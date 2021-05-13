@@ -21,10 +21,13 @@ package org.apache.flink.api.common.eventtime;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 一个时间戳分配器，它基于机器的挂钟分配时间戳。如果这个赋值器在一个流源之后使用，它实现了“摄取时间”语义。
+ *
  * A timestamp assigner that assigns timestamps based on the machine's wall clock. If this assigner
  * is used after a stream source, it realizes "ingestion time" semantics.
  *
  * @param <T> The type of the elements that get timestamps assigned.
+ *            获得分配时间戳的元素的类型。
  */
 @Public
 public final class IngestionTimeAssigner<T> implements TimestampAssigner<T> {

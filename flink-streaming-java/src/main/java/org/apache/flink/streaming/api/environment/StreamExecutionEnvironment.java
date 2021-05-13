@@ -111,6 +111,10 @@ import java.util.concurrent.ExecutionException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * treamExecutionEnvironment 是流程序在其中执行的上下文。{@link LocalStreamEnvironment}将在当前JVM中执行，
+ * {@link RemoteStreamEnvironment}将在远程设置中执行。
+ * <p>环境提供了控制作业执行(例如设置并行度或容错检查点参数)和与外界交互(数据访问)的方法。
+ *
  * The StreamExecutionEnvironment is the context in which a streaming program is executed. A {@link
  * LocalStreamEnvironment} will cause execution in the current JVM, a {@link
  * RemoteStreamEnvironment} will cause execution on a remote setup.
@@ -129,6 +133,7 @@ public class StreamExecutionEnvironment {
     public static final String DEFAULT_JOB_NAME = "Flink Streaming Job";
 
     /** The time characteristic that is used if none other is set. */
+    // 如果没有其他设置，则使用的时间特性。
     private static final TimeCharacteristic DEFAULT_TIME_CHARACTERISTIC =
             TimeCharacteristic.ProcessingTime;
 
@@ -142,14 +147,17 @@ public class StreamExecutionEnvironment {
             threadLocalContextEnvironmentFactory = new ThreadLocal<>();
 
     /** The default parallelism used when creating a local environment. */
+    // 创建本地环境时使用的默认并行度。
     private static int defaultLocalParallelism = Runtime.getRuntime().availableProcessors();
 
     // ------------------------------------------------------------------------
 
     /** The execution configuration for this environment. */
+    // 此环境的执行配置。
     private final ExecutionConfig config = new ExecutionConfig();
 
     /** Settings that control the checkpointing behavior. */
+    // 控制检查点行为的设置
     private final CheckpointConfig checkpointCfg = new CheckpointConfig();
 
     protected final List<Transformation<?>> transformations = new ArrayList<>();
@@ -159,6 +167,7 @@ public class StreamExecutionEnvironment {
     protected boolean isChainingEnabled = true;
 
     /** The state backend used for storing k/v state and state snapshots. */
+    // 用于存储kv状态和状态快照的状态 backend
     private StateBackend defaultStateBackend;
 
     /** The time characteristic used by the data streams. */
@@ -252,6 +261,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 获取已注册以便在任务管理器中分发的缓存文件的列表。
+     *
      * Get the list of cached files that were registered for distribution among the task managers.
      */
     public List<Tuple2<String, DistributedCache.DistributedCacheEntry>> getCachedFiles() {
@@ -394,6 +405,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 为流作业启用检查点。流数据流的分布式状态会定期被快照。如果出现故障，流数据流将从最近完成的检查点重新启动。
+     * 这个方法选择{@link CheckpointingModeEXACTLY_ONCE}保证。<p>作业在给定的时间间隔内定期绘制检查点。状态将存储在已配置的状态后端。
+     *
      * Enables checkpointing for the streaming job. The distributed state of the streaming dataflow
      * will be periodically snapshotted. In case of a failure, the streaming dataflow will be
      * restarted from the latest completed checkpoint. This method selects {@link
@@ -525,6 +539,12 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 设置描述如何存储和检查点操作符状态的状态后端。它定义了在执行期间哪些数据结构保持状态(例如哈希表、RockDB或其他数据存储)，
+     * 以及检查点数据将在哪里持久化。< p >状态管理的状态后端包括键控状态,可以在{@link org.apache.flink.streaming.api.datastream.KeyedStream键流},
+     * 以及维护的状态直接由用户代码实现{@link org.apache.flink.streaming.api.checkpoint.CheckpointedFunction CheckpointedFunction}。
+     * 例如，{@link org.apache.flink.time.state.memorystatebackend}
+     * 在堆内存中维护状态，作为对象。它是轻量级的，没有额外的依赖关系，但是只能对较小的状态(一些计数器)进行检查点。相反，{@link状态检查点(也作为堆对象维护)存储在文件中。当使用复制文件系统(如HDFS, S3, MapR FS, Alluxio等)时，这将保证状态不会丢失，单个节点的故障，流程序可以执行高可用性和强一致性(假设Flink运行在高可用模式)。
+     *
      * Sets the state backend that describes how to store and checkpoint operator state. It defines
      * both which data structures hold state during execution (for example hash tables, RockDB, or
      * other data stores) as well as where checkpointed data will be persisted.
@@ -572,6 +592,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 设置重启策略配置。该配置指定在重启的情况下，执行图将使用哪种重启策略。
+     *
      * Sets the restart strategy configuration. The configuration specifies which restart strategy
      * will be used for the execution graph in case of a restart.
      *
@@ -627,6 +649,9 @@ public class StreamExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 将新的Kryo默认序列化器添加到运行时。注意，序列化器实例必须是可序列化的(如java.io. serializable所定义的)，
+     * 因为它可以通过java序列化分发到工作节点。
+     *
      * Adds a new Kryo default serializer to the Runtime.
      *
      * <p>Note that the serializer instance must be serializable (as defined by
@@ -1394,6 +1419,14 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 使用{@link org.apache.flink.api.common.io.InputFormat}创建输入数据流的通用方法。
+     * <p>因为所有的数据流都需要特定的类型信息，所以这个方法需要确定输入格式产生的数据的类型。它将尝试通过反射来确定数据类型，
+     * 除非输入格式实现了{@link org.apache.flink.api.java.typeutils.ResultTypeQueryable}接口。在后一种情况下，该方法将调用
+     * {@link org.apache.flink.api.java.typeutils.ResultTypeQueryable#getProducedType()}
+     * 方法来确定输入格式产生的数据类型。< p > < b >笔记检查点:< b >的{@link FileInputFormat},
+     * 源(执行{@link ContinuousFileMonitoringFunction})监视道路,创建{@link org.apache.flink.core.fs.FileInputSplit FileInputSplits}
+     * 要处理,将其转发到下游的读者阅读的实际数据,并退出,而不是等待读者读完。这意味着在源退出后不会再转发检查点屏障，因此没有检查点。
+     *
      * Generic method to create an input data stream with {@link
      * org.apache.flink.api.common.io.InputFormat}.
      *
@@ -1505,6 +1538,11 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 将数据源添加到流拓扑。<p>默认情况下，源的并行度为1。为了支持并行执行，用户定义的源代码应该实现{@link org.apache.flink.stream .api.functions.source。
+     * 或扩展{@link org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction}。
+     * 在这些情况下，生成的源将具有环境的并行性。要在后面更改这个，调用{
+     * @link org.apache.flink.streaming.api.datastream.DataStreamSource#setParallelism(int)}
+     *
      * Adds a Data Source to the streaming topology.
      *
      * <p>By default sources have a parallelism of 1. To enable parallel execution, the user defined
@@ -1537,6 +1575,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 广告一个带有自定义类型信息的数据源，从而打开一个{@link DataStream}。只有在非常特殊的情况下，用户才需要支持类型信息。
+     * 否则使用{@link addSource(org.apache.flink.stream.api.functions.sourcefunction)}
+     *
      * Ads a data source with a custom type information thus opening a {@link DataStream}. Only in
      * very special cases does the user need to support type information. Otherwise use {@link
      * #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
@@ -1635,6 +1676,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 控制程序的执行。环境将执行导致“接收器”操作的程序的所有部分。例如，接收操作是打印结果或将结果转发到消息队列。<p>程序的执行将被记录并以提供的名称显示
+     *
      * Triggers the program execution. The environment will execute all parts of the program that
      * have resulted in a "sink" operation. Sink operations are for example printing results or
      * forwarding them to a message queue.
@@ -1652,6 +1695,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 触发程序执行。环境将执行导致“接收器”操作的程序的所有部分。例如，接收操作是打印结果或将结果转发到消息队列。
+     *
      * Triggers the program execution. The environment will execute all parts of the program that
      * have resulted in a "sink" operation. Sink operations are for example printing results or
      * forwarding them to a message queue.
@@ -1667,12 +1712,14 @@ public class StreamExecutionEnvironment {
         try {
             final JobExecutionResult jobExecutionResult;
 
+            // 指定管道是以附加模式还是分离模式提交的
             if (configuration.getBoolean(DeploymentOptions.ATTACHED)) {
                 jobExecutionResult = jobClient.getJobExecutionResult(userClassloader).get();
             } else {
                 jobExecutionResult = new DetachedJobExecutionResult(jobClient.getJobID());
             }
 
+            // JobExecuted 事件发送
             jobListeners.forEach(
                     jobListener -> jobListener.onJobExecuted(jobExecutionResult, null));
 
@@ -1695,6 +1742,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 在这个环境中注册一个{@link JobListener}。当特定的作业状态改变时，{@link JobListener}将得到通知。
+     *
      * Register a {@link JobListener} in this environment. The {@link JobListener} will be notified
      * on specific job status changed.
      */

@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.configuration.Configuration;
 
 /**
+ * 所有富用户定义函数的基接口。该类定义了函数生命周期的方法，以及用于访问执行函数的上下文的方法。
+ *
  * An base interface for all rich user-defined functions. This class defines methods for the life
  * cycle of the functions, as well as methods to access the context in which the functions are
  * executed.
@@ -82,6 +84,10 @@ public interface RichFunction extends Function {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取包含有关UDF运行时信息的上下文，例如函数的并行度、函数的子任务索引或执行该函数的任务的名称。
+     * <p> RuntimeContext还允许访问{@link org.apache.flink.api.common.accumulators.Accumulator}
+     * 和{@link org.apache.flink.api.common.cache.DistributedCache}
+     *
      * Gets the context that contains information about the UDF's runtime, such as the parallelism
      * of the function, the subtask index of the function, or the name of the of the task that
      * executes the function.
@@ -95,6 +101,9 @@ public interface RichFunction extends Function {
     RuntimeContext getRuntimeContext();
 
     /**
+     * 获取{@link RuntimeContext}的专一版本，其中包含关于执行函数的迭代的额外信息。
+     * 此 IterationRuntimeContext 仅在函数是迭代的一部分时可用。否则，此方法将抛出异常。
+     *
      * Gets a specialized version of the {@link RuntimeContext}, which has additional information
      * about the iteration in which the function is executed. This IterationRuntimeContext is only
      * available if the function is part of an iteration. Otherwise, this method throws an

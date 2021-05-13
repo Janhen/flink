@@ -23,6 +23,10 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 
 /**
+ * {@link StateDescriptor} for {@link ValueState}。这可以用来创建分区值状态使用
+ * {@link org.apache.flink.api.common.functions.RuntimeContext#getState(ValueStateDescriptor)}。
+ * 如果你不使用设置默认值的构造函数，当你使用{@link ValueStatevalue()}读取{@link ValueStatevalue()}时得到的值将是{@code null}。
+ *
  * {@link StateDescriptor} for {@link ValueState}. This can be used to create partitioned value
  * state using {@link
  * org.apache.flink.api.common.functions.RuntimeContext#getState(ValueStateDescriptor)}.

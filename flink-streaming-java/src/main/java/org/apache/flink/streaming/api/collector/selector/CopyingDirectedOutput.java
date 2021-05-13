@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * {@link DirectedOutput}的特殊版本，它执行{@link StreamRecord}的浅拷贝，以确保多链正确工作。
+ *
  * Special version of {@link DirectedOutput} that performs a shallow copy of the {@link
  * StreamRecord} to ensure that multi-chaining works correctly.
  */

@@ -25,6 +25,13 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * 处理两个键控流的元素并产生单个输出流的函数。
+ * <p>该函数将对输入流中的每个元素调用，并可以产生0个或多个输出元素。与{@link CoFlatMapFunction}相反，
+ * 该函数还可以通过提供的{@link Context}查询时间(事件和处理)和设置计时器。当响应 set timer 的触发时，函数可以发出更多的元素。
+ * <p>连接流的一个示例用例是对另一个流(stream  {@code stream a})中包含的元素应用一组随着时间变化的规则({@code stream a})。
+ * {@code 流A} 中包含的规则可以存储在状态中，并等待新元素到达{@code 流B}。在{@code 流B}
+ * 上接收到一个新元素时，函数现在可以将之前存储的规则应用到元素上，并直接发出一个结果，或者注册一个计时器，以在将来触发一个动作。
+ *
  * A function that processes elements of two keyed streams and produces a single output one.
  *
  * <p>The function will be called for every element in the input streams and can produce zero or
@@ -86,6 +93,8 @@ public abstract class KeyedCoProcessFunction<K, IN1, IN2, OUT> extends AbstractR
             throws Exception;
 
     /**
+     * 当使用{@link TimerService}设置的计时器被触发时调用。
+     *
      * Called when a timer set using {@link TimerService} fires.
      *
      * @param timestamp The timestamp of the firing timer.
@@ -107,6 +116,9 @@ public abstract class KeyedCoProcessFunction<K, IN1, IN2, OUT> extends AbstractR
     public abstract class Context {
 
         /**
+         * 当前正在处理的元素的时间戳或触发计时器的时间戳。<p>这可能是{@code null}，例如，
+         * 如果你的程序的时间特征被设置为{@link org.apache.flink.streaming.api.TimeCharacteristic#ProcessingTime}。
+         *
          * Timestamp of the element currently being processed or timestamp of a firing timer.
          *
          * <p>This might be {@code null}, for example if the time characteristic of your program is
@@ -118,6 +130,8 @@ public abstract class KeyedCoProcessFunction<K, IN1, IN2, OUT> extends AbstractR
         public abstract TimerService timerService();
 
         /**
+         * 向由{@link OutputTag}标识的侧输出发出一条记录。
+         *
          * Emits a record to the side output identified by the {@link OutputTag}.
          *
          * @param outputTag the {@code OutputTag} that identifies the side output to emit to.
@@ -130,6 +144,8 @@ public abstract class KeyedCoProcessFunction<K, IN1, IN2, OUT> extends AbstractR
     }
 
     /**
+     * 调用{@link #onTimer(long, OnTimerContext, Collector)}中可用的信息。
+     *
      * Information available in an invocation of {@link #onTimer(long, OnTimerContext, Collector)}.
      */
     public abstract class OnTimerContext extends Context {

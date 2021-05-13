@@ -33,6 +33,7 @@ import static org.apache.flink.runtime.jobgraph.tasks.CheckpointCoordinatorConfi
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Configuration that captures all checkpointing related settings. */
+// 捕获所有检查点相关设置的配置
 @Public
 public class CheckpointConfig implements java.io.Serializable {
 
@@ -60,6 +61,7 @@ public class CheckpointConfig implements java.io.Serializable {
     private CheckpointingMode checkpointingMode = DEFAULT_MODE;
 
     /** Periodic checkpoint triggering interval. */
+    // 定时检查点触发间隔
     private long checkpointInterval = -1; // disabled
 
     /** Maximum time checkpoint may take before being discarded. */
@@ -130,6 +132,9 @@ public class CheckpointConfig implements java.io.Serializable {
     }
 
     /**
+     * 获取定期安排检查点的时间间隔。<p>这个设置定义了基本间隔。检查点触发可能会被{@link getmaxconcurrent检查点()}
+     * 和{@link getminpausebetween检查点()}设置延迟。
+     *
      * Gets the interval in which checkpoints are periodically scheduled.
      *
      * <p>This setting defines the base interval. Checkpoint triggering may be delayed by the
@@ -270,6 +275,10 @@ public class CheckpointConfig implements java.io.Serializable {
     }
 
     /**
+     * 这决定了遇到检查点错误时的行为。如果返回true，这等价于将tolerablecheckpointfailurennumber设为0，
+     * 作业管理器将在收到下降检查点消息后使整个作业失败。如果返回false，这等价于将tolerablecheckpointfailurennumber
+     * 作为整数的最大值(意味着无限)，那么作业管理器将不会使整个作业失败，无论它接收到多少个拒绝检查点
+     *
      * This determines the behaviour when meeting checkpoint errors. If this returns true, which is
      * equivalent to get tolerableCheckpointFailureNumber as zero, job manager would fail the whole
      * job once it received a decline checkpoint message. If this returns false, which is equivalent
@@ -342,6 +351,12 @@ public class CheckpointConfig implements java.io.Serializable {
     }
 
     /**
+     * 允许检查点从外部持久化。<p>外化检查点将其元数据写入持久化存储，当拥有的作业失败或挂起(以作业状态{@link JobStatus#FAILED}
+     * 或{@link JobStatus#SUSPENDED}终止)时，<strong>而不是<strong>自动清除。在这种情况下，您必须手动清理检查点状态，
+     * 包括元数据和实际程序状态。<p> {@link ExternalizedCheckpointCleanup}模式定义了如何在作业取消时清除外部化检查点。
+     * 如果您选择在取消时保留外部化检查点，那么您也需要在取消作业时手动处理检查点清理(以作业状态{@link JobStatus#CANCELED}终止)
+     * <p>外部化检查点的目标目录通过{@link org.apache.flink.configuration.CheckpointingOptions#CHECKPOINTS_DIRECTORY}配置。
+     *
      * Enables checkpoints to be persisted externally.
      *
      * <p>Externalized checkpoints write their meta data out to persistent storage and are
@@ -451,6 +466,7 @@ public class CheckpointConfig implements java.io.Serializable {
     }
 
     /** Cleanup behaviour for externalized checkpoints when the job is cancelled. */
+    // 作业取消时外部化检查点的清理行为
     @PublicEvolving
     public enum ExternalizedCheckpointCleanup {
 

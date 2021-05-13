@@ -29,6 +29,8 @@ import org.apache.flink.streaming.api.CheckpointingMode;
 import java.time.Duration;
 
 /**
+ * 执行{@link ConfigOption}配置检查点相关参数
+ *
  * Execution {@link ConfigOption} for configuring checkpointing related parameters.
  *
  * @see CheckpointConfig

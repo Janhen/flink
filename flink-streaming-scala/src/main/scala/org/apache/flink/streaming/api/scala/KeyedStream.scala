@@ -36,6 +36,7 @@ import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.api.windowing.windows.{GlobalWindow, TimeWindow, Window}
 import org.apache.flink.util.Collector
 
+// 按照指定 KEY 分组的流
 @Public
 class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T](javaStream) {
 
@@ -55,6 +56,11 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   // ------------------------------------------------------------------------
 
   /**
+   * 在输入流上应用给定的[[ProcessFunction]]，从而创建转换后的输出流。该函数将对流中的每个元素调用，可以产生零或多个输出。
+   * 该功能还可以查询时间和设置定时器。当响应 set timer 的触发时，函数可以发出更多的元素。
+   * 该函数将对输入流中的每个元素调用，并可以产生零个或多个输出元素。与[[DataStream#flatMap(FlatMapFunction)]]功能相反，
+   * 该功能还可以查询时间和设置定时器。当响应设置定时器的触发时，函数可以直接发射元素和或注册更多的定时器。
+   *
     * Applies the given [[ProcessFunction]] on the input stream, thereby
     * creating a transformed output stream.
     *
@@ -84,6 +90,11 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * ! 在输入流上应用给定的[[KeyedProcessFunction]]，从而创建转换后的输出流。
+   * 该函数将对流中的每个元素调用，可以产生零或多个输出。该功能还可以查询时间和设置定时器。当响应set timer的触发时，函数可以发出更多的元素。
+   * 该函数将对输入流中的每个元素调用，并可以产生零个或多个输出元素。与[[DataStreamflatMap(FlatMapFunction)]]功能相反，该功能还可以查询时间和设置定时器。
+   * 当响应设置定时器的触发时，函数可以直接发射元素和或注册更多的定时器。
+   *
    * Applies the given [[KeyedProcessFunction]] on the input stream, thereby
    * creating a transformed output stream.
    *
@@ -116,6 +127,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   // ------------------------------------------------------------------------
 
   /**
+   * 通过[[IntervalJoin.between]]指定的时间间隔连接这个[[KeyedStream]]的元素和另一个[[KeyedStream]]的元素。
+   *
     * Join elements of this [[KeyedStream]] with elements of another [[KeyedStream]] over
     * a time interval that can be specified with [[IntervalJoin.between]].
     *
@@ -129,6 +142,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * 在一个时间间隔内执行连接
+   *
     * Perform a join over a time interval.
     *
     * @tparam IN1 The type parameter of the elements in the first streams
@@ -139,6 +154,9 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
                                     val streamTwo: KeyedStream[IN2, KEY]) {
 
     /**
+     * 指定连接操作工作的时间边界，使<pre>leftElement。timestamp + lowerBound <= righttelement。时间戳< = leftElement。timestamp + upperBound
+     * 默认情况下，下界和上界都包含。这可以用[[IntervalJoined]配置。lowerBoundExclusive]]和[[IntervalJoined.upperBoundExclusive]]
+     *
       * Specifies the time boundaries over which the join operation works, so that
       * <pre>leftElement.timestamp + lowerBound <= rightElement.timestamp
       * <= leftElement.timestamp + upperBound</pre>
@@ -175,6 +193,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
     private var upperBoundInclusive = true
 
     /**
+     * 将下界设置为exclusive
+     *
       * Set the lower bound to be exclusive
       */
     @PublicEvolving
@@ -193,6 +213,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
     }
 
     /**
+     * 使用用户函数完成连接操作，该函数为每个连接的元素对执行。
+     *
       * Completes the join operation with the user function that is executed for each joined pair
       * of elements.
       *
@@ -223,6 +245,9 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   // ------------------------------------------------------------------------
 
   /**
+   * Windows这个[[KeyedStream]]进入滚动时间窗口。这是' .window(TumblingEventTimeWindows.of(size)) '或' .window(TumblingProcessingTimeWindows.of(size)) '
+   * 的快捷方式，取决于使用[[streamexecutionenvironment . setstreamtimecharcharacteristic()]]设置的时间特征。
+   *
    * Windows this [[KeyedStream]] into tumbling time windows.
    *
    * This is a shortcut for either `.window(TumblingEventTimeWindows.of(size))` or

@@ -71,6 +71,8 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 表示流拓扑的类。它包含为执行构建作业图所需的所有信息。
+ *
  * Class representing the streaming topology. It contains all the information necessary to build the
  * jobgraph for the execution.
  */
@@ -85,10 +87,14 @@ public class StreamGraph implements Pipeline {
 
     private String jobName;
 
+    // 执行时的配置
     private final ExecutionConfig executionConfig;
+    // 检查点配置
     private final CheckpointConfig checkpointConfig;
     private SavepointRestoreSettings savepointRestoreSettings = SavepointRestoreSettings.none();
 
+    // 调度的模式
+    // -
     private ScheduleMode scheduleMode;
 
     private boolean chaining;

@@ -103,6 +103,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * DataStream表示相同类型的元素流。一个DataStream可以通过应用一个转换转换为另一个DataStream
+ *
  * A DataStream represents a stream of elements of the same type. A DataStream can be transformed
  * into another DataStream by applying a transformation as for example:
  *
@@ -249,6 +251,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 通过将(可能的)不同类型的输出连接起来，创建一个新的{@link ConnectedStreams}。使用此操作符连接的DataStreams可以与CoFunctions一起使用以应用联合转换
+     *
      * Creates a new {@link ConnectedStreams} by connecting {@link DataStream} outputs of (possible)
      * different types with each other. The DataStreams connected using this operator can be used
      * with CoFunctions to apply joint transformations.
@@ -352,6 +356,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 使用自定义分区程序在指定的关键字段上分区元组DataStream。此方法获取分区上的键位置，以及接受键类型的分区器。
+     * <p>注意:此方法仅适用于单个字段的键。
+     *
      * Partitions a tuple DataStream on the specified key fields using a custom partitioner. This
      * method takes the key position to partition on, and a partitioner that accepts the key type.
      *
@@ -370,6 +377,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 使用自定义分区程序在指定的关键字段上分区POJO DataStream。此方法将键表达式带到分区上，并将接受该键类型的分区器。
+     * <p>注意:此方法仅适用于单个字段的键。
+     *
      * Partitions a POJO DataStream on the specified key fields using a custom partitioner. This
      * method takes the key expression to partition on, and a partitioner that accepts the key type.
      *
@@ -388,6 +398,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 使用自定义分区器，在选择器返回的键上对DataStream进行分区。此方法接受键选择器以获取分区上的键，以及接受键类型的分区器。
+     * 注意:此方法只适用于单个字段键，即选择器不能返回字段元祖
+     *
      * Partitions a DataStream on the key returned by the selector, using a custom partitioner. This
      * method takes the key selector to get the key to partition on, and a partitioner that accepts
      * the key type.
@@ -417,6 +430,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 设置{@link DataStream}的分区，以便将输出元素广播到下一个操作的每个并行实例。
+     *
      * Sets the partitioning of the {@link DataStream} so that the output elements are broadcasted
      * to every parallel instance of the next operation.
      *
@@ -445,6 +460,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 设置{@link DataStream}的分区，以便将输出元素均匀随机打乱到下一个操作。
+     *
      * Sets the partitioning of the {@link DataStream} so that the output elements are shuffled
      * uniformly randomly to the next operation.
      *
@@ -466,6 +483,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 设置{@link DataStream}的分区，以便输出元素以循环方式均匀地分布到下一个操作的实例
+     *
      * Sets the partitioning of the {@link DataStream} so that the output elements are distributed
      * evenly to instances of the next operation in a round-robin fashion.
      *
@@ -638,6 +657,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 在输入流上应用给定的{@link ProcessFunction}，从而创建一个转换后的输出流。
+     * <p>该函数将对输入流中的每个元素调用，并可以产生0个或多个输出元素。
+     *
      * Applies the given {@link ProcessFunction} on the input stream, thereby creating a transformed
      * output stream.
      *
@@ -833,6 +855,13 @@ public class DataStream<T> {
     // ------------------------------------------------------------------------
 
     /**
+     * 将时间戳分配给数据流中的元素，并生成标记事件时间进度的水印。给定的{@link WatermarkStrategy}用于创建{@link TimestampAssigner}和{@link WatermarkGenerator}。
+     * <p>对于数据流中的每个事件，调用{@link TimestampAssigner#extractTimestamp(Object, long)}方法来指定一个事件时间戳。
+     * <p>对于数据流中的每个事件，{@link WatermarkGenerator#onEvent(Object, long, WatermarkOutput)}将被调用。
+     * <p>定期(由{@link ExecutionConfig#getAutoWatermarkInterval()}定义)
+     * ，{@link WatermarkGenerator#onPeriodicEmit(WatermarkOutput)}方法将被调用。
+     * <p>普通水印生成模式可以通过静态方法在{@link org.apache.flink.api.common.eventtime.WatermarkStrategy}类中找到。
+     *
      * Assigns timestamps to the elements in the data stream and generates watermarks to signal
      * event time progress. The given {@link WatermarkStrategy} is used to create a {@link
      * TimestampAssigner} and {@link WatermarkGenerator}.

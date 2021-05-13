@@ -46,6 +46,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * RuntimeContext包含关于执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息(如当前并行性)和其他结构，
+ * 如累加器和广播变量。<p>函数可以在运行时通过调用{@link AbstractRichFunction#getRuntimeContext()}获得RuntimeContext。
+ *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
  * contextual information (such as the current parallelism) and other constructs like accumulators
@@ -96,6 +99,8 @@ public interface RuntimeContext {
     int getIndexOfThisSubtask();
 
     /**
+     * 获取此并行子任务的尝试次数。第一次尝试编号为0。
+     *
      * Gets the attempt number of this parallel subtask. First attempt is numbered 0.
      *
      * @return Attempt number of the subtask.
@@ -103,6 +108,9 @@ public interface RuntimeContext {
     int getAttemptNumber();
 
     /**
+     * 返回任务的名称，附加子任务指示符，例如“MyTask(36)”，其中3是({@link getIndexOfThisSubtask()} + 1)， 6
+     * 是{@link getNumberOfParallelSubtasks()}。
+     *
      * Returns the name of the task, appended with the subtask indicator, such as "MyTask (3/6)",
      * where 3 would be ({@link #getIndexOfThisSubtask()} + 1), and 6 would be {@link
      * #getNumberOfParallelSubtasks()}.
@@ -232,6 +240,11 @@ public interface RuntimeContext {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取系统键值状态的句柄。keyvalue状态只有在在KeyedStream上执行函数时才可访问。在每次访问时，该状态公开函数当前处理的元素键的值。
+     * 每个函数可能有多个分区状态，使用不同的名称进行处理。
+     * <p>因为每个值的范围是当前处理的元素的键，并且这些元素是由Flink运行时分配的，系统可以透明地向外扩展并重新分配状态和KeyedStream。
+     * <p>下面的代码示例演示了如何实现一个连续计数器，该计数器计算某个键的元素出现的次数，并在每次出现时发出该元素的更新计数。
+     *
      * Gets a handle to the system's key/value state. The key/value state is only accessible if the
      * function is executed on a KeyedStream. On each access, the state exposes the value for the
      * key of the element currently processed by the function. Each function may have multiple
@@ -276,6 +289,9 @@ public interface RuntimeContext {
     <T> ValueState<T> getState(ValueStateDescriptor<T> stateProperties);
 
     /**
+     * 获取系统键值列表状态的句柄。这个状态类似于通过{@link getState(ValueStateDescriptor)}访问的状态，
+     * 但是对包含列表的状态进行了优化。可以向列表中添加元素，或者作为一个整体检索列表。<p>此状态只有在KeyedStream上执行函数时才可访问
+     *
      * Gets a handle to the system's key/value list state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that holds
      * lists. One can add elements to the list, or retrieve the list as a whole.

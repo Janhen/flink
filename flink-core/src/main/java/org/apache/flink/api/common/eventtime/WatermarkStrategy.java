@@ -27,6 +27,24 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * WatermarkStrategy 定义了如何在流 source 中生成{@link Watermark}。WatermarkStrategy
+ * 是{@link WatermarkGenerator} 和 {@link TimestampAssigner} 的构建工厂，前者生成水印，后者分配记录的内部时间戳。
+ *
+ * 这个接口分为三个部分:
+ * 1)方法需要实现这个接口的实现者,
+ * 2)生成器的方法构建一个{@code WatermarkStrategy}基本策略,
+ * 3)便利的方法构造一个{@code WatermarkStrategy}为常见的内置策略或基于{@link WatermarkGeneratorSupplier}
+ *
+ * 这个接口的实现者只需要实现{@link #createWatermarkGenerator(WatermarkGeneratorSupplier.Context)}。
+ * 还可以实现{@link #createTimestampAssigner(TimestampAssignerSupplier.Context)}。
+ *
+ * 他的构建方法，如{@link #withIdleness(Duration)}或
+ * {@link #createTimestampAssigner(TimestampAssignerSupplier.Context)}
+ * 创建了一个新的{@code WatermarkStrategy}，它包装并丰富了一个基本策略。调用方法所依据的策略是基本策略。
+ *
+ * 方便的方法，例如{@link #forBoundedOutOfOrderness(Duration)}，为公共内建策略创建一个{@code WatermarkStrategy}。
+ * 这个接口是{@link Serializable}，因为水印策略可以在分布式执行期间发送给工作器。
+ *
  * The WatermarkStrategy defines how to generate {@link Watermark}s in the stream sources. The
  * WatermarkStrategy is a builder/factory for the {@link WatermarkGenerator} that generates the
  * watermarks and the {@link TimestampAssigner} which assigns the internal timestamp of a record.
@@ -59,11 +77,14 @@ public interface WatermarkStrategy<T>
     //  Methods that implementors need to implement.
     // ------------------------------------------------------------------------
 
+    // 实例化根据此策略生成水印的WatermarkGenerator。
     /** Instantiates a WatermarkGenerator that generates watermarks according to this strategy. */
     @Override
     WatermarkGenerator<T> createWatermarkGenerator(WatermarkGeneratorSupplier.Context context);
 
     /**
+     * 实例化一个{@link TimestampAssigner}，以便根据此策略分配时间戳。
+     *
      * Instantiates a {@link TimestampAssigner} for assigning timestamps according to this strategy.
      */
     @Override
@@ -80,6 +101,10 @@ public interface WatermarkStrategy<T>
     // ------------------------------------------------------------------------
 
     /**
+     * 创建一个新的{@code WatermarkStrategy}来包装这个策略，但是使用给定的{@link TimestampAssigner}
+     * 通过{@link TimestampAssignerSupplier})。
+     * <p>当{@link TimestampAssigner}需要额外的上下文时，可以使用它，例如访问度量系统。
+     *
      * Creates a new {@code WatermarkStrategy} that wraps this strategy but instead uses the given
      * {@link TimestampAssigner} (via a {@link TimestampAssignerSupplier}).
      *
@@ -99,6 +124,9 @@ public interface WatermarkStrategy<T>
     }
 
     /**
+     * 创建一个新的{@code WatermarkStrategy}来包装这个策略，但是使用给定的{@link SerializableTimestampAssigner}。
+     * <p>如果你想通过lambda函数指定一个{@link TimestampAssigner}，你可以使用这个
+     *
      * Creates a new {@code WatermarkStrategy} that wraps this strategy but instead uses the given
      * {@link SerializableTimestampAssigner}.
      *

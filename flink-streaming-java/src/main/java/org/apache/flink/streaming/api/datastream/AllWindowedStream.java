@@ -71,6 +71,13 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code AllWindowedStream}表示一个数据流，其中元素流基于{@link org.apache.flink.stream.api.windowing.assignators.windowassigner}
+ * 被分割成多个窗口。窗口发射是基于{@link org.apache.flink.streaming.api.windowindow.triggers.trigger}触发的。
+ * <p>如果一个{@link org.apache.flink.streaming.api.windowing.evictors.Evictor}
+ * ，它将用于在{@code Trigger}触发计算后，但在实际计算窗口之前，从窗口中逐出元素。
+ * 当使用evictor时，窗口性能将显著降低，因为不能使用窗口结果的预聚合。注意，{@code AllWindowedStream}是一个纯粹的API构造，
+ * 在运行时，{@code AllWindowedStream}将与窗口上的操作一起折叠成一个操作。
+ *
  * A {@code AllWindowedStream} represents a data stream where the stream of elements is split into
  * windows based on a {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}.
  * Window emission is triggered based on a {@link
@@ -92,6 +99,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class AllWindowedStream<T, W extends Window> {
 
     /** The keyed data stream that is windowed by this stream. */
+    // 在此流旁边打开的键控数据流
     private final KeyedStream<T, Byte> input;
 
     /** The window assigner. */
@@ -101,12 +109,15 @@ public class AllWindowedStream<T, W extends Window> {
     private Trigger<? super T, ? super W> trigger;
 
     /** The evictor that is used for evicting elements before window evaluation. */
+    // 用于在窗口计算之前逐出元素的逐出器。
     private Evictor<? super T, ? super W> evictor;
 
     /** The user-specified allowed lateness. */
     private long allowedLateness = 0L;
 
     /**
+     * 端输出{@code OutputTag}用于后期数据。如果没有设置任何标签，后期数据将被简单地删除。
+     *
      * Side output {@code OutputTag} for late data. If no tag is set late data will simply be
      * dropped.
      */
@@ -148,6 +159,9 @@ public class AllWindowedStream<T, W extends Window> {
     }
 
     /**
+     * 将延迟到达的数据发送到由给定的{@link OutputTag}标识的端输出。如果水印已经超过了窗口的结束时间，
+     * 再加上使用{@link allowedLateness(Time)}设置的允许的延迟时间，则认为数据是延迟的。
+     *
      * Send late arriving data to the side output identified by the given {@link OutputTag}. Data is
      * considered late after the watermark has passed the end of the window plus the allowed
      * lateness set using {@link #allowedLateness(Time)}.
@@ -188,6 +202,11 @@ public class AllWindowedStream<T, W extends Window> {
     // ------------------------------------------------------------------------
 
     /**
+     * 对窗口应用reduce函数。对于每个键，每个窗口的计算都会分别调用window函数。reduce函数的输出被解释为一个常规的非窗口流。
+     * <p>此窗口将在窗口策略允许的范围内尝试递增聚合数据。例如，滚动时间窗口可以聚合数据，这意味着每个键只存储一个元素。
+     * 滑动时间窗口将在滑动间隔的粒度上聚合，因此每个键存储一些元素(每个滑动间隔一个)。自定义窗口可能无法递增聚合，
+     * 或者可能需要在聚合树中存储额外的值。
+     *
      * Applies a reduce function to the window. The window function is called for each evaluation of
      * the window for each key individually. The output of the reduce function is interpreted as a
      * regular non-windowed stream.
@@ -492,6 +511,9 @@ public class AllWindowedStream<T, W extends Window> {
     // ------------------------------------------------------------------------
 
     /**
+     * 将给定的{@code AggregateFunction}应用到每个窗口。AggregateFunction将窗口的所有元素聚合为单个结果元素。
+     * 这些结果元素的流(每个窗口一个)被解释为常规的非窗口流。
+     *
      * Applies the given {@code AggregateFunction} to each window. The AggregateFunction aggregates
      * all elements of a window into a single result element. The stream of these result elements
      * (one per window) is interpreted as a regular non-windowed stream.
@@ -554,6 +576,9 @@ public class AllWindowedStream<T, W extends Window> {
     }
 
     /**
+     * 对每个窗口应用给定的窗口函数。对于每个键，每个窗口的计算都会分别调用window函数。窗口函数的输出被解释为一个常规的非窗口流。
+     * <p>到达的数据使用给定的聚合函数递增聚合。这意味着窗口函数在调用时通常只有一个值需要处理。
+     *
      * Applies the given window function to each window. The window function is called for each
      * evaluation of the window for each key individually. The output of the window function is
      * interpreted as a regular non-windowed stream.
@@ -576,6 +601,7 @@ public class AllWindowedStream<T, W extends Window> {
         checkNotNull(aggFunction, "aggFunction");
         checkNotNull(windowFunction, "windowFunction");
 
+        // 抽取出累加类型、聚合结果类型、结果类型
         TypeInformation<ACC> accumulatorType =
                 TypeExtractor.getAggregateFunctionAccumulatorType(
                         aggFunction, input.getType(), null, false);
@@ -584,6 +610,7 @@ public class AllWindowedStream<T, W extends Window> {
                 TypeExtractor.getAggregateFunctionReturnType(
                         aggFunction, input.getType(), null, false);
 
+        // 从 AllWindowFunction 和 aggResultType 中获取结果类型
         TypeInformation<R> resultType =
                 getAllWindowFunctionReturnType(windowFunction, aggResultType);
 
@@ -610,6 +637,9 @@ public class AllWindowedStream<T, W extends Window> {
     }
 
     /**
+     * 对每个窗口应用给定的窗口函数。对于每个键，每个窗口的计算都会分别调用window函数。窗口函数的输出被解释为一个常规的非窗口流。
+     * <p>到达的数据使用给定的聚合函数递增聚合。这意味着窗口函数在调用时通常只有一个值需要处理。
+     *
      * Applies the given window function to each window. The window function is called for each
      * evaluation of the window for each key individually. The output of the window function is
      * interpreted as a regular non-windowed stream.
@@ -737,6 +767,9 @@ public class AllWindowedStream<T, W extends Window> {
     }
 
     /**
+     * 对每个窗口应用给定的窗口函数。对于每个键，每个窗口的计算都会分别调用window函数。窗口函数的输出被解释为一个常规的非窗口流。
+     * <p>到达的数据使用给定的聚合函数递增聚合。这意味着窗口函数在调用时通常只有一个值需要处理。
+     *
      * Applies the given window function to each window. The window function is called for each
      * evaluation of the window for each key individually. The output of the window function is
      * interpreted as a regular non-windowed stream.

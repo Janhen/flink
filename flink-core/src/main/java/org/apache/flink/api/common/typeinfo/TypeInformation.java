@@ -32,6 +32,19 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * TypeInformation是Flink的类型系统的核心类。Flink需要用于用户函数输入或返回类型的所有类型的类型信息。
+ * 此类型信息类充当生成序列化器和比较器的工具，并执行语义检查，例如用作连接分组键的字段是否实际存在。
+ * <p>类型信息也是编程语言对象模型和逻辑平面模式之间的桥梁。它将类型中的字段映射到平面模式中的列(字段)。
+ * 不是一个类型的所有字段都映射到平面模式中的单独字段，通常整个类型都映射到一个字段。需要注意的是，
+ * 模式必须包含某个类型的所有实例。因此，列表和数组中的元素不会分配给单个字段，而是将列表和数组视为一个字段，以考虑数组中的不同长度。
+ *
+ * <ul>
+ *     <li>基本类型是不可分割的，被认为是单个字段。
+ *     <li>数组和集合是一个字段
+ *     <li>元组和case类代表的字段数量与类拥有字段的数量相等
+ *  </ul>
+ *  为了正确地表示这一点，每种类型都有一个<i> ity<i>(它直接包含的字段数量)和一个<i>总字段数量<i>(该类型的整个模式中的字段数量，包括嵌套类型)。
+ *
  * TypeInformation is the core class of Flink's type system. Flink requires a type information for
  * all types that are used as input or return type of a user function. This type information class
  * acts as the tool to generate serializers and comparators, and to perform semantic checks such as
@@ -91,6 +104,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract boolean isBasicType();
 
     /**
+     * 检查此类型信息是否表示Tuple类型。元组类型是Java API元组的子类。
+     *
      * Checks if this type information represents a Tuple type. Tuple types are subclasses of the
      * Java API tuples.
      *
@@ -120,6 +135,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract int getTotalFields();
 
     /**
+     * 获取由此类型信息表示的类型的类。
+     *
      * Gets the class of the type represented by this type information.
      *
      * @return The class of the type represented by this type information.
@@ -128,6 +145,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract Class<T> getTypeClass();
 
     /**
+     * 可选方法，用于为Flink提供关于泛型类型参数到子类型类型信息的映射的类型提取系统信息。在应该从输入类型推导出类型信息的情况下，此信息是必需的。
+     *
      * Optional method for giving Flink's type extraction system information about the mapping of a
      * generic type parameter to the type information of a subtype. This information is necessary in
      * cases where type information should be deduced from an input type.
@@ -196,6 +215,8 @@ public abstract class TypeInformation<T> implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 为给定类所描述的类型创建一个类型信息。<p>此方法仅适用于非泛型类型。对于泛型类型，使用 {@link #of(TypeHint)}方法。
+     *
      * Creates a TypeInformation for the type described by the given class.
      *
      * <p>This method only works for non-generic types. For generic types, use the {@link
@@ -218,6 +239,8 @@ public abstract class TypeInformation<T> implements Serializable {
     }
 
     /**
+     * 通过实用程序“类型提示”为泛型类型创建一个类型信息。这种方法可以如下使用(用于 Tuple):
+     *
      * Creates a TypeInformation for a generic type via a utility "type hint". This method can be
      * used as follows:
      *

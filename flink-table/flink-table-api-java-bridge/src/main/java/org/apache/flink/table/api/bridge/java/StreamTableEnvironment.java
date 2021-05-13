@@ -38,6 +38,9 @@ import org.apache.flink.table.functions.TableFunction;
 import org.apache.flink.table.functions.UserDefinedFunction;
 
 /**
+ * 这个表环境是创建与java特定的{@link DataStream} API集成的table和SQL API程序的入口点和中心上下文。
+ * <p>统一有界和无界数据处理。<p>流表环境负责:
+ *
  * This table environment is the entry point and central context for creating Table and SQL API
  * programs that integrate with the Java-specific {@link DataStream} API.
  *
@@ -537,6 +540,12 @@ public interface StreamTableEnvironment extends TableEnvironment {
     <T> DataStream<T> toAppendStream(Table table, TypeInformation<T> typeInfo);
 
     /**
+     * 将给定的{@link Table}转换为添加和收回消息的{@link DataStream}。该消息将被编码为{@link Tuple2}。
+     * 第一个字段是一个{@link Boolean}标志，
+     * 第二个字段保存指定类型{@link T}的记录。
+     * <p> true {@link Boolean}标志表示添加消息，false标志表示收回消息。
+     * <p> {@link Table}字段映射到{@link DataStream}字段如下:
+     *
      * Converts the given {@link Table} into a {@link DataStream} of add and retract messages. The
      * message will be encoded as {@link Tuple2}. The first field is a {@link Boolean} flag, the
      * second field holds the record of the specified type {@link T}.

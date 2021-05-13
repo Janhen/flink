@@ -21,6 +21,10 @@ package org.apache.flink.streaming.api;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 检查点模式定义了在出现故障时系统给出的一致性保证。<p>当检查点被激活时，数据流被重放，从而丢失的处理部分被重复。
+ * 对于有状态的操作和函数，检查点模式定义了系统是否绘制检查点，这样一个恢复行为就好像operator函数看到每条记录“恰好一次”({@link EXACTLY_ONCE})，
+ * 或者检查点是否以一种更简单的方式绘制，通常会在恢复时遇到一些重复({@link AT_LEAST_ONCE})
+ *
  * The checkpointing mode defines what consistency guarantees the system gives in the presence of
  * failures.
  *

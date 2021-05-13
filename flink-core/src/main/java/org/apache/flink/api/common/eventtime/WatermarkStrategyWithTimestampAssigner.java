@@ -19,6 +19,8 @@
 package org.apache.flink.api.common.eventtime;
 
 /**
+ * 一个覆盖给定基类{@link WatermarkStrategy}的{@link TimestampAssigner}的{@link WatermarkStrategy}。
+ *
  * A {@link WatermarkStrategy} that overrides the {@link TimestampAssigner} of the given base {@link
  * WatermarkStrategy}.
  */

@@ -24,6 +24,13 @@ import org.apache.flink.types.Value;
 import java.io.Serializable;
 
 /**
+ * 聚合器是一种跨函数的并行实例聚合值的方法。聚合器收集关于在函数中执行的实际工作的简单统计信息(例如处理元素的数量)。
+ * 聚合器是特定于迭代的，通常通过使用{@link ConvergenceCriterion}来检查迭代的收敛性。与{@link}(其结果在作业结束时可用)相反，
+ * 聚合器在每个迭代超步中计算一次。它们的值可以用于检查收敛性(在迭代超步的末尾)，并且可以在下一个迭代超步中访问。
+ * <p>聚合器必须在通过函数使用它们的迭代处注册。在Java API中，当将聚合器和收敛准则一起使用时，方法是“IterativeDataSet.registerAggregator(…)”
+ * 或“IterativeDataSet.registerAggregationConvergenceCriterion(…)”。聚合器总是在一个名称下注册。
+ * 该名称可用于在运行时从函数内部访问聚合器。下面的代码片段显示了一个典型的情况。这里，它在所有并行实例中计算一个函数过滤掉了多少个元素。
+ *
  * Aggregators are a means of aggregating values across parallel instances of a function.
  * Aggregators collect simple statistics (such as the number of processed elements) about the actual
  * work performed in a function. Aggregators are specific to iterations and are commonly used to

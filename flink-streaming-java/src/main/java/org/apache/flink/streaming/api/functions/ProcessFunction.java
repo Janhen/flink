@@ -26,6 +26,14 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * 处理流中元素的函数。<p>对于输入流中的每个元素{@link processElement(Object, Context, Collector)}被调用。
+ * 这可以产生零个或多个元素作为输出。实现还可以通过提供的{@link Context}查询时间和设置计时器。对于触发计时器{@link onTimer(long, OnTimerContext, Collector)}将被调用。
+ * 这可以再次产生零个或多个元素作为输出，并注册进一步的计时器。<p><b>注意:<b>只有当{@code ProcessFunction}应用于{@code KeyedStream}时，
+ * 才能访问键控状态和计时器(也适用于一个键)。注意:<b> A {@code ProcessFunction}总是{@link org.apache.flink.api.common.functions.RichFunction}。
+ * 因此，对{@link org.apache. flinkapi . common.function.runtimecontext}的访问总是可用的，并且可以实现安装和拆卸方法。
+ * 参见{@link org.apache.flink.api.common.functions.RichFunctionopen(org.apache.flink.api.common.functions.RichFunctionclose()}
+ * 和{@link org.apache.flink.api.common.functions.RichFunctionclose()}。
+ *
  * A function that processes elements of a stream.
  *
  * <p>For every element in the input stream {@link #processElement(Object, Context, Collector)} is
@@ -53,6 +61,8 @@ public abstract class ProcessFunction<I, O> extends AbstractRichFunction {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 处理输入流中的一个元素。<p>这个函数可以使用{@link Collector}参数输出0个或多个元素，也可以使用{@link Context}参数更新内部状态或设置计时器。
+     *
      * Process one element from the input stream.
      *
      * <p>This function can output zero or more elements using the {@link Collector} parameter and
@@ -69,6 +79,8 @@ public abstract class ProcessFunction<I, O> extends AbstractRichFunction {
     public abstract void processElement(I value, Context ctx, Collector<O> out) throws Exception;
 
     /**
+     * 当使用{@link TimerService}设置的计时器被触发时调用。
+     *
      * Called when a timer set using {@link TimerService} fires.
      *
      * @param timestamp The timestamp of the firing timer.

@@ -24,6 +24,10 @@ import org.apache.flink.metrics.MetricGroup;
 import java.io.Serializable;
 
 /**
+ * {@link WatermarkGenerator WatermarkGenerators}的 supplier。supplier 模式用于避免在API方法中使用
+ * {@link WatermarkGenerator} {@link Serializable}。
+ * <p>这个接口是{@link Serializable}，因为  supplier 可能在分布式执行期间被运送到 workers。
+ *
  * A supplier for {@link WatermarkGenerator WatermarkGenerators}. The supplier pattern is used to
  * avoid having to make {@link WatermarkGenerator} {@link Serializable} for use in API methods.
  *

@@ -40,6 +40,13 @@ import org.apache.flink.streaming.api.transformations.TwoInputTransformation;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * ConnectedStreams 表示两个(可能)不同数据类型的连接流。对于一个流上的操作直接影响另一个流上的操作(通常通过流之间的共享状态)的情况，
+ * 连接流是有用的
+ *
+ * 用连接流的一个例子是将随时间变化的规则应用到另一个流上。一个连接的流有规则，另一个流有应用规则的元素。连接流上的操作维护状态中的当前规则集。
+ * 它可以接收规则更新并更新状态，也可以接收数据元素并将状态中的规则应用于元素。
+ * <p>连接的流在概念上可以看作是任一类型的联合流，它包含第一个流的类型或第二个流的类型。
+ *
  * ConnectedStreams represent two connected streams of (possibly) different data types. Connected
  * streams are useful for cases where operations on one stream directly affect the operations on the
  * other stream, usually via shared state between the streams.
@@ -111,6 +118,8 @@ public class ConnectedStreams<IN1, IN2> {
     }
 
     /**
+     * 连接数据流的KeyBy操作。根据keyPosition1和keyPosition2给input1和input2元素分配键
+     *
      * KeyBy operation for connected data stream. Assigns keys to the elements of input1 and input2
      * according to keyPosition1 and keyPosition2.
      *
@@ -156,6 +165,9 @@ public class ConnectedStreams<IN1, IN2> {
     }
 
     /**
+     * 使用键表达式连接数据流的KeyBy操作。根据fields1和fields2输入t1和input2的元素。字段表达式可以是公共字段的名称，
+     * 也可以是带有{@link DataStream}底层类型圆括号的getter方法。点可用于向下钻取对象，如{@code "field1.getInnerField2()"}。
+     *
      * KeyBy operation for connected data stream using key expressions. the elements of input1 and
      * input2 according to fields1 and fields2. A field expression is either the name of a public
      * field or a getter method with parentheses of the {@link DataStream}S underlying type. A dot
@@ -171,6 +183,8 @@ public class ConnectedStreams<IN1, IN2> {
     }
 
     /**
+     * 连接数据流的KeyBy操作。使用keySelector1和keySelector2将键分配给input1和input2的元素。
+     *
      * KeyBy operation for connected data stream. Assigns keys to the elements of input1 and input2
      * using keySelector1 and keySelector2.
      *
@@ -204,6 +218,9 @@ public class ConnectedStreams<IN1, IN2> {
     }
 
     /**
+     * 在{@link ConnectedStreams}上应用CoMap转换，并将输出映射到公共类型。转换对第一个输入的每个元素调用{@link CoMapFunction#map1}，
+     * 对第二个输入的每个元素调用{@link CoMapFunction#map2}。每个CoMapFunction调用只返回一个元素。
+     *
      * Applies a CoMap transformation on a {@link ConnectedStreams} and maps the output to a common
      * type. The transformation calls a {@link CoMapFunction#map1} for each element of the first
      * input and {@link CoMapFunction#map2} for each element of the second input. Each CoMapFunction
@@ -289,6 +306,10 @@ public class ConnectedStreams<IN1, IN2> {
     }
 
     /**
+     * 在连接的输入流上应用给定的{@link CoProcessFunction}，从而创建转换后的输出流。
+     * <p>该函数将对输入流中的每个元素调用，并可以产生0个或多个输出元素。与{@link #flatMap(CoFlatMapFunction)}
+     * 函数相反，该函数还可以查询时间和设置计时器。当响应设置定时器的触发时，函数可以直接发射元素和或注册更多的定时器。
+     *
      * Applies the given {@link CoProcessFunction} on the connected input streams, thereby creating
      * a transformed output stream.
      *

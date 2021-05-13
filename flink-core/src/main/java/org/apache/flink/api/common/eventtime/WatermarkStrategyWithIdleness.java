@@ -21,6 +21,7 @@ package org.apache.flink.api.common.eventtime;
 import java.time.Duration;
 
 /** A {@link WatermarkStrategy} that adds idleness detection on top of the wrapped strategy. */
+// 一个{@link WatermarkStrategy}将空闲检测添加到包装策略之上。
 final class WatermarkStrategyWithIdleness<T> implements WatermarkStrategy<T> {
 
     private static final long serialVersionUID = 1L;

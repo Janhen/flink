@@ -23,6 +23,11 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.List;
 
 /**
+ * {@link State}接口用于操作中的分区列表状态。状态由用户函数访问和修改，系统始终作为分布式快照的一部分进行检查点。
+ * 状态可以是键列表状态或操作符列表状态。<p>当它是一个关键列表状态时，它被应用在{@code KeyedStream}上的函数访问。
+ * 键由系统自动提供，因此函数总是看到映射到当前元素键的值。这样，系统就可以一致地处理流和状态分区。
+ * 当它是一个操作符列表状态时，该列表是一组状态项的集合，这些状态项彼此独立，在操作符并行性发生变化时，可以跨操作符实例重新分配。
+ *
  * {@link State} interface for partitioned list state in Operations. The state is accessed and
  * modified by user functions, and checkpointed consistently by the system as part of the
  * distributed snapshots.

@@ -39,6 +39,9 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 配置状态TTL逻辑。<p>注:只有当用户值序列化器可以处理{@code null}值时，具有TTL的map状态当前支持{@code null}用户值。
+ * 如果序列化器不支持{@code null}值，它可以用{@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer}进行包装，代价是在序列化形式中增加一个字节。
+ *
  * Configuration of state TTL logic.
  *
  * <p>Note: The map state with TTL currently supports {@code null} user values only if the user

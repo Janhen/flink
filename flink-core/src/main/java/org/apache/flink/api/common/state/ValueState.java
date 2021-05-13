@@ -23,6 +23,9 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.IOException;
 
 /**
+ * {@link State}接口用于分区单值状态。可以检索或更新该值。<p>状态由用户函数访问和修改，系统始终作为分布式快照的一部分进行检查点。
+ * 该状态只能由应用在{@code KeyedStream}上的函数访问。键由系统自动提供，因此函数总是看到映射到当前元素键的值。这样，系统就可以一致地处理流和状态分区。
+ *
  * {@link State} interface for partitioned single-value state. The value can be retrieved or
  * updated.
  *

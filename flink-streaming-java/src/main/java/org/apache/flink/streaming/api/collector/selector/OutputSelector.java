@@ -24,6 +24,9 @@ import org.apache.flink.streaming.api.datastream.SplitStream;
 import java.io.Serializable;
 
 /**
+ * 使用{@link SingleOutputStreamOperator#split}调用为{@link SplitStream}定义OutputSelector
+ * 的接口。{@link SplitStream}的每个输出对象都将通过这个操作符来选择输出。
+ *
  * Interface for defining an OutputSelector for a {@link SplitStream} using the {@link
  * SingleOutputStreamOperator#split} call. Every output object of a {@link SplitStream} will run
  * through this operator to select outputs.
@@ -33,6 +36,9 @@ import java.io.Serializable;
 @PublicEvolving
 public interface OutputSelector<OUT> extends Serializable {
     /**
+     * 方法，用于在使用{@link SingleOutputStreamOperator#split}方法时为发出的对象选择输出名称。
+     * 这些值只会被发送到返回的可迭代对象中包含的输出名称。
+     *
      * Method for selecting output names for the emitted objects when using the {@link
      * SingleOutputStreamOperator#split} method. The values will be emitted only to output names
      * which are contained in the returned iterable.

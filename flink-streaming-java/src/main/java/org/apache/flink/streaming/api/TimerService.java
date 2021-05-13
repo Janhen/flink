@@ -21,6 +21,7 @@ package org.apache.flink.streaming.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Interface for working with time and timers. */
+// 与时间和计时器工作的接口
 @PublicEvolving
 public interface TimerService {
 
@@ -37,6 +38,9 @@ public interface TimerService {
     long currentWatermark();
 
     /**
+     * 注册一个计时器，当处理时间经过给定时间时触发。定时器可以在内部限定为键和或窗口。当您在关键字上下文中设置计时器时，
+     * 例如在{@link org.apache.flink.streaming.api.datastream.KeyedStream}，那么当你收到定时器通知时，该上下文也将被激活
+     *
      * Registers a timer to be fired when processing time passes the given time.
      *
      * <p>Timers can internally be scoped to keys and/or windows. When you set a timer in a keyed
@@ -47,6 +51,10 @@ public interface TimerService {
     void registerProcessingTimeTimer(long time);
 
     /**
+     * 注册一个计时器，当事件时间水印经过给定时间时触发。定时器可以在内部限定为键和或窗口。当您在关键字上下文中设置计时器时，
+     * 例如在{@link org.apache.flink.streaming.api.datastream.KeyedStream}}，那么当你收到定时器通知时，
+     * 该上下文也将被激活。
+     *
      * Registers a timer to be fired when the event time watermark passes the given time.
      *
      * <p>Timers can internally be scoped to keys and/or windows. When you set a timer in a keyed

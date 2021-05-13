@@ -27,6 +27,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** The {@link ConfigOption configuration options} relevant for all Executors. */
+// {@link ConfigOption配置选项} 与所有executor相关。
 @PublicEvolving
 public class DeploymentOptions {
 
@@ -47,6 +48,7 @@ public class DeploymentOptions {
                                     .text(".")
                                     .build());
 
+    // 指定管道是以附加模式还是分离模式提交的
     public static final ConfigOption<Boolean> ATTACHED =
             key("execution.attached")
                     .booleanType()

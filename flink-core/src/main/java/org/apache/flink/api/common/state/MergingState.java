@@ -21,6 +21,8 @@ package org.apache.flink.api.common.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 扩展{@link AppendingState}，允许状态合并。也就是说，{@link MergingState}的两个实例可以合并为一个实例，该实例包含两个合并状态的所有信息。
+ *
  * Extension of {@link AppendingState} that allows merging of state. That is, two instances of
  * {@link MergingState} can be combined into a single instance that contains all the information of
  * the two merged states.

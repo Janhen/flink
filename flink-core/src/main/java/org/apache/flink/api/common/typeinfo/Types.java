@@ -53,6 +53,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 这个类提供了对Flink内置序列化器和比较器的最常见类型的类型信息的访问。<p>在许多情况下，Flink试图分析函数的泛型签名来自动确定返回类型。
+ * 该类用于必须手动提供类型信息的情况，或自动类型推断导致低效类型的情况。请注意Scala API和Table API都有专门的Types类。
+ * (见<代码> org.apache.flink.api.scala。一个更方便的替代方法可能是{@link TypeHint}。
+ *
  * This class gives access to the type information of the most common types for which Flink has
  * built-in serializers and comparators.
  *
@@ -257,6 +261,15 @@ public class Types {
     }
 
     /**
+     * 返回POJO(普通旧Java对象)的类型信息。<p>一个POJO类是公共的和独立的(没有非静态的内部类)。它有一个公共的无参数构造函数。
+     * 类(以及所有超类)中的所有非静态、非瞬态字段要么是公共的(非final的)，要么有一个公共的getter和setter方法，
+     * 该方法遵循Java bean的getter和setter命名约定。
+     * <p> POJO是一个固定长度和感知空值的复合类型。独立于字段的类型，每个字段都可以为空。
+     * <p> POJO所有字段的泛型类型可以在子类的层次结构中定义。
+     * <p>如果Flink的类型分析器无法提取包含所有字段类型信息的有效POJO
+     * 类型信息，则抛出{@link org.apache.flink.api.common.functions.InvalidTypesException}。或者，
+     *   你也可以使用{@link Types#POJO(Class, Map)}手动指定所有字段。
+     *
      * Returns type information for a POJO (Plain Old Java Object).
      *
      * <p>A POJO class is public and standalone (no non-static inner class). It has a public

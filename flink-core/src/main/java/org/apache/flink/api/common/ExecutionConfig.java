@@ -45,6 +45,17 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 义程序执行行为的配置。它允许定义(在其他选项中)以下设置:
+ * <ul>
+ *     <li>程序的默认并行度，即为所有没有直接定义特定值的函数使用多少并行任务。
+ *     <li>执行失败时的重试次数。
+ *     <li>重试间隔时间。
+ *     <li>程序的{@link ExecutionMode}: Batch或Pipelined。默认的执行模式是{@link ExecutionMode#PIPELINED}
+ *     <li>启用或禁用闭包清理器。闭包清理器对函数的实现进行预处理。如果它们是(匿名)内部类，它将删除对外围类的未使用的引用，
+ *         以修复某些与序列化相关的问题，并减少闭包的大小。配置允许注册类型和序列化器，以提高处理<i>泛型<i>和<i> pojo
+ *        <i>的效率。这通常只在函数不仅返回在其签名中声明的类型，而且返回这些类型的子类时才需要。
+ * </ul>
+ *
  * A config to define the behavior of the program execution. It allows to define (among other
  * options) the following settings:
  *

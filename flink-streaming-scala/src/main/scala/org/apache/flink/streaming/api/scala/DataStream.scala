@@ -874,6 +874,13 @@ class DataStream[T](stream: JavaStream[T]) {
   }
 
   /**
+   * 当前在 Java 的 DataStream 中未找到该方法
+   *
+   * 将时间戳分配给数据流中的元素，并定期创建水印来表示事件时间进度。对于已知元素时间戳在每个并行流中是单调递增的数据流，
+   * 此方法是一种快捷方式。在这种情况下，通过跟踪上升的时间戳，系统可以自动、完美地生成水印。对于时间戳不是单调增加的情况，
+   * 使用更通用的方法[[assignTimestampsAndWatermarks(AssignerWithPeriodicWatermarks)]
+   * 和[[assignTimestampsAndWatermarks(AssignerWithPunctuatedWatermarks)]]。
+   *
    * Assigns timestamps to the elements in the data stream and periodically creates
    * watermarks to signal event time progress.
    * 

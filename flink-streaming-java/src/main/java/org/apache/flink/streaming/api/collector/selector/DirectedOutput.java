@@ -39,6 +39,8 @@ import java.util.Random;
 import java.util.Set;
 
 /**
+ * 基于{@link OutputSelector OutputSelectors}列表，将{@link Output}封装到其他{@link Output Outputs}。
+ *
  * Wrapping {@link Output} that forwards to other {@link Output Outputs } based on a list of {@link
  * OutputSelector OutputSelectors}.
  */

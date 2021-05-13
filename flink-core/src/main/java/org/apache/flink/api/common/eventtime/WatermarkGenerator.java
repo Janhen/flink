@@ -22,6 +22,11 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.api.common.ExecutionConfig;
 
 /**
+ * {@code WatermarkGenerator}基于事件或周期性(以固定的时间间隔)生成水印。
+ * <p><b>
+ *     注: 这个WatermarkGenerator包含了{@code assignerwithpunctuation watermarks}和{@code
+ *     AssignerWithPeriodicWatermarks}之间的区别。
+ *
  * The {@code WatermarkGenerator} generates watermarks either based on events or periodically (in a
  * fixed interval).
  *

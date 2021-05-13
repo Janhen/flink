@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.types.DoubleValue;
 
 /**
+ * 在{@link Aggregator}上的{@link ConvergenceCriterion}定义一旦聚合器的值为0，即达到收敛。聚合的数据类型是{@link DoubleValue}。
+ *
  * A {@link ConvergenceCriterion} over an {@link Aggregator} that defines convergence as reached
  * once the aggregator holds the value zero. The aggregated data type is a {@link DoubleValue}.
  */

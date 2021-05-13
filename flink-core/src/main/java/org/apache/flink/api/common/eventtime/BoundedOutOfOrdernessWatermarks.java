@@ -26,6 +26,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于记录无序的情况的WatermarkGenerator，但您可以设置事件无序程度的上限。无序绑定B意味着，一旦遇到时间戳为T的事件，
+ * 将不会出现比 {@code T - B} 更早的事件。
+ * 水印周期性生成。该水印策略引入的时延为周期间隔长度加上无序界。
+ *
  * A WatermarkGenerator for situations where records are out of order, but you can place an upper
  * bound on how far the events are out of order. An out-of-order bound B means that once an event
  * with timestamp T was encountered, no events older than {@code T - B} will follow any more.
@@ -37,9 +41,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class BoundedOutOfOrdernessWatermarks<T> implements WatermarkGenerator<T> {
 
     /** The maximum timestamp encountered so far. */
+    // 到目前为止遇到的最大时间戳。
     private long maxTimestamp;
 
     /** The maximum out-of-orderness that this watermark generator assumes. */
+    // 此水印发生器假定的最大无序程度
     private final long outOfOrdernessMillis;
 
     /**

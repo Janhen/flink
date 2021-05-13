@@ -33,6 +33,8 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 模式定义的基类。<p>模式定义被{@link org.apache.flink. ccep.nfa .compiler. nfacompiler}用来创建一个{@link NFA}。
+ *
  * Base class for a pattern definition.
  *
  * <p>A pattern definition is used by {@link org.apache.flink.cep.nfa.compiler.NFACompiler} to
@@ -53,20 +55,26 @@ public class Pattern<T, F extends T> {
     private final String name;
 
     /** Previous pattern. */
+    // 之前的模式
     private final Pattern<T, ? extends T> previous;
 
     /** The condition an event has to satisfy to be considered a matched. */
+    // 一个事件必须满足的条件被认为是匹配的。
     private IterativeCondition<F> condition;
 
     /** Window length in which the pattern match has to occur. */
+    // 模式匹配必须出现的窗口长度。
     private Time windowTime;
 
     /**
+     * 模式的量词。默认设置为{@link Quantifier#one(ConsumingStrategy)}。
+     *
      * A quantifier for the pattern. By default set to {@link Quantifier#one(ConsumingStrategy)}.
      */
     private Quantifier quantifier = Quantifier.one(ConsumingStrategy.STRICT);
 
     /** The condition an event has to satisfy to stop collecting events into looping state. */
+    // 事件必须满足停止将事件收集到循环状态的条件。
     private IterativeCondition<F> untilCondition;
 
     /** Applicable to a {@code times} pattern, and holds the number of times it has to appear. */
@@ -118,6 +126,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 开始一个新的模式序列。所提供的名称是新序列的初始模式之一。此外，还设置了事件序列的基本类型。
+     *
      * Starts a new pattern sequence. The provided name is the one of the initial pattern of the new
      * sequence. Furthermore, the base type of the event sequence is set.
      *
@@ -130,6 +140,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 开始一个新的模式序列。所提供的名称是新序列的初始模式之一。此外，还设置了事件序列的基本类型。
+     *
      * Starts a new pattern sequence. The provided name is the one of the initial pattern of the new
      * sequence. Furthermore, the base type of the event sequence is set.
      *
@@ -145,6 +157,9 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 添加一个事件必须满足的条件，以便被认为是匹配的。如果已经设置了另一个条件，则新条件将与前一个条件合并，并使用逻辑{@code AND}。
+     * 在其他情况下，这是唯一的条件。
+     *
      * Adds a condition that has to be satisfied by an event in order to be considered a match. If
      * another condition has already been set, the new one is going to be combined with the previous
      * with a logical {@code AND}. In other case, this is going to be the only condition.
@@ -165,6 +180,9 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 添加一个事件必须满足的条件，以便被认为是匹配的。如果已经设置了另一个条件，则新条件将与前一个条件合并，并使用逻辑{@code OR}。
+     * 在其他情况下，这是唯一的条件。
+     *
      * Adds a condition that has to be satisfied by an event in order to be considered a match. If
      * another condition has already been set, the new one is going to be combined with the previous
      * with a logical {@code OR}. In other case, this is going to be the only condition.
@@ -186,6 +204,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 在当前模式上应用子类型约束。这意味着一个事件必须是给定的子类型才能被匹配。
+     *
      * Applies a subtype constraint on the current pattern. This means that an event has to be of
      * the given subtype in order to be matched.
      *
@@ -235,6 +255,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 定义匹配模式必须在其中完成才能被认为有效的最大时间间隔。该间隔对应于第一个事件和最后一个事件之间的最大时间间隔。
+     *
      * Defines the maximum time interval in which a matching pattern has to be completed in order to
      * be considered valid. This interval corresponds to the maximum time gap between first and the
      * last event.
@@ -251,6 +273,9 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 向现有模式添加新模式。新模式强制执行严格的时间连续性。这意味着只有在与此模式匹配的事件直接跟在前一个匹配事件之后时，
+     * 整个模式序列才会匹配。因此，两个匹配事件之间不可能有任何事件。
+     *
      * Appends a new pattern to the existing one. The new pattern enforces strict temporal
      * contiguity. This means that the whole pattern sequence matches only if an event which matches
      * this pattern directly follows the preceding matching event. Thus, there cannot be any events
@@ -281,6 +306,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 向现有模式添加新模式。新模式强制非严格的时间连续性。这意味着此模式的匹配事件和前面的匹配事件可能与被忽略的其他事件交织在一起。
+     *
      * Appends a new pattern to the existing one. The new pattern enforces non-strict temporal
      * contiguity. This means that a matching event of this pattern and the preceding matching event
      * might be interleaved with other events which are ignored.
@@ -370,6 +397,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 指定匹配此模式的精确次数。
+     *
      * Specifies exact number of times that this pattern should be matched.
      *
      * @param times number of times matching event must appear

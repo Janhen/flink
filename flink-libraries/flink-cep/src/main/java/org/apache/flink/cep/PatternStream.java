@@ -38,6 +38,12 @@ import static org.apache.flink.cep.PatternProcessFunctionBuilder.fromSelect;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * CEP模式检测的流抽象。模式流是将检测到的模式序列作为与其名称相关联的事件映射发出的流。
+ * 使用{@link org.apache.flink.cep.nfa.NFA}检测该模式。为了处理检测到的序列，用户必须指定一个{@link PatternSelectFunction}
+ * 或{@link PatternFlatSelectFunction}。
+ * <p>此外，它允许处理已经超时的部分匹配的事件模式。为此，用户必须指定一个{@link PatternTimeoutFunction}
+ * 或{@link PatternFlatTimeoutFunction}。
+ *
  * Stream abstraction for CEP pattern detection. A pattern stream is a stream which emits detected
  * pattern sequences as a map of events associated with their names. The pattern is detected using a
  * {@link org.apache.flink.cep.nfa.NFA}. In order to process the detected sequences, the user has to

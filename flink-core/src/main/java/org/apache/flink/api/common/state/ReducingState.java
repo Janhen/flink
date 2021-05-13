@@ -21,6 +21,11 @@ package org.apache.flink.api.common.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * {@link State}接口减少状态。可以将元素添加到状态中，它们将使用reduce函数组合。可以检查当前状态。
+ * 状态由用户函数访问和修改，系统始终作为分布式快照的一部分进行检查点。
+ * 该状态只能由应用在{@code KeyedStream}上的函数访问。键由系统自动提供，因此函数总是看到映射到当前元素键的值。这样，
+ * 系统就可以一致地处理流和状态分区。
+ *
  * {@link State} interface for reducing state. Elements can be added to the state, they will be
  * combined using a reduce function. The current state can be inspected.
  *
