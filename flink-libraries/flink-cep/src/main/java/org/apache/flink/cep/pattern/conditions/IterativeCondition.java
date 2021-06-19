@@ -25,6 +25,11 @@ import org.apache.flink.cep.time.TimeContext;
 import java.io.Serializable;
 
 /**
+ * 一个用户定义的条件，它决定模式中是否应该接受某个元素。接受一个元素也意味着对应的{@link org.apache.flink.cep.nfa.NFA}的状态转换。
+ * <p>条件可以是简单的过滤器，也可以是更复杂的条件，迭代模式中以前接受的元素，并根据这些元素上的一些统计信息决定是否接受新元素。
+ * 在前一种情况下，条件应该扩展{@link simpleconcondition}类。在后一种方法中，条件应该扩展这个类，它还允许您通过{@link Context}
+ * 访问以前接受的元素。<p>一个迭代条件，它接受一个元素，如果i)它的名字是中间的，ii)所有被接受的元素的价格之和小于{@code 5}:
+ *
  * A user-defined condition that decides if an element should be accepted in the pattern or not.
  * Accepting an element also signals a state transition for the corresponding {@link
  * org.apache.flink.cep.nfa.NFA}.

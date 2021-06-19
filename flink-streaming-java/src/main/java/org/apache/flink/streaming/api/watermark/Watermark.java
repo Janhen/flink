@@ -22,6 +22,15 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.streaming.runtime.streamrecord.StreamElement;
 
 /**
+ * 一个时间戳，告知算子所有事件早于等于 Watermark 的事件或记录都已经到达，不会再有比 watermark 更早的记录
+ * 苏州奶可以根据 watermark 触发窗口的计算、清理资源
+ *
+ * Watermark告诉操作符，时间戳比水印时间戳早或等于水印时间戳的元素不应该到达操作符。水印从源发出，并通过拓扑的运算符传播。
+ * 操作符必须自己使用{@link org.apache.flink. api.operator.outputemitwatermark (Watermark)}向下游操作符发出水印。
+ * 没有在内部缓冲元素的操作符总是可以转发它们接收到的水印。缓冲元素的操作符，如窗口操作符，必须在被到达的水印触发的元素发出后转发一个水印。
+ * <p>在某些情况下，水印只是一种启发式，操作符应该能够处理后期元素。它们可以丢弃这些结果，也可以更新结果并向下游操作发出updatesretractions。
+ * <p>当一个源关闭时，它将发出一个带有时间戳{@code Long.MAX_VALUE}的最终水印。当操作符接收到这个信息时，它将知道以后不会有更多的输入到达。
+ *
  * A Watermark tells operators that no elements with a timestamp older or equal to the watermark
  * timestamp should arrive at the operator. Watermarks are emitted at the sources and propagate
  * through the operators of the topology. Operators must themselves emit watermarks to downstream

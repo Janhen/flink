@@ -26,6 +26,15 @@ import org.apache.flink.streaming.runtime.tasks.SourceStreamTask;
 import org.apache.flink.streaming.runtime.tasks.StreamTask;
 
 /**
+ * 流状态标记
+ * 告知 Task 是否会继续接受到上游的记录或者 watermark，在数据源算子中生成，向下游沿着 dataFlow 传播
+ *
+ * Stream Status元素通知流任务，它们是否应该继续期望从发送它们的输入流获得记录和水印。有两种状态，即{@link StreamStatusIDLE}
+ * 和{@link StreamStatusACTIVE}。流状态元素在源生成，并可以通过拓扑的任务传播。它们直接推断发送任务的当前状态;
+ * 如果一个{@link SourceStreamTask}或{@link StreamTask}会发出一个{@link StreamStatusIDLE}，如果它会暂时停止发出任何记录或水印
+ * (即空闲)，那么它会发出一个{@link StreamStatusACTIVE}，如果它恢复这样做(即激活)，那么它会发出一个{@link StreamStatusACTIVE}。
+ * 当任务在空闲和活动之间切换时，它们负责向下游传播它们的状态。源任务和下游任务被认为是空闲或活动的情况如下:
+ *
  * A Stream Status element informs stream tasks whether or not they should continue to expect
  * records and watermarks from the input stream that sent them. There are 2 kinds of status, namely
  * {@link StreamStatus#IDLE} and {@link StreamStatus#ACTIVE}. Stream Status elements are generated

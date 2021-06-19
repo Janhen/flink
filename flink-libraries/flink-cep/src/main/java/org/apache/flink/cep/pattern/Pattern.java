@@ -33,7 +33,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Preconditions;
 
 /**
- * 模式定义的基类。<p>模式定义被{@link org.apache.flink. ccep.nfa .compiler. nfacompiler}用来创建一个{@link NFA}。
+ * 模式定义的基类。<p>模式定义被{@link org.apache.flink.cep.nfa.compiler.NFACompiler}用来创建一个{@link NFA}。
  *
  * Base class for a pattern definition.
  *
@@ -363,6 +363,10 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 指定此模式可以出现{@code一次或多次}。这意味着至少有一个，最多有无限个事件可以与此模式匹配。<p>如果这个限定符为模式
+     * {@code a . oneormore (). followedby (B)}启用，并且出现一系列事件{@code A1 A2 B}，这将生成模式:{@code A1 B}
+     * 和{@code A1 A2 B}。参见{@link #allowCombinations()}。
+     *
      * Specifies that this pattern can occur {@code one or more} times. This means at least one and
      * at most infinite number of events can be matched to this pattern.
      *
@@ -435,6 +439,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 指定此模式至少可以在指定的时间内发生。这意味着至少指定的时间和最多无限个事件可以与此模式匹配。
+     *
      * Specifies that this pattern can occur the specified times at least. This means at least the
      * specified times and at most infinite number of events can be matched to this pattern.
      *
@@ -469,6 +475,8 @@ public class Pattern<T, F extends T> {
     }
 
     /**
+     * 与{@link Pattern#oneOrMore()}或{@link Pattern#times(int)}协同工作。指定任何不匹配的元素都会中断循环。
+     *
      * Works in conjunction with {@link Pattern#oneOrMore()} or {@link Pattern#times(int)}.
      * Specifies that any not matching element breaks the loop.
      *

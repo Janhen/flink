@@ -1214,6 +1214,7 @@ public class WindowedStream<T, K, W extends Window> {
         return apply(new InternalIterableProcessWindowFunction<>(function), resultType, function);
     }
 
+    // apply 实现
     private <R> SingleOutputStreamOperator<R> apply(
             InternalWindowFunction<Iterable<T>, R, K, W> function,
             TypeInformation<R> resultType,
@@ -1249,7 +1250,7 @@ public class WindowedStream<T, K, W extends Window> {
                             function,
                             trigger,
                             evictor,
-                            allowedLateness,
+                            allowedLateness, // 窗口运行的延迟 ...
                             lateDataOutputTag);
 
         } else {
@@ -1270,7 +1271,7 @@ public class WindowedStream<T, K, W extends Window> {
                             stateDesc,
                             function,
                             trigger,
-                            allowedLateness,
+                            allowedLateness,  // 窗口运行的延迟 ...
                             lateDataOutputTag);
         }
 

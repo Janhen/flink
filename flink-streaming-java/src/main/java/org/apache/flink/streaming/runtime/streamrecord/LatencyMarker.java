@@ -22,6 +22,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.runtime.jobgraph.OperatorID;
 
 /**
+ * 数据流元素
+ *
+ * 近似评估延迟
+ *
+ * 特殊的记录类型，在源操作符上携带其创建时间的时间戳以及该操作符的 vertexId 和子任务索引。
+ * <p>在汇聚处，标记可用于近似记录通过数据流所需的时间。
+ *
  * Special record type carrying a timestamp of its creation time at a source operator and the
  * vertexId and subtask index of the operator.
  *

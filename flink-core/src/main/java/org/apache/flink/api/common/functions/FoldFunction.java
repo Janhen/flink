@@ -23,6 +23,9 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * Fold函数的基本接口。Fold函数通过对一组元素中的每个元素的初始累加器元素应用二进制操作，将一组元素组合成单个值。
+ * <p> FoldFunction的基本语法如下:
+ *
  * Base interface for Fold functions. Fold functions combine groups of elements to a single value,
  * by applying a binary operation to an initial accumulator element every element from a group
  * elements.

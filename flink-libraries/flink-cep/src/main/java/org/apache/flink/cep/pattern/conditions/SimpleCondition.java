@@ -22,6 +22,9 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.functions.FilterFunction;
 
 /**
+ * 一个用户定义的条件，它决定模式中是否应该接受某个元素。接受一个元素也意味着对应的{@link org.apache.flink.cep.nfa.NFA}的状态转换。
+ * <p>与{@link IterativeCondition}相反，扩展这个类的条件不能访问模式中先前接受的元素。扩展这个类的条件是简单的{@code filter(…)}函数，它根据手边元素的属性来决定。
+ *
  * A user-defined condition that decides if an element should be accepted in the pattern or not.
  * Accepting an element also signals a state transition for the corresponding {@link
  * org.apache.flink.cep.nfa.NFA}.

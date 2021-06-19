@@ -29,8 +29,8 @@ import org.apache.flink.util.OutputTag;
  * <p>该函数将对输入流中的每个元素调用，并可以产生0个或多个输出元素。与{@link CoFlatMapFunction}相反，
  * 该函数还可以通过提供的{@link Context}查询时间(事件和处理)和设置计时器。当响应 set timer 的触发时，函数可以发出更多的元素。
  * <p>连接流的一个示例用例是对另一个流(stream  {@code stream a})中包含的元素应用一组随着时间变化的规则({@code stream a})。
- * {@code 流A} 中包含的规则可以存储在状态中，并等待新元素到达{@code 流B}。在{@code 流B}
- * 上接收到一个新元素时，函数现在可以将之前存储的规则应用到元素上，并直接发出一个结果，或者注册一个计时器，以在将来触发一个动作。
+ * {@code 流A} 中包含的规则可以存储在状态中，并等待新元素到达{@code 流B}。
+ * 在 {@code 流B} 上接收到一个新元素时，函数现在可以将之前存储的规则应用到元素上，并直接发出一个结果，或者注册一个计时器，以在将来触发一个动作。
  *
  * A function that processes elements of two keyed streams and produces a single output one.
  *

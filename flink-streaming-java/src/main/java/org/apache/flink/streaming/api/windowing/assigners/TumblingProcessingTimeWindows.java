@@ -30,6 +30,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * 一个{@link WindowAssigner}，根据运行操作的机器的当前系统时间将windows元素转换为windows。窗户不能重叠。
+ * <p>例如，为了窗口进入窗口1分钟，每10秒:
+ *
  * A {@link WindowAssigner} that windows elements into windows based on the current system time of
  * the machine the operation is running on. Windows cannot overlap.
  *
@@ -93,6 +96,13 @@ public class TumblingProcessingTimeWindows extends WindowAssigner<Object, TimeWi
     }
 
     /**
+     * 创建一个新的{@code TumblingProcessingTimeWindows} {@link WindowAssigner}，根据元素的时间戳和偏移量将元素分配给时间窗口。
+     * <p>例如，如果您想要一个以小时为单位的窗口流，但是窗口从每个小时的第15分钟开始，您可以使用{@code of(time .hours(1)， time .minutes(15))}，
+     * 那么您将得到从0:15:00,1:15:00,2:15:00开始的时间窗口，等等。
+     * <p>相反，如果你生活在一个不使用UTC±00:00时间的地方，例如中国使用UTC+08:00，并且你想要一个一天大小的时间窗口，
+     * 并且窗口在当地时间的每一个00:00:00开始，你可以使用{@code of(time .days(1)， time .hours(-8))}。
+     * offset的参数是{@code time. hours(-8))}，因为UTC+08:00比UTC时间早8小时。
+     *
      * Creates a new {@code TumblingProcessingTimeWindows} {@link WindowAssigner} that assigns
      * elements to time windows based on the element timestamp and offset.
      *

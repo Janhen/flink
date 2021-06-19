@@ -24,6 +24,8 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * 处理两个连接元素并产生单个输出元素的函数。<p>这个函数将在两个流中连接的每一对元素被调用。连接对的时间戳以及左元素和右元素的时间戳可以通过{@link Context}访问。
+ *
  * A function that processes two joined elements and produces a single output one.
  *
  * <p>This function will get called for every joined pair of elements the joined two streams. The
@@ -31,8 +33,11 @@ import org.apache.flink.util.OutputTag;
  * can be accessed through the {@link Context}.
  *
  * @param <IN1> Type of the first input
+ *              左边的数据输入类型
  * @param <IN2> Type of the second input
+ *              右边的数据输入类型
  * @param <OUT> Type of the output
+ *              结果输出
  */
 @PublicEvolving
 public abstract class ProcessJoinFunction<IN1, IN2, OUT> extends AbstractRichFunction {
@@ -40,6 +45,8 @@ public abstract class ProcessJoinFunction<IN1, IN2, OUT> extends AbstractRichFun
     private static final long serialVersionUID = -2444626938039012398L;
 
     /**
+     * 对于每个连接的元素对都调用此方法。它可以通过提供的{@link Collector}输出零个或多个元素，并且可以通过{@link Context}访问连接元素的时间戳和结果。
+     *
      * This method is called for each joined pair of elements. It can output zero or more elements
      * through the provided {@link Collector} and has access to the timestamps of the joined
      * elements and the result through the {@link Context}.

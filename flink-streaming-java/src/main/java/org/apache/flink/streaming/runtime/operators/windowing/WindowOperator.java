@@ -77,6 +77,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 基于{@link WindowAssigner}和{@link Trigger}实现窗口逻辑的操作符。
+ * <p>当一个元素到达时，使用{@link KeySelector}给它分配一个键，并使用{@link WindowAssigner}给它分配0个或多个窗口。
+ * 基于此，将元素放入窗格中。窗格是包含具有相同键和相同{@code Window}的元素的bucket。一个元素可以在多个窗格中，
+ * 如果它被{@code WindowAssigner}分配给多个窗口。<p>每个窗格获得它自己的实例提供的{@code 触发器}。该触发器决定应该在何时处理窗格的内容以发出结果。
+ * 当触发器触发时，给定的{@link InternalWindowFunction}将被调用以产生为{@code 触发器}所属的窗格发出的结果。
+ *
  * An operator that implements the logic for windowing based on a {@link WindowAssigner} and {@link
  * Trigger}.
  *

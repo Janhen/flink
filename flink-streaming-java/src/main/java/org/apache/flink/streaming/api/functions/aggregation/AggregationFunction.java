@@ -21,11 +21,13 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.functions.ReduceFunction;
 
 /** Holder class for aggregation types that can be used on a windowed stream or keyed stream. */
+// 用于可在窗口流或键控流上使用的聚合类型的Holder类
 @Internal
 public abstract class AggregationFunction<T> implements ReduceFunction<T> {
     private static final long serialVersionUID = 1L;
 
     /** Aggregation types that can be used on a windowed stream or keyed stream. */
+    // 可在窗口流或键控流上使用的聚合类型
     public enum AggregationType {
         SUM,
         MIN,

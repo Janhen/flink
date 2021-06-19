@@ -38,11 +38,10 @@ import static org.apache.flink.cep.PatternProcessFunctionBuilder.fromSelect;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * CEP模式检测的流抽象。模式流是将检测到的模式序列作为与其名称相关联的事件映射发出的流。
+ * CEP 模式检测的流抽象。模式流是将检测到的模式序列作为与其名称相关联的事件映射发出的流。
  * 使用{@link org.apache.flink.cep.nfa.NFA}检测该模式。为了处理检测到的序列，用户必须指定一个{@link PatternSelectFunction}
  * 或{@link PatternFlatSelectFunction}。
- * <p>此外，它允许处理已经超时的部分匹配的事件模式。为此，用户必须指定一个{@link PatternTimeoutFunction}
- * 或{@link PatternFlatTimeoutFunction}。
+ * <p>此外，它允许处理已经超时的部分匹配的事件模式。为此，用户必须指定一个{@link PatternTimeoutFunction}或{@link PatternFlatTimeoutFunction}。
  *
  * Stream abstraction for CEP pattern detection. A pattern stream is a stream which emits detected
  * pattern sequences as a map of events associated with their names. The pattern is detected using a
@@ -76,6 +75,9 @@ public class PatternStream<T> {
     }
 
     /**
+     * 将进程函数应用于检测到的模式序列。对于每个模式序列，调用提供的{@link PatternProcessFunction}。
+     * 为了处理超时的部分匹配，可以使用{@link TimedOutPartialMatchHandler}作为附加接口。
+     *
      * Applies a process function to the detected pattern sequence. For each pattern sequence the
      * provided {@link PatternProcessFunction} is called. In order to process timed out partial
      * matches as well one can use {@link TimedOutPartialMatchHandler} as additional interface.
@@ -103,6 +105,9 @@ public class PatternStream<T> {
     }
 
     /**
+     * 将进程函数应用于检测到的模式序列。对于每个模式序列，调用提供的{@link PatternProcessFunction}。
+     * 为了处理超时的部分匹配，可以使用{@link TimedOutPartialMatchHandler}作为附加接口。
+     *
      * Applies a process function to the detected pattern sequence. For each pattern sequence the
      * provided {@link PatternProcessFunction} is called. In order to process timed out partial
      * matches as well one can use {@link TimedOutPartialMatchHandler} as additional interface.
@@ -122,6 +127,8 @@ public class PatternStream<T> {
     }
 
     /**
+     * 对检测到的模式序列应用选择函数。对于每个模式序列，调用提供的{@link PatternSelectFunction}。模式选择函数只能产生一个结果元素。
+     *
      * Applies a select function to the detected pattern sequence. For each pattern sequence the
      * provided {@link PatternSelectFunction} is called. The pattern select function can produce
      * exactly one resulting element.
@@ -174,6 +181,10 @@ public class PatternStream<T> {
     }
 
     /**
+     * 对检测到的模式序列应用选择函数。对于每个模式序列，调用提供的{@link PatternSelectFunction}。模式选择函数只能产生一个结果元素。
+     * <p>对已超时的部分模式序列应用超时函数。对于每个部分模式序列，调用提供的{@link PatternTimeoutFunction}。模式超时函数只能产生一个结果元素。
+     * <p>可以从{@link SingleOutputStreamOperator#getSideOutput(OutputTag)}上的{@link SingleOutputStreamOperator#getSideOutput(OutputTag)}获得超时数据流。
+     *
      * Applies a select function to the detected pattern sequence. For each pattern sequence the
      * provided {@link PatternSelectFunction} is called. The pattern select function can produce
      * exactly one resulting element.
@@ -263,6 +274,9 @@ public class PatternStream<T> {
     }
 
     /**
+     * 对检测到的模式序列应用选择函数。对于每个模式序列，调用提供的{@link PatternSelectFunction}。模式选择函数只能产生一个结果元素。
+     * <p>对已超时的部分模式序列应用超时函数。对于每个部分模式序列，调用提供的{@link PatternTimeoutFunction}。模式超时函数只能产生一个结果元素。
+     *
      * Applies a select function to the detected pattern sequence. For each pattern sequence the
      * provided {@link PatternSelectFunction} is called. The pattern select function can produce
      * exactly one resulting element.

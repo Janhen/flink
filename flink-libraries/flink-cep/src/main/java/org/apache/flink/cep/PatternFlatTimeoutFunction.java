@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * 模式超时函数的基本接口，该函数可以产生多个结果元素。使用部分事件的映射调用模式平面超时函数，这些事件由其名称和超时发生时的时间戳标识。
- * 这些名称是由{@link org.apache.flink.cep.pattern定义的。Pattern}指定追求的模式。此外，收集器是作为参数提供的。收集器用于产生任意数量的结果元素。
+ * 这些名称是由{@link org.apache.flink.cep.pattern.Pattern}指定追求的模式。此外，收集器是作为参数提供的。收集器用于产生任意数量的结果元素。
  *
  * Base interface for a pattern timeout function which can produce multiple resulting elements. A
  * pattern flat timeout function is called with a map of partial events which are identified by

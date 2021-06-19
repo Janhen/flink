@@ -23,6 +23,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * 聚合操作： 默认的 sum, min, max, maxBy, minBy
+ * {@code AggregateFunction}是一个灵活的聚合函数，具有以下特征:
+ * <ul>
+ *     <li>聚合可以使用不同类型的输入值、中间聚合和结果类型，以支持广泛的聚合类型。
+ *     <li>对分布式聚合的支持:不同的中间聚合可以合并在一起，以允许预聚合最终聚合优化。
+ * </ul>
+ *
  * The {@code AggregateFunction} is a flexible aggregation function, characterized by the following
  * features:
  *
@@ -107,8 +114,11 @@ import java.io.Serializable;
  * }</pre>
  *
  * @param <IN> The type of the values that are aggregated (input values)
+ *             聚合值的类型(输入值)
  * @param <ACC> The type of the accumulator (intermediate aggregate state).
+ *              累加器的类型(中间聚合状态)
  * @param <OUT> The type of the aggregated result
+ *              聚合结果的类型
  */
 @PublicEvolving
 public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable {

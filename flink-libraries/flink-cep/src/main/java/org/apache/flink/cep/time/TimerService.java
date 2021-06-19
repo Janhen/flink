@@ -21,6 +21,8 @@ package org.apache.flink.cep.time;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 允许提供时间特征{@link org.apache.flink.cep.nfa.NFA}在{@link org.apache.flink.cep.pattern.conditions.IterativeCondition}中使用。
+ *
  * Enables to provide time characteristic to {@link org.apache.flink.cep.nfa.NFA} for use in {@link
  * org.apache.flink.cep.pattern.conditions.IterativeCondition}.
  */

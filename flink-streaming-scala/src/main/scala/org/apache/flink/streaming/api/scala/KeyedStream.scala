@@ -154,8 +154,11 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
                                     val streamTwo: KeyedStream[IN2, KEY]) {
 
     /**
-     * 指定连接操作工作的时间边界，使<pre>leftElement。timestamp + lowerBound <= righttelement。时间戳< = leftElement。timestamp + upperBound
-     * 默认情况下，下界和上界都包含。这可以用[[IntervalJoined]配置。lowerBoundExclusive]]和[[IntervalJoined.upperBoundExclusive]]
+     * 指定连接操作工作的时间边界，使
+     * <pre>leftElement.timestamp + lowerBound <= rightElement.timestamp
+     * <= leftElement.timestamp + upperBound</pre>
+     * 默认情况下，下界和上界都包含。这可以用[[IntervalJoined.lowerBoundExclusive]]配置和
+     * [[IntervalJoined.upperBoundExclusive]]
      *
       * Specifies the time boundaries over which the join operation works, so that
       * <pre>leftElement.timestamp + lowerBound <= rightElement.timestamp
@@ -295,6 +298,10 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * Windows这个数据流到[[WindowedStream]]，它通过一个键分组流评估窗口。元素被[[WindowAssigner]]放到窗口中。
+   * 元素的分组是通过键和窗口完成的。一个[[org.apache.flink.streaming.api.windowing.triggers.Trigger]]
+   * 可以定义触发器[]来指定何时计算窗口。然而，' WindowAssigner '有一个默认的'触发器'，如果'触发器'没有指定。
+   *
    * Windows this data stream to a [[WindowedStream]], which evaluates windows
    * over a key grouped stream. Elements are put into windows by a [[WindowAssigner]]. The
    * grouping of elements is done both by key and by window.
@@ -316,6 +323,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   // ------------------------------------------------------------------------
 
   /**
+   * 通过使用关联reduce函数减少这个DataStream的元素，创建一个新的[[DataStream]]。每个键保持一个独立的聚合
+   *
    * Creates a new [[DataStream]] by reducing the elements of this DataStream
    * using an associative reduce function. An independent aggregate is kept per key.
    */
@@ -328,6 +337,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * 通过使用关联reduce函数减少这个DataStream的元素，创建一个新的[[DataStream]]。每个键保持一个独立的聚合
+   *
    * Creates a new [[DataStream]] by reducing the elements of this DataStream
    * using an associative reduce function. An independent aggregate is kept per key.
    */
@@ -343,6 +354,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * 通过使用关联折叠函数和初始值折叠此DataStream的元素，创建一个新的[[DataStream]]。每个键保持一个独立的聚合。
+   *
    * Creates a new [[DataStream]] by folding the elements of this DataStream
    * using an associative fold function and an initial value. An independent 
    * aggregate is kept per key.
@@ -361,6 +374,8 @@ class KeyedStream[T, K](javaStream: KeyedJavaStream[T, K]) extends DataStream[T]
   }
 
   /**
+   * 通过使用关联折叠函数和初始值折叠此DataStream的元素，创建一个新的[[DataStream]]。每个键保持一个独立的聚合。
+   *
    * Creates a new [[DataStream]] by folding the elements of this DataStream
    * using an associative fold function and an initial value. An independent 
    * aggregate is kept per key.

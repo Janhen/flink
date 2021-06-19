@@ -684,6 +684,8 @@ class DataStream[T](stream: JavaStream[T]) {
   }
 
   /**
+   * 在输入流上应用给定的[[ProcessFunction]]，从而创建转换后的输出流。该函数将对流中的每个元素调用，可以产生零或多个输出。
+   *
    * Applies the given [[ProcessFunction]] on the input stream, thereby
    * creating a transformed output stream.
    *
@@ -936,6 +938,8 @@ class DataStream[T](stream: JavaStream[T]) {
   }
 
   /**
+   * 创建一个合作组操作。请参阅[[CoGroupedStreams]]以获得如何指定键和窗口的示例。
+   *
    * Creates a co-group operation. See [[CoGroupedStreams]] for an example of how the keys
    * and window can be specified.
    */
@@ -944,6 +948,8 @@ class DataStream[T](stream: JavaStream[T]) {
   }
 
   /**
+   * 创建一个连接操作。请参阅[[JoinedStreams]]以获得如何指定键和窗口的示例。
+   *
    * Creates a join operation. See [[JoinedStreams]] for an example of how the keys
    * and window can be specified.
    */

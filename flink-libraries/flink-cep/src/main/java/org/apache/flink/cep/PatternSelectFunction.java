@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 模式选择函数的基本接口。模式选择函数使用包含可通过名称访问的检测事件的映射来调用。这些名称依赖于{@link org.apache.flink.cep.pattern.Pattern}的定义。
+ * select方法只返回一个结果。如果你想返回多个结果，那么你必须实现一个{@link PatternFlatSelectFunction}。
+ *
  * Base interface for a pattern select function. A pattern select function is called with a map
  * containing the detected events which can be accessed by their names. The names depend on the
  * definition of the {@link org.apache.flink.cep.pattern.Pattern}. The select method returns exactly
@@ -43,6 +46,8 @@ import java.util.Map;
 public interface PatternSelectFunction<IN, OUT> extends Function, Serializable {
 
     /**
+     * 根据给定的事件映射生成结果。这些事件通过它们的名称来标识。只能生成一个结果元素。
+     *
      * Generates a result from the given map of events. The events are identified by their names.
      * Only one resulting element can be generated.
      *

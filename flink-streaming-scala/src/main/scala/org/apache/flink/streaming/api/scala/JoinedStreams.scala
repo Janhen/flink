@@ -32,6 +32,10 @@ import org.apache.flink.streaming.api.windowing.windows.Window
 import org.apache.flink.util.Collector
 
 /**
+ * JoinedStreams 表示已经连接的两个[[DataStream]]s。流连接操作是在窗口中的元素上计算的。要完成连接操作，
+ * 你还需要为第一个和第二个输入指定一个[[KeySelector]]和一个[[WindowAssigner]]
+ * 注意: 现在，组是在内存中构建的，所以你需要确保他们不会太大。否则JVM可能会崩溃。
+ *
  * `JoinedStreams` represents two [[DataStream]]s that have been joined.
  * A streaming join operation is evaluated over elements in a window.
  *
@@ -71,6 +75,9 @@ class JoinedStreams[T1, T2](input1: DataStream[T1], input2: DataStream[T2]) {
   }
 
   /**
+   * 一个为第一个输入定义了[[KeySelector]]的连接操作。在使用[[equalTo .window()]]来指定[[WindowAssigner]]之前，
+   * 你需要为第二个输入指定[[KeySelector]]
+   *
     * A join operation that has a [[KeySelector]] defined for the first input.
     *
     * You need to specify a [[KeySelector]] for the second input using [[equalTo()]]
@@ -100,6 +107,8 @@ class JoinedStreams[T1, T2](input1: DataStream[T1], input2: DataStream[T2]) {
       */
     class EqualTo(keySelector2: KeySelector[T2, KEY]) {
       /**
+       * 指定联接操作在其上工作的窗口
+       *
         * Specifies the window on which the join operation works.
         */
       @PublicEvolving
@@ -115,6 +124,8 @@ class JoinedStreams[T1, T2](input1: DataStream[T1], input2: DataStream[T2]) {
       }
 
       /**
+       * 一个为两个输入定义了[[KeySelector]]s和[[WindowAssigner]]的连接操作。
+       *
        * A join operation that has [[KeySelector]]s defined for both inputs as
        * well as a [[WindowAssigner]].
        *
@@ -127,6 +138,8 @@ class JoinedStreams[T1, T2](input1: DataStream[T1], input2: DataStream[T2]) {
           val allowedLateness: Time) {
 
         /**
+         * 设置用来触发窗口发射的[[Trigger]]
+         *
          * Sets the [[Trigger]] that should be used to trigger window emission.
          */
         @PublicEvolving

@@ -35,12 +35,16 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 public interface OneInputStreamOperator<IN, OUT> extends StreamOperator<OUT> {
 
     /**
+     * 处理到达该操作符的一个元素。此方法保证不会与该操作符的其他方法同时调用
+     *
      * Processes one element that arrived at this operator. This method is guaranteed to not be
      * called concurrently with other methods of the operator.
      */
     void processElement(StreamRecord<IN> element) throws Exception;
 
     /**
+     * 处理{@link水印}。此方法保证不会与该操作符的其他方法同时调用
+     *
      * Processes a {@link Watermark}. This method is guaranteed to not be called concurrently with
      * other methods of the operator.
      *

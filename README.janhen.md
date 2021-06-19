@@ -1,12 +1,22 @@
 ### 基本操作
 SingleOutputStreamOperator  
 KeyedStream  
+PatternStream   
+    - PatternSelectFunction
+    - PatternTimeoutFunction
 IterativeStream   
 AllWindowedStream  
 CoGroupedStreams  
 JoinedStreams  
 QueryableStateStream  
 WindowedStream   
+IntervalJoin: 在一个时间间隔内执行连接  
+    - between  
+    - ProcessJoinFunction
+    - IntervalJoined
+        - process
+JoinedStreams:   
+
 
 
 MapFunction  

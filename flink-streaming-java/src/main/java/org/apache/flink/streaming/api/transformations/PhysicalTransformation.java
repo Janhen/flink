@@ -24,6 +24,8 @@ import org.apache.flink.api.dag.Transformation;
 import org.apache.flink.streaming.api.operators.ChainingStrategy;
 
 /**
+ * 创建物理操作的{@link Transformation}。它允许设置{@link ChainingStrategy}。
+ *
  * A {@link Transformation} that creates a physical operation. It enables setting {@link
  * ChainingStrategy}.
  *
