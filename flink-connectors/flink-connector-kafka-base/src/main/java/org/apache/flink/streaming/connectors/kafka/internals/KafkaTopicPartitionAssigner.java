@@ -24,6 +24,11 @@ import org.apache.flink.annotation.Internal;
 public class KafkaTopicPartitionAssigner {
 
     /**
+     * 返回指定Kafka分区的目标子任务的索引。
+     * 单个主题分区的结果分布具有以下契约:
+     * 1. 均匀分布在子任务
+     * 2. 分区是轮循分布的(严格顺时针方向的w.r.t.升序子任务索引)，通过使用分区id作为起始索引的偏移量(即，使用主题名称确定的主题的分区0将被分配给的子任务的索引)。
+     *
      * Returns the index of the target subtask that a specific Kafka partition should be assigned
      * to.
      *

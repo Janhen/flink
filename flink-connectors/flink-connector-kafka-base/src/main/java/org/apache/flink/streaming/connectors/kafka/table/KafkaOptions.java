@@ -70,6 +70,7 @@ public class KafkaOptions {
     // Scan specific options
     // --------------------------------------------------------------------------------------------
 
+    // Kafka消费者的可选启动模式，有效的枚举值是“最早偏移量”、“最新偏移量”、“组偏移量”、“时间戳”“n或“具体偏移量
     public static final ConfigOption<String> SCAN_STARTUP_MODE =
             ConfigOptions.key("scan.startup.mode")
                     .stringType()
@@ -97,6 +98,7 @@ public class KafkaOptions {
     // Sink specific options
     // --------------------------------------------------------------------------------------------
 
+    // 可选的输出分区从Flink's partitionsn" "into Kafka's partitions valid enumerations aren" "fixed":(每个Flink分区最多在一个Kafka分区结束)，n" ""round-robin":(一个Flink分区被分配到Kafka分区round-robin)n" ""custom class name":(使用一个自定义的FlinkKafkaPartitioner子类)");
     public static final ConfigOption<String> SINK_PARTITIONER =
             ConfigOptions.key("sink.partitioner")
                     .stringType()
@@ -314,6 +316,9 @@ public class KafkaOptions {
     }
 
     /**
+     * "无效属性'%s'的格式为" "分区:0，偏移量:42;分区:1，偏移量:300 "，但为'%s' "，
+     *
+     *
      * Parses SpecificOffsets String to Map.
      *
      * <p>SpecificOffsets String format was given as following:
@@ -364,6 +369,8 @@ public class KafkaOptions {
     }
 
     /**
+     * 决定表选项是否包含以“properties”前缀开始的Kafka客户端属性。
+     *
      * Decides if the table options contains Kafka client properties that start with prefix
      * 'properties'.
      */

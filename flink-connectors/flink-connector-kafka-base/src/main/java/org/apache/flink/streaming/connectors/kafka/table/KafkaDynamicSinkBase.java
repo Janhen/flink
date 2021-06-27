@@ -35,6 +35,11 @@ import java.util.Optional;
 import java.util.Properties;
 
 /**
+ * 一个版本无关的Kafka {@link DynamicTableSink}。
+ *
+ * 版本特定的Kafka
+ * 消费者需要扩展这个类并重写{@link #createKafkaProducer(String, Properties, SerializationSchema, Optional)}}。
+ *
  * A version-agnostic Kafka {@link DynamicTableSink}.
  *
  * <p>The version-specific Kafka consumers need to extend this class and override {@link
@@ -56,6 +61,7 @@ public abstract class KafkaDynamicSinkBase implements DynamicTableSink {
     protected final EncodingFormat<SerializationSchema<RowData>> encodingFormat;
 
     /** Partitioner to select Kafka partition for each item. */
+    // Partitioner选择Kafka分区为每个 item
     protected final Optional<FlinkKafkaPartitioner<RowData>> partitioner;
 
     protected KafkaDynamicSinkBase(
@@ -91,6 +97,8 @@ public abstract class KafkaDynamicSinkBase implements DynamicTableSink {
     }
 
     /**
+     * 返回特定于版本的Kafka生成器。
+     *
      * Returns the version-specific Kafka producer.
      *
      * @param topic Kafka topic to produce to.

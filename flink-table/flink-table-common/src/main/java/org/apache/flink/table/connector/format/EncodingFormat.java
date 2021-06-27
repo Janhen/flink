@@ -23,6 +23,8 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import org.apache.flink.table.types.DataType;
 
 /**
+ * {@link DynamicTableSink}的{@link Format}用于写行。
+ *
  * A {@link Format} for a {@link DynamicTableSink} for writing rows.
  *
  * @param <I> runtime interface needed by the table sink

@@ -22,6 +22,7 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.metrics.Gauge;
 
 /** Gauge for getting the current value of a Kafka metric. */
+// 获取Kafka度量的当前值的度量。
 @Internal
 public class KafkaMetricWrapper implements Gauge<Double> {
     private final org.apache.kafka.common.Metric kafkaMetric;

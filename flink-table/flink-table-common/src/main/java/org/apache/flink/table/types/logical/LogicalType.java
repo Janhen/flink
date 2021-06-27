@@ -32,6 +32,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 描述值的数据类型的逻辑类型。它并不意味着传输或存储的具体物理表示，而是定义了基于jvm的语言和表生态系统之间的边界。
+ *
  * A logical type that describes the data type of a value. It does not imply a concrete physical
  * representation for transmission or storage but defines the boundaries between JVM-based languages
  * and the table ecosystem.
