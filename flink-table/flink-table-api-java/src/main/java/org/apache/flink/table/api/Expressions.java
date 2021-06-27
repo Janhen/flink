@@ -43,6 +43,12 @@ import static org.apache.flink.table.expressions.ApiExpressionUtils.unresolvedRe
 import static org.apache.flink.table.expressions.ApiExpressionUtils.valueLiteral;
 
 /**
+ * 表API表达式DSL的入口点，例如:{@code $("myField").plus(10).abs()}
+ * 这个类包含用于引用表列、创建文字和构建更复杂的{@link Expression}链的静态方法。{@link ApiExpression ApiExpressions}是纯API实体，在底层被进一步翻译成{@link ResolvedExpression ResolvedExpression}。
+ *
+ * 为了流畅地定义表达式并提高可读性，我们建议在这个类的方法中添加星型导入:
+ * import static org.apache.flink.table.api.Expressions.*;
+ *
  * Entry point of the Table API Expression DSL such as: {@code $("myField").plus(10).abs()}
  *
  * <p>This class contains static methods for referencing table columns, creating literals, and
@@ -78,6 +84,9 @@ public final class Expressions {
     // CHECKSTYLE.ON: MethodName
 
     /**
+     * 创建一个SQL文字。
+     * 数据类型派生于对象的类及其值。
+     *
      * Creates a SQL literal.
      *
      * <p>The data type is derived from the object's class and its value.
@@ -156,6 +165,10 @@ public final class Expressions {
     }
 
     /**
+     * unboundedRow
+     *
+     * 在unbounded {@code Over}窗口的{@code above}子句中使用的偏移常量。在一个时间间隔内使用这个常数。无界窗口从分区的第一行开始。
+     *
      * Offset constant to be used in the {@code preceding} clause of unbounded {@code Over} windows.
      * Use this constant for a time interval. Unbounded over windows start with the first row of a
      * partition.
@@ -164,6 +177,10 @@ public final class Expressions {
             apiCall(BuiltInFunctionDefinitions.UNBOUNDED_ROW);
 
     /**
+     * unboundedRange
+     *
+     * 在无界{@link Over}窗口的{@code前置}子句中使用的偏移常量。将此常数用于行计数间隔。无界窗口从分区的第一行开始。
+     *
      * Offset constant to be used in the {@code preceding} clause of unbounded {@link Over} windows.
      * Use this constant for a row-count interval. Unbounded over windows start with the first row
      * of a partition.
@@ -172,6 +189,10 @@ public final class Expressions {
             apiCall(BuiltInFunctionDefinitions.UNBOUNDED_RANGE);
 
     /**
+     * currentRow
+     *
+     * 在{@link Over}窗口的{@code following}子句中使用的偏移量常量。将窗口的上界设置为当前行。
+     *
      * Offset constant to be used in the {@code following} clause of {@link Over} windows. Use this
      * for setting the upper bound of the window to the current row.
      */
@@ -244,6 +265,8 @@ public final class Expressions {
     }
 
     /**
+     * 使用指定格式将时间戳格式化为字符串。该格式必须与MySQL的日期格式语法兼容，如date_parse函数所使用的。
+     *
      * Formats a timestamp as a string using a specified format. The format must be compatible with
      * MySQL's date formatting syntax as used by the date_parse function.
      *
@@ -431,6 +454,8 @@ public final class Expressions {
     }
 
     /**
+     * 三元条件运算符，根据计算后的布尔条件来决定其他两个表达式中的哪个应该计算。
+     *
      * Ternary conditional operator that decides which of two other expressions should be evaluated
      * based on a evaluated boolean condition.
      *
@@ -472,6 +497,8 @@ public final class Expressions {
     }
 
     /**
+     * 对将在目录中查找的函数的调用。有两种函数:
+     *
      * A call to a function that will be looked up in a catalog. There are two kinds of functions:
      *
      * <ul>

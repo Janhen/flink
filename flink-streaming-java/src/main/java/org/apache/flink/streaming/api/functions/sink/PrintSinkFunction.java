@@ -23,6 +23,8 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.operators.StreamingRuntimeContext;
 
 /**
+ * 将每个元组写入标准输出或标准错误流的SinkFunction的实现。
+ *
  * Implementation of the SinkFunction writing every tuple to the standard output or standard error
  * stream.
  *

@@ -74,6 +74,10 @@ public interface TimerService {
     void deleteProcessingTimeTimer(long time);
 
     /**
+     * 删除具有给定触发时间的事件时间计时器。这个方法只有在这样的计时器之前已经注册并且还没有过期的情况下才有效。
+     *
+     * 定时器可以在内部限定为键和或窗口。当您删除计时器时，它将从当前关键字上下文中删除。
+     *
      * Deletes the event-time timer with the given trigger time. This method has only an effect if
      * such a timer was previously registered and did not already expire.
      *

@@ -23,6 +23,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * {@link DataView}是可以在{@link org.apache.flink.table.functions.AggregateFunction}的累加器中使用的集合类型。
+ * <p>根据使用{@code AggregateFunction}的上下文，{@link DataView}可以由Java堆集合或状态后端支持。
+ *
+ *
  * A {@link DataView} is a collection type that can be used in the accumulator of an {@link
  * org.apache.flink.table.functions.AggregateFunction}.
  *

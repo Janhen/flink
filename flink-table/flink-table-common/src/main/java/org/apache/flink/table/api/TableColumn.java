@@ -28,6 +28,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * 表列用列名、列数据类型和计算表达式(如果是计算列)表示表列的结构。
+ *
  * A table column represents a table column's structure with column name, column data type and
  * computation expression(if it is a computed column).
  */

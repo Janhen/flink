@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Provides an expression to extract the timestamp for a rowtime attribute. */
+// 提供用于提取rowtime属性的时间戳的表达式。
 @PublicEvolving
 public abstract class TimestampExtractor implements FieldComputer<Long>, Serializable, Descriptor {
 

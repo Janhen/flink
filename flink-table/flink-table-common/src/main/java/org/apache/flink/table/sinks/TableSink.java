@@ -28,6 +28,8 @@ import org.apache.flink.table.types.DataType;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * {@link TableSink}指定如何将表发送到外部系统或位置。<p>接口是通用的，它可以支持不同的存储位置和格式。
+ *
  * A {@link TableSink} specifies how to emit a table to an external system or location.
  *
  * <p>The interface is generic such that it can support different storage locations and formats.

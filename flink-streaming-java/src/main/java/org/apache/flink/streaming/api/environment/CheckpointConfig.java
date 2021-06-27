@@ -58,6 +58,7 @@ public class CheckpointConfig implements java.io.Serializable {
     // ------------------------------------------------------------------------
 
     /** Checkpointing mode (exactly-once vs. at-least-once). */
+    // 默认 ECS
     private CheckpointingMode checkpointingMode = DEFAULT_MODE;
 
     /** Periodic checkpoint triggering interval. */

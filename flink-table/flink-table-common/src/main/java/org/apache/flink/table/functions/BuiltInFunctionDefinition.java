@@ -29,6 +29,11 @@ import org.apache.flink.util.Preconditions;
 import java.util.Arrays;
 
 /**
+ * 内置函数的定义。它通过引用相等实现跨不同模块的唯一标识。
+ *
+ * 与普通的{@link FunctionDefinition}相比，内置函数有一个默认名称。此默认名称用于在解析期间在目录中查找函数。
+ * 相等由引用相等定义。
+ *
  * Definition of a built-in function. It enables unique identification across different modules by
  * reference equality.
  *

@@ -53,6 +53,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * 该类提供了简单的实用方法，用于压缩具有索引或惟一标识符的数据集中的元素。
+ *
  * This class provides simple utility methods for zipping elements in a data set with an index or
  * with a unique identifier.
  */
@@ -351,6 +353,8 @@ public final class DataSetUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过收集所有列的单次统计信息来总结元组数据集。
+     *
      * Summarize a DataSet of Tuples by collecting single pass statistics for all columns.
      *
      * <p>Example usage:
@@ -407,6 +411,8 @@ public final class DataSetUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 获取数据集的计数(元素的数量)和校验和(元素散列的和)的方便方法。
+     *
      * Convenience method to get the count (number of elements) of a DataSet as well as the checksum
      * (sum over element hashes).
      *

@@ -27,6 +27,8 @@ import org.apache.flink.optimizer.plan.PlanNode;
 import java.util.Iterator;
 
 /**
+ * 成本估算器的抽象基类。定义成本估算方法并实现基本的工作方法，通过添加输入运输成本、输入本地成本和司机成本来计算操作员的成本。
+ *
  * Abstract base class for a cost estimator. Defines cost estimation methods and implements the
  * basic work method that computes the cost of an operator by adding input shipping cost, input
  * local cost, and driver cost.

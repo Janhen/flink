@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 组件的工厂接口，在存在多个匹配实现的情况下，可以进一步消除歧义。
+ *
  * A factory interface for components that enables further disambiguating in case there are multiple
  * matching implementations present.
  */

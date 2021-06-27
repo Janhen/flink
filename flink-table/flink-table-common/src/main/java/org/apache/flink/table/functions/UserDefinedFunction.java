@@ -29,6 +29,9 @@ import org.apache.flink.table.utils.EncodingUtils;
 import java.io.Serializable;
 
 /**
+ * 所有用户定义函数的基类。
+ * <p>用户定义函数组合了用于验证和计划的函数的逻辑定义，并包含相应的运行时实现。
+ *
  * Base class for all user-defined functions.
  *
  * <p>User-defined functions combine the logical definition of a function for validation and

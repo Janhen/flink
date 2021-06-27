@@ -21,6 +21,8 @@ package org.apache.flink.streaming.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 时间特性定义了系统如何对依赖于时间的顺序和操作(如时间窗)确定时间。
+ *
  * The time characteristic defines how the system determines time for time-dependent order and
  * operations that depend on time (such as time windows).
  */

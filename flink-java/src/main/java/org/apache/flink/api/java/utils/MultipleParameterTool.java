@@ -37,6 +37,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
+ * 该类提供了简单的实用方法，用于读取和解析来自不同来源的程序参数。可以支持args中的多个值参数。
+ * 例如:——multi multiValue1——multi multiValue2。如果{@link MultipleParameterTool}
+ * 对象用于GlobalJobParameters，将使用多个值中的最后一个。浏览{@link #toMap()}获取更多信息。
+ *
  * This class provides simple utility methods for reading and parsing program arguments from
  * different sources. Multiple values parameter in args could be supported. For example, --multi
  * multiValue1 --multi multiValue2. If {@link MultipleParameterTool} object is used for

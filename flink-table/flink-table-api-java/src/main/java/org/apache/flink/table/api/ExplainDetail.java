@@ -24,12 +24,16 @@ import org.apache.flink.annotation.PublicEvolving;
 @PublicEvolving
 public enum ExplainDetail {
     /**
+     * 优化器估计物理rel节点上的成本信息。例如TableSourceScan(…，累积成本= {1.0E8行，1.0E8 cpu, 2.4E9 io, 0.0网络，0.0内存}
+     *
      * The cost information on physical rel node estimated by optimizer. e.g. TableSourceScan(...,
      * cumulative cost = {1.0E8 rows, 1.0E8 cpu, 2.4E9 io, 0.0 network, 0.0 memory}
      */
     ESTIMATED_COST,
 
     /**
+     * 由物理rel节点产生的变更日志模式。例如GroupAggregate(…changelogMode =[我UA D])
+     *
      * The changelog mode produced by a physical rel node. e.g. GroupAggregate(...,
      * changelogMode=[I,UA,D])
      */

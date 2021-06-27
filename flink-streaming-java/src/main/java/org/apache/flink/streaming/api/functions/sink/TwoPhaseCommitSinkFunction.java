@@ -63,8 +63,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 于所有打算实现一次语义的{@link SinkFunction}，这是一个推荐的基类。它通过在{@link CheckpointedFunction}和{@link CheckpointListener}
- * 之上实现两个阶段提交算法来实现这一点。用户应该提供自定义{@code TXN}(事务句柄)，并实现处理该事务句柄的抽象方法。
+ * 于所有打算实现一次语义的{@link SinkFunction}，这是一个推荐的基类。
+ * 它通过在{@link CheckpointedFunction}和{@link CheckpointListener}之上实现两个阶段提交算法来实现这一点。
+ * 用户应该提供自定义{@code TXN}(事务句柄)，并实现处理该事务句柄的抽象方法。
  *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
  * exactly-once semantic. It does that by implementing two phase commit algorithm on top of the
@@ -73,8 +74,10 @@ import static org.apache.flink.util.Preconditions.checkState;
  *
  * @param <IN> Input type for {@link SinkFunction}.
  * @param <TXN> Transaction to store all of the information required to handle a transaction.
+ *              事务，存储处理事务所需的所有信息
  * @param <CONTEXT> Context that will be shared across all invocations for the given {@link
  *     TwoPhaseCommitSinkFunction} instance. Context is created once
+ *              上下文，将在给定的{@link TwoPhaseCommitSinkFunction}实例的所有调用之间共享。上下文创建一次
  */
 @PublicEvolving
 public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichSinkFunction<IN>
