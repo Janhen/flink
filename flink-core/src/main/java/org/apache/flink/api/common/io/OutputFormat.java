@@ -25,6 +25,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 用于使用记录的输出的基本接口。输出格式描述了如何存储最终记录，例如在文件中。
+ * <p>输出格式的生命周期如下:
+ * - Configure()被调用一次。该方法可用于从可能在实例化时附加的参数(配置)实现初始化。
+ * - 每个并行输出任务创建一个实例，配置它并打开它
+ * - 它的并行实例的所有记录都被转换为输出格式。
+ * - 关闭输出格式
+ *
  * The base interface for outputs that consumes records. The output format describes how to store
  * the final records, for example in a file.
  *

@@ -30,6 +30,9 @@ public final class LambdaUtil {
     }
 
     /**
+     * 此方法将输入中的所有元素提供给使用者。在处理所有元素之前，元素上发生的异常将被抑制。
+     * 如果一个或多个输入发生异常，它们将以组合抑制异常的形式报告。
+     *
      * This method supplies all elements from the input to the consumer. Exceptions that happen on
      * elements are suppressed until all elements are processed. If exceptions happened for one or
      * more of the inputs, they are reported in a combining suppressed exception.

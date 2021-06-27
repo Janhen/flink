@@ -39,6 +39,10 @@ public class CoreOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 定义从用户代码中加载类时的类解析策略，这意味着是否首先检查用户代码 jar ({@code "child-first"})或应用程序类路径({@code "parent-first"})
+     * 默认设置指示首先从用户代码jar加载类，这意味着用户代码jar可以包含和加载不同于Flink使用的依赖项(传递性)。
+     * 规则的例外是通过{@link #ALWAYS_PARENT_FIRST_LOADER_PATTERNS}定义的。
+     *
      * Defines the class resolution strategy when loading classes from user code, meaning whether to
      * first check the user code jar ({@code "child-first"}) or the application classpath ({@code
      * "parent-first"})
@@ -223,6 +227,10 @@ public class CoreOptions {
                                     .build());
 
     /**
+     * 此选项仅用于文档生成，仅在shell脚本中进行计算。
+     *
+     * 定义保存Flink日志的目录。它必须是一条绝对路径(默认为Flink的主目录下的日志目录)
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -235,6 +243,9 @@ public class CoreOptions {
                                     + " (Defaults to the log directory under Flink’s home)");
 
     /**
+     * 此选项仅用于文档生成，仅在shell脚本中进行计算。
+     * 要保留的旧日志文件的最大数量。
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -247,6 +258,9 @@ public class CoreOptions {
     /**
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
+     *
+     * 在启动或停止JobManager、TaskManager和Zookeeper服务(start-cluster.sh、stop-cluster.sh、start-zookeeper-quorum.sh、stop-zookeeper-quorum.sh)
+     * 时传递给SSH客户端的附加命令行选项。
      */
     @SuppressWarnings("unused")
     public static final ConfigOption<String> FLINK_SSH_OPTIONS =
@@ -340,6 +354,8 @@ public class CoreOptions {
                                     + " \"true\" to overwrite by default,\"false\" otherwise.");
 
     /**
+     * 指定文件系统是否应该始终为输出创建目录，即使并行度为1。
+     *
      * Specifies whether the file systems should always create a directory for the output, even with
      * a parallelism of one.
      */
@@ -356,6 +372,8 @@ public class CoreOptions {
                                     + " directory.");
 
     /**
+     * 给定方案的文件系统可以打开的输入和输出连接的总数。无限是违约。
+     *
      * The total number of input plus output connections that a file system for the given scheme may
      * open. Unlimited be default.
      */

@@ -47,6 +47,7 @@ import static org.apache.flink.configuration.StructuredOptionsSplitter.escapeWit
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Lightweight configuration object which stores key/value pairs. */
+// 存储键值对的轻量级配置对象
 @Public
 public class Configuration extends ExecutionConfig.GlobalJobParameters
         implements IOReadableWritable,

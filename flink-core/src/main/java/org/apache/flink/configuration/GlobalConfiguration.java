@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * Flink的全局配置对象。类似于Java属性配置对象，它包含表示框架配置的键-值对。
+ *
  * Global configuration object for Flink. Similar to Java properties configuration objects it
  * includes key-value pairs which represent the framework's configuration.
  */
@@ -69,6 +71,8 @@ public final class GlobalConfiguration {
     }
 
     /**
+     * 加载全局配置并添加给定的动态属性配置。
+     *
      * Loads the global configuration and adds the given dynamic properties configuration.
      *
      * @param dynamicProperties The given dynamic properties

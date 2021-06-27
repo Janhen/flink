@@ -30,6 +30,8 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 反序列化模式描述了如何将特定数据源(例如Apache Kafka)传递的字节消息转换为数据类型(JavaScala对象)，这些数据类型由Flink处理。
+ *
  * The deserialization schema describes how to turn the byte messages delivered by certain data
  * sources (for example Apache Kafka) into data types (Java/Scala objects) that are processed by
  * Flink.

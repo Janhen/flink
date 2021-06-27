@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 代表实际操作符的所有契约的抽象超类。
+ *
  * Abstract superclass for all contracts that represent actual operators.
  *
  * @param <FT> Type of the user function

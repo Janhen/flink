@@ -36,6 +36,7 @@ import static org.apache.flink.configuration.description.TextElement.text;
 public class PipelineOptions {
 
     /** The job name used for printing and logging. */
+    // 用于打印和记录日志的作业名称。
     public static final ConfigOption<String> NAME =
             key("pipeline.name")
                     .stringType()
@@ -43,6 +44,10 @@ public class PipelineOptions {
                     .withDescription("The job name used for printing and logging.");
 
     /**
+     * 包含用户定义函数(UDF)类和在UDF中使用的所有类的jar文件列表。
+     *
+     * 分号分隔的jar列表，包含要与要发送到集群的作业jar打包在一起的jar。这些必须是有效的路径。
+     *
      * A list of jar files that contain the user-defined function (UDF) classes and all classes used
      * from within the UDFs.
      */
@@ -55,6 +60,8 @@ public class PipelineOptions {
                             "A semicolon-separated list of the jars to package with the job jars to be sent to the"
                                     + " cluster. These have to be valid paths.");
     /**
+     * 添加到程序的每个用户代码类加载器的类路径中的url列表。路径必须指定一个协议(例如:file:)并且在所有节点上都可以访问
+     *
      * A list of URLs that are added to the classpath of each user code classloader of the program.
      * Paths must specify a protocol (e.g. file://) and be accessible on all nodes
      */

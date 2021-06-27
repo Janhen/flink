@@ -27,6 +27,8 @@ import org.apache.flink.api.java.typeutils.ListTypeInfo;
 import java.util.List;
 
 /**
+ * {@link ListState}的{@link StateDescriptor}。这可以用于创建状态，其中类型是一个可以附加和迭代的列表。
+ *
  * A {@link StateDescriptor} for {@link ListState}. This can be used to create state where the type
  * is a list that can be appended and iterated over.
  *

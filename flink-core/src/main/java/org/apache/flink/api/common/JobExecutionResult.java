@@ -29,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * 作业执行的结果。允许访问作业的执行时间，以及由该作业创建的所有累加器
+ *
  * The result of a job execution. Gives access to the execution time of the job, and to all
  * accumulators created by this job.
  */

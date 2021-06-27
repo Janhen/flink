@@ -29,6 +29,8 @@ import java.nio.charset.StandardCharsets;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 非常简单的字符串序列化模式。
+ *
  * Very simple serialization schema for strings.
  *
  * <p>By default, the serializer uses "UTF-8" for string/byte conversion.

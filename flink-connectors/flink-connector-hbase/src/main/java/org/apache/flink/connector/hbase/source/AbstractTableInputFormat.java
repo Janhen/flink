@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Abstract {@link InputFormat} to read data from HBase tables. */
+// {@link InputFormat}从HBase表读取数据。
 @Internal
 abstract class AbstractTableInputFormat<T> extends RichInputFormat<T, TableInputSplit> {
 

@@ -102,6 +102,8 @@ public class MemoryUtils {
     }
 
     /**
+     * 分配不安全的本机内存。
+     *
      * Allocates unsafe native memory.
      *
      * @param size size of the unsafe memory to allocate.
@@ -112,6 +114,9 @@ public class MemoryUtils {
     }
 
     /**
+     * 创建一个清理器，通过VM GC释放不安全内存。
+     * 当内存所有者变成 幻像可达， GC将释放底层的不安全内存，如果还没有释放的话。
+     *
      * Creates a cleaner to release the unsafe memory by VM GC.
      *
      * <p>When memory owner becomes <a href="package-summary.html#reachability">phantom

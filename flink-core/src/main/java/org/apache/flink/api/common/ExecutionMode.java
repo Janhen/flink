@@ -21,6 +21,8 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 执行模式指定如何以数据交换的方式执行批处理程序:流水线或批处理。
+ *
  * The execution mode specifies how a batch program is executed in terms of data exchange:
  * pipelining or batched.
  */

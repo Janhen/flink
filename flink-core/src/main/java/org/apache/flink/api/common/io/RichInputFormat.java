@@ -26,6 +26,8 @@ import org.apache.flink.core.io.InputSplit;
 import java.io.IOException;
 
 /**
+ * 富输入格式的抽象存根实现。富格式可以通过{@link #getRuntimeContext()}访问它们的运行时执行上下文。
+ *
  * An abstract stub implementation for Rich input formats. Rich formats have access to their runtime
  * execution context via {@link #getRuntimeContext()}.
  */

@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 定义初始化表环境的所有参数。这些参数只在实例化{@link TableEnvironment}时使用，之后不能更改。
+ *
  * Defines all parameters that initialize a table environment. Those parameters are used only during
  * instantiation of a {@link TableEnvironment} and cannot be changed afterwards.
  *
@@ -54,24 +56,32 @@ public class EnvironmentSettings {
     public static final String DEFAULT_BUILTIN_DATABASE = "default_database";
 
     /** Canonical name of the {@link Planner} class to use. */
+    // 要使用的{@link Planner}类的规范名称
     private final String plannerClass;
 
     /** Canonical name of the {@link Executor} class to use. */
+    // 要使用的{@link Executor}类的规范名称。
     private final String executorClass;
 
     /**
+     * 指定实例化{@link TableEnvironment}时要创建的初始目录的名称。
+     *
      * Specifies the name of the initial catalog to be created when instantiating {@link
      * TableEnvironment}.
      */
     private final String builtInCatalogName;
 
     /**
+     * 指定实例化{@link TableEnvironment}时要创建的初始目录中的默认数据库的名称。
+     *
      * Specifies the name of the default database in the initial catalog to be created when
      * instantiating {@link TableEnvironment}.
      */
     private final String builtInDatabaseName;
 
     /**
+     * 确定表环境是以批处理({@code false})模式还是以流方式({@code true})工作。
+     *
      * Determines if the table environment should work in a batch ({@code false}) or streaming
      * ({@code true}) mode.
      */

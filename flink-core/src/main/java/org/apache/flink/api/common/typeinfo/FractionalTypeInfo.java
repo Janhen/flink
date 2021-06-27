@@ -28,6 +28,7 @@ import java.util.HashSet;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Type information for numeric fractional primitive types (double, float). */
+// 部分类型信息
 @Public
 public class FractionalTypeInfo<T> extends NumericTypeInfo<T> {
 

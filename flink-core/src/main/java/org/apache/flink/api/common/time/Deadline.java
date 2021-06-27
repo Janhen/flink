@@ -23,6 +23,7 @@ import org.apache.flink.annotation.Internal;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
+// 这个类存储一个截止日期，可以通过{@link now()}或{@link plus(Duration)}获得。
 /** This class stores a deadline, as obtained via {@link #now()} or from {@link #plus(Duration)}. */
 @Internal
 public class Deadline {

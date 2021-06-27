@@ -27,6 +27,8 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 public class OptimizerOptions {
 
     /**
+     * 编译器为带分隔符的输入获取的最大行样本数。这些样本被用来估计记录的数量。可以使用输入格式的参数覆盖特定输入的该值。
+     *
      * The maximum number of line samples taken by the compiler for delimited inputs. The samples
      * are used to estimate the number of records. This value can be overridden for a specific input
      * with the input format’s parameters.
@@ -40,6 +42,8 @@ public class OptimizerOptions {
                                     + " input format’s parameters.");
 
     /**
+     * 编译器为带分隔符的输入所采取的最小行样本数。这些样本被用来估计记录的数量。可以使用输入格式的参数覆盖特定输入的该值。
+     *
      * The minimum number of line samples taken by the compiler for delimited inputs. The samples
      * are used to estimate the number of records. This value can be overridden for a specific input
      * with the input format’s parameters.

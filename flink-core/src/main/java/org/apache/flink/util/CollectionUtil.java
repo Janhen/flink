@@ -61,6 +61,7 @@ public final class CollectionUtil {
         return input.stream().map(element -> mapper.apply(element, count.getAndIncrement()));
     }
 
+    // 将一个集合划分为大约n个桶。
     /** Partition a collection into approximately n buckets. */
     public static <T> Collection<List<T>> partition(Collection<T> elements, int numBuckets) {
         Map<Integer, List<T>> buckets = new HashMap<>(numBuckets);
@@ -81,6 +82,8 @@ public final class CollectionUtil {
     }
 
     /**
+     * 在列表中收集Iterable中的元素。如果iterable参数为null，该方法将返回一个空列表。
+     *
      * Collects the elements in the Iterable in a List. If the iterable argument is null, this
      * method returns an empty list.
      */

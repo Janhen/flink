@@ -24,6 +24,7 @@ import org.apache.flink.api.dag.Transformation;
 import org.apache.flink.util.Preconditions;
 
 /** Utils for checking operators' resource and parallelism settings. */
+// 用于检查操作符的资源和并行性设置的Utils。
 public class OperatorValidationUtils {
 
     private OperatorValidationUtils() {}

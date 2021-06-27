@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.List;
 
 /**
+ * 输入分割分配程序将{@link InputSplit}分配到存在数据源的实例中。
+ *
  * An input split assigner distributes the {@link InputSplit}s among the instances on which a data
  * source exists.
  */

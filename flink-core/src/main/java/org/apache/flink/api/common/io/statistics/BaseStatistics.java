@@ -37,6 +37,8 @@ public interface BaseStatistics {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 获取输入的总大小。
+     *
      * Gets the total size of the input.
      *
      * @return The total size of the input, in bytes.
@@ -45,6 +47,8 @@ public interface BaseStatistics {
     public long getTotalInputSize();
 
     /**
+     * 获取输入中的记录数(=基数基数)。
+     *
      * Gets the number of records in the input (= base cardinality).
      *
      * @return The number of records in the input.
@@ -53,6 +57,8 @@ public interface BaseStatistics {
     public long getNumberOfRecords();
 
     /**
+     * 获取记录的平均宽度，以字节为单位。
+     *
      * Gets the average width of a record, in bytes.
      *
      * @return The average width of a record in bytes.

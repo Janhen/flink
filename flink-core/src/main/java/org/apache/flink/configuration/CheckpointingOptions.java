@@ -21,6 +21,7 @@ package org.apache.flink.configuration;
 import org.apache.flink.annotation.docs.Documentation;
 
 /** A collection of all configuration options that relate to checkpoints and savepoints. */
+// 与检查点和保存点相关的所有配置选项的集合
 public class CheckpointingOptions {
 
     // ------------------------------------------------------------------------
@@ -35,6 +36,7 @@ public class CheckpointingOptions {
                     .withDescription("The state backend to be used to store and checkpoint state.");
 
     /** The maximum number of completed checkpoints to retain. */
+    // 要保留的检查点的最大数量
     @Documentation.Section(Documentation.Sections.COMMON_STATE_BACKENDS)
     public static final ConfigOption<Integer> MAX_RETAINED_CHECKPOINTS =
             ConfigOptions.key("state.checkpoints.num-retained")
@@ -42,6 +44,9 @@ public class CheckpointingOptions {
                     .withDescription("The maximum number of completed checkpoints to retain.");
 
     /**
+     * 选项状态后端是否应该在可能和可配置的情况下使用异步快照方法。
+     * 有些状态后端可能不支持异步快照，或者只支持异步快照，请忽略此选项。
+     *
      * Option whether the state backend should use an asynchronous snapshot method where possible
      * and configurable.
      *
@@ -58,6 +63,12 @@ public class CheckpointingOptions {
                                     + " asynchronous snapshots, and ignore this option.");
 
     /**
+     * 选择状态后端是否应该创建增量检查点(如果可能的话)。对于增量检查点，只存储与前一个检查点的差异，而不是完整的检查点状态。
+     *
+     * 一旦启用，web UI中显示的状态大小或从rest API中获取的状态大小只代表增量检查点大小，而不是完整检查点大小。
+     *
+     * 一些状态后端可能不支持增量检查点，因此忽略此选项。
+     *
      * Option whether the state backend should create incremental checkpoints, if possible. For an
      * incremental checkpoint, only a diff from the previous checkpoint is stored, rather than the
      * complete checkpoint state.
@@ -79,6 +90,10 @@ public class CheckpointingOptions {
                                     + " Some state backends may not support incremental checkpoints and ignore this option.");
 
     /**
+     * 此选项为此状态后端配置本地恢复。缺省情况下，本地恢复处于去激活状态。
+     *
+     * 本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend不支持本地恢复，忽略此选项。
+     *
      * This option configures local recovery for this state backend. By default, local recovery is
      * deactivated.
      *
@@ -95,6 +110,10 @@ public class CheckpointingOptions {
                                     + "not support local recovery and ignore this option.");
 
     /**
+     * config参数定义了根目录，用于存储基于文件的本地恢复状态。
+     *
+     * 本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend不支持本地恢复，忽略此选项。
+     *
      * The config parameter defining the root directories for storing file-based state for local
      * recovery.
      *
@@ -115,6 +134,8 @@ public class CheckpointingOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 保存点的默认目录。由写保存点到文件系统的状态后端使用(MemoryStateBackend, FsStateBackend, RocksDBStateBackend)。
+     *
      * The default directory for savepoints. Used by the state backends that write savepoints to
      * file systems (MemoryStateBackend, FsStateBackend, RocksDBStateBackend).
      */
@@ -128,6 +149,9 @@ public class CheckpointingOptions {
                                     + " file systems (MemoryStateBackend, FsStateBackend, RocksDBStateBackend).");
 
     /**
+     * 在Flink支持的文件系统中，用于存储数据文件和检查点的元数据的默认目录。存储路径必须可以从所有参与的进程节点
+     * (即。所有任务管理器和工作管理器)。
+     *
      * The default directory used for storing the data files and meta data of checkpoints in a Flink
      * supported filesystem. The storage path must be accessible from all participating
      * processes/nodes(i.e. all TaskManagers and JobManagers).
@@ -143,6 +167,8 @@ public class CheckpointingOptions {
                                     + "(i.e. all TaskManagers and JobManagers).");
 
     /**
+     * 状态数据文件的最小大小。所有比它小的状态块都内联存储在根检查点元数据文件中。
+     *
      * The minimum size of state data files. All state chunks smaller than that are stored inline in
      * the root checkpoint metadata file.
      */
@@ -156,6 +182,8 @@ public class CheckpointingOptions {
                                     + " inline in the root checkpoint metadata file. The max memory threshold for this configuration is 1MB.");
 
     /**
+     * 写入文件系统的检查点流的写缓冲区的默认大小。
+     *
      * The default size of the write buffer for the checkpoint streams that write to file systems.
      */
     @Documentation.Section(Documentation.Sections.EXPERT_STATE_BACKENDS)

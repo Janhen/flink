@@ -42,6 +42,8 @@ public class ValueStateDescriptor<T> extends StateDescriptor<ValueState<T>, T> {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 使用给定的名称、类型和默认值创建一个新的{@code ValueStateDescriptor}。
+     *
      * Creates a new {@code ValueStateDescriptor} with the given name, type, and default value.
      *
      * <p>If this constructor fails (because it is not possible to describe the type via a class),

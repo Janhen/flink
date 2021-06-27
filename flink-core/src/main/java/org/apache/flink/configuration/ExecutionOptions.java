@@ -25,10 +25,14 @@ import org.apache.flink.configuration.description.TextElement;
 import java.time.Duration;
 
 /** {@link ConfigOption}s specific for a single execution of a user program. */
+// 特定于用户程序的一次执行。
 @PublicEvolving
 public class ExecutionOptions {
 
     /**
+     * 应该和{@code ExecutionConfig#useSnapshotCompression}一起移动到{@code ExecutionCheckpointingOptions}，
+     * 应该放到{@code CheckpointConfig}中。
+     *
      * Should be moved to {@code ExecutionCheckpointingOptions} along with {@code
      * ExecutionConfig#useSnapshotCompression}, which should be put into {@code CheckpointConfig}.
      */

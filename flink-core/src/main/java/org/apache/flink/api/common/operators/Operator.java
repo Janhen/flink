@@ -29,6 +29,8 @@ import org.apache.flink.util.Visitable;
 import java.util.List;
 
 /**
+ * 所有操作符的抽象基类。操作符是一个源、接收器，或者它将一个操作应用到一个或多个输入，从而产生一个结果。
+ *
  * Abstract base class for all operators. An operator is a source, sink, or it applies an operation
  * to one or more inputs, producing a result.
  *

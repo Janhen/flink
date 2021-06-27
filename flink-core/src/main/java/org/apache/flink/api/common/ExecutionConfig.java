@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
- * 义程序执行行为的配置。它允许定义(在其他选项中)以下设置:
+ * 程序执行行为的配置。它允许定义(在其他选项中)以下设置:
  * <ul>
  *     <li>程序的默认并行度，即为所有没有直接定义特定值的函数使用多少并行任务。
  *     <li>执行失败时的重试次数。

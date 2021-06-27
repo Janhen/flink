@@ -21,6 +21,8 @@ package org.apache.flink.api.common.accumulators;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 一种计算平均值的累加器。输入可以是{@code long}， {@code integer}，或{@code double}，结果是{@code double}。
+ *
  * An accumulator that computes the average value. Input can be {@code long}, {@code integer}, or
  * {@code double} and the result is {@code double}.
  */

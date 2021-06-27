@@ -110,6 +110,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 尝试用附加信息丰富传递的异常。
+     * <p>这个方法改进了直接和元空间{@link OutOfMemoryError}的错误消息。它增加了可能的原因和解决方法的描述。
+     *
      * Tries to enrich the passed exception with additional information.
      *
      * <p>This method improves error message for direct and metaspace {@link OutOfMemoryError}. It

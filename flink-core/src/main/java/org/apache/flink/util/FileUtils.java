@@ -59,6 +59,8 @@ import java.util.zip.ZipOutputStream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这是一个处理文件和目录的实用程序类。包含用于递归删除和创建临时文件的实用程序。
+ *
  * This is a utility class to deal files and directories. Contains utilities for recursive deletion
  * and creation of temporary files.
  */

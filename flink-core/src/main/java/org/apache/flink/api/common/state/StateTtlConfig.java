@@ -39,7 +39,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 配置状态TTL逻辑。<p>注:只有当用户值序列化器可以处理{@code null}值时，具有TTL的map状态当前支持{@code null}用户值。
+ * 配置状态TTL逻辑。
+ * 注: 只有当用户值序列化器可以处理{@code null}值时，具有TTL的map状态当前支持{@code null}用户值。
  * 如果序列化器不支持{@code null}值，它可以用{@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer}进行包装，代价是在序列化形式中增加一个字节。
  *
  * Configuration of state TTL logic.
@@ -61,6 +62,8 @@ public class StateTtlConfig implements Serializable {
                     .build();
 
     /**
+     * 此选项值配置何时更新延长状态TTL的最后一次访问时间戳。
+     *
      * This option value configures when to update last access timestamp which prolongs state TTL.
      */
     public enum UpdateType {
@@ -75,6 +78,7 @@ public class StateTtlConfig implements Serializable {
         OnReadAndWrite
     }
 
+    // 该选项配置是否可以返回过期的用户值。
     /** This option configures whether expired user value can be returned or not. */
     public enum StateVisibility {
         /** Return expired user value if it is not cleaned up yet. */
@@ -83,6 +87,7 @@ public class StateTtlConfig implements Serializable {
         NeverReturnExpired
     }
 
+    // 此选项配置ttl使用的时间尺度
     /** This option configures time scale to use for ttl. */
     public enum TtlTimeCharacteristic {
         /**

@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 一种以批量方式对数据进行编码的编码器，一次将许多记录编码在一起。
+ * 批量编码的例子大多是压缩格式，包括像Parquet和ORC这样的格式，它们将记录批量编码成列向量块。
+ * 批量编码器可以是有状态的，并且在其生命周期内绑定到单个流。
+ *
  * An encoder that encodes data in a bulk fashion, encoding many records together at a time.
  *
  * <p>Examples for bulk encoding are most compressed formats, including formats like Parquet and ORC

@@ -24,6 +24,8 @@ import org.apache.flink.api.common.functions.RuntimeContext;
 import java.io.Serializable;
 
 /**
+ * 创建速率限制器的接口
+ *
  * An interface to create a ratelimiter
  *
  * <p>The ratelimiter is configured via {@link #setRate(long)} and created via {@link

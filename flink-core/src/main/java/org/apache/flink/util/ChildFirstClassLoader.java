@@ -27,6 +27,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
+ * URLClassLoader的一种变体，它首先从url加载，然后才从父类加载。
+ *
+ * <p>{@link #getResourceAsStream(String)}内部使用{@link #getResource(String)}，所以我们不重写它。
+ *
  * A variant of the URLClassLoader that first loads from the URLs and only after that from the
  * parent.
  *

@@ -26,6 +26,9 @@ import org.apache.flink.api.java.typeutils.TypeExtractor;
 import java.io.Serializable;
 
 /**
+ * {@link OutputTag}是一个有类型和命名的标记，用于标记操作符的端输出。
+ * <p> {@code OutputTag}必须始终是一个匿名内部类，这样Flink就可以为泛型类型参数派生一个{@link TypeInformation}。<p>
+ *
  * An {@link OutputTag} is a typed and named tag to use for tagging side outputs of an operator.
  *
  * <p>An {@code OutputTag} must always be an anonymous inner class so that Flink can derive a {@link
