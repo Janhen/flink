@@ -36,6 +36,7 @@ public class MemoryUtils {
     public static final sun.misc.Unsafe UNSAFE = getUnsafe();
 
     /** The native byte order of the platform on which the system currently runs. */
+    // 系统当前运行的平台的本机字节顺序。
     public static final ByteOrder NATIVE_BYTE_ORDER = ByteOrder.nativeOrder();
 
     private static final long BUFFER_ADDRESS_FIELD_OFFSET =

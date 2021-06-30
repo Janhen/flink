@@ -292,6 +292,8 @@ public class ParameterTool extends AbstractParameterTool {
     // ------------------------- Interaction with other ParameterUtils -------------------------
 
     /**
+     * 合并多个参数，按需合并配置文件中的、参数传递的、系统属性的
+     *
      * Merges two {@link ParameterTool}.
      *
      * @param other Other {@link ParameterTool} object

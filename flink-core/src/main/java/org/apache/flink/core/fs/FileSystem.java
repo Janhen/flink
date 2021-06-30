@@ -205,12 +205,16 @@ public abstract class FileSystem {
     public enum WriteMode {
 
         /**
+         * 仅当该路径上已经不存在文件时才创建目标文件。不覆盖现有文件和目录。
+         *
          * Creates the target file only if no file exists at that path already. Does not overwrite
          * existing files and directories.
          */
         NO_OVERWRITE,
 
         /**
+         * 创建一个新的目标文件，而不管任何现有的文件或目录。在创建新文件之前，将自动删除现有的文件和目录(递归地)。
+         *
          * Creates a new target file regardless of any existing files or directories. Existing files
          * and directories will be deleted (recursively) automatically before creating the new file.
          */
@@ -223,15 +227,20 @@ public abstract class FileSystem {
     private static final Logger LOG = LoggerFactory.getLogger(FileSystem.class);
 
     /**
+     * 这个锁保护了方法{@link #initOutPathLocalFS(Path, WriteMode, boolean)}和
+     * {@link #initOutPathDistFS(Path, WriteMode, boolean)}，否则会受到种族的影响。
+     *
      * This lock guards the methods {@link #initOutPathLocalFS(Path, WriteMode, boolean)} and {@link
      * #initOutPathDistFS(Path, WriteMode, boolean)} which are otherwise susceptible to races.
      */
     private static final ReentrantLock OUTPUT_DIRECTORY_INIT_LOCK = new ReentrantLock(true);
 
     /** Object used to protect calls to specific methods. */
+    // 用于保护对特定方法的调用对象
     private static final ReentrantLock LOCK = new ReentrantLock(true);
 
     /** Cache for file systems, by scheme + authority. */
+    // 文件系统的缓存，按方案授权。
     private static final HashMap<FSKey, FileSystem> CACHE = new HashMap<>();
 
     /**
@@ -244,6 +253,7 @@ public abstract class FileSystem {
     private static final FileSystemFactory FALLBACK_FACTORY = loadHadoopFsFactory();
 
     /** All known plugins for a given scheme, do not fallback for those. */
+    // 对于给定方案的所有已知插件，不要后退。
     private static final Multimap<String, String> DIRECTLY_SUPPORTED_FILESYSTEM =
             ImmutableMultimap.<String, String>builder()
                     .put("wasb", "flink-fs-azure-hadoop")

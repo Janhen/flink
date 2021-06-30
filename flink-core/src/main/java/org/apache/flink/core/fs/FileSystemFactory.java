@@ -35,9 +35,12 @@ import java.net.URI;
 public interface FileSystemFactory extends Plugin {
 
     /** Gets the scheme of the file system created by this factory. */
+    // 获取此工厂创建的文件系统的 scheme
     String getScheme();
 
     /**
+     * 为给定的文件系统URI创建一个新的文件系统。URI描述文件系统的类型(通过它的方案)和文件系统的权限(例如主机)。
+     *
      * Creates a new file system for the given file system URI. The URI describes the type of file
      * system (via its scheme) and optionally the authority (for example the host) of the file
      * system.

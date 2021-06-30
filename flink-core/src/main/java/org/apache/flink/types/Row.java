@@ -27,6 +27,19 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
+ * 行是一个固定长度的、空感知的复合类型，用于以确定的字段顺序存储多个值。无论字段的类型如何，每个字段都可以为空。不能自动
+ * 推断行字段的类型;因此，无论何时产生一行，都需要提供类型信息。
+ *
+ * <p>行的主要目的是在Flink的Table和SQL生态系统和其他api之间架起桥梁。因此，一行不仅由模式部分(包含字段)组成，而且还
+ * 附加了一个{@link RowKind}，用于在changelog中对更改进行编码。因此，可以将一行视为变更日志中的一个条目。例如，在常
+ * 规批处理场景中，变更日志将由{@link RowKind#INSERT}行的有界流组成。
+ *
+ * <p>一行中的字段可以使用{@link #getField(int)}和{@link #setField(int, Object)}通过位置(从零开始)访问。行类
+ * 型与字段是分开的，可以使用{@link #getKind()}和{@link #setKind(RowKind)}访问。
+ *
+ * <p>一行实例原则上是{@link Serializable}。但是，它可能包含非串行化字段，在这种情况下，如果行没有被Flink的串行化堆
+ * 栈序列化，串行化将失败。
+ *
  * A row is a fixed-length, null-aware composite type for storing multiple values in a deterministic
  * field order. Every field can be null regardless of the field's type. The type of row fields
  * cannot be automatically inferred; therefore, it is required to provide type information whenever
@@ -52,18 +65,25 @@ public final class Row implements Serializable {
     private static final long serialVersionUID = 2L;
 
     /** The kind of change a row describes in a changelog. */
+    // 变更日志中一行所描述的变更类型。
     private RowKind kind;
 
     /** The array to store actual values. */
+    // 用于存储实际值的数组。
     private final Object[] fields;
 
     /**
+     * 创建一个新的行实例。
+     * <p>默认情况下，一行描述了{@link RowKind#INSERT}的变化。
+     *
      * Create a new row instance.
      *
      * <p>By default, a row describes an {@link RowKind#INSERT} change.
      *
      * @param kind kind of change a row describes in a changelog
+     *             类似于变更日志中一行所描述的变更
      * @param arity The number of fields in the row.
+     *              行中字段的数量。
      */
     public Row(RowKind kind, int arity) {
         this.kind = Preconditions.checkNotNull(kind, "Row kind must not be null.");
@@ -171,6 +191,8 @@ public final class Row implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建新行并将给定值分配给行字段。这比使用构造函数更方便。
+     *
      * Creates a new row and assigns the given values to the row's fields. This is more convenient
      * than using the constructor.
      *
@@ -200,6 +222,8 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 用给定的类型创建一个新行，并将给定的值分配给行的字段。这比使用构造函数更方便。
+     *
      * Creates a new row with given kind and assigns the given values to the row's fields. This is
      * more convenient than using the constructor.
      *

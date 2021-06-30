@@ -24,6 +24,14 @@ import org.apache.flink.core.io.SimpleVersionedSerializer;
 import java.io.IOException;
 
 /**
+ * RecoverableWriter创建和恢复{@link RecoverableFsDataOutputStream}。它可用于向文件系统写入数据，其方式是在故
+ * 障和恢复后可以一致地恢复写入，而不会丢失数据或可能的字节重复。
+ *
+ * <p>流不会使它们写入的文件立即可见，而是写入临时文件或其他临时存储。为了在最后原子地发布数据，流提供了
+ * {@link RecoverableFsDataOutputStream#closeForCommit()}方法来创建一个发布结果的提交器。
+ *
+ * <p>这些写入器在检查点上下文中很有用。下面的例子说明了如何使用它们:
+ *
  * The RecoverableWriter creates and recovers {@link RecoverableFsDataOutputStream}. It can be used
  * to write data to a file system in a way that the writing can be resumed consistently after a
  * failure and recovery without loss of data or possible duplication of bytes.

@@ -134,7 +134,8 @@ public class CheckpointingOptions {
     // ------------------------------------------------------------------------
 
     /**
-     * 保存点的默认目录。由写保存点到文件系统的状态后端使用(MemoryStateBackend, FsStateBackend, RocksDBStateBackend)。
+     * 保存点的默认目录。由写保存点到文件系统的状态后端使用(MemoryStateBackend, FsStateBackend,
+     * RocksDBStateBackend)。
      *
      * The default directory for savepoints. Used by the state backends that write savepoints to
      * file systems (MemoryStateBackend, FsStateBackend, RocksDBStateBackend).

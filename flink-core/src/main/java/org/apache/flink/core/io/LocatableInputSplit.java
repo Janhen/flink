@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Public;
 import java.util.Arrays;
 
 /**
+ * 可定位输入分割是指位于一个或多个主机上的输入数据的输入分割。
+ *
  * A locatable input split is an input split referring to input data which is located on one or more
  * hosts.
  */
@@ -71,6 +73,8 @@ public class LocatableInputSplit implements InputSplit, java.io.Serializable {
     }
 
     /**
+     * 返回存储此输入分割引用的数据的主机名
+     *
      * Returns the names of the hosts storing the data this input split refers to
      *
      * @return the names of the hosts storing the data this input split refers to

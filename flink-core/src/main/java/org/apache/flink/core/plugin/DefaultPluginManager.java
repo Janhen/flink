@@ -31,19 +31,27 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /** Default implementation of {@link PluginManager}. */
+
+/**
+ * J: 一些类加载的问题可参考 ...   flinkx 对于 yarn session 执行需要配置加载 。。。
+ */
 @Internal
 @ThreadSafe
 public class DefaultPluginManager implements PluginManager {
 
     /**
+     * 父类加载器到所有用于插件加载的类加载器。我们希望这是线程安全的。
+     *
      * Parent-classloader to all classloader that are used for plugin loading. We expect that this
      * is thread-safe.
      */
     private final ClassLoader parentClassLoader;
 
     /** A collection of descriptions of all plugins known to this plugin manager. */
+    // 这个插件管理器已知的所有插件的描述集合。
     private final Collection<PluginDescriptor> pluginDescriptors;
 
+    // 应该总是从父ClassLoader解析的类的模式列表。
     /** List of patterns for classes that should always be resolved from the parent ClassLoader. */
     private final String[] alwaysParentFirstPatterns;
 

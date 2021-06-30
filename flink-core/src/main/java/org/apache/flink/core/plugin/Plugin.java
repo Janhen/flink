@@ -23,6 +23,8 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 界面插件。插件通常在他们的SPI中扩展这个接口，服务的具体实现然后实现SPI契约。
+ *
  * Interface for plugins. Plugins typically extend this interface in their SPI and the concrete
  * implementations of a service then implement the SPI contract.
  */
@@ -30,6 +32,8 @@ import org.apache.flink.util.Preconditions;
 public interface Plugin {
 
     /**
+     * Helper方法来获取用于加载插件的类装入器。对于一些在插件加载之后使用动态类加载的插件来说，这可能是必需的。
+     *
      * Helper method to get the class loader used to load the plugin. This may be needed for some
      * plugins that use dynamic class loading afterwards the plugin was loaded.
      *
@@ -43,6 +47,8 @@ public interface Plugin {
     }
 
     /**
+     * 插件从配置中提取设置的可选方法。
+     *
      * Optional method for plugins to pick up settings from the configuration.
      *
      * @param config The configuration to apply to the plugin.

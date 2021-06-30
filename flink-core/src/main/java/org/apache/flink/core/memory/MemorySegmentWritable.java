@@ -27,6 +27,8 @@ import java.io.IOException;
 public interface MemorySegmentWritable {
 
     /**
+     * 从偏移量{@code off}开始的内存段{@code segment}，依次将{@code len}字节写入输出。
+     *
      * Writes {@code len} bytes from memory segment {@code segment} starting at offset {@code off},
      * in order, to the output.
      *

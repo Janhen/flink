@@ -24,7 +24,7 @@ import org.apache.flink.api.common.JobExecutionResult;
 import javax.annotation.Nullable;
 
 /**
- * 一个侦听器，当特定的作业状态发生改变时，它会得到通知，首先应该由执行环境的{@code registerJobListener}注册。
+ * 一个 listener，当特定的作业状态发生改变时，它会得到通知，首先应该由执行环境的{@code #registerJobListener}注册。
  * <p>强烈建议不要在回调内部执行任何阻塞操作。如果阻塞了线程，那么环境执行方法的调用者就可能被阻塞。
  *
  * A listener that is notified on specific job status changed, which should be firstly registered by
@@ -37,6 +37,10 @@ import javax.annotation.Nullable;
 public interface JobListener {
 
     /**
+     * 作业提交的回调。当{@code execute()}或{@code executeAsync()}被调用时，会调用这个函数。
+     *
+     * 传递的参数中有一个是null，分别表示失败或成功。
+     *
      * Callback on job submission. This is called when {@code execute()} or {@code executeAsync()}
      * is called.
      *
@@ -48,6 +52,10 @@ public interface JobListener {
     void onJobSubmitted(@Nullable JobClient jobClient, @Nullable Throwable throwable);
 
     /**
+     * 作业执行完成时的回调，成功或不成功。只有在调用执行环境的{@code execute()}而不是{@code executeAsync()}方法
+     * 时，它才会被回调。
+     * <p>传递的参数中有一个是null，分别表示失败或成功。
+     *
      * Callback on job execution finished, successfully or unsuccessfully. It is only called back
      * when you call {@code execute()} instead of {@code executeAsync()} methods of execution
      * environments.

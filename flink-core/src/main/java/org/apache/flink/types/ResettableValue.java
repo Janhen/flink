@@ -24,6 +24,8 @@ import org.apache.flink.annotation.Public;
 public interface ResettableValue<T extends Value> extends Value {
 
     /**
+     * 将封装的值设置为另一个值
+     *
      * Sets the encapsulated value to another value
      *
      * @param value the new value of the encapsulated value

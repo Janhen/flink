@@ -33,6 +33,18 @@ import java.io.UTFDataFormatException;
 import java.nio.ByteOrder;
 
 /**
+ * Record表示一个多值数据记录。该记录是任意值的元组。它实现了一个稀疏元组模型，这意味着记录可以包含许多实际上为空且没有
+ * 在记录中表示的字段。它内部有一个位图，标记哪些字段设置了，哪些字段没有设置。
+ *
+ * <p>为了有效地进行数据交换，从任何源读取的记录都以串行二进制的形式保存其数据。字段在第一次访问时被延迟地反序列化。修改
+ * 后的字段会被缓存，并且在下一次序列化或任何对{@link #updateBinaryRepresenation()}方法的显式调用时将修改合并到二
+ * 进制表示中。
+ *
+ * <p>重要注意:记录必须作为可变对象使用，并在用户函数调用中重用，以实现性能。该记录是一个重量级对象，旨在最小化对单个字
+ * 段的序列化和反序列化方法的调用。它存储相当多的状态，消耗相当多的内存(&gt;在64位JVM中200字节)，这是由于几个指针和数组。
+ *
+ * <p>这个类不是线程安全的!
+ *
  * The Record represents a multi-valued data record. The record is a tuple of arbitrary values. It
  * implements a sparse tuple model, meaning that the record can contain many fields which are
  * actually null and not represented in the record. It has internally a bitmap marking which fields

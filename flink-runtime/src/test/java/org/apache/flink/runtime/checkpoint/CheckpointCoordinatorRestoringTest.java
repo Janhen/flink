@@ -88,6 +88,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /** Tests for restoring checkpoint. */
+// 恢复检查点。
 @SuppressWarnings("checkstyle:EmptyLineSeparator")
 public class CheckpointCoordinatorRestoringTest extends TestLogger {
     private static final String TASK_MANAGER_LOCATION_INFO = "Unknown location";

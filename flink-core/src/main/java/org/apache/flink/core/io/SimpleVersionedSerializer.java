@@ -23,6 +23,10 @@ import org.apache.flink.annotation.Internal;
 import java.io.IOException;
 
 /**
+ * 一个用于版本化序列化的简单序列化程序接口。
+ * <p>序列化器有一个版本(由{@link #getVersion()}返回)，可以附加到序列化的数据。当序列化器发展时，
+ *    可以使用版本来标识数据是用哪个之前的版本序列化的。
+ *
  * A simple serializer interface for versioned serialization.
  *
  * <p>The serializer has a version (returned by {@link #getVersion()}) which can be attached to the

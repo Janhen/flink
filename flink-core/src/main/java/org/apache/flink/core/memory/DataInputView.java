@@ -24,6 +24,9 @@ import java.io.DataInput;
 import java.io.IOException;
 
 /**
+ * 这个接口定义了一些内存上的视图，可以用来顺序地读取内存中的内容。该视图通常由一个或多个
+ * {@link org.apache.flink.core.memory.MemorySegment}支持。
+ *
  * This interface defines a view over some memory that can be used to sequentially read the contents
  * of the memory. The view is typically backed by one or more {@link
  * org.apache.flink.core.memory.MemorySegment}.
@@ -43,6 +46,9 @@ public interface DataInputView extends DataInput {
     void skipBytesToRead(int numBytes) throws IOException;
 
     /**
+     * 读取内存的{@code len}字节，并将其存储到{@code b}中，从offset {@code off}开始。
+     * 它返回读字节数，如果没有剩余数据，则返回-1。
+     *
      * Reads up to {@code len} bytes of memory and stores it into {@code b} starting at offset
      * {@code off}. It returns the number of read bytes or -1 if there is no more data left.
      *

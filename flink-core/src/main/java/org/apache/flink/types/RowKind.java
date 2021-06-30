@@ -21,6 +21,7 @@ package org.apache.flink.types;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Lists all kinds of changes that a row can describe in a changelog. */
+// 列出一行可以在变更日志中描述的所有类型的变更。
 @PublicEvolving
 public enum RowKind {
 
@@ -31,6 +32,11 @@ public enum RowKind {
     INSERT("+I", (byte) 0),
 
     /**
+     * 使用更新行前面的内容更新操作。
+     *
+     * <p>这种类型应该与{@link #UPDATE_AFTER}一起出现，用于建模需要首先撤销前一行的更新。它在非幂等更新的情况下很有
+     * 用，例如，对一个不是唯一可由键标识的行进行更新。
+     *
      * Update operation with the previous content of the updated row.
      *
      * <p>This kind SHOULD occur together with {@link #UPDATE_AFTER} for modelling an update that

@@ -20,6 +20,11 @@ package org.apache.flink.core.io;
 
 import org.apache.flink.annotation.Public;
 
+/**
+ * 只有一个分区号的通用输入分割。
+ *
+ * J: flinkx 初始使用该类
+ */
 /** A generic input split that has only a partition number. */
 @Public
 public class GenericInputSplit implements InputSplit, java.io.Serializable {
@@ -35,6 +40,8 @@ public class GenericInputSplit implements InputSplit, java.io.Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 使用给定的分割号创建一个通用输入分割。
+     *
      * Creates a generic input split with the given split number.
      *
      * @param partitionNumber The number of the split's partition.
