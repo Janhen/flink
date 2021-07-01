@@ -85,6 +85,9 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 检查点协调器协调操作符和状态的分布式快照。它通过向相关任务发送消息来触发检查点，并收集检查点确认。它还收集和维护确认检
+ * 查点的任务报告的状态句柄的概述。
+ *
  * The checkpoint coordinator coordinates the distributed snapshots of operators and state. It
  * triggers the checkpoint by sending the messages to the relevant tasks and collects the checkpoint
  * acknowledgements. It also collects and maintains the overview of the state handles reported by
@@ -95,14 +98,17 @@ public class CheckpointCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(CheckpointCoordinator.class);
 
     /** The number of recent checkpoints whose IDs are remembered. */
+    // 最近记住id的检查点的数量。
     private static final int NUM_GHOST_CHECKPOINT_IDS = 16;
 
     // ------------------------------------------------------------------------
 
     /** Coordinator-wide lock to safeguard the checkpoint updates. */
+    // 协调器范围的锁，以保护检查点更新。
     private final Object lock = new Object();
 
     /** The job whose checkpoint this coordinator coordinates. */
+    // 此协调器协调其检查点的作业。
     private final JobID job;
 
     /** Default checkpoint properties. * */

@@ -24,6 +24,19 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 import javax.annotation.Nullable;
 
 /**
+ * {@code AssignerWithPeriodicWatermarks}将事件时间戳分配给元素，并生成低水位标记来表示流中的事件时间进度。对事件
+ * 时间(例如事件时间窗口)进行操作的函数和操作符使用这些时间戳和水印。
+ *
+ * <p>用于按周期间隔生成水印。在大多数{@code i}毫秒(通过{@link ExecutionConfig#getAutoWatermarkInterval()}配
+ * 置)，系统将调用{@link #getCurrentWatermark()}方法来探测下一个水印值。如果探测到的值为非空，且时间戳比前一个水印
+ * 的时间戳大，系统将生成一个新的水印(以保持水印升序的一致性)。
+ *
+ * <p>系统调用{@link #getCurrentWatermark()}方法的频率可能低于{@code i}每毫秒一次，如果上次调用该方法后没有新元
+ * 素到达的话。
+ *
+ * <p>时间戳和水印被定义为{@code longs}，表示从Epoch (midnight, January 1, 1970 UTC)开始的毫秒数。具有特定值
+ * {@code t}的水印表示不再出现具有事件时间戳{@code x}(其中{@code x}小于或等于{@code t})的元素。
+ *
  * The {@code AssignerWithPeriodicWatermarks} assigns event time timestamps to elements, and
  * generates low watermarks that signal event time progress within the stream. These timestamps and
  * watermarks are used by functions and operators that operate on event time, for example event time

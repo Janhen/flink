@@ -26,6 +26,10 @@ import org.apache.flink.annotation.Public;
 public interface WatermarkOutput {
 
     /**
+     * 发出给定的水印。
+     *
+     * 发出水印还隐式地将流标记为<i>活动<i>，以先前标记为闲置结束。
+     *
      * Emits the given watermark.
      *
      * <p>Emitting a watermark also implicitly marks the stream as <i>active</i>, ending previously
@@ -34,6 +38,10 @@ public interface WatermarkOutput {
     void emitWatermark(Watermark watermark);
 
     /**
+     * 将此输出标记为空闲，意味着下游操作不等待此输出的水印。
+     *
+     * <p>一旦发出下一个水印，输出就再次激活。
+     *
      * Marks this output as idle, meaning that downstream operations do not wait for watermarks from
      * this output.
      *

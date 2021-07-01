@@ -26,6 +26,10 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 检查点的配置。这描述了
+ * - 检查点是常规检查点还是保存点。
+ * - 何时应该对检查点进行垃圾收集。
+ *
  * The configuration of a checkpoint. This describes whether
  *
  * <ul>
@@ -41,6 +45,8 @@ public class CheckpointProperties implements Serializable {
     private final CheckpointType checkpointType;
 
     /**
+     * 这有一个误导性的名称，实际上是指是否必须触发快照，或者如果当前正在进行的检查点太多，是否可能会被检查点协调器拒绝。
+     *
      * This has a misleading name and actually means whether the snapshot must be triggered, or
      * whether it may be rejected by the checkpoint coordinator if too many checkpoints are
      * currently in progress.
@@ -94,6 +100,9 @@ public class CheckpointProperties implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 返回当检查点被包含时是否应该丢弃它。
+     * <p>当达到保留的检查点的最大数量，并且一个最近的检查点完成时，一个检查点被纳入。
+     *
      * Returns whether the checkpoint should be discarded when it is subsumed.
      *
      * <p>A checkpoint is subsumed when the maximum number of retained checkpoints is reached and a
@@ -108,6 +117,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回当所属作业到达{@link JobStatus#FINISHED}状态时，检查点是否应该被丢弃。
+     *
      * Returns whether the checkpoint should be discarded when the owning job reaches the {@link
      * JobStatus#FINISHED} state.
      *
