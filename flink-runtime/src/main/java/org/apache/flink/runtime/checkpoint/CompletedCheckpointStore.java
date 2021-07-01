@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /** A bounded LIFO-queue of {@link CompletedCheckpoint} instances. */
+// 个由{@link CompletedCheckpoint}实例组成的有界lifo队列。
 public interface CompletedCheckpointStore {
 
     Logger LOG = LoggerFactory.getLogger(CompletedCheckpointStore.class);

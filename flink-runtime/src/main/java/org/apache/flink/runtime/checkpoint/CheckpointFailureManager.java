@@ -29,9 +29,11 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The checkpoint failure manager which centralized manage checkpoint failure processing logic. */
+// 集中管理检查点故障处理逻辑的检查点故障管理器。
 public class CheckpointFailureManager {
 
     public static final int UNLIMITED_TOLERABLE_FAILURE_NUMBER = Integer.MAX_VALUE;
+    // 超过检查点可容忍故障阈值。
     public static final String EXCEEDED_CHECKPOINT_TOLERABLE_FAILURE_MESSAGE =
             "Exceeded checkpoint tolerable failure threshold.";
 
@@ -52,6 +54,8 @@ public class CheckpointFailureManager {
     }
 
     /**
+     * 使用处理程序回调处理作业级检查点异常。
+     *
      * Handle job level checkpoint exception with a handler callback.
      *
      * @param exception the checkpoint exception.
@@ -59,6 +63,8 @@ public class CheckpointFailureManager {
      *     based on checkpoint id sequence. In trigger phase, we may not get the checkpoint id when
      *     the failure happens before the checkpoint id generation. In this case, it will be
      *     specified a negative latest generated checkpoint id as a special flag.
+     *     失败的检查点id，用于根据检查点id序列计算连续失败的次数。在触发阶段，当故障在生成检查点id之前发生时，我们可
+     *     能无法获得检查点id。在这种情况下，它将被指定一个负的最新生成的检查点id作为一个特殊标志。
      */
     public void handleJobLevelCheckpointException(
             CheckpointException exception, long checkpointId) {
@@ -182,6 +188,7 @@ public class CheckpointFailureManager {
     }
 
     /** A callback interface about how to fail a job. */
+    // 关于如何使作业失败的回调接口。
     public interface FailJobCallback {
 
         /**
@@ -192,6 +199,8 @@ public class CheckpointFailureManager {
         void failJob(final Throwable cause);
 
         /**
+         * 由于任务失败而导致整个 job graph 失败。
+         *
          * Fails the whole job graph due to task failure.
          *
          * @param cause The reason why the job is cancelled.

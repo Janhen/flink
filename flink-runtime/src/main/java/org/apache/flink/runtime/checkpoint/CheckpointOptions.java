@@ -27,6 +27,11 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 执行检查点的选项。
+ *
+ * <p> {@link CheckpointProperties}是相关的，并且cover属性只与{@link CheckpointCoordinator}相关。这些选项
+ * 与在任务管理器上运行的{@link AbstractInvokable}实例相关。
+ *
  * Options for performing the checkpoint.
  *
  * <p>The {@link CheckpointProperties} are related and cover properties that are only relevant at

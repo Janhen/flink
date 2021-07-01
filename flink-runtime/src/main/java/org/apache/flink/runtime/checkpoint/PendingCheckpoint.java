@@ -56,6 +56,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 挂起检查点是已经启动的检查点，但尚未被所有需要确认它的任务确认。一旦所有任务都确认了它，它就变成了一个
+ * {@link CompletedCheckpoint}。
+ *
  * A pending checkpoint is a checkpoint that has been started, but has not been acknowledged by all
  * tasks that need to acknowledge it. Once all tasks have acknowledged it, it becomes a {@link
  * CompletedCheckpoint}.
@@ -499,6 +502,7 @@ public class PendingCheckpoint {
     // ------------------------------------------------------------------------
 
     /** Aborts a checkpoint with reason and cause. */
+    // 有原因地中止检查点。
     public void abort(CheckpointFailureReason reason, @Nullable Throwable cause) {
         try {
             failureCause = new CheckpointException(reason, cause);

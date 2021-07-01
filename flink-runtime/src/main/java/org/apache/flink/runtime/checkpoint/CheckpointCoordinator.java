@@ -499,6 +499,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 触发一个新的标准检查点，并使用给定的时间戳作为检查点时间戳。返回值是一个future。当触发的检查点完成或发生错误时，它就完成了。
+     *
      * Triggers a new standard checkpoint and uses the given timestamp as the checkpoint timestamp.
      * The return value is a future. It completes when the checkpoint triggered finishes or an error
      * occurred.
@@ -1733,6 +1735,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 异常终止所有 pending 检查点。
+     *
      * Aborts all the pending checkpoints due to en exception.
      *
      * @param exception The exception.
@@ -1892,6 +1896,7 @@ public class CheckpointCoordinator {
                         && pendingCheckpoint.getProps().isSynchronous()) {
                     failureManager.handleSynchronousSavepointFailure(exception);
                 } else if (executionAttemptID != null) {
+                    //
                     failureManager.handleTaskLevelCheckpointException(
                             exception, pendingCheckpoint.getCheckpointId(), executionAttemptID);
                 } else {
@@ -1916,12 +1921,15 @@ public class CheckpointCoordinator {
         }
 
         // Don't allow periodic checkpoint if scheduling has been disabled
+        // 如果已禁用调度，则不允许定期检查点
         if (isPeriodic && !periodicScheduling) {
             throw new CheckpointException(CheckpointFailureReason.PERIODIC_SCHEDULER_SHUTDOWN);
         }
     }
 
     /**
+     * 检查是否所有需要触发的任务都在运行。如果不是，中止检查点。
+     *
      * Check if all tasks that we need to trigger are running. If not, abort the checkpoint.
      *
      * @return the executions need to be triggered.
@@ -1955,6 +1963,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 检查是否所有需要确认检查点的任务都在运行。如果不是，中止检查点
+     *
      * Check if all tasks that need to acknowledge the checkpoint are running. If not, abort the
      * checkpoint
      *
@@ -1987,6 +1997,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 检查点的取消者。如果检查点没有在配置的时间段内完成，那么它可能会被取消。
+     *
      * The canceller of checkpoint. The checkpoint might be cancelled if it doesn't finish in a
      * configured period.
      */
@@ -2001,6 +2013,7 @@ public class CheckpointCoordinator {
         @Override
         public void run() {
             synchronized (lock) {
+                // 只有在检查点没有被丢弃的情况下才做这些工作，注意检查点完成会丢弃挂起的检查点对象
                 // only do the work if the checkpoint is not discarded anyways
                 // note that checkpoint completion discards the pending checkpoint object
                 if (!pendingCheckpoint.isDiscarded()) {
@@ -2009,6 +2022,7 @@ public class CheckpointCoordinator {
                             pendingCheckpoint.getCheckpointId(),
                             job);
 
+                    // !检查点在完成之前过期
                     abortPendingCheckpoint(
                             pendingCheckpoint,
                             new CheckpointException(CheckpointFailureReason.CHECKPOINT_EXPIRED));
@@ -2076,12 +2090,15 @@ public class CheckpointCoordinator {
     private enum OperatorCoordinatorRestoreBehavior {
 
         /** Coordinators are always restored. If there is no checkpoint, they are restored empty. */
+        // 协调器总是被恢复。如果没有检查点，它们将被恢复为空。
         RESTORE_OR_RESET,
 
         /** Coordinators are restored if there was a checkpoint. */
+        // 如果存在检查点，则恢复 Coordinators
         RESTORE_IF_CHECKPOINT_PRESENT,
 
         /** Coordinators are not restored during this checkpoint restore. */
+        // 在此检查点恢复期间，不会恢复协调器。
         SKIP;
     }
 }

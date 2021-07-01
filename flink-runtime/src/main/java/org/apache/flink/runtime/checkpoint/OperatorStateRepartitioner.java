@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Internal;
 import java.util.List;
 
 /**
+ * 允许在并行性更改时实现操作符状态的重新分区的不同策略的接口
+ *
  * Interface that allows to implement different strategies for repartitioning of operator state as
  * parallelism changes.
  */

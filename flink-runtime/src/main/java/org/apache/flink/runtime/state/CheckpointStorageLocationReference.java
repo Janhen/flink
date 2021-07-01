@@ -27,6 +27,15 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 对存储位置的引用。这是一个字节数组的包装器，这些字节受状态后端存储位置的解释(类似于序列化器需要解释字节流)。当不需要
+ * 额外的信息来确定检查点应该存储在哪里时(所有信息都可以从配置和检查点id派生出来)，“默认位置”可以作为状态后端的优化。
+ *
+ * 为什么这只是一个字节数组?< h3 >
+ *
+ * <p>引用通过原始字节表示，由状态后端解释。我们没有在中间添加任何类型和序列化抽象，因为这些类型需要在网络流(字节缓冲区)
+ * 和壁垒之间快速序列化和反序列化。如果我们简单地为检查点屏障保留字节缓冲区并转发它们，最终可能会添加更多类型，从而节省对
+ * 这些引用的反复解码和重新编码。
+ *
  * A reference to a storage location. This is a wrapper around an array of bytes that are subject to
  * interpretation by the state backend's storage locations (similar as a serializer needs to
  * interpret byte streams). There is special handling for a 'default location', which can be used as

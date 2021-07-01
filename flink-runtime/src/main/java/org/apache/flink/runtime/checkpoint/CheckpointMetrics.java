@@ -24,17 +24,21 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** A collection of simple metrics, around the triggering of a checkpoint. */
+// 围绕检查点触发的一组简单指标。
 public class CheckpointMetrics implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /** The duration (in nanoseconds) that the stream alignment for the checkpoint took. */
+    // 流对齐检查点所花费的时间(以纳秒为单位)。
     private long alignmentDurationNanos;
 
     /** The duration (in milliseconds) of the synchronous part of the operator checkpoint. */
+    // 操作符检查点同步部分的持续时间(以毫秒为单位)。
     private long syncDurationMillis;
 
     /** The duration (in milliseconds) of the asynchronous part of the operator checkpoint. */
+    // 操作符检查点异步部分的持续时间(以毫秒为单位)。
     private long asyncDurationMillis;
 
     private long checkpointStartDelayNanos;

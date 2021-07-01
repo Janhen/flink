@@ -37,6 +37,7 @@ import java.util.Objects;
  * same job vertex together.
  *
  * @deprecated Internal class for savepoint backwards compatibility. Don't use for other purposes.
+ *             用于保存点向后兼容的内部类。不要用于其他目的。
  */
 @Deprecated
 public class TaskState implements CompositeStateHandle {

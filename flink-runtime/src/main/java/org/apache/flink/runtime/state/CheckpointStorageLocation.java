@@ -21,6 +21,11 @@ package org.apache.flink.runtime.state;
 import java.io.IOException;
 
 /**
+ * 一个特定检查点的存储位置，提供数据持久性、元数据持久性和生命周期清理方法。
+ *
+ * checkpointstoragelocation 通常是通过{@link CheckpointStorage#initializeLocationForCheckpoint(long)}
+ * 或{@link CheckpointStorage#initializeLocationForSavepoint(long, String)}创建和初始化的。
+ *
  * A storage location for one particular checkpoint, offering data persistent, metadata persistence,
  * and lifecycle/cleanup methods.
  *

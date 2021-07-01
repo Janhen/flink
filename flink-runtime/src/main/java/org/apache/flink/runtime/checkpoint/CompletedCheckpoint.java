@@ -45,6 +45,22 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ *
+ * CompletedCheckpoint描述了所有必需任务确认它(及其状态)后的检查点，该检查点被认为是成功的。CompletedCheckpoint
+ * 类包含检查点的所有元数据，即检查点ID、时间戳和作为检查点一部分的所有状态句柄。
+ *
+ * <h2>CompletedCheckpoint 实例的大小</h2>
+ *
+ * 在大多数情况下，CompletedCheckpoint对象是非常小的，因为检查点状态的句柄只是指针(例如文件路径)。但是，一些状态后端
+ * 实现可能选择直接用元数据存储一些有效载荷数据(例如避免许多小文件)。如果这些阈值增加到较大的值，那么CompletedCheckpoint
+ * 对象的内存消耗可能会很大。
+ *
+ * <h2> 元数据持久化 </h2>
+ *
+ * <p> CompletedCheckpoint的元数据也被持久化到外部存储系统中。检查点有一个指向元数据的外部指针。例如，当在文件系统中
+ * 存储检查点时，该指针是到检查点文件夹或元数据文件的文件路径。对于在数据库表中存储元数据的状态后端，指针可以是表名和行键。
+ * 指针被编码为一个字符串。
+ *
  * A CompletedCheckpoint describes a checkpoint after all required tasks acknowledged it (with their
  * state) and that is considered successful. The CompletedCheckpoint class contains all the metadata
  * of the checkpoint, i.e., checkpoint ID, timestamps, and the handles to all states that are part

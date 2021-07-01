@@ -19,57 +19,78 @@
 package org.apache.flink.runtime.checkpoint;
 
 /** Various reasons why a checkpoint was failure. */
+// 检查点失败的各种原因。
 public enum CheckpointFailureReason {
+    // 定期检查点调度程序被关闭
     PERIODIC_SCHEDULER_SHUTDOWN(true, "Periodic checkpoint scheduler is shut down."),
 
+    // 超过了并发检查点的最大数目
     TOO_MANY_CONCURRENT_CHECKPOINTS(
             true, "The maximum number of concurrent checkpoints is exceeded"),
 
+    // 队列检查点请求的最大数目超过
     TOO_MANY_CHECKPOINT_REQUESTS(true, "The maximum number of queued checkpoint requests exceeded"),
 
+    // 检查点之间的最短时间仍未确定。"检查点将在最短时间后触发。"
     MINIMUM_TIME_BETWEEN_CHECKPOINTS(
             true,
             "The minimum time between checkpoints is still pending. "
                     + "Checkpoint will be triggered after the minimum time."),
 
+    // 目前并不是所有必需的任务都在运行。
     NOT_ALL_REQUIRED_TASKS_RUNNING(true, "Not all required tasks are currently running."),
 
+    // 触发检查点时发生异常。
     EXCEPTION(true, "An Exception occurred while triggering the checkpoint."),
 
+    // 异步任务检查点失败。
     CHECKPOINT_ASYNC_EXCEPTION(false, "Asynchronous task checkpoint failed."),
 
+    // !检查点在完成之前过期。
     CHECKPOINT_EXPIRED(false, "Checkpoint expired before completing."),
 
+    // 检查点已被包含
     CHECKPOINT_SUBSUMED(false, "Checkpoint has been subsumed."),
 
+    // 检查点是拒绝。
     CHECKPOINT_DECLINED(false, "Checkpoint was declined."),
 
+    // 检查点被拒绝(任务没有准备好)
     CHECKPOINT_DECLINED_TASK_NOT_READY(false, "Checkpoint was declined (tasks not ready)"),
 
+    // 检查点被拒绝(task 的 operators 部分关闭)"
     CHECKPOINT_DECLINED_TASK_CLOSING(
             false, "Checkpoint was declined (task's operators partially closed)"),
 
+    // 任务不支持检查点
     CHECKPOINT_DECLINED_TASK_NOT_CHECKPOINTING(false, "Task does not support checkpointing"),
 
+    // 检查点被取消，因为从新的检查点接收到 barrier
     CHECKPOINT_DECLINED_SUBSUMED(
             false, "Checkpoint was canceled because a barrier from newer checkpoint was received."),
 
+    // 任务从其输入之一接收取消
     CHECKPOINT_DECLINED_ON_CANCELLATION_BARRIER(
             false, "Task received cancellation from one of its inputs"),
 
+    // 检查点对齐阶段需要缓冲比配置的最大字节更多的字节
     CHECKPOINT_DECLINED_ALIGNMENT_LIMIT_EXCEEDED(
             false,
             "The checkpoint alignment phase needed to buffer more than the configured maximum bytes"),
 
+    // 由于一个输入流已完成，检查点被拒绝
     CHECKPOINT_DECLINED_INPUT_END_OF_STREAM(
             false, "Checkpoint was declined because one input stream is finished"),
 
+    // CheckpointCoordinator关闭。
     CHECKPOINT_COORDINATOR_SHUTDOWN(false, "CheckpointCoordinator shutdown."),
 
+    // 检查点协调器挂起。
     CHECKPOINT_COORDINATOR_SUSPEND(false, "Checkpoint Coordinator is suspending."),
 
     JOB_FAILURE(false, "The job has failed."),
 
+    // FailoverRegion重启
     JOB_FAILOVER_REGION(false, "FailoverRegion is restarting."),
 
     TASK_FAILURE(false, "Task has failed."),

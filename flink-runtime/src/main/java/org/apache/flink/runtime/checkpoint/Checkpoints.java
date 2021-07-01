@@ -53,6 +53,13 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个实用程序类，具有写、加载、释放检查点和保存点元数据的方法。
+ *
+ * <p>存储的检查点元数据文件有以下格式:
+ * <pre>[MagicNumber (int) | format Version (int) | checkpoint metadata (variable)]</pre>
+ *
+ * <p>实际的保存点序列化是通过{@link MetadataSerializer}版本特定的。
+ *
  * A utility class with the methods to write/load/dispose the checkpoint and savepoint metadata.
  *
  * <p>Stored checkpoint metadata files have the following format:

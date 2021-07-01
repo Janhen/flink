@@ -35,6 +35,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 包含原始托管操作符状态和键组状态的简单容器类，它处理操作符的所有子任务，因此表示逻辑操作符的完整状态。
+ *
  * Simple container class which contains the raw/managed operator state and key-group state handles
  * from all sub tasks of an operator and therefore represents the complete state of a logical
  * operator.
