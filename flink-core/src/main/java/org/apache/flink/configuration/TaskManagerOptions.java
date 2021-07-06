@@ -368,6 +368,7 @@ public class TaskManagerOptions {
                                     + " Task Off-Heap Memory, Managed Memory and Network Memory.");
 
     /** Task Off-Heap Memory size for TaskExecutors. */
+    // TaskExecutor 的任务堆外内存大小。
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> TASK_OFF_HEAP_MEMORY =
             key("taskmanager.memory.task.off-heap.size")
@@ -379,6 +380,7 @@ public class TaskManagerOptions {
                                     + " when Flink calculates the JVM max direct memory size parameter.");
 
     /** Managed Memory size for TaskExecutors. */
+    // TaskExecutors 的管理内存大小。
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> MANAGED_MEMORY_SIZE =
             key("taskmanager.memory.managed.size")

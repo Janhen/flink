@@ -27,6 +27,16 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 该接口描述了pact运行时处理数据类型所需的方法。具体来说，该接口包含用于散列、比较和创建辅助结构的方法。
+ *
+ * <p>此接口中的方法不仅取决于记录，还取决于记录的哪些字段用于比较或散列。这组字段通常是记录字段的子集。一般来说，这个类
+ * 假设一个关于哈希码和相等的契约，与为 {@link java.lang.Object#equals(Object)} {@link java.lang.Object#equals(Object)}
+ * 定义的方式相同
+ *
+ * <p>实现类是有状态的，因为有几种方法需要将一个记录设置为比较的参考，然后再将候选者与它进行比较。因此，实现此接口的类不
+ * 是线程安全的。运行时将确保不会在不同线程中两次使用任何实例，但会为此目的创建一个副本。因此，由 {@link #duplicate()}
+ * 方法创建的副本必须与复制它们的实例不共享状态：它们必须是深副本。
+ *
  * This interface describes the methods that are required for a data type to be handled by the pact
  * runtime. Specifically, this interface contains the methods used for hashing, comparing, and
  * creating auxiliary structures.

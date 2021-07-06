@@ -23,6 +23,13 @@ import org.apache.flink.annotation.Internal;
 import java.io.IOException;
 
 /**
+ * 一个简单的迭代器接口。与 {@link java.util.Iterator} 的主要区别是
+ *
+ * <ul>
+ *     <li>它有两个不同的<code>next()<code>，其中一个变体允许传递一个可以重用的对象，如果类型是可变的。
+ *     <li>它将逻辑整合到一个 <code>next()<code> 函数中，而不是将其拆分为两个不同的函数，例如 <code>hasNext()<code> 和 <code>next()<code>
+ * <ul>
+ *
  * A simple iterator interface. The key differences to the {@link java.util.Iterator} are
  *
  * <ul>

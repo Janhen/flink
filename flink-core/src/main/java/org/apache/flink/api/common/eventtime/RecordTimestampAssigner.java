@@ -21,7 +21,8 @@ package org.apache.flink.api.common.eventtime;
 import org.apache.flink.annotation.Public;
 
 /**
- * 转发已经分配的时间戳的{@link TimestampAssigner}。这适用于当记录来自一个带有有效时间戳的 source 时，例如Kafka元数据。
+ * 转发已经分配的时间戳的{@link TimestampAssigner}。这适用于当记录来自一个带有有效时间戳的 source 时，例如Kafka元
+ * 数据。
  *
  * A {@link TimestampAssigner} that forwards the already-assigned timestamp. This is for use when
  * records come out of a source with valid timestamps, for example from the Kafka Metadata.

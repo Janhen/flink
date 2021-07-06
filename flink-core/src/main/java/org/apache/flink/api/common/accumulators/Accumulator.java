@@ -23,10 +23,12 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
- * 累加器从用户函数和操作符中收集分布式统计信息或聚合。每个并行实例创建并更新自己的累加器对象，累加器的不同并行实例稍后会合并。
- * 在作业结束时被系统合并。结果可以从作业执行的结果中获得，也可以从web运行时监视器中获得。
- * <p>累加器的灵感来自HadoopMapReduce计数器。
- * 添加到累加器的类型可能与返回的类型不同。这就是集合累加器的情况:我们添加单个对象，但结果是一组对象。
+ * 累加器从用户函数和操作符中收集分布式统计信息或聚合。每个并行实例创建并更新自己的累加器对象，累加器的不同并行实例稍后会
+ * 合并。在作业结束时被系统合并。结果可以从作业执行的结果中获得，也可以从web运行时监视器中获得。
+ *
+ * <p>累加器的灵感来自 Hadoop/MapReduce 计数器。
+ *
+ * <p>添加到累加器的类型可能与返回的类型不同。这就是集合累加器的情况:我们添加单个对象，但结果是一组对象。
  *
  * Accumulators collect distributed statistics or aggregates in a from user functions and operators.
  * Each parallel instance creates and updates its own accumulator object, and the different parallel
@@ -53,6 +55,8 @@ public interface Accumulator<V, R extends Serializable> extends Serializable, Cl
     void resetLocal();
 
     /**
+     * 由系统内部使用以在作业结束时合并收集器的收集部分。
+     *
      * Used by system internally to merge the collected parts of an accumulator at the end of the
      * job.
      *
@@ -61,6 +65,8 @@ public interface Accumulator<V, R extends Serializable> extends Serializable, Cl
     void merge(Accumulator<V, R> other);
 
     /**
+     * 复制累加器。所有子类都需要正确实现克隆并且不能抛出 {@link java.lang.CloneNotSupportedException}
+     *
      * Duplicates the accumulator. All subclasses need to properly implement cloning and cannot
      * throw a {@link java.lang.CloneNotSupportedException}
      *

@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import static org.apache.flink.util.ExceptionUtils.tryEnrichOutOfMemoryError;
 
 /** Exception utils to handle and enrich exceptions occurring in TaskManager. */
+// 用于处理和丰富 TaskManager 中发生的异常的异常实用程序。
 public class TaskManagerExceptionUtils {
     private static final String TM_DIRECT_OOM_ERROR_MESSAGE =
             String.format(

@@ -32,6 +32,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
  * (混合)内存段的工厂({@link HybridMemorySegment})。
+ *
  * <p>这个工厂的目的是确保堆数据的所有内存段都是相同类型的。这样，运行时就不会混合{@link MemorySegment}的各种专门化。
  * 不混合使用它们已经证明有利于JIT的方法专门化和整体性能。
  *

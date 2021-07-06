@@ -31,6 +31,14 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
+ * Java GC 清洁器包装器。
+ *
+ * <p>清理操作可以用 Java GC Cleaner 包装，它会在为给定的所有者对象（在用户代码中无法访问）运行 GC 之前安排此操作。
+ * 但前提是用户之前尚未明确运行清洁器。如果在 GC 之后运行清洁器，它将不会再次运行清洁操作。通过这种方式，我们保证清理操作
+ * 将始终在某个时间点运行，但只运行一次。
+ *
+ * <p>包装器在不同的包中查找底层的 Java GC Cleaner 类
+ *
  * Java GC Cleaner wrapper.
  *
  * <p>A clean operation can be wrapped with the Java GC Cleaner which will schedule this operation

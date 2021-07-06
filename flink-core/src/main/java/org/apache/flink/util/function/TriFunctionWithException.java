@@ -24,6 +24,8 @@ import org.apache.flink.util.ExceptionUtils;
 import java.util.function.BiFunction;
 
 /**
+ * 接受三个参数的函数。
+ *
  * Function which takes three arguments.
  *
  * @param <S> type of the first argument

@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Utility class to create instances from class objects and checking failure reasons. */
+// 从类对象创建实例并检查失败原因的实用程序类。
 @Internal
 public final class InstantiationUtil {
 

@@ -19,6 +19,8 @@
 package org.apache.flink.util;
 
 /**
+ * 一个仅实现 {@link java.io.Serializable} 的简单对象，因此可以在可序列化类中使用。
+ *
  * A simple object that only implements {@link java.io.Serializable}, so it can be used in
  * serializable classes.
  */

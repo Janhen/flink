@@ -19,6 +19,9 @@
 package org.apache.flink.util;
 
 /**
+ * 可以处理的类的接口，即具有专门的生命周期步骤来“销毁”对象。这样做的原因是例如释放本机资源。从这一点来看，该接口实现了与
+ * {@link java.io.Closeable} 接口类似的目的，但有时两者都应表示为孤立的、独立的生命周期步骤。
+ *
  * Interface for classes that can be disposed, i.e. that have a dedicated lifecycle step to
  * "destroy" the object. On reason for this is for example to release native resources. From this
  * point, the interface fulfills a similar purpose as the {@link java.io.Closeable} interface, but
@@ -27,6 +30,8 @@ package org.apache.flink.util;
 public interface Disposable {
 
     /**
+     * 处置对象并释放所有资源。调用此方法后，调用对象上的任何方法都可能导致未定义的行为。
+     *
      * Disposes the object and releases all resources. After calling this method, calling any
      * methods on the object may result in undefined behavior.
      *

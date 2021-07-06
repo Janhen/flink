@@ -40,6 +40,8 @@ public class AccumulatorHelper {
     private static final Logger LOG = LoggerFactory.getLogger(AccumulatorHelper.class);
 
     /**
+     * 合并两个累加器集合。第二个将合并到第一个中。
+     *
      * Merge two collections of accumulators. The second will be merged into the first.
      *
      * @param target The collection of accumulators that will be updated

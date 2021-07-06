@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** A registry for iteration {@link Aggregator}s. */
+// 迭代 {@link Aggregator} 的注册表。
 @Internal
 public class AggregatorRegistry {
 

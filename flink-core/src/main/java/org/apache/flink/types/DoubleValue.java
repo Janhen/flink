@@ -25,6 +25,8 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 盒装可序列化和可比较的双精度浮点类型，表示原始类型 {@code double}。
+ *
  * Boxed serializable and comparable double precision floating point type, representing the
  * primitive type {@code double}.
  */
