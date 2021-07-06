@@ -29,6 +29,7 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** The settings regarding RocksDBs memory usage. */
+// 关于rocksdb内存使用情况的设置。
 public final class RocksDBMemoryConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,12 +41,16 @@ public final class RocksDBMemoryConfiguration implements Serializable {
     @Nullable private MemorySize fixedMemoryPerSlot;
 
     /**
+     * 写缓冲区所消耗的总共享内存的最大部分。如果没有设置为空。
+     *
      * The maximum fraction of the total shared memory consumed by the write buffers. Null if not
      * set.
      */
     @Nullable private Double writeBufferRatio;
 
     /**
+     * 共享缓存中的高优先级池比率，用于索引和过滤器块。如果没有设置为空。
+     *
      * The high priority pool ratio in the shared cache, used for index & filter blocks. Null if not
      * set.
      */
@@ -169,6 +174,7 @@ public final class RocksDBMemoryConfiguration implements Serializable {
     // ------------------------------------------------------------------------
 
     /** Validates if the configured options are valid with respect to one another. */
+    // 验证配置的选项是否相对于其他选项有效。
     public void validate() {
         // As FLINK-15512 introduce a new mechanism to calculate the cache capacity,
         // the relationship of write_buffer_manager_capacity and cache_capacity has changed to:
@@ -190,6 +196,9 @@ public final class RocksDBMemoryConfiguration implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 从另一个对象和一个配置派生一个RocksDBMemoryConfiguration。在另一个配置对象上设置的值优先，如果在另一个配置
+     * 对象上没有设置值，则使用配置中的值。
+     *
      * Derives a RocksDBMemoryConfiguration from another object and a configuration. The values set
      * on the other object take precedence, and the values from the configuration are used if no
      * values are set on the other config object.

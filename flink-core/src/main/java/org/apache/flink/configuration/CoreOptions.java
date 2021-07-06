@@ -39,9 +39,9 @@ public class CoreOptions {
     // ------------------------------------------------------------------------
 
     /**
-     * 定义从用户代码中加载类时的类解析策略，这意味着是否首先检查用户代码 jar ({@code "child-first"})或应用程序类路径({@code "parent-first"})
-     * 默认设置指示首先从用户代码jar加载类，这意味着用户代码jar可以包含和加载不同于Flink使用的依赖项(传递性)。
-     * 规则的例外是通过{@link #ALWAYS_PARENT_FIRST_LOADER_PATTERNS}定义的。
+     * 定义从用户代码中加载类时的类解析策略，这意味着是否首先检查用户代码 jar ({@code "child-first"})或应用程序类
+     * 路径({@code "parent-first"})默认设置指示首先从用户代码jar加载类，这意味着用户代码jar可以包含和加载不同于
+     * Flink使用的依赖项(传递性)。规则的例外是通过{@link #ALWAYS_PARENT_FIRST_LOADER_PATTERNS}定义的。
      *
      * Defines the class resolution strategy when loading classes from user code, meaning whether to
      * first check the user code jar ({@code "child-first"}) or the application classpath ({@code

@@ -41,7 +41,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * 配置状态TTL逻辑。
  * 注: 只有当用户值序列化器可以处理{@code null}值时，具有TTL的map状态当前支持{@code null}用户值。
- * 如果序列化器不支持{@code null}值，它可以用{@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer}进行包装，代价是在序列化形式中增加一个字节。
+ * 如果序列化器不支持{@code null}值，它可以用{@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer}
+ * 进行包装，代价是在序列化形式中增加一个字节。
  *
  * Configuration of state TTL logic.
  *
@@ -70,11 +71,14 @@ public class StateTtlConfig implements Serializable {
         /** TTL is disabled. State does not expire. */
         Disabled,
         /**
+         * 在每个写操作上创建状态并更新状态时初始化最后访问时间戳。
+         *
          * Last access timestamp is initialised when state is created and updated on every write
          * operation.
          */
         OnCreateAndWrite,
         /** The same as <code>OnCreateAndWrite</code> but also updated on read. */
+        // 与<code>OnCreateAndWrite<code>相同，但也在读取时更新。
         OnReadAndWrite
     }
 
@@ -82,6 +86,7 @@ public class StateTtlConfig implements Serializable {
     /** This option configures whether expired user value can be returned or not. */
     public enum StateVisibility {
         /** Return expired user value if it is not cleaned up yet. */
+        // 如果还没有清除，则返回过期的用户值。
         ReturnExpiredIfNotCleanedUp,
         /** Never return expired user value. */
         NeverReturnExpired
@@ -342,6 +347,10 @@ public class StateTtlConfig implements Serializable {
     }
 
     /**
+     * TTL清理策略。
+     * <p>这个类配置何时用TTL清除过期状态。默认情况下，如果发现过期，则在显式读访问时总是清除状态。当前状态完整快照的清
+     * 理可以额外激活。
+     *
      * TTL cleanup strategies.
      *
      * <p>This class configures when to cleanup expired state with TTL. By default, state is always

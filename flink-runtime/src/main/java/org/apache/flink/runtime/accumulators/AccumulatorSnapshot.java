@@ -28,6 +28,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * 这个类封装了单个任务的累加器映射。它用于从TaskManagers到JobManager以及从JobManager到客户机的传输。
+ *
  * This class encapsulates a map of accumulators for a single task. It is used for the transfer from
  * TaskManagers to the JobManager and from the JobManager to the Client.
  */

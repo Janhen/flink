@@ -23,6 +23,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import javax.annotation.Nullable;
 
 /**
+ * 一个三元布尔值，它的值可以是'true'， 'false'或'undefined'。
+ *
+ * <p>一个三元布尔值可以用于配置开关，可能没有配置(未定义)，在这种情况下，应该假定一个默认值。
+ *
  * A ternary boolean, which can have the values 'true', 'false', or 'undefined'.
  *
  * <p>A ternary boolean can for example be used to configuration switches that may be not configured

@@ -26,6 +26,7 @@ import java.net.URLClassLoader;
 import java.util.function.Consumer;
 
 /** Gives the URLClassLoader a nicer name for debugging purposes. */
+// 为URLClassLoader提供一个便于调试的名称。
 public class FlinkUserCodeClassLoaders {
 
     private FlinkUserCodeClassLoaders() {}

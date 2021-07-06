@@ -78,6 +78,14 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 个状态后端，将其状态存储在{@code RocksDB}中。这个状态后端可以存储超过内存和溢出到磁盘的非常大的状态。
+ *
+ * <p>所有keyvalue状态(包括windows)都存储在RocksDB的keyvalue索引中。为了防止机器丢失，检查点获取RocksDB数据库的
+ * 快照，并将该快照持久化到文件系统(默认情况下)或其他可配置状态后端。< p >
+ *
+ * <p> RocksDB实例的行为可以通过{@link #setPredefinedOptions(PredefinedOptions)}和
+ * {@link #setRocksDBOptions(RocksDBOptionsFactory)}设置RocksDBOptions参数化。
+ *
  * A State Backend that stores its state in {@code RocksDB}. This state backend can store very large
  * state that exceeds memory and spills to disk.
  *
@@ -134,6 +142,7 @@ public class RocksDBStateBackend extends AbstractStateBackend implements Configu
     private final TernaryBoolean enableIncrementalCheckpointing;
 
     /** Thread number used to transfer (download and upload) state, default value: 1. */
+    // 传输(下载、上传)状态的线程号，默认为1。
     private int numberOfTransferThreads;
 
     /** The configuration for memory settings (pool sizes, etc.). */

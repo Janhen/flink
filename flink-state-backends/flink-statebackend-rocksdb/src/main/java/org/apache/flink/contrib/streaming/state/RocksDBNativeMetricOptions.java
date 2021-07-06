@@ -29,6 +29,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 使RocksDB的指标转发到Flink的指标报告。所有指标都在列族级别报告，并返回无符号长值
+ *
  * Enable which RocksDB metrics to forward to Flink's metrics reporter. All metrics report at the
  * column family level and return unsigned long values.
  *

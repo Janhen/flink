@@ -1121,6 +1121,10 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     }
 
     /**
+     * 在执行配置中注册的自定义用户配置对象的抽象类。
+     *
+     * <p>这个用户配置在运行时可以通过getRuntimeContext().getExecutionConfig().GlobalJobParameters()访问
+     *
      * Abstract class for a custom user configuration object registered at the execution config.
      *
      * <p>This user config is accessible at runtime through

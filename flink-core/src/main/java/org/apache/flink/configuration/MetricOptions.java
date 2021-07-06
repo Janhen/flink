@@ -28,12 +28,13 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** Configuration options for metrics and metric reporters. */
+// 度量和度量报告的配置选项。
 @PublicEvolving
 public class MetricOptions {
 
     /**
-     * 一个可选的 report 名单。如果配置了，那么只有名称与列表中的任何名称匹配的报告才会被启动。
-     * 否则，在配置中可以找到的所有报告都将启动。
+     * 一个可选的 report 名单。如果配置了，那么只有名称与列表中的任何名称匹配的报告才会被启动。否则，在配置中可以找到的
+     * 所有报告都将启动。
      *
      * An optional list of reporter names. If configured, only reporters whose name matches any of
      * the names in the list will be started. Otherwise, all reporters that could be found in the
