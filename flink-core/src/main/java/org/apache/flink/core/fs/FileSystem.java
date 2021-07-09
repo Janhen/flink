@@ -406,6 +406,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 返回对{@link FileSystem}实例的引用，用于访问由给定的{@link URI}标识的文件系统。
+     *
      * Returns a reference to the {@link FileSystem} instance for accessing the file system
      * identified by the given {@link URI}.
      *

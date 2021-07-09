@@ -23,6 +23,9 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * InputSplitSources创建了{@link InputSplit}，它定义了由{@link org.apache.flink.api.common.io.InputFormat}
+ * 生成的部分数据。
+ *
  * InputSplitSources create {@link InputSplit}s that define portions of data to be produced by
  * {@link org.apache.flink.api.common.io.InputFormat}s.
  *

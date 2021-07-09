@@ -54,6 +54,8 @@ import static com.google.cloud.pubsub.v1.SubscriptionAdminSettings.defaultCreden
 import static org.apache.flink.runtime.concurrent.Executors.directExecutor;
 
 /**
+ * 输出到PubSub的接收器函数。
+ *
  * A sink function that outputs to PubSub.
  *
  * @param <IN> type of PubSubSink messages to write

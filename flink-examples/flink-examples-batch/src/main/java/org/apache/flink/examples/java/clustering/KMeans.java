@@ -35,6 +35,8 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
+ * 这个例子实现了一个基本的K-Means聚类算法。
+ *
  * This example implements a basic K-Means clustering algorithm.
  *
  * <p>K-Means is an iterative clustering algorithm and works as follows:<br>

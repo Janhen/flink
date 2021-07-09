@@ -62,6 +62,8 @@ public interface OutputFormat<IT> extends Serializable {
     void configure(Configuration parameters);
 
     /**
+     * 打开输出格式的并行实例以存储其并行实例的结果。
+     *
      * Opens a parallel instance of the output format to store the result of its parallel instance.
      *
      * <p>When this method is called, the output format it guaranteed to be configured.
@@ -73,6 +75,10 @@ public interface OutputFormat<IT> extends Serializable {
     void open(int taskNumber, int numTasks) throws IOException;
 
     /**
+     * 向输出添加一条记录。
+     *
+     * <p>当这个方法被调用时，它保证打开的输出格式。
+     *
      * Adds a record to the output.
      *
      * <p>When this method is called, the output format it guaranteed to be opened.
@@ -83,6 +89,11 @@ public interface OutputFormat<IT> extends Serializable {
     void writeRecord(IT record) throws IOException;
 
     /**
+     * 方法，标记并行输出实例的生命周期的结束。应用于关闭渠道和流并释放资源。当这个方法返回时没有错误，输出就被认为是正
+     * 确的。
+     *
+     * <p>当这个方法被调用时，它保证打开的输出格式。
+     *
      * Method that marks the end of the life-cycle of parallel output instance. Should be used to
      * close channels and streams and release resources. After this method returns without an error,
      * the output is assumed to be correct.

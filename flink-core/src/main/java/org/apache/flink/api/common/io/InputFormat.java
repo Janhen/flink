@@ -29,6 +29,14 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 生成记录的数据源的基本接口。
+ *
+ * <p>输入格式处理以下内容:
+ *
+ * <li>它描述了如何将输入分割成可并行处理的部分。
+ * <li>描述如何从输入分割读取记录。
+ * <li>描述如何从输入中收集基本统计信息。
+ *
  * The base interface for data sources that produces records.
  *
  * <p>The input format handles the following:
@@ -67,6 +75,8 @@ import java.io.Serializable;
 public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<T>, Serializable {
 
     /**
+     * 配置此输入格式。由于输入格式是通用实例化的，因此没有参数，因此该方法是输入格式根据配置值设置其基本字段的地方。
+     *
      * Configures this input format. Since input formats are instantiated generically and hence
      * parameterless, this method is the place where the input formats set their basic fields based
      * on configuration values.
@@ -79,6 +89,11 @@ public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<
     void configure(Configuration parameters);
 
     /**
+     * 从按此格式描述的输入获取基本统计信息。如果输入格式不知道如何创建这些统计信息，它可能返回null。此方法可选择获取统
+     * 计信息的缓存版本。输入格式可以检查它们，并决定是否直接返回它们，而无需重新收集统计信息。
+     *
+     * <p>当调用此方法时，保证配置输入格式。
+     *
      * Gets the basic statistics from the input described by this format. If the input format does
      * not know how to create those statistics, it may return null. This method optionally gets a
      * cached version of the statistics. The input format may examine them and decide whether it
@@ -102,6 +117,10 @@ public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 打开输入格式的并行实例以处理分割。
+     *
+     * <p>当这个方法被调用时，它保证配置的输入格式。
+     *
      * Opens a parallel instance of the input format to work on a split.
      *
      * <p>When this method is called, the input format it guaranteed to be configured.
@@ -112,6 +131,10 @@ public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<
     void open(T split) throws IOException;
 
     /**
+     * 用于检查是否已到达输入的末尾。
+     *
+     * <p>当这个方法被调用时，它保证被打开的输入格式。
+     *
      * Method used to check if the end of the input is reached.
      *
      * <p>When this method is called, the input format it guaranteed to be opened.

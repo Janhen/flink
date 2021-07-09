@@ -251,6 +251,11 @@ public class SingleOutputStreamOperator<T> extends DataStream<T> {
     }
 
     /**
+     * 关闭此操作符的链接，因此线程协同定位将不会用作优化。
+     *
+     * <p>链接可以通过{@link StreamExecutionEnvironment#disableOperatorChaining()}关闭整个作业，但不建议出
+     * 于性能考虑。
+     *
      * Turns off chaining for this operator so thread co-location will not be used as an
      * optimization.
      *

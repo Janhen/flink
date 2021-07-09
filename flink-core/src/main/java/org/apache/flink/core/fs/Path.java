@@ -270,6 +270,8 @@ public class Path implements IOReadableWritable, Serializable {
     }
 
     /**
+     * 返回拥有此路径的文件系统。
+     *
      * Returns the FileSystem that owns this Path.
      *
      * @return the FileSystem that owns this Path

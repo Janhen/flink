@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 
 /** A Java POJO that represents a task for copying a single file. */
+// 表示复制单个文件的任务的Java POJO。
 public class FileCopyTask implements Serializable {
 
     private static final long serialVersionUID = -8760082278978316032L;

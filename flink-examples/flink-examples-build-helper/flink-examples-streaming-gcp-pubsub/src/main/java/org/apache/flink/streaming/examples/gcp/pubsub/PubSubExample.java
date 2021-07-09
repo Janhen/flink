@@ -73,6 +73,7 @@ public class PubSubExample {
                                 .build())
                 .map(PubSubExample::printAndReturn)
                 .disableChaining()
+                // 自定义 sink 配合构造器模式使用
                 .addSink(
                         PubSubSink.newBuilder()
                                 .withSerializationSchema(new IntegerSerializer())

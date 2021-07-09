@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Queue;
 
 /**
+ * 一种输入格式的实现，它动态地将{@code FileCopyTask}分配给已经完成先前分配的任务的映射器。
+ *
  * An implementation of an input format that dynamically assigns {@code FileCopyTask} to the mappers
  * that have finished previously assigned tasks.
  */

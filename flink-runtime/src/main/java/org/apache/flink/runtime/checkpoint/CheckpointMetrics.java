@@ -41,6 +41,7 @@ public class CheckpointMetrics implements Serializable {
     // 操作符检查点异步部分的持续时间(以毫秒为单位)。
     private long asyncDurationMillis;
 
+    // 检查点开始延迟
     private long checkpointStartDelayNanos;
 
     public CheckpointMetrics() {
