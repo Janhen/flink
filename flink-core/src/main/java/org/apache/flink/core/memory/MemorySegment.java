@@ -30,8 +30,9 @@ import java.nio.ReadOnlyBufferException;
 /**
  * 这个类表示由Flink管理的一块内存。段可以由堆内存(字节数组)或堆外内存支持。
  *
- * <p>用于单个内存访问的方法在类中是专门的。{@link org.apache.flink.core.memory.HybridMemorySegment}。
- * 所有跨两个内存段操作的方法都在这个类中实现，以透明地处理内存段类型的混合。
+ * <p>用于单个内存访问的方法在类中是专门的。{@link org.apache.flink.core.memory.HybridMemorySegment}。所有跨
+ * 两个内存段操作的方法都在这个类中实现，以透明地处理内存段类型的混合。
+ *
  * <p>
  * 这个类在概念上实现了与Java的{@link java.nio.ByteBuffer}类似的目的。我们出于各种原因添加了这个专门化类:
  * - 它提供了额外的二进制比较、交换和复制方法。
@@ -40,6 +41,7 @@ import java.nio.ReadOnlyBufferException;
  * - 它提供显式的大端小端访问方法，而不是在内部跟踪字节顺序。
  * - 它透明而有效地在堆上和堆外变量之间移动数据。
  * <p>
+ *
  * This class represents a piece of memory managed by Flink. The segment may be backed by heap
  * memory (byte array) or by off-heap memory.
  *

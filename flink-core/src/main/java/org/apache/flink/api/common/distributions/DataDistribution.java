@@ -59,6 +59,8 @@ public interface DataDistribution extends IOReadableWritable, Serializable {
     int getNumberOfFields();
 
     /**
+     * 获取对数据集进行分区所依据的键的类型。
+     *
      * Gets the type of the key by which the dataSet is partitioned.
      *
      * @return The type of the key by which the dataSet is partitioned.

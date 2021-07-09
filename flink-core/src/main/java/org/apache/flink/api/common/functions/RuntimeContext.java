@@ -46,8 +46,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * RuntimeContext包含关于执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息(如当前并行性)和其他结构，
- * 如累加器和广播变量。<p>函数可以在运行时通过调用{@link AbstractRichFunction#getRuntimeContext()}获得RuntimeContext。
+ * RuntimeContext包含关于执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息(如当前
+ * 并行性)和其他结构，如累加器和广播变量。
+ *
+ * <p>函数可以在运行时通过调用{@link AbstractRichFunction#getRuntimeContext()}获得RuntimeContext。
  *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
@@ -120,12 +122,16 @@ public interface RuntimeContext {
     String getTaskNameWithSubtasks();
 
     /**
+     * 返回当前正在执行的作业的 {@link org.apache.flink.api.common.ExecutionConfig}。
+     *
      * Returns the {@link org.apache.flink.api.common.ExecutionConfig} for the currently executing
      * job.
      */
     ExecutionConfig getExecutionConfig();
 
     /**
+     * 获取 ClassLoader 以加载不在系统类路径中但属于用户作业的 jar 文件一部分的类。
+     *
      * Gets the ClassLoader to load classes that are not in system's classpath, but are part of the
      * jar file of a user job.
      *
@@ -136,6 +142,9 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 添加此累加器。如果累加器已存在于同一任务中，则引发异常。请注意，累加器名称必须在 Flink 作业中具有唯一名称。否则，
+     * 当来自不同任务的不兼容累加器在作业完成后在 JobManager 中组合时，您将收到错误消息。
+     *
      * Add this accumulator. Throws an exception if the accumulator already exists in the same Task.
      * Note that the Accumulator name must have an unique name across the Flink job. Otherwise you
      * will get an error when incompatible accumulators from different Tasks are combined at the
@@ -144,6 +153,10 @@ public interface RuntimeContext {
     <V, A extends Serializable> void addAccumulator(String name, Accumulator<V, A> accumulator);
 
     /**
+     * 获取现有的累加器对象。累加器必须先前已添加到此本地运行时上下文中。
+     *
+     * <p>如果累加器不存在或累加器存在但类型不同，则抛出异常。
+     *
      * Get an existing accumulator object. The accumulator must have been added previously in this
      * local runtime context.
      *
@@ -179,6 +192,8 @@ public interface RuntimeContext {
     Histogram getHistogram(String name);
 
     /**
+     * 通过resourceName获取具体的外部资源信息。
+     *
      * Get the specific external resource information by the resourceName.
      *
      * @param resourceName of the required external resource
@@ -190,6 +205,8 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 测试由给定的 {@code name} 标识的广播变量是否存在。
+     *
      * Tests for the existence of the broadcast variable identified by the given {@code name}.
      *
      * @param name The name under which the broadcast variable is registered;
@@ -199,6 +216,10 @@ public interface RuntimeContext {
     boolean hasBroadcastVariable(String name);
 
     /**
+     * 返回绑定到由给定 {@code name} 标识的广播变量的结果。
+     *
+     * <p>重要：广播变量数据结构在一台机器上的并行任务之间共享。任何修改其内部状态的访问都需要由调用者手动同步。
+     *
      * Returns the result bound to the broadcast variable identified by the given {@code name}.
      *
      * <p>IMPORTANT: The broadcast variable data structure is shared between the parallel tasks on
@@ -228,6 +249,8 @@ public interface RuntimeContext {
             String name, BroadcastVariableInitializer<T, C> initializer);
 
     /**
+     * 返回 {@link DistributedCache} 以获取文件的本地临时文件副本，否则无法在本地访问。
+     *
      * Returns the {@link DistributedCache} to get the local temporary file copies of files
      * otherwise not locally accessible.
      *
@@ -240,9 +263,12 @@ public interface RuntimeContext {
     // ------------------------------------------------------------------------
 
     /**
-     * 获取系统键值状态的句柄。keyvalue状态只有在在KeyedStream上执行函数时才可访问。在每次访问时，该状态公开函数当前处理的元素键的值。
-     * 每个函数可能有多个分区状态，使用不同的名称进行处理。
-     * <p>因为每个值的范围是当前处理的元素的键，并且这些元素是由Flink运行时分配的，系统可以透明地向外扩展并重新分配状态和KeyedStream。
+     * 获取系统键值状态的句柄。keyvalue状态只有在在KeyedStream上执行函数时才可访问。在每次访问时，该状态公开函数当前
+     * 处理的元素键的值。每个函数可能有多个分区状态，使用不同的名称进行处理。
+     *
+     * <p>因为每个值的范围是当前处理的元素的键，并且这些元素是由Flink运行时分配的，系统可以透明地向外扩展并重新分配状态
+     * 和KeyedStream。
+     *
      * <p>下面的代码示例演示了如何实现一个连续计数器，该计数器计算某个键的元素出现的次数，并在每次出现时发出该元素的更新计数。
      *
      * Gets a handle to the system's key/value state. The key/value state is only accessible if the
@@ -289,8 +315,10 @@ public interface RuntimeContext {
     <T> ValueState<T> getState(ValueStateDescriptor<T> stateProperties);
 
     /**
-     * 获取系统键值列表状态的句柄。这个状态类似于通过{@link getState(ValueStateDescriptor)}访问的状态，
-     * 但是对包含列表的状态进行了优化。可以向列表中添加元素，或者作为一个整体检索列表。<p>此状态只有在KeyedStream上执行函数时才可访问
+     * 获取系统键值列表状态的句柄。这个状态类似于通过{@link #getState(ValueStateDescriptor)}访问的状态，但是对包
+     * 含列表的状态进行了优化。可以向列表中添加元素，或者作为一个整体检索列表。
+     *
+     * <p>此状态只有在KeyedStream上执行函数时才可访问
      *
      * Gets a handle to the system's key/value list state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that holds

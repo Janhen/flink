@@ -170,6 +170,8 @@ public final class IOUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 关闭 AutoCloseable 对象并<b>忽略<b>任何 {@link Exception} 或空指针。只能用于异常处理程序中的清理。
+     *
      * Close the AutoCloseable objects and <b>ignore</b> any {@link Exception} or null pointers.
      * Must only be used for cleanup in exception handlers.
      *

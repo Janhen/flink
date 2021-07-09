@@ -31,6 +31,10 @@ import org.apache.flink.annotation.Internal;
 import javax.annotation.Nullable;
 
 /**
+ * 一组用于验证输入的静态实用方法。
+ *
+ * <p>该类仿照 Google Guava 的 Preconditions 类建模，并部分采用了该类的代码。我们将此代码添加到 Flink 代码库中，以减少外部依赖。
+ *
  * A collection of static utility methods to validate input.
  *
  * <p>This class is modelled after Google Guava's Preconditions class, and partly takes code from

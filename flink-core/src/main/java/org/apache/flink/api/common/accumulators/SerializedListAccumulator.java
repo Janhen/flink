@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 这个累加器以序列化的形式存储一组对象，这样存储的对象就不会受到对原始对象的修改的影响。
+ *
+ * <p>对象可以根据需要使用特定的类加载器进行反序列化。
+ *
  * This accumulator stores a collection of objects in serialized form, so that the stored objects
  * are not affected by modifications to the original objects.
  *

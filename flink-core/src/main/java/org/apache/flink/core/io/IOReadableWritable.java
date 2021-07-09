@@ -27,6 +27,7 @@ import java.io.IOException;
 /**
  * 这个接口必须由每个类实现，这些类的对象必须序列化为二进制表示，反之亦然。特别是，记录必须实现这个接口，以便指定如何将其
  * 数据传输为二进制表示。
+ *
  * <p>当实现这个接口时，请确保实现类有一个默认的(零参数)构造函数!
  *
  * This interface must be implemented by every class whose objects have to be serialized to their

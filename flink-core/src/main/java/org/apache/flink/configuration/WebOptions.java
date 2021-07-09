@@ -92,6 +92,7 @@ public class WebOptions {
                                     + " under the directory specified by JOB_MANAGER_WEB_TMPDIR_KEY.");
 
     /** The config parameter defining the number of archived jobs for the JobManager. */
+    // 定义 JobManager 存档作业数量的配置参数
     public static final ConfigOption<Integer> ARCHIVE_COUNT =
             key("web.history")
                     .defaultValue(5)
@@ -99,6 +100,8 @@ public class WebOptions {
                     .withDescription("Number of archived jobs for the JobManager.");
 
     /**
+     * 日志文件位置（可能在独立的日志中，但在使用 YARN 时在日志目录下）。
+     *
      * The log file location (may be in /log for standalone but under log directory when using
      * YARN).
      */
@@ -110,6 +113,7 @@ public class WebOptions {
                             "Path to the log file (may be in /log for standalone but under log directory when using YARN).");
 
     /** Config parameter indicating whether jobs can be uploaded and run from the web-frontend. */
+    // 指示是否可以从 Web 前端上传和运行作业的配置参数。
     public static final ConfigOption<Boolean> SUBMIT_ENABLE =
             key("web.submit.enable")
                     .defaultValue(true)
@@ -118,6 +122,7 @@ public class WebOptions {
                             "Flag indicating whether jobs can be uploaded and run from the web-frontend.");
 
     /** Config parameter defining the number of checkpoints to remember for recent history. */
+    // 配置参数定义要记住的最近历史记录的检查点数量。
     public static final ConfigOption<Integer> CHECKPOINTS_HISTORY_SIZE =
             key("web.checkpoints.history")
                     .defaultValue(10)
@@ -125,6 +130,7 @@ public class WebOptions {
                     .withDescription("Number of checkpoints to remember for recent history.");
 
     /** Time, in milliseconds, after which cached stats are cleaned up if not accessed. */
+    // 时间（以毫秒为单位），此后缓存的统计信息在未访问时被清除。
     public static final ConfigOption<Integer> BACKPRESSURE_CLEANUP_INTERVAL =
             key("web.backpressure.cleanup-interval")
                     .defaultValue(10 * 60 * 1000)
@@ -133,6 +139,8 @@ public class WebOptions {
                             "Time, in milliseconds, after which cached stats are cleaned up if not accessed.");
 
     /**
+     * 时间，以毫秒为单位，在此之后可用统计数据被弃用并需要刷新（通过重新采样）。
+     *
      * Time, in milliseconds, after which available stats are deprecated and need to be refreshed
      * (by resampling).
      */

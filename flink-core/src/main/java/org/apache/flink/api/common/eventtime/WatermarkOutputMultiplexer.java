@@ -29,6 +29,19 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link WatermarkOutputMultiplexer} 将多个 partitions/shards/splits 的水印（和空闲）更新组合成一个组合水印
+ * 更新，并将其转发到底层 {@link WatermarkOutput}。
+ *
+ * <p>多路复用输出可以是立即的也可以是延迟的。即时输出上的水印更新可能会直接影响组合水印状态，该状态将立即转发到底层输出。
+ * 延迟输出上的水印更新只会更新内部状态，而不会直接更新组合水印状态。只有当 {@link #onPeriodicEmit()} 被调用时，延
+ * 迟更新才会被合并并转发到底层输出。
+ *
+ * <p>要注册一个新的多路复用输出，您必须首先调用 {@link #registerNewOutput(String)}，然后使用您从中获得的输出 ID
+ * 调用 {@link #getImmediateOutput(String)} 或 {@link #getDeferredOutput(String)} .您可以获得给定输出 ID
+ * 的立即输出和延迟输出，也可以多次调用 getter。
+ *
+ * <p><b>警告：<b>此类不是线程安全的。
+ *
  * A {@link WatermarkOutputMultiplexer} combines the watermark (and idleness) updates of multiple
  * partitions/shards/splits into one combined watermark update and forwards it to an underlying
  * {@link WatermarkOutput}.

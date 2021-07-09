@@ -30,6 +30,8 @@ import org.apache.flink.annotation.Public;
 public interface Collector<T> {
 
     /**
+     * 发出记录。
+     *
      * Emits a record.
      *
      * @param record The record to collect.
@@ -37,5 +39,6 @@ public interface Collector<T> {
     void collect(T record);
 
     /** Closes the collector. If any data was buffered, that data will be flushed. */
+    // 关闭收集器。如果缓冲了任何数据，则该数据将被刷新。
     void close();
 }

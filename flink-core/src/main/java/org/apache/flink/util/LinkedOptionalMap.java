@@ -37,6 +37,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * LinkedOptionalMap 是一种顺序保留映射（如 {@link LinkedHashMap}），其中键具有唯一的字符串名称，但可以选择存在，而值是可选的。
+ *
  * A LinkedOptionalMap is an order preserving map (like {@link LinkedHashMap}) where keys have a
  * unique string name, but are optionally present, and the values are optional.
  */
@@ -267,6 +269,8 @@ public final class LinkedOptionalMap<K, V> {
     // --------------------------------------------------------------------------------------------------------
 
     /**
+     * 使用 {@link #mergeRightIntoLeft(LinkedOptionalMap, LinkedOptionalMap)} 合并两个 {@link LinkedOptionalMap} 的结果。
+     *
      * The result of merging two {@link LinkedOptionalMap}s using {@link
      * #mergeRightIntoLeft(LinkedOptionalMap, LinkedOptionalMap)}.
      */

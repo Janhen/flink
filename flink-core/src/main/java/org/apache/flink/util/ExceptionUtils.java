@@ -111,6 +111,7 @@ public final class ExceptionUtils {
 
     /**
      * 尝试用附加信息丰富传递的异常。
+     *
      * <p>这个方法改进了直接和元空间{@link OutOfMemoryError}的错误消息。它增加了可能的原因和解决方法的描述。
      *
      * Tries to enrich the passed exception with additional information.
@@ -264,6 +265,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 在签名不允许您抛出任意 Throwable 的情况下抛出给定的 {@code Throwable}。 Errors 和 RuntimeExceptions
+     * 直接抛出，其他异常打包成运行时异常
+     *
      * Throws the given {@code Throwable} in scenarios where the signatures do not allow you to
      * throw an arbitrary Throwable. Errors and RuntimeExceptions are thrown directly, other
      * exceptions are packed into runtime exceptions

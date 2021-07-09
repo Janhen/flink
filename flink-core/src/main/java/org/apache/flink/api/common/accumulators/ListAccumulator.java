@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Public;
 import java.util.ArrayList;
 
 /**
+ * 这个累加器存储一组对象。
+ *
  * This accumulator stores a collection of objects.
  *
  * @param <T> The type of the accumulated objects

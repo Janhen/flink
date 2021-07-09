@@ -74,6 +74,9 @@ public final class StringValueUtils {
     // ============================================================================================
 
     /**
+     * 字符串值的标记器，使用空格字符作为标记分隔符。分词器被设计为具有可重置状态并对可变对象进行操作，从而节省对象分配
+     * 和垃圾收集开销。
+     *
      * A tokenizer for string values that uses whitespace characters as token delimiters. The
      * tokenizer is designed to have a resettable state and operate on mutable objects, sparing
      * object allocation and garbage collection overhead.

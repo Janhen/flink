@@ -21,6 +21,18 @@ package org.apache.flink.util.clock;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 一个可以访问时间的时钟。这个时钟返回两种时间：
+ *
+ * <h3>绝对时间<h3>
+ *
+ * <p>这是指真实世界的挂钟时间，通常源自系统时钟。受时钟漂移和不准确的影响，如果调整系统时钟，可能会发生跳跃。绝对时间的
+ * 行为类似于 {@link System#currentTimeMillis()}。
+ *
+ * <h3>相对时间<h3>
+ *
+ * <p>这个时间以与<i>绝对时间<i>相同的速度前进，但时间戳只能相对于彼此引用。时间戳没有绝对意义，不能跨 JVM 进程进行比
+ * 较。时间戳的来源不受系统时钟调整的影响，因此它永远不会跳跃。相对时间的行为类似于 {@link System#nanoTime()}。
+ *
  * A clock that gives access to time. This clock returns two flavors of time:
  *
  * <h3>Absolute Time</h3>

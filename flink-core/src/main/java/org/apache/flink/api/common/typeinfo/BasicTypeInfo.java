@@ -312,6 +312,7 @@ public class BasicTypeInfo<T> extends TypeInformation<T> implements AtomicType<T
         }
     }
 
+    // J: Java 原始类型 -> Flink 中的类型
     private static final Map<Class<?>, BasicTypeInfo<?>> TYPES =
             new HashMap<Class<?>, BasicTypeInfo<?>>();
 

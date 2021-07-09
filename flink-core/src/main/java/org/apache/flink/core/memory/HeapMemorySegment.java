@@ -28,8 +28,10 @@ import java.util.Objects;
 
 /**
  * 这个类表示由Flink管理的一块堆内存。段由一个字节数组支持，并具有基本类型的随机put和get方法，以及比较和交换方法。
- * 这个类专门用于堆内存的字节访问和字节复制调用，同时重用来自MemorySegment的多字节类型访问和跨段操作。
- * 注意，内存段通常不应该手动分配，而是通过{@link MemorySegmentFactory}分配。
+ *
+ * <p>这个类专门用于堆内存的字节访问和字节复制调用，同时重用来自MemorySegment的多字节类型访问和跨段操作。
+ *
+ * <p>注意，内存段通常不应该手动分配，而是通过{@link MemorySegmentFactory}分配。
  *
  * This class represents a piece of heap memory managed by Flink. The segment is backed by a byte
  * array and features random put and get methods for the basic types, as well as compare and swap

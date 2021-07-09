@@ -24,8 +24,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * 直方图累加器，以分布式方式构建直方图。实现为一个Integer-&gt;Integer TreeMap，以便条目根据值排序。
- * 这个类以后不会扩展到连续值，因为它不会尝试将数据放入箱子中。
+ * 直方图累加器，以分布式方式构建直方图。实现为一个 Integer -> Integer TreeMap，以便条目根据值排序。
+ *
+ * <p>这个类以后不会扩展到连续值，因为它不会尝试将数据放入箱子中。
  *
  * Histogram accumulator, which builds a histogram in a distributed manner. Implemented as a
  * Integer-&gt;Integer TreeMap, so that the entries are sorted according to the values.

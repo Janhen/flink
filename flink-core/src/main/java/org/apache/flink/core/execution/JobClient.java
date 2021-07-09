@@ -43,7 +43,7 @@ public interface JobClient {
     CompletableFuture<Void> cancel();
 
     /**
-     * 停止Flink集群上的关联作业。
+     * 停止 Flink 集群上的关联作业。
      *
      * <p>停止只对流媒体程序有效。请注意，在发送停止命令之后，作业可能会继续运行一段时间，因为在源停止发出数据之后，所有
      * operators 都需要完成处理。

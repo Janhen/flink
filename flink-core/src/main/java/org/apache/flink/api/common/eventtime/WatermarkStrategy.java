@@ -93,6 +93,7 @@ public interface WatermarkStrategy<T>
         // By default, this is {@link RecordTimestampAssigner},
         // for cases where records come out of a source with valid timestamps, for example from
         // Kafka.
+        // 默认情况下，这是 {@link RecordTimestampAssigner}，用于记录来自具有有效时间戳的源的情况，例如来自 Kafka。
         return new RecordTimestampAssigner<>();
     }
 
@@ -103,6 +104,7 @@ public interface WatermarkStrategy<T>
     /**
      * 创建一个新的{@code WatermarkStrategy}来包装这个策略，但是使用给定的{@link TimestampAssigner}
      * 通过{@link TimestampAssignerSupplier})。
+     *
      * <p>当{@link TimestampAssigner}需要额外的上下文时，可以使用它，例如访问度量系统。
      *
      * Creates a new {@code WatermarkStrategy} that wraps this strategy but instead uses the given
@@ -125,6 +127,7 @@ public interface WatermarkStrategy<T>
 
     /**
      * 创建一个新的{@code WatermarkStrategy}来包装这个策略，但是使用给定的{@link SerializableTimestampAssigner}。
+     *
      * <p>如果你想通过lambda函数指定一个{@link TimestampAssigner}，你可以使用这个
      *
      * Creates a new {@code WatermarkStrategy} that wraps this strategy but instead uses the given

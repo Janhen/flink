@@ -116,7 +116,8 @@ public class MemoryUtils {
 
     /**
      * 创建一个清理器，通过VM GC释放不安全内存。
-     * 当内存所有者变成 幻像可达， GC将释放底层的不安全内存，如果还没有释放的话。
+     *
+     * <p>当内存所有者变成 幻像可达， GC将释放底层的不安全内存，如果还没有释放的话。
      *
      * Creates a cleaner to release the unsafe memory by VM GC.
      *
@@ -142,6 +143,8 @@ public class MemoryUtils {
     }
 
     /**
+     * 使用 {@link ByteBuffer} 包装不安全的本机内存。
+     *
      * Wraps the unsafe native memory with a {@link ByteBuffer}.
      *
      * @param address address of the unsafe memory to wrap
@@ -162,6 +165,8 @@ public class MemoryUtils {
     }
 
     /**
+     * 获取由给定的 {@link ByteBuffer} 包装的本机内存地址。
+     *
      * Get native memory address wrapped by the given {@link ByteBuffer}.
      *
      * @param buffer {@link ByteBuffer} which wraps the native memory address to get

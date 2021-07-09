@@ -26,6 +26,8 @@ import java.util.Properties;
 public class PropertiesUtil {
 
     /**
+     * 从属性中获取整数。如果整数无效，此方法将引发异常。
+     *
      * Get integer from properties. This method throws an exception if the integer is not valid.
      *
      * @param config Properties
@@ -118,6 +120,11 @@ public class PropertiesUtil {
     }
 
     /**
+     * 将递归 {@link Properties} 展平为一级属性映射。
+     *
+     * <p>在某些情况下，例如 {@code KafkaProducer#propsToMap}，Properties 纯粹用作 HashTable，而没有考虑其默
+     * 认属性。
+     *
      * Flatten a recursive {@link Properties} to a first level property map.
      *
      * <p>In some cases, {@code KafkaProducer#propsToMap} for example, Properties is used purely as
