@@ -133,6 +133,7 @@ public class ConfigOptions {
         }
 
         /** Defines that the value of the option should be of {@link String} type. */
+        // 定义选项的值应该是 {@link String} 类型
         public TypedConfigOptionBuilder<String> stringType() {
             return new TypedConfigOptionBuilder<>(key, String.class);
         }

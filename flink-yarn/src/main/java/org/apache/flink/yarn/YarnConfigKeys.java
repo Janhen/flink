@@ -19,6 +19,7 @@
 package org.apache.flink.yarn;
 
 /** The Yarn environment variables used for settings of the containers. */
+// 用于设置容器的 Yarn 环境变量
 public class YarnConfigKeys {
 
     // ------------------------------------------------------------------------
@@ -41,7 +42,9 @@ public class YarnConfigKeys {
     public static final String KEYTAB_PRINCIPAL = "_KEYTAB_PRINCIPAL";
     public static final String ENV_HADOOP_USER_NAME = "HADOOP_USER_NAME";
 
+    // kb 认证路径
     public static final String ENV_KRB5_PATH = "_KRB5_PATH";
+    // yarn 配置路径
     public static final String ENV_YARN_SITE_XML_PATH = "_YARN_SITE_XML_PATH";
 
     public static final String LOCAL_RESOURCE_DESCRIPTOR_SEPARATOR = ";";

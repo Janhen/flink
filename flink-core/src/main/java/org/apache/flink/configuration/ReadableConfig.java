@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Optional;
 
 /**
+ * 对配置对象的读取访问权限。允许读取用包含在 {@link ConfigOption} 中的元信息描述的值
+ *
  * Read access to a configuration object. Allows reading values described with meta information
  * included in {@link ConfigOption}.
  */
@@ -30,6 +32,8 @@ import java.util.Optional;
 public interface ReadableConfig {
 
     /**
+     * 使用 {@link ConfigOption} 中包含的元数据读取值。如果配置中不存在值键，则返回 {@link ConfigOption#defaultValue()}
+     *
      * Reads a value using the metada included in {@link ConfigOption}. Returns the {@link
      * ConfigOption#defaultValue()} if value key not present in the configuration.
      *
@@ -41,6 +45,9 @@ public interface ReadableConfig {
     <T> T get(ConfigOption<T> option);
 
     /**
+     * 使用 {@link ConfigOption} 中包含的元数据读取值。与 {@link #get(ConfigOption)} 相反，如果值不存在，则返
+     * 回 {@link Optional#empty()}
+     *
      * Reads a value using the metada included in {@link ConfigOption}. In contrast to {@link
      * #get(ConfigOption)} returns {@link Optional#empty()} if value not present.
      *

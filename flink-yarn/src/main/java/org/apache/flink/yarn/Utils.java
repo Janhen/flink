@@ -72,6 +72,7 @@ import static org.apache.flink.yarn.YarnConfigKeys.ENV_FLINK_CLASSPATH;
 import static org.apache.flink.yarn.YarnConfigKeys.LOCAL_RESOURCE_DESCRIPTOR_SEPARATOR;
 
 /** Utility class that provides helper methods to work with Apache Hadoop YARN. */
+// 提供与 Apache Hadoop YARN 一起使用的辅助方法的实用程序类。
 public final class Utils {
 
     private static final Logger LOG = LoggerFactory.getLogger(Utils.class);

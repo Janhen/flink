@@ -27,7 +27,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** The {@link ConfigOption configuration options} relevant for all Executors. */
-// {@link ConfigOption配置选项} 与所有executor相关。
+// {@link ConfigOption 配置选项} 与所有executor相关。
 @PublicEvolving
 public class DeploymentOptions {
 

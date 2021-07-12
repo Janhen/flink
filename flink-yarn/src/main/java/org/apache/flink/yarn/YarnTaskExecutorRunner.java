@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /** This class is the executable entry point for running a TaskExecutor in a YARN container. */
+// 此类是在 YARN 容器中运行 TaskExecutor 的可执行入口点
 public class YarnTaskExecutorRunner {
 
     protected static final Logger LOG = LoggerFactory.getLogger(YarnTaskExecutorRunner.class);
@@ -48,6 +49,7 @@ public class YarnTaskExecutorRunner {
     private static final Map<String, String> ENV = System.getenv();
 
     /** The exit code returned if the initialization of the yarn task executor runner failed. */
+    // 如果 yarn 任务执行器运行器的初始化失败，则返回退出代码
     private static final int INIT_ERROR_EXIT_CODE = 31;
 
     // ------------------------------------------------------------------------

@@ -29,6 +29,10 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code ConfigOption} 描述配置参数。它封装了配置密钥、不推荐使用的旧版本密钥以及配置参数的可选默认值。
+ *
+ * <p>{@code ConfigOptions} 是通过 {@link ConfigOptions} 类构建的。创建后，配置选项是不可变的。
+ *
  * A {@code ConfigOption} describes a configuration parameter. It encapsulates the configuration
  * key, deprecated older versions of the key, and an optional default value for the configuration
  * parameter.
@@ -51,6 +55,7 @@ public class ConfigOption<T> {
     private final String key;
 
     /** The list of deprecated keys, in the order to be checked. */
+    // 不推荐使用的键列表，按要检查的顺序排列
     private final FallbackKey[] fallbackKeys;
 
     /** The default value for this option. */
@@ -60,6 +65,8 @@ public class ConfigOption<T> {
     private final Description description;
 
     /**
+     * 此 ConfigOption 描述的值的类型
+     *
      * Type of the value that this ConfigOption describes.
      *
      * <ul>

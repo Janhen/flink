@@ -240,6 +240,7 @@ object FlinkShell {
     val commandOptions = CliFrontendParser.getRunCommandOptions
     val commandLineOptions = CliFrontendParser.mergeOptions(commandOptions,
       frontend.getCustomCommandLineOptions)
+    // J:
     val commandLine = CliFrontendParser.parse(commandLineOptions, args, true)
 
     val customCLI = frontend.validateAndGetActiveCommandLine(commandLine)

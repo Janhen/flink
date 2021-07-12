@@ -45,6 +45,8 @@ import static org.apache.flink.runtime.util.ClusterEntrypointUtils.tryFindUserLi
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 此类包含 {@link YarnSessionClusterEntrypoint} 和 {@link YarnJobClusterEntrypoint} 的实用方法
+ *
  * This class contains utility methods for the {@link YarnSessionClusterEntrypoint} and {@link
  * YarnJobClusterEntrypoint}.
  */

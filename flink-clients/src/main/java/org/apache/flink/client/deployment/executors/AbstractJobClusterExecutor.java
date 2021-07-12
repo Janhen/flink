@@ -41,6 +41,8 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个抽象的 {@link PipelineExecutor}，用于在专用（每个作业）集群上执行 {@link Pipeline pipelines}
+ *
  * An abstract {@link PipelineExecutor} used to execute {@link Pipeline pipelines} on dedicated
  * (per-job) clusters.
  *

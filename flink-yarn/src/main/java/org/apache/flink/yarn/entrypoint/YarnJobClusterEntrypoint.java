@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /** Entry point for Yarn per-job clusters. */
+// Yarn per-job 集群的入口点
 public class YarnJobClusterEntrypoint extends JobClusterEntrypoint {
 
     public YarnJobClusterEntrypoint(Configuration configuration) {
@@ -58,6 +59,7 @@ public class YarnJobClusterEntrypoint extends JobClusterEntrypoint {
     }
 
     // ------------------------------------------------------------------------
+    //  单个 Flink 作业的 Yarn Application Master Process 的可执行入口点
     //  The executable entry point for the Yarn Application Master Process
     //  for a single Flink job.
     // ------------------------------------------------------------------------

@@ -28,12 +28,15 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A class containing all the supported deployment target names for Yarn. */
+// 包含 Yarn 所有支持的部署目标名称的类
 @Internal
 public enum YarnDeploymentTarget {
     PER_JOB("yarn-per-job"),
     SESSION("yarn-session"),
     APPLICATION("yarn-application");
 
+    // 未找到执行者。请确保导出 HADOOP_CLASSPATH 环境变量或在您的类路径中有 hadoop。有关更多信息，请参阅 Apache
+    // Flink 官方文档的“部署和操作”部分。
     public static final String ERROR_MESSAGE =
             "No Executor found. Please make sure to export the HADOOP_CLASSPATH environment variable "
                     + "or have hadoop in your classpath. For more information refer to the \"Deployment & Operations\" "

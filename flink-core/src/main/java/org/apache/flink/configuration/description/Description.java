@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * {@link org.apache.flink.configuration.ConfigOption} 的描述。允许提供多种丰富的格式
+ *
  * Description for {@link org.apache.flink.configuration.ConfigOption}. Allows providing multiple
  * rich formats.
  */
@@ -38,6 +40,8 @@ public class Description {
     }
 
     /**
+     * {@link Description} 的构建器。允许添加丰富的格式，如列表、链接、换行符等
+     *
      * Builder for {@link Description}. Allows adding a rich formatting like lists, links,
      * linebreaks etc. For example:
      *

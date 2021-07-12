@@ -89,6 +89,7 @@ import static org.apache.flink.configuration.HighAvailabilityOptions.HA_CLUSTER_
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Class handling the command line interface to the YARN session. */
+// 处理 YARN 会话的命令行接口的类
 public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
     private static final Logger LOG = LoggerFactory.getLogger(FlinkYarnSessionCli.class);
 
@@ -492,6 +493,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
             return ConverterUtils.toApplicationId(
                     commandLine.getOptionValue(applicationId.getOpt()));
         } else if (configuration.getOptional(YarnConfigOptions.APPLICATION_ID).isPresent()) {
+            // J: 应用 ID 获取
             return ConverterUtils.toApplicationId(
                     configuration.get(YarnConfigOptions.APPLICATION_ID));
         } else if (isYarnPropertiesFileMode(commandLine)) {

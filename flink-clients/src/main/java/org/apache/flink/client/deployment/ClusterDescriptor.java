@@ -24,6 +24,8 @@ import org.apache.flink.runtime.jobgraph.JobGraph;
 import org.apache.flink.util.FlinkException;
 
 /**
+ * 用于部署集群（例如 Yarn 或 Mesos）并返回用于集群通信的客户端的描述符。
+ *
  * A descriptor to deploy a cluster (e.g. Yarn or Mesos) and return a Client for Cluster
  * communication.
  *
@@ -37,6 +39,8 @@ public interface ClusterDescriptor<T> extends AutoCloseable {
     String getClusterDescription();
 
     /**
+     * 检索现有的 Flink 集群
+     *
      * Retrieves an existing Flink Cluster.
      *
      * @param clusterId The unique identifier of the running cluster
@@ -56,6 +60,9 @@ public interface ClusterDescriptor<T> extends AutoCloseable {
             throws ClusterDeploymentException;
 
     /**
+     * 触发应用程序集群的部署。这对应于专用于执行预定义应用程序的集群。集群将在应用程序提交时创建，并在应用程序终止时拆除。
+     * 此外，应用程序的用户代码的{@code main()} 将在集群上执行，而不是在客户端上执行。
+     *
      * Triggers deployment of an application cluster. This corresponds to a cluster dedicated to the
      * execution of a predefined application. The cluster will be created on application submission
      * and torn down upon application termination. In addition, the {@code main()} of the
@@ -72,6 +79,8 @@ public interface ClusterDescriptor<T> extends AutoCloseable {
             throws ClusterDeploymentException;
 
     /**
+     * 使用集群上的给定作业部署每个作业集群
+     *
      * Deploys a per-job cluster with the given job on the cluster.
      *
      * @param clusterSpecification Initial cluster specification with which the Flink cluster is
@@ -89,6 +98,8 @@ public interface ClusterDescriptor<T> extends AutoCloseable {
             throws ClusterDeploymentException;
 
     /**
+     * 终止具有给定集群 ID 的集群
+     *
      * Terminates the cluster with the given cluster id.
      *
      * @param clusterId identifying the cluster to shut down

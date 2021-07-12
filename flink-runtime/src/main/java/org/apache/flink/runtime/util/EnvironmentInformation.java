@@ -325,6 +325,8 @@ public class EnvironmentInformation {
     }
 
     /**
+     * 获取在启动时传递给 JVM 的系统参数和环境参数
+     *
      * Gets the system parameters and environment parameters that were passed to the JVM on startup.
      *
      * @return The options passed to the JVM on startup.
@@ -381,6 +383,8 @@ public class EnvironmentInformation {
     }
 
     /**
+     * 记录有关环境的信息，例如代码修订、当前用户、Java 版本和 JVM 参数
+     *
      * Logs information about the environment, like code revision, current user, Java version, and
      * JVM parameters.
      *
@@ -497,6 +501,8 @@ public class EnvironmentInformation {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 修订信息封装了 Flink 代码的源代码修订信息
+     *
      * Revision information encapsulates information about the source code revision of the Flink
      * code.
      */

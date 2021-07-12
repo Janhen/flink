@@ -21,6 +21,7 @@ package org.apache.flink.yarn;
 import org.apache.flink.util.FlinkException;
 
 /** Interface which allows to retrieve information about a Yarn cluster. */
+// 允许检索有关 Yarn 集群的信息的接口
 public interface YarnClusterInformationRetriever {
 
     /**

@@ -93,6 +93,8 @@ public class JvmShutdownSafeguard extends Thread {
     // ------------------------------------------------------------------------
 
     /**
+     * 安装保护关机钩子。 JVM 在被杀死之前被允许在关闭上花费的最长时间是 5 秒
+     *
      * Installs the safeguard shutdown hook. The maximum time that the JVM is allowed to spend on
      * shutdown before being killed is five seconds.
      *

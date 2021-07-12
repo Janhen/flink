@@ -61,6 +61,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A class with utilities for uploading files related to the deployment of a single application. */
+// 具有用于上传与单个应用程序部署相关的文件的实用程序的类
 class YarnApplicationFileUploader implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(YarnApplicationFileUploader.class);

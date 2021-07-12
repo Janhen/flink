@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** General utilities for parsing values to configuration options. */
+// 用于将值解析为配置选项的通用实用程序
 @Internal
 public class ConfigUtils {
 
@@ -101,6 +102,9 @@ public class ConfigUtils {
     }
 
     /**
+     * 从 {@link ReadableConfig} 获取 {@code IN} 类型的值的 {@link List}，并根据提供的 {@code mapper} 函数
+     * 将其转换为 {@code OUT} 类型的 {@link List} .
+     *
      * Gets a {@link List} of values of type {@code IN} from a {@link ReadableConfig} and transforms
      * it to a {@link List} of type {@code OUT} based on the provided {@code mapper} function.
      *

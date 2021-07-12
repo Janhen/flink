@@ -27,6 +27,7 @@ import org.apache.flink.yarn.YarnResourceManager;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Yarn configuration options that are not meant to be set by the user. */
+// 不打算由用户设置的纱线配置选项
 @Internal
 public class YarnConfigOptionsInternal {
 

@@ -28,6 +28,7 @@ import org.apache.flink.yarn.configuration.YarnDeploymentTarget;
 import javax.annotation.Nonnull;
 
 /** An {@link PipelineExecutorFactory} for executing jobs on dedicated (per-job) clusters. */
+// 一个 {@link Pipeline ExecutorFactory}，用于在专用（每个作业）集群上执行作业。
 @Internal
 public class YarnJobClusterExecutorFactory implements PipelineExecutorFactory {
 

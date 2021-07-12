@@ -34,6 +34,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /** Utility class which monitors the specified yarn application status periodically. */
+// 定期监视指定纱线应用程序状态的实用程序类
 public class YarnApplicationStatusMonitor implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(YarnApplicationStatusMonitor.class);

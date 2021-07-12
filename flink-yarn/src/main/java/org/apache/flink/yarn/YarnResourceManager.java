@@ -81,6 +81,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
+ * 资源管理器的实现。当系统通过资源框架 YARN 启动时使用
+ *
  * The yarn implementation of the resource manager. Used when the system is started via the resource
  * framework YARN.
  */
@@ -90,6 +92,7 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
     private static final Priority RM_REQUEST_PRIORITY = Priority.newInstance(1);
 
     /** YARN container map. Package private for unit test purposes. */
+    // YARN 容器映射。用于单元测试目的的私有包
     private final ConcurrentMap<ResourceID, YarnWorkerNode> workerNodeMap;
     /**
      * Environment variable name of the final container id used by the YarnResourceManager.

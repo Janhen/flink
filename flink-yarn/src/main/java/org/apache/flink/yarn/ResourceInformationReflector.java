@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 查找与 org.apache.hadoop.yarn.api.records.Resource#setResourceInformation 相关的方法。仅在 Hadoop 3.0+
+ * 或 2.10+ 中受支持
+ *
  * Looks up the methods related to
  * org.apache.hadoop.yarn.api.records.Resource#setResourceInformation. Only supported in Hadoop 3.0+
  * or 2.10+.

@@ -205,6 +205,7 @@ public class ExecutionGraphBuilder {
         // file output formats create directories here, input formats create splits
 
         final long initMasterStart = System.nanoTime();
+        // J: 打印初始化的运行信息
         log.info("Running initialization on master for job {} ({}).", jobName, jobId);
 
         for (JobVertex vertex : jobGraph.getVertices()) {

@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /** Entry point for Yarn session clusters. */
+// Yarn session 集群的入口点
 public class YarnSessionClusterEntrypoint extends SessionClusterEntrypoint {
 
     public YarnSessionClusterEntrypoint(Configuration configuration) {

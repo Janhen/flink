@@ -84,6 +84,7 @@ import static org.apache.flink.client.cli.CliFrontendParser.HELP_OPTION;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Implementation of a simple command line frontend for executing programs. */
+// 用于执行程序的简单命令行前端的实现
 public class CliFrontend {
 
     private static final Logger LOG = LoggerFactory.getLogger(CliFrontend.class);
@@ -200,6 +201,8 @@ public class CliFrontend {
     }
 
     /**
+     * 执行运行操作。
+     *
      * Executions the run action.
      *
      * @param args Command line arguments for the run action.
@@ -219,6 +222,7 @@ public class CliFrontend {
         final CustomCommandLine activeCommandLine =
                 validateAndGetActiveCommandLine(checkNotNull(commandLine));
 
+        // J:
         final ProgramOptions programOptions = ProgramOptions.create(commandLine);
 
         final PackagedProgram program = getPackagedProgram(programOptions);
@@ -908,6 +912,8 @@ public class CliFrontend {
     }
 
     /**
+     * 从给定的 {@link CustomCommandLine} 检索 {@link ClusterClient} 并对其运行给定的 {@link ClusterAction}。
+     *
      * Retrieves the {@link ClusterClient} from the given {@link CustomCommandLine} and runs the
      * given {@link ClusterAction} against it.
      *
@@ -935,6 +941,7 @@ public class CliFrontend {
 
         try (final ClusterDescriptor<ClusterID> clusterDescriptor =
                 clusterClientFactory.createClusterDescriptor(executorConfig)) {
+            // J:
             try (final ClusterClient<ClusterID> clusterClient =
                     clusterDescriptor.retrieve(clusterId).getClusterClient()) {
                 clusterAction.runAction(clusterClient);
@@ -1130,6 +1137,7 @@ public class CliFrontend {
 
         //	Command line interface of the YARN session, with a special initialization here
         //	to prefix all options with y/yarn.
+        // YARN 会话的命令行界面，这里有一个特殊的初始化，以 yyarn 为所有选项添加前缀。
         final String flinkYarnSessionCLI = "org.apache.flink.yarn.cli.FlinkYarnSessionCli";
         try {
             customCommandLines.add(

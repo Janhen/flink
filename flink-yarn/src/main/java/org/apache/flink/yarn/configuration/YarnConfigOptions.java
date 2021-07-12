@@ -31,6 +31,10 @@ import static org.apache.flink.configuration.description.TextElement.code;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /**
+ * 此类保存 Flink 的 YARN 运行程序使用的配置常量。
+ *
+ * <p>这些选项预计不会由用户明确配置。
+ *
  * This class holds configuration constants used by Flink's YARN runners.
  *
  * <p>These options are not expected to be ever configured by users explicitly.
@@ -45,6 +49,9 @@ public class YarnConfigOptions {
                             "The number of virtual cores (vcores) used by YARN application master.");
 
     /**
+     * 定义用户 jar 是否包含在每个作业集群的系统类路径中以及它们在路径中的位置。它们可以定位在开头（“FIRST”）、结尾（“LAST”），或者根据它们的名称定位（“ORDER”）。
+     * “禁用”表示用户 jars 从系统类路径中排除。
+     *
      * Defines whether user-jars are included in the system class path for per-job-clusters as well
      * as their positioning in the path. They can be positioned at the beginning ("FIRST"), at the
      * end ("LAST"), or be positioned based on their name ("ORDER"). "DISABLED" means the user-jars
@@ -60,6 +67,7 @@ public class YarnConfigOptions {
                                     + " are excluded from the system class path.");
 
     /** The vcores exposed by YARN. */
+    // YARN 公开的 vcore。
     public static final ConfigOption<Integer> VCORES =
             key("yarn.containers.vcores")
                     .defaultValue(-1)
@@ -75,6 +83,10 @@ public class YarnConfigOptions {
                                     .build());
 
     /**
+     * 在高可用性模式下设置失败的 YARN ApplicationMastersJobManager 的重试次数。该值通常受 YARN 限制。默认情况下，它在独立情况下为 1，在高可用性情况下为 2。
+     *
+     * <p>>注意：此选项返回一个字符串，因为整数选项必须具有静态默认值。
+     *
      * Set the number of retries for failed YARN ApplicationMasters/JobManagers in high availability
      * mode. This value is usually limited by YARN. By default, it's 1 in the standalone case and 2
      * in the high availability case.
@@ -138,6 +150,8 @@ public class YarnConfigOptions {
                                     .build());
 
     /**
+     * 当 Flink 作业提交到 YARN 时，JobManager 的主机和可用处理槽的数量被写入属性文件，以便 Flink 客户端能够获取这些详细信息。此配置参数允许更改该文件的默认位置（例如，对于用户之间共享 Flink 安装的环境）
+     *
      * When a Flink job is submitted to YARN, the JobManager's host and the number of available
      * processing slots is written into a properties file, so that the Flink client is able to pick
      * those details up. This configuration parameter allows changing the default location of that
@@ -153,6 +167,9 @@ public class YarnConfigOptions {
                                     + " (for example for environments sharing a Flink installation between users).");
 
     /**
+     * 为 ApplicationMaster 和 JobManager 定义 Akka actor 系统端口的配置参数。端口可以​​是端口，例如“9123”，端口范围：“50100-50200”或范围和/或点列表：
+     * “50100-50200,50300-50400,51234”。将端口设置为 0 将使操作系统选择一个可用端口。
+     *
      * The config parameter defining the Akka actor system port for the ApplicationMaster and
      * JobManager. The port can either be a port, such as "9123", a range of ports: "50100-50200" or
      * a list of ranges and or points: "50100-50200,50300-50400,51234". Setting the port to 0 will
@@ -213,6 +230,7 @@ public class YarnConfigOptions {
 
     // ----------------------- YARN CLI OPTIONS ------------------------------------
 
+    // 要传送到 YARN 集群的以分号分隔的目录列表
     public static final ConfigOption<List<String>> SHIP_DIRECTORIES =
             key("yarn.ship-directories")
                     .stringType()
@@ -221,12 +239,14 @@ public class YarnConfigOptions {
                     .withDescription(
                             "A semicolon-separated list of directories to be shipped to the YARN cluster.");
 
+    // Flink dist jar 的位置
     public static final ConfigOption<String> FLINK_DIST_JAR =
             key("yarn.flink-dist-jar")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The location of the Flink dist jar.");
 
+    // 正在运行的纱线集群的纱线应用程序 ID。 这是管道将在其中执行的纱线集群
     public static final ConfigOption<String> APPLICATION_ID =
             key("yarn.application.id")
                     .stringType()
@@ -235,6 +255,7 @@ public class YarnConfigOptions {
                             "The YARN application id of the running yarn cluster."
                                     + " This is the YARN cluster where the pipeline is going to be executed.");
 
+    // 放置当前管道的 YARN 队列
     public static final ConfigOption<String> APPLICATION_QUEUE =
             key("yarn.application.queue")
                     .stringType()
@@ -247,6 +268,7 @@ public class YarnConfigOptions {
                     .noDefaultValue()
                     .withDescription("A custom name for your YARN application.");
 
+    // YARN 应用程序的自定义类型
     public static final ConfigOption<String> APPLICATION_TYPE =
             key("yarn.application.type")
                     .stringType()
@@ -259,6 +281,7 @@ public class YarnConfigOptions {
                     .noDefaultValue()
                     .withDescription("Specify YARN node label for the YARN application.");
 
+    // 当这是真的 Flink 将通过以下方式发送配置的密钥表文件 `security.kerberos.login.keytab` 作为本地化的 YARN 资源
     public static final ConfigOption<Boolean> SHIP_LOCAL_KEYTAB =
             key("yarn.security.kerberos.ship-local-keytab")
                     .booleanType()
@@ -282,6 +305,8 @@ public class YarnConfigOptions {
                                     + "resource directory. If set to false, Flink"
                                     + " will try to directly locate the keytab from the path itself.");
 
+    // "提供的 lib 目录的分号分隔列表。它们应该预先上传并且" + "世界可读。Flink 将使用它们来排除本地 Flink jars（例如 flink-dist、lib、插件）
+    // 上传到加速作业提交过程。此外，YARN 会将它们缓存在节点上，以便“+”不需要每次为每个应用程序都下载它们。例如，“+”hdfs:namenode_addresspathofflinklib”
     public static final ConfigOption<List<String>> PROVIDED_LIB_DIRS =
             key("yarn.provided.lib.dirs")
                     .stringType()
@@ -295,6 +320,8 @@ public class YarnConfigOptions {
                                     + "hdfs://$namenode_address/path/of/flink/lib");
 
     /**
+     * 在 Yarn 中定义该外部资源的配置键。这在实际配置中用作后缀
+     *
      * Defines the configuration key of that external resource in Yarn. This is used as a suffix in
      * an actual config.
      */

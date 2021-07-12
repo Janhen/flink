@@ -24,10 +24,13 @@ import org.apache.flink.configuration.Configuration;
 import javax.annotation.Nullable;
 
 /** A factory containing all the necessary information for creating clients to Flink clusters. */
+// 包含创建客户端到 Flink 集群的所有必要信息的工厂
 @Internal
 public interface ClusterClientFactory<ClusterID> {
 
     /**
+     * 如果当前 {@link ClusterClientFactory} 与提供的配置兼容，则返回 {@code true}，否则返回 {@code false}
+     *
      * Returns {@code true} if the current {@link ClusterClientFactory} is compatible with the
      * provided configuration, {@code false} otherwise.
      */
@@ -57,6 +60,8 @@ public interface ClusterClientFactory<ClusterID> {
     ClusterID getClusterId(Configuration configuration);
 
     /**
+     * 返回由配置和命令行选项指定的 {@link ClusterSpecification}。该规范可用于部署新的 Flink 集群
+     *
      * Returns the {@link ClusterSpecification} specified by the configuration and the command line
      * options. This specification can be used to deploy a new Flink cluster.
      *

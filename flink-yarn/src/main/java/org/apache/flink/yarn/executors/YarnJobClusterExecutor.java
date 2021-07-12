@@ -27,6 +27,9 @@ import org.apache.flink.yarn.configuration.YarnDeploymentTarget;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
 
 /**
+ * 单独执行作业时要使用的 {@link PipelineExecutor}。此执行程序将专门为手头的作业启动一个集群，并在作业成功完成或由于
+ * 错误完成时将其拆除
+ *
  * The {@link PipelineExecutor} to be used when executing a job in isolation. This executor will
  * start a cluster specifically for the job at hand and tear it down when the job is finished either
  * successfully or due to an error.

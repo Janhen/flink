@@ -120,6 +120,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.yarn.YarnConfigKeys.LOCAL_RESOURCE_DESCRIPTOR_SEPARATOR;
 
 /** The descriptor with deployment information for deploying a Flink cluster on Yarn. */
+// 带有部署信息的描述符，用于在 Yarn 上部署 Flink 集群
 public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     private static final Logger LOG = LoggerFactory.getLogger(YarnClusterDescriptor.class);
 
@@ -130,9 +131,11 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     private final YarnClusterInformationRetriever yarnClusterInformationRetriever;
 
     /** True if the descriptor must not shut down the YarnClient. */
+    // 如果描述符不能关闭 YarnClient，则为真
     private final boolean sharedYarnClient;
 
     /** Lazily initialized list of files to ship. */
+    // 延迟初始化要发送的文件列表
     private final List<File> shipFiles = new LinkedList<>();
 
     private final String yarnQueue;
@@ -177,6 +180,7 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     private Optional<List<File>> decodeDirsToShipToCluster(final Configuration configuration) {
         checkNotNull(configuration);
 
+        // J: yarn ship 文件获取
         final List<File> files =
                 ConfigUtils.decodeListFromConfig(
                         configuration, YarnConfigOptions.SHIP_DIRECTORIES, File::new);
@@ -233,6 +237,8 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     }
 
     /**
+     * 用于启动应用程序主机的类。此类在作业集群的情况下运行 main 方法
+     *
      * The class to start the application master with. This class runs the main method in case of
      * the job cluster.
      */
@@ -255,6 +261,11 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     }
 
     /**
+     * 将给定的文件添加到要发送的文件列表中
+     *
+     * <p>注意任何匹配“<tt>flink-dist.jar<tt>”的文件都会被{@link YarnApplicationFileUploader#registerMultipleLocalResources(Collection, String)}
+     * 排除在上传之外，因为我们自己上传了Flink uber jar，不需要多次部署
+     *
      * Adds the given files to the list of files to ship.
      *
      * <p>Note that any file matching "<tt>flink-dist*.jar</tt>" will be excluded from the upload by
@@ -311,6 +322,7 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
         }
 
         // check if required Hadoop environment variables are set. If not, warn user
+        // 检查是否设置了所需的 Hadoop 环境变量。如果没有，警告用户
         if (System.getenv("HADOOP_CONF_DIR") == null && System.getenv("YARN_CONF_DIR") == null) {
             LOG.warn(
                     "Neither the HADOOP_CONF_DIR nor the YARN_CONF_DIR environment variable is set. "
@@ -472,6 +484,8 @@ public class YarnClusterDescriptor implements ClusterDescriptor<ApplicationId> {
     }
 
     /**
+     * 此方法将阻塞，直到 ApplicationMasterJobManager 已部署在 YARN 上
+     *
      * This method will block until the ApplicationMaster/JobManager have been deployed on YARN.
      *
      * @param clusterSpecification Initial cluster specification for the Flink cluster to be

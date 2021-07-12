@@ -19,6 +19,7 @@
 package org.apache.flink.client.deployment;
 
 /** Description of the cluster to start by the {@link ClusterDescriptor}. */
+// 由 {@link ClusterDescriptor} 启动的集群描述
 public final class ClusterSpecification {
     private final int masterMemoryMB;
     private final int taskManagerMemoryMB;

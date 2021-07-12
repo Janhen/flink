@@ -32,6 +32,7 @@ import java.util.Optional;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A class with utilities for setting the log config file. */
+// 具有用于设置日志配置文件的实用程序的类
 @Internal
 public class YarnLogConfigUtil {
 
@@ -69,6 +70,7 @@ public class YarnLogConfigUtil {
         final File logbackFile =
                 new File(configurationDirectory + File.separator + CONFIG_FILE_LOGBACK_NAME);
         if (logbackFile.exists()) {
+            // J: log4j 有 logback 配置选择，优先 log4j 配置
             if (logConfigFile.isPresent()) {
                 LOG.warn(
                         "The configuration directory ('"
@@ -104,6 +106,7 @@ public class YarnLogConfigUtil {
             return "";
         }
 
+        // J: 拼接日志 JVM 命令参数
         return new StringBuilder(
                         "-Dlog.file=\""
                                 + ApplicationConstants.LOG_DIR_EXPANSION_VAR

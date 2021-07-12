@@ -57,6 +57,8 @@ public interface CustomCommandLine {
     void addGeneralOptions(Options baseOptions);
 
     /**
+     * 通过指定的命令行选项覆盖配置设置。
+     *
      * Override configuration settings by specified command line options.
      *
      * @param commandLine containing the overriding values
