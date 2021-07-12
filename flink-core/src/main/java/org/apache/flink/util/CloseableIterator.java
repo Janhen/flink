@@ -149,6 +149,8 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
     }
 
     /**
+     * 从{@link Iterator}到{@link CloseableIterator}的适配器。对{@link close()}不做任何操作。
+     *
      * Adapter from {@link Iterator} to {@link CloseableIterator}. Does nothing on {@link #close()}.
      *
      * @param <E> the type of iterated elements.

@@ -21,6 +21,7 @@ package org.apache.flink.configuration;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Configuration parameters for join/sort algorithms. */
+// 连接排序算法的配置参数
 public class AlgorithmOptions {
 
     public static final ConfigOption<Boolean> HASH_JOIN_BLOOM_FILTERS =
@@ -40,6 +41,7 @@ public class AlgorithmOptions {
                                     + " the number of file handles per operator, but may cause intermediate merging/partitioning, if set too"
                                     + " small.");
 
+    // 当这部分内存预算满时，排序操作开始溢出
     public static final ConfigOption<Float> SORT_SPILLING_THRESHOLD =
             key("taskmanager.runtime.sort-spilling-threshold")
                     .defaultValue(0.8f)

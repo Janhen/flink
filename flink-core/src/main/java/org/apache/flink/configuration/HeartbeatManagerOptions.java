@@ -24,6 +24,7 @@ import org.apache.flink.annotation.docs.Documentation;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** The set of configuration options relating to heartbeat manager settings. */
+// 与心跳管理器设置相关的一组配置选项
 @PublicEvolving
 public class HeartbeatManagerOptions {
 

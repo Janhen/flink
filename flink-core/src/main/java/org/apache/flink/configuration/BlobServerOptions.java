@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Configuration options for the BlobServer and BlobCache. */
+// BlobServer和BlobCache的配置选项。
 @PublicEvolving
 public class BlobServerOptions {
 
@@ -41,6 +42,8 @@ public class BlobServerOptions {
                             "The config parameter defining number of retires for failed BLOB fetches.");
 
     /**
+     * config参数定义了JobManager服务的并发BLOB获取的最大数量
+     *
      * The config parameter defining the maximum number of concurrent BLOB fetches that the
      * JobManager serves.
      */

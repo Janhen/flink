@@ -43,6 +43,8 @@ public class ExecutionOptions {
                     .withDescription(
                             "Tells if we should use compression for the state snapshot data or not");
 
+    // 输出缓冲区刷新的最大时间频率(毫秒)。默认情况下，输出缓冲区频繁刷新，以提供低延迟和帮助平稳开发人员的经验。
+    // 设置该参数可以导致三种逻辑模式:"
     public static final ConfigOption<Duration> BUFFER_TIMEOUT =
             ConfigOptions.key("execution.buffer-timeout")
                     .durationType()

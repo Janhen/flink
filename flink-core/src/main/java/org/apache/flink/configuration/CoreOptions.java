@@ -30,6 +30,7 @@ import org.apache.flink.shaded.guava18.com.google.common.collect.Iterables;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** The set of configuration options for core parameters. */
+// 核心参数的一组配置选项
 @PublicEvolving
 @ConfigGroups(groups = {@ConfigGroup(name = "Environment", keyPrefix = "env")})
 public class CoreOptions {
@@ -115,6 +116,7 @@ public class CoreOptions {
                                     + ALWAYS_PARENT_FIRST_LOADER_PATTERNS.key()
                                     + "\".");
 
+    // 如果在尝试加载用户代码类时抛出“OutOfMemoryError: metspace”，则Flink JVM进程将失败。
     @Documentation.Section(Documentation.Sections.EXPERT_CLASS_LOADING)
     public static final ConfigOption<Boolean> FAIL_ON_USER_CLASS_LOADING_METASPACE_OOM =
             ConfigOptions.key("classloader.fail-on-metaspace-oom-error")
@@ -179,6 +181,7 @@ public class CoreOptions {
     //  process parameters
     // ------------------------------------------------------------------------
 
+    // 启动所有Flink进程的JVM的Java选项
     public static final ConfigOption<String> FLINK_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts")
                     .stringType()
@@ -189,6 +192,7 @@ public class CoreOptions {
                                             "Java options to start the JVM of all Flink processes with.")
                                     .build());
 
+    // 启动JobManager JVM的Java选项。
     public static final ConfigOption<String> FLINK_JM_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts.jobmanager")
                     .stringType()
@@ -198,6 +202,7 @@ public class CoreOptions {
                                     .text("Java options to start the JVM of the JobManager with.")
                                     .build());
 
+    // 启动TaskManager的JVM的Java选项
     public static final ConfigOption<String> FLINK_TM_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts.taskmanager")
                     .stringType()
@@ -207,6 +212,7 @@ public class CoreOptions {
                                     .text("Java options to start the JVM of the TaskManager with.")
                                     .build());
 
+    // 启动HistoryServer的JVM的Java选项
     public static final ConfigOption<String> FLINK_HS_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts.historyserver")
                     .stringType()
@@ -227,7 +233,7 @@ public class CoreOptions {
                                     .build());
 
     /**
-     * 此选项仅用于文档生成，仅在shell脚本中进行计算。
+     * 此选项仅用于文档生成，仅在 shell 脚本中进行计算。
      *
      * 定义保存Flink日志的目录。它必须是一条绝对路径(默认为Flink的主目录下的日志目录)
      *
@@ -243,8 +249,7 @@ public class CoreOptions {
                                     + " (Defaults to the log directory under Flink’s home)");
 
     /**
-     * 此选项仅用于文档生成，仅在shell脚本中进行计算。
-     * 要保留的旧日志文件的最大数量。
+     * 此选项仅用于文档生成，仅在shell脚本中进行计算。要保留的旧日志文件的最大数量。
      *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
@@ -256,11 +261,11 @@ public class CoreOptions {
                     .withDescription("The maximum number of old log files to keep.");
 
     /**
+     * 在启动或停止JobManager、TaskManager和Zookeeper服务(start-cluster.sh、stop-cluster.sh、
+     * start-zookeeper-quorum.sh、stop-zookeeper-quorum.sh)时传递给SSH客户端的附加命令行选项。
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
-     *
-     * 在启动或停止JobManager、TaskManager和Zookeeper服务(start-cluster.sh、stop-cluster.sh、start-zookeeper-quorum.sh、stop-zookeeper-quorum.sh)
-     * 时传递给SSH客户端的附加命令行选项。
      */
     @SuppressWarnings("unused")
     public static final ConfigOption<String> FLINK_SSH_OPTIONS =
@@ -272,6 +277,8 @@ public class CoreOptions {
                                     + " stop-zookeeper-quorum.sh).");
 
     /**
+     * 此选项仅用于文档生成，仅在shell脚本中进行计算
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -284,6 +291,8 @@ public class CoreOptions {
                                     + " configuration. You can also set it via environment variable.");
 
     /**
+     * 此选项仅用于文档生成，仅在shell脚本中进行计算。
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -327,6 +336,7 @@ public class CoreOptions {
     // ------------------------------------------------------------------------
 
     /** The default filesystem scheme, used for paths that do not declare a scheme explicitly. */
+    // 默认文件系统方案，用于没有显式声明方案的路径
     @Documentation.Section(Documentation.Sections.COMMON_MISCELLANEOUS)
     public static final ConfigOption<String> DEFAULT_FILESYSTEM_SCHEME =
             ConfigOptions.key("fs.default-scheme")

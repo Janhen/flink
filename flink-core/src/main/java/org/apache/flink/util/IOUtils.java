@@ -29,6 +29,7 @@ import java.net.Socket;
 import static java.util.Arrays.asList;
 
 /** An utility class for I/O related functionality. */
+// 一个用于IO相关功能的实用程序类
 public final class IOUtils {
 
     /** The block size for byte operations in byte. */
@@ -103,6 +104,8 @@ public final class IOUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 在循环中读取len字节
+     *
      * Reads len bytes in a loop.
      *
      * @param in The InputStream to read from
@@ -148,6 +151,8 @@ public final class IOUtils {
     }
 
     /**
+     * 类似于readFully()。在循环中跳过字节
+     *
      * Similar to readFully(). Skips bytes in a loop.
      *
      * @param in The InputStream to skip bytes from

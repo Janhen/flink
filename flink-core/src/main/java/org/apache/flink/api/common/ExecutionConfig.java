@@ -50,7 +50,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
  *     <li>程序的默认并行度，即为所有没有直接定义特定值的函数使用多少并行任务。
  *     <li>执行失败时的重试次数。
  *     <li>重试间隔时间。
- *     <li>程序的{@link ExecutionMode}: Batch或Pipelined。默认的执行模式是{@link ExecutionMode#PIPELINED}
+ *     <li>程序的{@link ExecutionMode}: Batch 或 Pipelined。默认的执行模式是{@link ExecutionMode#PIPELINED}
  *     <li>启用或禁用闭包清理器。闭包清理器对函数的实现进行预处理。如果它们是(匿名)内部类，它将删除对外围类的未使用的引用，
  *         以修复某些与序列化相关的问题，并减少闭包的大小。配置允许注册类型和序列化器，以提高处理<i>泛型<i>和<i> pojo
  *        <i>的效率。这通常只在函数不仅返回在其签名中声明的类型，而且返回这些类型的子类时才需要。
@@ -1123,7 +1123,7 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     /**
      * 在执行配置中注册的自定义用户配置对象的抽象类。
      *
-     * <p>这个用户配置在运行时可以通过getRuntimeContext().getExecutionConfig().GlobalJobParameters()访问
+     * <p>这个用户配置在运行时可以通过 getRuntimeContext().getExecutionConfig().GlobalJobParameters() 访问
      *
      * Abstract class for a custom user configuration object registered at the execution config.
      *
@@ -1159,6 +1159,7 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     }
 
     /** Configuration settings for the closure cleaner. */
+    // 闭包清理器的配置设置
     public enum ClosureCleanerLevel {
         /** Disable the closure cleaner completely. */
         NONE,
@@ -1171,6 +1172,10 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     }
 
     /**
+     * 设置{@link ReadableConfig}中包含的所有相关选项，例如{@link PipelineOptions#CLOSURE_CLEANER_LEVEL}。
+     *
+     * <p>只有在{@code configuration}中设置了相应的选项时，它才会改变设置的值。如果键不存在，字段的当前值将保持不变。
+     *
      * Sets all relevant options contained in the {@link ReadableConfig} such as e.g. {@link
      * PipelineOptions#CLOSURE_CLEANER_LEVEL}.
      *

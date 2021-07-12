@@ -27,9 +27,11 @@ import static org.apache.flink.configuration.description.LinkElement.link;
 import static org.apache.flink.configuration.description.TextElement.code;
 
 /** Options which control the cluster behaviour. */
+// 控制集群行为的选项
 @PublicEvolving
 public class ClusterOptions {
 
+    // 集群组件之间初始注册超时(以毫秒为单位)
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> INITIAL_REGISTRATION_TIMEOUT =
             ConfigOptions.key("cluster.registration.initial-timeout")

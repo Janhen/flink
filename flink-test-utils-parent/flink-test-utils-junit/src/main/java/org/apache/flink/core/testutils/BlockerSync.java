@@ -19,6 +19,8 @@
 package org.apache.flink.core.testutils;
 
 /**
+ * 在其中一个线程应该在另一个线程可能继续之前达到阻塞状态时，帮助同步两个线程的实用程序。
+ *
  * A utility to help synchronize two threads in cases where one of them is supposed to reach a
  * blocking state before the other may continue.
  *

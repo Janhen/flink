@@ -36,6 +36,8 @@ import java.util.Set;
 import static org.apache.flink.configuration.FallbackKey.createDeprecatedKey;
 
 /**
+ * 一种配置，用于从给定配置中管理具有公共前缀的键子集
+ *
  * A configuration that manages a subset of keys with a common prefix from a given configuration.
  */
 public final class DelegatingConfiguration extends Configuration {

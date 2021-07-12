@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Random;
 
 /** A statistically unique identification number. */
+// 统计上唯一的识别号码
 @PublicEvolving
 public class AbstractID implements Comparable<AbstractID>, java.io.Serializable {
 
@@ -123,6 +124,8 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
     }
 
     /**
+     * 以十六进制形式返回ID的纯字符串表示。这种方法应该用于构建路径等需要稳定表示的东西，因此是最终的。
+     *
      * Returns pure String representation of the ID in hexadecimal. This method should be used to
      * construct things like paths etc., that require a stable representation and is therefore
      * final.

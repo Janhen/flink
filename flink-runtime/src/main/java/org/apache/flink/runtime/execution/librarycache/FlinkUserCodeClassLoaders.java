@@ -26,7 +26,7 @@ import java.net.URLClassLoader;
 import java.util.function.Consumer;
 
 /** Gives the URLClassLoader a nicer name for debugging purposes. */
-// 为URLClassLoader提供一个便于调试的名称。
+// 为 URLClassLoader提 供一个便于调试的名称。
 public class FlinkUserCodeClassLoaders {
 
     private FlinkUserCodeClassLoaders() {}
@@ -65,6 +65,7 @@ public class FlinkUserCodeClassLoaders {
     }
 
     /** Class resolution order for Flink URL {@link ClassLoader}. */
+    // Flink URL {@link ClassLoader}的类解析顺序。
     public enum ResolveOrder {
         CHILD_FIRST,
         PARENT_FIRST;
@@ -81,6 +82,8 @@ public class FlinkUserCodeClassLoaders {
     }
 
     /**
+     * 常规的URLClassLoader，它首先从父类加载，然后才从url加载
+     *
      * Regular URLClassLoader that first loads from the parent and only after that from the URLs.
      */
     static class ParentFirstClassLoader extends FlinkUserCodeClassLoader {

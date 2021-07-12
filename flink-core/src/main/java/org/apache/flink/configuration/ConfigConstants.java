@@ -27,6 +27,8 @@ import java.nio.charset.StandardCharsets;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 该类包含配置的所有常量。这包括配置键和默认值
+ *
  * This class contains all constants for the configuration. That includes the configuration keys and
  * the default values.
  */
@@ -50,6 +52,9 @@ public final class ConfigConstants {
     // ---------------------------- Restart strategies ------------------------
 
     /**
+     * 定义要使用的重启策略。它可以是“off”，“none”，“disable”被禁用，或者它可以是“fixeddelay”，“fixed-delay”来
+     * 使用FixedDelayRestartStrategy，或者它可以是“failurerate”，“fail -rate”来使用FailureRateRestartStrategy。
+     *
      * Defines the restart strategy to be used. It can be "off", "none", "disable" to be disabled or
      * it can be "fixeddelay", "fixed-delay" to use the FixedDelayRestartStrategy or it can be
      * "failurerate", "failure-rate" to use FailureRateRestartStrategy.
@@ -103,6 +108,8 @@ public final class ConfigConstants {
             "restart-strategy.failure-rate.failure-rate-interval";
 
     /**
+     * FailureRateRestartStrategy中连续两次重启尝试之间的延迟时间。它可以用Scala的FiniteDuration标记来指定:“1分钟”，“20秒”。
+     *
      * Delay between two consecutive restart attempts in FailureRateRestartStrategy. It can be
      * specified using Scala's FiniteDuration notation: "1 min", "20 s".
      *
@@ -216,6 +223,7 @@ public final class ConfigConstants {
     @Deprecated public static final String TASK_MANAGER_TMP_DIR_KEY = "taskmanager.tmp.dirs";
 
     /** The config parameter defining the taskmanager log file location. */
+    // 定义任务管理器日志文件位置的配置参数。
     public static final String TASK_MANAGER_LOG_PATH_KEY = "taskmanager.log.path";
 
     /** @deprecated Use {@link TaskManagerOptions#MANAGED_MEMORY_SIZE} instead */
@@ -360,6 +368,8 @@ public final class ConfigConstants {
     // -------- Common Resource Framework Configuration (YARN & Mesos) --------
 
     /**
+     * 容器中移除的堆空间百分比(YARN Mesos Kubernetes)，以补偿其他JVM内存的使用。
+     *
      * Percentage of heap space to remove from containers (YARN / Mesos / Kubernetes), to compensate
      * for other JVM memory usage.
      *

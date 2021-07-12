@@ -31,6 +31,7 @@ import static org.apache.flink.configuration.description.TextElement.text;
 @PublicEvolving
 public class DeploymentOptions {
 
+    // 执行的部署目标。它可以取以下值之一:"
     public static final ConfigOption<String> TARGET =
             key("execution.target")
                     .stringType()
@@ -64,6 +65,7 @@ public class DeploymentOptions {
                             "If the job is submitted in attached mode, perform a best-effort cluster shutdown "
                                     + "when the CLI is terminated abruptly, e.g., in response to a user interrupt, such as typing Ctrl + C.");
 
+    // 自定义joblistener要注册到执行环境中。"注册的侦听器不能有带参数的构造函数。
     public static final ConfigOption<List<String>> JOB_LISTENERS =
             key("execution.job-listeners")
                     .stringType()

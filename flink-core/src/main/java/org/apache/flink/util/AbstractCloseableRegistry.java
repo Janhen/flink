@@ -31,6 +31,12 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * 这是注册表的抽象基类，允许注册{@link Closeable}的实例，如果该注册表关闭，该实例将全部关闭。
+ *
+ * <p>注册到一个已经关闭的注册表会抛出一个异常并关闭提供的{@link Closeable}
+ *
+ * <p>这个类中的所有方法都是线程安全的
+ *
  * This is the abstract base class for registries that allow to register instances of {@link
  * Closeable}, which are all closed if this registry is closed.
  *
@@ -46,6 +52,7 @@ import java.util.Map;
 public abstract class AbstractCloseableRegistry<C extends Closeable, T> implements Closeable {
 
     /** Lock that guards state of this registry. * */
+    // 锁定这个注册表的 guard state
     private final Object lock;
 
     /** Map from tracked Closeables to some associated meta data. */
@@ -53,6 +60,7 @@ public abstract class AbstractCloseableRegistry<C extends Closeable, T> implemen
     protected final Map<Closeable, T> closeableToRef;
 
     /** Indicates if this registry is closed. */
+    // 指示该注册表是否关闭
     @GuardedBy("lock")
     private boolean closed;
 
@@ -63,6 +71,9 @@ public abstract class AbstractCloseableRegistry<C extends Closeable, T> implemen
     }
 
     /**
+     * 用注册表注册一个{@link Closeable}。如果注册表已经关闭，这个方法会抛出{@link IllegalStateException}并关
+     * 闭传递的{@link Closeable}。
+     *
      * Registers a {@link Closeable} with the registry. In case the registry is already closed, this
      * method throws an {@link IllegalStateException} and closes the passed {@link Closeable}.
      *

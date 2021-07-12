@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /**
+ * 这个接口表示一个可关闭的可迭代对象。
+ *
  * This interface represents an iterable that is also closeable.
  *
  * @param <T> type of the iterated objects.

@@ -29,6 +29,7 @@ public class CheckpointingOptions {
     // ------------------------------------------------------------------------
 
     /** The state backend to be used to store and checkpoint state. */
+    // 用于存储和检查点状态的状态后端
     @Documentation.Section(value = Documentation.Sections.COMMON_STATE_BACKENDS, position = 1)
     public static final ConfigOption<String> STATE_BACKEND =
             ConfigOptions.key("state.backend")
@@ -36,7 +37,7 @@ public class CheckpointingOptions {
                     .withDescription("The state backend to be used to store and checkpoint state.");
 
     /** The maximum number of completed checkpoints to retain. */
-    // 要保留的检查点的最大数量
+    // 要保留的检查点的最大数量, 默认为 1
     @Documentation.Section(Documentation.Sections.COMMON_STATE_BACKENDS)
     public static final ConfigOption<Integer> MAX_RETAINED_CHECKPOINTS =
             ConfigOptions.key("state.checkpoints.num-retained")
@@ -45,7 +46,8 @@ public class CheckpointingOptions {
 
     /**
      * 选项状态后端是否应该在可能和可配置的情况下使用异步快照方法。
-     * 有些状态后端可能不支持异步快照，或者只支持异步快照，请忽略此选项。
+     *
+     * <p>有些状态后端可能不支持异步快照，或者只支持异步快照，请忽略此选项。
      *
      * Option whether the state backend should use an asynchronous snapshot method where possible
      * and configurable.
@@ -65,9 +67,9 @@ public class CheckpointingOptions {
     /**
      * 选择状态后端是否应该创建增量检查点(如果可能的话)。对于增量检查点，只存储与前一个检查点的差异，而不是完整的检查点状态。
      *
-     * 一旦启用，web UI中显示的状态大小或从rest API中获取的状态大小只代表增量检查点大小，而不是完整检查点大小。
+     * <p>一旦启用，web UI中显示的状态大小或从rest API中获取的状态大小只代表增量检查点大小，而不是完整检查点大小。
      *
-     * 一些状态后端可能不支持增量检查点，因此忽略此选项。
+     * <p>一些状态后端可能不支持增量检查点，因此忽略此选项。
      *
      * Option whether the state backend should create incremental checkpoints, if possible. For an
      * incremental checkpoint, only a diff from the previous checkpoint is stored, rather than the
@@ -92,7 +94,7 @@ public class CheckpointingOptions {
     /**
      * 此选项为此状态后端配置本地恢复。缺省情况下，本地恢复处于去激活状态。
      *
-     * 本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend不支持本地恢复，忽略此选项。
+     * <p>本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend 不支持本地恢复，忽略此选项。
      *
      * This option configures local recovery for this state backend. By default, local recovery is
      * deactivated.
@@ -112,7 +114,7 @@ public class CheckpointingOptions {
     /**
      * config参数定义了根目录，用于存储基于文件的本地恢复状态。
      *
-     * 本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend不支持本地恢复，忽略此选项。
+     * <p>本地恢复目前只覆盖键控状态后端。目前，MemoryStateBackend不支持本地恢复，忽略此选项。
      *
      * The config parameter defining the root directories for storing file-based state for local
      * recovery.

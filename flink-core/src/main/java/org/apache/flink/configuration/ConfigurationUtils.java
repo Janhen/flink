@@ -56,6 +56,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 提取由{@link org.apache.flink.configuration.CoreOptions#TMP_DIRS}定义的临时文件的任务管理器目录。
+     *
      * Extracts the task manager directories for temporary files as defined by {@link
      * org.apache.flink.configuration.CoreOptions#TMP_DIRS}.
      *
@@ -83,6 +85,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 将字符串解析为字符串的映射。Map 的预期格式是:
+     *
      * Parses a string as a map of strings. The expected format of the map is:
      *
      * <pre>

@@ -39,6 +39,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class ConfigUtils {
 
     /**
+     * 在{@link WritableConfig}中放置一个类型为{@code IN}的值数组，作为类型为{@link List}的{@code OUT}的
+     * {@link ConfigOption}。如果{@code values}是{@code null}或空，那么配置中什么都没有。
+     *
      * Puts an array of values of type {@code IN} in a {@link WritableConfig} as a {@link
      * ConfigOption} of type {@link List} of type {@code OUT}. If the {@code values} is {@code null}
      * or empty, then nothing is put in the configuration.

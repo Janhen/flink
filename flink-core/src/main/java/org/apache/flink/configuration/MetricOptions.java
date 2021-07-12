@@ -60,17 +60,20 @@ public class MetricOptions {
                                     + " any of the names in the list will be started. Otherwise, all reporters that could be found in"
                                     + " the configuration will be started.");
 
+    // 要用于名为<name>的报告器的报告器类。
     public static final ConfigOption<String> REPORTER_CLASS =
             key("metrics.reporter.<name>.class")
                     .noDefaultValue()
                     .withDescription("The reporter class to use for the reporter named <name>.");
 
+    // 要用于名为<name>的报告器的报告器间隔
     public static final ConfigOption<Duration> REPORTER_INTERVAL =
             key("metrics.reporter.<name>.interval")
                     .durationType()
                     .defaultValue(Duration.ofSeconds(10))
                     .withDescription("The reporter interval to use for the reporter named <name>.");
 
+    // 为名为<name>的报告器配置参数<parameter>。
     public static final ConfigOption<String> REPORTER_CONFIG_PARAMETER =
             key("metrics.reporter.<name>.<parameter>")
                     .noDefaultValue()
@@ -78,12 +81,14 @@ public class MetricOptions {
                             "Configures the parameter <parameter> for the reporter named <name>.");
 
     /** The delimiter used to assemble the metric identifier. */
+    // 用于组装度量标识符的分隔符。
     public static final ConfigOption<String> SCOPE_DELIMITER =
             key("metrics.scope.delimiter")
                     .defaultValue(".")
                     .withDescription("Delimiter used to assemble the metric identifier.");
 
     /** The scope format string that is applied to all metrics scoped to a JobManager. */
+    // 定义应用于作用域为JobManager的所有指标的作用域格式字符串
     public static final ConfigOption<String> SCOPE_NAMING_JM =
             key("metrics.scope.jm")
                     .defaultValue("<host>.jobmanager")
@@ -91,6 +96,7 @@ public class MetricOptions {
                             "Defines the scope format string that is applied to all metrics scoped to a JobManager.");
 
     /** The scope format string that is applied to all metrics scoped to a TaskManager. */
+    // 定义适用于TaskManager范围内的所有度量的范围格式字符串。
     public static final ConfigOption<String> SCOPE_NAMING_TM =
             key("metrics.scope.tm")
                     .defaultValue("<host>.taskmanager.<tm_id>")
@@ -98,6 +104,7 @@ public class MetricOptions {
                             "Defines the scope format string that is applied to all metrics scoped to a TaskManager.");
 
     /** The scope format string that is applied to all metrics scoped to a job on a JobManager. */
+    // 定义适用于JobManager上作业范围内的所有指标的范围格式字符串
     public static final ConfigOption<String> SCOPE_NAMING_JM_JOB =
             key("metrics.scope.jm.job")
                     .defaultValue("<host>.jobmanager.<job_name>")
@@ -120,6 +127,7 @@ public class MetricOptions {
                             "Defines the scope format string that is applied to all metrics scoped to a task.");
 
     /** The scope format string that is applied to all metrics scoped to an operator. */
+    // 作用域格式字符串，应用于作用域为操作符的所有指标。
     public static final ConfigOption<String> SCOPE_NAMING_OPERATOR =
             key("metrics.scope.operator")
                     .defaultValue(
@@ -152,6 +160,7 @@ public class MetricOptions {
                                     .build());
 
     /** The number of measured latencies to maintain at each operator. */
+    // 每个 operator 需要维护的延迟数
     public static final ConfigOption<Integer> LATENCY_HISTORY_SIZE =
             key("metrics.latency.history-size")
                     .defaultValue(128)

@@ -33,6 +33,12 @@ public class JobManagerOptions {
     public static final MemorySize MIN_JVM_HEAP_SIZE = MemorySize.ofMebiBytes(128);
 
     /**
+     * 定义与作业管理器通信所连接的网络地址的配置参数。
+     *
+     * <p>这个值只在存在一个静态名称或地址的JobManager的设置中解释(简单的独立设置，或具有动态服务名称解析的容器设置)。
+     * 在许多高可用性设置中，当使用leader-选举服务(如ZooKeeper)从可能的多个备用JobManager中选举和发现JobManager
+     * leader时，它并不被使用。
+     *
      * The config parameter defining the network address to connect to for communication with the
      * job manager.
      *
@@ -147,6 +153,7 @@ public class JobManagerOptions {
                                     + "'jobmanager.memory.flink.size' for Total Flink Memory size configuration.");
 
     /** Total Flink Memory size for the JobManager. */
+    // 总Flink用于JobManager的内存大小。
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> TOTAL_FLINK_MEMORY =
             key("jobmanager.memory.flink.size")
@@ -160,6 +167,7 @@ public class JobManagerOptions {
                                     TOTAL_PROCESS_MEMORY.key()));
 
     /** JVM Heap Memory size for the JobManager. */
+    // JobManager的JVM堆内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> JVM_HEAP_MEMORY =
             key("jobmanager.memory.heap.size")
@@ -171,6 +179,7 @@ public class JobManagerOptions {
                                     + '.');
 
     /** Off-heap Memory size for the JobManager. */
+    // 非堆内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> OFF_HEAP_MEMORY =
             key("jobmanager.memory.off-heap.size")
@@ -186,6 +195,7 @@ public class JobManagerOptions {
                                     .build());
 
     /** Off-heap Memory size for the JobManager. */
+    // 非堆内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<Boolean> JVM_DIRECT_MEMORY_LIMIT_ENABLED =
             key("jobmanager.memory.enable-jvm-direct-memory-limit")
@@ -200,6 +210,7 @@ public class JobManagerOptions {
                                     .build());
 
     /** JVM Metaspace Size for the JobManager. */
+    // JobManager的JVM元空间大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> JVM_METASPACE =
             key("jobmanager.memory.jvm-metaspace.size")
@@ -236,6 +247,7 @@ public class JobManagerOptions {
                                     + JVM_OVERHEAD_DESCRIPTION);
 
     /** Fraction of Total Process Memory to be reserved for JVM Overhead. */
+    // 为JVM开销预留的进程总内存的一部分
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<Float> JVM_OVERHEAD_FRACTION =
             key("jobmanager.memory.jvm-overhead.fraction")
@@ -255,6 +267,8 @@ public class JobManagerOptions {
                             "The maximum number of prior execution attempts kept in history.");
 
     /**
+     * 此选项指定任务计算如何从任务失败中恢复。"可接受的值是:")
+     *
      * This option specifies the failover strategy, i.e. how the job computation recovers from task
      * failures.
      */
@@ -290,6 +304,7 @@ public class JobManagerOptions {
                             "Dictionary for JobManager to store the archives of completed jobs.");
 
     /** The job store cache size in bytes which is used to keep completed jobs in memory. */
+    // 作业存储缓存大小(以字节为单位)，用于将已完成的作业保存在内存中。
     @Documentation.Section(Documentation.Sections.ALL_JOB_MANAGER)
     public static final ConfigOption<Long> JOB_STORE_CACHE_SIZE =
             key("jobstore.cache-size")
@@ -298,6 +313,7 @@ public class JobManagerOptions {
                             "The job store cache size in bytes which is used to keep completed jobs in memory.");
 
     /** The time in seconds after which a completed job expires and is purged from the job store. */
+    // 完成的作业到期并从作业存储中清除的时间(以秒为单位)。
     @Documentation.Section(Documentation.Sections.ALL_JOB_MANAGER)
     public static final ConfigOption<Long> JOB_STORE_EXPIRATION_TIME =
             key("jobstore.expiration-time")

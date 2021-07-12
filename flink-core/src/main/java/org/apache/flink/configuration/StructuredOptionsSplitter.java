@@ -27,6 +27,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Helper class for splitting a string on a given delimiter with quoting logic. */
+// 辅助类，用于使用引号逻辑在给定分隔符上拆分字符串。
 @Internal
 class StructuredOptionsSplitter {
 

@@ -31,6 +31,9 @@ public class ExecutorUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ExecutorUtils.class);
 
     /**
+     * 优雅地关闭给定的{@link ExecutorService}。调用将等待所有ExecutorServices终止的给定超时。如果
+     * ExecutorServices在此时间内没有终止，它们将被硬关闭
+     *
      * Gracefully shutdown the given {@link ExecutorService}. The call waits the given timeout that
      * all ExecutorServices terminate. If the ExecutorServices do not terminate in this time, they
      * will be shut down hard.

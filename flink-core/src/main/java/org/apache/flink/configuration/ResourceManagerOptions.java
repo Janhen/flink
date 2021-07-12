@@ -104,6 +104,7 @@ public class ResourceManagerOptions {
                     .withDescription("The timeout for an idle task manager to be released.");
 
     /** The timeout for an idle task manager to be released, in milliseconds. */
+    // 释放空闲任务管理器的超时时间，以毫秒为单位
     public static final ConfigOption<Long> TASK_MANAGER_TIMEOUT =
             ConfigOptions.key("resourcemanager.taskmanager-timeout")
                     .defaultValue(30000L)
@@ -138,6 +139,9 @@ public class ResourceManagerOptions {
                                     .build());
 
     /**
+     * 前缀，用于将自定义环境变量传递给Flink的主进程。例如，将LD_LIBRARY_PATH作为env变量传递给AppMaster，设置如下:
+     * containerized.master.env.LD_LIBRARY_PATH:“/usr/lib/native”在flink-conf.yaml。
+     *
      * Prefix for passing custom environment variables to Flink's master process. For example for
      * passing LD_LIBRARY_PATH as an env variable to the AppMaster, set:
      * containerized.master.env.LD_LIBRARY_PATH: "/usr/lib/native" in the flink-conf.yaml.
@@ -145,6 +149,8 @@ public class ResourceManagerOptions {
     public static final String CONTAINERIZED_MASTER_ENV_PREFIX = "containerized.master.env.";
 
     /**
+     * 类似于{@see CONTAINERIZED_MASTER_ENV_PREFIX}，这个配置前缀允许为 workers(TaskManagers)设置自定义环境变量。
+     *
      * Similar to the {@see CONTAINERIZED_MASTER_ENV_PREFIX}, this configuration prefix allows
      * setting custom environment variables for the workers (TaskManagers).
      */

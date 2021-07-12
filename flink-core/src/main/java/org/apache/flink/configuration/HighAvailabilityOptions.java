@@ -96,6 +96,8 @@ public class HighAvailabilityOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 当使用ZooKeeper以高可用性模式运行Flink时，使用的ZooKeeper仲裁。
+     *
      * The ZooKeeper quorum to use, when running Flink in a high-availability mode with ZooKeeper.
      */
     @Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY_ZOOKEEPER)

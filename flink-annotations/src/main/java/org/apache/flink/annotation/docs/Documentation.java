@@ -61,10 +61,10 @@ public final class Documentation {
     public static final class Sections {
 
         public static final String COMMON_HOST_PORT = "common_host_port";
-        public static final String COMMON_STATE_BACKENDS = "common_state_backends";
         public static final String COMMON_HIGH_AVAILABILITY = "common_high_availability";
         public static final String COMMON_HIGH_AVAILABILITY_ZOOKEEPER =
                 "common_high_availability_zk";
+        public static final String COMMON_STATE_BACKENDS = "common_state_backends";
         public static final String COMMON_MEMORY = "common_memory";
         public static final String COMMON_MISCELLANEOUS = "common_miscellaneous";
 

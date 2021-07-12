@@ -59,6 +59,9 @@ public final class GlobalConfiguration {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 从环境加载全局配置。如果加载过程中出现错误，将失败。如果没有设置环境变量，则返回一个空配置对象。在生产环境中设置了
+     * 此变量，但测试和本地执行调试没有设置此环境变量。这就是为什么如果不确定，我们就会失败。
+     *
      * Loads the global configuration from the environment. Fails if an error occurs during loading.
      * Returns an empty configuration object if the environment variable is not set. In production
      * this variable is set but tests and local execution/debugging don't have this environment

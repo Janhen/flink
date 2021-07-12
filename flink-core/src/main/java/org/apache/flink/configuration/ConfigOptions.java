@@ -29,6 +29,8 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code ConfigOptions}用于构建一个{@link ConfigOption}。该选项通常以以下模式之一构建:
+ *
  * {@code ConfigOptions} are used to build a {@link ConfigOption}. The option is typically built in
  * one of the following pattern:
  *
