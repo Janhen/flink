@@ -200,6 +200,7 @@ public class StreamExecutionEnvironmentComplexConfigurationTest {
     }
 
     /** JobExecuted counter listener for unit test. */
+    // jobeexecutedcounter listener用于单元测试
     public static class BasicJobExecutedCounter implements JobListener {
         private int count = 0;
 

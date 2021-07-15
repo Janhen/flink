@@ -55,6 +55,7 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 /** {@link JobMaster} rpc gateway interface. */
+// {@link JobMaster} rpc网关接口。
 public interface JobMasterGateway
         extends CheckpointCoordinatorGateway,
                 FencedRpcGateway<JobMasterId>,

@@ -24,6 +24,10 @@ import org.rocksdb.ColumnFamilyHandle;
 import org.rocksdb.RocksDB;
 
 /**
+ * {@link RocksDB}可以被Flink的metrics reporter查询的属性。
+ *
+ * <p>注意:Metrics属性会在{@link RocksDB}的每个新版本中添加，当升级到后一个版本时，请考虑使用新添加的属性更新这个类。
+ *
  * {@link RocksDB} properties that can be queried by Flink's metrics reporter.
  *
  * <p>Note: Metrics properties are added in each new version of {@link RocksDB}, when upgrading to a

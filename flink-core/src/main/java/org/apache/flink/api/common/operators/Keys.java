@@ -199,6 +199,7 @@ public abstract class Keys<T> {
     }
 
     /** Represents (nested) field access through string and integer-based keys */
+    // 通过字符串和基于整数的键表示(嵌套)字段访问
     public static class ExpressionKeys<T> extends Keys<T> {
 
         public static final String SELECT_ALL_CHAR = "*";

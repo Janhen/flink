@@ -36,6 +36,9 @@ import org.apache.flink.types.Value;
 import java.util.Arrays;
 
 /**
+ * DeltaIteration表示一个增量迭代的开始。它是通过{@link DataSet#iterateDelta(DataSet, int, int...)}
+ * 方法从表示初始解决方案集的DataSet创建的。
+ *
  * The DeltaIteration represents the start of a delta iteration. It is created from the DataSet that
  * represents the initial solution set via the {@link DataSet#iterateDelta(DataSet, int, int...)}
  * method.

@@ -115,6 +115,12 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ *
+ * ExecutionGraph 是协调数据流分布式执行的中心数据结构。它保持每个并行任务、每个中间流以及它们之间的通信的表示。
+ *
+ * <p>执行图包含以下结构:
+ *
+ *
  * The execution graph is the central data structure that coordinates the distributed execution of a
  * data flow. It keeps representations of each parallel task, each intermediate stream, and the
  * communication between them.

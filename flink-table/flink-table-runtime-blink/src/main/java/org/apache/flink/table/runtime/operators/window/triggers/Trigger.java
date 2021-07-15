@@ -29,6 +29,14 @@ import org.apache.flink.table.runtime.operators.window.assigners.WindowAssigner;
 import java.io.Serializable;
 
 /**
+ * {@code Trigger}决定了什么时候应该计算窗口的一个窗格以发出窗口的那一部分的结果。
+ *
+ * <p>窗格是包含具有相同键和相同{@link Window}的元素的bucket。一个元素可以在多个窗格中，如果它被{@link WindowAssigner}
+ * 分配给多个窗口。这些窗格都有自己的{@code Trigger}实例。
+ *
+ * <p>触发器不能在内部维护状态，因为它们可以被重新创建或用于不同的键。所有必要的状态都应该使用{@link TriggerContext}
+ * 上可用的状态抽象来持久化。
+ *
  * A {@code Trigger} determines when a pane of a window should be evaluated to emit the results for
  * that part of the window.
  *
@@ -54,6 +62,8 @@ public abstract class Trigger<W extends Window> implements Serializable {
     public abstract void open(TriggerContext ctx) throws Exception;
 
     /**
+     * 对添加到窗格中的每个元素调用。其结果将决定是否对窗格进行评估以发出结果。
+     *
      * Called for every element that gets added to a pane. The result of this will determine whether
      * the pane is evaluated to emit results.
      *
@@ -65,6 +75,11 @@ public abstract class Trigger<W extends Window> implements Serializable {
     public abstract boolean onElement(Object element, long timestamp, W window) throws Exception;
 
     /**
+     * 当使用触发器上下文设置的处理时间计时器触发时调用。
+     *
+     * <p>注意:如果窗口不包含任何元素，则不会调用此方法。因此，如果您从触发器方法返回{@code PURGE}，并且希望在将来调
+     * 用计时器回调时进行清理，那么最好清除在计时器回调中将要清理的任何状态。
+     *
      * Called when a processing-time timer that was set using the trigger context fires.
      *
      * <p>Note: This method is not called in case the window does not contain any elements. Thus, if
@@ -93,6 +108,10 @@ public abstract class Trigger<W extends Window> implements Serializable {
     public abstract boolean onEventTime(long time, W window) throws Exception;
 
     /**
+     * 如果此触发器支持合并触发器状态，则返回true。
+     *
+     * <p>If this return {@code true} you must正确实现{@link #onMerge(Window, OnMergeContext)}
+     *
      * Returns true if this trigger supports merging of trigger state and can therefore.
      *
      * <p>If this returns {@code true} you must properly implement {@link #onMerge(Window,

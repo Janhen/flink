@@ -24,6 +24,7 @@ import org.apache.flink.configuration.Configuration;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Configuration for the cluster components. */
+// 集群组件的配置
 public class RetryingRegistrationConfiguration {
 
     private final long initialRegistrationTimeoutMillis;
@@ -88,6 +89,7 @@ public class RetryingRegistrationConfiguration {
     }
 
     public static RetryingRegistrationConfiguration defaultConfiguration() {
+        // J: ConfigOption 给定默认值
         return fromConfiguration(new Configuration());
     }
 }

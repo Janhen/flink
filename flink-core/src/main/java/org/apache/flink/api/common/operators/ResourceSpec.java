@@ -36,6 +36,18 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用UDF描述 operator 的不同资源因素。
+ *
+ * <p>Resource在生成作业图时为链接操作符提供{@link #merge(ResourceSpec)}方法。
+ *
+ * <p>Resource提供了{@link #lessThanOrEqual(ResourceSpec)}}方法来按顺序比较这些字段:
+ *
+ * CPU 核心
+ * Task 堆内存大小
+ * Task 非碓内存大小
+ * 管理内存
+ * 扩展资源
+ *
  * Describe the different resource factors of the operator with UDF.
  *
  * <p>Resource provides {@link #merge(ResourceSpec)} method for chained operators when generating

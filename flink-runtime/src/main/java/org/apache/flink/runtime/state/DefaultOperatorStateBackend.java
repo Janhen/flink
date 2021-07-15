@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.concurrent.RunnableFuture;
 
 /** Default implementation of OperatorStateStore that provides the ability to make snapshots. */
+// 提供快照功能的OperatorStateStore的默认实现。
 @Internal
 public class DefaultOperatorStateBackend implements OperatorStateBackend {
 

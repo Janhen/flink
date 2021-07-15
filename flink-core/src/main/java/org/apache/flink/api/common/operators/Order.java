@@ -21,6 +21,8 @@ package org.apache.flink.api.common.operators;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 枚举代表顺序。可以表示没有顺序，升序或降序。
+ *
  * Enumeration representing order. May represent no order, an ascending order or a descending order.
  */
 @Public

@@ -1860,6 +1860,9 @@ public abstract class DataSet<T> {
     }
 
     /**
+     * 使用{@link OutputFormat}发出数据集。此方法向程序添加一个数据接收器。程序可以有多个数据接收器。一个数据集还可
+     * 以同时有多个使用者(数据接收或转换)。
+     *
      * Emits a DataSet using an {@link OutputFormat}. This method adds a data sink to the program.
      * Programs may have multiple data sinks. A DataSet may also have multiple consumers (data sinks
      * or transformations) at the same time.

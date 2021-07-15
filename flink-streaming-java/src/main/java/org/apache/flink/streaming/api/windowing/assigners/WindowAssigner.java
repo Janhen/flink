@@ -29,9 +29,11 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * 一个{@code WindowAssigner}赋值0个或多个{@link Window Window}给一个元素。在窗口操作中，元素是根据键(如果可用)和它被分配到的窗口分组的。
- * 具有相同键和窗口的元素集称为窗格。当{@link Trigger}决定某个窗格应该触发
- * {@link org.apache.flink.streaming.api.functions.windowing.WindowFunction}用于生成该窗格的输出元素。
+ * 一个{@code WindowAssigner}赋值0个或多个{@link Window Window}给一个元素。
+ *
+ * 在窗口操作中，元素是根据键(如果可用)和它被分配到的窗口分组的。具有相同键和窗口的元素集称为窗格。当{@link Trigger}决
+ * 定某个窗格应该触发{@link org.apache.flink.streaming.api.functions.windowing.WindowFunction}用于生成该
+ * 窗格的输出元素。
  *
  * A {@code WindowAssigner} assigns zero or more {@link Window Windows} to an element.
  *

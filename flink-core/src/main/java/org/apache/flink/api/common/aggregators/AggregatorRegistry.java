@@ -31,6 +31,7 @@ import java.util.Map;
 @Internal
 public class AggregatorRegistry {
 
+    // J: ..
     private final Map<String, Aggregator<?>> registry = new HashMap<String, Aggregator<?>>();
 
     private ConvergenceCriterion<? extends Value> convergenceCriterion;

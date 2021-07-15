@@ -86,6 +86,16 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * ExecutionEnvironment是执行程序的上下文。{@link LocalEnvironment}将在当前JVM中执行，{@link RemoteEnvironment}
+ * 将在远程设置中执行。
+ *
+ * <p>环境提供了控制作业执行(例如设置并行度)和与外界交互(数据访问)的方法。
+ *
+ * <p>请注意，执行环境需要所有被执行操作的输入和返回类型的强类型信息。这意味着环境需要知道操作的返回值是一个由String和
+ * Integer组成的元组。因为Java编译器丢弃了很多泛型类型信息，所以大多数方法都试图使用反射重新获得这些信息。在某些情况下，
+ *
+ * 可能需要手动向某些方法提供该信息。
+ *
  * The ExecutionEnvironment is the context in which a program is executed. A {@link
  * LocalEnvironment} will cause execution in the current JVM, a {@link RemoteEnvironment} will cause
  * execution on a remote setup.
@@ -110,6 +120,8 @@ public class ExecutionEnvironment {
     protected static final Logger LOG = LoggerFactory.getLogger(ExecutionEnvironment.class);
 
     /**
+     * 上下文的环境(默认为本地，如果通过命令行调用则为集群)。
+     *
      * The environment of the context (local by default, cluster if invoked through command line).
      */
     private static ExecutionEnvironmentFactory contextEnvironmentFactory = null;
@@ -130,11 +142,14 @@ public class ExecutionEnvironment {
     private final ExecutionConfig config = new ExecutionConfig();
 
     /**
+     * 最新执行的结果，使其在使用立即执行方法时可检索。
+     *
      * Result from the latest execution, to make it retrievable when using eager execution methods.
      */
     protected JobExecutionResult lastJobExecutionResult;
 
     /** Flag to indicate whether sinks have been cleared in previous executions. */
+    // 标记，指示在以前的执行中是否清除了汇聚。
     private boolean wasExecuted = false;
 
     private final PipelineExecutorServiceLoader executorServiceLoader;

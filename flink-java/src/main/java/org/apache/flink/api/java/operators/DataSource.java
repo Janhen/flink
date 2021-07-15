@@ -31,6 +31,8 @@ import org.apache.flink.api.java.io.SplitDataProperties;
 import org.apache.flink.configuration.Configuration;
 
 /**
+ * 创建新数据集(数据源)的操作。该操作充当要在其上应用进一步转换的数据集。它封装了额外的配置参数，以定制执行。
+ *
  * An operation that creates a new data set (data source). The operation acts as the data set on
  * which to apply further transformations. It encapsulates additional configuration parameters, to
  * customize the execution.

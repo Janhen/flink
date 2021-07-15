@@ -40,6 +40,8 @@ import org.apache.flink.configuration.Configuration;
 import java.util.Arrays;
 
 /**
+ * 一种允许存储数据结果的操作。
+ *
  * An operation that allows storing data results.
  *
  * @param <T>

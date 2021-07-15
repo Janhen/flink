@@ -120,6 +120,12 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * JobMaster 的实现。作业主机负责执行单个{@link JobGraph}。
+ *
+ * <p>它提供了以下方法作为其rpc接口的一部分，以与JobMaster远程交互:
+ *
+ * <li>{@link #updateTaskExecutionState}更新给定任务的执行状态
+ *
  * JobMaster implementation. The job master is responsible for the execution of a single {@link
  * JobGraph}.
  *

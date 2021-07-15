@@ -100,6 +100,7 @@ public class JobListenerITCase extends TestLogger {
                 new JobListener() {
                     @Override
                     public void onJobSubmitted(JobClient jobClient, Throwable t) {
+                        //
                         jobIdReference.set(jobClient.getJobID());
                         submissionLatch.trigger();
                     }

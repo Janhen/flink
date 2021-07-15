@@ -67,6 +67,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * 一个{@link AbstractKeyedStateBackend}在Java堆上保持状态，并在检查点时将状态序列化为{@link CheckpointStreamFactory}
+ * 提供的流。
+ *
  * A {@link AbstractKeyedStateBackend} that keeps state on the Java Heap and will serialize state to
  * streams provided by a {@link CheckpointStreamFactory} upon checkpointing.
  *

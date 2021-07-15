@@ -46,6 +46,7 @@ public class ClusterOptions {
                     .withDescription(
                             "Maximum registration timeout between cluster components in milliseconds.");
 
+    // 注册尝试后的暂停导致异常(不是超时)，单位是毫秒。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> ERROR_REGISTRATION_DELAY =
             ConfigOptions.key("cluster.registration.error-delay")

@@ -24,6 +24,8 @@ import org.apache.flink.util.Disposable;
 import java.io.Closeable;
 
 /**
+ * 结合了两者的接口，用户接口{@link OperatorStateStore}和系统接口{@link SnapshotStrategy}
+ *
  * Interface that combines both, the user facing {@link OperatorStateStore} interface and the system
  * interface {@link SnapshotStrategy}
  */

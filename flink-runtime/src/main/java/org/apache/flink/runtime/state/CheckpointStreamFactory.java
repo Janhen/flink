@@ -26,6 +26,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * 检查点输出流工厂，用于保存检查点的数据。
+ *
+ * <p>可以从{@link CheckpointStorage}通过
+ * {@link CheckpointStorage#resolveCheckpointStorageLocation(long, CheckpointStorageLocationReference)}
+ * 创建流工厂。
+ *
  * A factory for checkpoint output streams, which are used to persist data for checkpoints.
  *
  * <p>Stream factories can be created from the {@link CheckpointStorage} through {@link

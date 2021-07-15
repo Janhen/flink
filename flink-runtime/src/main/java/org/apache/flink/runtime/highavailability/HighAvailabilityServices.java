@@ -29,6 +29,16 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
+ * HighAvailabilityServices提供对高可用性设置所需的所有服务的访问。特别是，这些服务提供存取高可用性的储存和登记，以及分发的柜台和领导选举。
+ *
+ * <li>ResourceManager leader选举和leader检索
+ * <li>JobManager leader选举和leader检索
+ * <li>检查点元数据持久性
+ * <li>注册最新完成的检查点
+ * <li>用于BLOB存储的持久性
+ * <li>标记作业状态的注册表
+ * <li> RPC端点命名
+ *
  * The HighAvailabilityServices give access to all services needed for a highly-available setup. In
  * particular, the services provide access to highly available storage and registries, as well as
  * distributed counters and leader election.
@@ -56,6 +66,9 @@ public interface HighAvailabilityServices extends ClientHighAvailabilityServices
     UUID DEFAULT_LEADER_ID = new UUID(0, 0);
 
     /**
+     * 当使用{@link HighAvailabilityServices}时，应该使用这个JobID来标识旧的JobManager。使用新模式，每个
+     * JobMaster都将分配一个不同的JobID。
+     *
      * This JobID should be used to identify the old JobManager when using the {@link
      * HighAvailabilityServices}. With the new mode every JobMaster will have a distinct JobID
      * assigned.

@@ -32,6 +32,8 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * JobCheckpointingSettings附加到JobGraph上，并描述了JobGraph的异步检查点的设置，例如间隔，以及哪些顶点需要参与
+ *
  * The JobCheckpointingSettings are attached to a JobGraph and describe the settings for the
  * asynchronous checkpoints of the JobGraph, such as interval, and which vertices need to
  * participate.

@@ -46,6 +46,13 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * JobGraph表示一个Flink数据流程序，位于JobManager接受的低级别。所有来自高级api的程序都被转换为JobGraphs。
+ *
+ * <p> JobGraph是连接在一起形成DAG的顶点和中间结果的图。请注意，迭代(反馈边)目前不是在JobGraph中编码的，而是在某些
+ * 特定的顶点中编码的，这些顶点在它们自己之间建立反馈通道。
+ *
+ * <p> JobGraph定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
+ *
  * The JobGraph represents a Flink dataflow program, at the low level that the JobManager accepts.
  * All programs from higher level APIs are transformed into JobGraphs.
  *
@@ -84,6 +91,7 @@ public class JobGraph implements Serializable {
     private SerializedValue<ExecutionConfig> serializedExecutionConfig;
 
     /** The settings for the job checkpoints */
+    // 作业检查点的设置
     private JobCheckpointingSettings snapshotSettings;
 
     /** Savepoint restore settings. */
@@ -92,13 +100,16 @@ public class JobGraph implements Serializable {
     // --- attached resources ---
 
     /** Set of JAR files required to run this job. */
+    // 运行此作业所需的JAR文件集。
     private final List<Path> userJars = new ArrayList<Path>();
 
     /** Set of custom files required to run this job. */
+    // 运行此作业所需的自定义文件集。
     private final Map<String, DistributedCache.DistributedCacheEntry> userArtifacts =
             new HashMap<>();
 
     /** Set of blob keys identifying the JAR files required to run this job. */
+    // 标识运行此作业所需的JAR文件的一组blob键
     private final List<PermanentBlobKey> userJarBlobKeys = new ArrayList<>();
 
     /** List of classpaths required to run this job. */

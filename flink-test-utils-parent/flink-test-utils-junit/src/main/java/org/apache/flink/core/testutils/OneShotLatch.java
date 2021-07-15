@@ -25,6 +25,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 用于在测试中同步部分代码的锁存。一旦锁存器被触发，对{@link #await()}的调用将在将来立即返回。
+ *
+ * <p>代码的一部分，只能在其他代码调用{@link #await()}后运行。调用只会在另一部分完成并调用{@link #trigger()}时返回。
+ *
  * Latch for synchronizing parts of code in tests. Once the latch has fired once calls to {@link
  * #await()} will return immediately in the future.
  *
@@ -47,6 +51,8 @@ public final class OneShotLatch {
     }
 
     /**
+     * 等待{@link OneShotLatch#trigger()}被调用。一旦{@code #trigger()}被调用，这个调用总是会立即返回。
+     *
      * Waits until {@link OneShotLatch#trigger()} is called. Once {@code trigger()} has been called
      * this call will always return immediately.
      *

@@ -24,9 +24,12 @@ import org.apache.flink.util.AutoCloseableAsync;
 import java.util.concurrent.CompletableFuture;
 
 /** Interface which specifies the JobMaster service. */
+// 指定JobMaster服务的接口。
 public interface JobMasterService extends AutoCloseableAsync {
 
     /**
+     * 使用给定的{@link JobMasterId}启动JobMaster服务。
+     *
      * Start the JobMaster service with the given {@link JobMasterId}.
      *
      * @param jobMasterId to start the service with
