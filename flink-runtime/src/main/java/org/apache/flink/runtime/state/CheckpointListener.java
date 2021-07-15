@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 该接口必须由希望在所有参与者完全确认检查点后接收提交通知的功能操作实现。
+ *
  * This interface must be implemented by functions/operations that want to receive a commit
  * notification once a checkpoint has been completely acknowledged by all participants.
  */
@@ -28,6 +30,10 @@ import org.apache.flink.annotation.Public;
 public interface CheckpointListener {
 
     /**
+     * 一旦分布式检查点完成，此方法将作为通知调用。
+     *
+     * <p>请注意，此方法期间的任何异常都不会导致检查点再次失败。
+     *
      * This method is called as a notification once a distributed checkpoint has been completed.
      *
      * <p>Note that any exception during this method will not cause the checkpoint to fail any more.
@@ -39,6 +45,8 @@ public interface CheckpointListener {
     void notifyCheckpointComplete(long checkpointId) throws Exception;
 
     /**
+     * 一旦分布式检查点被中止，此方法将作为通知调用。
+     *
      * This method is called as a notification once a distributed checkpoint has been aborted.
      *
      * @param checkpointId The ID of the checkpoint that has been aborted.

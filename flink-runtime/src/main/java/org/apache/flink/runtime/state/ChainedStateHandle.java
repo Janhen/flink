@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** Handle to state handles for the operators in an operator chain. */
+// 操作符链中操作符的状态句柄的句柄。
 public class ChainedStateHandle<T extends StateObject> implements StateObject {
 
     private static final long serialVersionUID = 1L;

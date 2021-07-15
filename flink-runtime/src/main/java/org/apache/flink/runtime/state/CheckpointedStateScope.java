@@ -19,6 +19,10 @@
 package org.apache.flink.runtime.state;
 
 /**
+ * 检查点状态块的范围。定义状态是由一个检查点拥有，还是由多个检查点共享。
+ *
+ * <p>不同的检查点存储实现可能会以不同的方式处理不同范围的检查点状态，例如将其放入不同的文件夹或表中。
+ *
  * The scope for a chunk of checkpointed state. Defines whether state is owned by one checkpoint, or
  * whether it is shared by multiple checkpoints.
  *
@@ -28,9 +32,14 @@ package org.apache.flink.runtime.state;
 public enum CheckpointedStateScope {
 
     /** Exclusive state belongs exclusively to one specific checkpoint / savepoint. */
+    // 独占状态只属于一个特定的检查点保存点。
     EXCLUSIVE,
 
     /**
+     * 共享状态可能属于多个检查点。
+     *
+     * <p>共享状态通常用于增量或差异检查点方法，其中仅写入增量，并且在较新的检查点中也引用来自先前检查点的状态。
+     *
      * Shared state may belong to more than one checkpoint.
      *
      * <p>Shared state is typically used for incremental or differential checkpointing methods,

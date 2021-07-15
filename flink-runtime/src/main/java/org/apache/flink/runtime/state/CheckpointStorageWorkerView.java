@@ -21,6 +21,11 @@ package org.apache.flink.runtime.state;
 import java.io.IOException;
 
 /**
+ * 该接口实现了检查点数据和元数据流的持久存储。单个检查点或保存点存储到由 {@link CheckpointStorageCoordinatorView}
+ * 创建的 {@link CheckpointStorageLocation}。
+ *
+ * <p>此接口的方法在任务管理器中充当辅助角色。
+ *
  * This interface implements the durable storage of checkpoint data and metadata streams. An
  * individual checkpoint or savepoint is stored to a {@link CheckpointStorageLocation} which created
  * by {@link CheckpointStorageCoordinatorView}.

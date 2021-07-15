@@ -23,6 +23,10 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 /**
+ * 此接口创建一个 {@link CheckpointStorageLocation}，用于存储单个检查点或保存点。
+ *
+ * <p>此接口的方法在检查点协调器中充当管理角色。
+ *
  * This interface creates a {@link CheckpointStorageLocation} to which an individual checkpoint or
  * savepoint is stored.
  *

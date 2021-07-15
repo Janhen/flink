@@ -19,6 +19,9 @@
 package org.apache.flink.runtime.state;
 
 /**
+ * 此接口的实现应实现充当检查点存储管理角色的方法，该方法在 {@link CheckpointStorageCoordinatorView} 中定义。并
+ * 且还实现了充当辅助角色的方法，该方法在 {@link CheckpointStorageWorkerView} 中定义。
+ *
  * Implementations of this interface should implement methods acting as an administration role for
  * checkpoint storage, which defined in {@link CheckpointStorageCoordinatorView}. And also implement
  * methods acting as a worker role, which defined in {@link CheckpointStorageWorkerView}.

@@ -47,6 +47,9 @@ public class StateUtil {
     }
 
     /**
+     * 遍历传递的状态句柄并在每个不为空的句柄上调用discardState()。所有发生的异常都会被抑制和收集，直到迭代结束并作为
+     * 单个异常发出。
+     *
      * Iterates through the passed state handles and calls discardState() on each handle that is not
      * null. All occurring exceptions are suppressed and collected until the iteration is over and
      * emitted as a single exception.
@@ -63,6 +66,8 @@ public class StateUtil {
     }
 
     /**
+     * 通过首先尝试取消它来丢弃给定的状态未来。如果这是不可能的，则计算包含在未来中的状态对象，然后将其丢弃。
+     *
      * Discards the given state future by first trying to cancel it. If this is not possible, then
      * the state object contained in the future is calculated and afterwards discarded.
      *
