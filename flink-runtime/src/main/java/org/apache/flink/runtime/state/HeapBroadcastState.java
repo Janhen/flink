@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * {@link BroadcastState 广播状态}支持基于堆的{@link Map}。
+ *
  * A {@link BroadcastState Broadcast State} backed a heap-based {@link Map}.
  *
  * @param <K> The key type of the elements in the {@link BroadcastState Broadcast State}.
@@ -40,12 +42,15 @@ import java.util.Map;
 public class HeapBroadcastState<K, V> implements BackendWritableBroadcastState<K, V> {
 
     /** Meta information of the state, including state name, assignment mode, and serializer. */
+    // 状态的元信息，包括状态名称、分配模式和序列化器。
     private RegisteredBroadcastStateBackendMetaInfo<K, V> stateMetaInfo;
 
     /** The internal map the holds the elements of the state. */
+    // 内部映射包含状态的元素。
     private final Map<K, V> backingMap;
 
     /** A serializer that allows to perform deep copies of internal map state. */
+    // 允许执行内部映射状态深度复制的序列化器。
     private final MapSerializer<K, V> internalMapCopySerializer;
 
     HeapBroadcastState(RegisteredBroadcastStateBackendMetaInfo<K, V> stateMetaInfo) {

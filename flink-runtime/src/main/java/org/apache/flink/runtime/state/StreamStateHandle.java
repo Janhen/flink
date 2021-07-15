@@ -24,17 +24,22 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
+ * 一个{@link StateObject}表示写入流的状态。数据可以通过{@link #openInputStream()}读取回来。
+ *
  * A {@link StateObject} that represents state that was written to a stream. The data can be read
  * back via {@link #openInputStream()}.
  */
 public interface StreamStateHandle extends StateObject {
 
     /**
+     * 返回一个{@link FSDataInputStream}，可用于读回先前写入流的数据。
+     *
      * Returns an {@link FSDataInputStream} that can be used to read back the data that was
      * previously written to the stream.
      */
     FSDataInputStream openInputStream() throws IOException;
 
     /** @return Content of this handle as bytes array if it is already in memory. */
+    /** @return 这个句柄的内容为字节数组，如果它已经在内存中。 */
     Optional<byte[]> asBytesIfInMemory();
 }

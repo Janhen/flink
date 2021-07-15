@@ -38,6 +38,8 @@ import java.io.Serializable;
 public interface StateObject extends Serializable {
 
     /**
+     * 丢弃此句柄所引用和庄严拥有的状态，以释放持久存储中的资源。当此对象所表示的状态不再被使用时，将调用此方法。
+     *
      * Discards the state referred to and solemnly owned by this handle, to free up resources in the
      * persistent storage. This method is called when the state represented by this object will not
      * be used any more.
@@ -45,6 +47,15 @@ public interface StateObject extends Serializable {
     void discardState() throws Exception;
 
     /**
+     * 以字节为单位返回状态的大小。如果不知道大小，这个方法应该返回{@code 0}。
+     *
+     * <p>此方法产生的值仅用于信息目的和度量监视。如果这个方法返回错误的值，检查点和恢复仍然会正常运行。但是，效率可能会
+     * 受到影响(错误的空间预分配)，依赖于指标的功能(比如监视)也会受到影响。
+     *
+     * <p>实现注意:此方法在获取状态大小时不应该执行任何IO操作(因此它没有声明抛出{@code IOException})。相反，状态大
+     * 小应该存储在状态对象中，或者应该从存储在该对象中的状态进行计算。原因是这个方法经常被检查点的几个部分调用，并且从这
+     * 个方法发出IO请求会在更高的规模上给存储系统带来沉重的IO负载。
+     *
      * Returns the size of the state in bytes. If the size is not known, this method should return
      * {@code 0}.
      *

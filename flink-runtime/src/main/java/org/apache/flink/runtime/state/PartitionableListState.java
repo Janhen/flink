@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * operator list 状态的实现。
  * Implementation of operator list state.
  *
  * @param <S> the type of an operator state partition.

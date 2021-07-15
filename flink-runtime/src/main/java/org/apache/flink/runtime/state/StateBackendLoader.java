@@ -38,6 +38,7 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** This class contains utility methods to load state backends from configurations. */
+// 该类包含从配置中加载状态后端的实用程序方法。
 public class StateBackendLoader {
 
     // ------------------------------------------------------------------------
@@ -45,12 +46,15 @@ public class StateBackendLoader {
     // ------------------------------------------------------------------------
 
     /**
+     * MemoryState后端检查到JobManager的快捷配置名
+     *
      * The shortcut configuration name for the MemoryState backend that checkpoints to the
      * JobManager
      */
     public static final String MEMORY_STATE_BACKEND_NAME = "jobmanager";
 
     /** The shortcut configuration name for the FileSystem State backend */
+    // 文件系统状态后端的快捷配置名
     public static final String FS_STATE_BACKEND_NAME = "filesystem";
 
     /** The shortcut configuration name for the RocksDB State Backend */

@@ -22,6 +22,9 @@ import org.apache.flink.annotation.VisibleForTesting;
 import org.apache.flink.util.StringBasedID;
 
 /**
+ * 这个类表示一个键，它唯一标识(在逻辑级别上)在{@link SharedStateRegistry}中注册的状态句柄。两个逻辑上应该相同的文
+ * 件应该具有相同的{@link SharedStateRegistryKey}。逻辑等价的含义取决于应用。
+ *
  * This class represents a key that uniquely identifies (on a logical level) state handles for
  * registration in the {@link SharedStateRegistry}. Two files which should logically be the same
  * should have the same {@link SharedStateRegistryKey}. The meaning of logical equivalence is up to

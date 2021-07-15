@@ -25,6 +25,10 @@ import org.apache.flink.configuration.ReadableConfig;
 import java.io.IOException;
 
 /**
+ * 用于创建特定状态后端的工厂。状态后端创建获得一个Configuration对象，该对象可用于读取进一步的配置值。
+ *
+ * <p>状态后端工厂通常在配置中指定，以产生一个已配置的状态后端。
+ *
  * A factory to create a specific state backend. The state backend creation gets a Configuration
  * object that can be used to read further config values.
  *
@@ -37,6 +41,8 @@ import java.io.IOException;
 public interface StateBackendFactory<T extends StateBackend> {
 
     /**
+     * 可选地使用给定的配置创建状态后端。
+     *
      * Creates the state backend, optionally using the given configuration.
      *
      * @param config The Flink configuration (loaded by the TaskManager).

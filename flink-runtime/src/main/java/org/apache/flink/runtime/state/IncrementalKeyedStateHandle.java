@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /** Common interface to all incremental {@link KeyedStateHandle}. */
+// 所有增量式{@link KeyedStateHandle}的公共接口。
 public interface IncrementalKeyedStateHandle extends KeyedStateHandle {
 
     /** Returns the ID of the checkpoint for which the handle was created. */
@@ -34,6 +35,8 @@ public interface IncrementalKeyedStateHandle extends KeyedStateHandle {
     UUID getBackendIdentifier();
 
     /**
+     * 在创建时，返回后端中所有已注册的共享状态的id集。
+     *
      * Returns a set of ids of all registered shared states in the backend at the time this was
      * created.
      */

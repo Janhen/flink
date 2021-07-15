@@ -28,6 +28,8 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
+ * 集合的接口，该接口按顺序提供对元素w.r.t的优先级的访问。
+ *
  * Interface for collection that gives in order access to elements w.r.t their priority.
  *
  * @param <T> type of elements in the ordered set.
@@ -36,6 +38,8 @@ import java.util.Collection;
 public interface InternalPriorityQueue<T> {
 
     /**
+     * 检索并删除该集合的第一个元素(按顺序排列)，如果该集合为空则返回{@code null}。
+     *
      * Retrieves and removes the first element (w.r.t. the order) of this set, or returns {@code
      * null} if this set is empty.
      *
@@ -93,6 +97,7 @@ public interface InternalPriorityQueue<T> {
     void addAll(@Nullable Collection<? extends T> toAdd);
 
     /** Iterator over all elements, no order guaranteed. Iterator must be closed after usage. */
+    // 迭代器遍历所有元素，不保证顺序。使用后必须关闭迭代器。
     @Nonnull
     CloseableIterator<T> iterator();
 }

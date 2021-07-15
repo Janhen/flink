@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /**
+ * 这个类定义了一系列键组索引。键组是为状态后端中的键控状态处理而对作业的键空间进行分区的粒度。范围的边界是包括在内的。
+ *
  * This class defines a range of key-group indexes. Key-groups are the granularity into which the
  * keyspace of a job is partitioned for keyed state-handling in state backends. The boundaries of
  * the range are inclusive.
@@ -45,6 +47,8 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
+     * 定义范围[startKeyGroup, endKeyGroup]
+     *
      * Defines the range [startKeyGroup, endKeyGroup]
      *
      * @param startKeyGroup start of the range (inclusive)
@@ -70,6 +74,8 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
+     * 创建一个表示此范围和给定范围之间的交集的范围。
+     *
      * Create a range that represent the intersection between this range and the given range.
      *
      * @param other A KeyGroupRange to intersect.
@@ -167,6 +173,8 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
+     * 也处理空键组创建的工厂方法。
+     *
      * Factory method that also handles creation of empty key-groups.
      *
      * @param startKeyGroup start of the range (inclusive)

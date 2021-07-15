@@ -29,6 +29,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
+ * 该接口提供报告和检索任务状态的方法。
+ *
+ * <p>当一个任务触发一个检查点或保存点时，它将为它拥有的所有流操作符实例创建快照。然后通过该接口报告任务中的所有操作符快
+ * 照。典型的实现将发送并将报告的状态信息转发给相关方，如检查点协调器或本地状态存储。
+ *
+ * <p>该接口还提供了一个补充方法，用于访问任务中先前保存的操作符实例状态，以便进行恢复。
+ *
  * This interface provides methods to report and retrieve state for a task.
  *
  * <p>When a checkpoint or savepoint is triggered on a task, it will create snapshots for all stream
@@ -42,6 +49,8 @@ import javax.annotation.Nullable;
 public interface TaskStateManager extends CheckpointListener, AutoCloseable {
 
     /**
+     * 报告所属任务中运行的操作员实例的状态快照。
+     *
      * Report the state snapshots for the operator instances running in the owning task.
      *
      * @param checkpointMetaData meta data from the checkpoint request.
@@ -56,6 +65,8 @@ public interface TaskStateManager extends CheckpointListener, AutoCloseable {
             @Nullable TaskStateSnapshot localState);
 
     /**
+     * 返回意味着恢复先前报告的在所属任务中运行的操作符的状态。
+     *
      * Returns means to restore previously reported state of an operator running in the owning task.
      *
      * @param operatorID the id of the operator for which we request state.
@@ -66,6 +77,8 @@ public interface TaskStateManager extends CheckpointListener, AutoCloseable {
     PrioritizedOperatorSubtaskState prioritizedOperatorState(OperatorID operatorID);
 
     /**
+     * 返回本地恢复的配置，即所属子任务的所有基于文件的本地状态的基本目录和本地恢复的通用模式。
+     *
      * Returns the configuration for local recovery, i.e. the base directories for all file-based
      * local state of the owning subtask and the general mode for local recovery.
      */

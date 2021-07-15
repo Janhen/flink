@@ -26,6 +26,15 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface KeyedStateStore {
 
     /**
+     * 获取系统键值状态的句柄。key/value状态只有在在KeyedStream上执行函数时才可访问。在每次访问时，该状态公开函数当前
+     * 处理的元素键的值。每个函数可能有多个分区状态，使用不同的名称进行处理。
+     *
+     * <p>因为每个值的范围是当前处理的元素的键，并且这些元素是由Flink运行时分配的，系统可以透明地向外扩展并重新分配状态
+     * 和KeyedStream。
+     *
+     * <p>下面的代码示例演示了如何实现一个连续计数器，该计数器计算某个键的元素出现的次数，并在每次出现时发出该元素的更新
+     * 计数。
+     *
      * Gets a handle to the system's key/value state. The key/value state is only accessible if the
      * function is executed on a KeyedStream. On each access, the state exposes the value for the
      * key of the element currently processed by the function. Each function may have multiple

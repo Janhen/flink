@@ -41,6 +41,8 @@ import java.util.Map;
 import static org.apache.flink.runtime.state.metainfo.StateMetaInfoSnapshotReadersWriters.CURRENT_STATE_META_INFO_SNAPSHOT_VERSION;
 
 /**
+ * 键控状态后端的所有元数据的序列化代理。将来我们可能还需要迁移这里的实际状态序列化逻辑。
+ *
  * Serialization proxy for all meta data in keyed state backends. In the future we might also
  * requiresMigration the actual state serialization logic here.
  */

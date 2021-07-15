@@ -21,12 +21,15 @@ package org.apache.flink.runtime.state;
 import javax.annotation.Nullable;
 
 /**
+ * 键控流中检查点状态句柄的基础。当从失败中恢复时，句柄将被传递给所有键组范围与之重叠的任务。
+ *
  * Base for the handles of the checkpointed states in keyed streams. When recovering from failures,
  * the handle will be passed to all tasks whose key group ranges overlap with it.
  */
 public interface KeyedStateHandle extends CompositeStateHandle {
 
     /** Returns the range of the key groups contained in the state. */
+    // 返回状态中包含的键组的范围。
     KeyGroupRange getKeyGroupRange();
 
     /**

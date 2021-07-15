@@ -21,6 +21,9 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 这个接口提供了一个上下文，在这个上下文中，使用managed(即由状态后端管理的状态)或raw(即操作符可以写它的状态流)状态的
+ * 操作符可以执行快照。
+ *
  * This interface provides a context in which operators that use managed (i.e. state that is managed
  * by state backends) or raw (i.e. the operator can write it's state streams) state can perform a
  * snapshot.

@@ -40,6 +40,8 @@ import org.apache.flink.util.Preconditions;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * KeyedStateStore的默认实现，当前将状态注册转发到{@link RuntimeContext}。
+ *
  * Default implementation of KeyedStateStore that currently forwards state registration to a {@link
  * RuntimeContext}.
  */

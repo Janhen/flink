@@ -26,6 +26,8 @@ import org.apache.flink.util.Disposable;
 import java.util.stream.Stream;
 
 /**
+ * 键控状态后端提供了管理键控状态的方法。
+ *
  * A keyed state backend provides methods for managing keyed state.
  *
  * @param <K> The key by which state is keyed.

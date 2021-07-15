@@ -38,6 +38,8 @@ public class StateUtil {
     }
 
     /**
+     * 返回状态对象的大小
+     *
      * Returns the size of a state object
      *
      * @param handle The handle to the retrieved state

@@ -54,6 +54,7 @@ public class DefaultOperatorStateBackend implements OperatorStateBackend {
     public static final String DEFAULT_OPERATOR_STATE_NAME = "_default_";
 
     /** Map for all registered operator states. Maps state name -> state */
+    // 映射所有注册的操作符状态。映射状态名称->状态
     private final Map<String, PartitionableListState<?>> registeredOperatorStates;
 
     /** Map for all registered operator broadcast states. Maps state name -> state */

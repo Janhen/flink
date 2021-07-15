@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
+ * 检查点输出流，允许以分区的方式写入原始键控状态，并将其划分为键组。
+ *
  * Checkpoint output stream that allows to write raw keyed state in a partitioned way, split into
  * key-groups.
  */

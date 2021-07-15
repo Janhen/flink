@@ -30,6 +30,8 @@ import org.apache.flink.api.common.state.State;
 public interface KeyedStateFunction<K, S extends State> {
 
     /**
+     * 实际的方法适用于每一种状态。
+     *
      * The actual method to be applied on each of the states.
      *
      * @param key the key whose state is being processed.

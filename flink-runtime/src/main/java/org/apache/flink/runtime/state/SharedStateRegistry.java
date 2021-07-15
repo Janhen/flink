@@ -31,6 +31,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
+ * 此注册表管理跨(增量)检查点共享的状态，并负责删除任何有效检查点中不再使用的共享状态。
+ *
+ * <p>A {@code SharedStateRegistry}将被部署在{@link org.apache.flink.runtime.checkpoint.CheckpointCoordinator}
+ * 中，通过一个键(逻辑上)识别{@link StreamStateHandle}来维护引用计数。
+ *
  * This registry manages state that is shared across (incremental) checkpoints, and is responsible
  * for deleting shared state that is no longer used in any valid checkpoint.
  *

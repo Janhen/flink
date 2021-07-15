@@ -39,8 +39,10 @@ public interface CheckpointListener {
      * <p>Note that any exception during this method will not cause the checkpoint to fail any more.
      *
      * @param checkpointId The ID of the checkpoint that has been completed.
+     *                     已完成的检查点ID。
      * @throws Exception This method can propagate exceptions, which leads to a failure/recovery for
      *     the task. Not that this will NOT lead to the checkpoint being revoked.
+     *                    此方法可以传播异常，从而导致任务的失败恢复。并不是说这不会导致检查点被撤销。
      */
     void notifyCheckpointComplete(long checkpointId) throws Exception;
 

@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state;
 import javax.annotation.Nonnull;
 
 /**
+ * 函数从给定对象中提取密钥。
+ *
  * Function to extract a key from a given object.
  *
  * @param <T> type of the element from which we extract the key.
@@ -38,6 +40,7 @@ public interface KeyExtractorFunction<T> {
             };
 
     /** Returns the key for the given element by which the key-group can be computed. */
+    // 返回用于计算键组的给定元素的键。
     @Nonnull
     Object extractKeyFromElement(@Nonnull T element);
 

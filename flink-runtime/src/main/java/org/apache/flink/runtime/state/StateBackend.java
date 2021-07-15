@@ -109,6 +109,8 @@ public interface StateBackend extends java.io.Serializable {
     CompletedCheckpointStorageLocation resolveCheckpoint(String externalPointer) throws IOException;
 
     /**
+     * 为给定作业的检查点创建存储。检查点存储用于写入检查点数据和元数据。
+     *
      * Creates a storage for checkpoints for the given job. The checkpoint storage is used to write
      * checkpoint data and metadata.
      *
@@ -122,6 +124,10 @@ public interface StateBackend extends java.io.Serializable {
     //  Structure Backends
     // ------------------------------------------------------------------------
     /**
+     * 创建一个新的{@link AbstractKeyedStateBackend}负责保存<b>keyed状态<b>并对其进行检查点。
+     *
+     * <p><i>Keyed State<i>是每个值绑定到一个键的状态。
+     *
      * Creates a new {@link AbstractKeyedStateBackend} that is responsible for holding <b>keyed
      * state</b> and checkpointing it.
      *

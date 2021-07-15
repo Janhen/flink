@@ -29,6 +29,10 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 /**
+ * 包含用于将数据划分为键组的基本算法。该算法目前适用于两个数组(输入、输出)，以获得最佳算法复杂度。注意，这也可以在单个数
+ * 组上实现，使用一些布谷鸟哈希风格的元素替换。这将具有更低的算法复杂度，但更好的空间效率。目前，我们更倾向于在算法复杂度
+ * 方面进行权衡。
+ *
  * Class that contains the base algorithm for partitioning data into key-groups. This algorithm
  * currently works with two array (input, output) for optimal algorithmic complexity. Notice that
  * this could also be implemented over a single array, using some cuckoo-hashing-style element

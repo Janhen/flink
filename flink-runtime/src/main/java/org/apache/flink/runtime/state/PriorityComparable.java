@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state;
 import javax.annotation.Nonnull;
 
 /**
+ * 可按优先级进行比较的对象的接口。
+ *
  * Interface for objects that can be compared by priority.
  *
  * @param <T> type of the compared objects.

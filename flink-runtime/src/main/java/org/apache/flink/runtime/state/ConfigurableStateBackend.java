@@ -23,6 +23,7 @@ import org.apache.flink.configuration.IllegalConfigurationException;
 import org.apache.flink.configuration.ReadableConfig;
 
 /** An interface for state backends that pick up additional parameters from a configuration. */
+// 状态后端接口，从配置中获取附加参数。
 @Internal
 public interface ConfigurableStateBackend {
 

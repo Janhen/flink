@@ -28,6 +28,11 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 
 /**
+ * 应该按键组进行写分区的状态快照的通用接口。所有的快照都应该在使用后释放。该接口概述了异步快照的生命周期，通常如下所示。
+ * 在检查点的同步部分中，为某个状态生成一个{@link StateSnapshot}实例，并捕获此时的状态。然后，在检查点的异步部分，用
+ * 户调用{@link #getKeyGroupWriter()}以确保快照被划分为键组。对于已经分区的状态，这可以是NOP。调用者可以使用返回的
+ * {@link StateKeyGroupWriter}按键组写入状态。作为最后一步，当状态完全写入时，用户调用{@link #release()}。
+ *
  * General interface for state snapshots that should be written partitioned by key-groups. All
  * snapshots should be released after usage. This interface outlines the asynchronous snapshot
  * life-cycle, which typically looks as follows. In the synchronous part of a checkpoint, an

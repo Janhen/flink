@@ -33,6 +33,11 @@ import java.io.Serializable;
  *
  * <p><b>将 TypeSerializer 升级到新的 TypeSerializerSnapshot 模型<b>
  *
+ * <p>如果你在Flink 1.6版本中实现了一个TypeSerializer，并且想让这个实现适应新的接口，以支持适当的状态模式演变，同时
+ * 保持向后兼容性，那么这个部分是相关的。请遵循以下步骤:
+ *
+ *  ...
+ *
  * This interface describes the methods that are required for a data type to be handled by the Flink
  * runtime. Specifically, this interface contains the serialization and copying methods.
  *
@@ -73,6 +78,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 获取该类型是否为不可变类型。
+     *
      * Gets whether the type is an immutable type.
      *
      * @return True, if the type is immutable.
@@ -80,6 +87,11 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract boolean isImmutableType();
 
     /**
+     * 如果它是有状态的，则创建此序列化器的深层副本。如果序列化器不是有状态的，则返回本身。
+     *
+     * <p>我们需要这个，因为序列化器可能在多个线程中使用。无状态序列化器本质上是线程安全的，而有状态序列化器可能不是线程
+     * 安全的。
+     *
      * Creates a deep copy of this serializer if it is necessary, i.e. if it is stateful. This can
      * return itself if the serializer is not stateful.
      *
@@ -93,6 +105,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建数据类型的新实例。
+     *
      * Creates a new instance of the data type.
      *
      * @return A new instance of the data type.
@@ -100,6 +114,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract T createInstance();
 
     /**
+     * 在新元素中创建给定元素的深层副本。
+     *
      * Creates a deep copy of the given element in a new element.
      *
      * @param from The element reuse be copied.
@@ -108,6 +124,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract T copy(T from);
 
     /**
+     * 从给定元素创建一个副本。如果类型是可变的，则该方法尝试将副本存储在给定的重用元素中。然而，这并不能保证。
+     *
      * Creates a copy from the given element. The method makes an attempt to store the copy in the
      * given reuse element, if the type is mutable. This is, however, not guaranteed.
      *
@@ -120,6 +138,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 如果数据类型是固定长度数据类型，则获取数据类型的长度。
+     *
      * Gets the length of the data type, if it is a fix length data type.
      *
      * @return The length of the data type, or <code>-1</code> for variable length data types.
@@ -129,6 +149,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 将给定的记录序列化到给定的目标 output view
+     *
      * Serializes the given record to the given target output view.
      *
      * @param record The record to serialize.

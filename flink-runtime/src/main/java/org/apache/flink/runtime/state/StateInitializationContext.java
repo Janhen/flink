@@ -21,6 +21,14 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 这个接口提供了一个上下文，在这个上下文中，操作符可以通过注册到托管状态(即由状态后端管理的状态)或迭代在前一个快照中作为
+ * 原始状态写入的状态分区流来进行初始化。
+ *
+ * <p>类似于{@link ManagedInitializationContext}的管理状态，一般来说，原始操作符状态对所有操作符都可用，而原始键
+ * 值状态只对keyBy之后的操作符可用。
+ *
+ * <p>为了初始化，如果所有状态都是空的(新操作符)，或者从该操作符的前一次执行中恢复了任何状态，上下文会发出信号。
+ *
  * This interface provides a context in which operators can initialize by registering to managed
  * state (i.e. state that is managed by state backends) or iterating over streams of state
  * partitions written as raw state in a previous snapshot.
@@ -36,12 +44,16 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface StateInitializationContext extends FunctionInitializationContext {
 
     /**
+     * 返回一个可迭代对象以获得先前存储的分配给此操作符的操作符状态分区的输入流。
+     *
      * Returns an iterable to obtain input streams for previously stored operator state partitions
      * that are assigned to this operator.
      */
     Iterable<StatePartitionStreamProvider> getRawOperatorStateInputs();
 
     /**
+     * 返回一个可迭代对象以获取分配给此操作符的先前存储的键控状态分区的输入流。
+     *
      * Returns an iterable to obtain input streams for previously stored keyed state partitions that
      * are assigned to this operator.
      */

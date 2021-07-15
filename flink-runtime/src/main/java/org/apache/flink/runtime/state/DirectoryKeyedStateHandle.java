@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state;
 import javax.annotation.Nonnull;
 
 /**
+ * 该类是一个基于目录的键控状态句柄。它结合了{@link DirectoryStateHandle}和{@link KeyGroupRange}。
+ *
  * This class is a keyed state handle based on a directory. It combines a {@link
  * DirectoryStateHandle} and a {@link KeyGroupRange}.
  */

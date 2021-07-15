@@ -24,6 +24,8 @@ import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 一个总是完成的{@link Future}只会产生创建时给定的对象。
+ *
  * A {@link Future} that is always done and will just yield the object that was given at creation
  * time.
  *

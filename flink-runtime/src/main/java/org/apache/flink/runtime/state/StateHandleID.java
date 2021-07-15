@@ -21,6 +21,9 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.util.StringBasedID;
 
 /**
+ * 允许状态句柄之间进行逻辑比较的唯一ID。两个被认为在逻辑上相等的状态句柄应该总是返回相同的ID(无论逻辑相等的意思是什么，
+ * 都取决于实现)。例如，这可以基于基于文件的状态的完整文件路径的字符串表示。
+ *
  * Unique ID that allows for logical comparison between state handles.
  *
  * <p>Two state handles that are considered as logically equal should always return the same ID

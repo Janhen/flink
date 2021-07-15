@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * 该类提供对输入流的访问，这些输入流包含可分区状态的一个状态分区的数据。
+ *
  * This class provides access to input streams that contain data of one state partition of a
  * partitionable state.
  *

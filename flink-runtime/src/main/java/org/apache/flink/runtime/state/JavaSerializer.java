@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 一个使用Java序列化的{@link org.apache.flink.api.common.typeutils.TypeSerializer}。这不能用于任何用途。
+ *
  * A {@link org.apache.flink.api.common.typeutils.TypeSerializer} that uses Java serialization. This
  * should not be used for anything.
  */

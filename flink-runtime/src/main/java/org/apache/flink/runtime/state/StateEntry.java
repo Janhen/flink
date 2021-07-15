@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.state;
 
 /**
+ * 状态后端表项的接口。条目由键、名称空间和状态组成。
+ *
  * Interface of entries in a state backend. Entries are triple of key, namespace, and state.
  *
  * @param <K> type of key.

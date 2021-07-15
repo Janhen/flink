@@ -23,6 +23,12 @@ import org.apache.flink.core.fs.FSDataOutputStream;
 import java.io.IOException;
 
 /**
+ * 检查点元数据的输出流。
+ *
+ * <p>这个流类似于{@link CheckpointStreamFactory。CheckpointStateOutputStream}，但用于元数据文件而不是数据文件。
+ *
+ * <p>这个流总是创建一个文件，不管写入的数据量是多少。
+ *
  * An output stream for checkpoint metadata.
  *
  * <p>This stream is similar to the {@link CheckpointStreamFactory.CheckpointStateOutputStream}, but
@@ -33,15 +39,23 @@ import java.io.IOException;
 public abstract class CheckpointMetadataOutputStream extends FSDataOutputStream {
 
     /**
+     * 在写入所有元数据并完成检查点位置后关闭流。
+     *
      * Closes the stream after all metadata was written and finalizes the checkpoint location.
      *
      * @return An object representing a finalized checkpoint storage location.
+     *         表示最终检查点存储位置的对象。
      * @throws IOException Thrown, if the stream cannot be closed or the finalization fails.
      */
     public abstract CompletedCheckpointStorageLocation closeAndFinalizeCheckpoint()
             throws IOException;
 
     /**
+     * 如果之前没有关闭流，则此方法应该关闭流。如果这个方法实际上关闭了流，它应该删除释放流背后的资源，比如流写入的文件。
+     *
+     * <p>上面的意思是这个方法是“不成功的关闭”，比如当取消写流时，或者当发生异常时。关闭成功案例的流必须通过
+     * {@link #closeAndFinalizeCheckpoint()}。
+     *
      * This method should close the stream, if has not been closed before. If this method actually
      * closes the stream, it should delete/release the resource behind the stream, such as the file
      * that the stream writes to.

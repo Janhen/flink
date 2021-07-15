@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.state;
 
 /** This interface offers ordered random read access to multiple key group ids. */
+// 该接口提供对多个密钥组id的有序随机读访问
 public interface KeyGroupsList extends Iterable<Integer> {
 
     /** Returns the number of key group ids in the list. */
