@@ -25,6 +25,8 @@ import org.apache.flink.api.common.JobID;
 public interface CheckpointRecoveryFactory {
 
     /**
+     * 为作业创建一个{@link CompletedCheckpointStore}实例。
+     *
      * Creates a {@link CompletedCheckpointStore} instance for a job.
      *
      * @param jobId Job ID to recover checkpoints for
@@ -37,6 +39,8 @@ public interface CheckpointRecoveryFactory {
             throws Exception;
 
     /**
+     * 为作业创建一个{@link CheckpointIDCounter}实例。
+     *
      * Creates a {@link CheckpointIDCounter} instance for a job.
      *
      * @param jobId Job ID to recover checkpoints for

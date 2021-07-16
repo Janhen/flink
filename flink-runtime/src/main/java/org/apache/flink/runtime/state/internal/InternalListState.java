@@ -23,6 +23,10 @@ import org.apache.flink.api.common.state.ListState;
 import java.util.List;
 
 /**
+ * 内部状态类型层次结构中的{@link ListState}的对等体。
+ *
+ * <p>参见{@link InternalKvState}获取内部状态层次结构的描述。
+ *
  * The peer to the {@link ListState} in the internal state type hierarchy.
  *
  * <p>See {@link InternalKvState} for a description of the internal state hierarchy.
@@ -35,6 +39,11 @@ public interface InternalListState<K, N, T>
         extends InternalMergingState<K, N, T, List<T>, Iterable<T>>, ListState<T> {
 
     /**
+     * 通过将现有值更新为给定值列表来更新{@link #get()}可访问的操作符状态。下一次调用{@link #get()}(对于同一个状态
+     * 分区)时，返回的状态将表示更新后的列表。
+     *
+     * <p>如果传入' null '或一个空列表，状态值将为null
+     *
      * Updates the operator state accessible by {@link #get()} by updating existing values to to the
      * given list of values. The next time {@link #get()} is called (for the same state partition)
      * the returned state will represent the updated list.

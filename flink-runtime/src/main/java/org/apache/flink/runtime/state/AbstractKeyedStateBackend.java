@@ -42,6 +42,9 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * KeyedStateBackend的基本实现。状态可以使用
+ * {@link #snapshot(long, long, CheckpointStreamFactory, CheckpointOptions)}检查指向流。
+ *
  * Base implementation of KeyedStateBackend. The state can be checkpointed to streams using {@link
  * #snapshot(long, long, CheckpointStreamFactory, CheckpointOptions)}.
  *

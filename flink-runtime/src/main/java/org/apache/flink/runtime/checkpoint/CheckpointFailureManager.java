@@ -32,6 +32,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 // 集中管理检查点故障处理逻辑的检查点故障管理器。
 public class CheckpointFailureManager {
 
+    // 无限可容忍故障数
     public static final int UNLIMITED_TOLERABLE_FAILURE_NUMBER = Integer.MAX_VALUE;
     // 超过检查点可容忍故障阈值。
     public static final String EXCEEDED_CHECKPOINT_TOLERABLE_FAILURE_MESSAGE =
@@ -151,6 +152,8 @@ public class CheckpointFailureManager {
     }
 
     /**
+     * 成功处理检查点。
+     *
      * Handle checkpoint success.
      *
      * @param checkpointId the failed checkpoint id used to count the continuous failure number
@@ -166,6 +169,11 @@ public class CheckpointFailureManager {
     }
 
     /**
+     * 如果正在进行的同步保存点被丢弃，则使整个作业图失败。
+     *
+     * <p>如果检查点在检查点协调器上被取消，即在同步保存点屏障被发送到任务之前，那么我们不会取消作业，因为我们不会有死锁
+     * 的风险。
+     *
      * Fails the whole job graph in case an in-progress synchronous savepoint is discarded.
      *
      * <p>If the checkpoint was cancelled at the checkpoint coordinator, i.e. before the synchronous
@@ -188,10 +196,12 @@ public class CheckpointFailureManager {
     }
 
     /** A callback interface about how to fail a job. */
-    // 关于如何使作业失败的回调接口。
+    // 关于如何使作业失败的回调接口
     public interface FailJobCallback {
 
         /**
+         * 无法完成整个 job graph
+         *
          * Fails the whole job graph.
          *
          * @param cause The reason why the synchronous savepoint fails.

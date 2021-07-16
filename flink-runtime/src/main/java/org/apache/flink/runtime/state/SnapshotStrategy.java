@@ -53,7 +53,9 @@ public interface SnapshotStrategy<S extends StateObject> {
      * @param checkpointId The ID of the checkpoint.
      * @param timestamp The timestamp of the checkpoint.
      * @param streamFactory The factory that we can use for writing our state to streams.
+     *                      可以用来将状态写入流的工厂
      * @param checkpointOptions Options for how to perform this checkpoint.
+     *                          关于如何执行此检查点的选项
      * @return A runnable future that will yield a {@link StateObject}.
      */
     @Nonnull

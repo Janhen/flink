@@ -24,6 +24,10 @@ import org.apache.flink.runtime.jobmanager.HighAvailabilityMode;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * {@link CheckpointIDCounter}实例用于运行在{@link HighAvailabilityMode#NONE}中的jobmanager。
+ *
+ * <p>简单包装{@link AtomicLong}。
+ *
  * {@link CheckpointIDCounter} instances for JobManagers running in {@link
  * HighAvailabilityMode#NONE}.
  *
@@ -55,6 +59,8 @@ public class StandaloneCheckpointIDCounter implements CheckpointIDCounter {
     }
 
     /**
+     * 返回最后一个检查点ID(当前- 1)。
+     *
      * Returns the last checkpoint ID (current - 1).
      *
      * @return Last checkpoint ID.

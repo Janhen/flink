@@ -36,6 +36,17 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 检查点统计的跟踪器。
+ *
+ * <p>与{@link CheckpointCoordinator}紧密集成，以简化细粒度统计信息的收集。
+ *
+ * <p>跟踪统计包括总结计数，最近和正在进行的检查点的详细历史，以及关于大小，持续时间和更多的最近检查点的总结。
+ *
+ * <p>数据通过回调{@link CheckpointCoordinator}和相关类{@link PendingCheckpoint}和{@link CompletedCheckpoint}
+ * 收集，这些类首先接收原始的统计数据。
+ *
+ * <p>统计数据通过{@link #createSnapshot()}访问，并通过web前端和{@link Metric}系统公开。
+ *
  * Tracker for checkpoint statistics.
  *
  * <p>This is tightly integrated with the {@link CheckpointCoordinator} in order to ease the
@@ -54,6 +65,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class CheckpointStatsTracker {
 
     /**
+     * 用于更新统计数据和创建快照的锁定。更新总是一次从一个线程中发生，对最新统计快照可能有多个并发读访问。
+     *
+     * <p>当前，写操作由线程执行协调器动作(在锁定范围内已经发生)执行。读取可以来自web运行时监视器的多个并发的Netty事件
+     * 循环线程。
+     *
      * Lock used to update stats and creating snapshots. Updates always happen from a single Thread
      * at a time and there can be multiple concurrent read accesses to the latest stats snapshot.
      *

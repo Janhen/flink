@@ -22,12 +22,14 @@ package org.apache.flink.runtime.checkpoint;
 public enum CheckpointType {
 
     /** A checkpoint, full or incremental. */
+    // 检查点，完整的或增量的
     CHECKPOINT(false, false),
 
     /** A regular savepoint. */
     SAVEPOINT(true, false),
 
     /** A savepoint taken while suspending/terminating the job. */
+    // 挂起和终止作业时获取的保存点
     SYNC_SAVEPOINT(true, true);
 
     private final boolean isSavepoint;

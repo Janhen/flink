@@ -29,7 +29,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * 执行检查点的选项。
  *
- * <p> {@link CheckpointProperties}是相关的，并且cover属性只与{@link CheckpointCoordinator}相关。这些选项
+ * <p>{@link CheckpointProperties}是相关的，并且cover属性只与{@link CheckpointCoordinator}相关。这些选项
  * 与在任务管理器上运行的{@link AbstractInvokable}实例相关。
  *
  * Options for performing the checkpoint.
@@ -46,10 +46,13 @@ public class CheckpointOptions implements Serializable {
     private final CheckpointType checkpointType;
 
     /** Target location for the checkpoint. */
+    // 检查点的目标位置
     private final CheckpointStorageLocationReference targetLocation;
 
+    // EOS 模式
     private final boolean isExactlyOnceMode;
 
+    // 非对齐检查点
     private final boolean isUnalignedCheckpoint;
 
     @VisibleForTesting

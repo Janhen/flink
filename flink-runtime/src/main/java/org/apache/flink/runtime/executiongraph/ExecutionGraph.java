@@ -120,6 +120,18 @@ import static org.apache.flink.util.Preconditions.checkState;
  *
  * <p>执行图包含以下结构:
  *
+ *   {@link ExecutionJobVertex}表示在执行过程中来自JobGraph的一个顶点(通常是像“map”或“join”这样的操作)。它保存
+ *     所有并行子任务的聚合状态。ExecutionJobVertex在图中通过{@link JobVertexID}标识，它从JobGraph对应
+ *     的JobVertex中获取。
+ *
+ *   {@link ExecutionVertex}表示一个并行子任务。对于每个ExecutionJobVertex，其ExecutionVertices的数量与并行度
+ *     相同。ExecutionVertex由ExecutionJobVertex和并行子任务的索引标识
+ *
+ *   {@link Execution}是执行ExecutionVertex的一次尝试。ExecutionVertex可能有多个执行，以防出现故障，或者某些数据
+ *     需要重新计算，因为在以后的操作请求时这些数据不再可用。一个Execution总是由{@link ExecutionAttemptID}标识。
+ *     JobManager和TaskManager之间关于任务部署和任务状态更新的所有消息总是使用ExecutionAttemptID来寻地址消息接收者。
+ *
+ *  Execution Graph 有两种failover模式:<i> Global failover<i>和<i>local failover<i>。
  *
  * The execution graph is the central data structure that coordinates the distributed execution of a
  * data flow. It keeps representations of each parallel task, each intermediate stream, and the
@@ -173,9 +185,11 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // --------------------------------------------------------------------------------------------
 
     /** Job specific information like the job id, job name, job configuration, etc. */
+    // 作业特定信息，如作业id、作业名称、作业配置等。
     private final JobInformation jobInformation;
 
     /** Serialized job information or a blob key pointing to the offloaded job information. */
+    // 序列化作业信息或指向卸载作业信息的blob键。
     private final Either<SerializedValue<JobInformation>, PermanentBlobKey> jobInformationOrBlobKey;
 
     /** The executor which is used to execute futures. */
@@ -454,6 +468,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
         return Optional.ofNullable(stateBackendName);
     }
 
+    // J: 开启检查点
     public void enableCheckpointing(
             CheckpointCoordinatorConfiguration chkConfig,
             List<ExecutionJobVertex> verticesToTrigger,
@@ -477,6 +492,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
 
         checkpointStatsTracker = checkNotNull(statsTracker, "CheckpointStatsTracker");
 
+        // J: checkpoint 失败管理
         CheckpointFailureManager failureManager =
                 new CheckpointFailureManager(
                         chkConfig.getTolerableCheckpointFailureNumber(),

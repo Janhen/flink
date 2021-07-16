@@ -81,6 +81,11 @@ public class CheckpointProperties implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 返回是否应该强制执行检查点。
+     *
+     * <p>强制检查点忽略配置的最大并发检查点数和检查点之间的最小时间。此外，只要它们还在等待，它们就不会被包含在最近的
+     * 检查点中。
+     *
      * Returns whether the checkpoint should be forced.
      *
      * <p>Forced checkpoints ignore the configured maximum number of concurrent checkpoints and
@@ -101,6 +106,7 @@ public class CheckpointProperties implements Serializable {
 
     /**
      * 返回当检查点被包含时是否应该丢弃它。
+     *
      * <p>当达到保留的检查点的最大数量，并且一个最近的检查点完成时，一个检查点被纳入。
      *
      * Returns whether the checkpoint should be discarded when it is subsumed.
@@ -131,6 +137,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回当所属作业达到{@link JobStatus#CANCELED}状态时，检查点是否应该被丢弃。
+     *
      * Returns whether the checkpoint should be discarded when the owning job reaches the {@link
      * JobStatus#CANCELED} state.
      *
@@ -143,6 +151,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回当所属作业到达{@link JobStatus#FAILED}状态时，检查点是否应该被丢弃。
+     *
      * Returns whether the checkpoint should be discarded when the owning job reaches the {@link
      * JobStatus#FAILED} state.
      *
@@ -155,6 +165,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回当所属作业达到{@link JobStatus#SUSPENDED}状态时，检查点是否应该被丢弃。
+     *
      * Returns whether the checkpoint should be discarded when the owning job reaches the {@link
      * JobStatus#SUSPENDED} state.
      *
@@ -172,6 +184,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回检查点属性是否描述标准保存点
+     *
      * Returns whether the checkpoint properties describe a standard savepoint.
      *
      * @return <code>true</code> if the properties describe a savepoint, <code>false</code>
@@ -182,6 +196,8 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 返回检查点属性是否描述同步的savepoint/checkpoint
+     *
      * Returns whether the checkpoint properties describe a synchronous savepoint/checkpoint.
      *
      * @return <code>true</code> if the properties describe a synchronous operation, <code>false
@@ -296,6 +312,10 @@ public class CheckpointProperties implements Serializable {
                     false); // Retain on suspension
 
     /**
+     * 为(手动触发的)保存点创建检查点属性。
+     *
+     * <p>由于时间触发限制，保存点没有排队。他们必须手动进行垃圾收集。
+     *
      * Creates the checkpoint properties for a (manually triggered) savepoint.
      *
      * <p>Savepoints are not queued due to time trigger limits. They have to be garbage collected
@@ -312,6 +332,11 @@ public class CheckpointProperties implements Serializable {
     }
 
     /**
+     * 为检查点创建检查点属性。
+     *
+     * <p>检查点可能排队，以防当前发生太多其他检查点。它们将被自动垃圾回收，除非拥有的作业以状态{@link JobStatus#FAILED}
+     * 终止。用户需要配置作业取消时的清理行为。
+     *
      * Creates the checkpoint properties for a checkpoint.
      *
      * <p>Checkpoints may be queued in case too many other checkpoints are currently happening. They

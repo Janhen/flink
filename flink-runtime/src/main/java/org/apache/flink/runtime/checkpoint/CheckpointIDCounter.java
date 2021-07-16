@@ -21,12 +21,17 @@ package org.apache.flink.runtime.checkpoint;
 import org.apache.flink.api.common.JobStatus;
 
 /** A checkpoint ID counter. */
+// 检查点ID计数器
 public interface CheckpointIDCounter {
 
     /** Starts the {@link CheckpointIDCounter} service down. */
     void start() throws Exception;
 
     /**
+     * 关闭{@link CheckpointIDCounter}服务。
+     *
+     * <p>作业状态被转发，用于决定状态是应该丢弃还是保留。
+     *
      * Shuts the {@link CheckpointIDCounter} service.
      *
      * <p>The job status is forwarded and used to decide whether state should actually be discarded
