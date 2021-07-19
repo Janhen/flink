@@ -509,6 +509,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 获取分配的用户jar路径的列表。
+     *
      * Gets the list of assigned user jar paths.
      *
      * @return The list of assigned user jar paths
@@ -608,6 +610,7 @@ public class JobGraph implements Serializable {
     public void writeUserArtifactEntriesToConfiguration() {
         for (Map.Entry<String, DistributedCache.DistributedCacheEntry> userArtifact :
                 userArtifacts.entrySet()) {
+            // J: 写入 DristributedCache
             DistributedCache.writeFileInfoToConfig(
                     userArtifact.getKey(), userArtifact.getValue(), jobConfiguration);
         }

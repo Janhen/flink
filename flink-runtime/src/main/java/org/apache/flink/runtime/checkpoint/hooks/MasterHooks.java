@@ -41,6 +41,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
 
 /** Collection of methods to deal with checkpoint master hooks. */
+// 处理检查点主钩子的方法集合。
 public class MasterHooks {
 
     // ------------------------------------------------------------------------
@@ -96,6 +97,8 @@ public class MasterHooks {
     // ------------------------------------------------------------------------
 
     /**
+     * 触发主钩子并返回一个带有状态的可完成的future。
+     *
      * Trigger master hook and return a completable future with state.
      *
      * @param hook The master hook given

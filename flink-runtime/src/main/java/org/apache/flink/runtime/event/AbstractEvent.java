@@ -22,6 +22,8 @@ import org.apache.flink.core.io.IOReadableWritable;
 import org.apache.flink.runtime.taskexecutor.TaskExecutor;
 
 /**
+ * 这种类型的事件可以用于在不同的{@link TaskExecutor} 之间交换通知消息对象在运行时使用通信通道。
+ *
  * This type of event can be used to exchange notification messages between different {@link
  * TaskExecutor} objects at runtime using the communication channels.
  */

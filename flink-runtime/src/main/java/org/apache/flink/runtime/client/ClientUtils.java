@@ -39,6 +39,8 @@ public enum ClientUtils {
     ;
 
     /**
+     * 从给定的{@link JobGraph}中提取执行所需的所有文件并上传它们使用来自给定的{@link Supplier}的{@link BlobClient}。
+     *
      * Extracts all files required for the execution from the given {@link JobGraph} and uploads
      * them using the {@link BlobClient} from the given {@link Supplier}.
      *

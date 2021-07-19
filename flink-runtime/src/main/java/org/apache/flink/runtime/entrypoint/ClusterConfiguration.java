@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import java.util.Properties;
 
 /**
+ * 配置类，它包含解析后的命令行参数 {@link ClusterEntrypoint}。
+ *
  * Configuration class which contains the parsed command line arguments for the {@link
  * ClusterEntrypoint}.
  */

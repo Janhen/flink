@@ -25,6 +25,8 @@ import org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartition
 public enum StartupMode {
 
     /**
+     * 从特定消费组的ZK Kafka broker中提交的偏移量开始(默认)。
+     *
      * Start from committed offsets in ZK / Kafka brokers of a specific consumer group (default).
      */
     GROUP_OFFSETS(KafkaTopicPartitionStateSentinel.GROUP_OFFSET),

@@ -59,6 +59,13 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 调度Flink作业的接口。
+ *
+ * <p>实例通过{@link SchedulerNGFactory}创建，并在实例化时接收一个{@link JobGraph}。
+ *
+ * <p>实现可以期望方法不会被并发调用。事实上，所有的调用都将起源于{@link ComponentMainThreadExecutor}中的一个线程，
+ * 该线程将通过{@link #setMainThreadExecutor(ComponentMainThreadExecutor)}传递。
+ *
  * Interface for scheduling Flink jobs.
  *
  * <p>Instances are created via {@link SchedulerNGFactory}, and receive a {@link JobGraph} when

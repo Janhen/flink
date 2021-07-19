@@ -93,6 +93,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.apache.flink.runtime.security.ExitTrappingSecurityManager.replaceGracefulExitWithHaltIfConfigured;
 
 /**
+ * Flink集群入口点的基类。
+ *
+ * <p>这个类的专门化可以用于会话模式和每个作业模式
+ *
  * Base class for the Flink cluster entry points.
  *
  * <p>Specialization of this class can be used for the session mode and the per-job mode

@@ -24,6 +24,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
+ * 检查点元数据的反序列化器。存在不同的反序列化器来对不同的反序列化格式的版本。
+ *
+ * <p>版本特定的序列化器是通过{@link MetadataSerializers}helper 访问的。
+ *
  * Deserializer for checkpoint metadata. Different deserializers exist to deserialize from different
  * format versions.
  *

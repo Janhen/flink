@@ -80,6 +80,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 所有Flink Kafka Consumer数据源的基类。这实现了所有Kafka版本的通用行为。
+ *
+ * <p> Kafka版本特定行为主要定义在{@link AbstractFetcher}的特定子类中。
+ *
  * Base class of all Flink Kafka Consumer data sources. This implements the common behavior across
  * all Kafka versions.
  *
@@ -132,6 +136,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private Map<KafkaTopicPartition, Long> subscribedPartitionsToStartOffsets;
 
     /**
+     * 可选的水印策略，将运行每个Kafka分区，以利用每个分区的时间戳特征。水印策略以序列化的形式保存，将其反序列化为多个副本。
+     *
      * Optional watermark strategy that will be run per Kafka partition, to exploit per-partition
      * timestamp characteristics. The watermark strategy is kept in serialized form, to deserialize
      * it into multiple copies.
@@ -139,6 +145,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private SerializedValue<WatermarkStrategy<T>> watermarkStrategy;
 
     /**
+     * 决定是否在检查点上提交的用户设置标志。注意:此标志不代表最终的偏移量提交模式。
+     *
      * User-set flag determining whether or not to commit on checkpoints. Note: this flag does not
      * represent the final offset commit mode.
      */
