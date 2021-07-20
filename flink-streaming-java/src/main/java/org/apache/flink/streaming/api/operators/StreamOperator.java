@@ -29,6 +29,15 @@ import org.apache.flink.util.Disposable;
 import java.io.Serializable;
 
 /**
+ * 流操作符的基本接口。实现者将实现其中一个{@link org.apache.flink.streaming.api.operators.OneInputStreamOperator}或
+ * {@link org.apache.flink.streaming.api.operators.TwoInputStreamOperator}来创建处理元素的操作符。
+ *
+ * <p> class {@link org.apache.flink.streaming.api.operators.AbstractStreamOperator}为生命周期和属性方法
+ * 提供了默认实现。
+ *
+ * <p> {@code StreamOperator}的方法保证不会被并发调用。同样，如果使用计时器服务，计时器回调也保证不会与{@code StreamOperator}
+ * 上的方法同时调用。
+ *
  * Basic interface for stream operators. Implementers would implement one of {@link
  * org.apache.flink.streaming.api.operators.OneInputStreamOperator} or {@link
  * org.apache.flink.streaming.api.operators.TwoInputStreamOperator} to create operators that process

@@ -91,6 +91,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * Flink Sink生成数据到Kafka主题。默认情况下，生产者将使用{@link FlinkKafkaProducer。SemanticAT_LEAST_ONCE}
+ * 语义。在使用{@link FlinkKafkaProducer。请参考Flink的Kafka连接器文档。
+ *
  * Flink Sink to produce data into a Kafka topic. By default producer will use {@link
  * FlinkKafkaProducer.Semantic#AT_LEAST_ONCE} semantic. Before using {@link
  * FlinkKafkaProducer.Semantic#EXACTLY_ONCE} please refer to Flink's Kafka connector documentation.

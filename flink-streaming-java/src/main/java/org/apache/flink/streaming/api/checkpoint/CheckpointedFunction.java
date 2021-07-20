@@ -26,6 +26,11 @@ import org.apache.flink.runtime.state.FunctionInitializationContext;
 import org.apache.flink.runtime.state.FunctionSnapshotContext;
 
 /**
+ * 这是<i>状态转换函数<i>的核心接口，意思是维护跨单个流记录的状态的函数。虽然更轻量级的接口作为各种类型状态的快捷方式存
+ * 在，但该接口在管理<i>keyed state<i>和<i>operator state<i>时提供了最大的灵活性。
+ *
+ * <p> section <a href="shortcuts"> shortcuts <a>说明了常用的轻量级方法，用于设置有状态函数，而不是使用此接口所代表的成熟抽象。
+ *
  * This is the core interface for <i>stateful transformation functions</i>, meaning functions that
  * maintain state across individual stream records. While more lightweight interfaces exist as
  * shortcuts for various types of state, this interface offer the greatest flexibility in managing

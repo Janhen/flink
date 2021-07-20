@@ -29,6 +29,10 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * 此转换表示使用给定的{@link OutputTag}选择上游操作的侧输出。
+ *
+ * <p>这并不创建物理操作，它只影响上游操作如何连接到下游操作。
+ *
  * This transformation represents a selection of a side output of an upstream operation with a given
  * {@link OutputTag}.
  *

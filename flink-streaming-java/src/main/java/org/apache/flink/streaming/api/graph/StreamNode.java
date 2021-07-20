@@ -44,6 +44,8 @@ import java.util.Optional;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Class representing the operators in the streaming programs, with all their properties. */
+// 表示流程序中的操作符及其所有属性的类
+// J: StreamNode 是 StreamGraph 中的节点，从 Transformation 转换而来，可以简单理解为一个 StreamNode 表示一个算子
 @Internal
 public class StreamNode implements Serializable {
 

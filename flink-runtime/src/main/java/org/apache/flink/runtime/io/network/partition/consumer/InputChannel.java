@@ -41,6 +41,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 输入通道使用单个{@link ResultSubpartitionView}。
+ *
+ * <p>每个通道的消耗生命周期如下:
+ *
  * An input channel consumes a single {@link ResultSubpartitionView}.
  *
  * <p>For each channel, the consumption life cycle is as follows:

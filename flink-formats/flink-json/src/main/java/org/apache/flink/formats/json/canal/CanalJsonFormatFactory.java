@@ -43,6 +43,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 为RowData {@link DeserializationSchema}提供配置的Canal JSON实例的格式工厂。
+ *
  * Format factory for providing configured instances of Canal JSON to RowData {@link
  * DeserializationSchema}.
  */

@@ -119,12 +119,11 @@ import static org.apache.flink.util.Preconditions.checkState;
  * ExecutionGraph 是协调数据流分布式执行的中心数据结构。它保持每个并行任务、每个中间流以及它们之间的通信的表示。
  *
  * <p>执行图包含以下结构:
- *
- *   {@link ExecutionJobVertex}表示在执行过程中来自JobGraph的一个顶点(通常是像“map”或“join”这样的操作)。它保存
- *     所有并行子任务的聚合状态。ExecutionJobVertex在图中通过{@link JobVertexID}标识，它从JobGraph对应
+ *   {@link ExecutionJobVertex}表示在执行过程中来自 JobGraph 的一个顶点(通常是像“map”或“join”这样的操作)。它保存
+ *     所有并行子任务的聚合状态。ExecutionJobVertex 在图中通过{@link JobVertexID}标识，它从JobGraph对应
  *     的JobVertex中获取。
  *
- *   {@link ExecutionVertex}表示一个并行子任务。对于每个ExecutionJobVertex，其ExecutionVertices的数量与并行度
+ *   {@link ExecutionVertex}表示一个并行子任务。对于每个 ExecutionJobVertex，其 ExecutionVertices 的数量与并行度
  *     相同。ExecutionVertex由ExecutionJobVertex和并行子任务的索引标识
  *
  *   {@link Execution}是执行ExecutionVertex的一次尝试。ExecutionVertex可能有多个执行，以防出现故障，或者某些数据

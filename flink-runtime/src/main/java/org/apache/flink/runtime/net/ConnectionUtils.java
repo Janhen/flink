@@ -40,6 +40,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * 属性绑定的网络接口和地址TaskManager沟通。
+ *
+ * <p>实现注意:这个类使用{@code System.nanoTime()}来测量运行时间，因为它不受时间变化的影响。
+ *
  * Utilities to determine the network interface and address that should be used to bind the
  * TaskManager communication to.
  *

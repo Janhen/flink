@@ -21,6 +21,18 @@ package org.apache.flink.streaming.connectors.kafka;
 import org.apache.flink.api.common.typeutils.SimpleTypeSerializerSnapshot;
 
 /**
+ * 兼容类使从0.11连接器迁移到通用连接器成为可能。
+ *
+ * <p>问题是，FlinkKafkaProducer (universal)和FlinkKafkaProducer011有不同的名称，他们都定义静态类
+ * NextTransactionalIdHint, KafkaTransactionState和KafkaTransactionContext在父类内部。这将导致不兼容问题，
+ * 例如FlinkKafkaProducer011.KafkaTransactionState, FlinkKafkaProducer.KafkaTransactionState被视为完全不
+ * 兼容的类，尽管它们是相同的。
+ *
+ * <p>这个问题通过使用自定义序列化逻辑来解决:保持一个假的FlinkKafkaProducer011。通用连接器(这个类)中的序列化器类，
+ * 作为反序列化的入口点，并将它们转换为FlinkKafkaProducer。序列化程序计数器部分。在所有这些情况下，序列化的二进制数据
+ * 都是完全相同的。
+ *
+ *
  * Compatibility class to make migration possible from the 0.11 connector to the universal one.
  *
  * <p>Problem is that FlinkKafkaProducer (universal) and FlinkKafkaProducer011 have different names

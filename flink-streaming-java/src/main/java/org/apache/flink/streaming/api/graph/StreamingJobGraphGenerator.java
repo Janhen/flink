@@ -90,6 +90,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** The StreamingJobGraphGenerator converts a {@link StreamGraph} into a {@link JobGraph}. */
+// StreamingJobGraphGenerator将一个{@link StreamGraph}转换为一个{@link JobGraph}。
 @Internal
 public class StreamingJobGraphGenerator {
 

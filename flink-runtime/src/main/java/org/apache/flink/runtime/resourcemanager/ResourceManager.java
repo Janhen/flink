@@ -90,6 +90,14 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * ResourceManager实现。资源管理器负责资源的重新分配和记账。
+ *
+ * <p>它提供了以下方法作为其rpc接口的一部分来远程与他交互:
+ *
+ * {@link #registerJobManager(JobMasterId, ResourceID, String, JobID, Time)}注册一个{@link JobMaster}
+ *   在资源管理器
+ * {@link #requestSlot(JobMasterId, SlotRequest, Time)}从资源中请求一个slot
+ *
  * ResourceManager implementation. The resource manager is responsible for resource de-/allocation
  * and bookkeeping.
  *

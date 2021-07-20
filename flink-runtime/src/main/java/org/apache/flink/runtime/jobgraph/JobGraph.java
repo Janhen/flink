@@ -46,12 +46,14 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * JobGraph表示一个Flink数据流程序，位于JobManager接受的低级别。所有来自高级api的程序都被转换为JobGraphs。
+ * JobGraph 表示一个 Flink 数据流程序，位于 JobManager 接受的低级别。所有来自高级 api 的程序都被转换为 JobGraphs。
  *
  * <p> JobGraph是连接在一起形成DAG的顶点和中间结果的图。请注意，迭代(反馈边)目前不是在JobGraph中编码的，而是在某些
  * 特定的顶点中编码的，这些顶点在它们自己之间建立反馈通道。
  *
  * <p> JobGraph定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
+ *
+ *
  *
  * The JobGraph represents a Flink dataflow program, at the low level that the JobManager accepts.
  * All programs from higher level APIs are transformed into JobGraphs.

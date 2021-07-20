@@ -24,6 +24,8 @@ import org.apache.flink.runtime.concurrent.ScheduledExecutor;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 通过抛出{@link IllegalStateException}来验证它没有被使用的重启策略在任何方法调用上。
+ *
  * A restart strategy that validates that it is not in use by throwing {@link IllegalStateException}
  * on any method call.
  */

@@ -140,6 +140,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
         implements JobMasterGateway, JobMasterService {
 
     /** Default names for Flink's distributed components. */
+    // Flink分布式组件的默认名称
     public static final String JOB_MANAGER_NAME = "jobmanager";
 
     // ------------------------------------------------------------------------
@@ -156,6 +157,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     private final BlobWriter blobWriter;
 
+    // J: 心跳管理
     private final HeartbeatServices heartbeatServices;
 
     private final JobManagerJobMetricGroupFactory jobMetricGroupFactory;
@@ -164,6 +166,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     private final OnCompletionActions jobCompletionActions;
 
+    /// J： 失败处理
     private final FatalErrorHandler fatalErrorHandler;
 
     private final ClassLoader userCodeLoader;
@@ -178,6 +181,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     // --------- BackPressure --------
 
+    // J：背压统计追踪
     private final BackPressureStatsTracker backPressureStatsTracker;
 
     // --------- ResourceManager --------
@@ -203,6 +207,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     @Nullable private JobManagerJobMetricGroup jobManagerJobMetricGroup;
 
+    // J:
     @Nullable private ResourceManagerAddress resourceManagerAddress;
 
     @Nullable private ResourceManagerConnection resourceManagerConnection;
@@ -211,6 +216,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     private Map<String, Object> accumulators;
 
+    // J: 分区追踪
     private final JobMasterPartitionTracker partitionTracker;
 
     // ------------------------------------------------------------------------

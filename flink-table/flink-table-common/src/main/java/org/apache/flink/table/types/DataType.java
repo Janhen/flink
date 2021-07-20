@@ -33,6 +33,9 @@ import java.util.Objects;
 /**
  * 描述表生态系统中值的数据类型。该类的实例可用于声明操作的输入和输出类型。
  *
+ * {@link DataType}类有两个职责:声明一个逻辑类型，并向规划器提供关于数据的物理表示的提示。虽然逻辑类型是强制的，但提示
+ * 是可选的，但在其他api的边缘很有用。
+ *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
  * declare input and/or output types of operations.
  *

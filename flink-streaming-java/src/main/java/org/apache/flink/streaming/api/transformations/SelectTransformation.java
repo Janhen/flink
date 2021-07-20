@@ -27,6 +27,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 这个转换只代表了某些上游元素的选择。这必须遵循{@link org.apache.flink.streaming.api.transformations.SplitTransformation}
+ * 将元素拆分为几个指定名称的逻辑流。
+ *
+ * <p>这并不创建物理操作，它只影响上游操作如何连接到下游操作。
+ *
  * This transformation represents a selection of only certain upstream elements. This must follow a
  * {@link org.apache.flink.streaming.api.transformations.SplitTransformation} that splits elements
  * into several logical streams with assigned names.

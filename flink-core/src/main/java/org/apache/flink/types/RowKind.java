@@ -29,6 +29,7 @@ public enum RowKind {
     // this purpose.
 
     /** Insertion operation. */
+    // 插入操作
     INSERT("+I", (byte) 0),
 
     /**
@@ -46,6 +47,11 @@ public enum RowKind {
     UPDATE_BEFORE("-U", (byte) 1),
 
     /**
+     * 使用更新行的新内容更新操作
+     *
+     * <p>这种类型可以与{@link #UPDATE_BEFORE}一起出现，用于建模需要首先撤销前一行的更新。或者它描述幂等更新，也就是
+     * 说，对由键唯一标识的行进行更新。
+     *
      * Update operation with new content of the updated row.
      *
      * <p>This kind CAN occur together with {@link #UPDATE_BEFORE} for modelling an update that
@@ -55,6 +61,7 @@ public enum RowKind {
     UPDATE_AFTER("+U", (byte) 2),
 
     /** Deletion operation. */
+    // 删除操作
     DELETE("-D", (byte) 3);
 
     private final String shortString;
