@@ -22,6 +22,8 @@ import org.apache.flink.runtime.plugable.SerializationDelegate;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 选择所有输出通道的分区器。
+ *
  * Partitioner that selects all the output channels.
  *
  * @param <T> Type of the elements in the Stream being broadcast
@@ -31,6 +33,8 @@ public class BroadcastPartitioner<T> extends StreamPartitioner<T> {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 注意:广播模式可以直接处理记录写入器中的所有输出通道，所以不需要通过此方法选择通道。
+     *
      * Note: Broadcast mode could be handled directly for all the output channels in record writer,
      * so it is no need to select channels via this method.
      */

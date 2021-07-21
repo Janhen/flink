@@ -136,6 +136,8 @@ public final class StreamRecord<T> extends StreamElement {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建此流记录的副本。使用复制的值作为新记录的值，即只复制时间戳字段。
+     *
      * Creates a copy of this stream record. Uses the copied value as the value for the new record,
      * i.e., only copies timestamp fields.
      */
@@ -147,6 +149,8 @@ public final class StreamRecord<T> extends StreamElement {
     }
 
     /**
+     * 将此记录复制到新的流记录中。使用复制的值作为新记录的值，即只复制时间戳字段。
+     *
      * Copies this record into the new stream record. Uses the copied value as the value for the new
      * record, i.e., only copies timestamp fields.
      */

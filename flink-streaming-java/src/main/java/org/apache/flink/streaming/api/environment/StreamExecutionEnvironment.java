@@ -130,6 +130,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class StreamExecutionEnvironment {
 
     /** The default name to use for a streaming job if no other name has been specified. */
+    // 如果未指定其他名称，则为流作业使用的默认名称。
     public static final String DEFAULT_JOB_NAME = "Flink Streaming Job";
 
     /** The time characteristic that is used if none other is set. */
@@ -138,6 +139,8 @@ public class StreamExecutionEnvironment {
             TimeCharacteristic.ProcessingTime;
 
     /**
+     * 上下文的环境(默认为本地，如果通过命令行调用则为集群)。
+     *
      * The environment of the context (local by default, cluster if invoked through command line).
      */
     private static StreamExecutionEnvironmentFactory contextEnvironmentFactory = null;
@@ -173,6 +176,7 @@ public class StreamExecutionEnvironment {
     /** The time characteristic used by the data streams. */
     private TimeCharacteristic timeCharacteristic = DEFAULT_TIME_CHARACTERISTIC;
 
+    // J: 缓存的文件
     protected final List<Tuple2<String, DistributedCache.DistributedCacheEntry>> cacheFile =
             new ArrayList<>();
 
@@ -182,6 +186,7 @@ public class StreamExecutionEnvironment {
 
     private final ClassLoader userClassloader;
 
+    // J: job 监听器
     private final List<JobListener> jobListeners = new ArrayList<>();
 
     // --------------------------------------------------------------------------------------------
@@ -616,6 +621,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 设置失败任务重新执行的次数。零值有效地禁用容错功能。{@code -1}的值表示应该使用系统默认值(如配置中定义的)。
+     *
      * Sets the number of times that failed tasks are re-executed. A value of zero effectively
      * disables fault tolerance. A value of {@code -1} indicates that the system default value (as
      * defined in the configuration) should be used.
@@ -667,6 +674,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 将新的 Kryo 默认序列化器添加到运行时。
+     *
      * Adds a new Kryo default serializer to the Runtime.
      *
      * @param type The class of the types serialized with the given serializer.
@@ -678,6 +687,11 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 用Kryo序列化器注册给定类型。
+     *
+     * <p>注意，序列化器实例必须是可序列化的(如java.io. serializable所定义的)，因为它可以通过java序列化分发到工作
+     * 节点。
+     *
      * Registers the given type with a Kryo Serializer.
      *
      * <p>Note that the serializer instance must be serializable (as defined by
@@ -829,6 +843,11 @@ public class StreamExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建包含数字序列的新数据流。这是一个并行源，如果你手动设置并行度为{@code 1}(使用
+     *
+     * {@link org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator#setParallelism(int)}
+     * )，生成的元素序列是有序的。
+     *
      * Creates a new data stream that contains a sequence of numbers. This is a parallel source, if
      * you manually set the parallelism to {@code 1} (using {@link
      * org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator#setParallelism(int)})

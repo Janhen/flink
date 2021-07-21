@@ -24,10 +24,13 @@ import java.util.Collection;
 import java.util.Optional;
 
 /** Contains the information of an external resource. */
+// 包含外部资源的信息。
 @PublicEvolving
 public interface ExternalResourceInfo {
 
     /**
+     * 获取指定键所指示的属性。
+     *
      * Get the property indicated by the specified key.
      *
      * @param key of the required property
@@ -37,6 +40,8 @@ public interface ExternalResourceInfo {
     Optional<String> getProperty(String key);
 
     /**
+     * 获取所有属性键。
+     *
      * Get all property keys.
      *
      * @return collection of all property keys

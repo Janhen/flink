@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.concurrent.Future;
 
 /** A standalone implementation of the {@link RuntimeContext}, created by runtime UDF operators. */
+// {@link RuntimeContext}的独立实现，由运行时UDF操作符创建。
 @Internal
 public class RuntimeUDFContext extends AbstractRuntimeUDFContext {
 

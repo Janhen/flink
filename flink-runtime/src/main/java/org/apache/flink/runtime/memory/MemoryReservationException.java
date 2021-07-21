@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.memory;
 
 /** An exception to be thrown when a memory reservation operation is not successful. */
+// 当内存预留操作不成功时将引发的异常。
 public class MemoryReservationException extends Exception {
 
     private static final long serialVersionUID = 1L;

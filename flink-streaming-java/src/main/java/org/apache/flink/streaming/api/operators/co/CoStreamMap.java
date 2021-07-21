@@ -24,6 +24,8 @@ import org.apache.flink.streaming.api.operators.TwoInputStreamOperator;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * StreamOperator 处理 CoMapFunctions
+ *
  * {@link org.apache.flink.streaming.api.operators.StreamOperator} for processing {@link
  * CoMapFunction CoMapFunctions}.
  */

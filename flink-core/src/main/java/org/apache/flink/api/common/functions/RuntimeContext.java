@@ -46,10 +46,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * RuntimeContext包含关于执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息(如当前
+ * RuntimeContext 包含关于执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息(如当前
  * 并行性)和其他结构，如累加器和广播变量。
  *
- * <p>函数可以在运行时通过调用{@link AbstractRichFunction#getRuntimeContext()}获得RuntimeContext。
+ * <p>函数可以在运行时通过调用{@link AbstractRichFunction#getRuntimeContext()}获得 RuntimeContext。
  *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
@@ -63,6 +63,8 @@ import java.util.Set;
 public interface RuntimeContext {
 
     /**
+     * 返回在计划构建期间分配的UDF运行的任务的名称。
+     *
      * Returns the name of the task in which the UDF runs, as assigned during plan construction.
      *
      * @return The name of the task in which the UDF runs.
@@ -70,6 +72,8 @@ public interface RuntimeContext {
     String getTaskName();
 
     /**
+     * 返回此并行子任务的指标组。
+     *
      * Returns the metric group for this parallel subtask.
      *
      * @return The metric group for this parallel subtask.
@@ -78,6 +82,8 @@ public interface RuntimeContext {
     MetricGroup getMetricGroup();
 
     /**
+     * 获取并行任务与之运行的并行度。
+     *
      * Gets the parallelism with which the parallel task runs.
      *
      * @return The parallelism with which the parallel task runs.
@@ -85,6 +91,8 @@ public interface RuntimeContext {
     int getNumberOfParallelSubtasks();
 
     /**
+     * 获取并行任务运行的最大并行度。
+     *
      * Gets the number of max-parallelism with which the parallel task runs.
      *
      * @return The max-parallelism with which the parallel task runs.
@@ -93,6 +101,9 @@ public interface RuntimeContext {
     int getMaxNumberOfParallelSubtasks();
 
     /**
+     * 获取此并行子任务的编号。编号从0开始，一直到parallelism-1 (parallelism由
+     * {@link #getNumberOfParallelSubtasks()}返回)。
+     *
      * Gets the number of this parallel subtask. The numbering starts from 0 and goes up to
      * parallelism-1 (parallelism as returned by {@link #getNumberOfParallelSubtasks()}).
      *
@@ -110,8 +121,8 @@ public interface RuntimeContext {
     int getAttemptNumber();
 
     /**
-     * 返回任务的名称，附加子任务指示符，例如“MyTask(36)”，其中3是({@link getIndexOfThisSubtask()} + 1)， 6
-     * 是{@link getNumberOfParallelSubtasks()}。
+     * 返回任务的名称，附加子任务指示符，例如“MyTask(36)”，其中3是({@link #getIndexOfThisSubtask()} + 1)， 6
+     * 是{@link #getNumberOfParallelSubtasks()}。
      *
      * Returns the name of the task, appended with the subtask indicator, such as "MyTask (3/6)",
      * where 3 would be ({@link #getIndexOfThisSubtask()} + 1), and 6 would be {@link
@@ -166,6 +177,8 @@ public interface RuntimeContext {
     <V, A extends Serializable> Accumulator<V, A> getAccumulator(String name);
 
     /**
+     * 返回此任务的所有已注册累加器的映射。返回的 map 不能被修改。
+     *
      * Returns a map of all registered accumulators for this task. The returned map must not be
      * modified.
      *
@@ -176,10 +189,12 @@ public interface RuntimeContext {
     Map<String, Accumulator<?, ?>> getAllAccumulators();
 
     /** Convenience function to create a counter object for integers. */
+    // 为整数创建计数器对象的方便函数。
     @PublicEvolving
     IntCounter getIntCounter(String name);
 
     /** Convenience function to create a counter object for longs. */
+    // 方便函数，用于为长整数创建计数器对象。
     @PublicEvolving
     LongCounter getLongCounter(String name);
 
@@ -188,11 +203,12 @@ public interface RuntimeContext {
     DoubleCounter getDoubleCounter(String name);
 
     /** Convenience function to create a counter object for histograms. */
+    // 方便函数为直方图创建计数器对象。
     @PublicEvolving
     Histogram getHistogram(String name);
 
     /**
-     * 通过resourceName获取具体的外部资源信息。
+     * 通过 resourceName 获取具体的外部资源信息。
      *
      * Get the specific external resource information by the resourceName.
      *
@@ -232,6 +248,11 @@ public interface RuntimeContext {
     <RT> List<RT> getBroadcastVariable(String name);
 
     /**
+     * 返回绑定到由给定的{@code name}标识的广播变量的结果。广播变量作为一个共享数据结构返回，该结构用给定的
+     * {@link BroadcastVariableInitializer}初始化。
+     *
+     * <p>IMPORTANT:广播变量数据结构在一台机器上的并行任务之间共享。任何修改其内部状态的访问都需要由调用者手动同步。
+     *
      * Returns the result bound to the broadcast variable identified by the given {@code name}. The
      * broadcast variable is returned as a shared data structure that is initialized with the given
      * {@link BroadcastVariableInitializer}.
@@ -318,7 +339,7 @@ public interface RuntimeContext {
      * 获取系统键值列表状态的句柄。这个状态类似于通过{@link #getState(ValueStateDescriptor)}访问的状态，但是对包
      * 含列表的状态进行了优化。可以向列表中添加元素，或者作为一个整体检索列表。
      *
-     * <p>此状态只有在KeyedStream上执行函数时才可访问
+     * <p>此状态只有在 KeyedStream 上执行函数时才可访问
      *
      * Gets a handle to the system's key/value list state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that holds
@@ -361,6 +382,11 @@ public interface RuntimeContext {
     <T> ListState<T> getListState(ListStateDescriptor<T> stateProperties);
 
     /**
+     * 获取系统的键值减少状态的句柄。这个状态类似于通过{@link #getState(ValueStateDescriptor)}访问的状态，但是
+     * 对聚集值的状态进行了优化。
+     *
+     * <p>此状态只有在KeyedStream上执行函数时才可访问。
+     *
      * Gets a handle to the system's key/value reducing state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that
      * aggregates values.
@@ -439,6 +465,11 @@ public interface RuntimeContext {
             AggregatingStateDescriptor<IN, ACC, OUT> stateProperties);
 
     /**
+     * 获取系统键值映射状态的句柄。这个状态类似于通过{@link #getState(ValueStateDescriptor)}访问的状态，但是对由
+     * 用户定义的键值对组成的状态进行了优化
+     *
+     * <p>此状态只有在KeyedStream上执行函数时才可访问。
+     *
      * Gets a handle to the system's key/value map state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that is
      * composed of user-defined key-value pairs

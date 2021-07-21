@@ -350,6 +350,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 使用提供的{@link ClassLoader}创建给定类名和类型的新实例。
+     *
      * Creates a new instance of the given class name and type using the provided {@link
      * ClassLoader}.
      *

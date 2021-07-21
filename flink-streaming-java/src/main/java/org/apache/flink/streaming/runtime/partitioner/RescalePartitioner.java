@@ -23,6 +23,11 @@ import org.apache.flink.runtime.plugable.SerializationDelegate;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 通过循环通过输出通道来平均分配数据的分区器。它只分布到下游节点的子集，因为
+ * {@link org.apache.flink.streaming.api.graph.StreamingJobGraphGenerator}
+ * 当遇到{@code RescalePartitioner}时，StreamingJobGraphGenerator
+ * 实例化一个{@link DistributionPattern#POINTWISE}分布模式。
+ *
  * Partitioner that distributes the data equally by cycling through the output channels. This
  * distributes only to a subset of downstream nodes because {@link
  * org.apache.flink.streaming.api.graph.StreamingJobGraphGenerator} instantiates a {@link

@@ -26,6 +26,8 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 在类型序列化器的帮助下，序列化委托将一个任意元素公开为{@link IOReadableWritable}用于序列化。
+ *
  * The serialization delegate exposes an arbitrary element as a {@link IOReadableWritable} for
  * serialization, with the help of a type serializer.
  *

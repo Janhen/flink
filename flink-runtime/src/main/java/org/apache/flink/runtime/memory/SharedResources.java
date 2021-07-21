@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** A map that keeps track of acquired shared resources and handles their allocation disposal. */
+// 跟踪获取的共享资源并处理它们的分配处置的地图。
 final class SharedResources {
 
     private final ReentrantLock lock = new ReentrantLock();
@@ -81,6 +82,8 @@ final class SharedResources {
     }
 
     /**
+     * 释放给定类型的租约(由租约持有人对象标识)。如果没有其他租约存在，资源将被释放。
+     *
      * Releases a lease (identified by the lease holder object) for the given type. If no further
      * leases exist, the resource is disposed.
      */
@@ -89,6 +92,10 @@ final class SharedResources {
     }
 
     /**
+     * 释放给定类型的租约(由租约持有人对象标识)。如果没有其他租约存在，资源将被释放。
+     *
+     * <p>这个方法有一个附加的钩子，当资源被释放时调用这个钩子。
+     *
      * Releases a lease (identified by the lease holder object) for the given type. If no further
      * leases exist, the resource is disposed.
      *

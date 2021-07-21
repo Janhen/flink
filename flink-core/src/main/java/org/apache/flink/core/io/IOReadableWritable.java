@@ -41,6 +41,8 @@ import java.io.IOException;
 public interface IOReadableWritable {
 
     /**
+     * 将对象的内部数据写入给定的数据输出视图。
+     *
      * Writes the object's internal data to the given data output view.
      *
      * @param out the output view to receive the data.
@@ -49,6 +51,8 @@ public interface IOReadableWritable {
     void write(DataOutputView out) throws IOException;
 
     /**
+     * 从给定的数据输入视图中读取对象的内部数据。
+     *
      * Reads the object's internal data from the given data input view.
      *
      * @param in the input view to read the data from

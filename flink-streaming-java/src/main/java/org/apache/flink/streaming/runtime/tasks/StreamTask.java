@@ -98,6 +98,13 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 
 /**
+ * 所有流任务的基类。任务是由TaskManagers部署和执行的本地处理单元。每个任务运行一个或多个{@link StreamOperator}，
+ * 它们构成了任务的操作符链。链接在一起的操作符在同一个线程中同步执行，因此在同一个流分区上同步执行。这些链的一个常见情况
+ * 是连续的map/flatmap/filter任务。
+ *
+ * <p>任务链包含一个"head"操作符和多个链式操作符。StreamTask专门用于头操作符的类型:单输入和双输入任务，以及源、迭代头
+ * 和迭代尾。
+ *
  * Base class for all streaming tasks. A task is the unit of local processing that is deployed and
  * executed by the TaskManagers. Each task runs one or more {@link StreamOperator}s which form the
  * Task's operator chain. Operators that are chained together execute synchronously in the same

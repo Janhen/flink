@@ -27,6 +27,16 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 这表示拓扑中的一个反馈点。
+ *
+ * <p>这与迭代在批处理中的工作方式不同。一旦一个反馈点被定义，你可以连接一个或几个{@code Transformations}作为一个反
+ * 馈边。从反馈点向下的操作将从这个反馈点的输入和反馈边缘接收元素。
+ *
+ * <p>输入边和反馈边的分割都被保留。它们还可以使用不同的分区策略。然而，这要求反馈{@code Transformation}的并行性必
+ * 须与输入{@code Transformation}的并行性匹配。
+ *
+ * <p>输入{@code Transformation}和反馈{@code Transformation}的类型必须匹配。
+ *
  * This represents a feedback point in a topology.
  *
  * <p>This is different from how iterations work in batch processing. Once a feedback point is
@@ -72,6 +82,9 @@ public class FeedbackTransformation<T> extends Transformation<T> {
     }
 
     /**
+     * 增加 feedback edge。{@code Transformation}的并行度必须匹配这个{@code FeedbackTransformation}的输入
+     * {@code Transformation}的并行度
+     *
      * Adds a feedback edge. The parallelism of the {@code Transformation} must match the
      * parallelism of the input {@code Transformation} of this {@code FeedbackTransformation}
      *
@@ -98,6 +111,8 @@ public class FeedbackTransformation<T> extends Transformation<T> {
     }
 
     /**
+     * 返回等待时间。这是反馈操作符持续倾听反馈元素的时间。一旦时间过期，该操作将关闭，并且不再接收其他元素。
+     *
      * Returns the wait time. This is the amount of time that the feedback operator keeps listening
      * for feedback elements. Once the time expires the operation will close and will not receive
      * further elements.

@@ -47,6 +47,12 @@ import java.util.function.Consumer;
 import static org.apache.flink.core.memory.MemorySegmentFactory.allocateOffHeapUnsafeMemory;
 
 /**
+ * 内存管理器管理Flink用于排序、散列、缓存或堆外状态后端(例如RocksDB)的内存。内存要么用相同大小的{@link MemorySegment}
+ * 表示，要么用特定大小的保留块表示。操作符通过请求一些内存段或保留内存块来分配内存。所有已分配的内存都必须释放，以便以后重用。
+ *
+ * <p>内存段表示为堆外不安全内存区域(通过{@link HybridMemorySegment})。释放内存段将使其被垃圾收集器回收，但不一定
+ * 立即释放底层内存。
+ *
  * The memory manager governs the memory that Flink uses for sorting, hashing, caching or off-heap
  * state backends (e.g. RocksDB). Memory is represented either in {@link MemorySegment}s of equal
  * size or in reserved chunks of certain size. Operators allocate the memory either by requesting a
@@ -61,17 +67,22 @@ public class MemoryManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(MemoryManager.class);
     /** The default memory page size. Currently set to 32 KiBytes. */
+    // 默认内存页大小。当前设置为32kibytes。
     public static final int DEFAULT_PAGE_SIZE = 32 * 1024;
 
     /** The minimal memory page size. Currently set to 4 KiBytes. */
+    // 最小内存页大小。当前设置为4kibytes。
     public static final int MIN_PAGE_SIZE = 4 * 1024;
 
     // ------------------------------------------------------------------------
 
     /** Memory segments allocated per memory owner. */
+    // 为每个内存所有者分配的内存段。
+    // owner -> [memorySegment,..]
     private final Map<Object, Set<MemorySegment>> allocatedSegments;
 
     /** Reserved memory per memory owner. */
+    // 每个内存所有者保留的内存。
     private final Map<Object, Long> reservedMemory;
 
     private final long pageSize;
@@ -182,6 +193,10 @@ public class MemoryManager {
     // ------------------------------------------------------------------------
 
     /**
+     * 从这个内存管理器分配一组内存段。
+     *
+     * <p>分配的总内存不会超过构造函数中声明的大小限制。
+     *
      * Allocates a set of memory segments from this memory manager.
      *
      * <p>The total allocated memory will not exceed its size limit, announced in the constructor.
@@ -200,6 +215,10 @@ public class MemoryManager {
     }
 
     /**
+     * 从这个内存管理器分配一组内存段。
+     *
+     * <p>分配的总内存不会超过构造函数中声明的大小限制。
+     *
      * Allocates a set of memory segments from this memory manager.
      *
      * <p>The total allocated memory will not exceed its size limit, announced in the constructor.
@@ -259,6 +278,11 @@ public class MemoryManager {
     }
 
     /**
+     * 尝试释放指定段的内存。
+     *
+     * <p>如果段已经被释放，则只释放它。如果它为空或没有所有者，请求将被简单地忽略。GC只释放段并使其有资格被回收。这个
+     * 段将被返回到内存池，从而增加了以后分配的可用限制。
+     *
      * Tries to release the memory for the specified segment.
      *
      * <p>If the segment has already been released, it is only freed. If it is null or has no owner,
@@ -378,6 +402,8 @@ public class MemoryManager {
     }
 
     /**
+     * 释放给定所有者的所有内存段。
+     *
      * Releases all memory segments for the given owner.
      *
      * @param owner The owner memory segments are to be released.
@@ -406,6 +432,8 @@ public class MemoryManager {
     }
 
     /**
+     * 从这个内存管理器中为所有者保留一定大小的内存块。
+     *
      * Reserves a memory chunk of a certain size for an owner from this memory manager.
      *
      * @param owner The owner to associate with the memory reservation, for the fallback release.
@@ -430,6 +458,8 @@ public class MemoryManager {
     }
 
     /**
+     * 将一定大小的内存块从所有者释放到这个内存管理器。
+     *
      * Releases a memory chunk of a certain size from an owner to this memory manager.
      *
      * @param owner The owner to associate with the memory reservation, for the fallback release.
@@ -477,6 +507,8 @@ public class MemoryManager {
     }
 
     /**
+     * 将所有保留的内存块从所有者释放到这个内存管理器。
+     *
      * Releases all reserved memory chunks from an owner to this memory manager.
      *
      * @param owner The owner to associate with the memory reservation, for the fallback release.
@@ -614,6 +646,8 @@ public class MemoryManager {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取由内存管理器处理的页的大小。
+     *
      * Gets the size of the pages handled by the memory manager.
      *
      * @return The size of the pages handled by the memory manager.
@@ -632,6 +666,8 @@ public class MemoryManager {
     }
 
     /**
+     * 返回此内存管理器所处理的特定类型内存的可用数量。
+     *
      * Returns the available amount of the certain type of memory handled by this memory manager.
      *
      * @return The available amount of memory.

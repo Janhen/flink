@@ -42,6 +42,15 @@ import java.nio.ReadOnlyBufferException;
  * - 它透明而有效地在堆上和堆外变量之间移动数据。
  * <p>
  *
+ * <p><i>关于实现<i>的注释:我们大量使用本机指令支持的操作，以实现高效率。多字节类型(int、long、float、double等)是
+ * 通过“不安全的”本机命令读写的。
+ *
+ * <p>:为了达到最好的效率，使用这个类的代码应该确保只加载一个子类，或者这个类中的抽象方法只能从其中一个子类中使用(要么是
+ * {@link org.apache.flink.core.memory.HeapMemorySegment}，或者
+ * {@link org.apache.flink.core.memory.HybridMemorySegment})。
+ *
+ * <p>这样，MemorySegment基类中的所有抽象方法都只有一个加载的实际实现。JIT很容易通过类层次结构分析或识别调用是单态的
+ * (所有调用都指向相同的具体方法实现)来识别这一点。在这些条件下，JIT可以完美地内联方法。
  * This class represents a piece of memory managed by Flink. The segment may be backed by heap
  * memory (byte array) or by off-heap memory.
  *
@@ -95,13 +104,6 @@ import java.nio.ReadOnlyBufferException;
  *                                                 ;   {poll_return}
  *   0x00007fc403e1994a: retq
  * </pre>
- *
- * >:为了达到最好的效率，使用这个类的代码应该确保只加载一个子类，或者这个类中的抽象方法只能从其中一个子类中使用(要么是
- * {@link org.apache.flink.core.memory.HeapMemorySegment}，或者
- * {@link org.apache.flink.core.memory.HybridMemorySegment})。
- *
- * 这样，MemorySegment基类中的所有抽象方法都只有一个加载的实际实现。JIT很容易通过类层次结构分析或识别调用是单态的
- * (所有调用都指向相同的具体方法实现)来识别这一点。在这些条件下，JIT可以完美地内联方法。
  *
  * <p><i>Note on efficiency</i>: For best efficiency, the code that uses this class should make sure
  * that only one subclass is loaded, or that the methods that are abstract in this class are used

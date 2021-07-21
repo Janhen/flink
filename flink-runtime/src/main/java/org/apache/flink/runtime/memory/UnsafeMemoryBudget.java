@@ -25,6 +25,14 @@ import javax.annotation.Nonnegative;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * 跟踪自定义限制内的内存分配和释放。
+ *
+ * <p>这个内存管理在Flink中使用了与Java相同的方法来分配直接内存并在GC上释放它，但是这里的内存也可以通过
+ * {@link #releasmemory(long)}直接释放。内存保留{@link #reserveMemory(long)}首先尝试运行所有使用
+ * {@link org.apache.flink.core.memory.MemoryUtils#createMemoryGcCleaner}
+ * ，用于准备被垃圾收集的对象。如果内存仍然不可用，它将触发GC，并在抛出{@link OutOfMemoryError}之前继续处理任何尝
+ * 试{@link #MAX_SLEEPS}的就绪清理程序。
+ *
  * Tracker of memory allocation and release within a custom limit.
  *
  * <p>This memory management in Flink uses the same approach as Java uses to allocate direct memory

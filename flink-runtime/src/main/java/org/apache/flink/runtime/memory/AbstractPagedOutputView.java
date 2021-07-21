@@ -27,6 +27,11 @@ import java.io.IOException;
 import java.io.UTFDataFormatException;
 
 /**
+ * 由多个内存页支持的所有输出视图的基类。这个基类包含所有将数据写入页面和检测页面边界跨越的编码方法。具体的子类必须实现收
+ * 集当前页的方法，并在跨越边界后提供下一个内存页。
+ *
+ * <p>分页假设所有内存段的大小相同。
+ *
  * The base class for all output views that are backed by multiple memory pages. This base class
  * contains all encoding methods to write data to a page and detect page boundary crossing. The
  * concrete sub classes must implement the methods to collect the current page and provide the next

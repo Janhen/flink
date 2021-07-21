@@ -24,6 +24,8 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * 通过循环通过输出通道来平均分配数据的分区器。
+ *
  * Partitioner that distributes the data equally by cycling through the output channels.
  *
  * @param <T> Type of the elements in the Stream being rebalanced
@@ -43,6 +45,7 @@ public class RebalancePartitioner<T> extends StreamPartitioner<T> {
 
     @Override
     public int selectChannel(SerializationDelegate<StreamRecord<T>> record) {
+        // J: rebance
         nextChannelToSendTo = (nextChannelToSendTo + 1) % numberOfChannels;
         return nextChannelToSendTo;
     }
