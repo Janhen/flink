@@ -40,6 +40,12 @@ import static org.apache.flink.table.utils.EncodingUtils.escapeIdentifier;
 import static org.apache.flink.table.utils.EncodingUtils.escapeSingleQuotes;
 
 /**
+ * 字段序列的逻辑类型。字段由字段名、字段类型和可选描述组成。表中最特定的行类型是行类型。在本例中，行中的每一列对应于与
+ * 列具有相同序数位置的行类型的字段。与 SQL 标准相比，可选字段描述简化了对复杂结构的处理。
+ *
+ * <p>序列化字符串表示为{@code ROW<n0 t0 'd0'， n1 t1 'd1'，…>}其中{@code n}是字段的唯一名称，{@code t}是字段
+ * 的逻辑类型，{@code d}是字段的描述。{@code ROW(…)}是接近 SQL 标准的同义词。
+ *
  * Logical type of a sequence of fields. A field consists of a field name, field type, and an
  * optional description. The most specific type of a row of a table is a row type. In this case,
  * each column of the row corresponds to the field of the row type that has the same ordinal
@@ -61,8 +67,10 @@ public final class RowType extends LogicalType {
     private static final Class<?> DEFAULT_CONVERSION = Row.class;
 
     /** Describes a field of a {@link RowType}. */
+    // 描述一个{@link RowType}的字段。
     public static final class RowField implements Serializable {
 
+        // J: column 格式化
         public static final String FIELD_FORMAT_WITH_DESCRIPTION = "%s %s '%s'";
 
         public static final String FIELD_FORMAT_NO_DESCRIPTION = "%s %s";

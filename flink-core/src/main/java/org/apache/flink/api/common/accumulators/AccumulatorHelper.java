@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /** Helper functions for the interaction with {@link Accumulator}. */
+// 用于与{@link Accumulator}交互的Helper函数。
 @Internal
 public class AccumulatorHelper {
     private static final Logger LOG = LoggerFactory.getLogger(AccumulatorHelper.class);
@@ -45,7 +46,9 @@ public class AccumulatorHelper {
      * Merge two collections of accumulators. The second will be merged into the first.
      *
      * @param target The collection of accumulators that will be updated
+     *               将被更新的累加器集合
      * @param toMerge The collection of accumulators that will be merged into the other
+     *                将合并到另一个累加器的集合
      */
     public static void mergeInto(
             Map<String, OptionalFailure<Accumulator<?, ?>>> target,

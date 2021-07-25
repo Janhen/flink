@@ -71,6 +71,10 @@ public final class YearMonthIntervalType extends LogicalType {
     private static final Class<?> DEFAULT_CONVERSION = java.time.Period.class;
 
     /**
+     * 支持此类型的分辨率。
+     *
+     * <p>注: 该 enum 的顺序反映了粒度由粗到细。
+     *
      * Supported resolutions of this type.
      *
      * <p>Note: The order of this enum reflects the granularity from coarse to fine.

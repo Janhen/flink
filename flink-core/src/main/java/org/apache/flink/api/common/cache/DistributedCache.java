@@ -212,6 +212,11 @@ public class DistributedCache {
     }
 
     /**
+     * 解析以字符串编码的分布式缓存条目列表。可以用来解析由
+     * {@link org.apache.flink.configuration.PipelineOptions#CACHED_FILES}描述的配置选项。
+     *
+     * < p >看到{@link org.apache.flink.configuration.PipelineOptions#CACHED_FILES}的格式。
+     *
      * Parses a list of distributed cache entries encoded in a string. Can be used to parse a config
      * option described by {@link org.apache.flink.configuration.PipelineOptions#CACHED_FILES}.
      *

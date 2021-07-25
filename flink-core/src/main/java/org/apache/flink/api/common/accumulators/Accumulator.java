@@ -46,9 +46,11 @@ import java.io.Serializable;
 @Public
 public interface Accumulator<V, R extends Serializable> extends Serializable, Cloneable {
     /** @param value The value to add to the accumulator object */
+    // 要加到累加器对象的值
     void add(V value);
 
     /** @return local The local value from the current UDF context */
+    // @return local当前UDF上下文的本地值
     R getLocalValue();
 
     /** Reset the local value. This only affects the current UDF context. */

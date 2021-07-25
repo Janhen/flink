@@ -32,9 +32,11 @@ import static org.apache.flink.contrib.streaming.state.RocksDBStateBackend.Prior
 import static org.apache.flink.contrib.streaming.state.RocksDBStateBackend.PriorityQueueStateType.ROCKSDB;
 
 /** Configuration options for the RocksDB backend. */
+// RocksDB后端配置选项。
 public class RocksDBOptions {
 
     /** The local directory (on the TaskManager) where RocksDB puts its files. */
+    // RocksDB存放文件的本地目录(在TaskManager上)。
     @Documentation.Section(Documentation.Sections.EXPERT_ROCKSDB)
     public static final ConfigOption<String> LOCAL_DIRECTORIES =
             ConfigOptions.key("state.backend.rocksdb.localdir")
@@ -56,6 +58,8 @@ public class RocksDBOptions {
                                     HEAP.name(), ROCKSDB.name()));
 
     /**
+     * 在RocksDBStateBackend中用于传输(下载和上传)文件的线程数。
+     *
      * The number of threads used to transfer (download and upload) files in RocksDBStateBackend.
      */
     @Documentation.Section(Documentation.Sections.EXPERT_ROCKSDB)
@@ -66,6 +70,7 @@ public class RocksDBOptions {
                             "The number of threads (per stateful operator) used to transfer (download and upload) files in RocksDBStateBackend.");
 
     /** The predefined settings for RocksDB DBOptions and ColumnFamilyOptions by Flink community. */
+    // 由Flink社区预定义的RocksDB DBOptions和ColumnFamilyOptions设置。
     @Documentation.Section(Documentation.Sections.EXPERT_ROCKSDB)
     public static final ConfigOption<String> PREDEFINED_OPTIONS =
             ConfigOptions.key("state.backend.rocksdb.predefined-options")
@@ -81,6 +86,7 @@ public class RocksDBOptions {
                                     FLASH_SSD_OPTIMIZED.name()));
 
     /** The options factory class for RocksDB to create DBOptions and ColumnFamilyOptions. */
+    // 为RocksDB创建DBOptions和ColumnFamilyOptions的options工厂类。
     @Documentation.Section(Documentation.Sections.EXPERT_ROCKSDB)
     public static final ConfigOption<String> OPTIONS_FACTORY =
             ConfigOptions.key("state.backend.rocksdb.options-factory")
@@ -101,6 +107,9 @@ public class RocksDBOptions {
                                     + "managed memory budget of the task slot, and divide the memory over write buffers, indexes, "
                                     + "block caches, etc. That way, the three major uses of memory of RocksDB will be capped.");
 
+    // 固定的内存总量，由每个插槽的所有RocksDB实例共享。" "此选项在配置时将覆盖 state.backend.rocksdb.memory.managed!
+    // '选项。如果既没有设置此选项，也没有设置“state.backend.rocksdb.memory.managed”选项“”，则每个RocksDB列族
+    // 状态都有自己的内存缓存(由列“”列族选项控制)。
     @Documentation.Section(Documentation.Sections.STATE_BACKEND_ROCKSDB)
     public static final ConfigOption<MemorySize> FIX_PER_SLOT_MEMORY_SIZE =
             ConfigOptions.key("state.backend.rocksdb.memory.fixed-per-slot")

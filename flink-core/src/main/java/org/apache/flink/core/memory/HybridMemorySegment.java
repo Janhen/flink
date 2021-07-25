@@ -34,7 +34,7 @@ import java.nio.ReadOnlyBufferException;
 import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
 
 /**
- * 这个类表示由Flink管理的一块内存。
+ * 这个类表示由 Flink 管理的一块内存。
  *
  * <p>内存可以是堆上，堆外直接或堆外不安全的，这是透明的由这个类处理。
  *
@@ -61,6 +61,8 @@ import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
 @Internal
 public final class HybridMemorySegment extends MemorySegment {
     /**
+     * 包装堆外内存的直接字节缓冲区。这个内存段保存着对那个缓冲区的引用，所以只要这个内存段存在，内存就不会被释放
+     *
      * The direct byte buffer that wraps the off-heap memory. This memory segment holds a reference
      * to that buffer, so as long as this memory segment lives, the memory will not be released.
      */
@@ -107,6 +109,8 @@ public final class HybridMemorySegment extends MemorySegment {
     }
 
     /**
+     * 获取拥有此内存段的内存的缓冲区。
+     *
      * Gets the buffer that owns the memory of this memory segment.
      *
      * @return The byte buffer that owns the memory of this memory segment.

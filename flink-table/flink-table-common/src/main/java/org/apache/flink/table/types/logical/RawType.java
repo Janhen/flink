@@ -35,6 +35,11 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 任意序列化类型的逻辑类型。这种类型是表生态系统中的一个黑盒子，只在边缘反序列化。原始类型是SQL标准的扩展。
+ *
+ * <p>序列化的字符串表示是{@code RAW('c'， 's')}，其中{@code c}是原始类，{@code s}是Base64编码的序列化的
+ * {@link TypeSerializerSnapshot}。
+ *
  * Logical type of an arbitrary serialized type. This type is a black box within the table ecosystem
  * and is only deserialized at the edges. The raw type is an extension to the SQL standard.
  *

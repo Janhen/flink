@@ -29,6 +29,13 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 不带时区的时间戳的逻辑类型，由{@code year-month-day hour:minute:second[.fraction]}组成，精度可达纳秒，值
+ * 范围从{@code 0000-01-01 00:00:00.000000000}到{@code 99999 -12-31 23:59:59.999999999}。与SQL标准相比，
+ * 不支持闰秒(23:59:60和23:59:61)，因为其语义更接近{@link java.time.LocalDateTime}。
+ *
+ * <p>序列化的字符串表示是{@code TIMESTAMP(p)}，其中{@code p}是小数秒的位数(=precision)。{@code p}的值必须在
+ * 0到9之间(包括0和9)。如果没有指定精度，{@code p}等于6。{@code TIMESTAMP(p) WITHOUT TIME ZONE}是该类型的同义词。
+ *
  * Logical type of a timestamp WITHOUT time zone consisting of {@code year-month-day
  * hour:minute:second[.fractional]} with up to nanosecond precision and values ranging from {@code
  * 0000-01-01 00:00:00.000000000} to {@code 9999-12-31 23:59:59.999999999}. Compared to the SQL
@@ -71,6 +78,8 @@ public final class TimestampType extends LogicalType {
     private final int precision;
 
     /**
+     * 内部构造函数，允许附加关于时间属性属性的元数据。额外的元数据不会影响相等性或序列化性。
+     *
      * Internal constructor that allows attaching additional metadata about time attribute
      * properties. The additional metadata does not affect equality or serializability.
      *

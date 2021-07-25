@@ -40,6 +40,9 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link CheckpointBarrierAligner}在给定的通道上跟踪接收到的{@link CheckpointBarrier}，并通过决定哪些通道应
+ * 该被阻塞以及何时释放被阻塞的通道来控制对齐。
+ *
  * {@link CheckpointBarrierAligner} keep tracks of received {@link CheckpointBarrier} on given
  * channels and controls the alignment, by deciding which channels should be blocked and when to
  * release blocked channels.
@@ -50,9 +53,11 @@ public class CheckpointBarrierAligner extends CheckpointBarrierHandler {
     private static final Logger LOG = LoggerFactory.getLogger(CheckpointBarrierAligner.class);
 
     /** Flags that indicate whether a channel is currently blocked/buffered. */
+    // 指示通道当前是否被阻塞的标志
     private final Map<InputChannelInfo, Boolean> blockedChannels;
 
     /** The total number of channels that this buffer handles data from. */
+    // 此缓冲区处理数据的通道总数
     private final int totalNumberOfInputChannels;
 
     private final String taskName;
@@ -61,6 +66,10 @@ public class CheckpointBarrierAligner extends CheckpointBarrierHandler {
     private long currentCheckpointId = -1L;
 
     /**
+     * 接收到的屏障数量(=被阻塞的缓冲通道的数量)
+     *
+     * 重要:一个被取消的检查点必须总是有0个屏障。
+     *
      * The number of received barriers (= number of blocked/buffered channels) IMPORTANT: A canceled
      * checkpoint must always have 0 barriers.
      */
@@ -70,6 +79,7 @@ public class CheckpointBarrierAligner extends CheckpointBarrierHandler {
     private int numClosedChannels;
 
     /** The timestamp as in {@link System#nanoTime()} at which the last alignment started. */
+    // 在{@link System#nanoTime()}中，最后一次对齐开始的时间戳。
     private long startOfAlignmentTimestamp;
 
     /** The time (in nanoseconds) that the latest alignment took. */
@@ -214,6 +224,8 @@ public class CheckpointBarrierAligner extends CheckpointBarrierHandler {
     }
 
     /**
+     * 阻塞给定的信道索引，从那里接收到一个屏障。
+     *
      * Blocks the given channel index, from which a barrier has been received.
      *
      * @param channelInfo The channel to block.

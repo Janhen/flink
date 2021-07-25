@@ -40,6 +40,7 @@ public class OptionalFailure<T> implements Serializable {
 
     @Nullable private transient T value;
 
+    // J: 可选的异常
     @Nullable private Throwable failureCause;
 
     private OptionalFailure(@Nullable T value, @Nullable Throwable failureCause) {

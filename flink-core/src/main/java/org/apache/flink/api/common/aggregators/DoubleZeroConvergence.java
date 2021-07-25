@@ -32,6 +32,8 @@ import org.apache.flink.types.DoubleValue;
 public class DoubleZeroConvergence implements ConvergenceCriterion<DoubleValue> {
 
     /**
+     * 如果聚合器值为零，则返回true，否则返回false。
+     *
      * Returns true, if the aggregator value is zero, false otherwise.
      *
      * @param iteration The number of the iteration superstep. Ignored in this case.

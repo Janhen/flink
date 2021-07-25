@@ -28,7 +28,7 @@ import java.nio.ByteOrder;
 import java.nio.ReadOnlyBufferException;
 
 /**
- * 这个类表示由Flink管理的一块内存。段可以由堆内存(字节数组)或堆外内存支持。
+ * 这个类表示由 Flink 管理的一块内存。段可以由堆内存(字节数组)或堆外内存支持。
  *
  * <p>用于单个内存访问的方法在类中是专门的。{@link org.apache.flink.core.memory.HybridMemorySegment}。所有跨
  * 两个内存段操作的方法都在这个类中实现，以透明地处理内存段类型的混合。
@@ -124,10 +124,13 @@ public abstract class MemorySegment {
     protected static final sun.misc.Unsafe UNSAFE = MemoryUtils.UNSAFE;
 
     /** The beginning of the byte array contents, relative to the byte array object. */
+    // 相对于字节数组对象的字节数组内容的开头。
     @SuppressWarnings("restriction")
     protected static final long BYTE_ARRAY_BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
 
     /**
+     * 标记字节顺序的常量。因为这是一个布尔常量，所以JIT编译器可以很好地使用它来积极地消除不适用的代码路径。
+     *
      * Constant that flags the byte order. Because this is a boolean constant, the JIT compiler can
      * use this well to aggressively eliminate the non-applicable code paths.
      */
@@ -153,6 +156,8 @@ public abstract class MemorySegment {
     protected long address;
 
     /**
+     * 地址在最后一个可寻址字节之后的一个字节，即<tt>地址大小<tt>，而段未被丢弃。
+     *
      * The address one byte after the last addressable byte, i.e. <tt>address + size</tt> while the
      * segment is not disposed.
      */
@@ -162,6 +167,7 @@ public abstract class MemorySegment {
     protected final int size;
 
     /** Optional owner of the memory segment. */
+    // 内存段的可选所有者。
     private final Object owner;
 
     /**
@@ -185,6 +191,8 @@ public abstract class MemorySegment {
     }
 
     /**
+     * 创建一个新的内存段，表示指针给出的绝对地址处的内存。
+     *
      * Creates a new memory segment that represents the memory at the absolute address given by the
      * pointer.
      *

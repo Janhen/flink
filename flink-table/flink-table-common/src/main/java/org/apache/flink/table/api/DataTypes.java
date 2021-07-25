@@ -75,6 +75,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * {@link DataType}可用于声明操作的输入或输出类型。这个类枚举Table & SQL API的所有预定义数据类型。
+ *
+ * <p>为了方便起见，这个类还包含用于创建{@link UnresolvedDataType}的方法，这些方法需要在后面的阶段解析。这对于表示
+ * 为{@link Class}的更复杂类型(参见{@link #of(Class)})或需要在目录中查找的类型(参见{@link #of(String)})尤其有用。
+ *
+ * <p>注意:规划人员可能不支持所有具有所需精度或参数的数据类型。在使用数据类型之前，请参阅网站文档中的规划器兼容性和限制部分。
+ *
  * A {@link DataType} can be used to declare input and/or output types of operations. This class
  * enumerates all pre-defined data types of the Table & SQL API.
  *
@@ -479,6 +486,8 @@ public final class DataTypes {
     }
 
     /**
+     * 时间间隔的数据类型。有两种类型的时间间隔:以纳秒为粒度的白天时间间隔或以月为粒度的年-月间隔。
+     *
      * Data type of a temporal interval. There are two types of temporal intervals: day-time
      * intervals with up to nanosecond granularity or year-month intervals with up to month
      * granularity.
@@ -579,6 +588,9 @@ public final class DataTypes {
     }
 
     /**
+     * multiset的数据类型(=bag)。与set不同的是，它允许每个具有公共子类型的元素具有多个实例。每个唯一的值(包括{@code NULL})
+     * 被映射到某个多样性。
+     *
      * Data type of a multiset (=bag). Unlike a set, it allows for multiple instances for each of
      * its elements with a common subtype. Each unique value (including {@code NULL}) is mapped to
      * some multiplicity.
@@ -661,6 +673,13 @@ public final class DataTypes {
     }
 
     /**
+     * 字段序列的数据类型。字段由字段名、字段类型和可选描述组成。表中最特定的行类型是行类型。在本例中，行中的每一列对应
+     * 于与列具有相同序数位置的行类型的字段。
+     *
+     * <p>与SQL标准相比，可选字段描述简化了对复杂结构的处理。
+     *
+     * <p>使用{@link #FIELD(String, DataType)}或{@link #FIELD(String, DataType, String)}构造字段。
+     *
      * Data type of a sequence of fields. A field consists of a field name, field type, and an
      * optional description. The most specific type of a row of a table is a row type. In this case,
      * each column of the row corresponds to the field of the row type that has the same ordinal
@@ -761,6 +780,11 @@ public final class DataTypes {
     }
 
     /**
+     * 任意序列化类型的数据类型。这种类型是表生态系统中的一个黑盒子，只在边缘反序列化。
+     *
+     * <p>原始类型是SQL标准的扩展。这个方法假设存在一个{@link TypeSerializer}实例。使用{@link #RAW(Class)}自动
+     * 生成序列化器。
+     *
      * Data type of an arbitrary serialized type. This type is a black box within the table
      * ecosystem and is only deserialized at the edges.
      *
@@ -821,6 +845,8 @@ public final class DataTypes {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 分辨率以秒为单位，默认为6位小数秒。
+     *
      * Resolution in seconds with 6 digits for fractional seconds by default.
      *
      * @see #SECOND(int)
@@ -944,6 +970,8 @@ public final class DataTypes {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 用于定义间隔解析的 Helper 类
+     *
      * Helper class for defining the resolution of an interval.
      *
      * @see #INTERVAL(Resolution)
@@ -952,6 +980,7 @@ public final class DataTypes {
 
         private static final int EMPTY_PRECISION = -1;
 
+        // 间隔单位
         private enum IntervalUnit {
             SECOND,
             MINUTE,
@@ -1090,6 +1119,8 @@ public final class DataTypes {
     }
 
     /**
+     * 用于行或结构化类型的已解析和未解析字段的通用助手类。
+     *
      * Common helper class for resolved and unresolved fields of a row or structured type.
      *
      * @see #FIELD(String, DataType)

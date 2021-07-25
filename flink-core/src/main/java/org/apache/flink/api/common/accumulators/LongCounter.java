@@ -21,6 +21,7 @@ package org.apache.flink.api.common.accumulators;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** An accumulator that sums up {@code long} values. */
+// 汇总{@code long}值的累加器。
 @PublicEvolving
 public class LongCounter implements SimpleAccumulator<Long> {
 

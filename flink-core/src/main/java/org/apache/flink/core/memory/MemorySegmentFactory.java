@@ -49,6 +49,10 @@ public final class MemorySegmentFactory {
     private static final Runnable NO_OP = () -> {};
 
     /**
+     * 创建一个新的内存段，以给定的堆内存区域为目标。
+     *
+     * <p>该方法应该用于将短期字节数组转换为内存段。
+     *
      * Creates a new memory segment that targets the given heap memory region.
      *
      * <p>This method should be used to turn short lived byte arrays into memory segments.
@@ -61,6 +65,8 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 复制给定的堆内存区域并创建一个新的内存段来包装它。
+     *
      * Copies the given heap memory region and creates a new memory segment wrapping it.
      *
      * @param bytes The heap memory region.
@@ -88,6 +94,10 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 分配一些非池内存并创建一个表示该内存的新内存段。
+     *
+     * <p>这个方法类似于{@link #allocateUnpooledSegment(int, Object)}，但是内存段的所有者为null。
+     *
      * Allocates some unpooled memory and creates a new memory segment that represents that memory.
      *
      * <p>This method is similar to {@link #allocateUnpooledSegment(int, Object)}, but the memory

@@ -178,6 +178,7 @@ public class PipelineOptions {
                                                     + " would cause the program to fail.")
                                     .build());
 
+    // 注册一个自定义的、可序列化的用户配置对象。配置可以在操作符中“”访问
     public static final ConfigOption<Map<String, String>> GLOBAL_JOB_PARAMETERS =
             key("pipeline.global-job-parameters")
                     .mapType()
@@ -186,6 +187,7 @@ public class PipelineOptions {
                             "Register a custom, serializable user configuration object. The configuration can be "
                                     + " accessed in operators");
 
+    // 用于未指定“”最大并行度的操作符的程序范围的最大并行度。最大并行度指定动态伸缩的上限和用于分区状态的“”键组的数量。
     public static final ConfigOption<Integer> MAX_PARALLELISM =
             key("pipeline.max-parallelism")
                     .intType()
@@ -238,6 +240,8 @@ public class PipelineOptions {
                                                     + " sure that only tags are written.")
                                     .build());
 
+    // 要向序列化堆栈注册的类型列表，由分号分隔。如果类型“”最终被序列化为POJO，那么该类型将被注册到POJO序列化器。
+    // 如果“”类型最终被Kryo序列化，那么它将在Kryo注册，以确保“”确保只写标签。
     public static final ConfigOption<List<String>> POJO_REGISTERED_CLASSES =
             key("pipeline.registered-pojo-types")
                     .stringType()
@@ -252,6 +256,7 @@ public class PipelineOptions {
                                                     + " sure that only tags are written.")
                                     .build());
 
+    // 操作符链允许非洗牌操作在同一个线程中共存”“完全避免序列化和反序列化”。
     public static final ConfigOption<Boolean> OPERATOR_CHAINING =
             key("pipeline.operator-chaining")
                     .booleanType()
@@ -260,6 +265,8 @@ public class PipelineOptions {
                             "Operator chaining allows non-shuffle operations to be co-located in the same thread "
                                     + "fully avoiding serialization and de-serialization.");
 
+    // J:"以指定名称在分布式缓存中注册的文件。这些文件可以从本地路径下的(分布式)运行时中的任何用户定义函数中“”访问。
+    // 文件可以是本地文件(将通过BlobServer分发)，也可以是分布式文件系统中的文件。如果需要，运行时将临时复制文件到本地缓存
     public static final ConfigOption<List<String>> CACHED_FILES =
             key("pipeline.cached-files")
                     .stringType()

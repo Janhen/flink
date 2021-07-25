@@ -27,6 +27,15 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 一个没有时区的时间的逻辑类型，由{@code hour:minute:second[.fraction]}组成，精度可达纳秒，值范围
+ * 从{@code 00:00:00.000000000}到{@code 23:59:59.999999999}。与SQL标准相比，不支持闰秒(23:59:60和23:59:61)，
+ * 因为其语义更接近{@link java.time.LocalTime}。没有提供time WITH时区。
+ *
+ * <p>序列化的字符串表示形式是{@code TIME(p)}，其中{@code p}是小数秒的位数(=precision)。{@code p}的值必须在
+ * 0到9之间(包括0和9)。如果没有指定精度，{@code p}等于0。{@code TIME(p) WITHOUT TIME ZONE}是该类型的同义词。
+ *
+ * <p>从{@code int}到{@code int}的转换描述了一天的毫秒数。从{@code long}到{@code long}的转换描述了一天的纳秒数。
+ *
  * Logical type of a time WITHOUT time zone consisting of {@code hour:minute:second[.fractional]}
  * with up to nanosecond precision and values ranging from {@code 00:00:00.000000000} to {@code
  * 23:59:59.999999999}. Compared to the SQL standard, leap seconds (23:59:60 and 23:59:61) are not

@@ -35,6 +35,9 @@ import java.io.IOException;
 public interface DataInputView extends DataInput {
 
     /**
+     * 跳过{@code numBytes}字节的内存。与{@link #skipBytes(int)}方法相比，该方法总是跳过所需的字节数或抛出
+     * {@link java.io.EOFException}
+     *
      * Skips {@code numBytes} bytes of memory. In contrast to the {@link #skipBytes(int)} method,
      * this method always skips the desired number of bytes or throws an {@link
      * java.io.EOFException}.
@@ -61,6 +64,8 @@ public interface DataInputView extends DataInput {
     int read(byte[] b, int off, int len) throws IOException;
 
     /**
+     * 试填充给定的字节数组{@code b}。返回实际读字节数，如果没有更多数据则返回-1。
+     *
      * Tries to fill the given byte array {@code b}. Returns the actually number of read bytes or -1
      * if there is no more data.
      *

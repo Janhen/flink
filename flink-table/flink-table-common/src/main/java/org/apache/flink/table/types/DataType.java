@@ -33,8 +33,15 @@ import java.util.Objects;
 /**
  * 描述表生态系统中值的数据类型。该类的实例可用于声明操作的输入和输出类型。
  *
- * {@link DataType}类有两个职责:声明一个逻辑类型，并向规划器提供关于数据的物理表示的提示。虽然逻辑类型是强制的，但提示
+ * <p>{@link DataType}类有两个职责:声明一个逻辑类型，并向规划器提供关于数据的物理表示的提示。虽然逻辑类型是强制的，但提示
  * 是可选的，但在其他api的边缘很有用。
+ *
+ * <p>逻辑类型独立于任何物理表示，接近SQL标准中的“数据类型”术语。看到{@link org.apache.flink.table.types.logical}
+ * 及其子类以获取有关可用逻辑类型及其属性的更多信息。
+ *
+ * <p>表生态系统的边缘需要物理提示。提示指示实现所期望的数据格式。例如，数据源可以使用{@link java.sql.Timestamp}
+ * 表示为逻辑时间戳生成值。而不是使用{@link java.time.LocalDateTime}。有了这些信息，运行时就能够将生成的类转换为它
+ * 的内部数据格式。作为回报，数据接收器可以声明它从运行时使用的数据格式。
  *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
  * declare input and/or output types of operations.
@@ -72,6 +79,8 @@ public abstract class DataType implements AbstractDataType<DataType>, Serializab
     }
 
     /**
+     * 返回相应的逻辑类型
+     *
      * Returns the corresponding logical type.
      *
      * @return a parameterized instance of {@link LogicalType}
@@ -81,6 +90,8 @@ public abstract class DataType implements AbstractDataType<DataType>, Serializab
     }
 
     /**
+     * 返回表示值的相应转换类。如果没有手动定义转换类，则使用逻辑类型定义的默认转换。
+     *
      * Returns the corresponding conversion class for representing values. If no conversion class
      * was defined manually, the default conversion defined by the logical type is used.
      *

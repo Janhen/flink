@@ -100,6 +100,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class RocksDBStateBackend extends AbstractStateBackend implements ConfigurableStateBackend {
 
     /** The options to chose for the type of priority queue state. */
+    // 要为优先队列状态类型选择的选项。
     public enum PriorityQueueStateType {
         HEAP,
         ROCKSDB

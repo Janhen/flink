@@ -36,6 +36,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * 返回{@link LogicalType}的深层副本。
+ *
+ * <p>它还可以通过覆盖相应的{@code visit()}方法来替换可能嵌套的结构的子结构。
+ *
  * Returns a deep copy of a {@link LogicalType}.
  *
  * <p>It also enables replacing children of possibly nested structures by overwriting corresponding
