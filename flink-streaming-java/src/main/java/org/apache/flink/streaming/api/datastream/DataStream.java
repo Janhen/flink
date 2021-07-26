@@ -398,8 +398,10 @@ public class DataStream<T> {
     }
 
     /**
-     * 使用自定义分区器，在选择器返回的键上对DataStream进行分区。此方法接受键选择器以获取分区上的键，以及接受键类型的分区器。
-     * 注意:此方法只适用于单个字段键，即选择器不能返回字段元祖
+     * 使用自定义分区器，在选择器返回的键上对 DataStream 进行分区。此方法接受键选择器以获取分区上的键，以及接受键类型
+     * 的分区器。
+     *
+     * <p>注意:此方法只适用于单个字段键，即选择器不能返回字段元祖
      *
      * Partitions a DataStream on the key returned by the selector, using a custom partitioner. This
      * method takes the key selector to get the key to partition on, and a partitioner that accepts
@@ -442,6 +444,10 @@ public class DataStream<T> {
     }
 
     /**
+     * 设置{@link DataStream}的分区，以便输出元素被广播到下一个操作的每个并行实例。此外，它隐式地将
+     * {@link org.apache.flink.api.common.state.BroadcastState broadcast states}作为指定的描述符，用于
+     * 存储流中的元素。
+     *
      * Sets the partitioning of the {@link DataStream} so that the output elements are broadcasted
      * to every parallel instance of the next operation. In addition, it implicitly as many {@link
      * org.apache.flink.api.common.state.BroadcastState broadcast states} as the specified

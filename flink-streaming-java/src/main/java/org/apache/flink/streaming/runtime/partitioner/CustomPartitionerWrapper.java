@@ -24,6 +24,8 @@ import org.apache.flink.runtime.plugable.SerializationDelegate;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 分区程序，它在键上选择具有用户定义的分区程序函数的通道。
+ *
  * Partitioner that selects the channel with a user defined partitioner function on a key.
  *
  * @param <K> Type of the key

@@ -28,6 +28,8 @@ import org.apache.flink.streaming.api.operators.async.AsyncWaitOperatorFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 将{@link AsyncFunction}应用于数据流的helper类。
+ *
  * A helper class to apply {@link AsyncFunction} to a data stream.
  *
  * <pre>{@code
@@ -41,6 +43,7 @@ import java.util.concurrent.TimeUnit;
 public class AsyncDataStream {
 
     /** Output mode for asynchronous operations. */
+    // 异步操作的输出模式。
     public enum OutputMode {
         ORDERED,
         UNORDERED
@@ -49,6 +52,8 @@ public class AsyncDataStream {
     private static final int DEFAULT_QUEUE_CAPACITY = 100;
 
     /**
+     * 添加一个AsyncWaitOperator。
+     *
      * Add an AsyncWaitOperator.
      *
      * @param in The {@link DataStream} where the {@link AsyncWaitOperator} will be added.

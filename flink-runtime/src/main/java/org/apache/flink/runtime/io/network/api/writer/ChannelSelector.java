@@ -21,6 +21,8 @@ package org.apache.flink.runtime.io.network.api.writer;
 import org.apache.flink.core.io.IOReadableWritable;
 
 /**
+ * {@link ChannelSelector}决定记录应该写入到哪个逻辑通道。
+ *
  * The {@link ChannelSelector} determines to which logical channels a record should be written to.
  *
  * @param <T> the type of record which is sent through the attached output gate
@@ -28,6 +30,8 @@ import org.apache.flink.core.io.IOReadableWritable;
 public interface ChannelSelector<T extends IOReadableWritable> {
 
     /**
+     * 用输出通道的数量初始化通道选择器。
+     *
      * Initializes the channel selector with the number of output channels.
      *
      * @param numberOfChannels the total number of output channels which are attached to respective
@@ -36,6 +40,9 @@ public interface ChannelSelector<T extends IOReadableWritable> {
     void setup(int numberOfChannels);
 
     /**
+     * 返回逻辑通道索引，给定的记录应写入该索引。为广播通道选择器调用这个方法是非法的，在这种情况下这个方法仍然不能实现
+     * (例如抛出{@link UnsupportedOperationException})。
+     *
      * Returns the logical channel index, to which the given record should be written. It is illegal
      * to call this method for broadcast channel selectors and this method can remain not
      * implemented in that case (for example by throwing {@link UnsupportedOperationException}).
@@ -47,6 +54,8 @@ public interface ChannelSelector<T extends IOReadableWritable> {
     int selectChannel(T record);
 
     /**
+     * 返回通道选择器是否总是选择所有输出通道。
+     *
      * Returns whether the channel selector always selects all the output channels.
      *
      * @return true if the selector is for broadcast mode.

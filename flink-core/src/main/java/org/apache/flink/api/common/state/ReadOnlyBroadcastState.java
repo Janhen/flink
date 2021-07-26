@@ -23,6 +23,11 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Map;
 
 /**
+ * {@link BroadcastState}的只读视图。
+ *
+ * <p>虽然是只读的，但用户代码不应该修改{@link #get(Object)}返回的值或{@link #immutableEntries()}返回的不可变迭
+ * 代器的条目，因为这会导致不一致的状态。这样做的原因是，出于性能考虑，我们没有创建元素的额外副本。
+ *
  * A read-only view of the {@link BroadcastState}.
  *
  * <p>Although read-only, the user code should not modify the value returned by the {@link
@@ -37,6 +42,10 @@ import java.util.Map;
 public interface ReadOnlyBroadcastState<K, V> extends State {
 
     /**
+     * 返回与给定键关联的当前值。
+     *
+     * <p>用户代码不能修改返回的值，因为这会导致不一致的状态。
+     *
      * Returns the current value associated with the given key.
      *
      * <p>The user code must not modify the value returned, as this can lead to inconsistent states.
@@ -57,6 +66,10 @@ public interface ReadOnlyBroadcastState<K, V> extends State {
     boolean contains(K key) throws Exception;
 
     /**
+     * 在状态项上返回一个不可变的{@link Iterable}。
+     *
+     * <p>用户代码不能修改返回的不可变迭代器的条目，因为这会导致不一致的状态。
+     *
      * Returns an immutable {@link Iterable} over the entries in the state.
      *
      * <p>The user code must not modify the entries of the returned immutable iterator, as this can

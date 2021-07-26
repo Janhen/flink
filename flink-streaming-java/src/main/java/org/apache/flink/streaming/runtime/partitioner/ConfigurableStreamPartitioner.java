@@ -19,6 +19,10 @@
 package org.apache.flink.streaming.runtime.partitioner;
 
 /**
+ * {@link StreamPartitioner}的接口，必须配置为流转换的最大并行度。当添加内部边时，StreamGraph调用configure方法。
+ *
+ * <p>该接口是必需的，因为流分区是主动实例化的。因为最大并行度可能还没有确定，需要在最大并行度可能已经确定的阶段进行设置。
+ *
  * Interface for {@link StreamPartitioner} which have to be configured with the maximum parallelism
  * of the stream transformation. The configure method is called by the StreamGraph when adding
  * internal edges.
@@ -30,6 +34,8 @@ package org.apache.flink.streaming.runtime.partitioner;
 public interface ConfigurableStreamPartitioner {
 
     /**
+     * 配置{@link StreamPartitioner}，使其具有下行操作符的最大并行度。
+     *
      * Configure the {@link StreamPartitioner} with the maximum parallelism of the down stream
      * operator.
      *

@@ -37,5 +37,6 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface State {
 
     /** Removes the value mapped under the current key. */
+    // 删除当前键下映射的值
     void clear();
 }

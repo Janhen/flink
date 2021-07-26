@@ -30,6 +30,14 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * {@code BroadcastStream}是带有{@link org.apache.flink.api.common.state.BroadcastState broadcast state(s)}
+ * 的流。这可以由任何流使用{@link DataStream#broadcast(MapStateDescriptor[])}方法创建，并隐式创建状态，用户可
+ * 以在其中存储创建的{@code BroadcastStream}的元素。(见{@link BroadcastConnectedStream})。
+ *
+ * <p>注意，不能对这些流应用进一步的操作。唯一可用的选项是用键控流或非键控流连接它们，分别使用
+ * {@link KeyedStream#connect(BroadcastStream)}和{@link DataStream#connect(BroadcastStream)}。应用这些
+ * 方法将得到一个{@link BroadcastConnectedStream}用于进一步处理。
+ *
  * A {@code BroadcastStream} is a stream with {@link
  * org.apache.flink.api.common.state.BroadcastState broadcast state(s)}. This can be created by any
  * stream using the {@link DataStream#broadcast(MapStateDescriptor[])} method and implicitly creates
@@ -52,6 +60,9 @@ public class BroadcastStream<T> {
     private final DataStream<T> inputStream;
 
     /**
+     * {@link org.apache.flink.api.common.state.StateDescriptor}的注册
+     * {@link org.apache.flink.api.common.state.BroadcastState}。这些状态具有{@code key-value}格式。
+     *
      * The {@link org.apache.flink.api.common.state.StateDescriptor state descriptors} of the
      * registered {@link org.apache.flink.api.common.state.BroadcastState broadcast states}. These
      * states have {@code key-value} format.

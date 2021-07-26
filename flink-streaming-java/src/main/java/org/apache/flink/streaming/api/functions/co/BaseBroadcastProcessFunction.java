@@ -26,6 +26,9 @@ import org.apache.flink.api.common.state.ReadOnlyBroadcastState;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * 包含所有广播进程函数可用的功能的基类。这些函数包括{@link BroadcastProcessFunction}和
+ * {@link KeyedBroadcastProcessFunction}。
+ *
  * The base class containing the functionality available to all broadcast process function. These
  * include the {@link BroadcastProcessFunction} and the {@link KeyedBroadcastProcessFunction}.
  */
@@ -42,6 +45,11 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
     abstract class BaseContext {
 
         /**
+         * 当前正在处理的元素的时间戳或触发计时器的时间戳。
+         *
+         * <p>这可能是{@code null}，例如，如果你的程序的时间特征被设置为
+         * {@link org.apache.flink.streaming.api.TimeCharacteristic#ProcessingTime}。
+         *
          * Timestamp of the element currently being processed or timestamp of a firing timer.
          *
          * <p>This might be {@code null}, for example if the time characteristic of your program is
@@ -50,6 +58,8 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
         public abstract Long timestamp();
 
         /**
+         * 向由{@link OutputTag}标识的侧输出发出一条记录。
+         *
          * Emits a record to the side output identified by the {@link OutputTag}.
          *
          * @param outputTag the {@code OutputTag} that identifies the side output to emit to.
@@ -58,9 +68,11 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
         public abstract <X> void output(final OutputTag<X> outputTag, final X value);
 
         /** Returns the current processing time. */
+        // 返回当前处理时间。
         public abstract long currentProcessingTime();
 
         /** Returns the current event-time watermark. */
+        // 返回当前事件时间水印。
         public abstract long currentWatermark();
     }
 

@@ -38,6 +38,13 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * BroadcastConnectedStream表示连接键控流或非键控流的结果，使用{@link BroadcastStream}和
+ * {@link org.apache.flink.api.common.state.BroadcastState}。在{@link ConnectedStreams}
+ * 的情况下，当一个流上的操作直接影响另一个流上的操作时，这些流很有用，通常是通过流之间的共享状态。
+ *
+ * <p>使用这种连接流的一个例子是将随时间变化的规则应用到另一个流(可能是键控流)上。具有广播状态的流具有规则，并将它们存
+ * 储在广播状态中，而另一个流将包含应用规则的元素。通过广播规则，这些规则将在所有并行实例中可用，并可应用于其他流的所有分区。
+ *
  * A BroadcastConnectedStream represents the result of connecting a keyed or non-keyed stream, with
  * a {@link BroadcastStream} with {@link org.apache.flink.api.common.state.BroadcastState broadcast
  * state(s)}. As in the case of {@link ConnectedStreams} these streams are useful for cases where
@@ -77,6 +84,8 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 返回非广播的{@link DataStream}。
+     *
      * Returns the non-broadcast {@link DataStream}.
      *
      * @return The stream which, by convention, is not broadcasted.
@@ -95,6 +104,8 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 获取第一个输入的类型。
+     *
      * Gets the type of the first input.
      *
      * @return The type of the first input
@@ -104,6 +115,8 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 获取第二个输入的类型。
+     *
      * Gets the type of the second input.
      *
      * @return The type of the second input
@@ -113,6 +126,9 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 假设输入一个{@link BroadcastStream}和一个{@link KeyedStream}，并在它们上应用给定的
+     * {@link KeyedBroadcastProcessFunction}，从而创建一个转换后的输出流。
+     *
      * Assumes as inputs a {@link BroadcastStream} and a {@link KeyedStream} and applies the given
      * {@link KeyedBroadcastProcessFunction} on them, thereby creating a transformed output stream.
      *
@@ -143,6 +159,9 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 假设输入一个{@link BroadcastStream}和一个{@link KeyedStream}，并在它们上应用给定的
+     * {@link KeyedBroadcastProcessFunction}，从而创建一个转换后的输出流。
+     *
      * Assumes as inputs a {@link BroadcastStream} and a {@link KeyedStream} and applies the given
      * {@link KeyedBroadcastProcessFunction} on them, thereby creating a transformed output stream.
      *
@@ -169,6 +188,9 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 假设输入一个{@link BroadcastStream}和一个非键控的{@link DataStream}，并在它们上应用给定的
+     * {@link BroadcastProcessFunction}，从而创建一个转换后的输出流。
+     *
      * Assumes as inputs a {@link BroadcastStream} and a non-keyed {@link DataStream} and applies
      * the given {@link BroadcastProcessFunction} on them, thereby creating a transformed output
      * stream.
@@ -199,6 +221,9 @@ public class BroadcastConnectedStream<IN1, IN2> {
     }
 
     /**
+     * 假设输入一个{@link BroadcastStream}和一个非键控的{@link DataStream}，并在它们上应用给定的
+     * {@link BroadcastProcessFunction}，从而创建一个转换后的输出流。
+     *
      * Assumes as inputs a {@link BroadcastStream} and a non-keyed {@link DataStream} and applies
      * the given {@link BroadcastProcessFunction} on them, thereby creating a transformed output
      * stream.
