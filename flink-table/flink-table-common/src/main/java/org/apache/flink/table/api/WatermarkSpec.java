@@ -25,6 +25,12 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link TableSchema}中定义的水印元数据。主要包括三个部分:
+ *
+ * <li>rowtime属性。
+ * <li>水印生成表达式的字符串表示。
+ * <li>表示水印生成表达式计算结果的数据类型。
+ *
  * Watermark metadata defined in {@link TableSchema}. It mainly contains 3 parts:
  *
  * <ol>

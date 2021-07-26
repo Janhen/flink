@@ -65,6 +65,9 @@ public class CoreOptions {
                                     + " jars can include and load different dependencies than Flink uses (transitively).");
 
     /**
+     * 使用来自父类加载器的首选项加载的类的名称空间模式，这意味着应用程序类路径，而不是任何用户代码jar文件。这个选项只
+     * 有在{@link #CLASSLOADER_RESOLVE_ORDER}被设置为{@code "child-first"}时才有效果。
+     *
      * The namespace patterns for classes that are loaded with a preference from the parent
      * classloader, meaning the application class path, rather than any user code jar file. This
      * option only has an effect when {@link #CLASSLOADER_RESOLVE_ORDER} is set to {@code
@@ -133,6 +136,8 @@ public class CoreOptions {
     }
 
     /**
+     * 插件特定的选项{@link #ALWAYS_PARENT_FIRST_LOADER_PATTERNS}。插件使用这个父列表而不是全局版本。
+     *
      * Plugin-specific option of {@link #ALWAYS_PARENT_FIRST_LOADER_PATTERNS}. Plugins use this
      * parent first list instead of the global version.
      */

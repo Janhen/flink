@@ -23,6 +23,9 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /**
+ * 用于创建翻转窗口的 Helper 类。滚动窗是具有指定长度的连续、不重叠的窗。例如，一个5分钟大小的滚动窗口以 5 分钟的间隔
+ * 对元素进行分组。
+ *
  * Helper class for creating a tumbling window. Tumbling windows are consecutive, non-overlapping
  * windows of a specified fixed length. For example, a tumbling window of 5 minutes size groups
  * elements in 5 minutes intervals.

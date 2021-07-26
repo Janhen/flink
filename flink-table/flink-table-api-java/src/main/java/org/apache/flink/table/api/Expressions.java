@@ -44,9 +44,11 @@ import static org.apache.flink.table.expressions.ApiExpressionUtils.valueLiteral
 
 /**
  * 表API表达式DSL的入口点，例如:{@code $("myField").plus(10).abs()}
- * 这个类包含用于引用表列、创建文字和构建更复杂的{@link Expression}链的静态方法。{@link ApiExpression ApiExpressions}是纯API实体，在底层被进一步翻译成{@link ResolvedExpression ResolvedExpression}。
+ * 这个类包含用于引用表列、创建文字和构建更复杂的{@link Expression}链的静态方法。
+ * {@link ApiExpression ApiExpressions}是纯API实体，在底层被进一步翻译成
+ * {@link ResolvedExpression ResolvedExpression}。
  *
- * 为了流畅地定义表达式并提高可读性，我们建议在这个类的方法中添加星型导入:
+ * <p>为了流畅地定义表达式并提高可读性，我们建议在这个类的方法中添加星型导入:
  * import static org.apache.flink.table.api.Expressions.*;
  *
  * Entry point of the Table API Expression DSL such as: {@code $("myField").plus(10).abs()}
@@ -69,6 +71,8 @@ import static org.apache.flink.table.expressions.ApiExpressionUtils.valueLiteral
 @PublicEvolving
 public final class Expressions {
     /**
+     * 创建对表字段的未解析引用。
+     *
      * Creates an unresolved reference to a table's field.
      *
      * <p>Example:
@@ -85,7 +89,8 @@ public final class Expressions {
 
     /**
      * 创建一个SQL文字。
-     * 数据类型派生于对象的类及其值。
+     *
+     * <p>数据类型派生于对象的类及其值。
      *
      * Creates a SQL literal.
      *
@@ -118,6 +123,8 @@ public final class Expressions {
     }
 
     /**
+     * 表示从'start'到'end'的范围，可用于列选择。
+     *
      * Indicates a range from 'start' to 'end', which can be used in columns selection.
      *
      * <p>Example:

@@ -24,6 +24,13 @@ import org.apache.flink.table.types.DataType;
 import java.util.List;
 
 /**
+ * 通用接口的各种表达式。
+ *
+ * <p>表达式表示用于生成计算结果的逻辑树。每个表达式由零个、一个或多个子表达式组成。表达式可以是文字值、函数调用或字段引用。
+ *
+ * <p>表达式是API的一部分。它们可能在API堆栈中被转换多次，直到它们完全{@link ResolvedExpression}s。值类型和输出
+ * 类型表示为{@link DataType}的实例。
+ *
  * General interface for all kinds of expressions.
  *
  * <p>Expressions represent a logical tree for producing a computation result. Every expression

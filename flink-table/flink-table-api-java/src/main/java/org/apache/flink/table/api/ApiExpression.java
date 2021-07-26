@@ -25,6 +25,8 @@ import org.apache.flink.table.expressions.ExpressionVisitor;
 import java.util.List;
 
 /**
+ * 允许访问表达式操作的 Java API 类。
+ *
  * Java API class that gives access to expression operations.
  *
  * @see BaseExpressions

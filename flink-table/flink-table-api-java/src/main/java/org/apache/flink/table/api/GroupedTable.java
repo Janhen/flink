@@ -22,10 +22,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.expressions.Expression;
 
 /** A table that has been grouped on a set of grouping keys. */
+// 在一组分组键上分组的表。
 @PublicEvolving
 public interface GroupedTable {
 
     /**
+     * 对分组表执行选择操作。类似于SQL SELECT语句。字段表达式可以包含复杂表达式和聚合。
+     *
      * Performs a selection operation on a grouped table. Similar to an SQL SELECT statement. The
      * field expressions can contain complex expressions and aggregations.
      *

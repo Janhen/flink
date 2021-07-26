@@ -21,15 +21,20 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** ResultKind defines the types of the result. */
+// ResultKind定义结果的类型。
 @PublicEvolving
 public enum ResultKind {
     /**
+     * 语句(例如DDL, USE)执行成功，结果只包含一个简单的“OK”。
+     *
      * The statement (e.g. DDL, USE) executes successfully, and the result only contains a simple
      * "OK".
      */
     SUCCESS,
 
     /**
+     * 语句(如DML、DQL、SHOW)执行成功，结果包含重要内容。
+     *
      * The statement (e.g. DML, DQL, SHOW) executes successfully, and the result contains important
      * content.
      */

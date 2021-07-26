@@ -34,6 +34,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 配置当前{@link TableEnvironment}会话，以调整表和SQL API程序。
+ *
+ * <p>对于常见或重要的配置选项，这个类提供了带有详细内联文档的getter和setter方法。
+ *
  * Configuration for the current {@link TableEnvironment} session to adjust Table & SQL API
  * programs.
  *

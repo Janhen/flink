@@ -40,6 +40,18 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
+ * 表环境是创建table和SQL API程序的基类、入口点和中心上下文。
+ *
+ * <p>它在语言层面上是统一的，适用于所有基于jvm的语言(也就是说，Scala和Java API之间没有区别)，也适用于有界和无界数据处理。
+ *
+ *
+ * <p>表环境负责:
+ *
+ *   <li>连接外部系统。
+ *   <li>从目录注册和检索{@link Table}和其他元对象。
+ *   <li>执行SQL语句。
+ *   <li>提供更多的配置选项。
+ *
  * A table environment is the base class, entry point, and central context for creating Table and
  * SQL API programs.
  *

@@ -32,6 +32,7 @@ import static org.apache.flink.configuration.description.TextElement.code;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** The {@link ConfigOption configuration options} for job execution. */
+// 用于作业执行的{@link ConfigOption配置选项}。
 @PublicEvolving
 public class PipelineOptions {
 
@@ -44,9 +45,9 @@ public class PipelineOptions {
                     .withDescription("The job name used for printing and logging.");
 
     /**
-     * 包含用户定义函数(UDF)类和在UDF中使用的所有类的jar文件列表。
+     * 包含用户定义函数(UDF)类和在 UDF 中使用的所有类的 jar 文件列表。
      *
-     * 分号分隔的jar列表，包含要与要发送到集群的作业jar打包在一起的jar。这些必须是有效的路径。
+     * 分号分隔的 jar 列表，包含要与要发送到集群的作业 jar 打包在一起的 jar。这些必须是有效的路径。
      *
      * A list of jar files that contain the user-defined function (UDF) classes and all classes used
      * from within the UDFs.
@@ -74,6 +75,9 @@ public class PipelineOptions {
                             "A semicolon-separated list of the classpaths to package with the job jars to be sent to"
                                     + " the cluster. These have to be valid URLs.");
 
+    // 禁用自动生成 uid 后，用户必须在 DataStream 应用程序上手动指定 uid。
+    // 强烈建议用户在部署到“”生产之前指定 uid，因为它们用于将保存点中的状态与作业中的操作符“”匹配。因为在修改作业时，自
+    // 动生成的 ID 很可能会发生变化，指定自定义 ID 允许应用程序随时间发展而不丢弃状态。
     public static final ConfigOption<Boolean> AUTO_GENERATE_UIDS =
             key("pipeline.auto-generate-uids")
                     .booleanType()
@@ -92,6 +96,7 @@ public class PipelineOptions {
                                                     + " without discarding state.")
                                     .build());
 
+    // 控制Flink是否自动注册所有类型的用户程序“”与Kryo。
     public static final ConfigOption<Boolean> AUTO_TYPE_REGISTRATION =
             key("pipeline.auto-type-registration")
                     .booleanType()
@@ -100,6 +105,7 @@ public class PipelineOptions {
                             "Controls whether Flink is automatically registering all types in the user programs"
                                     + " with Kryo.");
 
+    // 自动水印发射的时间间隔。在整个流系统中使用水印来跟踪时间的进展。例如，“”用于基于时间的窗口。
     public static final ConfigOption<Duration> AUTO_WATERMARK_INTERVAL =
             key("pipeline.auto-watermark-interval")
                     .durationType()
@@ -152,6 +158,7 @@ public class PipelineOptions {
                                     + " analyze as POJO. In some cases this might be preferable. For example, when using interfaces"
                                     + " with subclasses that cannot be analyzed as POJO.");
 
+    // 如果禁用泛型类型的使用，Flink将抛出一个%s，每当它遇到" "一个数据类型将通过Kryo进行序列化。
     public static final ConfigOption<Boolean> GENERIC_TYPES =
             key("pipeline.generic-types")
                     .booleanType()
@@ -197,6 +204,8 @@ public class PipelineOptions {
                                     + " maximum parallelism. The maximum parallelism specifies the upper limit for dynamic scaling and"
                                     + " the number of key groups used for partitioned state.");
 
+    // 当启用时，Flink内部用于反序列化和向用户代码函数传递“”数据的对象将被重用。请记住，当操作的“”用户代码函数没有意识
+    // 到这种行为时，这可能会导致错误。
     public static final ConfigOption<Boolean> OBJECT_REUSE =
             key("pipeline.object-reuse")
                     .booleanType()

@@ -26,7 +26,15 @@ import org.apache.flink.table.operations.QueryOperation;
 import org.apache.flink.table.sinks.TableSink;
 
 /**
- * Table是Table API的核心组件。类似于批处理和流API有数据集和DataStream，表API是围绕{@link Table}构建的。
+ * Table 是 Table API 的核心组件。类似于批处理和流 API 有数据集和 DataStream，表 API 是围绕 {@link Table} 构建的。
+ *
+ * <p>使用{@link Table}方法进行数据转换。使用{@code TableEnvironment}将{@link Table}转换回{@code DataSet}
+ * 或{@code DataStream}。
+ *
+ * <p>当使用Scala时，{@link Table}也可以使用隐式转换进行转换。
+ *
+ * <p>像{@code join}， {@code select}， {@code where}和{@code groupBy}这样的操作要么在Scala DSL中接受参数，
+ * 要么作为表达式String。有关表达式语法，请参阅文档。
  *
  * A Table is the core component of the Table API. Similar to how the batch and streaming APIs have
  * DataSet and DataStream, the Table API is built around {@link Table}.

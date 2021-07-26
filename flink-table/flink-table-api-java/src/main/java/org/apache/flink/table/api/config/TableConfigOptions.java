@@ -34,6 +34,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 public class TableConfigOptions {
     private TableConfigOptions() {}
 
+    // 启用或禁用用于动态指定表选项的OPTIONS提示，如果禁用，如果指定任何OPTIONS提示，将引发一个异常
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Boolean> TABLE_DYNAMIC_TABLE_OPTIONS_ENABLED =
             key("table.dynamic-table-options.enabled")

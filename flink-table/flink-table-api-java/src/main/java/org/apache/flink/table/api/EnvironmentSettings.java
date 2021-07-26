@@ -101,6 +101,10 @@ public class EnvironmentSettings {
     }
 
     /**
+     * 创建一个用于创建{@link EnvironmentSettings}实例的构建器。
+     *
+     * <p>默认情况下，它不指定必需的规划器，将使用通过发现在类路径上可用的规划器。
+     *
      * Creates a builder for creating an instance of {@link EnvironmentSettings}.
      *
      * <p>By default, it does not specify a required planner and will use the one that is available

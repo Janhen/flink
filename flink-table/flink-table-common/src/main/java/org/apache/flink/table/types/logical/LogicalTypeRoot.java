@@ -25,6 +25,18 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
+ * 逻辑类型根的枚举，包含关于逻辑数据类型的静态信息。
+ *
+ * <p>根是{@link LogicalType}的基本描述，没有附加参数。例如，参数化逻辑类型{@code DECIMAL(12,3)}拥有其根
+ * {@code DECIMAL}的所有特征。此外，逻辑类型根允许在类型计算期间进行有效的比较。
+ *
+ * <p>枚举在命名和完整性方面非常接近SQL标准。然而，它只是反映了正在发展的标准的一个子集，并包含了一些扩展(如{@code NULL}，
+ * {@code SYMBOL}，或{@code RAW})。
+ *
+ * <p>请参阅类型实现类以获得每种类型的更详细描述。
+ *
+ * <p>实现者注意:当我们对类型根执行匹配时(例如使用 switch case 语句)，建议:
+ *
  * An enumeration of logical type roots containing static information about logical data types.
  *
  * <p>A root is an essential description of a {@link LogicalType} without additional parameters. For

@@ -26,16 +26,21 @@ import org.apache.flink.util.CloseableIterator;
 import java.util.Optional;
 
 /** A TableResult is the representation of the statement execution result. */
+// TableResult 语句执行结果的表示
 @PublicEvolving
 public interface TableResult {
 
     /**
+     * 对于DML和DQL语句，返回与提交的Flink作业关联的{@link JobClient}。对于其他语句(例如DDL, DCL)返回空。
+     *
      * For DML and DQL statement, return the {@link JobClient} which associates the submitted Flink
      * job. For other statements (e.g. DDL, DCL) return empty.
      */
     Optional<JobClient> getJobClient();
 
     /**
+     * 获取结果的模式。
+     *
      * Get the schema of result.
      *
      * <p>The schema of DDL, USE, EXPLAIN:

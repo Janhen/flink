@@ -29,7 +29,7 @@ import org.apache.flink.streaming.api.CheckpointingMode;
 import java.time.Duration;
 
 /**
- * 执行{@link ConfigOption}配置检查点相关参数
+ * 执行 {@link ConfigOption} 配置检查点相关参数
  *
  * Execution {@link ConfigOption} for configuring checkpointing related parameters.
  *
@@ -37,12 +37,14 @@ import java.time.Duration;
  */
 @PublicEvolving
 public class ExecutionCheckpointingOptions {
+    // 检查点模式(一次对至少一次)。
     public static final ConfigOption<CheckpointingMode> CHECKPOINTING_MODE =
             ConfigOptions.key("execution.checkpointing.mode")
                     .enumType(CheckpointingMode.class)
                     .defaultValue(CheckpointingMode.EXACTLY_ONCE)
                     .withDescription("The checkpointing mode (exactly-once vs. at-least-once).");
 
+    // 检查点在被丢弃之前可能花费的最大时间”)
     public static final ConfigOption<Duration> CHECKPOINTING_TIMEOUT =
             ConfigOptions.key("execution.checkpointing.timeout")
                     .durationType()
@@ -50,6 +52,8 @@ public class ExecutionCheckpointingOptions {
                     .withDescription(
                             "The maximum time that a checkpoint may take before being discarded.");
 
+    // 可能同时进行的检查点尝试的最大数目。如果" "这个值是n，那么在" "飞行中有n次检查点尝试时不会触发检查点。要触发下
+    // 一个检查点，需要完成一个检查点尝试，否则“”过期。
     public static final ConfigOption<Integer> MAX_CONCURRENT_CHECKPOINTS =
             ConfigOptions.key("execution.checkpointing.max-concurrent-checkpoints")
                     .intType()
@@ -60,6 +64,8 @@ public class ExecutionCheckpointingOptions {
                                     + "flight. For the next checkpoint to be triggered, one checkpoint attempt would need to finish or "
                                     + "expire.");
 
+    // 检查点尝试之间的最小停顿。此设置定义“”检查点协调器触发另一个检查点的时间，当触发“与最大并发检查点数量相关的另一个
+    // 检查点”(见%s)成为可能后。
     public static final ConfigOption<Duration> MIN_PAUSE_BETWEEN_CHECKPOINTS =
             ConfigOptions.key("execution.checkpointing.min-pause")
                     .durationType()
@@ -79,6 +85,7 @@ public class ExecutionCheckpointingOptions {
                                                     + "sure that a minimum amount of time passes where no checkpoint is in progress at all.")
                                     .build());
 
+    // 如果启用，当有最近的“”保存点时，作业恢复应回退到检查点。
     public static final ConfigOption<Boolean> PREFER_CHECKPOINT_FOR_RECOVERY =
             ConfigOptions.key("execution.checkpointing.prefer-checkpoint-for-recovery")
                     .booleanType()
@@ -87,6 +94,7 @@ public class ExecutionCheckpointingOptions {
                             "If enabled, a job recovery should fallback to checkpoint when there is a more recent "
                                     + "savepoint.");
 
+    // 可容忍的检查点故障号。如果设置为0，这意味着“”我们不容忍任何检查点故障。
     public static final ConfigOption<Integer> TOLERABLE_FAILURE_NUMBER =
             ConfigOptions.key("execution.checkpointing.tolerable-failed-checkpoints")
                     .intType()
@@ -95,6 +103,8 @@ public class ExecutionCheckpointingOptions {
                             "The tolerable checkpoint failure number. If set to 0, that means"
                                     + "we do not tolerance any checkpoint failure.");
 
+    // 外部化的检查点将它们的元数据写入持久存储，当拥有的任务失败或挂起(以任务“”状态%s或%s终止)时，不会“”自动清除。
+    // 在这种情况下，您必须手动清除检查点状态，包括“”元数据和实际程序状态。
     public static final ConfigOption<CheckpointConfig.ExternalizedCheckpointCleanup>
             EXTERNALIZED_CHECKPOINT =
                     ConfigOptions.key("execution.checkpointing.externalized-checkpoint-retention")
