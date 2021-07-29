@@ -27,6 +27,18 @@ import org.apache.flink.api.java.typeutils.MapTypeInfo;
 import java.util.Map;
 
 /**
+ * {@link MapState} 的 {@link StateDescriptor}。这可以用于创建状态，其中类型是可以更新和迭代的映射。
+ *
+ * <p>使用{@code MapState}通常比在{@link ValueState}中手动维护一个映射更有效，因为后台实现可以支持有效的更新，
+ * 而不是在写时替换整个映射。
+ *
+ * <p>创建key map状态(在KeyedStream上)，使用
+ * {@link org.apache.flink.api.common.functions.RuntimeContext#getMapState(MapStateDescriptor)}。
+ *
+ * <p>注意:只有当用户值序列化器能够处理 {@code null}值时，TTL映射状态才支持{@code null}用户值。如果序列化器不支持
+ * {@code null}值，可以用{@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer}来包
+ * 装它，但在序列化形式中会多出一个字节。
+ *
  * A {@link StateDescriptor} for {@link MapState}. This can be used to create state where the type
  * is a map that can be updated and iterated over.
  *

@@ -38,6 +38,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 序列化器包装器添加支持{@code null}值序列化。
+ *
+ * <p>如果目标序列化器不支持其类型的{@code null}值，您可以使用这个类来包装这个序列化器。这是对{@code null}值序列
+ * 化的一种通用处理，它带来了最终序列化值中额外字节的成本。{@code NullableSerializer}将拦截{@code null}值的序
+ * 列化大小写，并在目标序列化值前面加上一个布尔标志来标记它是否是{@code null}。
+ *
  * Serializer wrapper to add support of {@code null} value serialization.
  *
  * <p>If the target serializer does not support {@code null} values of its type, you can use this

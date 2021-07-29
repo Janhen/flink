@@ -813,6 +813,11 @@ public class TypeExtractor {
     }
 
     /**
+     * 从给定的参数创建一个{@link TypeInformation}。
+     *
+     * <p>如果给定的 {@code instance} 实现了{@link ResultTypeQueryable}，它的信息被用来确定类型信息。否则，
+     * 类型信息将基于给定的类信息派生。
+     *
      * Creates a {@link TypeInformation} from the given parameters.
      *
      * <p>If the given {@code instance} implements {@link ResultTypeQueryable}, its information is

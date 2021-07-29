@@ -34,6 +34,7 @@ public final class StringSerializer extends TypeSerializerSingleton<String> {
     private static final long serialVersionUID = 1L;
 
     /** Sharable instance of the StringSerializer. */
+    // StringSerializer 的可共享实例。
     public static final StringSerializer INSTANCE = new StringSerializer();
 
     private static final String EMPTY = "";
@@ -91,6 +92,7 @@ public final class StringSerializer extends TypeSerializerSingleton<String> {
     // ------------------------------------------------------------------------
 
     /** Serializer configuration snapshot for compatibility and format evolution. */
+    // 序列化器配置快照的兼容性和格式演变。
     @SuppressWarnings("WeakerAccess")
     public static final class StringSerializerSnapshot
             extends SimpleTypeSerializerSnapshot<String> {

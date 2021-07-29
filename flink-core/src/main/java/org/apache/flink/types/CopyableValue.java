@@ -25,10 +25,13 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** Interface to be implemented by basic types that support to be copied efficiently. */
+// 由支持有效复制的基本类型实现的接口。
 @Public
 public interface CopyableValue<T> extends Value {
 
     /**
+     * 获取数据类型序列化时的长度，以字节为单位。
+     *
      * Gets the length of the data type when it is serialized, in bytes.
      *
      * @return The length of the data type, or {@code -1}, if variable length.
@@ -36,6 +39,8 @@ public interface CopyableValue<T> extends Value {
     int getBinaryLength();
 
     /**
+     * 在 {@code target} 实例中执行该对象的深度拷贝。
+     *
      * Performs a deep copy of this object into the {@code target} instance.
      *
      * @param target Object to copy into.
@@ -43,6 +48,11 @@ public interface CopyableValue<T> extends Value {
     void copyTo(T target);
 
     /**
+     * 将此对象复制到新实例中。
+     *
+     * <p>当存储多个对象时，此方法对于一般的用户定义函数克隆 {@link CopyableValue} 非常有用。使用对象重用时，必须
+     * 创建深度副本，并且类型擦除防止调用 new。
+     *
      * Performs a deep copy of this object into a new instance.
      *
      * <p>This method is useful for generic user-defined functions to clone a {@link CopyableValue}
@@ -54,6 +64,11 @@ public interface CopyableValue<T> extends Value {
     T copy();
 
     /**
+     * 将下一个序列化实例从{@code source}复制到{@code target}。
+     *
+     * <p>该方法等价于在 {@code IOReadableWritable.read(DataInputView)} 之后调用
+     * {@code IOReadableWritable.write(DataOutputView)}，但不需要中间反序列化。
+     *
      * Copies the next serialized instance from {@code source} to {@code target}.
      *
      * <p>This method is equivalent to calling {@code IOReadableWritable.read(DataInputView)}

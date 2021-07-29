@@ -40,17 +40,26 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * 表环境是创建table和SQL API程序的基类、入口点和中心上下文。
+ * 表环境是创建 table 和 SQL API 程序的基类、入口点和中心上下文。
  *
- * <p>它在语言层面上是统一的，适用于所有基于jvm的语言(也就是说，Scala和Java API之间没有区别)，也适用于有界和无界数据处理。
- *
+ * <p>它在语言层面上是统一的，适用于所有基于 jvm 的语言(也就是说，Scala 和 Java API 之间没有区别)，也适用于有界和
+ * 无界数据处理。
  *
  * <p>表环境负责:
  *
  *   <li>连接外部系统。
- *   <li>从目录注册和检索{@link Table}和其他元对象。
+ *   <li>从目录注册和检索 {@link Table} 和其他元对象。
  *   <li>执行SQL语句。
  *   <li>提供更多的配置选项。
+ *
+ * <p>方法(如 {@link #createTemporaryView(String, Table)}) 中 path 的语法遵循
+ * [[catalog-name.]database-name.]object-name，其中目录名称和数据库是可选的。路径解析请参见
+ * {@link #useCatalog(String)} 和 {@link #useDatabase(String)}。
+ *
+ * <p>的例子:“cat.1”。“分贝”。'Table' 解析为名为 'cat ' 目录中的 'Table' 对象。数据库名称为 “db”
+ *
+ * <p>注意:此环境用于纯表程序。如果您想要从其他 Flink api 转换到其他 api，可能需要在相应的桥接模块中使用可用的特定
+ * 于语言的表环境之一。
  *
  * A table environment is the base class, entry point, and central context for creating Table and
  * SQL API programs.
@@ -82,6 +91,11 @@ import java.util.Optional;
 public interface TableEnvironment {
 
     /**
+     * 创建一个表环境，它是创建表和SQL API程序的入口点和中心上下文。
+     *
+     * <p>它在语言层面上是统一的，适用于所有基于 jvm 的语言(也就是说，Scala 和 Java API 之间没有区别)，也适用于有
+     * 界和无界数据处理。
+     *
      * Creates a table environment that is the entry point and central context for creating Table
      * and SQL API programs.
      *
@@ -382,6 +396,8 @@ public interface TableEnvironment {
     void registerCatalog(String catalogName, Catalog catalog);
 
     /**
+     * 获取按名称注册的{@link Catalog}。
+     *
      * Gets a registered {@link Catalog} by name.
      *
      * @param catalogName The name to look up the {@link Catalog}.
@@ -390,6 +406,9 @@ public interface TableEnvironment {
     Optional<Catalog> getCatalog(String catalogName);
 
     /**
+     * 以唯一的名称加载 {@link Module}。模块将按加载顺序保存。当已经有相同名称的模块时，会抛出
+     * ValidationException。
+     *
      * Loads a {@link Module} under a unique name. Modules will be kept in the loaded order.
      * ValidationException is thrown when there is already a module with the same name.
      *
@@ -407,6 +426,8 @@ public interface TableEnvironment {
     void unloadModule(String moduleName);
 
     /**
+     * 在一个唯一的名字下注册一个 {@link ScalarFunction}。替换此名称下已经存在的用户定义函数。
+     *
      * Registers a {@link ScalarFunction} under a unique name. Replaces already existing
      * user-defined functions under this name.
      *
@@ -474,6 +495,12 @@ public interface TableEnvironment {
     boolean dropTemporarySystemFunction(String name);
 
     /**
+     * 在给定路径中注册一个{@link UserDefinedFunction}类作为目录函数。
+     *
+     * <p>与全局定义名称的系统函数相比，目录函数总是(隐式或显式)由目录和数据库标识。
+     *
+     * <p>不能在同一路径下注册其他函数(临时或永久)。
+     *
      * Registers a {@link UserDefinedFunction} class as a catalog function in the given path.
      *
      * <p>Compared to system functions with a globally defined name, catalog functions are always
@@ -518,6 +545,14 @@ public interface TableEnvironment {
     boolean dropFunction(String path);
 
     /**
+     * 注册一个 {@link UserDefinedFunction} 类作为临时目录函数。
+     *
+     * <p>临时函数可以遮蔽永久函数。如果给定名称下的永久函数存在，则在当前会话中无法访问它。为了使永久功能再次可用，
+     * 可以放弃相应的临时功能。
+     *
+     * <p>临时函数可以遮蔽永久函数。如果给定名称下的永久函数存在，则在当前会话中无法访问它。为了使永久功能再次可用，可
+     * 以放弃相应的临时功能。
+     *
      * Registers a {@link UserDefinedFunction} class as a temporary catalog function.
      *
      * <p>Compared to {@link #createTemporarySystemFunction(String, Class)} with a globally defined
@@ -587,6 +622,11 @@ public interface TableEnvironment {
     void registerTable(String name, Table table);
 
     /**
+     * 注册一个{@link Table} API对象作为一个类似于SQL临时视图的临时视图。
+     *
+     * <p>临时对象可以遮蔽永久对象。如果给定路径中的永久对象存在，则在当前会话中无法访问。要使永久对象再次可用，可以删
+     * 除相应的临时对象。
+     *
      * Registers a {@link Table} API object as a temporary view similar to SQL temporary views.
      *
      * <p>Temporary objects can shadow permanent ones. If a permanent object in a given path exists,
@@ -906,6 +946,8 @@ public interface TableEnvironment {
     String explain(boolean extended);
 
     /**
+     * 返回指定语句的 AST 和计算给定语句结果的执行计划。
+     *
      * Returns the AST of the specified statement and the execution plan to compute the result of
      * the given statement.
      *
@@ -1180,9 +1222,21 @@ public interface TableEnvironment {
     void useDatabase(String databaseName);
 
     /** Returns the table config that defines the runtime behavior of the Table API. */
+    // 返回定义 table API 运行时行为的表配置。
     TableConfig getConfig();
 
     /**
+     * 触发程序执行。环境将执行程序的所有部分。
+     *
+     * <p>程序的执行将被记录，并以提供的名称显示
+     *
+     * <p><b>注意:<b> 强烈建议在程序一开始就在 {@link TableConfig} 中设置所有参数。如果查询与配置更改混合在一
+     * 起，将使用哪些配置值执行是未定义的。它取决于特定参数的特性。其中一些将使用查询构造时的值(例如currentCatalog)。
+     * 另一方面，一些值可能会根据调用该方法时的状态进行评估(例如timeZone)。
+     *
+     * <p>执行完成后，无论执行是否成功，之前定义的所有 DML 都将被清除。因此，如果你想在失败的情况下重试，你必须重新定义
+     * DML，即通过调用 {@link #sqlUpdate(String)}，在你再次调用这个方法。
+     *
      * Triggers the program execution. The environment will execute all parts of the program.
      *
      * <p>The program execution will be logged and displayed with the provided name
@@ -1209,6 +1263,9 @@ public interface TableEnvironment {
     JobExecutionResult execute(String jobName) throws Exception;
 
     /**
+     * 创建一个接受 DML 语句或表的 {@link StatementSet} 实例，规划器可以同时优化所有添加的语句和表，然后作为一个
+     * 作业提交。
+     *
      * Create a {@link StatementSet} instance which accepts DML statements or Tables, the planner
      * can optimize all added statements and Tables together and then submit as one job.
      */

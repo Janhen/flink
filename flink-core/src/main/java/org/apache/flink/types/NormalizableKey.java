@@ -22,6 +22,12 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.core.memory.MemorySegment;
 
 /**
+ * 标准化键的基本接口。可标准化键可以创建它们自己的二进制表示，按字节进行比较。两个标准化键的按字节进行比较，直到所有字
+ * 节进行比较或对应位置的两个字节不相等为止。如果两个对应的字节值不相等，则较低的字节值表示较低的键。如果两个标准化键在
+ * 字节上相同，则必须查看实际的键，以确定哪个键更低。
+ *
+ * <p>后者取决于规范化的键是覆盖整个键还是仅仅是键的前缀。如果规范化键的长度小于最大规范化键的长度，则将其视为前缀。
+ *
  * The base interface for normalizable keys. Normalizable keys can create a binary representation of
  * themselves that is byte-wise comparable. The byte-wise comparison of two normalized keys proceeds
  * until all bytes are compared or two bytes at the corresponding positions are not equal. If two
@@ -37,6 +43,11 @@ import org.apache.flink.core.memory.MemorySegment;
 public interface NormalizableKey<T> extends Comparable<T>, Key<T> {
 
     /**
+     * 获取数据类型将生成的规范化键的最大长度，以仅通过规范化键确定实例的顺序。值为
+     * {@link java.lang.Integer}.MAX_VALUE 被解释为无穷大。
+     *
+     * <p>例如，32位整数返回4，而字符串(可能是无限制的长度)返回 {@link java.lang.Integer}.MAX_VALUE。
+     *
      * Gets the maximal length of normalized keys that the data type would produce to determine the
      * order of instances solely by the normalized key. A value of {@link
      * java.lang.Integer}.MAX_VALUE is interpreted as infinite.

@@ -26,6 +26,8 @@ import org.apache.flink.util.FlinkRuntimeException;
 /**
  * 用于描述泛型类型的实用程序类。它可以通过以下方式获取类型信息:
  *
+ * J: 类似 fastjson 中的 TypeReference 获得 Type 信息
+ *
  * A utility class for describing generic types. It can be used to obtain a type information via:
  *
  * <pre>{@code
@@ -47,6 +49,7 @@ public abstract class TypeHint<T> {
     private final TypeInformation<T> typeInfo;
 
     /** Creates a hint for the generic type in the class signature. */
+    // 在类签名中为泛型类型创建提示。
     public TypeHint() {
         try {
             this.typeInfo = TypeExtractor.createTypeInfo(this, TypeHint.class, getClass(), 0);

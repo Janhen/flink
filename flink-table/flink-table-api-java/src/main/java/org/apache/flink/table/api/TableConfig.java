@@ -34,9 +34,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 配置当前{@link TableEnvironment}会话，以调整表和SQL API程序。
+ * 配置当前 {@link TableEnvironment} 会话，以调整表和 SQL API 程序。
  *
- * <p>对于常见或重要的配置选项，这个类提供了带有详细内联文档的getter和setter方法。
+ * <p>对于常见或重要的配置选项，这个类提供了带有详细内联文档的 getter 和 setter 方法。
  *
  * Configuration for the current {@link TableEnvironment} session to adjust Table & SQL API
  * programs.
@@ -67,9 +67,11 @@ import java.util.Map;
 public class TableConfig {
 
     /** Defines the zone id for timestamp with local time zone. */
+    // 定义带有本地时区的时间戳的 zone id。
     private ZoneId localZoneId = ZoneId.systemDefault();
 
     /** Defines if all fields need to be checked for NULL first. */
+    // 定义是否需要首先检查所有字段是否为 NULL。
     private Boolean nullCheck = true;
 
     /** Defines the configuration of Planner for Table API and SQL queries. */

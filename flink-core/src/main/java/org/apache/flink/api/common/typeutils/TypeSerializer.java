@@ -162,6 +162,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract void serialize(T record, DataOutputView target) throws IOException;
 
     /**
+     * 从给定的源输入视图反序列化一条记录。
+     *
      * De-serializes a record from the given source input view.
      *
      * @param source The input view from which to read the data.
@@ -173,6 +175,8 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract T deserialize(DataInputView source) throws IOException;
 
     /**
+     * 如果是可变的，则将记录从给定源输入视图反序列化到给定重用记录实例。
+     *
      * De-serializes a record from the given source input view into the given reuse record instance
      * if mutable.
      *
@@ -186,6 +190,10 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract T deserialize(T reuse, DataInputView source) throws IOException;
 
     /**
+     * 将一条记录从源输入视图复制到目标输出视图。这个操作是对二进制数据进行操作，还是对记录进行部分反序列化以确定其
+     * 长度(比如可变长度的记录)，这取决于实现者。二进制拷贝通常更快。包含两个整数(总共8字节)的记录的副本最有效地
+     * 实现为 {@code target.write(source, 8);}.
+     *
      * Copies exactly one record from the source input view to the target output view. Whether this
      * operation works on binary data or partially de-serializes the record to determine its length
      * (such as for records of variable length) is up to the implementer. Binary copies are
@@ -207,6 +215,15 @@ public abstract class TypeSerializer<T> implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 快照这个 TypeSerializer 的配置。只有当序列化器用于在检查点或保存点中存储状态时，此方法才相关。
+     *
+     * <p> TypeSerializer的快照应该包含影响序列化器序列化格式的所有信息。快照有两个目的:第一，在恢复检查点保存点时
+     * 重新生成序列化器，第二，检查序列化格式是否与恢复程序中使用的序列化器兼容。
+     *
+     * <p><b>重要:<b> TypeSerializerSnapshots 在 Flink 1.6 之后改变。在 Flink 1.6
+     * 之前的版本中实现的序列化器仍然可以工作，但是需要根据新的模型进行调整，以支持状态演化，并具有可扩展性。请参阅类
+     * 级注释“将t ypeserializer 升级到新的 TypeSerializerSnapshot 模型”一节了解详细信息。
+     *
      * Snapshots the configuration of this TypeSerializer. This method is only relevant if the
      * serializer is used to state stored in checkpoints/savepoints.
      *

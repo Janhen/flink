@@ -65,7 +65,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 基本类型(int, long, double, byte，…)，String, Date, Void, BigInteger和BigDecimal的类型信息。
+ * 基本类型(int, long, double, byte，…)，String, Date, Void, BigInteger 和 BigDecimal 的类型信息。
  *
  * Type information for primitive types (int, long, double, byte, ...), String, Date, Void,
  * BigInteger, and BigDecimal.

@@ -53,9 +53,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 这个类提供了对Flink内置序列化器和比较器的最常见类型的类型信息的访问。<p>在许多情况下，Flink试图分析函数的泛型签名来自动确定返回类型。
- * 该类用于必须手动提供类型信息的情况，或自动类型推断导致低效类型的情况。请注意Scala API和Table API都有专门的Types类。
- * (见<代码> org.apache.flink.api.scala。一个更方便的替代方法可能是{@link TypeHint}。
+ * 这个类提供了对 Flink 内置序列化器和比较器的最常见类型的类型信息的访问。
+ *
+ * <p>在许多情况下，Flink 试图分析函数的泛型签名来自动确定返回类型。该类用于必须手动提供类型信息的情况，或自动类型推
+ * 断导致低效类型的情况。请注意 Scala API 和 Table API 都有专门的 Types 类。
+ * (见<代码> org.apache.flink.api.scala。
+ *
+ * <p>一个更方便的替代方法可能是{@link TypeHint}。
  *
  * This class gives access to the type information of the most common types for which Flink has
  * built-in serializers and comparators.
@@ -160,6 +164,15 @@ public class Types {
     // CHECKSTYLE.OFF: MethodName
 
     /**
+     * 返回{@link org.apache.flink.types.Row 的类型信息。具有给定类型字段的Row}。行本身不能为空。
+     *
+     * <p>行是一种固定长度、支持空的复合类型，用于以确定的字段顺序存储多个值。无论字段的类型如何，每个字段都可以为空。
+     * 不能自动推断行字段的类型;因此，每当生成一行时，都需要提供类型信息。
+     *
+     * <p>行模式最多可以有<code>Integer。MAX_VALUE<代码>字段，然而，所有行实例必须严格遵守由类型info定义的模式。
+     *
+     * <p>该方法使用给定类型的字段生成类型信息;字段具有默认名称(f0, f1, f2 ..)。
+     *
      * Returns type information for {@link org.apache.flink.types.Row} with fields of the given
      * types. A row itself must not be null.
      *
@@ -261,14 +274,19 @@ public class Types {
     }
 
     /**
-     * 返回POJO(普通旧Java对象)的类型信息。<p>一个POJO类是公共的和独立的(没有非静态的内部类)。它有一个公共的无参数构造函数。
-     * 类(以及所有超类)中的所有非静态、非瞬态字段要么是公共的(非final的)，要么有一个公共的getter和setter方法，
-     * 该方法遵循Java bean的getter和setter命名约定。
-     * <p> POJO是一个固定长度和感知空值的复合类型。独立于字段的类型，每个字段都可以为空。
-     * <p> POJO所有字段的泛型类型可以在子类的层次结构中定义。
-     * <p>如果Flink的类型分析器无法提取包含所有字段类型信息的有效POJO
-     * 类型信息，则抛出{@link org.apache.flink.api.common.functions.InvalidTypesException}。或者，
-     *   你也可以使用{@link Types#POJO(Class, Map)}手动指定所有字段。
+     * 返回 POJO(普通旧 Java 对象)的类型信息。
+     *
+     * <p>一个 POJO 类是公共的和独立的(没有非静态的内部类)。它有一个公共的无参数构造函数。类(以及所有超类)中的所有
+     * 非静态、非瞬态字段要么是公共的(非 final 的)，要么有一个公共的 getter 和 setter 方法，该方法遵循 Java
+     * bean 的 getter 和 setter 命名约定。
+     *
+     * <p> POJO 是一个固定长度和感知空值的复合类型。独立于字段的类型，每个字段都可以为空。
+     *
+     * <p> POJO 所有字段的泛型类型可以在子类的层次结构中定义。
+     *
+     * <p>如果 Flink 的类型分析器无法提取包含所有字段类型信息的有效 POJO 类型信息，则抛出
+     * {@link org.apache.flink.api.common.functions.InvalidTypesException}。或者，你也可以使用
+     * {@link Types#POJO(Class, Map)} 手动指定所有字段。
      *
      * Returns type information for a POJO (Plain Old Java Object).
      *
@@ -298,6 +316,8 @@ public class Types {
     }
 
     /**
+     * 返回POJO (Plain Old Java Object)的类型信息，并允许手动指定所有字段。
+     *
      * Returns type information for a POJO (Plain Old Java Object) and allows to specify all fields
      * manually.
      *
@@ -320,6 +340,7 @@ public class Types {
      * @param pojoClass POJO class
      * @param fields map of fields that map a name to type information. The map key is the name of
      *     the field and the value is its type.
+     *               将名称映射到类型信息的字段的映射。映射键是字段的名称，值是字段的类型
      */
     public static <T> TypeInformation<T> POJO(
             Class<T> pojoClass, Map<String, TypeInformation<?>> fields) {
@@ -337,6 +358,12 @@ public class Types {
     }
 
     /**
+     * 返回任何Java对象的泛型类型信息。串行化逻辑将使用通用串行化器 Kryo。
+     *
+     * <p>Generic 类型是 Flink 的黑盒，但允许在字段中包含任何对象和空值。
+     *
+     * <p>默认情况下，这种类型的序列化不是很有效。请阅读关于如何提高效率的文件(即预选课程)。
+     *
      * Returns generic type information for any Java object. The serialization logic will use the
      * general purpose serializer Kryo.
      *
@@ -352,6 +379,8 @@ public class Types {
     }
 
     /**
+     * 返回原始类型的Java数组的类型信息(例如<code>byte[]<code>)。数组不能为空。
+     *
      * Returns type information for Java arrays of primitive type (such as <code>byte[]</code>). The
      * array must not be null.
      *
@@ -379,6 +408,9 @@ public class Types {
     }
 
     /**
+     * 返回对象类型的Java数组的类型信息(如<code>String[]<code>， <code>Integer[]<code>)。数组本身不能为空。
+     * 支持元素的空值。
+     *
      * Returns type information for Java arrays of object types (such as <code>String[]</code>,
      * <code>Integer[]</code>). The array itself must not be null. Null values for elements are
      * supported.
@@ -415,6 +447,13 @@ public class Types {
     }
 
     /**
+     * 返回Java {@link java.util.Map}的类型信息。映射不能为空。不支持键中的空值。条目的值可以为空。
+     *
+     * <p>默认情况下，映射是无类型的，在Flink中被视为泛型类型;因此，在使用映射时传递类型信息是很有用的。
+     *
+     * <p><strong>注意:<strong> Flink 不保留具体的 {@link Map} 类型。它在复制或反序列化时将映射转换为
+     * {@link HashMap}。
+     *
      * Returns type information for a Java {@link java.util.Map}. A map must not be null. Null
      * values in keys are not supported. An entry's value can be null.
      *
@@ -433,6 +472,13 @@ public class Types {
     }
 
     /**
+     * 返回Java {@link java.util.List}的类型信息。列表不能为空。不支持元素中的空值。
+     *
+     * <p>默认情况下，列表是无类型的，在Flink中被视为泛型类型;因此，在使用列表时传递类型信息是很有用的。
+     *
+     * <p><strong>注意:<strong> Flink不保留具体的 {@link List} 类型。它在复制或反序列化时将列表转换为
+     * {@link ArrayList}。
+     *
      * Returns type information for a Java {@link java.util.List}. A list must not be null. Null
      * values in elements are not supported.
      *
@@ -449,6 +495,8 @@ public class Types {
     }
 
     /**
+     * 返回 Java 枚举的类型信息。不支持空值。
+     *
      * Returns type information for Java enumerations. Null values are not supported.
      *
      * @param enumType enumeration class extending {@link java.lang.Enum}
@@ -458,6 +506,12 @@ public class Types {
     }
 
     /**
+     * 返回 Flink 的 {@link org.apache.flink.types.Either} 类型。不支持空值。
+     *
+     * <p>任何一种类型都可以用于两种可能类型的值。
+     *
+     * <p>使用例子:<code> Types.EITHER(类型。空白,Types.INT) </code>
+     *
      * Returns type information for Flink's {@link org.apache.flink.types.Either} type. Null values
      * are not supported.
      *
