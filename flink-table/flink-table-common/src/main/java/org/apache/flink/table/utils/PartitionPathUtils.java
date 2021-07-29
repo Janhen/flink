@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Utils for file system. */
+// 文件系统的 Utils
 @Internal
 public class PartitionPathUtils {
 
@@ -78,6 +79,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从分区规格中创建分区路径
+     *
      * Make partition path from partition spec.
      *
      * @param partitionSpec The partition spec.
@@ -127,6 +130,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从路径创建分区值
+     *
      * Make partition values from path.
      *
      * @param currPath partition file path.
@@ -189,6 +194,7 @@ public class PartitionPathUtils {
     }
 
     /** List file status without hidden files. */
+    // 列表文件状态没有隐藏的文件
     public static FileStatus[] listStatusWithoutHidden(FileSystem fs, Path dir) throws IOException {
         FileStatus[] statuses = fs.listStatus(dir);
         if (statuses == null) {
@@ -200,6 +206,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 搜索此路径中的所有分区。
+     *
      * Search all partitions in this path.
      *
      * @param path search path.
@@ -221,6 +229,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从路径中提取分区值并填充到记录中。
+     *
      * Extract partition value from path and fill to record.
      *
      * @param fieldNames record field names.
@@ -257,6 +267,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从字符串和类型恢复分区值。
+     *
      * Restore partition value from string and type.
      *
      * @param valStr string partition value.

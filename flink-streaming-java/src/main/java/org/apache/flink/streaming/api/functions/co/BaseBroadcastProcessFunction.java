@@ -38,6 +38,9 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
     private static final long serialVersionUID = -131631008887478610L;
 
     /**
+     * 广播进程函数中所有方法可用的基上下文。这包括{@link BroadcastProcessFunction BroadcastProcessFunctions}
+     * 和{@link KeyedBroadcastProcessFunction KeyedBroadcastProcessFunctions}。
+     *
      * The base context available to all methods in a broadcast process function. This include
      * {@link BroadcastProcessFunction BroadcastProcessFunctions} and {@link
      * KeyedBroadcastProcessFunction KeyedBroadcastProcessFunctions}.
@@ -47,7 +50,7 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
         /**
          * 当前正在处理的元素的时间戳或触发计时器的时间戳。
          *
-         * <p>这可能是{@code null}，例如，如果你的程序的时间特征被设置为
+         * <p>这可能是 {@code null}，例如，如果你的程序的时间特征被设置为
          * {@link org.apache.flink.streaming.api.TimeCharacteristic#ProcessingTime}。
          *
          * Timestamp of the element currently being processed or timestamp of a firing timer.
@@ -58,7 +61,7 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
         public abstract Long timestamp();
 
         /**
-         * 向由{@link OutputTag}标识的侧输出发出一条记录。
+         * 向由 {@link OutputTag} 标识的侧输出发出一条记录。
          *
          * Emits a record to the side output identified by the {@link OutputTag}.
          *
@@ -68,11 +71,11 @@ public abstract class BaseBroadcastProcessFunction extends AbstractRichFunction 
         public abstract <X> void output(final OutputTag<X> outputTag, final X value);
 
         /** Returns the current processing time. */
-        // 返回当前处理时间。
+        // 返回当前处理时间
         public abstract long currentProcessingTime();
 
         /** Returns the current event-time watermark. */
-        // 返回当前事件时间水印。
+        // 返回当前事件时间水印
         public abstract long currentWatermark();
     }
 

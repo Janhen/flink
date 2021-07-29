@@ -39,6 +39,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 public class TableSchemaUtils {
 
     /**
+     * 返回由所有物理列组成的 {@link TableSchema}。这意味着，计算的列被过滤掉了
+     *
+     * <p>reader(或 writer)，如 {@link TableSource} 和 {@link TableSink} 应该使用这个物理模式来生成
+     * {@link TableSource#getProducedDataType()}和{@link TableSource#getTableSchema()}
+     * ，而不是使用可能包含计算列的原始TableSchema。
+     *
      * Return {@link TableSchema} which consists of all physical columns. That means, the computed
      * columns are filtered out.
      *
@@ -106,6 +112,8 @@ public class TableSchemaUtils {
     }
 
     /**
+     * 返回此模式的物理列中主键的字段索引(不包括计算列)。
+     *
      * Returns the field indices of primary key in the physical columns of this schema (not include
      * computed columns).
      */
@@ -122,6 +130,8 @@ public class TableSchemaUtils {
     }
 
     /**
+     * 使用给定的表模式创建构建器。
+     *
      * Creates a builder with given table schema.
      *
      * @param oriSchema Original schema

@@ -21,6 +21,7 @@ package org.apache.flink.table.utils;
 import org.apache.flink.annotation.Internal;
 
 /** Utilities for table sources and sinks. */
+// 用于表 source 和 sink 的实用程序。
 @Internal
 public final class TableConnectorUtils {
 
@@ -29,6 +30,7 @@ public final class TableConnectorUtils {
     }
 
     /** Returns the table connector name used for logging and web UI. */
+    // 返回用于日志和web UI的表连接器名称。
     public static String generateRuntimeName(Class<?> clazz, String[] fields) {
         String className = clazz.getSimpleName();
         if (null == fields) {

@@ -28,6 +28,15 @@ import org.apache.flink.streaming.api.TimerService;
 import org.apache.flink.util.Collector;
 
 /**
+ * 一个函数应用到一个
+ * {@link org.apache.flink.streaming.api.datastream.BroadcastConnectedStream BroadcastConnectedStream}
+ * 连接{@link org.apache.flink.streaming.api.datastream.BroadcastStream BroadcastStream},
+ * 即流与广播状态,{@link org.apache.flink.streaming.api.datastream.KeyedStream KeyedStream}。
+ *
+ * <p
+ * >带广播状态的流可以使用{@link org.apache.flink.streaming.api.datastream.KeyedStream#broadcast(MapStateDescriptor[])}
+ * keyedStream.broadcast(MapStateDescriptor)}方法创建。
+ *
  * A function to be applied to a {@link
  * org.apache.flink.streaming.api.datastream.BroadcastConnectedStream BroadcastConnectedStream} that
  * connects {@link org.apache.flink.streaming.api.datastream.BroadcastStream BroadcastStream}, i.e.
@@ -138,6 +147,8 @@ public abstract class KeyedBroadcastProcessFunction<KS, IN1, IN2, OUT>
     public abstract class Context extends BaseBroadcastProcessFunction.Context {
 
         /**
+         * 将提供的{@code function}应用到与提供的{@code state descriptor}相关联的状态。
+         *
          * Applies the provided {@code function} to the state associated with the provided {@code
          * state descriptor}.
          *

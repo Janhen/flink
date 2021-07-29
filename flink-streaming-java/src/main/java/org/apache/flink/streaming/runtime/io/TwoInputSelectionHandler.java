@@ -24,6 +24,8 @@ import org.apache.flink.streaming.api.operators.InputSelection;
 import javax.annotation.Nullable;
 
 /**
+ * 这个处理程序主要用于在{@link StreamTwoInputProcessor}中选择下一个可用的输入索引。
+ *
  * This handler is mainly used for selecting the next available input index in {@link
  * StreamTwoInputProcessor}.
  */

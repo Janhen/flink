@@ -36,11 +36,11 @@ import java.util.Objects;
  * <p>{@link DataType} 类有两个职责:声明一个逻辑类型，并向 planner 提供关于数据的物理表示的提示。虽然逻辑类型是强
  * 制的，但提示是可选的，但在其他 api 的边缘很有用。
  *
- * <p>逻辑类型独立于任何物理表示，接近 SQL 标准中的“数据类型”术语。看到{@link org.apache.flink.table.types.logical}
+ * <p>逻辑类型独立于任何物理表示，接近 SQL 标准中的“数据类型”术语。看到 {@link org.apache.flink.table.types.logical}
  * 及其子类以获取有关可用逻辑类型及其属性的更多信息。
  *
  * <p>表生态系统的边缘需要物理提示。提示指示实现所期望的数据格式。例如，数据源可以使用 {@link java.sql.Timestamp}
- * 表示为逻辑时间戳生成值。而不是使用{@link java.time.LocalDateTime}。有了这些信息，运行时就能够将生成的类转换为它
+ * 表示为逻辑时间戳生成值。而不是使用 {@link java.time.LocalDateTime}。有了这些信息，运行时就能够将生成的类转换为它
  * 的内部数据格式。作为回报，数据接收器可以声明它从运行时使用的数据格式。
  *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
@@ -132,6 +132,8 @@ public abstract class DataType implements AbstractDataType<DataType>, Serializab
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 这个方法应该捕获最常见的错误。然而，在更深的层次中还需要另一个验证，因为我们不知道数据类型是用于输入还是输出声明。
+     *
      * This method should catch the most common errors. However, another validation is required in
      * deeper layers as we don't know whether the data type is used for input or output declaration.
      */

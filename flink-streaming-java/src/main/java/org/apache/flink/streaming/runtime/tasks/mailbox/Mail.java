@@ -25,6 +25,8 @@ import org.apache.flink.util.function.ThrowingRunnable;
 import java.util.concurrent.Future;
 
 /**
+ * 绑定到链中特定操作符的可执行文件，以便为下游邮箱选择它。
+ *
  * An executable bound to a specific operator in the chain, such that it can be picked for
  * downstream mailbox.
  */

@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 一种包含字段数据类型(如行、结构化和不同类型)的数据类型。
+ *
  * A data type that contains field data types (i.e. row, structured, and distinct types).
  *
  * @see DataTypes for a list of supported data types

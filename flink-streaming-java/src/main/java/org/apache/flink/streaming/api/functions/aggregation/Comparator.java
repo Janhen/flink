@@ -23,6 +23,7 @@ import org.apache.flink.streaming.api.functions.aggregation.AggregationFunction.
 import java.io.Serializable;
 
 /** Internal comparator implementation, for use with {@link ComparableAggregator}. */
+// 内部比较器实现，与{@link ComparableAggregator}一起使用。
 @Internal
 public abstract class Comparator implements Serializable {
 

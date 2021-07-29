@@ -21,6 +21,7 @@ package org.apache.flink.streaming.runtime.metrics;
 import org.apache.flink.metrics.Gauge;
 
 /** A {@link Gauge} for exposing the current input/output watermark. */
+// 用于显示当前输入输出水印的{@link Gauge}。
 public class WatermarkGauge implements Gauge<Long> {
 
     private volatile long currentWatermark = Long.MIN_VALUE;

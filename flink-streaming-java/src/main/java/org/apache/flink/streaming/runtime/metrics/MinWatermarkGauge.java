@@ -25,6 +25,7 @@ import java.util.Arrays;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** A {@link Gauge} for exposing the minimum watermark of chosen {@link WatermarkGauge}s. */
+// {@link Gauge} 用于显示所选 {@link WatermarkGauge} 的最小水印。
 public class MinWatermarkGauge implements Gauge<Long> {
     private final WatermarkGauge[] watermarkGauges;
 

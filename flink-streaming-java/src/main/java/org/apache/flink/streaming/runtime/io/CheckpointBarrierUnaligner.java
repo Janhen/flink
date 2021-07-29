@@ -53,6 +53,8 @@ import static org.apache.flink.util.CloseableIterator.ofElement;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link CheckpointBarrierUnaligner} 用于触发检查点，同时读取第一个屏障，并跟踪接收和消耗的屏障的数量。
+ *
  * {@link CheckpointBarrierUnaligner} is used for triggering checkpoint while reading the first
  * barrier and keeping track of the number of received barriers and consumed barriers.
  */

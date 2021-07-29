@@ -19,7 +19,7 @@
 package org.apache.flink.streaming.api;
 
 /**
- * {@code TimeDomain}指定触发计时器是基于事件时间还是基于处理时间。
+ * {@code TimeDomain} 指定触发计时器是基于事件时间还是基于处理时间。
  *
  * {@code TimeDomain} specifies whether a firing timer is based on event time or processing time.
  */

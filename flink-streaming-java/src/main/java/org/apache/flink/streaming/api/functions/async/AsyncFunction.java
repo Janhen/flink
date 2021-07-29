@@ -77,6 +77,8 @@ import java.util.concurrent.TimeoutException;
 public interface AsyncFunction<IN, OUT> extends Function, Serializable {
 
     /**
+     * 为每个流输入触发异步操作。
+     *
      * Trigger async operation for each stream input.
      *
      * @param input element coming from an upstream task
@@ -87,6 +89,8 @@ public interface AsyncFunction<IN, OUT> extends Function, Serializable {
     void asyncInvoke(IN input, ResultFuture<OUT> resultFuture) throws Exception;
 
     /**
+     * {@link AsyncFunction#asyncInvoke}超时。默认情况下，结果future以超时异常完成
+     *
      * {@link AsyncFunction#asyncInvoke} timeout occurred. By default, the result future is
      * exceptionally completed with a timeout exception.
      *

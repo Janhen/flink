@@ -344,6 +344,7 @@ public final class TypeMappingUtils {
     }
 
     /** Returns a list with all rowtime attribute names of the [[TableSource]]. */
+    // 返回一个包含[[TableSource]]的所有行时间属性名的列表。
     private static List<String> getRowtimeAttributes(TableSource<?> tableSource) {
         if (tableSource instanceof DefinedRowtimeAttributes) {
             return ((DefinedRowtimeAttributes) tableSource)

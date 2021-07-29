@@ -31,6 +31,13 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
+ * 一种有状态的流源，在给定的时间间隔内准确地发出每个数字一次，可能是并行的。
+ *
+ * <p>对于可重新伸缩的源，在作业第一次运行时，我们预先计算每个任务应该发出的所有元素，在检查点时，每个元素组成自己的分区。
+ * 当重新伸缩时，这些分区将被随机地重新分配给新任务。
+ *
+ * <p>该策略保证每个元素只触发一次，但元素并不一定按升序触发，即使对于相同的任务也是如此。
+ *
  * A stateful streaming source that emits each number from a given interval exactly once, possibly
  * in parallel.
  *

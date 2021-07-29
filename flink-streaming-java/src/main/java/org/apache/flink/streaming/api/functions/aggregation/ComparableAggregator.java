@@ -24,6 +24,8 @@ import org.apache.flink.streaming.util.typeutils.FieldAccessor;
 import org.apache.flink.streaming.util.typeutils.FieldAccessorFactory;
 
 /**
+ * 一个基于{@link Comparable Comparables}比较的{@link AggregationFunction}计算值。
+ *
  * An {@link AggregationFunction} that computes values based on comparisons of {@link Comparable
  * Comparables}.
  */

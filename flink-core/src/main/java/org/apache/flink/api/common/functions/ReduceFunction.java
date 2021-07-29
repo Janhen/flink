@@ -51,6 +51,8 @@ import java.io.Serializable;
 public interface ReduceFunction<T> extends Function, Serializable {
 
     /**
+     * educeFunction的核心方法，将两个值组合成同一类型的一个值。reduce函数连续地应用于一组的所有值，直到只剩下一个值。
+     *
      * The core method of ReduceFunction, combining two values into one value of the same type. The
      * reduce function is consecutively applied to all values of a group until only a single value
      * remains.

@@ -37,6 +37,9 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link CheckpointBarrierHandler}对来自输入通道的检查点屏障做出反应。不同的实现可能只是简单地跟踪 barrier，或者在
+ * barrier 上阻止某些输入。
+ *
  * The {@link CheckpointBarrierHandler} reacts to checkpoint barrier arriving from the input
  * channels. Different implementations may either simply track barriers, or block certain inputs on
  * barriers.

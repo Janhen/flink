@@ -24,6 +24,8 @@ import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 处理可查询的 ValueState 实例的内部操作符。
+ *
  * Internal operator handling queryable ValueState instances.
  *
  * @param <IN> Input type

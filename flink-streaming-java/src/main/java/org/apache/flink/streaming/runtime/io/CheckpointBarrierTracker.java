@@ -32,6 +32,14 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 
 /**
+ * {@link CheckpointBarrierTracker}跟踪从哪个输入通道接收到的检查点障碍。一旦它为一个检查点ID观察了所有检查点屏
+ * 障，它就通知它的侦听器一个完成的检查点。
+ *
+ * <p>不像{ @link CheckpointBarrierAligner}， BarrierTracker 不会阻塞已经发送屏障的输入通道，所以它不能用来获
+ * 得“精确一次”的处理保证。但是，它可以用来获得“至少一次”处理保证。
+ *
+ * 注意:此实现严格假设较新的检查点具有较高的检查点 id。
+ *
  * The {@link CheckpointBarrierTracker} keeps track of what checkpoint barriers have been received
  * from which input channels. Once it has observed all checkpoint barriers for a checkpoint ID, it
  * notifies its listener of a completed checkpoint.

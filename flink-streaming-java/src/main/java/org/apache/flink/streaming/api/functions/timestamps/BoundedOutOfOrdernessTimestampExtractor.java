@@ -23,6 +23,10 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 /**
+ * 这是一个{@link AssignerWithPeriodicWatermarks}，用于发射滞后于元素的最大时间戳(在事件时间)到目前为止的固定数
+ * 量的时间，<code> t_late<code>。这可以帮助减少由于迟到被忽略的元素计算最终结果对于一个给定的窗口时,如果我们知道元
+ * 素到不晚于<代码> t_late <代码>单位时间后的水印信号,系统事件时间拥有先进的过去(事件时间)的时间戳。
+ *
  * This is a {@link AssignerWithPeriodicWatermarks} used to emit Watermarks that lag behind the
  * element with the maximum timestamp (in event time) seen so far by a fixed amount of time, <code>
  * t_late</code>. This can help reduce the number of elements that are ignored due to lateness when

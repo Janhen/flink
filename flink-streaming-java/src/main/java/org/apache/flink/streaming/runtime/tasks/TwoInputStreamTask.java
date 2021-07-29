@@ -33,6 +33,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link StreamTask}用于执行{@link TwoInputStreamOperator}并支持{@link TwoInputStreamOperator}选择要读取的输入。
+ *
  * A {@link StreamTask} for executing a {@link TwoInputStreamOperator} and supporting the {@link
  * TwoInputStreamOperator} to select input for reading.
  */

@@ -32,6 +32,9 @@ public class HighAvailabilityOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 定义用于集群执行的高可用性模式。值为“NONE”表示没有高可用设置。高可用模式设置为“ZOOKEEPER”。也可以设置为高可
+     * 用性工厂类的FQN。
+     *
      * Defines high-availability mode used for the cluster execution. A value of "NONE" signals no
      * highly available setup. To enable high-availability, set this mode to "ZOOKEEPER". Can also
      * be set to FQN of HighAvailability factory class.

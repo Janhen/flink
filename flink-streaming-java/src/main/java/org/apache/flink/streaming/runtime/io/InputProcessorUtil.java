@@ -34,6 +34,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * 用于基于检查点模式为{@link StreamOneInputProcessor}和{@link StreamTwoInputProcessor}创建
+ * {@link CheckpointedInputGate}的实用程序。
+ *
  * Utility for creating {@link CheckpointedInputGate} based on checkpoint mode for {@link
  * StreamOneInputProcessor} and {@link StreamTwoInputProcessor}.
  */

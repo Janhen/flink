@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /** Utilities for print formatting. */
+// 用于打印格式的实用程序。
 @Internal
 public class PrintUtils {
 
@@ -56,6 +57,8 @@ public class PrintUtils {
     private PrintUtils() {}
 
     /**
+     * 以画面形式显示结果。
+     *
      * Displays the result in a tableau form.
      *
      * <p>For example: +-------------+---------+-------------+ | boolean_col | int_col | varchar_col
@@ -274,6 +277,8 @@ public class PrintUtils {
     }
 
     /**
+     * 这里我们考虑两个常用的时间戳类:LocalDateTime和java.sql.Timestamp。
+     *
      * Here we consider two popular class for timestamp: LocalDateTime and java.sql.Timestamp.
      *
      * <p>According to LocalDateTime's comment, the string output will be one of the following

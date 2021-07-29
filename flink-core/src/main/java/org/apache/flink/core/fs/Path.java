@@ -52,6 +52,7 @@ public class Path implements IOReadableWritable, Serializable {
     private static final long serialVersionUID = 1L;
 
     /** The directory separator, a slash. */
+    // 目录分隔符，斜杠
     public static final String SEPARATOR = "/";
 
     /** The directory separator, a slash (character). */

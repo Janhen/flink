@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** This class represents serialized checkpoint data for a collection of elements. */
+// 这个类表示元素集合的序列化检查点数据。
 class SerializedCheckpointData implements java.io.Serializable {
 
     private static final long serialVersionUID = -8783744683896503488L;
