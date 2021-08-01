@@ -21,6 +21,8 @@ package org.apache.flink.table.api.constraints;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 完整性约束，通常简称为约束，通过约束基表中的值来定义 sql 数据的有效状态。
+ *
  * Integrity constraints, generally referred to simply as constraints, define the valid states of
  * SQL-data by constraining the values in the base tables.
  */
@@ -43,6 +45,11 @@ public interface Constraint {
     String asSummaryString();
 
     /**
+     * 约束的类型。
+     *
+     * <li>UNIQUE -当且仅当在唯一列中不存在具有相同非空值的两行时满足
+     * <li>PRIMARY KEY——除了UNIQUE约束之外，它还要求指定列中的值不为空值。而且，一个表只能定义一个主键。
+     *
      * Type of the constraint.
      *
      * <p>Unique constraints:

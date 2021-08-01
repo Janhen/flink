@@ -26,6 +26,7 @@ import static org.apache.flink.table.descriptors.ConnectorDescriptorValidator.CO
 import static org.apache.flink.table.descriptors.ConnectorDescriptorValidator.CONNECTOR_TYPE;
 
 /** Describes a connector to an other system. */
+// 描述到另一个系统的连接器。
 @PublicEvolving
 public abstract class ConnectorDescriptor extends DescriptorBase implements Descriptor {
 

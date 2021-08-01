@@ -31,6 +31,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 影响基于反射提取 {@link DataType} 的提示。
+ *
+ * <p>数据类型提示可以参数化或替换单个函数参数和返回类型、结构化类或结构化类的字段的默认提取逻辑。实现者可以选择默认提
+ * 取逻辑应该修改到什么程度。
+ *
+ * <p>以下示例展示了如何显式指定数据类型，如何参数化提取逻辑，或如何接受任何数据类型作为输入数据类型:
+ *
  * A hint that influences the reflection-based extraction of a {@link DataType}.
  *
  * <p>Data type hints can parameterize or replace the default extraction logic of individual
@@ -108,6 +115,8 @@ public @interface DataTypeHint {
     String value() default "";
 
     /**
+     * 添加一个提示，当进入或离开表生态系统时，应该使用给定的类表示数据。
+     *
      * Adds a hint that data should be represented using the given class when entering or leaving
      * the table ecosystem.
      *
@@ -128,6 +137,9 @@ public @interface DataTypeHint {
     Class<?> bridgedTo() default void.class;
 
     /**
+     * 添加定义自定义序列化器的提示，该序列化器应用于序列化和反序列化不透明的RAW类型。如果 {@link #value()} 被显式
+     * 定义为非参数化的 {@code RAW} 字符串，或者(可能嵌套的)结构化类型中的字段需要作为不透明类型处理，则使用它。
+     *
      * Adds a hint that defines a custom serializer that should be used for serializing and
      * deserializing opaque RAW types. It is used if {@link #value()} is explicitly defined as an
      * unparameterized {@code RAW} string or if (possibly nested) fields in a structured type need

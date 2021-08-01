@@ -27,17 +27,17 @@ import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.TableException;
 
 /**
- * 定义一个外部的{@link TableSink}来产生一个带有插入、更新和删除更改的流{@link Table}。{@link Table}必须有唯一
- * 的关键字段(原子或复合)或只能追加。
+ * 定义一个外部的 {@link TableSink} 来产生一个带有插入、更新和删除更改的流 {@link Table}。{@link Table} 必须
+ * 有唯一的关键字段(原子或复合)或只能追加。
  *
- * <p>如果{@link Table}没有唯一的键并且不是只追加，将抛出一个{@link TableException}。
+ * <p>如果 {@link Table} 没有唯一的键并且不是只追加，将抛出一个 {@link TableException}。
  *
- * <p>表的唯一键由{@link UpsertStreamTableSink#setKeyFields(String[])}方法配置。
+ * <p>表的唯一键由 {@link UpsertStreamTableSink#setKeyFields(String[])} 方法配置。
  *
- * <p> {@link Table} 将被转换成一个 upsert 和 delete 消息流，编码为{@link Tuple2}。第一个字段是一个表示消息类型的
- * {@link Boolean}标志。第二个字段保存请求类型{@link T}的记录。.
+ * <p> {@link Table} 将被转换成一个 upsert 和 delete 消息流，编码为 {@link Tuple2}。第一个字段是一个表示消息
+ * 类型的 {@link Boolean} 标志。第二个字段保存请求类型 {@link T} 的记录。
  *
- * <p>具有 true {@link Boolean}字段的消息是配置键的 upsert 消息。
+ * <p>具有 true {@link Boolean} 字段的消息是配置键的 upsert 消息。
  *
  * <p>带 false 标志的消息是对配置的密钥的删除消息。
  *
@@ -70,8 +70,8 @@ import org.apache.flink.table.api.TableException;
 public interface UpsertStreamTableSink<T> extends StreamTableSink<Tuple2<Boolean, T>> {
 
     /**
-     * 配置要写入的{@link Table}的唯一关键字段。该方法在{@link TableSink#configure(String[],TypeInformation[])}
-     * 后面调用。
+     * 配置要写入的 {@link Table} 的唯一关键字段。该方法在
+     * {@link TableSink#configure(String[],TypeInformation[])} 后面调用。
      *
      * <p>如果表由一条(更新的)记录组成，则键数组可能是空的。如果表没有键并且是只追加的，则keys属性为空。
      *

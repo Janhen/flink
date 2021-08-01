@@ -25,11 +25,11 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * {@link TableSchema}中定义的水印元数据。主要包括三个部分:
+ * {@link TableSchema} 中定义的水印元数据。主要包括三个部分:
  *
- * <li>rowtime属性。
- * <li>水印生成表达式的字符串表示。
- * <li>表示水印生成表达式计算结果的数据类型。
+ *   <li>rowtime 属性。
+ *   <li>水印生成表达式的字符串表示。
+ *   <li>表示水印生成表达式计算结果的数据类型。
  *
  * Watermark metadata defined in {@link TableSchema}. It mainly contains 3 parts:
  *
@@ -57,6 +57,9 @@ public class WatermarkSpec {
     }
 
     /**
+     * 返回行时间属性的名称，它可以是使用点分隔符的嵌套字段。引用属性必须出现在{@link TableSchema}中，且类型为
+     * {@link org.apache.flink.table.types.logical.LogicalTypeRoot#TIMESTAMP_WITHOUT_TIME_ZONE}。
+     *
      * Returns the name of rowtime attribute, it can be a nested field using dot separator. The
      * referenced attribute must be present in the {@link TableSchema} and of type {@link
      * org.apache.flink.table.types.logical.LogicalTypeRoot#TIMESTAMP_WITHOUT_TIME_ZONE}.

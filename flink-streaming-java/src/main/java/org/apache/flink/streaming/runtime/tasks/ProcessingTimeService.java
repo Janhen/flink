@@ -22,6 +22,10 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定义当前处理时间并处理所有相关操作，例如为 future 要执行的任务注册计时器。
+ *
+ * <p>通过 {@link #getCurrentProcessingTime()} 访问时间总是可用的，不管计时器服务是否已经关闭。
+ *
  * Defines the current processing time and handles all related actions, such as register timers for
  * tasks to be executed in the future.
  *
@@ -31,9 +35,12 @@ import java.util.concurrent.TimeUnit;
 public interface ProcessingTimeService {
 
     /** Returns the current processing time. */
+    // 返回当前处理时间。
     long getCurrentProcessingTime();
 
     /**
+     * 注册一个要在(处理)时间为{@code timestamp}时执行的任务。
+     *
      * Registers a task to be executed when (processing) time is {@code timestamp}.
      *
      * @param timestamp Time when the task is to be executed (in processing time)
@@ -44,6 +51,8 @@ public interface ProcessingTimeService {
     ScheduledFuture<?> registerTimer(long timestamp, ProcessingTimeCallback target);
 
     /**
+     * 注册一个以固定速率重复执行的任务。
+     *
      * Registers a task to be executed repeatedly at a fixed rate.
      *
      * <p>This call behaves similar to {@link
@@ -59,6 +68,8 @@ public interface ProcessingTimeService {
             ProcessingTimeCallback callback, long initialDelay, long period);
 
     /**
+     * 注册一个以固定延迟重复执行的任务。
+     *
      * Registers a task to be executed repeatedly with a fixed delay.
      *
      * <p>This call behaves similar to {@link
@@ -74,6 +85,10 @@ public interface ProcessingTimeService {
             ProcessingTimeCallback callback, long initialDelay, long period);
 
     /**
+     * 这个方法将服务放入一个状态，其中它不注册新的计时器，但每次调用 {@link #registerTimer} 或
+     * {@link #scheduleAtFixedRate} 都会返回一个“mock”future，而这个“mock”future将永远不会完成。此外，之前
+     * 注册的计时器不会被触发，但允许正在运行的计时器完成。
+     *
      * This method puts the service into a state where it does not register new timers, but returns
      * for each call to {@link #registerTimer} or {@link #scheduleAtFixedRate} a "mock" future and
      * the "mock" future will be never completed. Furthermore, the timers registered before are

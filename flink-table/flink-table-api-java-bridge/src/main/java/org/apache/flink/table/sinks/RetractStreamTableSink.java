@@ -26,6 +26,15 @@ import org.apache.flink.api.java.typeutils.TupleTypeInfo;
 import org.apache.flink.table.api.Table;
 
 /**
+ * 定义一个外部的 {@link TableSink} 来产生一个带有插入、更新和删除更改的流 {@link Table}。
+ *
+ * <p>该表将被转换为一个累加和撤销消息流，编码为 {@link Tuple2}。第一个字段是一个表示消息类型的 {@link Boolean}
+ * 标志。第二个字段保存请求类型 {@link T} 的记录。
+ *
+ * <p>带有 true {@link Boolean} 标志的消息是一个累加(或添加)消息。
+ *
+ * <p>带 false 标志的消息为撤销消息。
+ *
  * Defines an external {@link TableSink} to emit a streaming {@link Table} with insert, update, and
  * delete changes.
  *

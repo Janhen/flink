@@ -22,6 +22,8 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSink;
 
 /**
+ * 定义外部流表并提供对其数据的写访问。
+ *
  * Defines an external stream table and provides write access to its data.
  *
  * @param <T> Type of the {@link DataStream} created by this {@link TableSink}.
@@ -29,6 +31,9 @@ import org.apache.flink.streaming.api.datastream.DataStreamSink;
 public interface StreamTableSink<T> extends TableSink<T> {
 
     /**
+     * 使用DataStream并返回接收器转换 {@link DataStreamSink}。返回的 {@link DataStreamSink}将用于为接收操
+     * 作符设置资源。
+     *
      * Consumes the DataStream and return the sink transformation {@link DataStreamSink}. The
      * returned {@link DataStreamSink} will be used to set resources for the sink operator.
      */

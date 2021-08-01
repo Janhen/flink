@@ -24,6 +24,10 @@ import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.TableException;
 
 /**
+ * 定义一个外部的 {@link TableSink} 来发出流 {@link Table}，但只有插入更改。
+ *
+ * <p>如果 {@link Table} 也被更新或删除修改，将抛出一个 {@link TableException}。
+ *
  * Defines an external {@link TableSink} to emit streaming {@link Table} with only insert changes.
  *
  * <p>If the {@link Table} is also modified by update or delete changes, a {@link TableException}

@@ -49,7 +49,7 @@ import java.util.Optional;
  *
  *   <li>连接外部系统。
  *   <li>从目录注册和检索 {@link Table} 和其他元对象。
- *   <li>执行SQL语句。
+ *   <li>执行 SQL 语句。
  *   <li>提供更多的配置选项。
  *
  * <p>方法(如 {@link #createTemporaryView(String, Table)}) 中 path 的语法遵循
@@ -91,7 +91,7 @@ import java.util.Optional;
 public interface TableEnvironment {
 
     /**
-     * 创建一个表环境，它是创建表和SQL API程序的入口点和中心上下文。
+     * 创建一个表环境，它是创建表和 SQL API 程序的入口点和中心上下文。
      *
      * <p>它在语言层面上是统一的，适用于所有基于 jvm 的语言(也就是说，Scala 和 Java API 之间没有区别)，也适用于有
      * 界和无界数据处理。
@@ -204,6 +204,8 @@ public interface TableEnvironment {
     }
 
     /**
+     * 从具有给定行类型的给定对象集合创建 Table。
+     *
      * Creates a Table from given collection of objects with a given row type.
      *
      * <p>The difference between this method and {@link #fromValues(Object...)} is that the schema
@@ -247,6 +249,8 @@ public interface TableEnvironment {
     }
 
     /**
+     * 从给定的值创建一个表。
+     *
      * Creates a Table from given values.
      *
      * <p>Examples:
@@ -387,6 +391,8 @@ public interface TableEnvironment {
     Table fromTableSource(TableSource<?> source);
 
     /**
+     * 在唯一名称下注册 {@link Catalog}。在 {@link Catalog} 中注册的所有表都可以被访问。
+     *
      * Registers a {@link Catalog} under a unique name. All tables registered in the {@link Catalog}
      * can be accessed.
      *
@@ -396,7 +402,7 @@ public interface TableEnvironment {
     void registerCatalog(String catalogName, Catalog catalog);
 
     /**
-     * 获取按名称注册的{@link Catalog}。
+     * 获取按名称注册的 {@link Catalog}。
      *
      * Gets a registered {@link Catalog} by name.
      *
@@ -418,6 +424,8 @@ public interface TableEnvironment {
     void loadModule(String moduleName, Module module);
 
     /**
+     * 卸载带有指定名称的 {@link Module}。当没有指定名称的模块时，会抛出 ValidationException
+     *
      * Unloads a {@link Module} with given name. ValidationException is thrown when there is no
      * module with the given name
      *
@@ -440,6 +448,14 @@ public interface TableEnvironment {
     void registerFunction(String name, ScalarFunction function);
 
     /**
+     * 注册一个{@link UserDefinedFunction}类作为临时系统函数。
+     *
+     * <p>与 {@link #createTemporaryFunction(String, Class)} 相比，系统函数由一个独立于当前编目和当前数据
+     * 库的全局名称标识。因此，该方法允许扩展内置的系统函数集，如 {@code TRIM}， {@code ABS}等。
+     *
+     * <p>临时函数可以遮蔽永久函数。如果给定名称下的永久函数存在，则在当前会话中无法访问它。为了使永久功能再次可用，
+     * 可以放弃相应的临时系统功能。
+     *
      * Registers a {@link UserDefinedFunction} class as a temporary system function.
      *
      * <p>Compared to {@link #createTemporaryFunction(String, Class)}, system functions are
@@ -495,7 +511,7 @@ public interface TableEnvironment {
     boolean dropTemporarySystemFunction(String name);
 
     /**
-     * 在给定路径中注册一个{@link UserDefinedFunction}类作为目录函数。
+     * 在给定路径中注册一个 {@link UserDefinedFunction} 类作为目录函数。
      *
      * <p>与全局定义名称的系统函数相比，目录函数总是(隐式或显式)由目录和数据库标识。
      *
@@ -607,6 +623,8 @@ public interface TableEnvironment {
     boolean dropTemporaryFunction(String path);
 
     /**
+     * 在TableEnvironment目录的唯一名称下注册一个{@link Table}。注册表可以在SQL查询中引用。
+     *
      * Registers a {@link Table} under a unique name in the TableEnvironment's catalog. Registered
      * tables can be referenced in SQL queries.
      *
@@ -622,7 +640,7 @@ public interface TableEnvironment {
     void registerTable(String name, Table table);
 
     /**
-     * 注册一个{@link Table} API对象作为一个类似于SQL临时视图的临时视图。
+     * 注册一个 {@link Table} API 对象作为一个类似于 SQL 临时视图的临时视图。
      *
      * <p>临时对象可以遮蔽永久对象。如果给定路径中的永久对象存在，则在当前会话中无法访问。要使永久对象再次可用，可以删
      * 除相应的临时对象。

@@ -24,7 +24,8 @@ import org.apache.flink.configuration.Configuration;
 import java.util.stream.Stream;
 
 /**
- * 一个由实体实现的接口，该实体负责找到正确的{@link PipelineExecutor}来执行给定的{@link org.apache.flink.api.dag.Pipeline}。
+ * 一个由实体实现的接口，该实体负责找到正确的 {@link PipelineExecutor} 来执行给定的
+ * {@link org.apache.flink.api.dag.Pipeline}。
  *
  * An interface to be implemented by the entity responsible for finding the correct {@link
  * PipelineExecutor} to execute a given {@link org.apache.flink.api.dag.Pipeline}.
@@ -33,6 +34,8 @@ import java.util.stream.Stream;
 public interface PipelineExecutorServiceLoader {
 
     /**
+     * 加载与所提供的配置兼容的 {@link PipelineExecutorFactory}。在可用工厂中最多只能有一个兼容工厂，否则将引发异常。
+     *
      * Loads the {@link PipelineExecutorFactory} which is compatible with the provided
      * configuration. There can be at most one compatible factory among the available ones,
      * otherwise an exception will be thrown.
@@ -44,5 +47,6 @@ public interface PipelineExecutorServiceLoader {
     PipelineExecutorFactory getExecutorFactory(final Configuration configuration) throws Exception;
 
     /** Loads and returns a stream of the names of all available executors. */
+    // 加载并返回所有可用执行器的名称流。
     Stream<String> getExecutorNames();
 }

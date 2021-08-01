@@ -47,6 +47,11 @@ import java.util.Optional;
 import java.util.Properties;
 
 /**
+ * 一个版本未知的Kafka {@link StreamTableSource}。
+ *
+ * <p>版本特定的 Kafka 消费者需要扩展这个类并覆盖
+ * {@link #createKafkaConsumer(String, Properties, DeserializationSchema)}}。
+ *
  * A version-agnostic Kafka {@link StreamTableSource}.
  *
  * <p>The version-specific Kafka consumers need to extend this class and override {@link
@@ -65,12 +70,15 @@ public abstract class KafkaTableSourceBase
     private final TableSchema schema;
 
     /** Field name of the processing time attribute, null if no processing time field is defined. */
+    // 处理时间属性的字段名，如果没有定义处理时间字段，则为空。
     private final Optional<String> proctimeAttribute;
 
     /** Descriptor for a rowtime attribute. */
+    // 行时属性的描述符。
     private final List<RowtimeAttributeDescriptor> rowtimeAttributeDescriptors;
 
     /** Mapping for the fields of the table schema to fields of the physical returned type. */
+    // 将表模式的字段映射到物理返回类型的字段。
     private final Optional<Map<String, String>> fieldMapping;
 
     // Kafka-specific attributes
@@ -79,17 +87,23 @@ public abstract class KafkaTableSourceBase
     private final String topic;
 
     /** Properties for the Kafka consumer. */
+    // Kafka消费者的属性。
     private final Properties properties;
 
     /** Deserialization schema for decoding records from Kafka. */
+    // 解码Kafka记录的反序列化模式。
     private final DeserializationSchema<Row> deserializationSchema;
 
     /**
+     * 包含的消费者的启动模式(默认是{@link StartupMode#GROUP_OFFSETS})。
+     *
      * The startup mode for the contained consumer (default is {@link StartupMode#GROUP_OFFSETS}).
      */
     private final StartupMode startupMode;
 
     /**
+     * 特定的启动补偿;仅当启动模式为{@link StartupMode#SPECIFIC_OFFSETS}时相关。
+     *
      * Specific startup offsets; only relevant when startup mode is {@link
      * StartupMode#SPECIFIC_OFFSETS}.
      */
@@ -310,6 +324,8 @@ public abstract class KafkaTableSourceBase
     //////// VALIDATION FOR PARAMETERS
 
     /**
+     * 验证模式的字段是否为处理时间属性。
+     *
      * Validates a field of the schema to be the processing time attribute.
      *
      * @param proctimeAttribute The name of the field that becomes the processing time field.
@@ -336,6 +352,8 @@ public abstract class KafkaTableSourceBase
     }
 
     /**
+     * 验证字段列表是否为 rowtime 属性。
+     *
      * Validates a list of fields to be rowtime attributes.
      *
      * @param rowtimeAttributeDescriptors The descriptors of the rowtime attributes.

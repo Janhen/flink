@@ -28,6 +28,7 @@ import org.apache.flink.util.Preconditions;
 import javax.annotation.Nullable;
 
 /** ScheduledUnit contains the information necessary to allocate a slot for the given task. */
+// ScheduledUnit包含为给定任务分配插槽所必需的信息。
 public class ScheduledUnit {
 
     private final ExecutionVertexID executionVertexId;

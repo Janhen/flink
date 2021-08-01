@@ -21,6 +21,7 @@ package org.apache.flink.table.functions;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Categorizes the semantics of a {@link FunctionDefinition}. */
+// 对 {@link FunctionDefinition} 的语义进行分类。
 @PublicEvolving
 public enum FunctionKind {
     SCALAR,

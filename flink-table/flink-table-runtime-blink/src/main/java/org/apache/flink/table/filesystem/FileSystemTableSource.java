@@ -57,6 +57,7 @@ import java.util.stream.IntStream;
 import static org.apache.flink.table.filesystem.FileSystemTableFactory.createFormatFactory;
 
 /** File system table source. */
+// 文件系统表源。
 public class FileSystemTableSource
         implements StreamTableSource<RowData>,
                 PartitionableTableSource,

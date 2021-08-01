@@ -38,6 +38,8 @@ import org.apache.flink.table.module.ModuleManager;
 import java.lang.reflect.Constructor;
 
 /**
+ * Java 批处理 {@link ExecutionEnvironment} 的 {@link TableEnvironment} 与 {@link DataSet} 一起工作。
+ *
  * The {@link TableEnvironment} for a Java batch {@link ExecutionEnvironment} that works with {@link
  * DataSet}s.
  *
@@ -57,6 +59,9 @@ import java.lang.reflect.Constructor;
 public interface BatchTableEnvironment extends TableEnvironment {
 
     /**
+     * 在 TableEnvironment 目录的唯一名称下注册一个 {@link TableFunction}。注册函数可以在表 API 和 SQL
+     * 查询中引用。
+     *
      * Registers a {@link TableFunction} under a unique name in the TableEnvironment's catalog.
      * Registered functions can be referenced in Table API and SQL queries.
      *

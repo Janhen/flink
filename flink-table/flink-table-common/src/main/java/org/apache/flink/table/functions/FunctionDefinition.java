@@ -26,6 +26,10 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * 函数的定义。该类的实例提供了验证函数调用和执行计划所需的所有细节。
+ *
+ * <p>纯函数定义不能包含运行时实现。这可以由计划人员在后期提供。
+ *
  * Definition of a function. Instances of this class provide all details necessary to validate a
  * function call and perform planning.
  *
@@ -38,9 +42,12 @@ import java.util.Set;
 public interface FunctionDefinition {
 
     /** Returns the kind of function this definition describes. */
+    // 返回定义所描述的函数类型。
     FunctionKind getKind();
 
     /**
+     * 返回对该函数定义的调用执行类型推断的逻辑。
+     *
      * Returns the logic for performing type inference of a call to this function definition.
      *
      * <p>The type inference process is responsible for inferring unknown types of input arguments,
@@ -55,11 +62,14 @@ public interface FunctionDefinition {
     TypeInference getTypeInference(DataTypeFactory typeFactory);
 
     /** Returns the set of requirements this definition demands. */
+    // 返回此定义所要求的需求集。
     default Set<FunctionRequirement> getRequirements() {
         return Collections.emptySet();
     }
 
     /**
+     * 返回关于函数结果的确定性的信息。
+     *
      * Returns information about the determinism of the function's results.
      *
      * <p>It returns <code>true</code> if and only if a call to this function is guaranteed to

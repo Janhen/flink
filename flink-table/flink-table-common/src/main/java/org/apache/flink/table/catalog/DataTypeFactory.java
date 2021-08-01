@@ -30,6 +30,10 @@ import org.apache.flink.table.types.logical.DistinctType;
 import org.apache.flink.table.types.logical.StructuredType;
 
 /**
+ * 用于创建可用于规划的完全解析数据类型的工厂。
+ *
+ * <p>工厂对于不能用 {@link DataTypes} 中的一个静态方法创建的类型很有用，因为它们需要访问配置或目录。
+ *
  * Factory for creating fully resolved data types that can be used for planning.
  *
  * <p>The factory is useful for types that cannot be created with one of the static methods in

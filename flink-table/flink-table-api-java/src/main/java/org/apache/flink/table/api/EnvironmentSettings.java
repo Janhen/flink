@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 定义初始化表环境的所有参数。这些参数只在实例化{@link TableEnvironment}时使用，之后不能更改。
+ * 定义初始化表环境的所有参数。这些参数只在实例化 {@link TableEnvironment} 时使用，之后不能更改。
  *
  * Defines all parameters that initialize a table environment. Those parameters are used only during
  * instantiation of a {@link TableEnvironment} and cannot be changed afterwards.
@@ -56,15 +56,15 @@ public class EnvironmentSettings {
     public static final String DEFAULT_BUILTIN_DATABASE = "default_database";
 
     /** Canonical name of the {@link Planner} class to use. */
-    // 要使用的{@link Planner}类的规范名称
+    // 要使用的 {@link Planner} 类的规范名称
     private final String plannerClass;
 
     /** Canonical name of the {@link Executor} class to use. */
-    // 要使用的{@link Executor}类的规范名称。
+    // 要使用的 {@link Executor} 类的规范名称。
     private final String executorClass;
 
     /**
-     * 指定实例化{@link TableEnvironment}时要创建的初始目录的名称。
+     * 指定实例化 {@link TableEnvironment} 时要创建的初始 catalog 的名称。
      *
      * Specifies the name of the initial catalog to be created when instantiating {@link
      * TableEnvironment}.
@@ -72,7 +72,7 @@ public class EnvironmentSettings {
     private final String builtInCatalogName;
 
     /**
-     * 指定实例化{@link TableEnvironment}时要创建的初始目录中的默认数据库的名称。
+     * 指定实例化 {@link TableEnvironment} 时要创建的初始 catalog 中的默认数据库的名称。
      *
      * Specifies the name of the default database in the initial catalog to be created when
      * instantiating {@link TableEnvironment}.
@@ -101,9 +101,9 @@ public class EnvironmentSettings {
     }
 
     /**
-     * 创建一个用于创建{@link EnvironmentSettings}实例的构建器。
+     * 创建一个用于创建 {@link EnvironmentSettings} 实例的构建器。
      *
-     * <p>默认情况下，它不指定必需的规划器，将使用通过发现在类路径上可用的规划器。
+     * <p>默认情况下，它不指定必需的 planner，将使用通过发现在类路径上可用的规划器。
      *
      * Creates a builder for creating an instance of {@link EnvironmentSettings}.
      *

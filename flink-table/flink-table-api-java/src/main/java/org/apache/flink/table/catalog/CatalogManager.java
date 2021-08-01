@@ -58,6 +58,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于处理表、视图、函数和类型等目录对象的管理器。它封装了所有可用的目录并存储临时对象。
+ *
  * A manager for dealing with catalog objects such as tables, views, functions, and types. It
  * encapsulates all available catalogs and stores temporary objects.
  */
@@ -66,10 +68,12 @@ public final class CatalogManager {
     private static final Logger LOG = LoggerFactory.getLogger(CatalogManager.class);
 
     // A map between names and catalogs.
+    // 名称和 catalog 之间的映射。
     private Map<String, Catalog> catalogs;
 
     // Those tables take precedence over corresponding permanent tables, thus they shadow
     // tables coming from catalogs.
+    // 这些表优先于相应的永久表，因此它们投影来自目录的表。
     private Map<ObjectIdentifier, CatalogBaseTable> temporaryTables;
 
     // The name of the current catalog and database
@@ -80,6 +84,7 @@ public final class CatalogManager {
     private CatalogTableSchemaResolver schemaResolver;
 
     // The name of the built-in catalog
+    // 内置 catalog 的名称
     private final String builtInCatalogName;
 
     private final DataTypeFactory typeFactory;
@@ -167,6 +172,8 @@ public final class CatalogManager {
     }
 
     /**
+     * 在给定名称下注册目录。目录名称不能重复。
+     *
      * Registers a catalog under the given name. The catalog name must be unique.
      *
      * @param catalogName name under which to register the given catalog
@@ -309,6 +316,8 @@ public final class CatalogManager {
     }
 
     /**
+     * 获取内置目录中的内置数据库名称。内置数据库用于存储所有非序列化的临时元对象。
+     *
      * Gets the built-in database name in the built-in catalog. The built-in database is used for
      * storing all non-serializable transient meta-objects.
      *
@@ -320,6 +329,9 @@ public final class CatalogManager {
     }
 
     /**
+     * 通过 {@link #getTable(ObjectIdentifier)} 查找表的结果。它结合了 {@link CatalogBaseTable}
+     * 和其他信息，比如表是临时表还是来自目录。
+     *
      * Result of a lookup for a table through {@link #getTable(ObjectIdentifier)}. It combines the
      * {@link CatalogBaseTable} with additional information such as if the table is a temporary
      * table or comes from the catalog.

@@ -30,6 +30,14 @@ import org.apache.flink.table.types.extraction.TypeInferenceExtractor;
 import org.apache.flink.table.types.inference.TypeInference;
 
 /**
+ * 用户定义的 scalar 函数的基类。用户定义的 scalar 函数将零、一个或多个 scalar 值映射到一个新的 scalar 值。
+ *
+ * <p>{@link ScalarFunction} 的行为可以通过实现自定义的求值方法来定义。求值方法必须公开声明并命名为
+ * <code>eval<code>。也可以通过实现名为<code>eval<code>的多个方法来重载求值方法。
+ *
+ * <p>默认情况下，使用反射自动提取输入和输出数据类型。如果反射信息不够充分，可以使用 {@link DataTypeHint} 和
+ * {@link FunctionHint} 注释来支持和充实。
+ *
  * Base class for a user-defined scalar function. A user-defined scalar functions maps zero, one, or
  * multiple scalar values to a new scalar value.
  *

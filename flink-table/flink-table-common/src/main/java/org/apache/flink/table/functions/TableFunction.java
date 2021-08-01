@@ -31,6 +31,9 @@ import org.apache.flink.table.types.inference.TypeInference;
 import org.apache.flink.util.Collector;
 
 /**
+ * 用户定义表函数的基类。用户定义的表函数将0、1或多个标量值映射到0、1或多行。如果输出行只包含一个字段，则可以忽略该行
+ * 并发出标量值。它将被运行时包装到隐式行中。
+ *
  * Base class for a user-defined table function. A user-defined table functions maps zero, one, or
  * multiple scalar values to zero, one, or multiple rows. If an output row consists of only one
  * field, the row can be omitted and a scalar value can be emitted. It will be wrapped into an

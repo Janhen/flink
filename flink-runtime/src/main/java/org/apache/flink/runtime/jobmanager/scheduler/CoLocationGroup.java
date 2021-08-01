@@ -26,6 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Co-location 组是一组 JobVertices，其中一个顶点的<i>i th<i>子任务必须与同一组中所有其他 JobVertices 的
+ * <i>i th<i> 子任务在同一个 TaskManager 上执行。
+ *
+ * <p>例如，co-location 组用于确保迭代头和迭代尾的第 i 个子任务被调度到同一个 TaskManager。
+ *
  * A Co-location group is a group of JobVertices, where the <i>i-th</i> subtask of one vertex has to
  * be executed on the same TaskManager as the <i>i-th</i> subtask of all other JobVertices in the
  * same group.

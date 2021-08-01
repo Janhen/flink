@@ -21,6 +21,8 @@ package org.apache.flink.table.annotation;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 描述基于反射的数据类型提取的预期行为的逻辑版本。
+ *
  * Logical version that describes the expected behavior of the reflection-based data type
  * extraction.
  *

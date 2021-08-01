@@ -28,8 +28,8 @@ import java.util.List;
  *
  * <p>表达式表示用于生成计算结果的逻辑树。每个表达式由零个、一个或多个子表达式组成。表达式可以是文字值、函数调用或字段引用。
  *
- * <p>表达式是API的一部分。它们可能在API堆栈中被转换多次，直到它们完全{@link ResolvedExpression}s。值类型和输出
- * 类型表示为{@link DataType}的实例。
+ * <p>表达式是 API 的一部分。它们可能在 API 堆栈中被转换多次，直到它们完全 {@link ResolvedExpression}s。值类型
+ * 和输出类型表示为 {@link DataType} 的实例。
  *
  * General interface for all kinds of expressions.
  *
@@ -45,6 +45,8 @@ import java.util.List;
 public interface Expression {
 
     /**
+     * 返回一个字符串，该字符串汇总此表达式以便打印到控制台。实现可能会跳过非常特定的属性。
+     *
      * Returns a string that summarizes this expression for printing to a console. An implementation
      * might skip very specific properties.
      *

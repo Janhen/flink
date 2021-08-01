@@ -24,6 +24,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * {@link Executor}接口的扩展，通过用于 Future 调度任务的方法丰富了该接口。
+ *
  * Extension for the {@link Executor} interface which is enriched by method for scheduling tasks in
  * the future.
  */

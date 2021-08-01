@@ -30,6 +30,7 @@ import java.io.Serializable;
 
 /**
  * 所有用户定义函数的基类。
+ *
  * <p>用户定义函数组合了用于验证和计划的函数的逻辑定义，并包含相应的运行时实现。
  *
  * Base class for all user-defined functions.
@@ -47,6 +48,7 @@ import java.io.Serializable;
 public abstract class UserDefinedFunction implements FunctionDefinition, Serializable {
 
     /** Returns a unique, serialized representation for this function. */
+    // 返回此函数的唯一序列化表示形式。
     public final String functionIdentifier() {
         final String md5 =
                 EncodingUtils.hex(EncodingUtils.md5(EncodingUtils.encodeObjectToString(this)));

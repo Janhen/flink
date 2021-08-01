@@ -29,6 +29,8 @@ import java.util.TreeSet;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 槽共享单元定义了哪些不同的任务(来自不同的作业顶点)可以一起部署在一个槽中。这是一种软许可，与共存提示定义的硬约束相反。
+ *
  * A slot sharing units defines which different task (from different job vertices) can be deployed
  * together within a slot. This is a soft permission, in contrast to the hard constraint defined by
  * a co-location hint.
@@ -42,6 +44,8 @@ public class SlotSharingGroup implements java.io.Serializable {
     private final SlotSharingGroupId slotSharingGroupId = new SlotSharingGroupId();
 
     /**
+     * 表示组中所有任务的资源。默认为零。任何具有UNKNOWN资源的任务都会将其变为 UNKNOWN。
+     *
      * Represents resources of all tasks in the group. Default to be zero. Any task with UNKNOWN
      * resources will turn it to be UNKNOWN.
      */

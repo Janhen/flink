@@ -23,6 +23,9 @@ import org.apache.flink.table.functions.AsyncTableFunction;
 import org.apache.flink.table.functions.TableFunction;
 
 /**
+ * {@link TableSource} 支持通过键列进行查找访问。例如，MySQL TableSource 可以实现这个接口来支持查找访问。当临时连
+ * 接这个MySQL表时，运行时行为可以采用查找方式。
+ *
  * A {@link TableSource} which supports for lookup accessing via key column(s). For example, MySQL
  * TableSource can implement this interface to support lookup accessing. When temporal join this
  * MySQL table, the runtime behavior could be in a lookup fashion.
@@ -33,6 +36,8 @@ import org.apache.flink.table.functions.TableFunction;
 public interface LookupableTableSource<T> extends TableSource<T> {
 
     /**
+     * 获取支持一次查找一个键的{@link TableFunction}。
+     *
      * Gets the {@link TableFunction} which supports lookup one key at a time.
      *
      * @param lookupKeys the chosen field names as lookup keys, it is in the defined order

@@ -105,6 +105,9 @@ import static org.apache.flink.runtime.scheduler.ExecutionVertexSchedulingRequir
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个顶点的一次执行。当 {@link ExecutionVertex} 可以被执行多次(用于恢复、重新计算、重新配置)时，这个类跟踪该顶点
+ * 和资源的一次执行状态。
+ *
  * A single execution of a vertex. While an {@link ExecutionVertex} can be executed multiple times
  * (for recovery, re-computation, re-configuration), this class tracks the state of a single
  * execution of that vertex and the resources.
@@ -135,6 +138,7 @@ public class Execution
     // --------------------------------------------------------------------------------------------
 
     /** The executor which is used to execute futures. */
+    // 用于执行期货的执行者。
     private final Executor executor;
 
     /** The execution vertex whose task this execution executes. */
@@ -175,16 +179,21 @@ public class Execution
     private Throwable failureCause; // once assigned, never changes
 
     /**
+     * 恢复时恢复任务的信息，如检查点id和任务状态快照。
+     *
      * Information to restore the task on recovery, such as checkpoint id and task state snapshot.
      */
     @Nullable private JobManagerTaskRestore taskRestore;
 
     /** This field holds the allocation id once it was assigned successfully. */
+    // 一旦分配成功，该字段将保存分配id。
     @Nullable private AllocationID assignedAllocationID;
 
     // ------------------------ Accumulators & Metrics ------------------------
 
     /**
+     * 用于自动更新累加器的锁。防止最终累加器在延迟心跳时被部分累加器覆盖。
+     *
      * Lock for updating the accumulators atomically. Prevents final accumulators to be overwritten
      * by partial accumulators on a late heartbeat.
      */
@@ -201,6 +210,8 @@ public class Execution
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建一个新的执行尝试。
+     *
      * Creates a new Execution attempt.
      *
      * @param executor The executor used to dispatch callbacks from futures and asynchronous RPC

@@ -1163,6 +1163,8 @@ public final class DataTypes {
     }
 
     /**
+     * 用于定义行或结构化类型的字段的Helper类。
+     *
      * Helper class for defining the field of a row or structured type.
      *
      * @see #FIELD(String, DataType)
@@ -1188,6 +1190,10 @@ public final class DataTypes {
     }
 
     /**
+     * 辅助类，用于定义行或结构化类型的未解析字段。
+     *
+     * <p>与 {@link Field} 相比，未解析字段可以包含 {@link UnresolvedDataType}。
+     *
      * Helper class for defining the unresolved field of a row or structured type.
      *
      * <p>Compared to {@link Field}, an unresolved field can contain an {@link UnresolvedDataType}.

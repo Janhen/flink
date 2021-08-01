@@ -38,13 +38,17 @@ public class TableColumn {
 
     // ~ Instance fields --------------------------------------------------------
 
+    // J: 列明
     private final String name;
+    // J: 列类型
     private final DataType type;
     @Nullable private final String expr;
 
     // ~ Constructors -----------------------------------------------------------
 
     /**
+     * 创建一个{@link TableColumn}实例。
+     *
      * Creates a {@link TableColumn} instance.
      *
      * @param name Column name
@@ -60,6 +64,7 @@ public class TableColumn {
     // ~ Methods ----------------------------------------------------------------
 
     /** Creates a table column from given name and data type. */
+    // 根据给定的名称和数据类型创建表列
     public static TableColumn of(String name, DataType type) {
         Preconditions.checkNotNull(name, "Column name can not be null!");
         Preconditions.checkNotNull(type, "Column type can not be null!");
@@ -67,6 +72,8 @@ public class TableColumn {
     }
 
     /**
+     * 根据给定的名称和计算表达式创建表列。
+     *
      * Creates a table column from given name and computation expression.
      *
      * @param name Name of the column
@@ -111,6 +118,8 @@ public class TableColumn {
     }
 
     /**
+     * 返回该列的计算表达式。如果该列不是计算列，则为空。
+     *
      * Returns computation expression of this column. Or empty if this column is not a computed
      * column.
      */
@@ -119,6 +128,8 @@ public class TableColumn {
     }
 
     /**
+     * 如果此列是由表达式生成的计算列，则返回。
+     *
      * Returns if this column is a computed column that is generated from an expression.
      *
      * @return true if this column is generated

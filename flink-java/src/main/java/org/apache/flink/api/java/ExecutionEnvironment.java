@@ -86,15 +86,14 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * ExecutionEnvironment是执行程序的上下文。{@link LocalEnvironment}将在当前JVM中执行，{@link RemoteEnvironment}
- * 将在远程设置中执行。
+ * ExecutionEnvironment 是执行程序的上下文。{@link LocalEnvironment} 将在当前 JVM 中执行，
+ * {@link RemoteEnvironment} 将在远程设置中执行。
  *
  * <p>环境提供了控制作业执行(例如设置并行度)和与外界交互(数据访问)的方法。
  *
- * <p>请注意，执行环境需要所有被执行操作的输入和返回类型的强类型信息。这意味着环境需要知道操作的返回值是一个由String和
- * Integer组成的元组。因为Java编译器丢弃了很多泛型类型信息，所以大多数方法都试图使用反射重新获得这些信息。在某些情况下，
- *
- * 可能需要手动向某些方法提供该信息。
+ * <p>请注意，执行环境需要所有被执行操作的输入和返回类型的强类型信息。这意味着环境需要知道操作的返回值是一个由 String
+ * 和 Integer 组成的元组。因为 Java 编译器丢弃了很多泛型类型信息，所以大多数方法都试图使用反射重新获得这些信息。在某
+ * 些情况下，可能需要手动向某些方法提供该信息。
  *
  * The ExecutionEnvironment is the context in which a program is executed. A {@link
  * LocalEnvironment} will cause execution in the current JVM, a {@link RemoteEnvironment} will cause
@@ -127,16 +126,19 @@ public class ExecutionEnvironment {
     private static ExecutionEnvironmentFactory contextEnvironmentFactory = null;
 
     /** The ThreadLocal used to store {@link ExecutionEnvironmentFactory}. */
+    // 用于存储 {@link ExecutionEnvironmentFactory} 的 ThreadLocal
     private static final ThreadLocal<ExecutionEnvironmentFactory>
             threadLocalContextEnvironmentFactory = new ThreadLocal<>();
 
     /** The default parallelism used by local environments. */
+    // 本地环境使用的默认并行度。
     private static int defaultLocalDop = Runtime.getRuntime().availableProcessors();
 
     // --------------------------------------------------------------------------------------------
 
     private final List<DataSink<?>> sinks = new ArrayList<>();
 
+    // J: 分布式缓存文件
     private final List<Tuple2<String, DistributedCacheEntry>> cacheFile = new ArrayList<>();
 
     private final ExecutionConfig config = new ExecutionConfig();
@@ -158,6 +160,7 @@ public class ExecutionEnvironment {
 
     private final ClassLoader userClassloader;
 
+    // 作业执行监听器
     private final List<JobListener> jobListeners = new ArrayList<>();
 
     /**
@@ -246,6 +249,7 @@ public class ExecutionEnvironment {
     }
 
     /** Gets the config JobListeners. */
+    // 获取配置 JobListeners。
     protected List<JobListener> getJobListeners() {
         return jobListeners;
     }
@@ -283,6 +287,8 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 设置重启策略配置。配置指定在重新启动的情况下执行图将使用哪个重新启动策略。
+     *
      * Sets the restart strategy configuration. The configuration specifies which restart strategy
      * will be used for the execution graph in case of a restart.
      *
@@ -305,6 +311,8 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 设置失败任务重新执行的次数。零值有效地禁用容错功能。{@code -1} 的值表示应该使用系统默认值(如配置中定义的)。
+     *
      * Sets the number of times that failed tasks are re-executed. A value of zero effectively
      * disables fault tolerance. A value of {@code -1} indicates that the system default value (as
      * defined in the configuration) should be used.
@@ -350,6 +358,8 @@ public class ExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 将新的 Kryo 默认序列化器添加到运行时。
+     *
      * Adds a new Kryo default serializer to the Runtime.
      *
      * <p>Note that the serializer instance must be serializable (as defined by
@@ -376,6 +386,10 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 用 Kryo 序列化器注册给定类型。
+     *
+     * 注意，序列化器实例必须是可序列化的(如 java.io.serializable 所定义的)，因为它可以通过 java 序列化分发到工作节点。
+     *
      * Registers the given type with a Kryo Serializer.
      *
      * <p>Note that the serializer instance must be serializable (as defined by
@@ -403,6 +417,9 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 向序列化堆栈注册给定类型。如果该类型最终被序列化为 POJO，那么该类型将被注册到 POJO 序列化器。如果类型最终被
+     * Kryo 序列化，那么它将被注册在 Kryo，以确保只写入标签。
+     *
      * Registers the given type with the serialization stack. If the type is eventually serialized
      * as a POJO, then the type is registered with the POJO serializer. If the type ends up being
      * serialized with Kryo, then it will be registered at Kryo to make sure that only tags are

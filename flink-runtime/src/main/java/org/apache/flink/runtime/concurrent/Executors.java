@@ -24,6 +24,8 @@ import java.util.concurrent.ExecutorService;
 import scala.concurrent.ExecutionContext;
 
 /**
+ * {@link Executor}， {@link ExecutorService} 和 {@link ExecutionContext} 实现的集合。
+ *
  * Collection of {@link Executor}, {@link ExecutorService} and {@link ExecutionContext}
  * implementations.
  */

@@ -131,6 +131,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A catalog implementation for Hive. */
+// Hive 的 catalog 实现。
 public class HiveCatalog extends AbstractCatalog {
     // Default database of Hive metastore
     public static final String DEFAULT_DB = "default";

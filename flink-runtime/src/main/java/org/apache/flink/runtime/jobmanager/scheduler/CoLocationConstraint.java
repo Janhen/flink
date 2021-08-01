@@ -30,6 +30,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * CoLocationConstraint 管理一组任务(执行顶点)的位置。在同一位置组中，不同 JobVertices 的不同子任务需要在同一个槽
+ * 上执行。这是通过创建一个特殊的共享槽来实现的。
+ *
  * A CoLocationConstraint manages the location of a set of tasks (Execution Vertices). In
  * co-location groups, the different subtasks of different JobVertices need to be executed on the
  * same slot. This is realized by creating a special shared slot that holds these tasks.

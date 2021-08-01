@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * CatalogBaseTable 是表和视图的公共父类。它有一个定义表属性的键值对映射。
+ *
  * CatalogBaseTable is the common parent of table and view. It has a map of key-value pairs defining
  * the properties of the table.
  */

@@ -38,8 +38,19 @@ import org.apache.flink.table.functions.TableFunction;
 import org.apache.flink.table.functions.UserDefinedFunction;
 
 /**
- * 这个表环境是创建与java特定的{@link DataStream} API集成的table和SQL API程序的入口点和中心上下文。
- * <p>统一有界和无界数据处理。<p>流表环境负责:
+ * 这个表环境是创建与 java 特定的 {@link DataStream} API 集成的 table 和 SQL API 程序的入口点和中心上下文。
+ *
+ * <p>统一有界和无界数据处理。
+ *
+ * <p>流表环境负责:
+ *
+ *   <li>将 {@link DataStream} 转换为 {@link Table}，反之亦然。
+ *   <li>连接外部系统。
+ *   <li>从 catalog 注册和检索 {@link Table} 和其他元对象。
+ *   <li>执行 SQL 语句。
+ *   <li>提供更多的配置选项。
+ *
+ * <p>注意:如果你不打算使用 {@link DataStream} API， {@link TableEnvironment} 意味着纯表程序。
  *
  * This table environment is the entry point and central context for creating Table and SQL API
  * programs that integrate with the Java-specific {@link DataStream} API.
@@ -63,8 +74,11 @@ import org.apache.flink.table.functions.UserDefinedFunction;
 public interface StreamTableEnvironment extends TableEnvironment {
 
     /**
-     * 创建一个表环境，它是创建与java特定的{@link DataStream} API集成的table和SQL API程序的入口点和中心上下文。
+     * 创建一个表环境，它是创建与 java 特定的 {@link DataStream} API 集成的 table 和 SQL API 程序的入口点和
+     * 中心上下文。
+     *
      * <p>统一有界和无界数据处理。
+     *
      * <p>流表环境负责:
      *
      * Creates a table environment that is the entry point and central context for creating Table
@@ -93,6 +107,8 @@ public interface StreamTableEnvironment extends TableEnvironment {
     }
 
     /**
+     * 创建一个表环境，它是创建与 java 特定的 {@link DataStream} API 集成的表和SQL API程序的入口点和中心上下文。
+     *
      * Creates a table environment that is the entry point and central context for creating Table
      * and SQL API programs that integrate with the Java-specific {@link DataStream} API.
      *

@@ -22,6 +22,8 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**
+ * 定义外部流表并提供对其数据的读访问。
+ *
  * Defines an external stream table and provides read access to its data.
  *
  * @param <T> Type of the {@link DataStream} created by this {@link TableSource}.
@@ -29,6 +31,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 public interface StreamTableSource<T> extends TableSource<T> {
 
     /**
+     * 如果这是一个有界源返回 true，如果这是一个无界源返回 false。默认是不受兼容性限制的。
+     *
      * Returns true if this is a bounded source, false if this is an unbounded source. Default is
      * unbounded for compatibility.
      */
@@ -37,6 +41,10 @@ public interface StreamTableSource<T> extends TableSource<T> {
     }
 
     /**
+     * 返回表的数据作为一个{@link DataStream}。
+     *
+     * <p>注意:此方法只用于内部定义{@link TableSource}。不要在表API程序中使用它。
+     *
      * Returns the data of the table as a {@link DataStream}.
      *
      * <p>NOTE: This method is for internal use only for defining a {@link TableSource}. Do not use

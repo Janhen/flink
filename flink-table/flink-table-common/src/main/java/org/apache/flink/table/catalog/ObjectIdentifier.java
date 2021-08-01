@@ -28,6 +28,13 @@ import java.util.Objects;
 import static org.apache.flink.table.utils.EncodingUtils.escapeIdentifier;
 
 /**
+ * 标识 catalog 中的对象。它允许标识 catalog 中的表、视图、函数或类型等对象。标识符必须是完全限定的。
+ * CatalogManager 负责将标识符解析为对象。
+ *
+ * <p>当 {@link ObjectPath} 在同一个目录中使用时，该类的实例可以跨 catalog 使用。
+ *
+ * <p>如果两个对象在一个稳定的会话上下文中共享相同的对象标识符，则认为它们相等。
+ *
  * Identifies an object in a catalog. It allows to identify objects such as tables, views, function,
  * or types in a catalog. An identifier must be fully qualified. It is the responsibility of the
  * catalog manager to resolve an identifier to an object.

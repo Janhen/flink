@@ -28,6 +28,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 用户定义聚合的基类。
+ *
  * Base class for user-defined aggregates.
  *
  * <p>The behavior of an {@link AggregateFunction} can be defined by implementing a series of custom

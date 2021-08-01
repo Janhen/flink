@@ -28,6 +28,7 @@ import org.apache.flink.table.operations.QueryOperation;
 import java.util.List;
 
 /** Provides methods for parsing SQL objects from a SQL string. */
+// 提供从 SQL 字符串解析 SQL 对象的方法。
 @Internal
 public interface Parser {
 

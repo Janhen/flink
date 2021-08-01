@@ -29,6 +29,15 @@ import org.apache.flink.table.utils.TableConnectorUtils;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * 用{@link TableSource#getTableSchema}提供的模式定义一个外部表。
+ *
+ * <p>{@code BatchTableSource} 的 {@code TableSource} 的数据被生成为 {@code DataSet}，
+ * {@code StreamTableSource} 的数据被生成为 {@code DataStream}。生成的 {@code DataSet} 或
+ * {@code DataStream}的类型由 {@link TableSource#getProducedDataType()} 方法指定。
+ *
+ * <p>默认情况下，{@link TableSchema} 的字段通过名称隐式映射到生成的 {@link DataType} 的字段。显式映射可以通过
+ * 实现 {@link DefinedFieldMapping} 接口来定义。
+ *
  * Defines an external table with the schema that is provided by {@link TableSource#getTableSchema}.
  *
  * <p>The data of a {@link TableSource} is produced as a {@code DataSet} in case of a {@code
@@ -46,6 +55,8 @@ import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoT
 public interface TableSource<T> {
 
     /**
+     * 返回生成的 {@link TableSource} 数据的 {@link DataType}。
+     *
      * Returns the {@link DataType} for the produced data of the {@link TableSource}.
      *
      * @return The data type of the returned {@code DataSet} or {@code DataStream}.
@@ -71,6 +82,8 @@ public interface TableSource<T> {
     }
 
     /**
+     * 返回生成的表的模式。
+     *
      * Returns the schema of the produced table.
      *
      * @return The {@link TableSchema} of the produced table.

@@ -21,6 +21,7 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartitionStateSentinel;
 
 /** Startup modes for the Kafka Consumer. */
+// Kafka Consumer的启动模式。
 @Internal
 public enum StartupMode {
 

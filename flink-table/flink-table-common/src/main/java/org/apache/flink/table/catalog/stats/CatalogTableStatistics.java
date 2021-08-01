@@ -22,13 +22,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Statistics for a non-partitioned table or a partition of a partitioned table. */
+// 非分区表或分区表的分区的统计信息。
 public class CatalogTableStatistics {
     public static final CatalogTableStatistics UNKNOWN = new CatalogTableStatistics(-1, -1, -1, -1);
 
     /** The number of rows in the table or partition. */
+    // 表或分区中的行数。
     private final long rowCount;
 
     /** The number of files on disk. */
+    // 磁盘上的文件数。
     private final int fileCount;
 
     /** The total size in bytes. */

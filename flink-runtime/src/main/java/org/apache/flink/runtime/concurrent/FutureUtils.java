@@ -60,6 +60,7 @@ import scala.concurrent.Future;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A collection of utilities that expand the usage of {@link CompletableFuture}. */
+// 扩展{@link CompletableFuture}用法的实用工具集合。
 public class FutureUtils {
 
     private static final CompletableFuture<Void> COMPLETED_VOID_FUTURE =
@@ -94,6 +95,8 @@ public class FutureUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 以给定的次数重试给定的操作，以防失败。
+     *
      * Retry the given operation the given number of times in case of a failure.
      *
      * @param operation to executed
@@ -115,6 +118,8 @@ public class FutureUtils {
     }
 
     /**
+     * 辅助方法，在失败时重试提供的操作。
+     *
      * Helper method which retries the provided operation in case of a failure.
      *
      * @param resultFuture to complete

@@ -33,18 +33,24 @@ public abstract class JoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunctio
         extends DualInputOperator<IN1, IN2, OUT, FT> {
 
     /**
+     * 提示的枚举，可用于告诉系统如何准确地执行连接。
+     *
      * An enumeration of hints, optionally usable to tell the system how exactly execute the join.
      */
     @Public
     public static enum JoinHint {
 
         /**
+         * 将如何进行连接的选择留给优化器。如果有疑问，优化器将选择重分区连接。
+         *
          * Leave the choice how to do the join to the optimizer. If in doubt, the optimizer will
          * choose a repartitioning join.
          */
         OPTIMIZER_CHOOSES,
 
         /**
+         * 提示第一个连接输入比第二个要小得多。这将导致广播和散列第一个输入，除非优化器推断出可以使用更便宜的现有分区。
+         *
          * Hint that the first join input is much smaller than the second. This results in
          * broadcasting and hashing the first input, unless the optimizer infers that prior existing
          * partitioning is available that is even cheaper to exploit.
@@ -52,6 +58,8 @@ public abstract class JoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunctio
         BROADCAST_HASH_FIRST,
 
         /**
+         * 提示第二个连接输入比第一个要小得多。这将导致广播和散列第二个输入，除非优化器推断出可以使用更便宜的现有分区。
+         *
          * Hint that the second join input is much smaller than the first. This results in
          * broadcasting and hashing the second input, unless the optimizer infers that prior
          * existing partitioning is available that is even cheaper to exploit.
@@ -59,6 +67,9 @@ public abstract class JoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunctio
         BROADCAST_HASH_SECOND,
 
         /**
+         * 提示第一个连接输入比第二个要小一些。这将导致对输入进行重新分区，并对第一个输入进行散列，除非优化器推断出
+         * 可以使用更便宜的现有分区和订单。
+         *
          * Hint that the first join input is a bit smaller than the second. This results in
          * repartitioning both inputs and hashing the first input, unless the optimizer infers that
          * prior existing partitioning and orders are available that are even cheaper to exploit.
@@ -66,6 +77,9 @@ public abstract class JoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunctio
         REPARTITION_HASH_FIRST,
 
         /**
+         * 提示第二个连接输入比第一个稍微小一些。这将导致对输入进行重新分区，并对第二个输入进行哈希，除非优化器推断出
+         * 之前已经存在的分区和订单是可用的，而且利用起来更便宜。
+         *
          * Hint that the second join input is a bit smaller than the first. This results in
          * repartitioning both inputs and hashing the second input, unless the optimizer infers that
          * prior existing partitioning and orders are available that are even cheaper to exploit.
@@ -73,6 +87,8 @@ public abstract class JoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunctio
         REPARTITION_HASH_SECOND,
 
         /**
+         * 提示连接应该对输入进行重新分区，并使用排序和合并作为连接策略。
+         *
          * Hint that the join should repartitioning both inputs and use sorting and merging as the
          * join strategy.
          */

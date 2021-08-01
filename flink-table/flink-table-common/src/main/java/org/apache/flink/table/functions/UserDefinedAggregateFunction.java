@@ -22,10 +22,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /** Base class for user-defined aggregates and table aggregates. */
+// 用户定义聚合和表聚合的基类。
 @PublicEvolving
 public abstract class UserDefinedAggregateFunction<T, ACC> extends UserDefinedFunction {
 
     /**
+     * 为这个 {@link UserDefinedAggregateFunction} 创建并初始化累加器。累加器用于保存计算聚合结果所需的聚合值。
+     *
      * Creates and initializes the accumulator for this {@link UserDefinedAggregateFunction}. The
      * accumulator is used to keep the aggregated values which are needed to compute an aggregation
      * result.
