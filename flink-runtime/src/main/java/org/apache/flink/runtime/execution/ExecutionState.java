@@ -19,6 +19,11 @@
 package org.apache.flink.runtime.execution;
 
 /**
+ * 任务在执行期间可能处于的所有状态的枚举。任务通常在状态{@code CREATED}中启动，并根据下图切换状态:
+ *
+ * <p>如果作业管理器故障转移，可以从{@code CREATED}状态进入{@code RECONCILING}状态，并且{@code RECONCILING}
+ * 状态可以切换到任何现有的任务状态。
+ *
  * An enumeration of all states that a task can be in during its execution. Tasks usually start in
  * the state {@code CREATED} and switch states according to this diagram:
  *
@@ -55,6 +60,9 @@ public enum ExecutionState {
     RUNNING,
 
     /**
+     * 这个状态标志着“成功完成”。只有当程序到达“输入的末端”时才能到达。当使用有界输入(文件的修复集、有界查询等)或停止
+     * 程序(不是取消!)时，可以达到“输入结束”，这使输入看起来像是在特定的点结束了。
+     *
      * This state marks "successfully completed". It can only be reached when a program reaches the
      * "end of its input". The "end of input" can be reached when consuming a bounded input (fix set
      * of files, bounded query, etc) or when stopping a program (not cancelling!) which make the

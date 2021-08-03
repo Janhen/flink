@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * {@link CheckpointCoordinator}的配置设置。这包括检查点间隔、检查点超时、检查点之间的暂停、并发检查点的最大数量和
+ * {@link CheckpointCoordinator} 的配置设置。这包括检查点间隔、检查点超时、检查点之间的暂停、并发检查点的最大数量和
  * 外部化检查点的设置。
  *
  * Configuration settings for the {@link CheckpointCoordinator}. This includes the checkpoint
@@ -51,6 +51,7 @@ public class CheckpointCoordinatorConfiguration implements Serializable {
     private final int tolerableCheckpointFailureNumber;
 
     /** Settings for what to do with checkpoints when a job finishes. */
+    // 设置当任务完成时如何处理检查点。322
     private final CheckpointRetentionPolicy checkpointRetentionPolicy;
 
     /**

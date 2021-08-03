@@ -64,6 +64,8 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.runtime.execution.ExecutionState.FINISHED;
 
 /**
+ * ExecutionVertex 是执行的并行子任务。它可以被执行一次，也可以多次执行，每次都会生成一个 {@link Execution}。
+ *
  * The ExecutionVertex is a parallel subtask of the execution. It may be executed once, or several
  * times, each of which time it spawns an {@link Execution}.
  */
@@ -91,6 +93,7 @@ public class ExecutionVertex
     private final Time timeout;
 
     /** The name in the format "myTask (2/7)", cached to avoid frequent string concatenations. */
+    // 格式为“myTask(27)”的名称，缓存以避免频繁的字符串连接。
     private final String taskNameWithSubtask;
 
     private CoLocationConstraint locationConstraint;

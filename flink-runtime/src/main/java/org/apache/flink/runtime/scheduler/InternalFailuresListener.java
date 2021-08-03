@@ -25,6 +25,9 @@ import org.apache.flink.runtime.jobmaster.JobMasterGateway;
 import org.apache.flink.runtime.taskmanager.TaskExecutionState;
 
 /**
+ * 该接口允许订阅从JobMaster端检测到的失败(例如，从{@link ExecutionGraph}内部)。相比之下，TaskManager也会检
+ * 测到失败，它们通过{@link JobMasterGateway#updateTaskExecutionState(TaskExecutionState)}进行通信。
+ *
  * This interface enables subscribing to failures that are detected from the JobMaster side (e.g.,
  * from within the {@link ExecutionGraph}). In contrast, there are also failures that are detected
  * by the TaskManager, which are communicated via {@link

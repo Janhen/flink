@@ -24,6 +24,7 @@ import org.apache.flink.util.SerializedThrowable;
 import java.io.Serializable;
 
 /** Simple container to hold an exception and the corresponding timestamp. */
+// 用于保存异常和相应时间戳的简单容器。
 public class ErrorInfo implements Serializable {
 
     private static final long serialVersionUID = -6138942031953594202L;

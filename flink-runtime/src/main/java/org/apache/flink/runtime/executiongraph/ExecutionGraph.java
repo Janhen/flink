@@ -214,6 +214,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final Map<JobVertexID, ExecutionJobVertex> tasks;
 
     /** All vertices, in the order in which they were created. * */
+    // 所有的顶点，按照它们被创建的顺序。
     private final List<ExecutionJobVertex> verticesInCreationOrder;
 
     /** All intermediate results that are part of this graph. */
@@ -221,6 +222,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final Map<IntermediateDataSetID, IntermediateResult> intermediateResults;
 
     /** The currently executed tasks, for callbacks. */
+    // 当前执行的任务，用于回调。
     private final Map<ExecutionAttemptID, Execution> currentExecutions;
 
     /**
@@ -236,6 +238,9 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final FailoverStrategy failoverStrategy;
 
     /**
+     * 时间戳(以毫秒为单位，由{@code System.currentTimeMillis()}在执行图转换到某个状态时返回。该数组的索引是枚
+     * 举值的序号，即图进入“RUNNING”状态的时间戳为 {@code stateTimestamps[RUNNING.ordinal()]}。
+     *
      * Timestamps (in milliseconds as returned by {@code System.currentTimeMillis()} when the
      * execution graph transitioned into a certain state. The index into this array is the ordinal
      * of the enum value, i.e. the timestamp when the graph went into state "RUNNING" is at {@code
@@ -260,15 +265,17 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final ClassLoader userClassLoader;
 
     /** Registered KvState instances reported by the TaskManagers. */
-    // taskmanager报告的已注册KvState实例。
+    // taskManager 报告的已注册 KvState 实例。
     private final KvStateLocationRegistry kvStateLocationRegistry;
 
     /** Blob writer used to offload RPC messages. */
+    // 用于卸载 RPC 消息的 Blob 编写器。
     private final BlobWriter blobWriter;
 
     private boolean legacyScheduling = true;
 
     /** The total number of vertices currently in the execution graph. */
+    // 当前执行图中顶点的总数。
     private int numVerticesTotal;
 
     private final PartitionReleaseStrategy.Factory partitionReleaseStrategyFactory;
@@ -280,6 +287,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     @Nullable private InternalFailuresListener internalTaskFailuresListener;
 
     /** Counts all restarts. Used by other Gauges/Meters and does not register to metric group. */
+    // 计算所有重启。用于其他测量仪表，不注册到公制组。
     private final Counter numberOfRestartsCounter = new SimpleCounter();
 
     // ------ Configuration of the Execution -------
@@ -318,6 +326,9 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private Throwable failureCause;
 
     /**
+     * 作业的扩展失败原因信息。除了' failrecause '，这个信息还存在，让' failrecause '成为对异常的强引用，而这个
+     * 信息没有对任何用户定义类的强引用。
+     *
      * The extended failure cause information for the job. This exists in addition to
      * 'failureCause', to let 'failureCause' be a strong reference to the exception, while this info
      * holds no strong reference to any user-defined classes.
@@ -335,12 +346,15 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // -------
 
     /** The coordinator for checkpoints, if snapshot checkpoints are enabled. */
+    // 如果启用快照检查点，则为检查点的协调器。
     @Nullable private CheckpointCoordinator checkpointCoordinator;
 
     /** TODO, replace it with main thread executor. */
     @Nullable private ScheduledExecutorService checkpointCoordinatorTimer;
 
     /**
+     * 检查点统计跟踪器与协调器分离，以便在归档后可用。
+     *
      * Checkpoint stats tracker separate from the coordinator in order to be available after
      * archiving.
      */
@@ -352,6 +366,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private String jsonPlan;
 
     /** Shuffle master to register partitions for task deployment. */
+    // Shuffle master 为任务部署注册分区。
     private final ShuffleMaster<?> shuffleMaster;
 
     // --------------------------------------------------------------------------------------------

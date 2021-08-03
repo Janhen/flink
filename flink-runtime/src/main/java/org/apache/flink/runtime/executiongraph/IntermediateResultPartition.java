@@ -112,6 +112,7 @@ public class IntermediateResultPartition {
 
     boolean markFinished() {
         // Sanity check that this is only called on blocking partitions.
+        // 检查是否只在阻塞分区时调用。
         if (!getResultType().isBlocking()) {
             throw new IllegalStateException(
                     "Tried to mark a non-blocking result partition as finished");
@@ -124,6 +125,7 @@ public class IntermediateResultPartition {
         if (refCnt == 0) {
             return true;
         } else if (refCnt < 0) {
+            // “未完成的生产者数量减少到0以下。“这很可能是执行状态中间结果中的错误”“分区管理”。
             throw new IllegalStateException(
                     "Decremented number of unfinished producers below 0. "
                             + "This is most likely a bug in the execution state/intermediate result "

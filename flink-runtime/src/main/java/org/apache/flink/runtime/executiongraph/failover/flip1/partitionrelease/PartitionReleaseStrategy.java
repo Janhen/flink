@@ -27,6 +27,8 @@ import org.apache.flink.runtime.scheduler.strategy.SchedulingTopology;
 import java.util.List;
 
 /**
+ * 决定何时释放 IntermediateResultPartition 的策略接口。
+ *
  * Interface for strategies that decide when to release {@link IntermediateResultPartition
  * IntermediateResultPartitions}.
  */

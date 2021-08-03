@@ -38,14 +38,14 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * 检查点统计的跟踪器。
  *
- * <p>与{@link CheckpointCoordinator}紧密集成，以简化细粒度统计信息的收集。
+ * <p>与 {@link CheckpointCoordinator} 紧密集成，以简化细粒度统计信息的收集。
  *
  * <p>跟踪统计包括总结计数，最近和正在进行的检查点的详细历史，以及关于大小，持续时间和更多的最近检查点的总结。
  *
- * <p>数据通过回调{@link CheckpointCoordinator}和相关类{@link PendingCheckpoint}和{@link CompletedCheckpoint}
- * 收集，这些类首先接收原始的统计数据。
+ * <p>数据通过回调 {@link CheckpointCoordinator} 和相关类 {@link PendingCheckpoint} 和
+ * {@link CompletedCheckpoint} 收集，这些类首先接收原始的统计数据。
  *
- * <p>统计数据通过{@link #createSnapshot()}访问，并通过web前端和{@link Metric}系统公开。
+ * <p>统计数据通过 {@link #createSnapshot()} 访问，并通过 web 前端和 {@link Metric} 系统公开。
  *
  * Tracker for checkpoint statistics.
  *
@@ -83,6 +83,7 @@ public class CheckpointStatsTracker {
     private final int totalSubtaskCount;
 
     /** Snapshotting settings created from the CheckpointConfig. */
+    // 从 CheckpointConfig 创建的快照设置。
     private final CheckpointCoordinatorConfiguration jobCheckpointingConfiguration;
 
     /** Checkpoint counts. */

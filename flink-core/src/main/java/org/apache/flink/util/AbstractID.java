@@ -40,12 +40,14 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
     // ------------------------------------------------------------------------
 
     /** The upper part of the actual ID. */
+    // 实际 ID 的上面部分。
     protected final long upperPart;
 
     /** The lower part of the actual ID. */
     protected final long lowerPart;
 
     /** The memoized value returned by toString(). */
+    // toString()返回的记忆值。
     private transient String hexString;
 
     // --------------------------------------------------------------------------------------------

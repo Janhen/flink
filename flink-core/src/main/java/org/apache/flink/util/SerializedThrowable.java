@@ -26,6 +26,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 实用程序类，用于处理已序列化的用户定义Throwable类型(例如在RPCActor通信期间)，但不能用默认的类装入器解析这些类型。
+ *
+ * <p>此异常在消息和堆栈跟踪方面模仿原始异常，并以序列化的形式包含原始异常。可以通过提供适当的类装入器重新获得原始异常。
+ *
  * Utility class for dealing with user-defined Throwable types that are serialized (for example
  * during RPC/Actor communication), but cannot be resolved with the default class loader.
  *

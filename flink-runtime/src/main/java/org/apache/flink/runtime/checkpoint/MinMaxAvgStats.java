@@ -21,6 +21,7 @@ package org.apache.flink.runtime.checkpoint;
 import java.io.Serializable;
 
 /** Helper for keeping track of min/max/average summaries. */
+// 帮助保持跟踪 min/max/average ++632.0摘要。
 public class MinMaxAvgStats implements Serializable {
 
     private static final long serialVersionUID = 1769601903483446707L;

@@ -78,6 +78,8 @@ public class CheckpointFailureManager {
     }
 
     /**
+     * 使用处理程序回调处理任务级检查点异常。
+     *
      * Handle task level checkpoint exception with a handler callback.
      *
      * @param exception the checkpoint exception.
@@ -94,6 +96,7 @@ public class CheckpointFailureManager {
         checkFailureCounter(exception, checkpointId);
         if (continuousFailureCounter.get() > tolerableCpFailureNumber) {
             clearCount();
+            // 超过检查点可容忍失败阈值
             failureCallback.failJobDueToTaskFailure(
                     new FlinkRuntimeException("Exceeded checkpoint tolerable failure threshold."),
                     executionAttemptID);

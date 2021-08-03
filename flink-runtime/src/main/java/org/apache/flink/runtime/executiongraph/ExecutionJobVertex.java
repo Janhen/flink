@@ -73,6 +73,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * {@code ExecutionJobVertex} 是 {@link ExecutionGraph} 的一部分，是 {@link JobVertex} 的对等体。
+ *
+ * <p> {@code ExecutionJobVertex} 对应一个并行操作。它包含该操作的每个并行实例的 {@link ExecutionVertex}。
+ *
  * An {@code ExecutionJobVertex} is part of the {@link ExecutionGraph}, and the peer to the {@link
  * JobVertex}.
  *
