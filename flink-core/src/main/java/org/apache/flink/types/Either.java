@@ -26,6 +26,8 @@ import org.apache.flink.api.java.typeutils.EitherTypeInfoFactory;
 import org.apache.flink.api.java.typeutils.runtime.EitherSerializer;
 
 /**
+ * 这个类型表示一个值有两种可能的类型，Left 或 Right(不相交的联合)，灵感来自 Scala 的 Either 类型。
+ *
  * This type represents a value of one two possible types, Left or Right (a disjoint union),
  * inspired by Scala's Either type.
  *
@@ -218,6 +220,10 @@ public abstract class Either<L, R> {
     }
 
     /**
+     * 支持对象重用的 {@link EitherSerializer} 实用函数。
+     *
+     * <p>为了支持对象重用，Either 的两个子类都包含对另一个类型实例的引用。此方法提供对交叉引用的访问和初始化。
+     *
      * Utility function for {@link EitherSerializer} to support object reuse.
      *
      * <p>To support object reuse both subclasses of Either contain a reference to an instance of

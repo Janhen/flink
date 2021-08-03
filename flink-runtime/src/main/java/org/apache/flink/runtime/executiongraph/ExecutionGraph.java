@@ -119,16 +119,17 @@ import static org.apache.flink.util.Preconditions.checkState;
  * ExecutionGraph 是协调数据流分布式执行的中心数据结构。它保持每个并行任务、每个中间流以及它们之间的通信的表示。
  *
  * <p>执行图包含以下结构:
- *   {@link ExecutionJobVertex}表示在执行过程中来自 JobGraph 的一个顶点(通常是像“map”或“join”这样的操作)。它保存
- *     所有并行子任务的聚合状态。ExecutionJobVertex 在图中通过{@link JobVertexID}标识，它从JobGraph对应
- *     的JobVertex中获取。
+ *   {@link ExecutionJobVertex} 表示在执行过程中来自 JobGraph 的一个顶点(通常是像“map”或“join”这样的操作)。
+ *   它保存所有并行子任务的聚合状态。ExecutionJobVertex 在图中通过 {@link JobVertexID} 标识，它从 JobGraph
+ *   对应的 JobVertex 中获取。
  *
- *   {@link ExecutionVertex}表示一个并行子任务。对于每个 ExecutionJobVertex，其 ExecutionVertices 的数量与并行度
- *     相同。ExecutionVertex由ExecutionJobVertex和并行子任务的索引标识
+ *   {@link ExecutionVertex} 表示一个并行子任务。对于每个 ExecutionJobVertex，其 ExecutionVertices 的数量
+ *   与并行度相同。ExecutionVertex 由 ExecutionJobVertex 和并行子任务的索引标识
  *
- *   {@link Execution}是执行ExecutionVertex的一次尝试。ExecutionVertex可能有多个执行，以防出现故障，或者某些数据
- *     需要重新计算，因为在以后的操作请求时这些数据不再可用。一个Execution总是由{@link ExecutionAttemptID}标识。
- *     JobManager和TaskManager之间关于任务部署和任务状态更新的所有消息总是使用ExecutionAttemptID来寻地址消息接收者。
+ *   {@link Execution}是执行ExecutionVertex的一次尝试。ExecutionVertex可能有多个执行，以防出现故障，或者某些
+ *   数据需要重新计算，因为在以后的操作请求时这些数据不再可用。一个Execution总是由{@link ExecutionAttemptID}标识。
+ *   JobManager 和 TaskManager 之间关于任务部署和任务状态更新的所有消息总是使用 ExecutionAttemptID 来寻地址消
+ *   息接收者。
  *
  *  Execution Graph 有两种failover模式:<i> Global failover<i>和<i>local failover<i>。
  *
@@ -155,6 +156,10 @@ import static org.apache.flink.util.Preconditions.checkState;
  * </ul>
  *
  * <h2>Global and local failover</h2>
+ *
+ * <h2>全球及地方failover<h2>
+ *
+ * <p>执行图有两种故障转移模式:<i>全局故障转移<i>和<i>局部故障转移<i>。
  *
  * <p>The Execution Graph has two failover modes: <i>global failover</i> and <i>local failover</i>.
  *
@@ -192,12 +197,14 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final Either<SerializedValue<JobInformation>, PermanentBlobKey> jobInformationOrBlobKey;
 
     /** The executor which is used to execute futures. */
+    // 用于执行 futures 的执行者。
     private final ScheduledExecutorService futureExecutor;
 
     /** The executor which is used to execute blocking io operations. */
     private final Executor ioExecutor;
 
     /** Executor that runs tasks in the job manager's main thread. */
+    // 在作业管理器的主线程中运行任务的执行器。
     @Nonnull private ComponentMainThreadExecutor jobMasterMainThreadExecutor;
 
     /** {@code true} if all source tasks are stoppable. */
@@ -210,18 +217,22 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final List<ExecutionJobVertex> verticesInCreationOrder;
 
     /** All intermediate results that are part of this graph. */
+    // 所有中间结果都是这个图的一部分。
     private final Map<IntermediateDataSetID, IntermediateResult> intermediateResults;
 
     /** The currently executed tasks, for callbacks. */
     private final Map<ExecutionAttemptID, Execution> currentExecutions;
 
     /**
+     * 当整个作业切换状态(例如从 RUNNING 到 FINISHED)时接收消息的侦听器。
+     *
      * Listeners that receive messages when the entire job switches it status (such as from RUNNING
      * to FINISHED).
      */
     private final List<JobStatusListener> jobStatusListeners;
 
     /** The implementation that decides how to recover the failures of tasks. */
+    // 决定如何恢复任务失败的实现
     private final FailoverStrategy failoverStrategy;
 
     /**
@@ -242,12 +253,14 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final RestartStrategy restartStrategy;
 
     /** The slot provider strategy to use for allocating slots for tasks as they are needed. */
+    // 用于在任务需要时为任务分配槽的槽提供程序策略。
     private final SlotProviderStrategy slotProviderStrategy;
 
     /** The classloader for the user code. Needed for calls into user code classes. */
     private final ClassLoader userClassLoader;
 
     /** Registered KvState instances reported by the TaskManagers. */
+    // taskmanager报告的已注册KvState实例。
     private final KvStateLocationRegistry kvStateLocationRegistry;
 
     /** Blob writer used to offload RPC messages. */

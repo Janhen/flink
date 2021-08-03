@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.Collection;
 
 /** Container class for job information which is stored in the {@link ExecutionGraph}. */
+// 容器类用于存储在 {@link ExecutionGraph} 中的作业信息
 public class JobInformation implements Serializable {
 
     private static final long serialVersionUID = 8367087049937822140L;
@@ -41,15 +42,18 @@ public class JobInformation implements Serializable {
     private final String jobName;
 
     /** Serialized execution config because it can contain user code classes */
+    // 序列化执行配置，因为它可以包含用户代码类
     private final SerializedValue<ExecutionConfig> serializedExecutionConfig;
 
     /** Configuration of the job */
     private final Configuration jobConfiguration;
 
     /** Blob keys for the required jar files */
+    // 所需 jar 文件的 Blob 键
     private final Collection<PermanentBlobKey> requiredJarFileBlobKeys;
 
     /** URLs specifying the classpath to add to the class loader */
+    // 指定要添加到类装入器中的类路径的 url
     private final Collection<URL> requiredClasspathURLs;
 
     public JobInformation(

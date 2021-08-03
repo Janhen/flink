@@ -19,7 +19,7 @@
 package org.apache.flink.runtime.jobgraph;
 
 /** The ScheduleMode decides how tasks of an execution graph are started. */
-// ScheduleMode决定如何启动执行图中的任务
+// ScheduleMode 决定如何启动执行图中的任务
 public enum ScheduleMode {
     /**
      * 从源延迟地计划任务。一旦输入数据准备好，下游任务就会启动
