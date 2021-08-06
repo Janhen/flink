@@ -24,6 +24,8 @@ import java.util.Collection;
 
 /**
  * Utility for tracking partitions and issuing release calls to task executors and shuffle masters.
+ *
+ * 用于跟踪分区并向任务执行器和 shuffle 主程序发出释放调用的实用程序。
  */
 public interface JobMasterPartitionTracker
         extends PartitionTracker<ResourceID, ResultPartitionDeploymentDescriptor> {

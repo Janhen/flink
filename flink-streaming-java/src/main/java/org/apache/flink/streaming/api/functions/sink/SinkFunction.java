@@ -23,6 +23,8 @@ import org.apache.flink.api.common.functions.Function;
 import java.io.Serializable;
 
 /**
+ * 实现用户定义的接收器功能的接口。
+ *
  * Interface for implementing user defined sink functionality.
  *
  * @param <IN> Input type parameter.
@@ -35,6 +37,11 @@ public interface SinkFunction<IN> extends Function, Serializable {
     default void invoke(IN value) throws Exception {}
 
     /**
+     * 将给定值写入接收器。每个记录都会调用这个函数。
+     *
+     * <p>当你实现一个{@code SinkFunction}时，你必须重写这个方法，这是一个{@code default}方法，只为了向后兼
+     * 容旧的方法。
+     *
      * Writes the given value to the sink. This function is called for every record.
      *
      * <p>You have to override this method when implementing a {@code SinkFunction}, this is a
@@ -50,6 +57,10 @@ public interface SinkFunction<IN> extends Function, Serializable {
     }
 
     /**
+     * {@link SinkFunction SinkFunctions}可以用来获取关于输入记录的额外数据的上下文。
+     *
+     * <p>上下文仅在{@link SinkFunction#invoke(Object, Context)}调用期间有效。不要储存上下文然后再使用!
+     *
      * Context that {@link SinkFunction SinkFunctions } can use for getting additional data about an
      * input record.
      *

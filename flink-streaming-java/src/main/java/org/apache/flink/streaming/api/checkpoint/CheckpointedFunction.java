@@ -27,9 +27,25 @@ import org.apache.flink.runtime.state.FunctionSnapshotContext;
 
 /**
  * 这是<i>状态转换函数<i>的核心接口，意思是维护跨单个流记录的状态的函数。虽然更轻量级的接口作为各种类型状态的快捷方式存
- * 在，但该接口在管理<i>keyed state<i>和<i>operator state<i>时提供了最大的灵活性。
+ * 在，但该接口在管理 <i>keyed state<i> 和 <i>operator state<i> 时提供了最大的灵活性。
  *
  * <p> section <a href="shortcuts"> shortcuts <a>说明了常用的轻量级方法，用于设置有状态函数，而不是使用此接口所代表的成熟抽象。
+ *
+ * <p> {@link CheckpointedFunction#initializeState(FunctionInitializationContext)}
+ * 在分布式执行过程中创建转换函数的并行实例时被调用。该方法提供了对 {@link FunctionInitializationContext} 的访问，
+ * 而 {@link OperatorStateStore} 和 {@link KeyedStateStore} 的访问。
+ *
+ * <p> {@code OperatorStateStore} 和 {@code KeyedStateStore} 给访问数据结构的状态应该为Flink透明地管理和存
+ * 储检查点,如{@link org.apache.flink.api.common.state.ValueState}或
+ * {@link org.apache.flink.api.common.state.ListState}。
+ *
+ * <p><b>注意:<b> {@code KeyedStateStore}只能在转换支持<i>键态<i>时使用，即当它应用于键态流(在{@code keyBy(…)}之后)。
+ *
+ * <p>当检查点获取转换函数的状态快照时，{@link CheckpointedFunction#snapshotState(FunctionSnapshotContext)}
+ * 将被调用。在这个方法中，函数通常确保检查点数据结构(在初始化阶段获得的)对于要拍摄的快照是最新的。给定的快照上下文允许
+ * 访问检查点的元数据。
+ *
+ * <p>此外，函数可以将此方法用作与外部系统进行 flush/commit/synchronize 的钩子。
  *
  * This is the core interface for <i>stateful transformation functions</i>, meaning functions that
  * maintain state across individual stream records. While more lightweight interfaces exist as
@@ -177,6 +193,7 @@ public interface CheckpointedFunction {
      * execution. Functions typically set up their state storing data structures in this method.
      *
      * @param context the context for initializing the operator
+     *                初始化操作符的上下文
      * @throws Exception Thrown, if state could not be created ot restored.
      */
     void initializeState(FunctionInitializationContext context) throws Exception;

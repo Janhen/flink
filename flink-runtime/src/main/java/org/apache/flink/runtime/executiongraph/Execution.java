@@ -108,6 +108,18 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * 一个顶点的一次执行。当 {@link ExecutionVertex} 可以被执行多次(用于恢复、重新计算、重新配置)时，这个类跟踪该顶点
  * 和资源的一次执行状态。
  *
+ * <h2>锁定自由状态转换</h2>
+ *
+ * <p>在代码的几个地方，我们需要处理可能的并发状态更改和操作。例如，当调用部署任务(将其发送到TaskManager)时，任务
+ * 被取消。
+ *
+ * <p>我们可以锁定代码的整个部分(决定部署、部署、将状态设置为运行)，这样就可以保证任何“取消命令”只在部署完成后才会出现，
+ * 而且“取消命令”调用永远不会取代部署调用。
+ *
+ * <p>这会阻塞线程很长时间，因为远程调用可能需要很长时间。根据它们的锁定行为，它甚至可能导致分布式死锁(除非小心避免)。
+ * 因此，我们使用原子状态更新和偶尔的双重检查，以确保完成调用后的状态符合预期，如果不是，则触发纠正操作。许多动作也是幂
+ * 等的(比如取消)。
+ *
  * A single execution of a vertex. While an {@link ExecutionVertex} can be executed multiple times
  * (for recovery, re-computation, re-configuration), this class tracks the state of a single
  * execution of that vertex and the resources.
@@ -138,13 +150,15 @@ public class Execution
     // --------------------------------------------------------------------------------------------
 
     /** The executor which is used to execute futures. */
-    // 用于执行期货的执行者。
+    // 用于执行 future 的执行者。
     private final Executor executor;
 
     /** The execution vertex whose task this execution executes. */
+    // 此执行执行其任务的执行顶点。
     private final ExecutionVertex vertex;
 
     /** The unique ID marking the specific execution instant of the task. */
+    // 标识任务的特定执行时刻的唯一ID。
     private final ExecutionAttemptID attemptId;
 
     /**
@@ -155,6 +169,8 @@ public class Execution
     private final long globalModVersion;
 
     /**
+     * 状态转换发生时的时间戳，由 {@link ExecutionState#ordinal()} 索引。
+     *
      * The timestamps when state transitions occurred, indexed by {@link ExecutionState#ordinal()}.
      */
     private final long[] stateTimestamps;
@@ -166,6 +182,7 @@ public class Execution
     private final Collection<PartitionInfo> partitionInfos;
 
     /** A future that completes once the Execution reaches a terminal ExecutionState. */
+    // 当执行到达终端 ExecutionState 时完成的 future。
     private final CompletableFuture<ExecutionState> terminalStateFuture;
 
     private final CompletableFuture<?> releaseFuture;

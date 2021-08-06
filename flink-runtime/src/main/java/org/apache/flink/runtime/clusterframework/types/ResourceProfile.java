@@ -38,6 +38,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 描述槽的不可变资源配置文件，无论是在需要还是提供时。可以检查该配置文件是否符合另一个配置文件的要求，并进一步计算匹
+ * 配分数，以决定当我们有大量的候选槽时，我们应该选择哪个配置文件。它应该由 {@link ResourceSpec} 生成，并在
+ * JobMaster 中计算输入和输出内存。
+ *
+ * <p>资源配置文件有一个总的排序，通过按顺序比较这些字段来定义:
+ *
  * Describe the immutable resource profile of the slot, either when requiring or offering it. The
  * profile can be checked whether it can match another profile's requirement, and furthermore we may
  * calculate a matching score to decide which profile we should choose when we have lots of
@@ -68,6 +74,8 @@ public class ResourceProfile implements Serializable {
     public static final ResourceProfile UNKNOWN = new ResourceProfile();
 
     /**
+     * 一个 ResourceProfile，它指示匹配任何资源需求的无限资源，仅用于测试目的。
+     *
      * A ResourceProfile that indicates infinite resource that matches any resource requirement, for
      * testability purpose only.
      */
@@ -82,12 +90,15 @@ public class ResourceProfile implements Serializable {
                     .build();
 
     /** A ResourceProfile describing zero resources. */
+    // 描述零资源的ResourceProfile。
     public static final ResourceProfile ZERO = newBuilder().build();
 
     /** Maximum number of cpu cores to output in {@link #toString()}. */
+    // 在{@link toString()}中输出的最大cpu核数。
     static final BigDecimal MAX_CPU_CORE_NUMBER_TO_LOG = new BigDecimal(16384);
 
     /** Maximum memory resource size to output in {@link #toString()}. */
+    // 在{@link toString()}中输出的最大内存资源大小。
     static final MemorySize MAX_MEMORY_SIZE_TO_LOG = new MemorySize(1L << 50); // 1Pb
 
     // ------------------------------------------------------------------------

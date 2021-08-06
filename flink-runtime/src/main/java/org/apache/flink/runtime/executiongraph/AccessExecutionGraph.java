@@ -34,8 +34,11 @@ import java.util.Map;
 import java.util.Optional;
 
 /** Common interface for the runtime {@link ExecutionGraph} and {@link ArchivedExecutionGraph}. */
+// 运行库{@link ExecutionGraph}和{@link ArchivedExecutionGraph}的通用接口。
 public interface AccessExecutionGraph {
     /**
+     * 以 JSON 字符串的形式返回任务计划。
+     *
      * Returns the job plan as a JSON string.
      *
      * @return job plan as a JSON string
@@ -43,6 +46,8 @@ public interface AccessExecutionGraph {
     String getJsonPlan();
 
     /**
+     * 返回这个执行图的{@link JobID}。
+     *
      * Returns the {@link JobID} for this execution graph.
      *
      * @return job ID for this execution graph
@@ -57,6 +62,8 @@ public interface AccessExecutionGraph {
     String getJobName();
 
     /**
+     * 返回此执行图的当前 {@link JobStatus}。
+     *
      * Returns the current {@link JobStatus} for this execution graph.
      *
      * @return job status for this execution graph
@@ -64,6 +71,8 @@ public interface AccessExecutionGraph {
     JobStatus getState();
 
     /**
+     * 返回导致作业失败的异常。这是第一个不可恢复并触发作业失败的根异常。
+     *
      * Returns the exception that caused the job to fail. This is the first root exception that was
      * not recoverable and triggered job failure.
      *
@@ -73,6 +82,8 @@ public interface AccessExecutionGraph {
     ErrorInfo getFailureInfo();
 
     /**
+     * 返回给定的{@link JobVertexID}的作业顶点。
+     *
      * Returns the job vertex for the given {@link JobVertexID}.
      *
      * @param id id of job vertex to be returned
@@ -82,6 +93,8 @@ public interface AccessExecutionGraph {
     AccessExecutionJobVertex getJobVertex(JobVertexID id);
 
     /**
+     * 返回包含此执行图的所有作业顶点的映射。
+     *
      * Returns a map containing all job vertices for this execution graph.
      *
      * @return map containing all job vertices for this execution graph
@@ -89,6 +102,8 @@ public interface AccessExecutionGraph {
     Map<JobVertexID, ? extends AccessExecutionJobVertex> getAllVertices();
 
     /**
+     * 返回一个可迭代对象，其中包含这个执行图的所有作业顶点，按它们创建的顺序排列。
+     *
      * Returns an iterable containing all job vertices for this execution graph in the order they
      * were created.
      *
@@ -113,6 +128,8 @@ public interface AccessExecutionGraph {
     long getStatusTimestamp(JobStatus status);
 
     /**
+     * 如果检查点被禁用，返回{@link CheckpointCoordinatorConfiguration}或<code>null<code>。
+     *
      * Returns the {@link CheckpointCoordinatorConfiguration} or <code>null</code> if checkpointing
      * is disabled.
      *

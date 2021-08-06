@@ -27,6 +27,8 @@ import java.util.function.Function;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个 {@link ResultPartitionAvailabilityChecker}，它根据执行图中对应的结果分区是否被跟踪来决定中间结果分区的可用性。
+ *
  * A {@link ResultPartitionAvailabilityChecker} which decides the intermediate result partition
  * availability based on whether the corresponding result partition in the execution graph is
  * tracked.

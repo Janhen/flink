@@ -23,14 +23,17 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Summary over <strong>all</strong> completed checkpoints. */
+// 总结<strong>所有<strong>完成的检查点。
 public class CompletedCheckpointStatsSummary implements Serializable {
 
     private static final long serialVersionUID = 5784360461635814038L;
 
     /** State size statistics for all completed checkpoints. */
+    // 所有完成的检查点的状态大小统计。
     private final MinMaxAvgStats stateSize;
 
     /** Duration statistics for all completed checkpoints. */
+    // 所有完成检查点的持续时间统计。
     private final MinMaxAvgStats duration;
 
     CompletedCheckpointStatsSummary() {

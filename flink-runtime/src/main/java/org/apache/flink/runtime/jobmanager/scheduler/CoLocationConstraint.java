@@ -97,6 +97,10 @@ public class CoLocationConstraint {
     // ------------------------------------------------------------------------
 
     /**
+     * 锁定这个插槽的位置。该位置只能被锁定一次，而且只能在分配了共享槽之后
+     *
+     * <p>注意:这个方法的存在是为了与新的{@link SlotPool}兼容。
+     *
      * Locks the location of this slot. The location can be locked only once and only after a shared
      * slot has been assigned.
      *

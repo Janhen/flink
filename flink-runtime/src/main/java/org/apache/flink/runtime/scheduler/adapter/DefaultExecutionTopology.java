@@ -44,6 +44,7 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Adapter of {@link ExecutionGraph} to {@link SchedulingTopology}. */
+// {@link ExecutionGraph} 到 {@link SchedulingTopology} 的适配器
 public class DefaultExecutionTopology implements SchedulingTopology {
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultExecutionTopology.class);

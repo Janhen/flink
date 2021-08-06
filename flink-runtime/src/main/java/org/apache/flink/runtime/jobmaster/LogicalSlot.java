@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 逻辑槽表示 TaskManager 上可以部署单个任务的资源。
+ *
  * A logical slot represents a resource on a TaskManager into which a single task can be deployed.
  */
 public interface LogicalSlot {
@@ -65,6 +67,8 @@ public interface LogicalSlot {
     TaskManagerGateway getTaskManagerGateway();
 
     /**
+     * 获取此槽的位置。
+     *
      * Gets the locality of this slot.
      *
      * @return locality of this slot
@@ -87,6 +91,8 @@ public interface LogicalSlot {
     boolean tryAssignPayload(Payload payload);
 
     /**
+     * 返回设置的有效负载，如果没有则为空。
+     *
      * Returns the set payload or null if none.
      *
      * @return Payload of this slot of null if none

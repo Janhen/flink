@@ -72,12 +72,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 工具类封装从 {@link JobGraph} 构建 {@link ExecutionGraph} 的逻辑。
+ *
  * Utility class to encapsulate the logic of building an {@link ExecutionGraph} from a {@link
  * JobGraph}.
  */
 public class ExecutionGraphBuilder {
 
     /**
+     * 从 JobGraph 构建 ExecutionGraph。如果存在先前的执行图，则将附加 JobGraph。如果之前的执行图不存在，那么
+     * JobGraph 将附加到一个新的空执行图。
+     *
      * Builds the ExecutionGraph from the JobGraph. If a prior execution graph exists, the JobGraph
      * will be attached. If no prior execution graph exists, then the JobGraph will become attach to
      * a new empty execution graph.

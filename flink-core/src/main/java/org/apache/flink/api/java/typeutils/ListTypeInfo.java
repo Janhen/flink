@@ -29,7 +29,11 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+<<<<<<< HEAD
  * Java API 的列表类型的 {@link TypeInformation}。
+=======
+ * 用于Java API列表类型的{@link TypeInformation}。
+>>>>>>> 98eefdd4440b8dabdfde74cbf87d61a6a7375cf6
  *
  * A {@link TypeInformation} for the list types of the Java API.
  *

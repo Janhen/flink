@@ -27,7 +27,13 @@ import org.apache.flink.api.java.typeutils.ListTypeInfo;
 import java.util.List;
 
 /**
- * {@link ListState}的{@link StateDescriptor}。这可以用于创建状态，其中类型是一个可以附加和迭代的列表。
+ * {@link ListState} 的 {@link StateDescriptor}。这可以用于创建状态，其中类型是一个可以附加和迭代的列表。
+ *
+ * <p>使用 {@code ListState} 通常比在 {@link ValueState} 中手动维护列表更有效，因为后台实现可以支持有效的追加，
+ * 而不是在写时替换完整的列表
+ *
+ * <p>创建键控列表状态(在KeyedStream上)，使用
+ * {@link org.apache.flink.api.common.functions.RuntimeContext#getListState(ListStateDescriptor)}。
  *
  * A {@link StateDescriptor} for {@link ListState}. This can be used to create state where the type
  * is a list that can be appended and iterated over.

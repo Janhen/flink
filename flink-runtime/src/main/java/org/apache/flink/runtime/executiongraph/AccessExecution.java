@@ -22,6 +22,8 @@ import org.apache.flink.runtime.execution.ExecutionState;
 import org.apache.flink.runtime.taskmanager.TaskManagerLocation;
 
 /**
+ * 运行库 {@link Execution} and {@link ArchivedExecution} 的通用接口。
+ *
  * Common interface for the runtime {@link Execution and {@link ArchivedExecution}.
  */
 public interface AccessExecution {
