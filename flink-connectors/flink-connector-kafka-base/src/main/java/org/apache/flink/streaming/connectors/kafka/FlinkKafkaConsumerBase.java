@@ -80,9 +80,9 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 所有Flink Kafka Consumer数据源的基类。这实现了所有Kafka版本的通用行为。
+ * 所有 Flink Kafka Consumer 数据源的基类。这实现了所有 Kafka 版本的通用行为。
  *
- * <p> Kafka版本特定行为主要定义在{@link AbstractFetcher}的特定子类中。
+ * <p> Kafka 版本特定行为主要定义在 {@link AbstractFetcher} 的特定子类中。
  *
  * Base class of all Flink Kafka Consumer data sources. This implements the common behavior across
  * all Kafka versions.
@@ -101,22 +101,28 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     protected static final Logger LOG = LoggerFactory.getLogger(FlinkKafkaConsumerBase.class);
 
     /** The maximum number of pending non-committed checkpoints to track, to avoid memory leaks. */
+    // 要跟踪的未提交的挂起检查点的最大数目，以避免内存泄漏。
     public static final int MAX_NUM_PENDING_CHECKPOINTS = 100;
 
     /**
+     * 执行分区发现的默认间隔，以毫秒为单位({@code Long.MIN_VALUE}，即默认禁用)。
+     *
      * The default interval to execute partition discovery, in milliseconds ({@code Long.MIN_VALUE},
      * i.e. disabled by default).
      */
     public static final long PARTITION_DISCOVERY_DISABLED = Long.MIN_VALUE;
 
     /** Boolean configuration key to disable metrics tracking. * */
+    // 布尔配置键禁用度量跟踪。
     public static final String KEY_DISABLE_METRICS = "flink.disable-metrics";
 
     /** Configuration key to define the consumer's partition discovery interval, in milliseconds. */
+    // 配置键定义使用者的分区发现间隔(以毫秒为单位)。
     public static final String KEY_PARTITION_DISCOVERY_INTERVAL_MILLIS =
             "flink.partition-discovery.interval-millis";
 
     /** State name of the consumer's partition offset states. */
+    // 使用者的分区偏移状态的状态名。
     private static final String OFFSETS_STATE_NAME = "topic-partition-offset-states";
 
     // ------------------------------------------------------------------------
@@ -124,19 +130,24 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /** Describes whether we are discovering partitions for fixed topics or a topic pattern. */
+    // 描述我们是为固定主题还是主题模式发现分区。
     private final KafkaTopicsDescriptor topicsDescriptor;
 
     /** The schema to convert between Kafka's byte messages, and Flink's objects. */
+    // 在Kafka的字节消息和Flink的对象之间进行转换的模式。
     protected final KafkaDeserializationSchema<T> deserializer;
 
     /**
+     * 源将要读取的主题分区集，以及从它们开始读取的初始偏移量。
+     *
      * The set of topic partitions that the source will read, with their initial offsets to start
      * reading from.
      */
     private Map<KafkaTopicPartition, Long> subscribedPartitionsToStartOffsets;
 
     /**
-     * 可选的水印策略，将运行每个Kafka分区，以利用每个分区的时间戳特征。水印策略以序列化的形式保存，将其反序列化为多个副本。
+     * 可选的水印策略，将运行每个 Kafka 分区，以利用每个分区的时间戳特征。水印策略以序列化的形式保存，将其反序列化
+     * 为多个副本。
      *
      * Optional watermark strategy that will be run per Kafka partition, to exploit per-partition
      * timestamp characteristics. The watermark strategy is kept in serialized form, to deserialize
@@ -145,7 +156,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private SerializedValue<WatermarkStrategy<T>> watermarkStrategy;
 
     /**
-     * 决定是否在检查点上提交的用户设置标志。注意:此标志不代表最终的偏移量提交模式。
+     * 决定是否在检查点上提交的用户设置标志。注意: 此标志不代表最终的偏移量提交模式。
      *
      * User-set flag determining whether or not to commit on checkpoints. Note: this flag does not
      * represent the final offset commit mode.
@@ -153,9 +164,13 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private boolean enableCommitOnCheckpoints = true;
 
     /** User-set flag to disable filtering restored partitions with current topics descriptor. */
+    // 用户设置标志以禁用使用当前主题描述符过滤恢复的分区。
     private boolean filterRestoredPartitionsWithCurrentTopicsDescriptor = true;
 
     /**
+     * 使用者的偏移提交模式。这个值只能在 {@link FlinkKafkaConsumerBase#open(Configuration)} 中确定，因为
+     * 它取决于是否为作业启用 checkpoint。
+     *
      * The offset commit mode for the consumer. The value of this can only be determined in {@link
      * FlinkKafkaConsumerBase#open(Configuration)} since it depends on whether or not checkpointing
      * is enabled for the job.
@@ -163,18 +178,24 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private OffsetCommitMode offsetCommitMode;
 
     /** User configured value for discovery interval, in milliseconds. */
+    // 用户配置的发现间隔值，以毫秒为单位。
     private final long discoveryIntervalMillis;
 
     /** The startup mode for the consumer (default is {@link StartupMode#GROUP_OFFSETS}). */
+    // 消费者的启动模式(默认是{@link StartupModeGROUP_OFFSETS})
     private StartupMode startupMode = StartupMode.GROUP_OFFSETS;
 
     /**
+     * 特定的启动补偿;仅当启动模式为 {@link StartupMode#SPECIFIC_OFFSETS} 时相关。
+     *
      * Specific startup offsets; only relevant when startup mode is {@link
      * StartupMode#SPECIFIC_OFFSETS}.
      */
     private Map<KafkaTopicPartition, Long> specificStartupOffsets;
 
     /**
+     * 确定启动偏移的时间戳;仅当启动模式为 {@link StartupMode#TIMESTAMP} 时相关。
+     *
      * Timestamp to determine startup offsets; only relevant when startup mode is {@link
      * StartupMode#TIMESTAMP}.
      */
@@ -185,15 +206,24 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /** Data for pending but uncommitted offsets. */
+    // 未决但未提交的偏移量的数据。
     private final LinkedMap pendingOffsetsToCommit = new LinkedMap();
 
     /** The fetcher implements the connections to the Kafka brokers. */
+    // fetcher 实现与 Kafka 代理的连接。
     private transient volatile AbstractFetcher<T, ?> kafkaFetcher;
 
     /** The partition discoverer, used to find new partitions. */
+    // 分区发现器，用于查找新分区。
     private transient volatile AbstractPartitionDiscoverer partitionDiscoverer;
 
     /**
+     * 如果使用者从检查点还原状态，则还原到的偏移量。
+     *
+     * <p>这个映射将由 {@link #initializeState(FunctionInitializationContext)}方法填充。
+     *
+     * <p>在使用恢复状态为分区发现者播种时，使用排序映射作为排序是很重要的。
+     *
      * The offsets to restore to, if the consumer restores state from a checkpoint.
      *
      * <p>This map will be populated by the {@link #initializeState(FunctionInitializationContext)}
@@ -205,12 +235,15 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private transient volatile TreeMap<KafkaTopicPartition, Long> restoredState;
 
     /** Accessor for state in the operator state backend. */
+    // 在操作符状态后端中用于状态的访问器。
     private transient ListState<Tuple2<KafkaTopicPartition, Long>> unionOffsetStates;
 
     /** Discovery loop, executed in a separate thread. */
+    // 发现循环，在单独的线程中执行。
     private transient volatile Thread discoveryLoopThread;
 
     /** Flag indicating whether the consumer is still running. */
+    // 指示使用者是否仍在运行的标志。
     private volatile boolean running = true;
 
     // ------------------------------------------------------------------------
@@ -218,18 +251,25 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /**
+     * 指示是否应该公开指标的标志。如果 {@code true}，偏移量(例如当前偏移量、提交偏移量)和 kafka 附带的偏移量将被注册。
+     *
      * Flag indicating whether or not metrics should be exposed. If {@code true}, offset metrics
      * (e.g. current offset, committed offset) and Kafka-shipped metrics will be registered.
      */
     private final boolean useMetrics;
 
     /** Counter for successful Kafka offset commits. */
+    // 成功的 Kafka 偏移提交。
     private transient Counter successfulCommits;
 
     /** Counter for failed Kafka offset commits. */
+    // Kafka 偏移提交失败的计数器。
     private transient Counter failedCommits;
 
     /**
+     * 在异步 Kafka 提交完成时调用的回调接口。请注意，基类中的默认回调实现不提供任何线程安全保证。这就足够了，因为
+     * 当前支持的 Kafka 连接器保证不超过 1 个并发异步挂起 offset 提交。
+     *
      * Callback interface that will be invoked upon async Kafka commit completion. Please be aware
      * that default callback implementation in base class does not provide any guarantees on
      * thread-safety. This is sufficient for now because current supported Kafka connectors
@@ -240,6 +280,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /**
+     * 基本构造函数。
+     *
      * Base constructor.
      *
      * @param topics fixed list of topics to subscribe to (null, if using topic pattern)
@@ -267,6 +309,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     /**
+     * 确保当我们的偏移提交模式是 ON_CHECKPOINTS 时，自动提交是禁用的。这将覆盖用户在属性中配置的任何设置。
+     *
      * Make sure that auto commit is disabled when our offset commit mode is ON_CHECKPOINTS. This
      * overwrites whatever setting the user configured in the properties.
      *
@@ -285,6 +329,18 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /**
+     * 在这个消费者上设置给定的 {@link WatermarkStrategy}。这些将用于为记录分配时间戳，并生成信号事件时间进展的水印。
+     *
+     * <p>运行时间戳提取器水印生成器直接在 Kafka 源(你可以使用这个方法)，每个 Kafka 分区，允许用户让他们利用每个
+     * 分区的特征。
+     *
+     * <p>当 FlinkKafkaConsumer 源的子任务读取多个 Kafka 分区时，分区中的流按照先到先服务的方式合并。每个分区的
+     * 特征通常是这样丢失的。例如，如果每个 Kafka 分区的时间戳都是严格升序的，那么如果并行源子任务读取多个分区，那么
+     * 它们在生成的 Flink DataStream 中就不会是严格升序的。
+     *
+     * <p>公共水印生成模式可以作为静态方法在
+     * {@link org.apache.flink.api.common.eventtime.WatermarkStrategy} 类中找到。
+     *
      * Sets the given {@link WatermarkStrategy} on this consumer. These will be used to assign
      * timestamps to records and generates watermarks to signal event time progress.
      *
@@ -412,6 +468,11 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     /**
+     * 指定消费者是否应该在检查点将偏移量提交回 Kafka。
+     *
+     * <p>该设置只有在作业启用检查点时才会生效。如果检查点没有启用，只有“auto.commit.enable”(适用于0.8)
+     * 将使用“enable.auto.commit”(对于0.9)属性设置。
+     *
      * Specifies whether or not the consumer should commit offsets back to Kafka on checkpoints.
      *
      * <p>This setting will only have effect if checkpointing is enabled for the job. If
@@ -426,6 +487,11 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     /**
+     * 指定从所有分区的最早偏移量开始读取的消费者。这让消费者忽略 Zookeeper Kafka 代理中提交的组偏移量。
+     *
+     * <p>当从检查点或保存点还原消费者时，此方法不影响从哪里读取分区。当从检查点或保存点还原使用者时，将只使用还原状
+     * 态中的偏移量
+     *
      * Specifies the consumer to start reading from the earliest offset for all partitions. This
      * lets the consumer ignore any committed group offsets in Zookeeper / Kafka brokers.
      *
@@ -443,6 +509,11 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     /**
+     * 指定从所有分区的最新偏移量开始读取的消费者。这让消费者忽略 Zookeeper Kafka 代理中提交的组偏移量。
+     *
+     * <p>当从检查点或保存点还原消费者时，此方法不影响从哪里读取分区。当从检查点或保存点还原使用者时，将只使用还原状
+     * 态中的偏移量。
+     *
      * Specifies the consumer to start reading from the latest offset for all partitions. This lets
      * the consumer ignore any committed group offsets in Zookeeper / Kafka brokers.
      *
@@ -460,6 +531,15 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     /**
+     * 指定从指定时间戳开始读取分区的消费者。指定的时间戳必须在当前时间戳之前。这让消费者忽略 Zookeeper Kafka
+     * 代理中提交的组偏移量。
+     *
+     * <p>消费者将从 Kafka 中查找时间戳大于或等于特定时间戳的最早的偏移量。如果没有这样的偏移量，消费者将使用最新的
+     * 偏移量从 kafka 读取数据。
+     *
+     * <p>当从检查点或保存点还原消费者时，此方法不影响从哪里读取分区。当从检查点或保存点还原使用者时，将只使用还原状态
+     * 中的偏移量
+     *
      * Specifies the consumer to start reading partitions from a specified timestamp. The specified
      * timestamp must be before the current timestamp. This lets the consumer ignore any committed
      * group offsets in Zookeeper / Kafka brokers.

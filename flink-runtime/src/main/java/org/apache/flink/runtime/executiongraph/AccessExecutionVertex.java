@@ -25,6 +25,8 @@ import javax.annotation.Nullable;
 /** Common interface for the runtime {@link ExecutionVertex} and {@link ArchivedExecutionVertex}. */
 public interface AccessExecutionVertex {
     /**
+     * 返回这个执行顶点的名称，格式为 “myTask(2/7)”。
+     *
      * Returns the name of this execution vertex in the format "myTask (2/7)".
      *
      * @return name of this execution vertex
@@ -53,6 +55,8 @@ public interface AccessExecutionVertex {
     ExecutionState getExecutionState();
 
     /**
+     * 返回给定的 {@link ExecutionState} 的时间戳。
+     *
      * Returns the timestamp for the given {@link ExecutionState}.
      *
      * @param state state for which the timestamp should be returned
@@ -61,6 +65,8 @@ public interface AccessExecutionVertex {
     long getStateTimestamp(ExecutionState state);
 
     /**
+     * 返回导致作业失败的异常。这是第一个不可恢复并触发作业失败的根异常。
+     *
      * Returns the exception that caused the job to fail. This is the first root exception that was
      * not recoverable and triggered job failure.
      *
@@ -69,6 +75,8 @@ public interface AccessExecutionVertex {
     String getFailureCauseAsString();
 
     /**
+     * 返回这个执行顶点的 {@link TaskManagerLocation}。
+     *
      * Returns the {@link TaskManagerLocation} for this execution vertex.
      *
      * @return taskmanager location for this execution vertex.
@@ -76,6 +84,8 @@ public interface AccessExecutionVertex {
     TaskManagerLocation getCurrentAssignedResourceLocation();
 
     /**
+     * 返回给定尝试数的执行。
+     *
      * Returns the execution for the given attempt number.
      *
      * @param attemptNumber attempt number of execution to be returned

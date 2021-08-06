@@ -280,10 +280,12 @@ public class ExecutionGraph implements AccessExecutionGraph {
 
     private final PartitionReleaseStrategy.Factory partitionReleaseStrategyFactory;
 
+    // 分区发布策略
     private PartitionReleaseStrategy partitionReleaseStrategy;
 
     private DefaultExecutionTopology executionTopology;
 
+    // J: 内部失败监听器
     @Nullable private InternalFailuresListener internalTaskFailuresListener;
 
     /** Counts all restarts. Used by other Gauges/Meters and does not register to metric group. */
@@ -293,6 +295,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // ------ Configuration of the Execution -------
 
     /**
+     * 调度方式。决定如何选择要部署的初始任务集。可能指示部署所有源，或部署所有东西，或通过对需要具体化的结果进行回溯来部署。
+     *
      * The mode of scheduling. Decides how to select the initial set of tasks to be deployed. May
      * indicate to deploy all sources, or to deploy everything, or to deploy via backtracking from
      * results than need to be materialized.
@@ -300,6 +304,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final ScheduleMode scheduleMode;
 
     /** The maximum number of prior execution attempts kept in history. */
+    // 历史中保留的以前执行尝试的最大次数。
     private final int maxPriorAttemptsHistoryLength;
 
     // ------ Execution status and progress. These values are volatile, and accessed under the lock
@@ -311,6 +316,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private volatile JobStatus state = JobStatus.CREATED;
 
     /** A future that completes once the job has reached a terminal state. */
+    // 当作业到达终端状态时完成的一个future。
     private final CompletableFuture<JobStatus> terminationFuture = new CompletableFuture<>();
 
     /**
@@ -1883,6 +1889,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
         }
     }
 
+    // 通知  SchedulerNg 内部 Task 运行失败
     void notifySchedulerNgAboutInternalTaskFailure(
             final ExecutionAttemptID attemptId, final Throwable t) {
         if (internalTaskFailuresListener != null) {
@@ -1890,18 +1897,22 @@ public class ExecutionGraph implements AccessExecutionGraph {
         }
     }
 
+    // Shuffle Master
     ShuffleMaster<?> getShuffleMaster() {
         return shuffleMaster;
     }
 
+    // 作业主分区跟踪器
     public JobMasterPartitionTracker getPartitionTracker() {
         return partitionTracker;
     }
 
+    // 结果分区可用性检查器
     public ResultPartitionAvailabilityChecker getResultPartitionAvailabilityChecker() {
         return resultPartitionAvailabilityChecker;
     }
 
+    // 分区发布策略
     PartitionReleaseStrategy getPartitionReleaseStrategy() {
         return partitionReleaseStrategy;
     }

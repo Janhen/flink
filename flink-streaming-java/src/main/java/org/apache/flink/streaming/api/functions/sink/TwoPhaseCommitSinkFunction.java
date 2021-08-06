@@ -63,9 +63,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 于所有打算实现一次语义的{@link SinkFunction}，这是一个推荐的基类。
- * 它通过在{@link CheckpointedFunction}和{@link CheckpointListener}之上实现两个阶段提交算法来实现这一点。
- * 用户应该提供自定义{@code TXN}(事务句柄)，并实现处理该事务句柄的抽象方法。
+ * 于所有打算实现一次语义的 {@link SinkFunction}，这是一个推荐的基类。
+ * 它通过在 {@link CheckpointedFunction} 和 {@link CheckpointListener} 之上实现两个阶段提交算法来实现这一点。
+ * 用户应该提供自定义 {@code TXN} (事务句柄)，并实现处理该事务句柄的抽象方法。
  *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
  * exactly-once semantic. It does that by implementing two phase commit algorithm on top of the
@@ -101,21 +101,31 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     private TransactionHolder<TXN> currentTransactionHolder;
 
     /** Specifies the maximum time a transaction should remain open. */
+    // 指定事务保持打开状态的最大时间。
     private long transactionTimeout = Long.MAX_VALUE;
 
     /**
+     * 如果为 true，在 {@link #recoverAndCommit(Object)} 中抛出的任何异常都将被捕获而不是传播。
+     *
      * If true, any exception thrown in {@link #recoverAndCommit(Object)} will be caught instead of
      * propagated.
      */
     private boolean ignoreFailuresAfterTransactionTimeout;
 
     /**
+     * 如果事务运行时间达到 transactionTimeout 的这个百分比，则会记录一条警告消息。取值范围为 [0,1]。负值禁用警告。
+     *
      * If a transaction's elapsed time reaches this percentage of the transactionTimeout, a warning
      * message will be logged. Value must be in range [0,1]. Negative value disables warnings.
      */
     private double transactionTimeoutWarningRatio = -1;
 
     /**
+     * 使用默认的 {@link ListStateDescriptor} 进行内部状态序列化。使用这个构造函数的有用工具有
+     * {@link TypeInformation#of(Class)}、
+     * {@link org.apache.flink.api.common.typeinfo.TypeHint} 和 {@link TypeInformation#of(TypeHint)}
+     * 。例子:
+     *
      * Use default {@link ListStateDescriptor} for internal state serialization. Helpful utilities
      * for using this constructor are {@link TypeInformation#of(Class)}, {@link
      * org.apache.flink.api.common.typeinfo.TypeHint} and {@link TypeInformation#of(TypeHint)}.
@@ -167,9 +177,12 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     // algorithm ------
 
     /** Write value within a transaction. */
+    // 在事务中写入值。
     protected abstract void invoke(TXN transaction, IN value, Context context) throws Exception;
 
     /**
+     * 方法启动新事务。
+     *
      * Method that starts a new transaction.
      *
      * @return newly created transaction.
@@ -177,6 +190,11 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     protected abstract TXN beginTransaction() throws Exception;
 
     /**
+     * 预先提交先前创建的事务。预提交必须完成所有必要的步骤，为将来可能发生的提交准备事务。在此之后，事务可能仍然会被
+     * 中止，但是底层实现必须确保对已经预先提交的事务的提交调用总是成功的。
+     *
+     * <p>通常实现需要刷新数据。
+     *
      * Pre commit previously created transaction. Pre commit must make all of the necessary steps to
      * prepare the transaction for a commit that might happen in the future. After this point the
      * transaction might still be aborted, but underlying implementation must ensure that commit
@@ -187,6 +205,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     protected abstract void preCommit(TXN transaction) throws Exception;
 
     /**
+     * 提交一个预提交的事务。如果这个方法失败，Flink应用程序将重新启动，
+     * {@link TwoPhaseCommitSinkFunction#recoverAndCommit(Object)} 将再次为相同的事务调用。
+     *
      * Commit a pre-committed transaction. If this method fail, Flink application will be restarted
      * and {@link TwoPhaseCommitSinkFunction#recoverAndCommit(Object)} will be called again for the
      * same transaction.
@@ -194,6 +215,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     protected abstract void commit(TXN transaction);
 
     /**
+     * 在失败后在恢复的事务上调用。用户实现必须确保这个调用最终成功。如果失败，将重新启动 Flink 应用程序并再次调用它。
+     * 如果最终没有成功，就会发生数据丢失。事务将按照创建它们的顺序恢复。
+     *
      * Invoked on recovered transactions after a failure. User implementation must ensure that this
      * call will eventually succeed. If it fails, Flink application will be restarted and it will be
      * invoked again. If it does not succeed eventually, a data loss will occur. Transactions will
@@ -207,11 +231,14 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     protected abstract void abort(TXN transaction);
 
     /** Abort a transaction that was rejected by a coordinator after a failure. */
+    // 中止在失败后被协调器拒绝的事务。
     protected void recoverAndAbort(TXN transaction) {
         abort(transaction);
     }
 
     /**
+     * 在恢复(每个)用户上下文之后调用的子类的回调。
+     *
      * Callback for subclasses which is called after restoring (each) user context.
      *
      * @param handledTransactions transactions which were already committed or aborted and do not
@@ -233,6 +260,10 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
     @Override
     public final void notifyCheckpointComplete(long checkpointId) throws Exception {
+        // 下面的场景是可能的
+        // (1) 从最近的检查点有一个事务被触发并完成。这应该是常见的情况。在这种情况下，只需提交该事务。
+        // (2) 有多个挂起的事务，因为跳过了前一个检查点。这是一种罕见的情况，但可以发生在以下情况:
+
         // the following scenarios are possible here
         //
         //  (1) there is exactly one transaction from the latest checkpoint that
@@ -460,6 +491,8 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 设置事务超时。仅设置事务超时本身没有影响。
+     *
      * Sets the transaction timeout. Setting only the transaction timeout has no effect in itself.
      *
      * @param transactionTimeout The transaction timeout in ms.
@@ -474,6 +507,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 如果事务比指定的事务超时时间更早，则接收器只会记录而不会传播在 {@link #recoverAndCommit(Object)} 中抛出
+     * 的异常。事务的开始时间由 {@link System#currentTimeMillis()} 决定。默认情况下，会传播失败。
+     *
      * If called, the sink will only log but not propagate exceptions thrown in {@link
      * #recoverAndCommit(Object)} if the transaction is older than a specified transaction timeout.
      * The start time of an transaction is determined by {@link System#currentTimeMillis()}. By
@@ -509,6 +545,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** State POJO class coupling pendingTransaction, context and pendingCommitTransactions. */
+    // 状态 POJO 类耦合 pendingTransaction、context 和 pendingCommitTransactions。
     @VisibleForTesting
     @Internal
     public static final class State<TXN, CONTEXT> {
@@ -592,15 +629,21 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 向事务对象添加元数据(当前仅为事务的开始时间)。
+     *
      * Adds metadata (currently only the start time of the transaction) to the transaction object.
      */
     @VisibleForTesting
     @Internal
     public static final class TransactionHolder<TXN> {
 
+        // 事务处理
         private final TXN handle;
 
         /**
+         * 创建 {@link #handle} 的系统时间。用于确定当前事务是否超过了由 {@link #transactionTimeout} 指定的
+         * 超时时间。
+         *
          * The system time when {@link #handle} was created. Used to determine if the current
          * transaction has exceeded its timeout specified by {@link #transactionTimeout}.
          */
@@ -652,6 +695,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** Custom {@link TypeSerializer} for the sink state. */
+    // 自定义接收器状态的{@link TypeSerializer}。
     @VisibleForTesting
     @Internal
     public static final class StateSerializer<TXN, CONTEXT>
@@ -868,6 +912,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** Snapshot for the {@link StateSerializer}. */
+    // {@link StateSerializer} 的快照。
     @Internal
     public static final class StateSerializerSnapshot<TXN, CONTEXT>
             extends CompositeTypeSerializerSnapshot<

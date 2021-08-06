@@ -42,6 +42,9 @@ import java.util.IdentityHashMap;
 import java.util.Set;
 
 /**
+ * 闭包清理器是一个实用程序，它试图截断非静态内部类(为内联转换函数创建的)的闭包(封闭实例)。这使得非静态的内部类在很多
+ * 情况下是可序列化的，而 Java 的默认行为在没有充分理由的情况下使它们是非可序列化的。
+ *
  * The closure cleaner is a utility that tries to truncate the closure (enclosing instance) of
  * non-static inner classes (created for inline transformation functions). That makes non-static
  * inner classes in many cases serializable, where Java's default behavior renders them

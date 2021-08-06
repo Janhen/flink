@@ -37,6 +37,7 @@ public class IntermediateResultPartition {
     private List<List<ExecutionEdge>> consumers;
 
     /** Whether this partition has produced some data. */
+    // 这个分区是否产生了一些数据。
     private boolean hasDataProduced = false;
 
     public IntermediateResultPartition(

@@ -21,6 +21,8 @@ package org.apache.flink.streaming.api.functions.sink;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 一个忽略所有元素的流接收器。
+ *
  * A stream sink that ignores all elements.
  *
  * @param <T> The type of elements received by the sink.

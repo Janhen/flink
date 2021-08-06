@@ -27,8 +27,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * {@link CheckpointCoordinator} 的配置设置。这包括检查点间隔、检查点超时、检查点之间的暂停、并发检查点的最大数量和
- * 外部化检查点的设置。
+ * {@link CheckpointCoordinator} 的配置设置。这包括检查点间隔、检查点超时、检查点之间的暂停、并发检查点的最大数
+ * 量和外部化检查点的设置。
  *
  * Configuration settings for the {@link CheckpointCoordinator}. This includes the checkpoint
  * interval, the checkpoint timeout, the pause between checkpoints, the maximum number of concurrent
@@ -40,22 +40,27 @@ public class CheckpointCoordinatorConfiguration implements Serializable {
 
     private static final long serialVersionUID = 2L;
 
+    // J: 间隔
     private final long checkpointInterval;
 
+    // 超时
     private final long checkpointTimeout;
 
+    // 最下停顿间隔
     private final long minPauseBetweenCheckpoints;
 
+    // 最大并发 checkpoint
     private final int maxConcurrentCheckpoints;
 
+    // 容忍 checkpoint 失败数
     private final int tolerableCheckpointFailureNumber;
 
     /** Settings for what to do with checkpoints when a job finishes. */
-    // 设置当任务完成时如何处理检查点。322
+    // 设置当任务完成时如何处理检查点。
     private final CheckpointRetentionPolicy checkpointRetentionPolicy;
 
     /**
-     * 指示是否恰好配置了一次检查点模式的标志。如果<code>false <code>，则至少配置了一次mode。这不是一个必要的属性，
+     * 指示是否恰好配置了一次检查点模式的标志。如果 <code>false <code>，则至少配置了一次 mode。这不是一个必要的属性，
      * 因为检查点模式只与流任务相关，但是我们在这里公开它以将其转发给web运行时UI。
      *
      * Flag indicating whether exactly once checkpoint mode has been configured. If <code>false
@@ -106,6 +111,7 @@ public class CheckpointCoordinatorConfiguration implements Serializable {
             boolean isUnalignedCheckpointsEnabled) {
 
         // sanity checks
+        // 合理性检查
         if (checkpointInterval < MINIMAL_CHECKPOINT_TIME
                 || checkpointTimeout < MINIMAL_CHECKPOINT_TIME
                 || minPauseBetweenCheckpoints < 0

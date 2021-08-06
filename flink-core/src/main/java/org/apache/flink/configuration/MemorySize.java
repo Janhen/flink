@@ -38,7 +38,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * MemorySize是字节数的表示，可以在不同的单元中查看。
+ * MemorySize 是字节数的表示，可以在不同的单元中查看。
  *
  * <h2>解析<h2>
  *
@@ -60,6 +60,7 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 
     public static final MemorySize MAX_VALUE = new MemorySize(Long.MAX_VALUE);
 
+    // 内存单位
     private static final List<MemoryUnit> ORDERED_UNITS =
             Arrays.asList(BYTES, KILO_BYTES, MEGA_BYTES, GIGA_BYTES, TERA_BYTES);
 
@@ -342,6 +343,10 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
     }
 
     /**
+     * Enum，定义内存单元，主要用于解析配置文件中的值。
+     *
+     * <p>为了使较大的值更紧凑，支持常用的 size 后缀:
+     *
      * Enum which defines memory unit, mostly used to parse value from configuration file.
      *
      * <p>To make larger values more compact, the common size suffixes are supported:
@@ -363,6 +368,7 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 
         private final String[] units;
 
+        // 乘数
         private final long multiplier;
 
         MemoryUnit(String[] units, long multiplier) {

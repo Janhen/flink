@@ -34,6 +34,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 作为流接收器的套接字客户端。数据以字节数组的形式发送到套接字。
+ *
+ * <p>接收器可以设置为在发送失败后重试发送消息。
+ *
+ * <p>接收器可以设置为“自动刷新”，在这种情况下，套接字流在每条消息之后都会刷新。这显著降低了吞吐量，但也降低了消息延迟。
+ *
  * Socket client that acts as a streaming sink. The data is sent to a Socket as a byte array.
  *
  * <p>The sink can be set to retry message sends after the sending failed.

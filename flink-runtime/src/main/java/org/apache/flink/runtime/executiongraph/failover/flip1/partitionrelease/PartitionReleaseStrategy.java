@@ -35,6 +35,8 @@ import java.util.List;
 public interface PartitionReleaseStrategy {
 
     /**
+     * 调用这个方法告诉策略一个顶点结束了。
+     *
      * Calling this method informs the strategy that a vertex finished.
      *
      * @param finishedVertex Id of the vertex that finished the execution
@@ -43,6 +45,8 @@ public interface PartitionReleaseStrategy {
     List<IntermediateResultPartitionID> vertexFinished(ExecutionVertexID finishedVertex);
 
     /**
+     * 调用此方法通知策略某个顶点不再处于完成状态，例如，当某个顶点被重新执行时
+     *
      * Calling this method informs the strategy that a vertex is no longer in finished state, e.g.,
      * when a vertex is re-executed.
      *

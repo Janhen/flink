@@ -23,6 +23,8 @@ import org.apache.flink.runtime.execution.ExecutionState;
 import org.apache.flink.runtime.jobgraph.JobVertexID;
 
 /**
+ * 运行时{@link ExecutionJobVertex}和{@link ArchivedExecutionJobVertex}的通用接口。
+ *
  * Common interface for the runtime {@link ExecutionJobVertex} and {@link
  * ArchivedExecutionJobVertex}.
  */
@@ -49,6 +51,8 @@ public interface AccessExecutionJobVertex {
     int getMaxParallelism();
 
     /**
+     * 返回此作业顶点的资源配置文件。
+     *
      * Returns the resource profile for this job vertex.
      *
      * @return resource profile for this job vertex.

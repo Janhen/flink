@@ -29,6 +29,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于Java API列表类型的{@link TypeInformation}。
+ *
  * A {@link TypeInformation} for the list types of the Java API.
  *
  * @param <T> The type of the elements in the list.

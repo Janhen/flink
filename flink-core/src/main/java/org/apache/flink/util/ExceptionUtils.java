@@ -49,6 +49,10 @@ public final class ExceptionUtils {
     public static final String STRINGIFIED_NULL_EXCEPTION = "(null)";
 
     /**
+     * 用字符串表示异常的堆栈跟踪，如果异常为空，则用“(null)”表示。
+     *
+     * <p>这种方法力求完美，永不失败。
+     *
      * Makes a string representation of the exception's stack trace, or "(null)", if the exception
      * is null.
      *
@@ -74,6 +78,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查给定的异常是否表明可能使JVM处于损坏状态，即只有通过干净地重新启动进程才能保证继续正常操作的状态。
+     *
      * Checks whether the given exception indicates a situation that may leave the JVM in a
      * corrupted state, meaning a state where continued normal operation can only be guaranteed via
      * clean process restart.

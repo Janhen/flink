@@ -20,6 +20,7 @@ package org.apache.flink.runtime.executiongraph;
 
 public class ExecutionEdge {
 
+    // 中间结果分区
     private final IntermediateResultPartition source;
 
     private final ExecutionVertex target;

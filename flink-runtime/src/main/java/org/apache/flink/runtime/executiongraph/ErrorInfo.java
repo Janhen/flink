@@ -30,6 +30,8 @@ public class ErrorInfo implements Serializable {
     private static final long serialVersionUID = -6138942031953594202L;
 
     /**
+     * 一直 hold 的 exception。没有对任何用户定义代码的强引用。
+     *
      * The exception that we keep holding forever. Has no strong reference to any user-defined code.
      */
     private final SerializedThrowable exception;
