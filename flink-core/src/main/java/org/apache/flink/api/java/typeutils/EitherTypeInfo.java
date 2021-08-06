@@ -32,6 +32,8 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * Java API 的 {@link Either} 类型的 {@link TypeInformation}。
+ *
  * A {@link TypeInformation} for the {@link Either} type of the Java API.
  *
  * @param <L> the Left value type

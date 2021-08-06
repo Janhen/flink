@@ -26,11 +26,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
+ * 根据特定类型的 StreamRecord 设置要在 JDBC Sink 中使用的 {@link PreparedStatement} 参数。
+ *
  * Sets {@link PreparedStatement} parameters to use in JDBC Sink based on a specific type of
  * StreamRecord.
  *
  * @param <T> type of payload in {@link org.apache.flink.streaming.runtime.streamrecord.StreamRecord
  *     StreamRecord}
+ *            {@link org.apache.flink.streaming.runtime.streamrecord.StreamRecord StreamRecord} 中的有效负载类型
  * @see JdbcBatchStatementExecutor
  */
 @PublicEvolving

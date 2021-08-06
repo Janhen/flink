@@ -119,6 +119,7 @@ public class JdbcInputFormat extends RichInputFormat<Row, InputSplit>
     protected transient ResultSet resultSet;
     protected int fetchSize;
     // Boolean to distinguish between default value and explicitly set autoCommit mode.
+    // 布尔值来区分默认值和显式设置的自动提交模式。
     protected Boolean autoCommit;
 
     protected boolean hasNext;
@@ -346,6 +347,8 @@ public class JdbcInputFormat extends RichInputFormat<Row, InputSplit>
     }
 
     /**
+     * 用于以 fluent 的方式为输出格式的配置设置参数的构建器。
+     *
      * A builder used to set parameters to the output format's configuration in a fluent way.
      *
      * @return builder

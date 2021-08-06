@@ -42,6 +42,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * Java API 元组类型的 {@link TypeInformation}。
+ *
  * A {@link TypeInformation} for the tuple types of the Java API.
  *
  * @param <T> The type of the tuple.

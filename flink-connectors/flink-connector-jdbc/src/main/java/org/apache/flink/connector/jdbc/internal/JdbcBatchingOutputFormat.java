@@ -52,12 +52,15 @@ import static org.apache.flink.connector.jdbc.utils.JdbcUtils.setRecordToStateme
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A JDBC outputFormat that supports batching records before writing records to database. */
+// 支持在将记录写入数据库之前对记录进行批处理的 JDBC 输出格式。
 @Internal
 public class JdbcBatchingOutputFormat<
                 In, JdbcIn, JdbcExec extends JdbcBatchStatementExecutor<JdbcIn>>
         extends AbstractJdbcOutputFormat<In> {
 
     /**
+     * 从给定参数中提取值的接口
+     *
      * An interface to extract a value from given argument.
      *
      * @param <F> The type of given argument
@@ -70,6 +73,8 @@ public class JdbcBatchingOutputFormat<
     }
 
     /**
+     * 用于创建 {@link JdbcBatchStatementExecutor} 实例的工厂。
+     *
      * A factory for creating {@link JdbcBatchStatementExecutor} instance.
      *
      * @param <T> The type of instance.
@@ -86,10 +91,12 @@ public class JdbcBatchingOutputFormat<
     private final RecordExtractor<In, JdbcIn> jdbcRecordExtractor;
 
     private transient JdbcExec jdbcStatementExecutor;
+    // J: 默认批次的执行数量
     private transient int batchCount = 0;
     private transient volatile boolean closed = false;
 
     private transient ScheduledExecutorService scheduler;
+    // J: 批次的间隔执行?
     private transient ScheduledFuture<?> scheduledFuture;
     private transient volatile Exception flushException;
 
@@ -105,6 +112,8 @@ public class JdbcBatchingOutputFormat<
     }
 
     /**
+     * 连接到目标数据库并初始化准备好的语句。
+     *
      * Connects to the target database and initializes the prepared statement.
      *
      * @param taskNumber The number of the parallel instance.
@@ -114,12 +123,14 @@ public class JdbcBatchingOutputFormat<
         super.open(taskNumber, numTasks);
         jdbcStatementExecutor = createAndOpenStatementExecutor(statementExecutorFactory);
         if (executionOptions.getBatchIntervalMs() != 0 && executionOptions.getBatchSize() != 1) {
+            // J: 调度执行批量间隔和批量的大小
             this.scheduler =
                     Executors.newScheduledThreadPool(
                             1, new ExecutorThreadFactory("jdbc-upsert-output-format"));
             this.scheduledFuture =
                     this.scheduler.scheduleWithFixedDelay(
                             () -> {
+                                // J: 类级别锁
                                 synchronized (JdbcBatchingOutputFormat.this) {
                                     if (!closed) {
                                         try {
@@ -180,6 +191,7 @@ public class JdbcBatchingOutputFormat<
         for (int i = 1; i <= executionOptions.getMaxRetries(); i++) {
             try {
                 attemptFlush();
+                // J: 重置批量处理
                 batchCount = 0;
                 break;
             } catch (SQLException e) {
@@ -211,6 +223,7 @@ public class JdbcBatchingOutputFormat<
     }
 
     protected void attemptFlush() throws SQLException {
+        // 尝试执行当前已有的批数据
         jdbcStatementExecutor.executeBatch();
     }
 

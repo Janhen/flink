@@ -84,7 +84,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
  * 一个用于对类进行反射分析的实用程序，用于确定转换函数实现的返回类型。自动类型提取是一个依赖于许多变量，如泛型、编译器、接口等的黑客业务。
- * 在{@link MissingTypeInfo}或硬异常情况下，类型提取经常失败。当您使用该类的方法时，请确保提供一种方法来传递自定义类型信息作为后备。
+ * 在 {@link MissingTypeInfo} 或硬异常情况下，类型提取经常失败。当您使用该类的方法时，请确保提供一种方法来传递自定义类型信息作为后备。
  *
  * A utility for reflection analysis on classes, to determine the return type of implementations of
  * transformation functions.

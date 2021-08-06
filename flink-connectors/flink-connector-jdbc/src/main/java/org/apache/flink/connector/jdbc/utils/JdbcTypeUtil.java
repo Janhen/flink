@@ -46,6 +46,7 @@ import static org.apache.flink.api.common.typeinfo.BasicTypeInfo.STRING_TYPE_INF
 import static org.apache.flink.api.common.typeinfo.PrimitiveArrayTypeInfo.BYTE_PRIMITIVE_ARRAY_TYPE_INFO;
 
 /** Utils for jdbc type. */
+// jdbc 类型的实用程序。
 @Internal
 public class JdbcTypeUtil {
     private static final Map<TypeInformation<?>, Integer> TYPE_MAPPING;

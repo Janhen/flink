@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /** JDBC sink batch options. */
+// JDBC 接收器批处理选项。
 @PublicEvolving
 public class JdbcExecutionOptions implements Serializable {
     public static final int DEFAULT_MAX_RETRY_TIMES = 3;

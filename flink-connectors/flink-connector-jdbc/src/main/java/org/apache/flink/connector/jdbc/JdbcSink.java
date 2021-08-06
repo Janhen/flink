@@ -28,6 +28,7 @@ import org.apache.flink.util.Preconditions;
 import java.util.function.Function;
 
 /** Facade to create JDBC {@link SinkFunction sinks}. */
+// 用于创建 JDBC {@link SinkFunction sinks} 的 Facade。
 @PublicEvolving
 public class JdbcSink {
 
@@ -44,6 +45,11 @@ public class JdbcSink {
     }
 
     /**
+     * 创建 JDBC 接收器。
+     *
+     * <p>注意：传入返回 sink 的对象可以批量处理，重试。因此，对象不能被
+     * {@link org.apache.flink.api.common.ExecutionConfig#enableObjectReuse() 重用}。
+     *
      * Create a JDBC sink.
      *
      * <p>Note: the objects passed to the return sink can be processed in batch and retried.
@@ -51,6 +57,7 @@ public class JdbcSink {
      * org.apache.flink.api.common.ExecutionConfig#enableObjectReuse() reused}.
      *
      * @param sql arbitrary DML query (e.g. insert, update, upsert)
+     *            任意 DML 查询（例如插入、更新、更新插入）
      * @param statementBuilder sets parameters on {@link java.sql.PreparedStatement} according to
      *     the query
      * @param <T> type of data in {@link

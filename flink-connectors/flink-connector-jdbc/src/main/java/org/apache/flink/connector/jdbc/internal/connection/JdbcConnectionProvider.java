@@ -22,9 +22,11 @@ import org.apache.flink.annotation.Internal;
 import java.sql.Connection;
 
 /** JDBC connection provider. */
+// JDBC 连接提供程序。
 @Internal
 public interface JdbcConnectionProvider {
     Connection getConnection() throws Exception;
 
+    // 重建连接
     Connection reestablishConnection() throws Exception;
 }

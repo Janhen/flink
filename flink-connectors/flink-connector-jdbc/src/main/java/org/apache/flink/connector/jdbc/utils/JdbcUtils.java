@@ -33,6 +33,14 @@ public class JdbcUtils {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcUtils.class);
 
     /**
+     * 向准备好的语句添加一条记录。
+     *
+     * <p>调用此方法时，保证打开输出格式。
+     *
+     * <p>警告：当没有指定列类型时，这可能会失败（因为尝试了尽力而为的方法来插入空值，但不能保证 JDBC 驱动程序处理
+     *
+     * PreparedStatement.setObject(pos, null)）
+     *
      * Adds a record to the prepared statement.
      *
      * <p>When this method is called, the output format is guaranteed to be opened.
@@ -43,7 +51,9 @@ public class JdbcUtils {
      *
      * @param upload The prepared statement.
      * @param typesArray The jdbc types of the row.
+     *                   行的 jdbc 类型。
      * @param row The records to add to the output.
+     *            要添加到输出的记录。
      * @see PreparedStatement
      */
     public static void setRecordToStatement(PreparedStatement upload, int[] typesArray, Row row)
@@ -64,6 +74,7 @@ public class JdbcUtils {
         } else {
             // types provided
             for (int i = 0; i < row.getArity(); i++) {
+                // 与 JDBC 的类型和 Row 的类型匹配
                 setField(upload, typesArray[i], row.getField(i), i);
             }
         }
@@ -75,6 +86,7 @@ public class JdbcUtils {
             upload.setNull(index + 1, type);
         } else {
             try {
+                // 按照建议的铸造值
                 // casting values as suggested by
                 // http://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
                 switch (type) {
@@ -150,6 +162,7 @@ public class JdbcUtils {
                         // case java.sql.Types.STRUC
                 }
             } catch (ClassCastException e) {
+                // 用详细信息丰富异常。
                 // enrich the exception with detailed information.
                 String errorMessage =
                         String.format(

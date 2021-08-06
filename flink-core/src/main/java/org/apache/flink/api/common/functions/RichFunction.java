@@ -32,6 +32,11 @@ import org.apache.flink.configuration.Configuration;
 public interface RichFunction extends Function {
 
     /**
+     * 函数的初始化方法。它在实际工作方法（如 <i>map<i> 或 <i>join<i>）之前调用，因此适用于一次性设置工作。对于
+     * 作为迭代一部分的函数，将在每个迭代超级步开始时调用此方法。
+     *
+     * <p>传递给函数的配置对象可用于配置和初始化。配置包含在程序组合中对功能进行配置的所有参数。
+     *
      * Initialization method for the function. It is called before the actual working methods (like
      * <i>map</i> or <i>join</i>) and thus suitable for one time setup work. For functions that are
      * part of an iteration, this method will be invoked at the beginning of each iteration
@@ -84,9 +89,10 @@ public interface RichFunction extends Function {
     // ------------------------------------------------------------------------
 
     /**
-     * 获取包含有关UDF运行时信息的上下文，例如函数的并行度、函数的子任务索引或执行该函数的任务的名称。
-     * <p> RuntimeContext还允许访问{@link org.apache.flink.api.common.accumulators.Accumulator}
-     * 和{@link org.apache.flink.api.common.cache.DistributedCache}
+     * 获取包含有关 UDF 运行时信息的上下文，例如函数的并行度、函数的子任务索引或执行该函数的任务的名称。
+     *
+     * <p> RuntimeContext 还允许访问 {@link org.apache.flink.api.common.accumulators.Accumulator}
+     * 和 {@link org.apache.flink.api.common.cache.DistributedCache}
      *
      * Gets the context that contains information about the UDF's runtime, such as the parallelism
      * of the function, the subtask index of the function, or the name of the of the task that
@@ -101,7 +107,7 @@ public interface RichFunction extends Function {
     RuntimeContext getRuntimeContext();
 
     /**
-     * 获取{@link RuntimeContext}的专一版本，其中包含关于执行函数的迭代的额外信息。
+     * 获取 {@link RuntimeContext} 的专一版本，其中包含关于执行函数的迭代的额外信息。
      * 此 IterationRuntimeContext 仅在函数是迭代的一部分时可用。否则，此方法将抛出异常。
      *
      * Gets a specialized version of the {@link RuntimeContext}, which has additional information

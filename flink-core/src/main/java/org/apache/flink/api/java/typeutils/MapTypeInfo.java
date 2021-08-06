@@ -30,6 +30,8 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link org.apache.flink.api.common.state.MapStateDescriptor} 使用的特殊 {@code TypeInformation}。
+ *
  * Special {@code TypeInformation} used by {@link
  * org.apache.flink.api.common.state.MapStateDescriptor}.
  *

@@ -34,6 +34,8 @@ import java.util.function.Function;
 import static org.apache.flink.connector.jdbc.utils.JdbcUtils.setRecordToStatement;
 
 /**
+ * OutputFormat 将 Rows 写入 JDBC 数据库。必须使用提供的 OutputFormatBuilder 配置 OutputFormat。
+ *
  * OutputFormat to write Rows into a JDBC database. The OutputFormat has to be configured using the
  * supplied OutputFormatBuilder.
  */
@@ -59,6 +61,7 @@ public class JdbcOutputFormat
 
     private static JdbcBatchStatementExecutor<Row> createRowExecutor(
             String sql, int[] typesArray, RuntimeContext ctx) {
+        // J: 构造 PreparedStatement
         JdbcStatementBuilder<Row> statementBuilder =
                 (st, record) -> setRecordToStatement(st, typesArray, record);
         return JdbcBatchStatementExecutor.simple(

@@ -59,6 +59,8 @@ public class ExecutorThreadFactory implements ThreadFactory {
     // ------------------------------------------------------------------------
 
     /**
+     * 使用默认线程池名称（'flink-executor-pool'）和默认未捕获的异常处理程序（记录异常和终止进程）创建一个新的线程工厂。
+     *
      * Creates a new thread factory using the default thread pool name ('flink-executor-pool') and
      * the default uncaught exception handler (log exception and kill process).
      */
@@ -67,6 +69,8 @@ public class ExecutorThreadFactory implements ThreadFactory {
     }
 
     /**
+     * 使用给定的线程池名称和默认的未捕获异常处理程序（记录异常和终止进程）创建一个新的线程工厂。
+     *
      * Creates a new thread factory using the given thread pool name and the default uncaught
      * exception handler (log exception and kill process).
      *
@@ -77,6 +81,8 @@ public class ExecutorThreadFactory implements ThreadFactory {
     }
 
     /**
+     * 使用给定的线程池名称和给定的未捕获异常处理程序创建一个新的线程工厂。
+     *
      * Creates a new thread factory using the given thread pool name and the given uncaught
      * exception handler.
      *

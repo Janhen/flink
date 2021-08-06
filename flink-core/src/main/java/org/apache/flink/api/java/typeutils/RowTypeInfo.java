@@ -41,6 +41,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link Row} 的 {@link TypeInformation}。
+ *
+ * <p>注意：{@link #hashCode()} 和 {@link #equals(Object)} 的实现不检查字段名称，因为它们在序列化和运行时无关
+ * 紧要。这可能会在未来的版本中改变。有关更多信息，请参阅 FLINK-14438。
+ *
  * {@link TypeInformation} for {@link Row}.
  *
  * <p>Note: The implementations of {@link #hashCode()} and {@link #equals(Object)} do not check
@@ -52,9 +57,11 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 
     private static final long serialVersionUID = 9158518989896601963L;
 
+    // J: 整形正则匹配
     private static final String REGEX_INT_FIELD = "[0-9]+";
     private static final String REGEX_STR_FIELD = "[\\p{L}_\\$][\\p{L}\\p{Digit}_\\$]*";
     private static final String REGEX_FIELD = REGEX_STR_FIELD + "|" + REGEX_INT_FIELD;
+    // J: 嵌入的属性
     private static final String REGEX_NESTED_FIELDS = "(" + REGEX_FIELD + ")(\\.(.+))?";
     private static final String REGEX_NESTED_FIELDS_WILDCARD =
             REGEX_NESTED_FIELDS
@@ -72,6 +79,7 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 
     protected final String[] fieldNames;
     /** Temporary variable for directly passing orders to comparators. */
+    // 用于直接将订单传递给比较器的临时变量。
     private boolean[] comparatorOrders = null;
 
     public RowTypeInfo(TypeInformation<?>... types) {
@@ -170,6 +178,7 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
         if (!matcher.matches()) {
             if (fieldExpression.equals(ExpressionKeys.SELECT_ALL_CHAR)
                     || fieldExpression.equals(ExpressionKeys.SELECT_ALL_CHAR_SCALA)) {
+                // 这里不允许使用通配符
                 throw new InvalidFieldReferenceException(
                         "Wildcard expressions are not allowed here.");
             } else {

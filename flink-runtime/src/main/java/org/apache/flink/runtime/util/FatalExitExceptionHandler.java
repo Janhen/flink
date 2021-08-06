@@ -22,6 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 未捕获异常的处理程序，将记录异常并在之后终止进程。
+ *
+ * <p>这保证了关键异常不会意外丢失并使系统运行在不一致的状态。
+ *
  * Handler for uncaught exceptions that will log the exception and kill the process afterwards.
  *
  * <p>This guarantees that critical exceptions are not accidentally lost and leave the system
@@ -31,6 +35,7 @@ public final class FatalExitExceptionHandler implements Thread.UncaughtException
 
     private static final Logger LOG = LoggerFactory.getLogger(FatalExitExceptionHandler.class);
 
+    // J: 饿汉单例
     public static final FatalExitExceptionHandler INSTANCE = new FatalExitExceptionHandler();
     public static final int EXIT_CODE = -17;
 

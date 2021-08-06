@@ -23,6 +23,8 @@ import org.apache.flink.util.ExceptionUtils;
 import java.util.function.BiConsumer;
 
 /**
+ * {@link BiConsumer} 接口的检查扩展。
+ *
  * A checked extension of the {@link BiConsumer} interface.
  *
  * @param <T> type of the first argument
@@ -33,6 +35,8 @@ import java.util.function.BiConsumer;
 public interface BiConsumerWithException<T, U, E extends Throwable> {
 
     /**
+     * 对给定的参数执行此操作。
+     *
      * Performs this operation on the given arguments.
      *
      * @param t the first input argument
@@ -42,6 +46,8 @@ public interface BiConsumerWithException<T, U, E extends Throwable> {
     void accept(T t, U u) throws E;
 
     /**
+     * 将 {@link BiConsumerWithException} 转换为 {@link BiConsumer}。
+     *
      * Convert a {@link BiConsumerWithException} into a {@link BiConsumer}.
      *
      * @param biConsumerWithException BiConsumer with exception to convert into a {@link

@@ -90,6 +90,8 @@ public class ClusterOptions {
                                             code("TaskExecutors"))
                                     .build());
 
+    // 进程是否应该因致命错误而停止，而不是执行正常关闭。 在某些环境中（例如带有 G1 垃圾收集器的 Java 8），定
+    // 期正常关闭会导致 JVM 死锁。有关详细信息，请参阅 %s。"
     @Documentation.Section(Documentation.Sections.EXPERT_CLUSTER)
     public static final ConfigOption<Boolean> HALT_ON_FATAL_ERROR =
             key("cluster.processes.halt-on-fatal-error")

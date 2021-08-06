@@ -32,6 +32,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Represent a field definition for {@link PojoTypeInfo} type of objects. */
+// 表示 {@link PojoTypeInfo} 类型对象的字段定义。
 @Internal
 public class PojoField implements Serializable {
 

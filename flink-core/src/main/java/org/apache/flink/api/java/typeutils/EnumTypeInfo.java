@@ -31,6 +31,8 @@ import org.apache.flink.api.common.typeutils.base.EnumSerializer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * java 枚举类型的 {@link TypeInformation}。
+ *
  * A {@link TypeInformation} for java enumeration types.
  *
  * @param <T> The type represented by this type information.

@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.function.Function;
 
 /** Executes the given JDBC statement in batch for the accumulated records. */
+// 对累积的记录批量执行给定的 JDBC 语句。
 @Internal
 public interface JdbcBatchStatementExecutor<T> {
 
@@ -35,6 +36,7 @@ public interface JdbcBatchStatementExecutor<T> {
     void addToBatch(T record) throws SQLException;
 
     /** Submits a batch of commands to the database for execution. */
+    // 提交一批命令到数据库执行。
     void executeBatch() throws SQLException;
 
     /** Close JDBC related statements. */
