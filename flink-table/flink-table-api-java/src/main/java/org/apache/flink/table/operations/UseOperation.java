@@ -21,6 +21,11 @@ package org.apache.flink.table.operations;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 一个描述目录数据库开关语句的{@link Operation}，例如USE CATALOG或USE [catalogName.]dataBaseName。
+ *
+ * <p>不同的子操作可以表示它们的特殊含义。例如，使用目录操作意味着切换当前目录到另一个目录，而使用数据库操作意味着切换
+ * 当前数据库。
+ *
  * An {@link Operation} that describes the catalog/database switch statements, e.g. USE CATALOG or
  * USE [catalogName.]dataBaseName.
  *

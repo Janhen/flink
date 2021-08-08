@@ -23,6 +23,9 @@ import org.apache.flink.table.delegation.Parser;
 import org.apache.flink.table.delegation.Planner;
 
 /**
+ * 涵盖所有类型的表操作，如查询(DQL)、修改(DML)、定义(DDL)或控制操作(DCL)。这是{@link Planner#getParser()}
+ * 和{@link Parser#parse(String)}的输出。
+ *
  * Covers all sort of Table operations such as queries(DQL), modifications(DML), definitions(DDL),
  * or control actions(DCL). This is the output of {@link Planner#getParser()} and {@link
  * Parser#parse(String)}.
@@ -33,6 +36,8 @@ import org.apache.flink.table.delegation.Planner;
 @PublicEvolving
 public interface Operation {
     /**
+     * 返回一个字符串，该字符串汇总此操作以便打印到控制台。实现可能会跳过非常特定的属性。
+     *
      * Returns a string that summarizes this operation for printing to a console. An implementation
      * might skip very specific properties.
      *

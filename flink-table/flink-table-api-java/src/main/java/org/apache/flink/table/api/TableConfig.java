@@ -75,9 +75,12 @@ public class TableConfig {
     private Boolean nullCheck = true;
 
     /** Defines the configuration of Planner for Table API and SQL queries. */
+    // 为表 API 和 SQL 查询定义 Planner 的配置。
     private PlannerConfig plannerConfig = PlannerConfig.EMPTY_CONFIG;
 
     /**
+     * 定义十进制除法计算的默认上下文。我们使用Scala的默认MathContext.DECIMAL128
+     *
      * Defines the default context for decimal division calculation. We use Scala's default
      * MathContext.DECIMAL128.
      */
