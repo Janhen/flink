@@ -28,6 +28,10 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 import java.io.Serializable;
 
 /**
+ * Flink中所有流数据源的基本接口。流源的约定如下:当源应该开始发出元素时，使用可用于发出元素的
+ * {@link SourceContext}调用{@link #run}方法。run方法可以根据需要运行多长时间。然而，源必须通过中断主循环来响应
+ * {@link #cancel()}的调用。
+ *
  * Base interface for all stream data sources in Flink. The contract of a stream source is the
  * following: When the source should start emitting elements, the {@link #run} method is called with
  * a {@link SourceContext} that can be used for emitting elements. The run method can run for as
@@ -172,6 +176,8 @@ public interface SourceFunction<T> extends Function, Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 源函数用来发射元素(可能还有水印)的接口。
+     *
      * Interface that source functions use to emit elements, and possibly watermarks.
      *
      * @param <T> The type of the elements produced by the source.
@@ -224,6 +230,9 @@ public interface SourceFunction<T> extends Function, Serializable {
         void collectWithTimestamp(T element, long timestamp);
 
         /**
+         * 发出给定的{@link Watermark}。值为{@code t}的Watermark声明带有时间戳{@code t' <= t}
+         * 的元素将不再出现。如果进一步发出这样的元素，则认为这些元素<i>late<i>。
+         *
          * Emits the given {@link Watermark}. A Watermark of value {@code t} declares that no
          * elements with a timestamp {@code t' <= t} will occur any more. If further such elements
          * will be emitted, those elements are considered <i>late</i>.
@@ -255,6 +264,8 @@ public interface SourceFunction<T> extends Function, Serializable {
         void markAsTemporarilyIdle();
 
         /**
+         * 返回检查点锁。关于如何编写一致的检查点源，请参考 {@link SourceFunction} 中的类级注释。
+         *
          * Returns the checkpoint lock. Please refer to the class-level comment in {@link
          * SourceFunction} for details about how to write a consistent checkpointed source.
          *

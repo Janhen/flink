@@ -21,6 +21,12 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 这个接口提供了一个上下文，用户函数可以通过注册到托管状态(即由状态后端管理的状态)来初始化。
+ *
+ * <p>Operator state 对所有函数都可用，而 keyed state 仅对 keyBy 之后的函数可用。
+ *
+ * <p>为了初始化的目的，如果状态为空或从以前的执行中恢复，则上下文发出信号
+ *
  * This interface provides a context in which user functions can initialize by registering to
  * managed state (i.e. state that is managed by state backends).
  *

@@ -21,6 +21,10 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 在验证阶段发生的所有错误的例外。
+ *
+ * <p>这个异常表明用户做了错误的事情。
+ *
  * Exception for all errors occurring during validation phase.
  *
  * <p>This exception indicates that the user did something wrong.

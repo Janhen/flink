@@ -23,6 +23,9 @@ import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import java.io.Serializable;
 
 /**
+ * 序列化模式描述如何将数据对象转换为不同的序列化表示形式。大多数数据接收器(例如Apache Kafka)要求数据以特定的格式
+ * (例如字节串)传递给它们。
+ *
  * The serialization schema describes how to turn a data object into a different serialized
  * representation. Most data sinks (for example Apache Kafka) require the data to be handed to them
  * in a specific format (for example as byte strings).
@@ -35,6 +38,8 @@ import java.io.Serializable;
 public interface KeyedSerializationSchema<T> extends Serializable {
 
     /**
+     * 如果没有可用的键，此方法可能返回 null。
+     *
      * Serializes the key of the incoming element to a byte array This method might return null if
      * no key is available.
      *
@@ -44,6 +49,8 @@ public interface KeyedSerializationSchema<T> extends Serializable {
     byte[] serializeKey(T element);
 
     /**
+     * 将传入元素的值序列化为字节数组。
+     *
      * Serializes the value of the incoming element to a byte array.
      *
      * @param element The incoming element to be serialized
@@ -52,6 +59,8 @@ public interface KeyedSerializationSchema<T> extends Serializable {
     byte[] serializeValue(T element);
 
     /**
+     * 确定元素的目标主题的可选方法。
+     *
      * Optional method to determine the target topic for the element.
      *
      * @param element Incoming element to determine the target topic from

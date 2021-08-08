@@ -33,7 +33,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * 一种特殊形式的阻塞队列，有两个附加项:
+ *
  * A special form of blocking queue with two additions:
+ *
+ * <li>当队列为空时可以自动关闭。在队列关闭后添加元素失败。这允许队列消费者自动发现没有元素可用，并将自己标记为关闭。
+ * <li>队列允许在一次轮询调用中轮询一批元素。
  *
  * <ol>
  *   <li>The queue can be closed atomically when empty. Adding elements after the queue is closed
@@ -52,12 +57,15 @@ import static java.util.Objects.requireNonNull;
 public class ClosableBlockingQueue<E> {
 
     /** The lock used to make queue accesses and open checks atomic. */
+    // 用于使队列访问和打开检查成为原子的锁。
     private final ReentrantLock lock;
 
     /** The condition on which blocking get-calls wait if the queue is empty. */
+    // 如果队列为空，阻塞的 get-calls 等待的条件。
     private final Condition nonEmpty;
 
     /** The deque of elements. */
+    // 元素的排列。
     private final ArrayDeque<E> elements;
 
     /** Flag marking the status of the queue. */

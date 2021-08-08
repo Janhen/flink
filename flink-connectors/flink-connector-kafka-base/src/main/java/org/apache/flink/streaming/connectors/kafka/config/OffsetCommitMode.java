@@ -20,6 +20,10 @@ package org.apache.flink.streaming.connectors.kafka.config;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 偏移量提交模式表示如何从外部将偏移量提交回 Kafka broker Zookeeper。
+ *
+ * <p> 它的确切值是在运行时在消费者子任务中确定的。
+ *
  * The offset commit mode represents the behaviour of how offsets are externally committed back to
  * Kafka brokers / Zookeeper.
  *
@@ -35,6 +39,8 @@ public enum OffsetCommitMode {
     ON_CHECKPOINTS,
 
     /**
+     * 使用 Kafka 内部客户端的自动提交功能，定期将偏移量提交回Kafka。
+     *
      * Commit offsets periodically back to Kafka, using the auto commit functionality of internal
      * Kafka clients.
      */

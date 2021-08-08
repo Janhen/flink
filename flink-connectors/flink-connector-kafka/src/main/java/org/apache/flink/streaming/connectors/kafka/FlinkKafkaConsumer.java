@@ -52,6 +52,18 @@ import static org.apache.flink.util.PropertiesUtil.getBoolean;
 import static org.apache.flink.util.PropertiesUtil.getLong;
 
 /**
+ * Flink Kafka Consumer 是一个流数据源，从Apache Kafka拉出并行数据流。消费者可以在多个并行实例中运行，每个实例
+ * 将从一个或多个Kafka分区中提取数据。
+ *
+ * <p> Flink Kafka Consumer参与检查点，并保证在失败期间没有数据丢失，并且计算处理元素“恰好一次”。(注意:这些保证
+ * 自然假设Kafka本身不会丢失任何数据。)
+ *
+ * <p>请注意，Flink 在内部将偏移量作为其分布式检查点的一部分进行快照。Kafka 承诺的偏移只是为了让外部的进程视图与
+ * Flink 的进程视图保持同步。通过这种方式，监控和其他工作可以了解Flink Kafka用户对某个主题的消费情况。
+ *
+ * <p>关于可用的配置属性，请参考Kafka的文档:
+ * http://kafka.apache.org/documentation.html#newconsumerconfigs
+ *
  * The Flink Kafka Consumer is a streaming data source that pulls a parallel data stream from Apache
  * Kafka. The consumer can run in multiple parallel instances, each of which will pull data from one
  * or more Kafka partitions.
@@ -72,9 +84,12 @@ import static org.apache.flink.util.PropertiesUtil.getLong;
 public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
 
     /** Configuration key to change the polling timeout. * */
+    // 修改轮询超时的配置键。
     public static final String KEY_POLL_TIMEOUT = "flink.poll-timeout";
 
     /**
+     * 来自Kafka的Javadoc:如果数据不可用，在轮询中等待的时间，以毫秒为单位。如果为0，则立即返回当前可用的任何记录。
+     *
      * From Kafka's Javadoc: The time, in milliseconds, spent waiting in poll if data is not
      * available. If 0, returns immediately with any records that are available now.
      */
@@ -83,9 +98,12 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     // ------------------------------------------------------------------------
 
     /** User-supplied properties for Kafka. * */
+    // Kafka的用户提供的属性。
     protected final Properties properties;
 
     /**
+     * 来自Kafka的Javadoc:如果数据不可用，在轮询中等待的时间，以毫秒为单位。如果为0，则立即返回当前可用的任何记录
+     *
      * From Kafka's Javadoc: The time, in milliseconds, spent waiting in poll if data is not
      * available. If 0, returns immediately with any records that are available now
      */
@@ -94,6 +112,8 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建一个新的Kafka流源消费者。
+     *
      * Creates a new Kafka streaming source consumer.
      *
      * @param topic The name of the topic that should be consumed.
@@ -123,6 +143,10 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     }
 
     /**
+     * 创建一个新的Kafka流源消费者。
+     *
+     * <p>这个构造函数允许向使用者传递多个主题。
+     *
      * Creates a new Kafka streaming source consumer.
      *
      * <p>This constructor allows passing multiple topics to the consumer.
@@ -138,6 +162,10 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     }
 
     /**
+     * 创建一个新的Kafka流源消费者。
+     *
+     * <p> 这个构造函数允许传递多个主题和一个键值反序列化模式。
+     *
      * Creates a new Kafka streaming source consumer.
      *
      * <p>This constructor allows passing multiple topics and a key/value deserialization schema.
@@ -153,6 +181,11 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     }
 
     /**
+     * 创建一个新的Kafka流源消费者。使用此构造函数可基于正则表达式模式订阅多个主题。
+     *
+     * <p> 如果启用分区发现(通过在属性中为 {@link FlinkKafkaConsumer#KEY_PARTITION_DISCOVERY_INTERVAL_MILLIS}
+     * 设置一个非负值)，名称匹配模式的主题也将被订阅，因为它们是动态创建的。
+     *
      * Creates a new Kafka streaming source consumer. Use this constructor to subscribe to multiple
      * topics based on a regular expression pattern.
      *
@@ -213,8 +246,11 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
                 deserializer,
                 getLong(
                         checkNotNull(props, "props"),
+                        // 配置键定义使用者的分区发现间隔
                         KEY_PARTITION_DISCOVERY_INTERVAL_MILLIS,
+                        // 执行分区发现的默认间隔
                         PARTITION_DISCOVERY_DISABLED),
+                // 配置键禁用度量跟踪
                 !getBoolean(props, KEY_DISABLE_METRICS, false));
 
         this.properties = props;
@@ -246,6 +282,8 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
 
         // make sure that auto commit is disabled when our offset commit mode is ON_CHECKPOINTS;
         // this overwrites whatever setting the user configured in the properties
+        // 当我们的偏移提交模式是 ON_CHECKPOINTS 时，确保自动提交是禁用的;
+        // 这将覆盖用户在属性中配置的任何设置
         adjustAutoCommitConfig(properties, offsetCommitMode);
 
         return new KafkaFetcher<>(
@@ -305,6 +343,7 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
 
     @Override
     protected boolean getIsAutoCommitEnabled() {
+        // J: 默认自动提交间隔 5s
         return getBoolean(properties, ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true)
                 && PropertiesUtil.getLong(
                                 properties, ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 5000)

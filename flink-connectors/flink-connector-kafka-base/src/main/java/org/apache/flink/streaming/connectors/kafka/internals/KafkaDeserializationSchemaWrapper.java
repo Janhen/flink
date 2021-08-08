@@ -26,6 +26,8 @@ import org.apache.flink.util.Collector;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 /**
+ * 一个使用KafkaDeserializationSchema接口的反序列化模式的简单包装器。
+ *
  * A simple wrapper for using the DeserializationSchema with the KafkaDeserializationSchema
  * interface.
  *

@@ -50,6 +50,10 @@ import static org.apache.flink.streaming.connectors.kafka.internals.metrics.Kafk
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 所有的 fetcher 的基类，实现到Kafka代理的连接，并从Kafka分区拉取记录。
+ *
+ * <p>这个 fetcher 基类实现了关于发出记录和跟踪偏移量的逻辑，以及关于可选时间戳赋值和水印生成的逻辑。
+ *
  * Base class for all fetchers, which implement the connections to Kafka brokers and pull records
  * from Kafka partitions.
  *
@@ -79,9 +83,12 @@ public abstract class AbstractFetcher<T, KPH> {
     protected final WatermarkOutput watermarkOutput;
 
     /** {@link WatermarkOutputMultiplexer} for supporting per-partition watermark generation. */
+    // {@link WatermarkOutputMultiplexer} 支持每分区生成水印。
     private final WatermarkOutputMultiplexer watermarkOutputMultiplexer;
 
     /**
+     * 从检查点的角度来看，保证记录发送和状态更新的锁是原子的。
+     *
      * The lock that guarantees that record emission and state updates are atomic, from the view of
      * taking a checkpoint.
      */

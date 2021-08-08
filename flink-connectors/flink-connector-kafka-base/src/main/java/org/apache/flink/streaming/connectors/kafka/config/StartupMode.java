@@ -21,12 +21,12 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.streaming.connectors.kafka.internals.KafkaTopicPartitionStateSentinel;
 
 /** Startup modes for the Kafka Consumer. */
-// Kafka Consumer的启动模式。
+// Kafka Consumer 的启动模式。
 @Internal
 public enum StartupMode {
 
     /**
-     * 从特定消费组的ZK Kafka broker中提交的偏移量开始(默认)。
+     * 从特定消费组的 ZK Kafka broker 中提交的偏移量开始(默认)。
      *
      * Start from committed offsets in ZK / Kafka brokers of a specific consumer group (default).
      */

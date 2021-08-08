@@ -53,12 +53,14 @@ public class KafkaOptions {
                     .noDefaultValue()
                     .withDescription("Required topic name from which the table is read");
 
+    // 需要Kafka服务器连接字符串
     public static final ConfigOption<String> PROPS_BOOTSTRAP_SERVERS =
             ConfigOptions.key("properties.bootstrap.servers")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Required Kafka server connection string");
 
+    // Kafka consumer中需要消费组，不需要Kafka producer
     public static final ConfigOption<String> PROPS_GROUP_ID =
             ConfigOptions.key("properties.group.id")
                     .stringType()
@@ -80,6 +82,7 @@ public class KafkaOptions {
                                     + "\"earliest-offset\", \"latest-offset\", \"group-offsets\", \"timestamp\"\n"
                                     + "or \"specific-offsets\"");
 
+    // 可选偏移量用于“特定偏移量”启动模式
     public static final ConfigOption<String> SCAN_STARTUP_SPECIFIC_OFFSETS =
             ConfigOptions.key("scan.startup.specific-offsets")
                     .stringType()
@@ -87,6 +90,7 @@ public class KafkaOptions {
                     .withDescription(
                             "Optional offsets used in case of \"specific-offsets\" startup mode");
 
+    // 可选的时间戳，用于“timestamp”启动模式
     public static final ConfigOption<Long> SCAN_STARTUP_TIMESTAMP_MILLIS =
             ConfigOptions.key("scan.startup.timestamp-millis")
                     .longType()
@@ -98,7 +102,10 @@ public class KafkaOptions {
     // Sink specific options
     // --------------------------------------------------------------------------------------------
 
-    // 可选的输出分区从Flink's partitionsn" "into Kafka's partitions valid enumerations aren" "fixed":(每个Flink分区最多在一个Kafka分区结束)，n" ""round-robin":(一个Flink分区被分配到Kafka分区round-robin)n" ""custom class name":(使用一个自定义的FlinkKafkaPartitioner子类)");
+    // 可选的输出分区从Flink's partitionsn" "into Kafka's partitions valid enumerations aren"
+    // "fixed":(每个Flink分区最多在一个Kafka分区结束)，n" "
+    // "round-robin":(一个Flink分区被分配到Kafka分区round-robin)n" "
+    // "custom class name":(使用一个自定义的FlinkKafkaPartitioner子类)");
     public static final ConfigOption<String> SINK_PARTITIONER =
             ConfigOptions.key("sink.partitioner")
                     .stringType()
@@ -121,6 +128,7 @@ public class KafkaOptions {
     public static final String SCAN_STARTUP_MODE_VALUE_SPECIFIC_OFFSETS = "specific-offsets";
     public static final String SCAN_STARTUP_MODE_VALUE_TIMESTAMP = "timestamp";
 
+    // J: 启动模式枚举项
     private static final Set<String> SCAN_STARTUP_MODE_ENUMS =
             new HashSet<>(
                     Arrays.asList(
@@ -134,12 +142,14 @@ public class KafkaOptions {
     public static final String SINK_PARTITIONER_VALUE_FIXED = "fixed";
     public static final String SINK_PARTITIONER_VALUE_ROUND_ROBIN = "round-robin";
 
+    // J: 写入分区枚举项
     private static final Set<String> SINK_PARTITIONER_ENUMS =
             new HashSet<>(
                     Arrays.asList(
                             SINK_PARTITIONER_VALUE_FIXED, SINK_PARTITIONER_VALUE_ROUND_ROBIN));
 
     // Prefix for Kafka specific properties.
+    // Kafka 特定属性的前缀。
     public static final String PROPERTIES_PREFIX = "properties.";
 
     // Other keywords.
@@ -276,6 +286,7 @@ public class KafkaOptions {
                 });
     }
 
+    // J: 去除配置前缀的 kafka 配置属性
     public static Properties getKafkaProperties(Map<String, String> tableOptions) {
         final Properties kafkaProperties = new Properties();
 
@@ -293,6 +304,8 @@ public class KafkaOptions {
     }
 
     /**
+     * 分区程序可以是“fixed”、“round-robin”或定制的分区程序完整类名。
+     *
      * The partitioner can be either "fixed", "round-robin" or a customized partitioner full class
      * name.
      */

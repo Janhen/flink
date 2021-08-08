@@ -24,6 +24,8 @@ import org.apache.kafka.common.Node;
 import java.io.Serializable;
 
 /**
+ * 带有领导节点信息的可序列化主题分区信息。这个类在运行时使用。
+ *
  * Serializable Topic Partition info with leader Node information. This class is used at runtime.
  */
 @Internal

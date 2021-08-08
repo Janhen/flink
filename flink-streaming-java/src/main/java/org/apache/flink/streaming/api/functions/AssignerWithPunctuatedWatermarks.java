@@ -23,6 +23,17 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 import javax.annotation.Nullable;
 
 /**
+ * {@code AssignerWithPunctuatedWatermarks} 将事件时间戳分配给元素，并生成低水位标记来指示流中的事件时间进度。
+ * 这些时间戳和水印由操作事件时间的函数和操作符使用，例如事件时间窗口。
+ *
+ * <p>如果某些特殊元素用作标志事件时间进展的标记，以及当您想在特定事件上发出水印时，请使用这个类。如果探测值是非空且
+ * 时间戳大于前一个水印的时间戳，系统将生成一个新的水印(以保持升序水印的契约)。
+ *
+ * <p>对于应该根据元素时间戳周期性地发出水印的用例，使用 {@link AssignerWithPeriodicWatermarks} 代替。
+ *
+ * <p> 下面的示例演示了如何使用此时间戳提取器和水印生成器。它假设元素携带一个时间戳，用来描述它们被创建的时间，并且
+ * 一些元素带有一个标志，将它们标记为序列的结束，这样具有更小时间戳的元素就不会再出现了。
+ *
  * The {@code AssignerWithPunctuatedWatermarks} assigns event time timestamps to elements, and
  * generates low watermarks that signal event time progress within the stream. These timestamps and
  * watermarks are used by functions and operators that operate on event time, for example event time
@@ -66,6 +77,8 @@ import javax.annotation.Nullable;
 public interface AssignerWithPunctuatedWatermarks<T> extends TimestampAssigner<T> {
 
     /**
+     * 询问该实现是否要发出水印。这个方法在 {@link #extractTimestamp(Object, long)} 方法之后被调用。
+     *
      * Asks this implementation if it wants to emit a watermark. This method is called right after
      * the {@link #extractTimestamp(Object, long)} method.
      *

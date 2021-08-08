@@ -37,6 +37,11 @@ import java.util.Objects;
 import java.util.Properties;
 
 /**
+ * 一个版本不可知的Kafka {@link ScanTableSource}。
+ *
+ * <p>版本特定的Kafka
+ * 消费者需要扩展这个类并覆盖{@link #createKafkaConsumer(String, Properties, DeserializationSchema)}}。
+ *
  * A version-agnostic Kafka {@link ScanTableSource}.
  *
  * <p>The version-specific Kafka consumers need to extend this class and override {@link
@@ -55,6 +60,7 @@ public abstract class KafkaDynamicSourceBase implements ScanTableSource {
     // --------------------------------------------------------------------------------------------
 
     /** Scan format for decoding records from Kafka. */
+    // 从 Kafka 扫描格式解码记录。
     protected final DecodingFormat<DeserializationSchema<RowData>> decodingFormat;
 
     // --------------------------------------------------------------------------------------------
