@@ -33,6 +33,8 @@ import java.util.Properties;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个分区发现器，可以通过 Kafka 高级消费者 API 从 Kafka broker 中发现主题和分区元数据。
+ *
  * A partition discoverer that can be used to discover topics and partitions metadata from Kafka
  * brokers via the Kafka high-level consumer API.
  */
@@ -64,6 +66,7 @@ public class KafkaPartitionDiscoverer extends AbstractPartitionDiscoverer {
             return new ArrayList<>(kafkaConsumer.listTopics().keySet());
         } catch (org.apache.kafka.common.errors.WakeupException e) {
             // rethrow our own wakeup exception
+            // 重新抛出我们自己的唤醒异常
             throw new AbstractPartitionDiscoverer.WakeupException();
         }
     }

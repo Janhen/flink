@@ -105,6 +105,11 @@ public abstract class AbstractPartitionDiscoverer {
     }
 
     /**
+     * 通过抛出{@link WakeupException}中断正在进行的发现尝试。如果没有正在进行的尝试，下一次尝试将抛出
+     * {@link WakeupException}。
+     *
+     * <p>这个方法可以从不同的线程并发调用。
+     *
      * Interrupt an in-progress discovery attempt by throwing a {@link WakeupException}. If no
      * attempt is in progress, the immediate next attempt will throw a {@link WakeupException}.
      *

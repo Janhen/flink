@@ -20,6 +20,10 @@ package org.apache.flink.streaming.connectors.kafka.internals;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * Flink Kafka Consumer 对每个 Kafka 分区持有的状态。包括用于分区的 Kafka 描述符。
+ *
+ * <p> 这个类描述了最基本的状态(仅是偏移量)，子类定义了更详细的状态，包含当前水印和时间戳提取器。
+ *
  * The state that the Flink Kafka Consumer holds for each Kafka partition. Includes the Kafka
  * descriptor for partitions.
  *

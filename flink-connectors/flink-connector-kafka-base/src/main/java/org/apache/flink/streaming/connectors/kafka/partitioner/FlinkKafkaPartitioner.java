@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * {@link FlinkKafkaPartitioner} 包装了如何跨多个 Kafka 主题分区分区记录的逻辑。
+ *
  * A {@link FlinkKafkaPartitioner} wraps logic on how to partition records across partitions of
  * multiple Kafka topics.
  */

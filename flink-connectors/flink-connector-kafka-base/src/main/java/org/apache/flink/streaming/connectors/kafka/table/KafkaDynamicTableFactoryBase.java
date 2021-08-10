@@ -56,6 +56,8 @@ import static org.apache.flink.streaming.connectors.kafka.table.KafkaOptions.get
 import static org.apache.flink.streaming.connectors.kafka.table.KafkaOptions.validateTableOptions;
 
 /**
+ * 创建 {@link KafkaDynamicSourceBase} 和 {@link KafkaDynamicSinkBase} 配置实例的工厂。
+ *
  * Factory for creating configured instances of {@link KafkaDynamicSourceBase} and {@link
  * KafkaDynamicSinkBase}.
  */

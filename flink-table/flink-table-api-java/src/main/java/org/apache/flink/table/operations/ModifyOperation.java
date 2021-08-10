@@ -25,6 +25,11 @@ import org.apache.flink.table.delegation.Planner;
 import java.util.List;
 
 /**
+ * 一个描述DML查询的{@link Operation}，例如INSERT或转换到一个DataStream。
+ *
+ * <p> {@link QueryOperation}的树，上面有{@link ModifyOperation}，表示一个可运行的查询，可以通过
+ * {@link Planner#translate(List)}转换为{@link Transformation}的图
+ *
  * A {@link Operation} that describes the DML queries such as e.g. INSERT or conversion to a
  * DataStream.
  *

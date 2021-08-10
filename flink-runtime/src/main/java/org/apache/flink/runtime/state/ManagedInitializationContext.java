@@ -24,9 +24,9 @@ import org.apache.flink.api.common.state.OperatorStateStore;
 /**
  * 该接口提供了一个上下文，操作符可以通过注册到托管状态(即由状态后端管理的状态)来进行初始化。
  *
- * <p>操作符状态对所有操作符可用，而keyyed状态只对keyBy后的操作符可用。
+ * <p>操作符状态对所有操作符可用，而 keyyed 状态只对 keyBy 后的操作符可用。
  *
- * <p>为了初始化，如果状态是空的(new操作符)，或者是从以前执行这个操作符恢复的，上下文会发出信号。
+ * <p>为了初始化，如果状态是空的(new 操作符)，或者是从以前执行这个操作符恢复的，上下文会发出信号。
  *
  * This interface provides a context in which operators can initialize by registering to managed
  * state (i.e. state that is managed by state backends).
@@ -40,7 +40,7 @@ import org.apache.flink.api.common.state.OperatorStateStore;
 public interface ManagedInitializationContext {
 
     /**
-     * 如果状态已从上一次执行的快照恢复，则返回true。对于无状态任务，它总是返回false。
+     * 如果状态已从上一次执行的快照恢复，则返回 true。对于无状态任务，它总是返回 false。
      *
      * Returns true, if state was restored from the snapshot of a previous execution. This returns
      * always false for stateless tasks.

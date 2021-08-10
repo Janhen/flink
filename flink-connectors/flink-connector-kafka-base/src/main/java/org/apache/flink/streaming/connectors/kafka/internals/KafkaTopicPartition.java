@@ -27,6 +27,10 @@ import java.util.Map;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * Kafka 主题中 Flink 对一个分区的描述。可序列化的，并且在所有 Kafka 消费者子类中通用(0.8,0.9，…)
+ *
+ * <p> 注意:这个类不能改变它的结构，因为它会改变序列化格式，使以前的保存点不可读。
+ *
  * Flink's description of a partition in a Kafka topic. Serializable, and common across all Kafka
  * consumer subclasses (0.8, 0.9, ...)
  *
@@ -37,6 +41,8 @@ import static java.util.Objects.requireNonNull;
 public final class KafkaTopicPartition implements Serializable {
 
     /**
+     * 这个串行版本的 uid 不能更改，因为它会中断从保存点读取旧的串行化实例。
+     *
      * THIS SERIAL VERSION UID MUST NOT CHANGE, BECAUSE IT WOULD BREAK READING OLD SERIALIZED
      * INSTANCES FROM SAVEPOINTS.
      */

@@ -34,6 +34,8 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * 来自外部存储系统的动态表的源。
+ *
  * Source of a dynamic table from an external storage system.
  *
  * <p>Dynamic tables are the core concept of Flink's Table & SQL API for processing both bounded and
@@ -63,12 +65,15 @@ import java.io.Serializable;
 public interface DynamicTableSource {
 
     /**
+     * 在规划期间创建此实例的副本。副本应该是所有可变成员的深层副本。
+     *
      * Creates a copy of this instance during planning. The copy should be a deep copy of all
      * mutable members.
      */
     DynamicTableSource copy();
 
     /** Returns a string that summarizes this source for printing to a console or log. */
+    // 返回一个字符串，该字符串汇总此源以便打印到控制台或日志。
     String asSummaryString();
 
     // --------------------------------------------------------------------------------------------
@@ -113,6 +118,8 @@ public interface DynamicTableSource {
     }
 
     /**
+     * 用于在运行时在对象和 Flink 的内部数据结构之间映射的转换器。
+     *
      * Converter for mapping between objects and Flink's internal data structures during runtime.
      *
      * <p>On request, the planner will provide a specialized (possibly code generated) converter

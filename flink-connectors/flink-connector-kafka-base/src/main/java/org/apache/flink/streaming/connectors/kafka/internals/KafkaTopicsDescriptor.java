@@ -44,7 +44,7 @@ public class KafkaTopicsDescriptor implements Serializable {
 
     public KafkaTopicsDescriptor(
             @Nullable List<String> fixedTopics, @Nullable Pattern topicPattern) {
-        // 必须指定fixedTopics或topicPattern中的一个。
+        // 必须指定 fixedTopics 或 topicPattern 中的一个。
         checkArgument(
                 (fixedTopics != null && topicPattern == null)
                         || (fixedTopics == null && topicPattern != null),

@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.expressions.Expression;
 
 /**
+ * 在 {@link Table}、{@link GroupedTable} 或 {@link WindowGroupedTable} 上执行 flatAggregate 的表。
+ *
  * A table that performs flatAggregate on a {@link Table}, a {@link GroupedTable} or a {@link
  * WindowGroupedTable}.
  */

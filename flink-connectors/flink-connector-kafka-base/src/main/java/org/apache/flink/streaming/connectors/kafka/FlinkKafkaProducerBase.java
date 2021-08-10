@@ -59,6 +59,11 @@ import java.util.Properties;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * Flink Sink 生成数据到 Kafka 主题中。
+ *
+ * <p>请注意，当启用检查点并设置 setFlushOnCheckpoint(true) 时，此生成器提供至少一次的可靠性保证。否则，生产者
+ * 不提供任何可靠性保证。
+ *
  * Flink Sink to produce data into a Kafka topic.
  *
  * <p>Please note that this producer provides at-least-once reliability guarantees when checkpoints

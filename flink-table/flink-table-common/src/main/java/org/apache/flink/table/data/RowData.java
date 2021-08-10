@@ -38,6 +38,29 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPr
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getScale;
 
 /**
+ * 内部数据结构的基本接口，表示 {@link RowType} 和其他(可能嵌套的)结构化类型的数据，如表生态系统中的
+ * {@link StructuredType}。
+ *
+ * <p>运行时通过 Table API 或 SQL 管道传递的所有顶级记录都是这个接口的实例。每个{@link RowData}包含一个
+ * {@link RowKind}，它表示一行在变更日志中描述的变更类型。{@link RowKind}只是行的元数据信息，因此不是表模式的一
+ * 部分，也就是说，不是一个专用字段。
+ *
+ * <p>备注:该数据结构的所有字段必须是内部数据结构。
+ *
+ * <p> {@link RowData}接口有不同的实现，它们是为不同的场景设计的:
+ *
+ *   <li>面向二进制的实现 {@code BinaryRowData} 由引用 {@link MemorySegment} 来支持，而不是使用 Java 对象来减
+ *     少序列化和反序列化开销。
+ *   <li>面向对象的实现 {@link GenericRowData} 是由一个Java {@link Object} 数组支持的，该数组构造简单，更新效率高。
+ *
+ * <p>{@link GenericRowData} 用于公共使用，具有稳定的行为。如果需要内部数据结构，建议使用这个类构造
+ *    {@link RowData}的实例。
+ *
+ * <p> Flink的Table API和SQL数据类型到内部数据结构的映射如下表所示:
+ *     ...
+ *
+ * <p> Nullability 总是由容器数据结构处理的。
+ *
  * Base interface for an internal data structure representing data of {@link RowType} and other
  * (possibly nested) structured types such as {@link StructuredType} in the table ecosystem.
  *

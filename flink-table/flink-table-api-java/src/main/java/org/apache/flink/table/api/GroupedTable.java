@@ -82,6 +82,9 @@ public interface GroupedTable {
     AggregatedTable aggregate(String aggregateFunction);
 
     /**
+     * 使用聚合函数执行聚合操作。你必须用一个select语句关闭 {@link #aggregate(Expression)}。如果输出类型是
+     * 复合类型，则输出将被平展。
+     *
      * Performs an aggregate operation with an aggregate function. You have to close the {@link
      * #aggregate(Expression)} with a select statement. The output will be flattened if the output
      * type is a composite type.
@@ -127,6 +130,9 @@ public interface GroupedTable {
     FlatAggregateTable flatAggregate(String tableAggFunction);
 
     /**
+     * 对分组表执行 flatAggregate 操作。FlatAggregate 接受一个 TableAggregateFunction，它返回多行。
+     * 在 flatAggregate 后面使用选择。
+     *
      * Performs a flatAggregate operation on a grouped table. FlatAggregate takes a
      * TableAggregateFunction which returns multiple rows. Use a selection after flatAggregate.
      *

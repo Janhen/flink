@@ -26,15 +26,21 @@ import org.apache.flink.table.operations.QueryOperation;
 import org.apache.flink.table.sinks.TableSink;
 
 /**
- * Table 是 Table API 的核心组件。类似于批处理和流 API 有数据集和 DataStream，表 API 是围绕 {@link Table} 构建的。
+ * Table 是 Table API 的核心组件。类似于批处理和流 API 有数据集和 DataStream，表 API 是围绕 {@link Table}
+ * 构建的。
  *
- * <p>使用{@link Table}方法进行数据转换。使用{@code TableEnvironment}将{@link Table}转换回{@code DataSet}
- * 或{@code DataStream}。
+ * <p> 使用 {@link Table} 方法进行数据转换。使用 {@code TableEnvironment} 将 {@link Table} 转换回
+ * {@code DataSet} 或 {@code DataStream}。
  *
- * <p>当使用Scala时，{@link Table}也可以使用隐式转换进行转换。
+ * <p> 当使用 Scala 时，{@link Table} 也可以使用隐式转换进行转换。
  *
- * <p>像{@code join}， {@code select}， {@code where}和{@code groupBy}这样的操作要么在Scala DSL中接受参数，
- * 要么作为表达式String。有关表达式语法，请参阅文档。
+ * <p> 像{@code join}， {@code select}， {@code where} 和 {@code groupBy} 这样的操作要么在 Scala DSL
+ * 中接受参数，要么作为表达式 String。有关表达式语法，请参阅文档。
+ *
+ * J: FlatAggregateTable
+ *   AggregatedTable
+ *   OverWindowedTable
+ *   GroupWindowedTable
  *
  * A Table is the core component of the Table API. Similar to how the batch and streaming APIs have
  * DataSet and DataStream, the Table API is built around {@link Table}.
@@ -86,6 +92,7 @@ public interface Table {
     void printSchema();
 
     /** Returns underlying logical representation of this table. */
+    // 返回该表的基础逻辑表示。
     QueryOperation getQueryOperation();
 
     /**
@@ -122,6 +129,13 @@ public interface Table {
     Table select(Expression... fields);
 
     /**
+     * 创建由该表备份的 {@link TemporalTableFunction} 作为历史表。时态表表示随时间变化的表的概念，Flink
+     * 会跟踪这些变化。{@link TemporalTableFunction} 提供了访问这些数据的方法。
+     *
+     * <p> 有关更多信息，请查看Flink关于时态表的文档。
+     *
+     * <p> 当前 {@link TemporalTableFunction} 只支持流。
+     *
      * Creates {@link TemporalTableFunction} backed up by this table as a history table. Temporal
      * Tables represent a concept of a table that changes over time and for which Flink keeps track
      * of those changes. {@link TemporalTableFunction} provides a way how to access those data.
@@ -210,6 +224,8 @@ public interface Table {
     Table filter(String predicate);
 
     /**
+     * 过滤掉不传递过滤谓词的元素。类似于SQL WHERE子句。
+     *
      * Filters out elements that don't pass the filter predicate. Similar to a SQL WHERE clause.
      *
      * <p>Example:
@@ -241,6 +257,8 @@ public interface Table {
     Table where(String predicate);
 
     /**
+     * 过滤掉不传递过滤谓词的元素。类似于 SQL WHERE 子句。
+     *
      * Filters out elements that don't pass the filter predicate. Similar to a SQL WHERE clause.
      *
      * <p>Example:
@@ -291,6 +309,8 @@ public interface Table {
     GroupedTable groupBy(Expression... fields);
 
     /**
+     * 删除重复的值，只返回不同的值。
+     *
      * Removes duplicate values and returns only distinct (different) values.
      *
      * <p>Example:
@@ -302,6 +322,11 @@ public interface Table {
     Table distinct();
 
     /**
+     * 连接两个{@link Table}。类似于 SQL 连接。两个连接操作的字段不能重叠，必要时使用 {@code as} 重命名字段。您可以
+     * 在连接之后使用 where 和 select 子句来进一步指定连接的行为。
+     *
+     * <p>注意:两个表必须绑定到同一个 {@code TableEnvironment}。
+     *
      * Joins two {@link Table}s. Similar to a SQL join. The fields of the two joined operations must
      * not overlap, use {@code as} to rename fields if necessary. You can use where and select
      * clauses after a join to further specify the behaviour of the join.
@@ -456,6 +481,11 @@ public interface Table {
     Table rightOuterJoin(Table right, Expression joinPredicate);
 
     /**
+     * 连接两个{@link Table}。类似于SQL的完整外部连接。两个连接操作的字段不能重叠，必要时使用{@code as}重命名字段。
+     *
+     * <p>注意:两个表必须绑定到同一个{@code TableEnvironment}，并且它的 {@code TableConfig} 必须启用
+     * 空检查(默认)。
+     *
      * Joins two {@link Table}s. Similar to a SQL full outer join. The fields of the two joined
      * operations must not overlap, use {@code as} to rename fields if necessary.
      *

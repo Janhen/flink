@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 一个分区器，确保每个内部Flink分区都在一个Kafka分区中结束。
+ *
  * A partitioner ensuring that each internal Flink partition ends up in one Kafka partition.
  *
  * <p>Note, one Kafka partition can contain multiple Flink partitions.

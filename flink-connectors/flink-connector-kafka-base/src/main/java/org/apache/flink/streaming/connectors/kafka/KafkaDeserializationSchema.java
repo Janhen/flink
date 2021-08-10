@@ -27,6 +27,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import java.io.Serializable;
 
 /**
+ * 反序列化模式描述了如何将Kafka ConsumerRecords转换为数据类型(Java/Scala 对象)，并由Flink处理。
+ *
  * The deserialization schema describes how to turn the Kafka ConsumerRecords into data types
  * (Java/Scala objects) that are processed by Flink.
  *
@@ -36,6 +38,10 @@ import java.io.Serializable;
 public interface KafkaDeserializationSchema<T> extends Serializable, ResultTypeQueryable<T> {
 
     /**
+     * 模式的初始化方法。它在实际工作方法{@link #deserialize}之前被调用，因此适合一次性设置工作。
+     *
+     * <p>提供的{@link DeserializationSchema.InitializationContext}可以用于访问其他特性，例如注册用户指标。
+     *
      * Initialization method for the schema. It is called before the actual working methods {@link
      * #deserialize} and thus suitable for one time setup work.
      *
@@ -47,6 +53,8 @@ public interface KafkaDeserializationSchema<T> extends Serializable, ResultTypeQ
     default void open(DeserializationSchema.InitializationContext context) throws Exception {}
 
     /**
+     * 方法来确定元素是否发出流结束的信号。如果返回 true，则不会触发元素。
+     *
      * Method to decide whether the element signals the end of the stream. If true is returned the
      * element won't be emitted.
      *
@@ -64,6 +72,11 @@ public interface KafkaDeserializationSchema<T> extends Serializable, ResultTypeQ
     T deserialize(ConsumerRecord<byte[], byte[]> record) throws Exception;
 
     /**
+     * 反序列化 Kafka 记录。
+     *
+     * <p>可以通过 {@link Collector} 输出多条记录。注意，生成的记录的数量和大小应该相对较小。根据源实现的不同，
+     * 记录可以缓冲在内存中，或者收集记录可能会延迟发出检查点屏障。
+     *
      * Deserializes the Kafka record.
      *
      * <p>Can output multiple records through the {@link Collector}. Note that number and size of

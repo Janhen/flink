@@ -103,6 +103,8 @@ public class PropertiesUtil {
     }
 
     /**
+     * 从属性获取布尔值。如果解析值为“true”，这个方法将返回{@code true}。
+     *
      * Get boolean from properties. This method returns {@code true} iff the parsed value is "true".
      *
      * @param config Properties

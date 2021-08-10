@@ -27,6 +27,15 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 反序列化模式描述了如何将某些数据源(例如Apache Kafka)传递的字节消息转换为数据类型(JavaScala对象)，并由Flink处理。
+ *
+ * <p> 此外，DeserializationSchema描述生成的类型({@link #getProducedType()})，这让Flink创建内部序列化器和结
+ * 构来处理类型。
+ *
+ * <p> 注意:<b>在大多数情况下，应该从{@link AbstractDeserializationSchema}开始，它自动生成返回类型信息。
+ *
+ * <p> DeserializationSchema必须是{@link Serializable}，因为它的实例通常是操作符或转换函数的一部分。
+ *
  * The deserialization schema describes how to turn the byte messages delivered by certain data
  * sources (for example Apache Kafka) into data types (Java/Scala objects) that are processed by
  * Flink.
@@ -94,6 +103,10 @@ public interface DeserializationSchema<T> extends Serializable, ResultTypeQuerya
     boolean isEndOfStream(T nextElement);
 
     /**
+     * 为{@link #open(InitializationContext)}方法提供的上下文信息。它可以用于:
+     *
+     * 通过{@link InitializationContext#getMetricGroup()}注册用户指标
+     *
      * A contextual information provided for {@link #open(InitializationContext)} method. It can be
      * used to:
      *
@@ -104,6 +117,11 @@ public interface DeserializationSchema<T> extends Serializable, ResultTypeQuerya
     @PublicEvolving
     interface InitializationContext {
         /**
+         * 返回运行此{@link DeserializationSchema}的源的并行子任务的度量组。
+         *
+         * <p> 该类的实例可用于向Flink注册新指标，并基于组名创建嵌套层次结构。有关度量系统的更多信息，请参见
+         * {@link MetricGroup}。
+         *
          * Returns the metric group for the parallel subtask of the source that runs this {@link
          * DeserializationSchema}.
          *

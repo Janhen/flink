@@ -34,6 +34,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import java.io.IOException;
 
 /**
+ * 键值对的序列化和反序列化模式，使用 Flink 的序列化堆栈将类型从字节数组转换为字节数组。
+ *
  * A serialization and deserialization schema for Key Value Pairs that uses Flink's serialization
  * stack to transform typed from and to byte arrays.
  *
@@ -120,6 +122,7 @@ public class TypeInformationKeyValueSerializationSchema<K, V>
             inputDeserializer.setBuffer(record.value());
             value = valueSerializer.deserialize(inputDeserializer);
         }
+        // J: kafka 消息的 k - v
         return new Tuple2<>(key, value);
     }
 

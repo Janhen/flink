@@ -24,6 +24,8 @@ import org.apache.flink.annotation.Internal;
 public class OffsetCommitModes {
 
     /**
+     * 使用几个配置值确定偏移提交模式。
+     *
      * Determine the offset commit mode using several configuration values.
      *
      * @param enableAutoCommit whether or not auto committing is enabled in the provided Kafka

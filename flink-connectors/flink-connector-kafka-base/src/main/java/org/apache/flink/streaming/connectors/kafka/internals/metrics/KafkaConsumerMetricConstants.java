@@ -20,6 +20,10 @@ package org.apache.flink.streaming.connectors.kafka.internals.metrics;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 一个 Kafka 消费者指标相关常量字符串的集合。
+ *
+ * <p>不能更改名称，因为这会破坏用户指标的向后兼容性
+ *
  * A collection of Kafka consumer metrics related constant strings.
  *
  * <p>The names must not be changed, as that would break backward compatibility for the consumer's
@@ -34,7 +38,9 @@ public class KafkaConsumerMetricConstants {
     //  Per-subtask metrics
     // ------------------------------------------------------------------------
 
+    // 成功的 commit 数量
     public static final String COMMITS_SUCCEEDED_METRICS_COUNTER = "commitsSucceeded";
+    // 失败的 commit 数量
     public static final String COMMITS_FAILED_METRICS_COUNTER = "commitsFailed";
 
     // ------------------------------------------------------------------------
@@ -49,6 +55,7 @@ public class KafkaConsumerMetricConstants {
 
     // ------------------------------------------------------------------------
     //  Legacy metrics
+    //  传统指标
     // ------------------------------------------------------------------------
 
     public static final String LEGACY_CURRENT_OFFSETS_METRICS_GROUP = "current-offsets";
