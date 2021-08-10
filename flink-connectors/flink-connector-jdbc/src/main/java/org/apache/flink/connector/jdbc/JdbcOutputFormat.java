@@ -59,11 +59,13 @@ public class JdbcOutputFormat
                 JdbcBatchingOutputFormat.RecordExtractor.identity());
     }
 
+    // J: 批量 StatementExecutor 执行
     private static JdbcBatchStatementExecutor<Row> createRowExecutor(
             String sql, int[] typesArray, RuntimeContext ctx) {
         // J: 构造 PreparedStatement
         JdbcStatementBuilder<Row> statementBuilder =
                 (st, record) -> setRecordToStatement(st, typesArray, record);
+        //
         return JdbcBatchStatementExecutor.simple(
                 sql,
                 statementBuilder,

@@ -61,9 +61,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * 调度 Flink 作业的接口。
  *
- * <p>实例通过 {@link SchedulerNGFactory} 创建，并在实例化时接收一个 {@link JobGraph}。
+ * <p> 实例通过 {@link SchedulerNGFactory} 创建，并在实例化时接收一个 {@link JobGraph}。
  *
- * <p>实现可以期望方法不会被并发调用。事实上，所有的调用都将起源于 {@link ComponentMainThreadExecutor} 中的一个线程，
+ * <p> 实现可以期望方法不会被并发调用。事实上，所有的调用都将起源于 {@link ComponentMainThreadExecutor} 中的一个线程，
  * 该线程将通过 {@link #setMainThreadExecutor(ComponentMainThreadExecutor)} 传递。
  *
  * Interface for scheduling Flink jobs.
@@ -77,8 +77,10 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface SchedulerNG {
 
+    // J: 主线程执行器
     void setMainThreadExecutor(ComponentMainThreadExecutor mainThreadExecutor);
 
+    // J: 注册 Job 状态监听器
     void registerJobStatusListener(JobStatusListener jobStatusListener);
 
     void startScheduling();
@@ -89,10 +91,13 @@ public interface SchedulerNG {
 
     CompletableFuture<Void> getTerminationFuture();
 
+    // J: 处理调度中的全局失败
     void handleGlobalFailure(Throwable cause);
 
+    // J: 更新 Task 级别的状态
     boolean updateTaskExecutionState(TaskExecutionState taskExecutionState);
 
+    // J: batch 处理时候的 Split?
     SerializedInputSplit requestNextInputSplit(
             JobVertexID vertexID, ExecutionAttemptID executionAttempt) throws IOException;
 
@@ -104,14 +109,17 @@ public interface SchedulerNG {
 
     ArchivedExecutionGraph requestJob();
 
+    // J: 获取 Job 的状态
     JobStatus requestJobStatus();
 
+    // J: 获取 Job 的详情
     JobDetails requestJobDetails();
 
     // ------------------------------------------------------------------------------------
     // Methods below do not belong to Scheduler but are included due to historical reasons
     // ------------------------------------------------------------------------------------
 
+    // J: 获取 Kv 状态未知
     KvStateLocation requestKvStateLocation(JobID jobId, String registrationName)
             throws UnknownKvStateLocation, FlinkJobNotFoundException;
 
@@ -133,15 +141,18 @@ public interface SchedulerNG {
 
     // ------------------------------------------------------------------------
 
+    // J: 调度中累加器更新
     void updateAccumulators(AccumulatorSnapshot accumulatorSnapshot);
 
     // ------------------------------------------------------------------------
 
+    // J: 获取算子的背压统计信息
     Optional<OperatorBackPressureStats> requestOperatorBackPressureStats(JobVertexID jobVertexId)
             throws FlinkException;
 
     // ------------------------------------------------------------------------
 
+    // J: 触发保存点
     CompletableFuture<String> triggerSavepoint(@Nullable String targetDirectory, boolean cancelJob);
 
     void acknowledgeCheckpoint(
@@ -151,6 +162,7 @@ public interface SchedulerNG {
             CheckpointMetrics checkpointMetrics,
             TaskStateSnapshot checkpointState);
 
+    // J: 拒绝检查点
     void declineCheckpoint(DeclineCheckpoint decline);
 
     CompletableFuture<String> stopWithSavepoint(
@@ -169,6 +181,8 @@ public interface SchedulerNG {
     // ------------------------------------------------------------------------
 
     /**
+     * 将给定的 OperatorEvent 传递给具有给定 {@link OperatorID} 的 {@link OperatorCoordinator}。
+     *
      * Delivers the given OperatorEvent to the {@link OperatorCoordinator} with the given {@link
      * OperatorID}.
      *

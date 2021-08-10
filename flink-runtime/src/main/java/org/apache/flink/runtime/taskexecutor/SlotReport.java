@@ -26,6 +26,8 @@ import java.util.Iterator;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 关于 TaskExecutor 的所有插槽的当前状态的报告，描述哪些插槽可用和分配，以及分配的插槽已分配给哪些作业（JobManager）。
+ *
  * A report about the current status of all slots of the TaskExecutor, describing which slots are
  * available and allocated, and what jobs (JobManagers) the allocated slots have been allocated to.
  */

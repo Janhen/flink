@@ -38,6 +38,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /** Task manager gateway interface to communicate with the task manager. */
+// 与任务管理器通信的任务管理器网关接口。
 public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
 
     /**
@@ -48,6 +49,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
     String getAddress();
 
     /**
+     * 请求给定任务的背压比。
+     *
      * Request the back pressure ratio for the given task.
      *
      * @param executionAttemptID identifying the task to request.
@@ -59,6 +62,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             ExecutionAttemptID executionAttemptID, int requestId, Time timeout);
 
     /**
+     * 向任务管理器提交任务。
+     *
      * Submit a task to the task manager.
      *
      * @param tdd describing the task to submit
@@ -98,6 +103,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
     void releasePartitions(JobID jobId, Set<ResultPartitionID> partitionIds);
 
     /**
+     * 通知给定任务有关已完成的检查点。
+     *
      * Notify the given task about a completed checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -109,6 +116,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             ExecutionAttemptID executionAttemptID, JobID jobId, long checkpointId, long timestamp);
 
     /**
+     * 通知给定任务有关中止的检查点。
+     *
      * Notify the given task about a aborted checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -120,6 +129,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             ExecutionAttemptID executionAttemptID, JobID jobId, long checkpointId, long timestamp);
 
     /**
+     * 为给定的任务触发一个检查点。
+     *
      * Trigger for the given task a checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -139,6 +150,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             boolean advanceToEndOfEventTime);
 
     /**
+     * 释放具有给定分配 ID 的插槽。
+     *
      * Frees the slot with the given allocation ID.
      *
      * @param allocationId identifying the slot to free

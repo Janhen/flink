@@ -34,10 +34,20 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * {@code Transformation} 表示创建 DataStream 的操作。每个DataStream都有一个底层的{@code Transformation}，它是所述DataStream的起源。
- *  DataStream map等 API 操作会在下面创建一个{@code Transformation}树。当要执行流程序时，使用StreamGraphGenerator将此图转换为流图。
- *  {@code Transformation}不一定对应于运行时的物理操作。有些操作只是逻辑概念。例如union、split select数据流、partitioning。
- *  {@code Transformations}的图表:
+ * {@code Transformation} 表示创建 DataStream 的操作。每个 DataStream 都有一个底层的
+ * {@code Transformation}，它是所述 DataStream 的起源。
+ *
+ * <p> DataStream map 等 API 操作会在下面创建一个 {@code Transformation} 树。当要执行流程序时，使用
+ * StreamGraphGenerator将此图转换为流图。
+ *
+ * <p> {@code Transformation} 不一定对应于运行时的物理操作。有些操作只是逻辑概念。例如 union、split select
+ * 数据流、partitioning。
+ *
+ * <p> {@code Transformations}的图表:
+ *
+ * <p> 将在运行时生成此操作图：
+ *
+ * <p> 有关分区、联合、拆分选择的信息最终被编码在将源连接到地图操作的边中。
  *
  * A {@code Transformation} represents the operation that creates a DataStream. Every DataStream has
  * an underlying {@code Transformation} that is the origin of said DataStream.

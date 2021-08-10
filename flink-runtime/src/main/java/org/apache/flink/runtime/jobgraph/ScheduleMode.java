@@ -30,7 +30,7 @@ public enum ScheduleMode {
     LAZY_FROM_SOURCES(true),
 
     /**
-     * 与LAZY_FROM_SOURCES相同，不同之处在于它使用批处理槽请求，支持执行槽数少于请求的作业。但是，
+     * 与 LAZY_FROM_SOURCES 相同，不同之处在于它使用批处理槽请求，支持执行槽数少于请求的作业。但是，
      * 用户需要确保作业不包含任何流水线洗牌(每个流水线区域都可以使用单个槽执行)。
      *
      * Same as LAZY_FROM_SOURCES just with the difference that it uses batch slot requests which

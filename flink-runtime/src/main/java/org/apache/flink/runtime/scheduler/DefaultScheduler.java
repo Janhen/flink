@@ -74,6 +74,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** The future default scheduler. */
+// 未来的默认调度程序。
 public class DefaultScheduler extends SchedulerBase implements SchedulerOperations {
 
     private final Logger log;
@@ -82,10 +83,12 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
 
     private final ExecutionSlotAllocator executionSlotAllocator;
 
+    // J: 执行失败处理器
     private final ExecutionFailureHandler executionFailureHandler;
 
     private final ScheduledExecutor delayExecutor;
 
+    // J: 调度测了
     private final SchedulingStrategy schedulingStrategy;
 
     private final ExecutionVertexOperations executionVertexOperations;

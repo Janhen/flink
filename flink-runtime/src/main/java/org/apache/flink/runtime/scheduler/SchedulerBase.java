@@ -130,6 +130,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** Base class which can be used to implement {@link SchedulerNG}. */
+// 可用于实现 {@link SchedulerNG} 的基类。
 public abstract class SchedulerBase implements SchedulerNG {
 
     private final Logger log;
@@ -138,30 +139,37 @@ public abstract class SchedulerBase implements SchedulerNG {
 
     private final ExecutionGraph executionGraph;
 
+    // J: 调度拓扑
     private final SchedulingTopology schedulingTopology;
 
     private final InputsLocationsRetriever inputsLocationsRetriever;
 
+    // J: 背压统计追踪
     private final BackPressureStatsTracker backPressureStatsTracker;
 
     private final Executor ioExecutor;
 
     private final Configuration jobMasterConfiguration;
 
+    // J: 曹提供
     private final SlotProvider slotProvider;
 
+    // J: 调度线程
     private final ScheduledExecutorService futureExecutor;
 
     private final ClassLoader userCodeLoader;
 
+    // J: 检查点恢复
     private final CheckpointRecoveryFactory checkpointRecoveryFactory;
 
     private final Time rpcTimeout;
 
+    // J: 重启测了
     private final RestartStrategy restartStrategy;
 
     private final BlobWriter blobWriter;
 
+    // J: JobManager 级别的 Job 指标组
     private final JobManagerJobMetricGroup jobManagerJobMetricGroup;
 
     private final Time slotRequestTimeout;

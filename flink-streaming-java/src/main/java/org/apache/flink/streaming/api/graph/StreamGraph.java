@@ -91,6 +91,7 @@ public class StreamGraph implements Pipeline {
     private final ExecutionConfig executionConfig;
     // 检查点配置
     private final CheckpointConfig checkpointConfig;
+    // 保存点恢复配置
     private SavepointRestoreSettings savepointRestoreSettings = SavepointRestoreSettings.none();
 
     // 调度的模式
@@ -106,6 +107,7 @@ public class StreamGraph implements Pipeline {
     private GlobalDataExchangeMode globalDataExchangeMode;
 
     /** Flag to indicate whether to put all vertices into the same slot sharing group by default. */
+    // 用于指示是否默认将所有顶点放入同一个槽共享组的标志。
     private boolean allVerticesInSameSlotSharingGroupByDefault = true;
 
     private Map<Integer, StreamNode> streamNodes;

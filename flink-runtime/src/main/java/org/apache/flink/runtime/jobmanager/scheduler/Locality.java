@@ -18,6 +18,7 @@
 
 package org.apache.flink.runtime.jobmanager.scheduler;
 
+// J: Job 的本地性?
 public enum Locality {
 
     /** No constraint existed on the task placement. */

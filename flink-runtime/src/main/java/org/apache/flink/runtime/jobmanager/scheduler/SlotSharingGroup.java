@@ -44,7 +44,7 @@ public class SlotSharingGroup implements java.io.Serializable {
     private final SlotSharingGroupId slotSharingGroupId = new SlotSharingGroupId();
 
     /**
-     * 表示组中所有任务的资源。默认为零。任何具有UNKNOWN资源的任务都会将其变为 UNKNOWN。
+     * 表示组中所有任务的资源。默认为零。任何具有 UNKNOWN 资源的任务都会将其变为 UNKNOWN。
      *
      * Represents resources of all tasks in the group. Default to be zero. Any task with UNKNOWN
      * resources will turn it to be UNKNOWN.

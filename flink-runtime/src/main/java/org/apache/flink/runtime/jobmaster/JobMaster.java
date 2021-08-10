@@ -120,11 +120,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * JobMaster 的实现。作业主机负责执行单个{@link JobGraph}。
+ * JobMaster 的实现。作业主机负责执行单个 {@link JobGraph}。
  *
- * <p>它提供了以下方法作为其rpc接口的一部分，以与JobMaster远程交互:
+ * <p> 它提供了以下方法作为其rpc接口的一部分，以与JobMaster远程交互:
  *
- * <li>{@link #updateTaskExecutionState}更新给定任务的执行状态
+ *   <li>{@link #updateTaskExecutionState} 更新给定任务的执行状态
  *
  * JobMaster implementation. The job master is responsible for the execution of a single {@link
  * JobGraph}.
@@ -140,7 +140,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
         implements JobMasterGateway, JobMasterService {
 
     /** Default names for Flink's distributed components. */
-    // Flink分布式组件的默认名称
+    // Flink 分布式组件的默认名称
     public static final String JOB_MANAGER_NAME = "jobmanager";
 
     // ------------------------------------------------------------------------
@@ -149,6 +149,7 @@ public class JobMaster extends FencedRpcEndpoint<JobMasterId>
 
     private final ResourceID resourceId;
 
+    // J: 调度的 JobGraph
     private final JobGraph jobGraph;
 
     private final Time rpcTimeout;

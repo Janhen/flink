@@ -26,15 +26,20 @@ import org.apache.flink.runtime.jobgraph.IntermediateResultPartitionID;
 import java.util.Set;
 
 /**
+ * 封装调度逻辑的组件。它可以对执行状态变化和分区消耗事件做出反应。此外，它负责解决任务失败。
+ *
  * Component which encapsulates the scheduling logic. It can react to execution state changes and
  * partition consumable events. Moreover, it is responsible for resolving task failures.
  */
 public interface SchedulingStrategy {
 
     /** Called when the scheduling is started (initial scheduling operation). */
+    // 在调度开始时调用（初始调度操作）。
     void startScheduling();
 
     /**
+     * 每当需要重新启动顶点时调用（由于任务失败）。
+     *
      * Called whenever vertices need to be restarted (due to task failure).
      *
      * @param verticesToRestart The tasks need to be restarted
@@ -42,6 +47,8 @@ public interface SchedulingStrategy {
     void restartTasks(Set<ExecutionVertexID> verticesToRestart);
 
     /**
+     * 每当 {@link Execution} 更改其状态时调用。
+     *
      * Called whenever an {@link Execution} changes its state.
      *
      * @param executionVertexId The id of the task
