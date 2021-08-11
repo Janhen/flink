@@ -30,6 +30,19 @@ import org.apache.flink.types.RowKind;
 import java.io.Serializable;
 
 /**
+ * 一个 {@link DynamicTableSource}，它在运行时扫描外部存储系统中的所有行。
+ *
+ * <p>扫描的行不必只包含插入，也可以包含更新和删除。因此，表源可用于读取（有限或无限）变更日志。给定的
+ *   {@link ChangelogMode} 表示规划器在运行时可以预期的更改集。
+ *
+ * <p>对于常规的批处理场景，源可以发出有界的仅插入行流。
+ *
+ * <p>对于常规流场景，源可以发出无界的仅插入行流。
+ *
+ * <p>对于变更数据捕获 (CDC) 方案，源可以发出具有插入、更新和删除行的有界或无界流。另请参阅 {@link RowKind}。
+ *
+ * <p>{@link ScanTableSource} 可以实现以下可能在计划期间改变实例的能力：
+ *
  * A {@link DynamicTableSource} that scans all rows from an external storage system during runtime.
  *
  * <p>The scanned rows don't have to contain only insertions but can also contain updates and

@@ -23,6 +23,8 @@ import org.apache.flink.api.common.io.OutputFormat;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * {@link OutputFormat} 实例的提供者作为 {@link DynamicTableSink} 的运行时实现。
+ *
  * Provider of an {@link OutputFormat} instance as a runtime implementation for {@link
  * DynamicTableSink}.
  */
@@ -30,6 +32,7 @@ import org.apache.flink.table.data.RowData;
 public interface OutputFormatProvider extends DynamicTableSink.SinkRuntimeProvider {
 
     /** Helper method for creating a static provider. */
+    // 用于创建静态提供程序的辅助方法。
     static OutputFormatProvider of(OutputFormat<RowData> outputFormat) {
         return () -> outputFormat;
     }

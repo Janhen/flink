@@ -36,6 +36,26 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * 将动态表接收到外部存储系统。
+ *
+ * <p>动态表是 Flink 的 Table & SQL API 的核心概念，用于以统一的方式处理有界和无界数据。根据定义，动态表可以随
+ *    时间变化。
+ *
+ * <p>在写动态表时，内容总是可以被认为是一个变更日志（有限或无限），所有变更都被连续写出，直到变更日志用完。给定的
+ *    {@link ChangelogMode} 表示接收器在运行时接受的更改集。
+ *
+ * <p> 对于常规批处理场景，接收器只能接受仅插入行并写出有界流。
+ *
+ * <p> 对于常规流场景，接收器只能接受仅插入的行并且可以写出无界流。
+ *
+ * <p>对于变更数据捕获 (CDC) 方案，接收器可以使用插入、更新和删除行写出有界或无界流。另请参阅 {@link RowKind}。
+ *
+ * <p>{@link DynamicTableSink} 的实例可以被看作是最终产生用于写入实际数据的具体运行时实现的工厂。
+ *
+ * <p>根据可选声明的能力，规划器可能会对实例应用更改，从而改变生成的运行时实现。
+ *
+ * <p>在最后一步，planner 会调用 {@link #getSinkRuntimeProvider(Context)} 获取运行时实现的提供者。
+ *
  * Sink of a dynamic table to an external storage system.
  *
  * <p>Dynamic tables are the core concept of Flink's Table & SQL API for processing both bounded and
@@ -105,12 +125,15 @@ public interface DynamicTableSink {
     SinkRuntimeProvider getSinkRuntimeProvider(Context context);
 
     /**
+     * 在规划期间创建此实例的副本。该副本应该是所有可变成员的深层副本。
+     *
      * Creates a copy of this instance during planning. The copy should be a deep copy of all
      * mutable members.
      */
     DynamicTableSink copy();
 
     /** Returns a string that summarizes this sink for printing to a console or log. */
+    // 返回总结此接收器以打印到控制台或日志的字符串。
     String asSummaryString();
 
     // --------------------------------------------------------------------------------------------
@@ -118,6 +141,13 @@ public interface DynamicTableSink {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过 {@link SinkRuntimeProvider} 创建运行时实现的上下文。
+     *
+     * <p>它由 planner 提供实用程序，用于创建对内部数据结构的依赖最小的运行时实现。
+     *
+     * <p>方法应该在 {@link #getSinkRuntimeProvider(Context)} 中调用。返回的实例为{@link Serializable}，
+     *    可以直接传入运行时实现类。
+     *
      * Context for creating runtime implementation via a {@link SinkRuntimeProvider}.
      *
      * <p>It offers utilities by the planner for creating runtime implementation with minimal

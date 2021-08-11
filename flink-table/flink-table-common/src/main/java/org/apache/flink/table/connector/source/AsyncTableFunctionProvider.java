@@ -22,6 +22,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.functions.AsyncTableFunction;
 
 /**
+ * {@link AsyncTableFunction} 实例的提供者作为 {@link LookupTableSource} 的运行时实现。
+ *
+ * <p>运行时将使用描述表查找键的值调用函数（按照 {@link LookupTableSource.ContextgetKeys()} 中的声明顺序）。
+ *
  * Provider of an {@link AsyncTableFunction} instance as a runtime implementation for {@link
  * LookupTableSource}.
  *

@@ -24,6 +24,17 @@ import org.apache.flink.types.RowKind;
 import java.io.Serializable;
 
 /**
+ * {@link DynamicTableSource} 在运行时通过一个或多个键查找外部存储系统的行。
+ *
+ * <p>与 {@link ScanTableSource} 相比，源不必读取整个表，并且可以在必要时从（可能不断变化的）外部表中懒惰地获取单个值。
+ *
+ * <p>注意：与 {@link ScanTableSource} 相比，{@link LookupTableSource} 目前仅支持发出仅插入更改（另见
+ *    {@link RowKind}）。不支持进一步的能力。
+ *
+ * <p>在最后一步，planner 会调用 {@link #getLookupRuntimeProvider(LookupContext)} 获取运行时实现的提供者。
+ *    执行查找所需的关键字段来自规划器的查询，并将在给定的 {@link LookupContext#getKeys()} 中提供。这些关键字段
+ *    的值在运行时传递。
+ *
  * A {@link DynamicTableSource} that looks up rows of an external storage system by one or more keys
  * during runtime.
  *

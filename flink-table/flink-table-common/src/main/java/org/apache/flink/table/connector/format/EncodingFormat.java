@@ -23,7 +23,7 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import org.apache.flink.table.types.DataType;
 
 /**
- * {@link DynamicTableSink}的{@link Format}用于写行。
+ * {@link DynamicTableSink} 的 {@link Format} 用于写行。
  *
  * A {@link Format} for a {@link DynamicTableSink} for writing rows.
  *
@@ -33,6 +33,8 @@ import org.apache.flink.table.types.DataType;
 public interface EncodingFormat<I> extends Format {
 
     /**
+     * 创建配置为使用给定数据类型的数据的运行时编码器实现。
+     *
      * Creates runtime encoder implementation that is configured to consume data of the given data
      * type.
      */

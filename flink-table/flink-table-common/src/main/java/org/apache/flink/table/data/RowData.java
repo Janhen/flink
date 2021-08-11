@@ -41,22 +41,22 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getSc
  * 内部数据结构的基本接口，表示 {@link RowType} 和其他(可能嵌套的)结构化类型的数据，如表生态系统中的
  * {@link StructuredType}。
  *
- * <p>运行时通过 Table API 或 SQL 管道传递的所有顶级记录都是这个接口的实例。每个{@link RowData}包含一个
- * {@link RowKind}，它表示一行在变更日志中描述的变更类型。{@link RowKind}只是行的元数据信息，因此不是表模式的一
+ * <p> 运行时通过 Table API 或 SQL 管道传递的所有顶级记录都是这个接口的实例。每个 {@link RowData} 包含一个
+ * {@link RowKind}，它表示一行在变更日志中描述的变更类型。{@link RowKind} 只是行的元数据信息，因此不是表模式的一
  * 部分，也就是说，不是一个专用字段。
  *
- * <p>备注:该数据结构的所有字段必须是内部数据结构。
+ * <p> 备注: 该数据结构的所有字段必须是内部数据结构。
  *
- * <p> {@link RowData}接口有不同的实现，它们是为不同的场景设计的:
+ * <p> {@link RowData} 接口有不同的实现，它们是为不同的场景设计的:
  *
  *   <li>面向二进制的实现 {@code BinaryRowData} 由引用 {@link MemorySegment} 来支持，而不是使用 Java 对象来减
- *     少序列化和反序列化开销。
+ *       少序列化和反序列化开销。
  *   <li>面向对象的实现 {@link GenericRowData} 是由一个Java {@link Object} 数组支持的，该数组构造简单，更新效率高。
  *
  * <p>{@link GenericRowData} 用于公共使用，具有稳定的行为。如果需要内部数据结构，建议使用这个类构造
  *    {@link RowData}的实例。
  *
- * <p> Flink的Table API和SQL数据类型到内部数据结构的映射如下表所示:
+ * <p> Flink 的 Table API 和 SQL 数据类型到内部数据结构的映射如下表所示:
  *     ...
  *
  * <p> Nullability 总是由容器数据结构处理的。
@@ -141,6 +141,10 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getSc
 public interface RowData {
 
     /**
+     * 返回该行中的字段数。
+     *
+     * <p>该数字不包括 {@link RowKind}。它是分开保存的。
+     *
      * Returns the number of fields in this row.
      *
      * <p>The number does not include {@link RowKind}. It is kept separately.
@@ -148,6 +152,8 @@ public interface RowData {
     int getArity();
 
     /**
+     * 返回此行在更改日志中描述的更改类型。
+     *
      * Returns the kind of change that this row describes in a changelog.
      *
      * @see RowKind
@@ -155,6 +161,8 @@ public interface RowData {
     RowKind getRowKind();
 
     /**
+     * 设置此行在更改日志中描述的更改类型。
+     *
      * Sets the kind of change that this row describes in a changelog.
      *
      * @see RowKind
@@ -166,9 +174,11 @@ public interface RowData {
     // ------------------------------------------------------------------------------------------
 
     /** Returns true if the field is null at the given position. */
+    // 如果该字段在给定位置为空，则返回 true。
     boolean isNullAt(int pos);
 
     /** Returns the boolean value at the given position. */
+    // 返回给定位置的布尔值。
     boolean getBoolean(int pos);
 
     /** Returns the byte value at the given position. */
@@ -193,6 +203,10 @@ public interface RowData {
     StringData getString(int pos);
 
     /**
+     * 返回给定位置的十进制值。
+     *
+     * <p>需要精度和小数位数来确定十进制值是否以紧凑表示形式存储（请参阅 {@link DecimalData}）。
+     *
      * Returns the decimal value at the given position.
      *
      * <p>The precision and scale are required to determine whether the decimal value was stored in
@@ -201,6 +215,10 @@ public interface RowData {
     DecimalData getDecimal(int pos, int precision, int scale);
 
     /**
+     * 返回给定位置的时间戳值。
+     *
+     * <p> 确定时间戳值是否以紧凑表示形式存储需要精度（请参阅 {@link TimestampData}）。
+     *
      * Returns the timestamp value at the given position.
      *
      * <p>The precision is required to determine whether the timestamp value was stored in a compact
@@ -209,6 +227,7 @@ public interface RowData {
     TimestampData getTimestamp(int pos, int precision);
 
     /** Returns the raw value at the given position. */
+    // 返回给定位置的原始值。
     <T> RawValueData<T> getRawValue(int pos);
 
     /** Returns the binary value at the given position. */
@@ -221,6 +240,10 @@ public interface RowData {
     MapData getMap(int pos);
 
     /**
+     * 返回给定位置的行值。
+     *
+     * <p> 正确提取行需要字段数。
+     *
      * Returns the row value at the given position.
      *
      * <p>The number of fields is required to correctly extract the row.

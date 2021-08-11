@@ -34,6 +34,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HConstants;
 
 /** HBase table sink implementation. */
+// HBase 表接收器实现。
 @Internal
 public class HBaseDynamicTableSink implements DynamicTableSink {
 

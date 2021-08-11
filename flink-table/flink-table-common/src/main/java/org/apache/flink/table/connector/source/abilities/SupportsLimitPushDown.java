@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.connector.source.ScanTableSource;
 
 /**
+ * 允许将限制（预期的最大生成记录数）下推到 {@link ScanTableSource}。
+ *
  * Enables to push down a limit (the expected maximum number of produced records) into a {@link
  * ScanTableSource}.
  *

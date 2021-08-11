@@ -23,6 +23,8 @@ import org.apache.flink.api.common.io.InputFormat;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * {@link InputFormat} 实例的提供者作为 {@link ScanTableSource} 的运行时实现。
+ *
  * Provider of an {@link InputFormat} instance as a runtime implementation for {@link
  * ScanTableSource}.
  */
@@ -30,6 +32,7 @@ import org.apache.flink.table.data.RowData;
 public interface InputFormatProvider extends ScanTableSource.ScanRuntimeProvider {
 
     /** Helper method for creating a static provider. */
+    // 用于创建静态提供程序的辅助方法。
     static InputFormatProvider of(InputFormat<RowData, ?> inputFormat) {
         return new InputFormatProvider() {
             @Override
@@ -45,5 +48,6 @@ public interface InputFormatProvider extends ScanTableSource.ScanRuntimeProvider
     }
 
     /** Creates an {@link InputFormat} instance. */
+    // 创建一个 {@link InputFormat} 实例。
     InputFormat<RowData, ?> createInputFormat();
 }

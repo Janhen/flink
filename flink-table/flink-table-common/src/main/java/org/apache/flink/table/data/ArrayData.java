@@ -36,6 +36,13 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPr
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getScale;
 
 /**
+ * 表示 {@link ArrayType} 数据的内部数据结构的基本接口。
+ *
+ * <p>注意：这个数据结构的所有元素必须是内部数据结构，并且必须是相同的类型。有关内部数据结构的更多信息，请参阅
+ *    {@link RowData}。
+ *
+ * <p>使用 {@link GenericArrayData} 从常规 Java 数组构造此接口的实例。
+ *
  * Base interface of an internal data structure representing data of {@link ArrayType}.
  *
  * <p>Note: All elements of this data structure must be internal data structures and must be of the

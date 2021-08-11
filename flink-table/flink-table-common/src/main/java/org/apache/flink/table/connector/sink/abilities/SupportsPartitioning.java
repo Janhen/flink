@@ -24,6 +24,13 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import java.util.Map;
 
 /**
+ * 允许在 {@link DynamicTableSink} 中写入分区数据
+ *
+ * <p>分区将存储在外部系统中的数据分成更小的部分，这些部分由一个或多个基于字符串的分区键标识。单个分区表示为
+ *    {@code Map < String, String >}，它将每个分区键映射到一个分区值。分区键及其顺序由目录表定义。
+ *
+ * <p>例如，数据可以按地区分区，在按月份分区的地区内。分区键的顺序（在示例中：首先按地区然后按月）由目录表定义。分区列表可以是：
+ *
  * Enables to write partitioned data in a {@link DynamicTableSink}.
  *
  * <p>Partitions split the data stored in an external system into smaller portions that are
@@ -88,6 +95,12 @@ import java.util.Map;
 public interface SupportsPartitioning {
 
     /**
+     * 提供分区的静态部分。
+     *
+     * <p> 单个分区将每个分区键映射到一个分区值。根据用户定义的语句，分区可能不包括所有分区键。
+     *
+     * <p> 有关详细信息，请参阅 {@link SupportsPartitioning} 的文档。
+     *
      * Provides the static part of a partition.
      *
      * <p>A single partition maps each partition key to a partition value. Depending on the
@@ -100,6 +113,14 @@ public interface SupportsPartitioning {
     void applyStaticPartition(Map<String, String> partition);
 
     /**
+     * 返回数据在被接收器消费之前是否需要按分区分组。默认情况下，运行时不需要这样做，并且记录以任意分区顺序到达。
+     *
+     * <p> 如果此方法返回 true，则接收器可以预期所有记录在被接收器消耗之前将按分区键分组。换句话说：接收器将接收一个
+     *    分区的所有元素，然后是另一个分区的所有元素。不同分区的元素不会混合。对于一些 sink，可以通过一次写入一个
+     *    partition 来减少 partition writer 的数量，提高写入性能。
+     *
+     * <p> 给定的参数指示当前执行模式是否支持分组。例如，根据执行模式，排序操作在运行时可能不可用。
+     *
      * Returns whether data needs to be grouped by partition before it is consumed by the sink. By
      * default, this is not required from the runtime and records arrive in arbitrary partition
      * order.

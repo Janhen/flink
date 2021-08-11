@@ -24,6 +24,10 @@ import org.apache.flink.table.data.binary.BinaryRawValueData;
 import org.apache.flink.table.types.logical.RawType;
 
 /**
+ * 表示 {@link RawType} 数据的内部数据结构。
+ *
+ * <p>这个数据结构是不可变的。
+ *
  * An internal data structure representing data of {@link RawType}.
  *
  * <p>This data structure is immutable.
@@ -34,6 +38,12 @@ import org.apache.flink.table.types.logical.RawType;
 public interface RawValueData<T> {
 
     /**
+     * 将此 {@link RawValueData} 转换为 Java 对象。
+     *
+     * <p> 需要给定的序列化器，因为“原始值”可能以二进制格式表示，需要先反序列化。
+     *
+     * <p> 注意：返回的 Java 对象可能会被重用。
+     *
      * Converts this {@link RawValueData} into a Java object.
      *
      * <p>The given serializer is required because the "raw value" might be represented in a binary

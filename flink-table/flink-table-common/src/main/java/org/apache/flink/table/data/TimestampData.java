@@ -30,9 +30,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * 一个内部数据结构，表示{@link TimestampType}和{@link LocalZonedTimestampType}的数据。
- * <p>自{@code 1970-01-01 00:00:00}以来，该数据结构是不可变的，由毫秒和毫秒纳米组成。
- * 如果值足够小，它可能被存储在紧凑的表示形式中(作为一个长值)。
+ * 一个内部数据结构，表示 {@link TimestampType} 和 {@link LocalZonedTimestampType} 的数据。
+ *
+ * <p>自 {@code 1970-01-01 00:00:00} 以来，该数据结构是不可变的，由毫秒和毫秒纳米组成。
+ *    如果值足够小，它可能被存储在紧凑的表示形式中(作为一个长值)。
  *
  * An internal data structure representing data of {@link TimestampType} and {@link
  * LocalZonedTimestampType}.
@@ -45,12 +46,15 @@ import java.time.LocalTime;
 public final class TimestampData implements Comparable<TimestampData> {
 
     // the number of milliseconds in a day
+    // 一天的毫秒数
     private static final long MILLIS_PER_DAY = 86400000; // = 24 * 60 * 60 * 1000
 
     // this field holds the integral second and the milli-of-second
+    // 该字段保存整数秒和毫秒
     private final long millisecond;
 
     // this field holds the nano-of-millisecond
+    // 该字段包含纳秒级
     private final int nanoOfMillisecond;
 
     private TimestampData(long millisecond, int nanoOfMillisecond) {

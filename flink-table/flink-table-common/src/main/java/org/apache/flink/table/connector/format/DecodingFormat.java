@@ -31,6 +31,8 @@ import org.apache.flink.table.types.DataType;
 public interface DecodingFormat<I> extends Format {
 
     /**
+     * 创建运行时解码器实现，该实现配置为生成给定数据类型的数据。
+     *
      * Creates runtime decoder implementation that is configured to produce data of the given data
      * type.
      */

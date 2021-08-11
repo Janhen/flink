@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.connector.source.ScanTableSource;
 
 /**
+ * 允许将水印下推到 {@link ScanTableSource}。
+ *
  * Enables to push down watermarks into a {@link ScanTableSource}.
  *
  * <p>The concept of watermarks defines when time operations based on an event time attribute will

@@ -29,6 +29,8 @@ import org.apache.flink.table.types.DataType;
 import java.io.Serializable;
 
 /**
+ * 允许将计算列下推到 {@link ScanTableSource}。
+ *
  * Enables to push down computed columns into a {@link ScanTableSource}.
  *
  * <p>Computed columns add additional columns to the table's schema. They are defined by logical

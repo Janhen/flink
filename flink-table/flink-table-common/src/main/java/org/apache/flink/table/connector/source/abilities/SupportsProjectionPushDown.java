@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.connector.source.ScanTableSource;
 
 /**
+ * 允许将（可能嵌套的）投影下推到 {@link ScanTableSource}。
+ *
  * Enables to push down a (possibly nested) projection into a {@link ScanTableSource}.
  *
  * <p>Given the following SQL:

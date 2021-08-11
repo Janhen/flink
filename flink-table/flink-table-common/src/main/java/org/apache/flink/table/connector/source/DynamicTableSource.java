@@ -36,6 +36,8 @@ import java.io.Serializable;
 /**
  * 来自外部存储系统的动态表的源。
  *
+ * <p>动态表是 Flink 的 Table & SQL API 的核心概念，用于以统一的方式处理有界和无界数据。根据定义，动态表可以随时间变化。
+ *
  * Source of a dynamic table from an external storage system.
  *
  * <p>Dynamic tables are the core concept of Flink's Table & SQL API for processing both bounded and
