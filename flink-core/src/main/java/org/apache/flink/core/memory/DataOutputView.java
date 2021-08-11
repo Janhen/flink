@@ -35,7 +35,7 @@ import java.io.IOException;
 public interface DataOutputView extends DataOutput {
 
     /**
-     * 跳过{@code numBytes}字节内存。如果某个程序读取被跳过的内存，结果是未定义的。
+     * 跳过 {@code numBytes} 字节内存。如果某个程序读取被跳过的内存，结果是未定义的。
      *
      * Skips {@code numBytes} bytes memory. If some program reads the memory that was skipped over,
      * the results are undefined.
@@ -47,7 +47,7 @@ public interface DataOutputView extends DataOutput {
     void skipBytesToWrite(int numBytes) throws IOException;
 
     /**
-     * 将{@code numBytes}字节从源复制到此视图。
+     * 将 {@code numBytes} 字节从源复制到此视图。
      *
      * Copies {@code numBytes} bytes from the source to this view.
      *

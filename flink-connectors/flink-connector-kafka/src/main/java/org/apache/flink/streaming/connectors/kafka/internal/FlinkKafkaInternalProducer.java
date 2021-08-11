@@ -55,10 +55,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /** Internal flink kafka producer. */
+// 内部 flink kafka 生产者。
+// J: 对 KafkaProducer 进行包装
 @PublicEvolving
 public class FlinkKafkaInternalProducer<K, V> implements Producer<K, V> {
     private static final Logger LOG = LoggerFactory.getLogger(FlinkKafkaInternalProducer.class);
 
+    // J: Kafka client API, 实际生产消息的 ...
     protected final KafkaProducer<K, V> kafkaProducer;
 
     // This lock and closed flag are introduced to workaround KAFKA-6635. Because the bug is only
@@ -81,6 +84,7 @@ public class FlinkKafkaInternalProducer<K, V> implements Producer<K, V> {
 
     // -------------------------------- Simple proxy method calls --------------------------------
 
+    // 加锁初始化事务
     @Override
     public void initTransactions() {
         synchronized (producerClosingLock) {

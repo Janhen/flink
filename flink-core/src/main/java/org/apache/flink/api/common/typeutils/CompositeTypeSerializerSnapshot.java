@@ -33,6 +33,10 @@ import static org.apache.flink.api.common.typeutils.CompositeTypeSerializerUtil.
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link CompositeTypeSerializerSnapshot} 是一个方便的序列化器快照类，可由简单的序列化器使用，它
+ * 1) 将其序列化委托给多个嵌套的序列化器，并且
+ * 2) 可能包含一些需要作为其快照的一部分持久化的额外静态信息。
+ *
  * A {@link CompositeTypeSerializerSnapshot} is a convenient serializer snapshot class that can be
  * used by simple serializers which 1) delegates its serialization to multiple nested serializers,
  * and 2) may contain some extra static information that needs to be persisted as part of its

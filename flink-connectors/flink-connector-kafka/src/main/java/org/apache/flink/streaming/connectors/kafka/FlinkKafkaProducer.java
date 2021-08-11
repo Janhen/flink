@@ -91,8 +91,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * Flink Sink生成数据到Kafka主题。默认情况下，生产者将使用{@link FlinkKafkaProducer。SemanticAT_LEAST_ONCE}
- * 语义。在使用{@link FlinkKafkaProducer。请参考Flink的Kafka连接器文档。
+ * Flink Sink 生成数据到 Kafka主题。默认情况下，生产者将使用 {@link FlinkKafkaProducer.Semantic#AT_LEAST_ONCE}
+ * 语义。在使用 {@link FlinkKafkaProducer。请参考 Flink 的 Kafka 连接器文档。
  *
  * Flink Sink to produce data into a Kafka topic. By default producer will use {@link
  * FlinkKafkaProducer.Semantic#AT_LEAST_ONCE} semantic. Before using {@link
@@ -151,6 +151,18 @@ public class FlinkKafkaProducer<IN>
     private static final long serialVersionUID = 1L;
 
     /**
+     * 这个系数决定什么是安全的缩小系数。
+     *
+     * <p>如果 Flink 应用程序在第一个检查点完成之前失败，或者我们正在从头开始新一批 {@link FlinkKafkaProducer}
+     *    而没有干净地关闭前一个，{@link FlinkKafkaProducer} 不知道以前的集合是什么使用了 Kafka 的
+     *    transactionalId。在这种情况下，它将尝试安全运行并中止以下范围内的所有可能的 transactionalId：
+     *    {@code [0, getNumberOfParallelSubtasks() kafkaProducersPoolSize SAFE_SCALE_DOWN_FACTOR)}
+     *
+     * <p> 可以使用事务 id 的范围是：{@code [0, getNumberOfParallelSubtasks() kafkaProducersPoolSize) }
+     *
+     * <p> 这意味着如果我们将 {@code getNumberOfParallelSubtasks()} 减少一个大于
+     *     {@code SAFE_SCALE_DOWN_FACTOR} 的因子，我们可能会留下一些挥之不去的事务。
+     *
      * This coefficient determines what is the safe scale down factor.
      *
      * <p>If the Flink application previously failed before first checkpoint completed or we are
@@ -169,15 +181,19 @@ public class FlinkKafkaProducer<IN>
     public static final int SAFE_SCALE_DOWN_FACTOR = 5;
 
     /**
+     * 池中 KafkaProducers 的默认数量。请参阅 {@link FlinkKafkaProducer.Semantic#EXACTLY_ONCE}。
+     *
      * Default number of KafkaProducers in the pool. See {@link
      * FlinkKafkaProducer.Semantic#EXACTLY_ONCE}.
      */
     public static final int DEFAULT_KAFKA_PRODUCERS_POOL_SIZE = 5;
 
     /** Default value for kafka transaction timeout. */
+    // kafka 事务超时的默认值。
     public static final Time DEFAULT_KAFKA_TRANSACTION_TIMEOUT = Time.hours(1);
 
     /** Configuration key for disabling the metrics reporting. */
+    // 用于禁用指标报告的配置键。
     public static final String KEY_DISABLE_METRICS = "flink.disable-metrics";
 
     /**
@@ -206,6 +222,7 @@ public class FlinkKafkaProducer<IN>
     private transient TransactionalIdsGenerator transactionalIdsGenerator;
 
     /** Hint for picking next transactional id. */
+    // 提示选择下一个 transactional ID。
     private transient FlinkKafkaProducer.NextTransactionalIdHint nextTransactionalIdHint;
 
     /** User defined properties for the Producer. */
@@ -221,47 +238,61 @@ public class FlinkKafkaProducer<IN>
     @Nullable private final KeyedSerializationSchema<IN> keyedSchema;
 
     /**
+     * (Serializable) 序列化模式，用于将记录序列化为 {@link ProducerRecord ProducerRecords}。
+     *
      * (Serializable) serialization schema for serializing records to {@link ProducerRecord
      * ProducerRecords}.
      */
     @Nullable private final KafkaSerializationSchema<IN> kafkaSchema;
 
     /** User-provided partitioner for assigning an object to a Kafka partition for each topic. */
+    // 用户提供的分区器，用于为每个主题将对象分配给 Kafka 分区。
     @Nullable private final FlinkKafkaPartitioner<IN> flinkKafkaPartitioner;
 
     /** Partitions of each topic. */
     protected final Map<String, int[]> topicPartitionsMap;
 
     /**
+     * 池中生产者的最大数量。如果所有生产者都在使用，快照状态将抛出异常。
+     *
      * Max number of producers in the pool. If all producers are in use, snapshoting state will
      * throw an exception.
      */
     private final int kafkaProducersPoolSize;
 
     /** Pool of available transactional ids. */
+    // 可用事务 ID 池。
     private final BlockingDeque<String> availableTransactionalIds = new LinkedBlockingDeque<>();
 
     /** Flag controlling whether we are writing the Flink record's timestamp into Kafka. */
+    // 控制我们是否将 Flink 记录的时间戳写入 Kafka 的标志。
     protected boolean writeTimestampToKafka = false;
 
     /** Flag indicating whether to accept failures (and log them), or to fail on failures. */
+    // 指示是否接受失败（并记录它们）或失败时失败的标志。
     private boolean logFailuresOnly;
 
     /** Semantic chosen for this instance. */
+    // 为此实例选择的语义。
     protected FlinkKafkaProducer.Semantic semantic;
 
     // -------------------------------- Runtime fields ------------------------------------------
 
     /** The callback than handles error propagation or logging callbacks. */
+    // 回调比处理错误传播或日志回调。
     @Nullable protected transient Callback callback;
 
     /** Errors encountered in the async producer are stored here. */
+    // 异步生产者中遇到的错误存储在这里
     @Nullable protected transient volatile Exception asyncException;
 
     /** Number of unacknowledged records. */
+    // 未确认的记录数。
     protected final AtomicLong pendingRecords = new AtomicLong();
 
     /**
+     * 缓存指标以替换已注册的指标，而不是覆盖现有指标。
+     *
      * Cache of metrics to replace already registered metrics instead of overwriting existing ones.
      */
     private final Map<String, KafkaMetricMutableWrapper> previouslyCreatedMetrics = new HashMap<>();
@@ -745,6 +776,8 @@ public class FlinkKafkaProducer<IN>
     // ---------------------------------- Properties --------------------------
 
     /**
+     * 如果设置为 true，Flink 会将附加到每条记录的（事件时间）时间戳写入 Kafka。时间戳必须为​​正数，Kafka 才能接受它们。
+     *
      * If set to true, Flink will write the (event time) timestamp attached to each record into
      * Kafka. Timestamps must be positive for Kafka to accept them.
      *
@@ -760,6 +793,9 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 定义生产者是否应该因错误而失败，或者只记录它们。如果设置为 true，则仅记录异常，如果设置为 false，则最终将抛
+     * 出异常并导致流程序失败（并进入恢复）。
+     *
      * Defines whether the producer should fail on errors, or only log them. If this is set to true,
      * then exceptions will be only logged, if set to false, exceptions will be eventually thrown
      * and cause the streaming program to fail (and enter recovery).
@@ -771,6 +807,12 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 禁用在作业恢复期间提交可能超时的 Kafka 事务时引发的异常传播。如果 Kafka 事务超时，则提交永远不会成功。因此，
+     * 使用此功能可以避免作业的恢复循环。仍将记录异常以通知用户可能已发生数据丢失。
+     *
+     * <p> 请注意，我们使用 {@link System#currentTimeMillis()} 来跟踪交易的年龄。此外，只有在恢复期间抛出的
+     * 异常才会被捕获，即生产者在放弃之前至少会尝试一次事务提交。
+     *
      * Disables the propagation of exceptions thrown when committing presumably timed out Kafka
      * transactions during recovery of the job. If a Kafka transaction is timed out, a commit will
      * never be successful. Hence, use this feature to avoid recovery loops of the Job. Exceptions
@@ -905,6 +947,7 @@ public class FlinkKafkaProducer<IN>
                             + "is a bug.");
         }
 
+        // J: 未确认的记录数 ++
         pendingRecords.incrementAndGet();
         transaction.producer.send(record, callback);
     }
@@ -912,15 +955,18 @@ public class FlinkKafkaProducer<IN>
     @Override
     public void close() throws FlinkKafkaException {
         // First close the producer for current transaction.
+        // 首先关闭当前事务的生产者。
         try {
             final KafkaTransactionState currentTransaction = currentTransaction();
             if (currentTransaction != null) {
                 // to avoid exceptions on aborting transactions with some pending records
+                // 避免在中止具有某些待处理记录的事务时出现异常
                 flush(currentTransaction);
 
                 // normal abort for AT_LEAST_ONCE and NONE do not clean up resources because of
                 // producer reusing, thus
                 // we need to close it manually
+                // 由于生产者重用，AT_LEAST_ONCE 和 NONE 的正常 abort 不会清理资源，因此我们需要手动关闭它
                 switch (semantic) {
                     case EXACTLY_ONCE:
                         break;
@@ -938,6 +984,7 @@ public class FlinkKafkaProducer<IN>
             // We may have to close producer of the current transaction in case some exception was
             // thrown before
             // the normal close routine finishes.
+            // 我们可能不得不关闭当前事务的生产者，以防在正常关闭例程完成之前抛出一些异常。
             if (currentTransaction() != null) {
                 try {
                     currentTransaction().producer.close(Duration.ofSeconds(0));
@@ -956,6 +1003,7 @@ public class FlinkKafkaProducer<IN>
                                 }
                             });
             // make sure we propagate pending errors
+            // 确保我们传播未决错误
             checkErroneous();
         }
     }
@@ -967,6 +1015,7 @@ public class FlinkKafkaProducer<IN>
             throws FlinkKafkaException {
         switch (semantic) {
             case EXACTLY_ONCE:
+                // J: 开启 kafka producer 自己的事务
                 FlinkKafkaInternalProducer<byte[], byte[]> producer = createTransactionalProducer();
                 producer.beginTransaction();
                 return new FlinkKafkaProducer.KafkaTransactionState(
@@ -974,6 +1023,7 @@ public class FlinkKafkaProducer<IN>
             case AT_LEAST_ONCE:
             case NONE:
                 // Do not create new producer on each beginTransaction() if it is not necessary
+                // 如果没有必要，不要在每个 beginTransaction() 上创建新的生产者
                 final FlinkKafkaProducer.KafkaTransactionState currentTransaction =
                         currentTransaction();
                 if (currentTransaction != null && currentTransaction.producer != null) {
@@ -1005,10 +1055,12 @@ public class FlinkKafkaProducer<IN>
 
     @Override
     protected void commit(FlinkKafkaProducer.KafkaTransactionState transaction) {
+        // J: 是否开启事务，不同语义 ...
         if (transaction.isTransactional()) {
             try {
                 transaction.producer.commitTransaction();
             } finally {
+                // J: 未开启事务时，回收事务 Producer
                 recycleTransactionalProducer(transaction.producer);
             }
         }
@@ -1061,6 +1113,9 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * <b>注意子类实现者：<b>在覆盖此方法时，请始终调用 {@code super.acknowledgeMes​​sage()} 以保持生产者内部
+     * 簿记的不变量。如果没有，一定要知道你在做什么。
+     *
      * <b>ATTENTION to subclass implementors:</b> When overriding this method, please always call
      * {@code super.acknowledgeMessage()} to keep the invariants of the internal bookkeeping of the
      * producer. If not, be sure to know what you are doing.
@@ -1070,6 +1125,8 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 刷新挂起的记录。
+     *
      * Flush pending records.
      *
      * @param transaction
@@ -1097,6 +1154,7 @@ public class FlinkKafkaProducer<IN>
         // To avoid duplication only first subtask keeps track of next transactional id hint.
         // Otherwise all of the
         // subtasks would write exactly same information.
+        // 为了避免重复，只有第一个子任务会跟踪下一个事务 ID 提示。否则，所有子任务都会写入完全相同的信息
         if (getRuntimeContext().getIndexOfThisSubtask() == 0
                 && semantic == FlinkKafkaProducer.Semantic.EXACTLY_ONCE) {
             checkState(
@@ -1109,6 +1167,8 @@ public class FlinkKafkaProducer<IN>
             // case we adjust nextFreeTransactionalId by the range of transactionalIds that could be
             // used for this
             // scaling up.
+            // 如果我们扩大规模，某些（未知）子任务必须从头开始创建新的事务 ID。在这种情况下，我们根据可用于此扩展的
+            // transactionalId 范围调整 nextFreeTransactionalId。
             if (getRuntimeContext().getNumberOfParallelSubtasks()
                     > nextTransactionalIdHint.lastParallelism) {
                 nextFreeTransactionalId +=
@@ -1215,6 +1275,8 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 初始化后，确保来自当前用户上下文的所有先前事务都已完成。
+     *
      * After initialization make sure that all previous transactions from the current user context
      * have been completed.
      *
@@ -1233,6 +1295,7 @@ public class FlinkKafkaProducer<IN>
         abortTransactions(abortTransactions);
     }
 
+    // 重置可用 Transaction ID 池
     private void resetAvailableTransactionalIdsPool(Collection<String> transactionalIds) {
         availableTransactionalIds.clear();
         availableTransactionalIds.addAll(transactionalIds);
@@ -1285,6 +1348,9 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 对于每个检查点，我们创建新的 {@link FlinkKafkaInternalProducer} 以便新事务不会与先前检查点期间创建的
+     * 事务发生冲突（{@code producer.initTransactions()} 确保我们获得新的 producerId 和 epoch 计数器）。
+     *
      * For each checkpoint we create new {@link FlinkKafkaInternalProducer} so that new transactions
      * will not clash with transactions created during previous checkpoints ({@code
      * producer.initTransactions()} assures that we obtain new producerId and epoch counters).
@@ -1293,6 +1359,7 @@ public class FlinkKafkaProducer<IN>
             throws FlinkKafkaException {
         String transactionalId = availableTransactionalIds.poll();
         if (transactionalId == null) {
+            // 正在进行的快照过多。增加 kafka 生产者池的大小或减少并发检查点的数量。
             throw new FlinkKafkaException(
                     FlinkKafkaErrorCode.PRODUCERS_POOL_EMPTY,
                     "Too many ongoing snapshots. Increase kafka producers pool size or decrease number of concurrent checkpoints.");
@@ -1383,6 +1450,7 @@ public class FlinkKafkaProducer<IN>
         in.defaultReadObject();
     }
 
+    // 迁移下一个事务 ID 后状态
     private void migrateNextTransactionalIdHindState(FunctionInitializationContext context)
             throws Exception {
         ListState<NextTransactionalIdHint> oldNextTransactionalIdHintState =
@@ -1438,10 +1506,12 @@ public class FlinkKafkaProducer<IN>
     }
 
     /** State for handling transactions. */
+    // 处理事务的状态。
     @VisibleForTesting
     @Internal
     public static class KafkaTransactionState {
 
+        // J: 内部 flink kafka 生产者。
         private final transient FlinkKafkaInternalProducer<byte[], byte[]> producer;
 
         @Nullable final String transactionalId;
@@ -1521,6 +1591,8 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 与 {@link FlinkKafkaProducer} 的此实例关联的上下文。用于跟踪事务 ID 的用户。
+     *
      * Context associated to this instance of the {@link FlinkKafkaProducer}. User for keeping track
      * of the transactionalIds.
      */
@@ -1755,6 +1827,7 @@ public class FlinkKafkaProducer<IN>
     }
 
     /** Keep information required to deduce next safe to use transactional id. */
+    // 保留推断下一个安全使用事务 ID 所需的信息。
     public static class NextTransactionalIdHint {
         public int lastParallelism = 0;
         public long nextFreeTransactionalId = 0;

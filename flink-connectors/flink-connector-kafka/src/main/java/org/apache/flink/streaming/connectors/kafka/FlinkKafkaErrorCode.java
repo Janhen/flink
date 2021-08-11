@@ -20,8 +20,11 @@ package org.apache.flink.streaming.connectors.kafka;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Error codes used in {@link FlinkKafkaException}. */
+// {@link FlinkKafkaException} 中使用的错误代码。
 @PublicEvolving
 public enum FlinkKafkaErrorCode {
+    // 生产者池空，
     PRODUCERS_POOL_EMPTY,
+    // 外部错误
     EXTERNAL_ERROR
 }

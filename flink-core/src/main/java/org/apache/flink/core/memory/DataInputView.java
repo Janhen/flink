@@ -35,7 +35,7 @@ import java.io.IOException;
 public interface DataInputView extends DataInput {
 
     /**
-     * 跳过{@code numBytes}字节的内存。与{@link #skipBytes(int)}方法相比，该方法总是跳过所需的字节数或抛出
+     * 跳过 {@code numBytes} 字节的内存。与 {@link #skipBytes(int)} 方法相比，该方法总是跳过所需的字节数或抛出
      * {@link java.io.EOFException}
      *
      * Skips {@code numBytes} bytes of memory. In contrast to the {@link #skipBytes(int)} method,
@@ -49,8 +49,8 @@ public interface DataInputView extends DataInput {
     void skipBytesToRead(int numBytes) throws IOException;
 
     /**
-     * 读取内存的{@code len}字节，并将其存储到{@code b}中，从offset {@code off}开始。
-     * 它返回读字节数，如果没有剩余数据，则返回-1。
+     * 读取内存的 {@code len} 字节，并将其存储到 {@code b} 中，从 offset {@code off} 开始。
+     * 它返回读字节数，如果没有剩余数据，则返回 -1。
      *
      * Reads up to {@code len} bytes of memory and stores it into {@code b} starting at offset
      * {@code off}. It returns the number of read bytes or -1 if there is no more data left.
@@ -64,7 +64,7 @@ public interface DataInputView extends DataInput {
     int read(byte[] b, int off, int len) throws IOException;
 
     /**
-     * 试填充给定的字节数组{@code b}。返回实际读字节数，如果没有更多数据则返回-1。
+     * 试填充给定的字节数组 {@code b}。返回实际读字节数，如果没有更多数据则返回-1。
      *
      * Tries to fill the given byte array {@code b}. Returns the actually number of read bytes or -1
      * if there is no more data.

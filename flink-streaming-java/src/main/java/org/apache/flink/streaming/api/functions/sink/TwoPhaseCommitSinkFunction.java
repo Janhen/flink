@@ -63,8 +63,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 于所有打算实现一次语义的 {@link SinkFunction}，这是一个推荐的基类。
- * 它通过在 {@link CheckpointedFunction} 和 {@link CheckpointListener} 之上实现两个阶段提交算法来实现这一点。
+ * 于所有打算实现 EOS 语义的 {@link SinkFunction}，这是一个推荐的基类。它通过在
+ * {@link CheckpointedFunction} 和 {@link CheckpointListener} 之上实现两个阶段提交算法来实现这一点。
  * 用户应该提供自定义 {@code TXN} (事务句柄)，并实现处理该事务句柄的抽象方法。
  *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
@@ -91,7 +91,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
     protected transient Optional<CONTEXT> userContext;
 
-    // 基于 State ...
+    // 基于 State ...，保存事务和对应的 上下文
     protected transient ListState<State<TXN, CONTEXT>> state;
 
     private final Clock clock;
@@ -167,6 +167,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
         return currentTransactionHolder == null ? null : currentTransactionHolder.handle;
     }
 
+    // 待 Transactions
     @Nonnull
     protected Stream<Map.Entry<Long, TXN>> pendingTransactions() {
         return pendingCommitTransactions.entrySet().stream()
@@ -193,7 +194,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
      * 预先提交先前创建的事务。预提交必须完成所有必要的步骤，为将来可能发生的提交准备事务。在此之后，事务可能仍然会被
      * 中止，但是底层实现必须确保对已经预先提交的事务的提交调用总是成功的。
      *
-     * <p>通常实现需要刷新数据。
+     * <p> 通常实现需要刷新数据。
      *
      * Pre commit previously created transaction. Pre commit must make all of the necessary steps to
      * prepare the transaction for a commit that might happen in the future. After this point the
@@ -205,7 +206,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     protected abstract void preCommit(TXN transaction) throws Exception;
 
     /**
-     * 提交一个预提交的事务。如果这个方法失败，Flink应用程序将重新启动，
+     * 提交一个预提交的事务。如果这个方法失败，Flink 应用程序将重新启动，
      * {@link TwoPhaseCommitSinkFunction#recoverAndCommit(Object)} 将再次为相同的事务调用。
      *
      * Commit a pre-committed transaction. If this method fail, Flink application will be restarted
@@ -228,6 +229,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** Abort a transaction. */
+    // 中止 transaction。
     protected abstract void abort(TXN transaction);
 
     /** Abort a transaction that was rejected by a coordinator after a failure. */
@@ -263,6 +265,17 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
         // 下面的场景是可能的
         // (1) 从最近的检查点有一个事务被触发并完成。这应该是常见的情况。在这种情况下，只需提交该事务。
         // (2) 有多个挂起的事务，因为跳过了前一个检查点。这是一种罕见的情况，但可以发生在以下情况:
+        //     - master 不能保留最后一个检查点的元数据（存储系统中的临时中断），但可以保留一个连续的检查点
+        //       （此处通知的那个）
+        //     - 其他任务无法在上一个检查点期间保持其状态，但不会触发失败，因为它们可以保持其状态并可以在后续检查点中
+        //       成功保持状态（此处通知的那个）
+
+        //     在这两种情况下，前一个检查点永远不会达到提交状态，但是这个检查点总是期望包含前一个检查点并覆盖自上一个
+        //     成功检查点以来的所有更改。因此，我们需要提交所有待处理的事务。
+        //  (3) 有多个 transaction 未决，但检查点完成通知与最新的无关。这是可能的，因为通知消息可能会延迟（在极端
+        //  情况下，直到触发后续检查点后才到达）并且因为可能存在并发重叠检查点（在前一个完全完成之前启动新的检查点）。
+        //
+        // ==> 永远不应该出现我们这里没有待处理交易的情况
 
         // the following scenarios are possible here
         //
@@ -316,6 +329,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
                     pendingTransaction,
                     pendingTransactionCheckpointId);
 
+            // 如果几乎达到超时，则记录警告
             logWarningIfTimeoutAlmostReached(pendingTransaction);
             try {
                 commit(pendingTransaction.handle);
@@ -344,6 +358,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     public void snapshotState(FunctionSnapshotContext context) throws Exception {
         // this is like the pre-commit of a 2-phase-commit transaction
         // we are ready to commit and remember the transaction
+        // 这就像我们准备提交并记住事务的两阶段提交事务的预提交
 
         checkState(
                 currentTransactionHolder != null,
@@ -373,6 +388,16 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
     @Override
     public void initializeState(FunctionInitializationContext context) throws Exception {
+        // 当我们使用 pendingCommitTransactions 恢复状态时，我们真的不知道事务是否已经提交，或者在完成 master
+        // 上的检查点和通知作者之间是否存在故障。
+
+        // （常见的情况实际上是已经提交了，master 上的提交和这里的通知之间的窗口很小）
+
+        // 如果在第一个完成的检查点之前发生故障，或者在向外扩展事件的情况下，其中一些新任务没有分配给检查的事务，则
+        // 可能根本没有任何事务）
+
+        // 如果发生缩减事件，或者出于 “notifyCheckpointComplete()” 方法中讨论的原因，我们可以检查多个事务。
+
         // when we are restoring state with pendingCommitTransactions, we don't really know whether
         // the
         // transactions were already committed, or whether there was a failure between
@@ -400,6 +425,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
                 List<TXN> handledTransactions = new ArrayList<>(recoveredTransactions.size() + 1);
                 for (TransactionHolder<TXN> recoveredTransaction : recoveredTransactions) {
                     // If this fails to succeed eventually, there is actually data loss
+                    // 如果最终未能成功，则实际上会丢失数据
                     recoverAndCommitInternal(recoveredTransaction);
                     handledTransactions.add(recoveredTransaction.handle);
                     LOG.info("{} committed recovered transaction {}", name(), recoveredTransaction);
@@ -423,6 +449,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
         }
 
         // if in restore we didn't get any userContext or we are initializing from scratch
+        // 如果在恢复中我们没有得到任何 userContext 或者我们从头开始初始化
         if (!recoveredUserContext) {
             LOG.info("{} - no state to restore", name());
 
@@ -435,6 +462,8 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 此方法必须是唯一调用 {@link #beginTransaction()} 的地方，以确保同时创建 {@link TransactionHolder}
+     *
      * This method must be the only place to call {@link #beginTransaction()} to ensure that the
      * {@link TransactionHolder} is created at the same time.
      */
@@ -443,6 +472,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 此方法必须是唯一调用 {@link #recoverAndCommit(Object)} 的地方，以确保遵守配置参数
+     * {@link #transactionTimeout} 和 {@link #ignoreFailuresAfterTransactionTimeout}。
+     *
      * This method must be the only place to call {@link #recoverAndCommit(Object)} to ensure that
      * the configuration parameters {@link #transactionTimeout} and {@link
      * #ignoreFailuresAfterTransactionTimeout} are respected.
@@ -521,6 +553,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 如果事务的经过时间达到 <code>transactionTimeout<code> 的指定比率，则启用警告日志记录。如果
+     * <code>warningRatio<code> 为 0，则在提交事务时将始终记录警告。
+     *
      * Enables logging of warnings if a transaction's elapsed time reaches a specified ratio of the
      * <code>transactionTimeout</code>. If <code>warningRatio</code> is 0, a warning will be always
      * logged when committing the transaction.
@@ -655,6 +690,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
             this.transactionStartTime = transactionStartTime;
         }
 
+        // 经过时间
         long elapsedTime(Clock clock) {
             return clock.millis() - transactionStartTime;
         }
@@ -695,7 +731,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** Custom {@link TypeSerializer} for the sink state. */
-    // 自定义接收器状态的{@link TypeSerializer}。
+    // 自定义接收器状态的 {@link TypeSerializer}。
     @VisibleForTesting
     @Internal
     public static final class StateSerializer<TXN, CONTEXT>
@@ -703,7 +739,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
         private static final long serialVersionUID = 1L;
 
+        // 事务的序列化
         private final TypeSerializer<TXN> transactionSerializer;
+        // 上下文的序列化
         private final TypeSerializer<CONTEXT> contextSerializer;
 
         public StateSerializer(
@@ -869,6 +907,9 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * {@link TypeSerializer ConfigSnapshot} 用于接收器状态。这必须是公开的，以便可以反序列化实例化，不应在
+     * {@code TwoPhaseCommitSinkFunction} 之外的任何地方使用。
+     *
      * {@link TypeSerializerConfigSnapshot} for sink state. This has to be public so that it can be
      * deserialized/instantiated, should not be used anywhere outside {@code
      * TwoPhaseCommitSinkFunction}.
