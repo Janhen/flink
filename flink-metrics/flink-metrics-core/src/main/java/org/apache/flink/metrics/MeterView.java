@@ -19,6 +19,17 @@
 package org.apache.flink.metrics;
 
 /**
+ * MeterView 提供给定时间段内每秒的平均事件率。
+ *
+ * <p>这个类的主要优点是速率既不是由计算线程更新，也不是为每个事件更新。相反，计数历史由后台线程定期更新。从该历史记录
+ *    中按需派生出速率，它表示给定时间跨度内事件的平均速率。
+ *
+ * <p>将时间跨度设置为较低的值可减少内存消耗，并会更准确地报告短期变化。可能的最小值为
+ *    {@link View#UPDATE_INTERVAL_SECONDS}。高值反过来会增加内存消耗，因为必须维护更长的历史记录，但会导致速率
+ *    之间更平滑的转换。
+ *
+ * <p>事件由 {@link Counter} 计数。
+ *
  * A MeterView provides an average rate of events per second over a given time period.
  *
  * <p>The primary advantage of this class is that the rate is neither updated by the computing
@@ -40,6 +51,7 @@ public class MeterView implements Meter, View {
     /** The underlying counter maintaining the count. */
     private final Counter counter;
     /** The time-span over which the average is calculated. */
+    // 计算平均值的时间跨度。
     private final int timeSpanInSeconds;
     /** Circular array containing the history of values. */
     private final long[] values;

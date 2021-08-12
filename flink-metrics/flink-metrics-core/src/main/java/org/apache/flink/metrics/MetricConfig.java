@@ -21,6 +21,7 @@ package org.apache.flink.metrics;
 import java.util.Properties;
 
 /** A properties class with added utility method to extract primitives. */
+// 一个属性类，添加了用于提取原语的实用方法。
 public class MetricConfig extends Properties {
 
     public String getString(String key, String defaultValue) {

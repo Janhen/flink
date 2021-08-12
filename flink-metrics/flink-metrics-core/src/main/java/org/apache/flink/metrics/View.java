@@ -19,10 +19,13 @@
 package org.apache.flink.metrics;
 
 /** An interface for metrics which should be updated in regular intervals by a background thread. */
+// 应由后台线程定期更新的指标接口。
 public interface View {
     /** The interval in which metrics are updated. */
+    // 更新指标的时间间隔。
     int UPDATE_INTERVAL_SECONDS = 5;
 
     /** This method will be called regularly to update the metric. */
+    // 将定期调用此方法以更新指标。
     void update();
 }

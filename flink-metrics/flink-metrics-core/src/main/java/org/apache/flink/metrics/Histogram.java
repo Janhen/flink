@@ -19,6 +19,10 @@
 package org.apache.flink.metrics;
 
 /**
+ * 与 Flink 的度量系统一起使用的直方图接口。
+ *
+ * <p>直方图允许记录值、获取记录值的当前计数并为当前看到的元素创建直方图统计信息。
+ *
  * Histogram interface to be used with Flink's metrics system.
  *
  * <p>The histogram allows to record values, get the current count of recorded values and create

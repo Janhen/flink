@@ -35,6 +35,8 @@ import java.util.Properties;
 public interface MetricReporterFactory {
 
     /**
+     * 创建一个新的度量报告器。
+     *
      * Creates a new metric reporter.
      *
      * @param properties configured properties for the reporter

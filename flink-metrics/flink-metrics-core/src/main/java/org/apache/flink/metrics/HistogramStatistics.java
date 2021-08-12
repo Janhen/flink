@@ -19,6 +19,10 @@
 package org.apache.flink.metrics;
 
 /**
+ * 直方图统计数据表示直方图中记录的元素的当前快照。
+ *
+ * <p>直方图统计允许计算分位数、平均值、标准偏差、最小值和最大值的值。
+ *
  * Histogram statistics represent the current snapshot of elements recorded in the histogram.
  *
  * <p>The histogram statistics allow to calculate values for quantiles, the mean, the standard

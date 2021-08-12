@@ -19,12 +19,18 @@
 package org.apache.flink.metrics;
 
 /**
+ * 字符过滤器功能的接口。过滤器函数被赋予一个过滤器可以转换的字符串。返回的字符串是转换结果。
+ *
  * Interface for a character filter function. The filter function is given a string which the filter
  * can transform. The returned string is the transformation result.
  */
 public interface CharacterFilter {
 
     /**
+     * 过滤给定的字符串并从中生成结果字符串。
+     *
+     * <p>例如，一种实现可以从输入字符串中过滤掉无效字符。
+     *
      * Filter the given string and generate a resulting string from it.
      *
      * <p>For example, one implementation could filter out invalid characters from the input string.

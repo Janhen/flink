@@ -19,6 +19,7 @@
 package org.apache.flink.metrics;
 
 /** A simple low-overhead {@link org.apache.flink.metrics.Counter} that is not thread-safe. */
+// 一个简单的低开销 {@link org.apache.flink.metrics.Counter} 不是线程安全的。
 public class SimpleCounter implements Counter {
 
     /** the current count. */
