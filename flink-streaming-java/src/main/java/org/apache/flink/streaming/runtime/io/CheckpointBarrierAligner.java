@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * {@link CheckpointBarrierAligner}在给定的通道上跟踪接收到的{@link CheckpointBarrier}，并通过决定哪些通道应
+ * {@link CheckpointBarrierAligner} 在给定的通道上跟踪接收到的 {@link CheckpointBarrier}，并通过决定哪些通道应
  * 该被阻塞以及何时释放被阻塞的通道来控制对齐。
  *
  * {@link CheckpointBarrierAligner} keep tracks of received {@link CheckpointBarrier} on given

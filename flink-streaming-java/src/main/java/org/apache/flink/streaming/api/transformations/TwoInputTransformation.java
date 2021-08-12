@@ -34,6 +34,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 此转换表示将 {@link TwoInputStreamOperator} 应用于两个输入 {@code Transformations}。结果再次只有一个流。
+ *
  * This Transformation represents the application of a {@link TwoInputStreamOperator} to two input
  * {@code Transformations}. The result is again only one stream.
  *
@@ -56,6 +58,8 @@ public class TwoInputTransformation<IN1, IN2, OUT> extends PhysicalTransformatio
     private TypeInformation<?> stateKeyType;
 
     /**
+     * 从给定的输入和运算符创建一个新的 {@code TwoInputTransformation}。
+     *
      * Creates a new {@code TwoInputTransformation} from the given inputs and operator.
      *
      * @param input1 The first input {@code Transformation}

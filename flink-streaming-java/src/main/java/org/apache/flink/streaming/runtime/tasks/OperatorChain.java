@@ -77,6 +77,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@code OperatorChain} 包含在单个 {@link StreamTask} 中作为一个链执行的所有运算符。
+ *
  * The {@code OperatorChain} contains all operators that are executed as one chain within a single
  * {@link StreamTask}.
  *

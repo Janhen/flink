@@ -47,6 +47,7 @@ public class SinkTransformation<T> extends PhysicalTransformation<Object> {
     private final StreamOperatorFactory<Object> operatorFactory;
 
     // We need this because sinks can also have state that is partitioned by key
+    // 我们需要这个，因为接收器也可以有由键分区的状态
     private KeySelector<T, ?> stateKeySelector;
 
     private TypeInformation<?> stateKeyType;

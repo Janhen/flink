@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.util.ExceptionUtils;
 
 /**
+ * 与 {@link Runnable} 类似，此接口用于捕获要执行的代码块。与 {@code Runnable} 相比，此接口允许抛出已检查的异常。
+ *
  * Similar to a {@link Runnable}, this interface is used to capture a block of code to be executed.
  * In contrast to {@code Runnable}, this interface allows throwing checked exceptions.
  */

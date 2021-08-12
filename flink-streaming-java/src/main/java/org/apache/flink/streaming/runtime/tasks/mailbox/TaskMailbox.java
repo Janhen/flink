@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 任务邮箱提供对邮箱的读写访问，并且具有打开->（静默）->关闭的生命周期。邮件具有可用于仅检索相关信件的优先级。
+ *
  * A task mailbox provides read and write access to a mailbox and has a lifecycle of open ->
  * (quiesced) -> closed. Mails have a priority that can be used to retrieve only relevant letters.
  *

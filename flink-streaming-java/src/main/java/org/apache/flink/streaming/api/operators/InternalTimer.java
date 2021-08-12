@@ -27,6 +27,8 @@ import org.apache.flink.runtime.state.PriorityComparator;
 import javax.annotation.Nonnull;
 
 /**
+ * 飞行中计时器的内部接口。
+ *
  * Internal interface for in-flight timers.
  *
  * @param <K> Type of the keys to which timers are scoped.
@@ -36,12 +38,16 @@ import javax.annotation.Nonnull;
 public interface InternalTimer<K, N> extends PriorityComparable<InternalTimer<?, ?>>, Keyed<K> {
 
     /** Function to extract the key from a {@link InternalTimer}. */
+    // 从 {@link InternalTimer} 中提取密钥的函数。
     KeyExtractorFunction<InternalTimer<?, ?>> KEY_EXTRACTOR_FUNCTION = InternalTimer::getKey;
 
     /** Function to compare instances of {@link InternalTimer}. */
+    // 用于比较 {@link InternalTimer} 实例的函数
     PriorityComparator<InternalTimer<?, ?>> TIMER_COMPARATOR =
             (left, right) -> Long.compare(left.getTimestamp(), right.getTimestamp());
     /**
+     * 返回计时器的时间戳。此值确定计时器将触发的时间点。
+     *
      * Returns the timestamp of the timer. This value determines the point in time when the timer
      * will fire.
      */

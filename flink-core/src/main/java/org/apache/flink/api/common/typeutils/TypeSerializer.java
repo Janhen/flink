@@ -90,7 +90,7 @@ public abstract class TypeSerializer<T> implements Serializable {
      * 如果它是有状态的，则创建此序列化器的深层副本。如果序列化器不是有状态的，则返回本身。
      *
      * <p>我们需要这个，因为序列化器可能在多个线程中使用。无状态序列化器本质上是线程安全的，而有状态序列化器可能不是线程
-     * 安全的。
+     *   安全的。
      *
      * Creates a deep copy of this serializer if it is necessary, i.e. if it is stateful. This can
      * return itself if the serializer is not stateful.
@@ -191,7 +191,7 @@ public abstract class TypeSerializer<T> implements Serializable {
 
     /**
      * 将一条记录从源输入视图复制到目标输出视图。这个操作是对二进制数据进行操作，还是对记录进行部分反序列化以确定其
-     * 长度(比如可变长度的记录)，这取决于实现者。二进制拷贝通常更快。包含两个整数(总共8字节)的记录的副本最有效地
+     * 长度(比如可变长度的记录)，这取决于实现者。二进制拷贝通常更快。包含两个整数(总共 8 字节)的记录的副本最有效地
      * 实现为 {@code target.write(source, 8);}.
      *
      * Copies exactly one record from the source input view to the target output view. Whether this

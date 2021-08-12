@@ -24,7 +24,7 @@ import org.apache.flink.api.dag.Transformation;
 import org.apache.flink.streaming.api.operators.ChainingStrategy;
 
 /**
- * 创建物理操作的{@link Transformation}。它允许设置{@link ChainingStrategy}。
+ * 创建物理操作的 {@link Transformation}。它允许设置 {@link ChainingStrategy}。
  *
  * A {@link Transformation} that creates a physical operation. It enables setting {@link
  * ChainingStrategy}.
@@ -36,6 +36,8 @@ import org.apache.flink.streaming.api.operators.ChainingStrategy;
 public abstract class PhysicalTransformation<T> extends Transformation<T> {
 
     /**
+     * 使用给定的名称、输出类型和并行度创建一个新的 {@code Transformation}。
+     *
      * Creates a new {@code Transformation} with the given name, output type and parallelism.
      *
      * @param name The name of the {@code Transformation}, this will be shown in Visualizations and
@@ -48,5 +50,6 @@ public abstract class PhysicalTransformation<T> extends Transformation<T> {
     }
 
     /** Sets the chaining strategy of this {@code Transformation}. */
+    // 设置此 {@code Transformation} 的链接策略。
     public abstract void setChainingStrategy(ChainingStrategy strategy);
 }

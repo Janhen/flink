@@ -35,6 +35,10 @@ import java.io.IOException;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * {@link StreamRecord}、{@link Watermark}、{@link LatencyMarker} 和 {@link StreamStatus} 的序列化程序。
+ *
+ * <p>这不像普通的 {@link TypeSerializer}，而是仅用于流任务操作员级别，用于传输 StreamRecords 和 Watermarks。
+ *
  * Serializer for {@link StreamRecord}, {@link Watermark}, {@link LatencyMarker}, and {@link
  * StreamStatus}.
  *

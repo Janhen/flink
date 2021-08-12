@@ -28,10 +28,15 @@ import java.util.List;
 import java.util.Optional;
 
 /** Interface for stream element queues for the {@link AsyncWaitOperator}. */
+// {@link AsyncWaitOperator} 的流元素队列接口。
 @Internal
 public interface StreamElementQueue<OUT> {
 
     /**
+     * 尝试将给定元素放入队列。如果队列有剩余容量，则此操作成功，如果队列已满，则此操作失败。
+     *
+     * <p>此方法返回插入元素的句柄，允许设置计算结果。
+     *
      * Tries to put the given element in the queue. This operation succeeds if the queue has
      * capacity left and fails if the queue is full.
      *

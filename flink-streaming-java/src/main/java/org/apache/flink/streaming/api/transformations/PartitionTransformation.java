@@ -30,6 +30,10 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 此转换表示输入元素分区的更改。
+ *
+ * <p>这不会创建物理操作，它只会影响上游操作如何连接到下游操作。
+ *
  * This transformation represents a change of partitioning of the input elements.
  *
  * <p>This does not create a physical operation, it only affects how upstream operations are
@@ -47,6 +51,8 @@ public class PartitionTransformation<T> extends Transformation<T> {
     private final ShuffleMode shuffleMode;
 
     /**
+     * 从给定的输入和 {@link StreamPartitioner} 创建一个新的 {@code PartitionTransformation}。
+     *
      * Creates a new {@code PartitionTransformation} from the given input and {@link
      * StreamPartitioner}.
      *
@@ -58,6 +64,8 @@ public class PartitionTransformation<T> extends Transformation<T> {
     }
 
     /**
+     * 从给定的输入和 {@link StreamPartitioner} 创建一个新的 {@code PartitionTransformation}。
+     *
      * Creates a new {@code PartitionTransformation} from the given input and {@link
      * StreamPartitioner}.
      *
@@ -87,6 +95,8 @@ public class PartitionTransformation<T> extends Transformation<T> {
     }
 
     /** Returns the {@link ShuffleMode} of this {@link PartitionTransformation}. */
+    // J: 返回此 {@link PartitionTransformation} 的 {@link ShuffleMode}。
+    // J: PartitionTransformation 特有的方法
     public ShuffleMode getShuffleMode() {
         return shuffleMode;
     }

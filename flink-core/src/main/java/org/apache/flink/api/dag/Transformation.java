@@ -45,7 +45,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <p> {@code Transformations}的图表:
  *
+ * ...
+ *
  * <p> 将在运行时生成此操作图：
+ *
+ * ...
  *
  * <p> 有关分区、联合、拆分选择的信息最终被编码在将源连接到地图操作的边中。
  *
@@ -132,17 +136,23 @@ public abstract class Transformation<T> {
     // This is used to handle MissingTypeInfo. As long as the outputType has not been queried
     // it can still be changed using setOutputType(). Afterwards an exception is thrown when
     // trying to change the output type.
+    // 这用于处理 MissingTypeInfo。只要 outputType 未被查询，它仍然可以使用 setOutputType() 进行更改。
+    // 之后尝试更改输出类型时会引发异常。
     protected boolean typeUsed;
 
     private int parallelism;
 
     /**
+     * 此流转换的最大并行度。它定义了动态扩展的上限和用于分区状态的密钥组数量。
+     *
      * The maximum parallelism for this stream transformation. It defines the upper limit for
      * dynamic scaling and the number of key groups used for partitioned state.
      */
     private int maxParallelism = -1;
 
     /**
+     * 此流转换的最少资源。它定义了未来计划中动态资源调整大小的下限。
+     *
      * The minimum resources for this stream transformation. It defines the lower limit for dynamic
      * resources resize in future plan.
      */
@@ -155,6 +165,9 @@ public abstract class Transformation<T> {
     private ResourceSpec preferredResources = ResourceSpec.DEFAULT;
 
     /**
+     * 这个权重表示这种转换对托管内存的依赖程度，因此高度依赖托管内存的转换将能够在运行时获取更多的托管内存（线性关联）。
+     * 请注意，它仅适用于 UNKNOWN 资源的情况。
+     *
      * This weight indicates how much this transformation relies on managed memory, so that
      * transformation highly relies on managed memory would be able to acquire more managed memory
      * in runtime (linear association). Note that it only works in cases of UNKNOWN resources.
@@ -162,6 +175,9 @@ public abstract class Transformation<T> {
     private int managedMemoryWeight = DEFAULT_MANAGED_MEMORY_WEIGHT;
 
     /**
+     * 此转换的用户指定 ID。这用于在作业重新启动时分配相同的操作员 ID。还有自动生成的 {@link #id}，它是从静态计数器
+     * 分配的。该字段与此无关。
+     *
      * User-specified ID for this transformation. This is used to assign the same operator ID across
      * job restarts. There is also the automatically generated {@link #id}, which is assigned from a
      * static counter. That field is independent from this.
@@ -333,6 +349,8 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 获取用户提供的哈希值。
+     *
      * Gets the user provided hash.
      *
      * @return The user provided hash.
@@ -376,6 +394,10 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 设置此转换的插槽共享组。如果可能，同一插槽共享组中的并行操作实例将共同位于同一个 TaskManager 插槽中。
+     *
+     * <p>最初，操作位于默认插槽共享组中。这可以使用 {@code setSlotSharingGroup("default")} 显式设置。
+     *
      * Sets the slot sharing group of this transformation. Parallel instances of operations that are
      * in the same slot sharing group will be co-located in the same TaskManager slot, if possible.
      *
@@ -402,6 +424,12 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * <b>注意：<b> 目前这是一个内部未记录的功能。目前尚不清楚这是否会得到长期支持和稳定。
+     *
+     * <p>获取标识并置组的密钥。具有相同 co-location key 的 Operator 将被调度器放置到相同的 slot 中。
+     *
+     * <p>如果这是 null（这是默认值），则表示没有并置约束。
+     *
      * <b>NOTE:</b> This is an internal undocumented feature for now. It is not clear whether this
      * will be supported and stable in the long term.
      *
@@ -460,6 +488,8 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 设置此 {@code Transformation} 的缓冲区超时。超时定义了数据在通过网络发送之前可以在部分已满的缓冲区中停留多长时间。
+     *
      * Set the buffer timeout of this {@code Transformation}. The timeout defines how long data may
      * linger in a partially full buffer before being sent over the network.
      *
@@ -485,6 +515,11 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 获得可传递的前驱
+     *
+     * 返回此 {@code Transformation} 的所有传递前导 {@code Transformation}。例如，在确定迭代的反馈边缘是否
+     * 实际上将迭代头作为前驱时使用。
+     *
      * Returns all transitive predecessor {@code Transformation}s of this {@code Transformation}.
      * This is, for example, used when determining whether a feedback edge of an iteration actually
      * has the iteration head as a predecessor.

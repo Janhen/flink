@@ -19,6 +19,10 @@
 package org.apache.flink.streaming.api.operators;
 
 /**
+ * 用于对键控操作的当前键进行排序和查询的接口。
+ *
+ * <p>这主要被计时器系统用来在创建计时器时查询键，并在触发计时器时设置正确的键上下文。
+ *
  * Inteface for setting and querying the current key of keyed operations.
  *
  * <p>This is mainly used by the timer system to query the key when creating timers and to set the

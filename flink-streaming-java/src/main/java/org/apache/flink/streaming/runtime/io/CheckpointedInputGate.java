@@ -38,6 +38,9 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link CheckpointedInputGate} 使用 {@link CheckpointBarrierHandler} 处理来自 {@link InputGate}
+ * 的传入 {@link CheckpointBarrier}。
+ *
  * The {@link CheckpointedInputGate} uses {@link CheckpointBarrierHandler} to handle incoming {@link
  * CheckpointBarrier} from the {@link InputGate}.
  */
