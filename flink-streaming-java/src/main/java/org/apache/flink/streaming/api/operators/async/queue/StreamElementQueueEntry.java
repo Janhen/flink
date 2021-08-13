@@ -26,6 +26,9 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamElement;
 import javax.annotation.Nonnull;
 
 /**
+ * {@link StreamElementQueue} 的条目。流元素队列条目存储已为其实例化流元素队列条目的{@link StreamElement}。
+ * 此外，它还允许通过 {@link ResultFuture} 设置完成条目的结果。
+ *
  * An entry for the {@link StreamElementQueue}. The stream element queue entry stores the {@link
  * StreamElement} for which the stream element queue entry has been instantiated. Furthermore, it
  * allows to set the result of a completed entry through {@link ResultFuture}.
@@ -41,6 +44,8 @@ interface StreamElementQueueEntry<OUT> extends ResultFuture<OUT> {
     boolean isDone();
 
     /**
+     * 发出与此队列条目关联的结果。
+     *
      * Emits the results associated with this queue entry.
      *
      * @param output the output into which to emit.
@@ -48,6 +53,8 @@ interface StreamElementQueueEntry<OUT> extends ResultFuture<OUT> {
     void emitResult(TimestampedCollector<OUT> output);
 
     /**
+     * 此队列条目的输入元素，为其异步执行计算。
+     *
      * The input element for this queue entry, for which the calculation is performed
      * asynchronously.
      *
@@ -57,6 +64,7 @@ interface StreamElementQueueEntry<OUT> extends ResultFuture<OUT> {
     StreamElement getInputElement();
 
     /** Not supported. Exceptions must be handled in the AsyncWaitOperator. */
+    // 不支持。异常必须在 AsyncWaitOperator 中处理。
     @Override
     default void completeExceptionally(Throwable error) {
         throw new UnsupportedOperationException(

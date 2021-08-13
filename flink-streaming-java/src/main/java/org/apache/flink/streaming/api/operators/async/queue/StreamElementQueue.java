@@ -49,6 +49,10 @@ public interface StreamElementQueue<OUT> {
     Optional<ResultFuture<OUT>> tryPut(StreamElement streamElement);
 
     /**
+     * 从这个队列的头部发出一个已完成的元素到给定的输出中。
+     *
+     * <p>如果没有完成任何元素，则不会发出任何元素（在进入任何临界区之前检查 {@link #hasCompletedElements()}）。
+     *
      * Emits one completed element from the head of this queue into the given output.
      *
      * <p>Will not emit any element if no element has been completed (check {@link
@@ -59,6 +63,8 @@ public interface StreamElementQueue<OUT> {
     void emitCompletedElement(TimestampedCollector<OUT> output);
 
     /**
+     * 检查是否至少有一个完整的头部元素。
+     *
      * Checks if there is at least one completed head element.
      *
      * @return True if there is a completed head element.
@@ -66,6 +72,10 @@ public interface StreamElementQueue<OUT> {
     boolean hasCompletedElements();
 
     /**
+     * 返回当前包含在此队列中的 {@link StreamElement} 集合以进行检查点。
+     *
+     * <p>这包括所有未发出、已完成和未完成的元素。
+     *
      * Returns the collection of {@link StreamElement} currently contained in this queue for
      * checkpointing.
      *
@@ -76,6 +86,8 @@ public interface StreamElementQueue<OUT> {
     List<StreamElement> values();
 
     /**
+     * 如果队列为空，则为真；否则为假。
+     *
      * True if the queue is empty; otherwise false.
      *
      * @return True if the queue is empty; otherwise false.
@@ -83,6 +95,8 @@ public interface StreamElementQueue<OUT> {
     boolean isEmpty();
 
     /**
+     * 返回队列的大小。
+     *
      * Return the size of the queue.
      *
      * @return The number of elements contained in this queue.

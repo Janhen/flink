@@ -25,6 +25,7 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import org.apache.flink.streaming.runtime.tasks.ProcessingTimeService;
 
 /** A {@link StreamOperator} for executing {@link SinkFunction SinkFunctions}. */
+// 用于执行 {@link SinkFunction SinkFunctions} 的 {@link StreamOperator}
 @Internal
 public class StreamSink<IN> extends AbstractUdfStreamOperator<Object, SinkFunction<IN>>
         implements OneInputStreamOperator<IN, Object> {
@@ -57,6 +58,7 @@ public class StreamSink<IN> extends AbstractUdfStreamOperator<Object, SinkFuncti
     @Override
     protected void reportOrForwardLatencyMarker(LatencyMarker marker) {
         // all operators are tracking latencies
+        // 所有 operator 都在跟踪延迟
         this.latencyStats.reportLatency(marker);
 
         // sinks don't forward latency markers

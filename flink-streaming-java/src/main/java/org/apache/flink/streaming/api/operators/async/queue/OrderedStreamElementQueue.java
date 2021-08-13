@@ -36,6 +36,9 @@ import java.util.Optional;
 import java.util.Queue;
 
 /**
+ * 订购 {@link StreamElementQueue} 实现。有序流元素队列按照 {@link StreamElementQueueEntry} 添加到队列的
+ * 顺序提供异步结果。因此，即使完成顺序可以是任意的，输出顺序也严格遵循插入顺序（元素不能相互超越）。
+ *
  * Ordered {@link StreamElementQueue} implementation. The ordered stream element queue provides
  * asynchronous results in the order in which the {@link StreamElementQueueEntry} have been added to
  * the queue. Thus, even if the completion order can be arbitrary, the output order strictly follows
@@ -50,6 +53,7 @@ public final class OrderedStreamElementQueue<OUT> implements StreamElementQueue<
     private final int capacity;
 
     /** Queue for the inserted StreamElementQueueEntries. */
+    // 插入的 StreamElementQueueEntries 的队列。
     private final Queue<StreamElementQueueEntry<OUT>> queue;
 
     public OrderedStreamElementQueue(int capacity) {
@@ -98,6 +102,7 @@ public final class OrderedStreamElementQueue<OUT> implements StreamElementQueue<
 
             queue.add(queueEntry);
 
+            // “将元素放入有序流元素队列。新的填充度”
             LOG.debug(
                     "Put element into ordered stream element queue. New filling degree "
                             + "({}/{}).",

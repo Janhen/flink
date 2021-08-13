@@ -39,6 +39,7 @@ public class MemoryUtils {
     // 系统当前运行的平台的本机字节顺序。
     public static final ByteOrder NATIVE_BYTE_ORDER = ByteOrder.nativeOrder();
 
+    // J: buffer 中 address 的 offset
     private static final long BUFFER_ADDRESS_FIELD_OFFSET =
             getClassFieldOffset(Buffer.class, "address");
     private static final long BUFFER_CAPACITY_FIELD_OFFSET =

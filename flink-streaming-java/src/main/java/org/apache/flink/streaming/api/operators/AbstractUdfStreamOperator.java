@@ -37,6 +37,8 @@ import org.apache.flink.streaming.util.functions.StreamingFunctionUtils;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * 这用作具有用户定义函数的运算符的基类。此类处理用户定义函数的打开和关闭，作为操作员生命周期的一部分。
+ *
  * This is used as the base class for operators that have a user-defined function. This class
  * handles the opening and closing of the user-defined functions, as part of the operator life
  * cycle.
@@ -54,6 +56,7 @@ public abstract class AbstractUdfStreamOperator<OUT, F extends Function>
     protected final F userFunction;
 
     /** Flag to prevent duplicate function.close() calls in close() and dispose(). */
+    // 标记以防止在 close() 和 dispose() 中重复调用 function.close()。
     private transient boolean functionsClosed = false;
 
     public AbstractUdfStreamOperator(F userFunction) {
@@ -80,12 +83,14 @@ public abstract class AbstractUdfStreamOperator<OUT, F extends Function>
             StreamConfig config,
             Output<StreamRecord<OUT>> output) {
         super.setup(containingTask, config, output);
+        // J: 算子的生命周期，在 setup 中未自定义 Function 添加 RuntimeContext(StreamingRuntimeContext)
         FunctionUtils.setFunctionRuntimeContext(userFunction, getRuntimeContext());
     }
 
     @Override
     public void snapshotState(StateSnapshotContext context) throws Exception {
         super.snapshotState(context);
+        // J: 生成流式函数的快照，只针对 OperatorStateBackend
         StreamingFunctionUtils.snapshotFunctionState(
                 context, getOperatorStateBackend(), userFunction);
     }

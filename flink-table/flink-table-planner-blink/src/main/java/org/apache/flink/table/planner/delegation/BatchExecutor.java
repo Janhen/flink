@@ -31,6 +31,9 @@ import org.apache.flink.table.planner.utils.ExecutorUtils;
 import java.util.List;
 
 /**
+ * 由 {@link StreamExecutionEnvironment} 支持的 {@link Executor} 实现。这是
+ * {@link org.apache.flink.table.planner.delegation.BatchPlanner} 支持的唯一执行器。
+ *
  * An implementation of {@link Executor} that is backed by a {@link StreamExecutionEnvironment}.
  * This is the only executor that {@link org.apache.flink.table.planner.delegation.BatchPlanner}
  * supports.

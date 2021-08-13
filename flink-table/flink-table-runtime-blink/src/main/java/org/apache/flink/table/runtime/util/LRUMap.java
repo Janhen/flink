@@ -22,6 +22,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 一个LRU缓存，基于<代码> LinkedHashMap的<代码>。
+ *
+ * <p>这个缓存有一个固定的最大元素数（<code>cacheSize<code>）。如果缓存已满并添加了另一个条目，则 LRU
+ *   （最近最少使用）条目将被删除。
+ *
+ * <p>注意：这个类不是线程安全的。
+ *
  * An LRU cache, based on <code>LinkedHashMap</code>.
  *
  * <p>This cache has a fixed maximum number of elements (<code>cacheSize</code>). If the cache is
@@ -58,6 +65,8 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> {
     }
 
     /**
+     * 从 LRUMap 中删除条目时可以接收通知的对象。
+     *
      * An object that can receive a notification when an entry is removed from a LRUMap.
      *
      * @param <K> the type of keys maintained by this map

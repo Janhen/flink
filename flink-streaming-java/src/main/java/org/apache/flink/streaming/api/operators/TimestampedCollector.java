@@ -25,6 +25,10 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * 为需要 {@link Output} 的用户函数封装一个 {@link Output}。在将 {@link TimestampedCollector} 提供给用户
+ * 函数之前，您必须设置应附加到发射元素的时间戳。大多数运营商会在此处设置传入
+ * {@link org.apache.flink.streaming.runtime.streamrecord.StreamRecord} 的时间戳。
+ *
  * Wrapper around an {@link Output} for user functions that expect a {@link Output}. Before giving
  * the {@link TimestampedCollector} to a user function you must set the timestamp that should be
  * attached to emitted elements. Most operators would set the timestamp of the incoming {@link
@@ -40,6 +44,7 @@ public final class TimestampedCollector<T> implements Output<T> {
     private final StreamRecord<T> reuse;
 
     /** Creates a new {@link TimestampedCollector} that wraps the given {@link Output}. */
+    // 创建一个新的 {@link TimestampedCollector} 包装了给定 {@link Output}。
     public TimestampedCollector(Output<StreamRecord<T>> output) {
         this.output = output;
         this.reuse = new StreamRecord<T>(null);

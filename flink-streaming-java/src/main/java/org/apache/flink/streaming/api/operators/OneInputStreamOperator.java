@@ -24,8 +24,8 @@ import org.apache.flink.streaming.runtime.streamrecord.LatencyMarker;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
- * 一个输入的流操作符的接口。使用{@link org.apache.flink.streaming.api.operators.AbstractStreamOperator}
- * 如果想要实现自定义操作符，可以将AbstractStreamOperator作为基类。
+ * 一个输入的流操作符的接口。使用 {@link org.apache.flink.streaming.api.operators.AbstractStreamOperator}
+ * 如果想要实现自定义操作符，可以将 AbstractStreamOperator 作为基类。
  *
  * Interface for stream operators with one input. Use {@link
  * org.apache.flink.streaming.api.operators.AbstractStreamOperator} as a base class if you want to
@@ -46,7 +46,7 @@ public interface OneInputStreamOperator<IN, OUT> extends StreamOperator<OUT> {
     void processElement(StreamRecord<IN> element) throws Exception;
 
     /**
-     * 处理{@link Watermark}。此方法保证不会与该 operator 的其他方法同时调用
+     * 处理 {@link Watermark}。此方法保证不会与该 operator 的其他方法同时调用
      *
      * Processes a {@link Watermark}. This method is guaranteed to not be called concurrently with
      * other methods of the operator.

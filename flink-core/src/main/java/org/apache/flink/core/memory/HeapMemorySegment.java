@@ -27,11 +27,11 @@ import java.nio.ByteBuffer;
 import java.util.Objects;
 
 /**
- * 这个类表示由Flink管理的一块堆内存。段由一个字节数组支持，并具有基本类型的随机put和get方法，以及比较和交换方法。
+ * 这个类表示由 Flink 管理的一块堆内存。段由一个字节数组支持，并具有基本类型的随机 put 和 get 方法，以及比较和交换方法。
  *
- * <p>这个类专门用于堆内存的字节访问和字节复制调用，同时重用来自MemorySegment的多字节类型访问和跨段操作。
+ * <p>这个类专门用于堆内存的字节访问和字节复制调用，同时重用来自 MemorySegment 的多字节类型访问和跨段操作。
  *
- * <p>注意，内存段通常不应该手动分配，而是通过{@link MemorySegmentFactory}分配。
+ * <p>注意，内存段通常不应该手动分配，而是通过 {@link MemorySegmentFactory} 分配。
  *
  * This class represents a piece of heap memory managed by Flink. The segment is backed by a byte
  * array and features random put and get methods for the basic types, as well as compare and swap
@@ -48,6 +48,8 @@ import java.util.Objects;
 public final class HeapMemorySegment extends MemorySegment {
 
     /**
+     * 对堆内存的额外引用，因此我们可以让字节数组检查通过内置检查自动失败而无需额外检查。
+     *
      * An extra reference to the heap memory, so we can let byte array checks fail by the built-in
      * checks automatically without extra checks.
      */
@@ -95,6 +97,8 @@ public final class HeapMemorySegment extends MemorySegment {
     }
 
     /**
+     * 获取支持此内存段的字节数组。
+     *
      * Gets the byte array that backs this memory segment.
      *
      * @return The byte array that backs this memory segment, or null, if the segment has been
@@ -181,12 +185,15 @@ public final class HeapMemorySegment extends MemorySegment {
     // -------------------------------------------------------------------------
 
     /**
+     * 产生堆内存段的内存段工厂。请注意，此工厂不支持分配堆外内存。
      * A memory segment factory that produces heap memory segments. Note that this factory does not
      * support to allocate off-heap memory.
      */
     public static final class HeapMemorySegmentFactory {
 
         /**
+         * 创建一个以给定堆内存区域为目标的新内存段。
+         *
          * Creates a new memory segment that targets the given heap memory region.
          *
          * @param memory The heap memory region.
@@ -197,6 +204,8 @@ public final class HeapMemorySegment extends MemorySegment {
         }
 
         /**
+         * 分配一些未合并的内存并创建一个代表该内存的新内存段。
+         *
          * Allocates some unpooled memory and creates a new memory segment that represents that
          * memory.
          *
@@ -209,6 +218,10 @@ public final class HeapMemorySegment extends MemorySegment {
         }
 
         /**
+         * 创建一个包装给定字节数组的内存段。
+         *
+         * <p>此方法旨在用于将内存池化并在长期存在的内存区域周围创建内存段的组件。
+         *
          * Creates a memory segment that wraps the given byte array.
          *
          * <p>This method is intended to be used for components which pool memory and create memory
@@ -226,5 +239,6 @@ public final class HeapMemorySegment extends MemorySegment {
         HeapMemorySegmentFactory() {}
     }
 
+    // J: 饿汉单例？
     public static final HeapMemorySegmentFactory FACTORY = new HeapMemorySegmentFactory();
 }

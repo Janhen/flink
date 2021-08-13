@@ -23,7 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Collection;
 
 /**
- * {@link ResultFuture}在处理异步io时收集用户代码中的数据错误。
+ * {@link ResultFuture} 在处理异步 io 时收集用户代码中的数据错误。
  *
  * {@link ResultFuture} collects data / error in user codes while processing async i/o.
  *
@@ -50,7 +50,7 @@ public interface ResultFuture<OUT> {
     void complete(Collection<OUT> result);
 
     /**
-     * 用一个异常完成结果future。
+     * 用一个异常完成结果 future。
      *
      * Completes the result future exceptionally with an exception.
      *

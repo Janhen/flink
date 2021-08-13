@@ -40,7 +40,7 @@ import java.util.concurrent.RunnableFuture;
 public interface SnapshotStrategy<S extends StateObject> {
 
     /**
-     * 该操作将快照写入由给定{@link CheckpointStreamFactory}提供的流中，并返回一个@{@link RunnableFuture}，
+     * 该操作将快照写入由给定 {@link CheckpointStreamFactory} 提供的流中，并返回一个 {@link RunnableFuture}，
      * 该操作提供了快照的状态句柄。操作是同步执行还是异步执行取决于实现。在后一种情况下，在获取句柄之前必须先执行返回的
      * Runnable。
      *

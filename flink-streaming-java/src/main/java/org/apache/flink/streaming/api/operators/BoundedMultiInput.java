@@ -20,10 +20,14 @@ package org.apache.flink.streaming.api.operators;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Interface for the multi-input operators that can process EndOfInput event. */
+// 可以处理 EndOfInput 事件的多输入操作符的接口。
 @PublicEvolving
 public interface BoundedMultiInput {
 
     /**
+     * 它被通知没有更多的数据将会由 {@code inputId} 标识的输入到达。的 {@code inputId} 被编号从1开始，而`1`表示
+     * 第一输入。
+     *
      * It is notified that no more data will arrive on the input identified by the {@code inputId}.
      * The {@code inputId} is numbered starting from 1, and `1` indicates the first input.
      */

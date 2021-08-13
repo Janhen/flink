@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.UTFDataFormatException;
 
 /**
+ * 由多个内存页面支持的所有输入视图的基类。该基类包含从页面读取数据和检测页面边界交叉的所有解码方法。一旦跨越边界，具体
+ * 的子类必须实现提供下一个内存页的方法。
+ *
  * The base class for all input views that are backed by multiple memory pages. This base class
  * contains all decoding methods to read data from a page and detect page boundary crossing. The
  * concrete sub classes must implement the methods to provide the next memory page once the boundary
@@ -35,14 +38,19 @@ public abstract class AbstractPagedInputView implements DataInputView {
 
     private MemorySegment currentSegment;
 
+    // 每段开头要跳过的字节数
     protected final int
             headerLength; // the number of bytes to skip at the beginning of each segment
 
+    // 当前段的偏移量
     private int positionInSegment; // the offset in the current segment
 
+    // 切换到下一个之前当前段的限制
     private int limitInSegment; // the limit in the current segment before switching to the next
 
+    // 用于 utf-8 解码的可重用字节缓冲区
     private byte[] utfByteBuffer; // reusable byte buffer for utf-8 decoding
+    // 用于 utf-8 解码的可重用字符缓冲区
     private char[] utfCharBuffer; // reusable char buffer for utf-8 decoding
 
     // --------------------------------------------------------------------------------------------
@@ -50,6 +58,9 @@ public abstract class AbstractPagedInputView implements DataInputView {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建一个以给定段开头的新视图。输入直接在给定页面的标题之后开始。如果标题大小为零，则从头开始。指定的初始限制
+     * 描述了在视图必须前进到下一个段之前可以从当前段读取的位置数据。
+     *
      * Creates a new view that starts with the given segment. The input starts directly after the
      * header of the given page. If the header size is zero, it starts at the beginning. The
      * specified initial limit describes up to which position data may be read from the current

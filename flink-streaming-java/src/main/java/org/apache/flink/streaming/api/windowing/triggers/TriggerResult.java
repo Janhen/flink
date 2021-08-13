@@ -19,6 +19,11 @@
 package org.apache.flink.streaming.api.windowing.triggers;
 
 /**
+ * 触发器方法的结果类型。这决定了窗口会发生什么，例如是否应该调用窗口函数，或者应该丢弃窗口。
+ *
+ * <p>如果 {@link Trigger} 返回 {@link #FIRE} 或 {@link #FIRE_AND_PURGE} 但窗口不包含任何数据，则不会调用
+ *   窗口函数，即不会为该窗口生成任何数据。
+ *
  * Result type for trigger methods. This determines what happens with the window, for example
  * whether the window function should be called, or the window should be discarded.
  *
@@ -29,18 +34,24 @@ package org.apache.flink.streaming.api.windowing.triggers;
 public enum TriggerResult {
 
     /** No action is taken on the window. */
+    // 不对窗口执行任何操作。
     CONTINUE(false, false),
 
     /** {@code FIRE_AND_PURGE} evaluates the window function and emits the window result. */
+    // {@code FIRE_AND_PURGE} 评估窗口函数并发出窗口结果。
     FIRE_AND_PURGE(true, true),
 
     /**
+     * 在 {@code FIRE} 上，评估窗口并发出结果。窗口不会被清除，但所有元素都被保留
+     *
      * On {@code FIRE}, the window is evaluated and results are emitted. The window is not purged,
      * though, all elements are retained.
      */
     FIRE(true, false),
 
     /**
+     * 窗口中的所有元素都被清除并丢弃该窗口，而不评估窗口函数或发出任何元素。
+     *
      * All elements in the window are cleared and the window is discarded, without evaluating the
      * window function or emitting any elements.
      */

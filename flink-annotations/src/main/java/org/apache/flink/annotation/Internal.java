@@ -24,6 +24,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 注释稳定中标记的方法，公开的 API 作为一个内部开发 API。
+ *
+ * <p>开发人员 API 是稳定的，但内部弗林克和跨版本可能会改变。
+ *
  * Annotation to mark methods within stable, public APIs as an internal developer API.
  *
  * <p>Developer APIs are stable but internal to Flink and might change across releases.

@@ -31,6 +31,7 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 
 /** A simple and efficient serializer for the {@link java.io.DataOutput} interface. */
+// {@link java.io.DataOutput} 接口的简单高效的序列化器
 public class DataOutputSerializer implements DataOutputView, MemorySegmentWritable {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataOutputSerializer.class);

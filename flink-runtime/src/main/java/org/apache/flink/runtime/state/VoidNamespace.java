@@ -21,6 +21,7 @@ package org.apache.flink.runtime.state;
 import java.io.ObjectStreamException;
 
 /** Singleton placeholder class for state without a namespace. */
+// 没有命名空间的状态的单例占位符类。
 public final class VoidNamespace {
 
     // ------------------------------------------------------------------------

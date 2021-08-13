@@ -23,6 +23,7 @@ import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /** A {@link StreamOperator} for executing projections on streams. */
+// 用于在流上执行投影的 {@link StreamOperator}。
 @Internal
 public class StreamProject<IN, OUT extends Tuple> extends AbstractStreamOperator<OUT>
         implements OneInputStreamOperator<IN, OUT> {

@@ -23,6 +23,16 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * Reduce 函数的基本接口。 Reduce 函数通过始终采用两个元素并将它们组合为一个来将元素组组合为一个值。 Reduce 函数
+ * 可用于整个数据集或分组数据集。在后一种情况下，每个组都单独减少。
+ *
+ * <p>有关同时作用于整个组的 reduce 函数（例如 MapReduceHadoop 样式的 reduce），请参阅
+ *   {@link GroupReduceFunction}。在一般情况下，ReduceFunctions 被认为更快，因为它们允许系统使用更有效的执行策略。
+ *
+ * ...
+ *
+ * <p>像所有函数一样，ReduceFunction 需要可序列化，如 {@link java.io.Serializable} 中所定义。
+ *
  * Base interface for Reduce functions. Reduce functions combine groups of elements to a single
  * value, by taking always two elements and combining them into one. Reduce functions may be used on
  * entire data sets, or on grouped data sets. In the latter case, each group is reduced
@@ -51,7 +61,8 @@ import java.io.Serializable;
 public interface ReduceFunction<T> extends Function, Serializable {
 
     /**
-     * educeFunction的核心方法，将两个值组合成同一类型的一个值。reduce函数连续地应用于一组的所有值，直到只剩下一个值。
+     * ReduceFunction的核心方法，将两个值组合成同一类型的一个值。reduce 函数连续地应用于一组的所有值，直到只剩
+     * 下一个值。
      *
      * The core method of ReduceFunction, combining two values into one value of the same type. The
      * reduce function is consecutively applied to all values of a group until only a single value

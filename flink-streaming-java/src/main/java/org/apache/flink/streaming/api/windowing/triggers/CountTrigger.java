@@ -26,6 +26,8 @@ import org.apache.flink.api.common.typeutils.base.LongSerializer;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 
 /**
+ * {@link Trigger}，在窗格中的元素计数达到给定计数时触发。
+ *
  * A {@link Trigger} that fires once the count of elements in a pane reaches the given count.
  *
  * @param <W> The type of {@link Window Windows} on which this trigger can operate.
@@ -36,6 +38,7 @@ public class CountTrigger<W extends Window> extends Trigger<Object, W> {
 
     private final long maxCount;
 
+    // J: ReducingState 使用进行计数
     private final ReducingStateDescriptor<Long> stateDesc =
             new ReducingStateDescriptor<>("count", new Sum(), LongSerializer.INSTANCE);
 
@@ -87,6 +90,8 @@ public class CountTrigger<W extends Window> extends Trigger<Object, W> {
     }
 
     /**
+     * 创建一个触发器，一旦窗格中的元素数量达到给定的计数就会触发。
+     *
      * Creates a trigger that fires once the number of elements in a pane reaches the given count.
      *
      * @param maxCount The count of elements at which to fire.

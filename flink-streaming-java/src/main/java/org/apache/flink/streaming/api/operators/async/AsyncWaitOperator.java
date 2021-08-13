@@ -56,6 +56,16 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * {@link AsyncWaitOperator} 允许异步处理传入的流记录。为此，操作员创建了一个 {@link ResultFuture}，该
+ * {@link ResultFuture} 被传递给一个 {@link AsyncFunction}。在 async 函数内，用户可以任意完成异步收集器。
+ * 异步收集器完成后，操作符的发射器将结果发送给下游操作符。
+ *
+ * <p>运算符根据所选的 {@link OutputMode} 提供不同的输出模式。为了提供恰好一次处理的保证，操作员将所有当前正在运行的
+ *    {@link StreamElement} 存储在其操作员状态中。在恢复时，记录的流元素集被重放。
+ *
+ * <p>在链接此运算符的情况下，必须确保链中的运算符从头到尾打开。原因是打开的 {@link AsyncWaitOperator} 已经开始
+ *    向下游操作符发送恢复的 {@link StreamElement}。
+ *
  * The {@link AsyncWaitOperator} allows to asynchronously process incoming stream records. For that
  * the operator creates an {@link ResultFuture} which is passed to an {@link AsyncFunction}. Within
  * the async function, the user can complete the async collector arbitrarily. Once the async
@@ -98,9 +108,11 @@ public class AsyncWaitOperator<IN, OUT>
     private transient ListState<StreamElement> recoveredStreamElements;
 
     /** Queue, into which to store the currently in-flight stream elements. */
+    // 队列，用于存储当前进行中的流元素。
     private transient StreamElementQueue<OUT> queue;
 
     /** Mailbox executor used to yield while waiting for buffers to empty. */
+    // 邮箱执行程序用于在等待缓冲区清空时让步。
     private final transient MailboxExecutor mailboxExecutor;
 
     private transient TimestampedCollector<OUT> timestampedCollector;
@@ -255,6 +267,10 @@ public class AsyncWaitOperator<IN, OUT>
     }
 
     /**
+     * 将给定的流元素添加到运算符的流元素队列中。在添加元素之前，此操作会阻塞。
+     *
+     * <p>在两次插入尝试之间，此方法将执行产生到邮箱，以便可以处理事件以及异步结果。
+     *
      * Add the given stream element to the operator's stream element queue. This operation blocks
      * until the element has been added.
      *

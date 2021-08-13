@@ -26,6 +26,9 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
 
 /**
+ * {@link org.apache.flink.streaming.api.operators.StreamOperator} 提供了此接口的对象，该对象可用于从
+ * operator 发出元素和其他消息，例如障碍和水印。
+ *
  * A {@link org.apache.flink.streaming.api.operators.StreamOperator} is supplied with an object of
  * this interface that can be used to emit elements and other messages, such as barriers and
  * watermarks, from an operator.
@@ -36,6 +39,10 @@ import org.apache.flink.util.OutputTag;
 public interface Output<T> extends Collector<T> {
 
     /**
+     * 从 operator 发出 {@link Watermark}。该水印被广播给所有下游运营商。
+     *
+     * <p>水印指定在未来不会发出时间戳小于或等于水印时间戳的元素。
+     *
      * Emits a {@link Watermark} from an operator. This watermark is broadcast to all downstream
      * operators.
      *
@@ -45,6 +52,8 @@ public interface Output<T> extends Collector<T> {
     void emitWatermark(Watermark mark);
 
     /**
+     * 发出由给定 {@link OutputTag} 标识的侧输出的记录。
+     *
      * Emits a record the side output identified by the given {@link OutputTag}.
      *
      * @param record The record to collect.
