@@ -28,6 +28,8 @@ import org.apache.flink.streaming.runtime.streamstatus.StreamStatus;
 public abstract class StreamElement {
 
     /**
+     * 检查此元素是否为水印。
+     *
      * Checks whether this element is a watermark.
      *
      * @return True, if this element is a watermark, false otherwise.
@@ -37,6 +39,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 检查此元素是否为流状态。
+     *
      * Checks whether this element is a stream status.
      *
      * @return True, if this element is a stream status, false otherwise.
@@ -46,6 +50,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 检查此元素是否为记录。
+     *
      * Checks whether this element is a record.
      *
      * @return True, if this element is a record, false otherwise.
@@ -55,6 +61,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 检查此元素是否为延迟标记。
+     *
      * Checks whether this element is a latency marker.
      *
      * @return True, if this element is a latency marker, false otherwise.
@@ -64,6 +72,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 施放此元素为StreamRecord。
+     *
      * Casts this element into a StreamRecord.
      *
      * @return This element as a stream record.
@@ -75,6 +85,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 将此元素转换为水印。
+     *
      * Casts this element into a Watermark.
      *
      * @return This element as a Watermark.
@@ -85,6 +97,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 将此元素转换为 StreamStatus。
+     *
      * Casts this element into a StreamStatus.
      *
      * @return This element as a StreamStatus.
@@ -95,6 +109,8 @@ public abstract class StreamElement {
     }
 
     /**
+     * 将此元素转换为 LatencyMarker。
+     *
      * Casts this element into a LatencyMarker.
      *
      * @return This element as a LatencyMarker.

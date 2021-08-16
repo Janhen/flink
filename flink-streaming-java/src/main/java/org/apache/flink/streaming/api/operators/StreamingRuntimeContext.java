@@ -56,6 +56,8 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link org.apache.flink.api.common.functions.RuntimeContext} 的实现，用于流操作符。
+ *
  * Implementation of the {@link org.apache.flink.api.common.functions.RuntimeContext}, for streaming
  * operators.
  */
@@ -63,6 +65,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class StreamingRuntimeContext extends AbstractRuntimeUDFContext {
 
     /** The task environment running the operator. */
+    // 运行操作符的任务环境。
     private final Environment taskEnvironment;
 
     private final StreamConfig streamConfig;

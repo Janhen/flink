@@ -30,6 +30,10 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 /**
+ * 构造 {@link AbstractStreamOperatorV2} 的助手类。包装几个内部参数以简化用户构造扩展
+ * {@link AbstractStreamOperatorV2} 的类，并允许在 {@link AbstractStreamOperatorV2} 的构造函数中进行向后
+ * 兼容的更改。
+ *
  * Helper class to construct {@link AbstractStreamOperatorV2}. Wraps couple of internal parameters
  * to simplify for users construction of classes extending {@link AbstractStreamOperatorV2} and to
  * allow for backward compatible changes in the {@link AbstractStreamOperatorV2}'s constructor.

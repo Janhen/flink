@@ -25,6 +25,8 @@ import org.apache.flink.api.common.time.Time;
 public class StateTtlConfigUtil {
 
     /**
+     * 根据保留时间参数创建一个 {@link StateTtlConfig}
+     *
      * Creates a {@link StateTtlConfig} depends on retentionTime parameter.
      *
      * @param retentionTime State ttl time which unit is MILLISECONDS.

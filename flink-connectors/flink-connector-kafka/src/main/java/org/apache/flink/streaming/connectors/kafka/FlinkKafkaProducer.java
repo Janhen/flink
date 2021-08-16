@@ -197,6 +197,9 @@ public class FlinkKafkaProducer<IN>
     public static final String KEY_DISABLE_METRICS = "flink.disable-metrics";
 
     /**
+     * 事务 ID 列表的描述符。注意：此状态由 Kryo Serializer 序列化，存在兼容性问题，稍后将删除。请使用
+     * NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR_V2。
+     *
      * Descriptor of the transactional IDs list. Note: This state is serialized by Kryo Serializer
      * and it has compatibility problem that will be removed later. Please use
      * NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR_V2.
@@ -1403,6 +1406,7 @@ public class FlinkKafkaProducer<IN>
                 defaultTopicId);
 
         // register Kafka metrics to Flink accumulators
+        // 将 Kafka 指标注册到 Flink 累加器
         if (registerMetrics
                 && !Boolean.parseBoolean(
                         producerConfig.getProperty(KEY_DISABLE_METRICS, "false"))) {
@@ -1721,6 +1725,7 @@ public class FlinkKafkaProducer<IN>
         }
 
         /** Serializer configuration snapshot for compatibility and format evolution. */
+        // 用于兼容性和格式演变的串行器配置快照。
         @SuppressWarnings("WeakerAccess")
         public static final class TransactionStateSerializerSnapshot
                 extends SimpleTypeSerializerSnapshot<FlinkKafkaProducer.KafkaTransactionState> {
@@ -1816,6 +1821,7 @@ public class FlinkKafkaProducer<IN>
         }
 
         /** Serializer configuration snapshot for compatibility and format evolution. */
+        // 用于兼容性和格式演变的串行器配置快照。
         @SuppressWarnings("WeakerAccess")
         public static final class ContextStateSerializerSnapshot
                 extends SimpleTypeSerializerSnapshot<KafkaTransactionContext> {

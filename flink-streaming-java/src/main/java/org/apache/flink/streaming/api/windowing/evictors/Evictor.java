@@ -27,6 +27,13 @@ import org.apache.flink.streaming.runtime.operators.windowing.TimestampedValue;
 import java.io.Serializable;
 
 /**
+ * {@code Evictor} 可以在 WindowFunction 评估之后和窗口评估被 {@link org.apache.flink.streaming.api.windowing.triggers.Trigger} 触发之后从窗格中删除元素
+ *
+ * <p>窗格是具有相同键（由 {@link org.apache.flink.api.java.functions.KeySelector} 分配）和相同
+ *   {@link Window} 的元素的桶。一个元素可以在它的多个窗格中被
+ *   {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner} 分配给多个窗口。这些窗格
+ *   都有自己的 {@code Evictor} 实例。
+ *
  * An {@code Evictor} can remove elements from a pane before/after the evaluation of WindowFunction
  * and after the window evaluation gets triggered by a {@link
  * org.apache.flink.streaming.api.windowing.triggers.Trigger}
@@ -44,6 +51,8 @@ import java.io.Serializable;
 public interface Evictor<T, W extends Window> extends Serializable {
 
     /**
+     * 可选地驱逐元素。在窗口函数之前调用。
+     *
      * Optionally evicts elements. Called before windowing function.
      *
      * @param elements The elements currently in the pane.
@@ -58,6 +67,8 @@ public interface Evictor<T, W extends Window> extends Serializable {
             EvictorContext evictorContext);
 
     /**
+     * 可选地驱逐元素。在窗口函数之后调用。
+     *
      * Optionally evicts elements. Called after windowing function.
      *
      * @param elements The elements currently in the pane.
@@ -72,6 +83,7 @@ public interface Evictor<T, W extends Window> extends Serializable {
             EvictorContext evictorContext);
 
     /** A context object that is given to {@link Evictor} methods. */
+    // 提供给 {@link Evictor} 方法的上下文对象。
     interface EvictorContext {
 
         /** Returns the current processing time. */

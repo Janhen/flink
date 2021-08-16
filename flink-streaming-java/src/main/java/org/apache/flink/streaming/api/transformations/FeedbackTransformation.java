@@ -29,13 +29,13 @@ import java.util.List;
 /**
  * 这表示拓扑中的一个反馈点。
  *
- * <p>这与迭代在批处理中的工作方式不同。一旦一个反馈点被定义，你可以连接一个或几个{@code Transformations}作为一个反
- * 馈边。从反馈点向下的操作将从这个反馈点的输入和反馈边缘接收元素。
+ * <p>这与迭代在批处理中的工作方式不同。一旦一个反馈点被定义，你可以连接一个或几个 {@code Transformations} 作为一个反
+ *    馈边。从反馈点向下的操作将从这个反馈点的输入和反馈边缘接收元素。
  *
- * <p>输入边和反馈边的分割都被保留。它们还可以使用不同的分区策略。然而，这要求反馈{@code Transformation}的并行性必
- * 须与输入{@code Transformation}的并行性匹配。
+ * <p>输入边和反馈边的分割都被保留。它们还可以使用不同的分区策略。然而，这要求反馈 {@code Transformation} 的并行性必
+ *    须与输入 {@code Transformation} 的并行性匹配。
  *
- * <p>输入{@code Transformation}和反馈{@code Transformation}的类型必须匹配。
+ * <p>输入 {@code Transformation} 和反馈 {@code Transformation} 的类型必须匹配。
  *
  * This represents a feedback point in a topology.
  *
@@ -58,6 +58,7 @@ public class FeedbackTransformation<T> extends Transformation<T> {
 
     private final Transformation<T> input;
 
+    // J: 反馈边
     private final List<Transformation<T>> feedbackEdges;
 
     private final Long waitTime;

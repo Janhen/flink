@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /** A {@link PhysicalTransformation} for {@link Source}. */
+// {@link Source} 的 {@link PhysicalTransformation}。
 @Internal
 public class SourceTransformation<OUT> extends PhysicalTransformation<OUT> {
     private final SourceOperatorFactory<OUT> sourceFactory;

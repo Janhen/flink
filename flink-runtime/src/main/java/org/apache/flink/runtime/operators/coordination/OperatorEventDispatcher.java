@@ -21,6 +21,9 @@ package org.apache.flink.runtime.operators.coordination;
 import org.apache.flink.runtime.jobgraph.OperatorID;
 
 /**
+ * 操作员通过它接收 {@link OperatorEvent} 并通过它他们可以将 OperatorEvents 发送回
+ * {@code OperatorCoordinator} 的调度程序。
+ *
  * The dispatcher through which Operators receive {@link OperatorEvent}s and through which they can
  * send OperatorEvents back to the {@code OperatorCoordinator}.
  */

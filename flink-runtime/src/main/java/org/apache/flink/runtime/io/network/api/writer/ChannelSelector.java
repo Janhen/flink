@@ -21,7 +21,7 @@ package org.apache.flink.runtime.io.network.api.writer;
 import org.apache.flink.core.io.IOReadableWritable;
 
 /**
- * {@link ChannelSelector}决定记录应该写入到哪个逻辑通道。
+ * {@link ChannelSelector} 决定记录应该写入到哪个逻辑通道。
  *
  * The {@link ChannelSelector} determines to which logical channels a record should be written to.
  *
@@ -41,7 +41,7 @@ public interface ChannelSelector<T extends IOReadableWritable> {
 
     /**
      * 返回逻辑通道索引，给定的记录应写入该索引。为广播通道选择器调用这个方法是非法的，在这种情况下这个方法仍然不能实现
-     * (例如抛出{@link UnsupportedOperationException})。
+     * (例如抛出 {@link UnsupportedOperationException})。
      *
      * Returns the logical channel index, to which the given record should be written. It is illegal
      * to call this method for broadcast channel selectors and this method can remain not

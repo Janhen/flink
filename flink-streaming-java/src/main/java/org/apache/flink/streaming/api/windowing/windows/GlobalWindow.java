@@ -29,12 +29,16 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 放置所有数据的默认窗口（通过
+ * {@link org.apache.flink.streaming.api.windowing.assigners.GlobalWindows}）。
+ *
  * The default window into which all data is placed (via {@link
  * org.apache.flink.streaming.api.windowing.assigners.GlobalWindows}).
  */
 @PublicEvolving
 public class GlobalWindow extends Window {
 
+    // J: 饿汉单例
     private static final GlobalWindow INSTANCE = new GlobalWindow();
 
     private GlobalWindow() {}

@@ -21,6 +21,12 @@ package org.apache.flink.metrics;
 import java.util.Map;
 
 /**
+ * MetricGroup 是 {@link Metric Metrics} 和更多指标子组的命名容器。
+ *
+ * <p>此类的实例可用于向 Flink 注册新指标并基于组名称创建嵌套层次结构。
+ *
+ * <p>MetricGroup 由它在层次结构中的位置和名称唯一标识。
+ *
  * A MetricGroup is a named container for {@link Metric Metrics} and further metric subgroups.
  *
  * <p>Instances of this class can be used to register new metrics with Flink and to create a nested
@@ -43,6 +49,8 @@ public interface MetricGroup {
     Counter counter(int name);
 
     /**
+     * 使用 Flink 创建并注册一个新的 {@link org.apache.flink.metrics.Counter}。
+     *
      * Creates and registers a new {@link org.apache.flink.metrics.Counter} with Flink.
      *
      * @param name name of the counter
@@ -51,6 +59,8 @@ public interface MetricGroup {
     Counter counter(String name);
 
     /**
+     * 向 Flink 注册一个 {@link org.apache.flink.metrics.Counter}。
+     *
      * Registers a {@link org.apache.flink.metrics.Counter} with Flink.
      *
      * @param name name of the counter
@@ -61,6 +71,8 @@ public interface MetricGroup {
     <C extends Counter> C counter(int name, C counter);
 
     /**
+     * 向 Flink 注册一个 {@link org.apache.flink.metrics.Counter}。
+     *
      * Registers a {@link org.apache.flink.metrics.Counter} with Flink.
      *
      * @param name name of the counter
@@ -71,6 +83,8 @@ public interface MetricGroup {
     <C extends Counter> C counter(String name, C counter);
 
     /**
+     * 向 Flink 注册一个新的 {@link org.apache.flink.metrics.Gauge}。
+     *
      * Registers a new {@link org.apache.flink.metrics.Gauge} with Flink.
      *
      * @param name name of the gauge
@@ -135,6 +149,8 @@ public interface MetricGroup {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建一个新的 MetricGroup 并将其添加到此组子组中。
+     *
      * Creates a new MetricGroup and adds it to this groups sub-groups.
      *
      * @param name name of the group
@@ -151,6 +167,11 @@ public interface MetricGroup {
     MetricGroup addGroup(String name);
 
     /**
+     * 创建一个新的键值 MetricGroup 对。键组被添加到这个组的子组中，而值组被添加到键组的子组中。此方法返回值组。
+     *
+     * <p>调用这个方法和{@code group.addGroup(key).addGroup(value)}的唯一区别是值组的
+     * {@link #getAllVariables()}返回一个额外的 {@code "<key>" ="value"} 对。
+     *
      * Creates a new key-value MetricGroup pair. The key group is added to this groups sub-groups,
      * while the value group is added to the key group's sub-groups. This method returns the value
      * group.
@@ -179,6 +200,8 @@ public interface MetricGroup {
     String[] getScopeComponents();
 
     /**
+     * 返回所有变量及其关联值的映射，例如 {@code {"<host>"="host-7", "<tm_id>"="taskmanager-2"}}。
+     *
      * Returns a map of all variables and their associated value, for example {@code
      * {"<host>"="host-7", "<tm_id>"="taskmanager-2"}}.
      *
@@ -187,6 +210,8 @@ public interface MetricGroup {
     Map<String, String> getAllVariables();
 
     /**
+     * 返回完全限定的指标名称，例如 {@code "host-7.task manager-2.window word_count.my-mapper.metric Name"}。
+     *
      * Returns the fully qualified metric name, for example {@code
      * "host-7.taskmanager-2.window_word_count.my-mapper.metricName"}.
      *

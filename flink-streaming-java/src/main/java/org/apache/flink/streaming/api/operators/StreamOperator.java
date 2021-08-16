@@ -29,14 +29,15 @@ import org.apache.flink.util.Disposable;
 import java.io.Serializable;
 
 /**
- * 流操作符的基本接口。实现者将实现其中一个{@link org.apache.flink.streaming.api.operators.OneInputStreamOperator}或
- * {@link org.apache.flink.streaming.api.operators.TwoInputStreamOperator}来创建处理元素的操作符。
+ * 流操作符的基本接口。实现者将实现其中一个
+ * {@link org.apache.flink.streaming.api.operators.OneInputStreamOperator} 或
+ * {@link org.apache.flink.streaming.api.operators.TwoInputStreamOperator}来创建处理元素的 operator。
  *
- * <p> class {@link org.apache.flink.streaming.api.operators.AbstractStreamOperator}为生命周期和属性方法
+ * <p> class {@link org.apache.flink.streaming.api.operators.AbstractStreamOperator} 为生命周期和属性方法
  * 提供了默认实现。
  *
- * <p> {@code StreamOperator}的方法保证不会被并发调用。同样，如果使用计时器服务，计时器回调也保证不会与{@code StreamOperator}
- * 上的方法同时调用。
+ * <p> {@code StreamOperator} 的方法保证不会被并发调用。同样，如果使用计时器服务，计时器回调也保证不会与
+ * {@code StreamOperator} 上的方法同时调用。
  *
  * Basic interface for stream operators. Implementers would implement one of {@link
  * org.apache.flink.streaming.api.operators.OneInputStreamOperator} or {@link
@@ -90,6 +91,10 @@ public interface StreamOperator<OUT>
     void close() throws Exception;
 
     /**
+     * 在 operator 生命的最后时刻调用此方法，无论是在操作成功完成的情况下，还是在操作失败和取消的情况下。
+     *
+     * <p>该方法有望彻底释放 operator 已获得的所有资源。
+     *
      * This method is called at the very end of the operator's life, both in the case of a
      * successful completion of the operation, and in the case of a failure and canceling.
      *
@@ -126,6 +131,8 @@ public interface StreamOperator<OUT>
     void prepareSnapshotPreBarrier(long checkpointId) throws Exception;
 
     /**
+     * 调用以从 operator 处绘制状态快照。
+     *
      * Called to draw a state snapshot from the operator.
      *
      * @return a runnable future to the state handle that points to the snapshotted state. For

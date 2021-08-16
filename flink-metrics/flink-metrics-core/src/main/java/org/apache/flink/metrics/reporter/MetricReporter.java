@@ -23,6 +23,14 @@ import org.apache.flink.metrics.MetricConfig;
 import org.apache.flink.metrics.MetricGroup;
 
 /**
+ * 报告器用于将 {@link Metric Metrics} 导出到外部后端。
+ *
+ * <p>Reporters 可以通过
+ *    a) 通过反射来实例化，在这种情况下，它们必须是公共的、非抽象的，并且具有公共的无参数构造函数。
+ *    b) 通过 {@link MetricReporterFactory}，在这种情况下不适用任何限制。 （受到推崇的）
+ *
+ * <p>既不要求也不鼓励报告者支持两种实例化路径。
+ *
  * Reporters are used to export {@link Metric Metrics} to an external backend.
  *
  * <p>Reporters are instantiated either a) via reflection, in which case they must be public,
@@ -38,6 +46,11 @@ public interface MetricReporter {
     // ------------------------------------------------------------------------
 
     /**
+     * 配置此报告器。
+     *
+     * <p>如果报告器是通用实例化的，因此没有参数，则此方法是报告器根据配置值设置其基本字段的地方。否则，此方法通常是
+     *    空操作，因为可以在构造函数中获取资源。
+     *
      * Configures this reporter.
      *
      * <p>If the reporter was instantiated generically and hence parameter-less, this method is the
@@ -58,6 +71,8 @@ public interface MetricReporter {
     // ------------------------------------------------------------------------
 
     /**
+     * 添加新的 {@link Metric} 时调用。
+     *
      * Called when a new {@link Metric} was added.
      *
      * @param metric the metric that was added
@@ -67,6 +82,8 @@ public interface MetricReporter {
     void notifyOfAddedMetric(Metric metric, String metricName, MetricGroup group);
 
     /**
+     * 在删除 {@link Metric} 时调用。
+     *
      * Called when a {@link Metric} was removed.
      *
      * @param metric the metric that should be removed

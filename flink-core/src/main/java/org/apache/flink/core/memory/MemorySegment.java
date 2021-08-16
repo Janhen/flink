@@ -31,18 +31,17 @@ import java.nio.ReadOnlyBufferException;
  * 这个类表示由 Flink 管理的一块内存。段可以由堆内存(字节数组)或堆外内存支持。
  *
  * <p>用于单个内存访问的方法在类中是专门的。{@link org.apache.flink.core.memory.HybridMemorySegment}。所有跨
- * 两个内存段操作的方法都在这个类中实现，以透明地处理内存段类型的混合。
+ *   两个内存段操作的方法都在这个类中实现，以透明地处理内存段类型的混合。
  *
- * <p>
- * 这个类在概念上实现了与Java的{@link java.nio.ByteBuffer}类似的目的。我们出于各种原因添加了这个专门化类:
- * - 它提供了额外的二进制比较、交换和复制方法。
- * - 它使用折叠检查来进行范围检查和内存段处理。
- * - 它为批量 put/get 方法提供了绝对定位方法，以保证线程的安全使用。
- * - 它提供显式的大端小端访问方法，而不是在内部跟踪字节顺序。
- * - 它透明而有效地在堆上和堆外变量之间移动数据。
+ * <p> 这个类在概念上实现了与 Java 的 {@link java.nio.ByteBuffer} 类似的目的。我们出于各种原因添加了这个专门化类:
+ *   - 它提供了额外的二进制比较、交换和复制方法。
+ *   - 它使用折叠检查来进行范围检查和内存段处理。
+ *   - 它为批量 put/get 方法提供了绝对定位方法，以保证线程的安全使用。
+ *   - 它提供显式的大端小端访问方法，而不是在内部跟踪字节顺序。
+ *   - 它透明而有效地在堆上和堆外变量之间移动数据。
  * <p>
  *
- * <p><i>关于实现<i>的注释:我们大量使用本机指令支持的操作，以实现高效率。多字节类型(int、long、float、double等)是
+ * <p><i>关于实现<i>的注释:我们大量使用本机指令支持的操作，以实现高效率。多字节类型(int、long、float、double 等)是
  * 通过“不安全的”本机命令读写的。
  *
  * <p>:为了达到最好的效率，使用这个类的代码应该确保只加载一个子类，或者这个类中的抽象方法只能从其中一个子类中使用(要么是
@@ -120,6 +119,7 @@ import java.nio.ReadOnlyBufferException;
 public abstract class MemorySegment {
 
     /** The unsafe handle for transparent memory copied (heap / off-heap). */
+    // 透明内存复制的不安全句柄（堆外）。
     @SuppressWarnings("restriction")
     protected static final sun.misc.Unsafe UNSAFE = MemoryUtils.UNSAFE;
 
@@ -130,7 +130,7 @@ public abstract class MemorySegment {
     protected static final long BYTE_ARRAY_BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
 
     /**
-     * 标记字节顺序的常量。因为这是一个布尔常量，所以JIT编译器可以很好地使用它来积极地消除不适用的代码路径。
+     * 标记字节顺序的常量。因为这是一个布尔常量，所以 JIT 编译器可以很好地使用它来积极地消除不适用的代码路径。
      *
      * J: 判断是否为Little Endian模式的字节存储顺序，若不是，就是 Big Endian 模式
      *
@@ -145,8 +145,8 @@ public abstract class MemorySegment {
     /**
      * 相对于我们访问内存的堆字节数组对象。
      *
-     * <p>是non-<tt>null<tt>如果内存在堆上，是<tt>null<tt>，如果内存不在堆上。如果我们有这个缓冲区，我们绝不能
-     *   使这个引用无效，否则内存段将指向堆外未定义的地址，在无序执行的情况下可能会导致分段错误。
+     * <p>非<tt>null<tt>，如果内存在堆上，并且<tt>null<tt>，如果内存不在堆上。如果我们有这个缓冲区，我们决不能
+     * 使这个引用无效，否则内存段将指向堆外的未定义地址，并可能在乱序执行的情况下导致段错误。
      *
      * The heap byte array object relative to which we access the memory.
      *
@@ -158,7 +158,11 @@ public abstract class MemorySegment {
     protected final byte[] heapMemory;
 
     /**
+<<<<<<< HEAD
      * 相对于堆内存字节数组的数据地址。如果堆内存字节数组为<tt>null<tt>，这将成为堆外的绝对内存地址。
+=======
+     * 数据的地址，相对于堆内存字节数组。如果堆内存字节数组为<tt>null<tt>，这将成为堆外的绝对内存地址。
+>>>>>>> c1f73819993d0651dc6c1ada96e42a2c76fa41f6
      *
      * The address to the data, relative to the heap memory byte array. If the heap memory byte
      * array is <tt>null</tt>, this becomes an absolute memory address outside the heap.
@@ -182,6 +186,10 @@ public abstract class MemorySegment {
     private final Object owner;
 
     /**
+     * 创建一个新的内存段，代表字节数组的内存。
+     *
+     * <p>由于字节数组由堆上内存支持，因此该内存段将其数据保存在堆上。缓冲区的大小必须至少为 8 个字节。
+     *
      * Creates a new memory segment that represents the memory of the byte array.
      *
      * <p>Since the byte array is backed by on-heap memory, this memory segment holds its data on
@@ -245,6 +253,8 @@ public abstract class MemorySegment {
     }
 
     /**
+     * 检查内存段是否被释放。
+     *
      * Checks whether the memory segment was freed.
      *
      * @return <tt>true</tt>, if the memory segment has been freed, <tt>false</tt> otherwise.
@@ -254,6 +264,11 @@ public abstract class MemorySegment {
     }
 
     /**
+     * 释放此内存段。
+     *
+     * <p>调用此操作后，将无法对内存段进行进一步的操作，并且将失败。实际内存（堆或堆外）只会在此内存段对象被垃圾回收
+     *   后才会释放。
+     *
      * Frees this memory segment.
      *
      * <p>After this operation has been called, no further operations are possible on the memory
@@ -307,6 +322,9 @@ public abstract class MemorySegment {
     }
 
     /**
+     * 将位于 <tt>offset<tt> 和 <tt>offset + length<tt> 之间的底层内存块包装在 NIO ByteBuffer 中。
+     * ByteBuffer 将完整段作为容量，偏移量和长度参数设置缓冲区的位置和限制。
+     *
      * Wraps the chunk of the underlying memory located between <tt>offset</tt> and <tt>offset +
      * length</tt> in a NIO ByteBuffer. The ByteBuffer has the full segment as capacity and the
      * offset and length parameters set the buffers position and limit.
@@ -1428,6 +1446,8 @@ public abstract class MemorySegment {
     }
 
     /**
+     * 使用给定的辅助缓冲区在两个内存段之间交换字节。
+     *
      * Swaps bytes between two memory segments, using the given auxiliary buffer.
      *
      * @param tempBuffer The auxiliary buffer in which to put data during triangle swap.

@@ -24,6 +24,7 @@ import org.apache.flink.streaming.api.operators.StreamOperatorParameters;
 import org.apache.flink.table.runtime.generated.GeneratedClass;
 
 /** Stream operator factory for code gen operator. */
+// 代码生成 operator 的流运算符工厂。
 public class CodeGenOperatorFactory<OUT> extends AbstractStreamOperatorFactory<OUT> {
 
     private final GeneratedClass<? extends StreamOperator<OUT>> generatedClass;

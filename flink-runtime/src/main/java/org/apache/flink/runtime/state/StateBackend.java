@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * <b>状态后端<b> 定义了流应用程序的状态是如何存储和检查点的。不同的状态后端以不同的方式存储它们的状态，并使用不同的
+ * 数据结构来保存正在运行的应用程序的状态。
+ *
  * A <b>State Backend</b> defines how the state of a streaming application is stored and
  * checkpointed. Different State Backends store their state in different fashions, and use different
  * data structures to hold the state of a running application.

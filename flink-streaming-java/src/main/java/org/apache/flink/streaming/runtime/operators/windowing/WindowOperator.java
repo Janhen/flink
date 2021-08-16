@@ -77,11 +77,14 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 基于{@link WindowAssigner}和{@link Trigger}实现窗口逻辑的操作符。
- * <p>当一个元素到达时，使用{@link KeySelector}给它分配一个键，并使用{@link WindowAssigner}给它分配0个或多个窗口。
- * 基于此，将元素放入窗格中。窗格是包含具有相同键和相同{@code Window}的元素的bucket。一个元素可以在多个窗格中，
- * 如果它被{@code WindowAssigner}分配给多个窗口。<p>每个窗格获得它自己的实例提供的{@code 触发器}。该触发器决定应该在何时处理窗格的内容以发出结果。
- * 当触发器触发时，给定的{@link InternalWindowFunction}将被调用以产生为{@code 触发器}所属的窗格发出的结果。
+ * 基于 {@link WindowAssigner} 和 {@link Trigger} 实现窗口逻辑的操作符。
+ *
+ * <p>当一个元素到达时，使用 {@link KeySelector} 给它分配一个键，并使用 {@link WindowAssigner} 给它分配 0 个
+ * 或多个窗口。基于此，将元素放入窗格中。窗格是包含具有相同键和相同 {@code Window} 的元素的 bucket。一个元素可以在
+ * 多个窗格中，如果它被 {@code WindowAssigner} 分配给多个窗口。
+ *
+ * <p>每个窗格获得它自己的实例提供的 {@code Trigger}。该触发器决定应该在何时处理窗格的内容以发出结果。
+ * 当触发器触发时，给定的 {@link InternalWindowFunction} 将被调用以产生为 {@code Trigger} 所属的窗格发出的结果。
  *
  * An operator that implements the logic for windowing based on a {@link WindowAssigner} and {@link
  * Trigger}.
@@ -113,21 +116,31 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     // Configuration values and user functions
     // ------------------------------------------------------------------------
 
+    // 配置值和用户功能
+
     protected final WindowAssigner<? super IN, W> windowAssigner;
 
     private final KeySelector<IN, K> keySelector;
 
     private final Trigger<? super IN, ? super W> trigger;
 
+    // J: 窗口描述
     private final StateDescriptor<? extends AppendingState<IN, ACC>, ?> windowStateDescriptor;
 
     /** For serializing the key in checkpoints. */
+    // 用于序列化检查点中的密钥。
     protected final TypeSerializer<K> keySerializer;
 
     /** For serializing the window in checkpoints. */
+    // 用于在检查点中序列化窗口。
     protected final TypeSerializer<W> windowSerializer;
 
     /**
+     * 元素的允许延迟。这用于：
+     *
+     *   <li>决定一个元素是否应该由于迟到而从窗口中删除。
+     *   <li>如果系统时间超过 {@code window.maxTimestamp + allowedLateness} 地标，则清除窗口的状态。
+     *
      * The allowed lateness for elements. This is used for:
      *
      * <ul>
@@ -139,33 +152,46 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     protected final long allowedLateness;
 
     /**
+     * {@link OutputTag} 用于迟到的事件。 {@code window.maxTimestamp + allowedLateness} 小于当前水印的
+     * 元素将被发送到此。
+     *
      * {@link OutputTag} to use for late arriving events. Elements for which {@code
      * window.maxTimestamp + allowedLateness} is smaller than the current watermark will be emitted
      * to this.
      */
     protected final OutputTag<IN> lateDataOutputTag;
 
+    // J: 指标名称，超时记录被丢弃的数量
     private static final String LATE_ELEMENTS_DROPPED_METRIC_NAME = "numLateRecordsDropped";
 
+    // J: 记录超时记录丢弃数量
     protected transient Counter numLateRecordsDropped;
 
     // ------------------------------------------------------------------------
     // State that is not checkpointed
     // ------------------------------------------------------------------------
 
+    // 未设置检查点的状态
+
     /** The state in which the window contents is stored. Each window is a namespace */
+    // 存储窗口内容的状态。每个窗口都是一个命名空间
     private transient InternalAppendingState<K, W, IN, ACC, ACC> windowState;
 
     /**
+     * {@link #windowState}，输入到合并窗口的合并状态。如果窗口状态不可合并，则为 Null。
+     *
      * The {@link #windowState}, typed to merging state for merging windows. Null if the window
      * state is not mergeable.
      */
     private transient InternalMergingState<K, W, IN, ACC, ACC> windowMergingState;
 
     /** The state that holds the merging window metadata (the sets that describe what is merged). */
+    // 保存合并窗口元数据的状态（描述合并内容的集合）。
     private transient InternalListState<K, VoidNamespace, Tuple2<W, W>> mergingSetsState;
 
     /**
+     * 这被赋予 {@code InternalWindowFunction} 用于发射具有给定时间戳的元素。
+     *
      * This is given to the {@code InternalWindowFunction} for emitting elements with a given
      * timestamp.
      */
@@ -181,9 +207,12 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     // State that needs to be checkpointed
     // ------------------------------------------------------------------------
 
+    // 需要检查点的状态
+
     protected transient InternalTimerService<W> internalTimerService;
 
     /** Creates a new {@code WindowOperator} based on the given policies and user functions. */
+    // 根据给定的策略和用户功能创建一个新的 {@code WindowOperator}。
     public WindowOperator(
             WindowAssigner<? super IN, W> windowAssigner,
             TypeSerializer<W> windowSerializer,
@@ -558,6 +587,10 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 删除给定窗口的所有状态并调用 {@link Trigger#clear(Window, Trigger.TriggerContext)}。
+     *
+     * <p>调用者必须确保在状态后端和 triggerContext 对象中设置了正确的键。
+     *
      * Drops all state for the given window and calls {@link Trigger#clear(Window,
      * Trigger.TriggerContext)}.
      *
@@ -578,6 +611,7 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /** Emits the contents of the given window using the {@link InternalWindowFunction}. */
+    // 使用 {@link InternalWindowFunction} 发出给定窗口的内容。
     @SuppressWarnings("unchecked")
     private void emitWindowContents(W window, ACC contents) throws Exception {
         timestampedCollector.setAbsoluteTimestamp(window.maxTimestamp());
@@ -587,6 +621,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 将跳过的迟到元素写入 SideOutput。
+     *
      * Write skipped late arriving element to SideOutput.
      *
      * @param element skipped late arriving element to side output
@@ -610,6 +646,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 如果水印在结束时间戳加上给定窗口的允许延迟之后，则返回 {@code true}。
+     *
      * Returns {@code true} if the watermark is after the end timestamp plus the allowed lateness of
      * the given window.
      */
@@ -619,6 +657,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 根据当前水印和允许的延迟确定记录当前是否延迟。
+     *
      * Decide if a record is currently late, based on current watermark and allowed lateness.
      *
      * @param element The element to check
@@ -631,6 +671,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 注册一个计时器来清理窗口的内容。
+     *
      * Registers a timer to cleanup the content of the window.
      *
      * @param window the window whose state to discard
@@ -689,6 +731,10 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 每个窗口的基类 {@link KeyedStateStore KeyedStateStores}。用于允许
+     * {@link org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction} 的每个窗口
+     * 状态访问。
+     *
      * Base class for per-window {@link KeyedStateStore KeyedStateStores}. Used to allow per-window
      * state access for {@link
      * org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction}.
@@ -706,6 +752,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 不允许访问每个窗口状态的特殊 {@link AbstractPerWindowStateStore}。
+     *
      * Special {@link AbstractPerWindowStateStore} that doesn't allow access to per-window state.
      */
     public class MergingWindowStateStore extends AbstractPerWindowStateStore {
@@ -773,6 +821,9 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 用于处理 {@code ProcessWindowFunction} 调用的实用程序类。这可以通过设置 {@code key} 和
+     * {@code window} 字段来重用。 {@code WindowContext} 中不得保留任何内部状态。
+     *
      * A utility class for handling {@code ProcessWindowFunction} invocations. This can be reused by
      * setting the {@code key} and {@code window} fields. No internal state must be kept in the
      * {@code WindowContext}.
@@ -831,6 +882,9 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * {@code Context} 是用于处理 {@code Trigger} 调用的实用程序。它可以通过设置 {@code key} 和
+     * {@code window} 字段来重用。 {@code Context} 中不得保留任何内部状态
+     *
      * {@code Context} is a utility for handling {@code Trigger} invocations. It can be reused by
      * setting the {@code key} and {@code window} fields. No internal state must be kept in the
      * {@code Context}
@@ -975,6 +1029,7 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /** Internal class for keeping track of in-flight timers. */
+    // 用于跟踪 in-flight 计时器的内部类。
     protected static class Timer<K, W extends Window> implements Comparable<Timer<K, W>> {
         protected long timestamp;
         protected K key;

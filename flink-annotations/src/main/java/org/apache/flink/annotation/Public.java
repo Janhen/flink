@@ -24,6 +24,13 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 用于将类标记为公共、稳定接口的注释。
+ *
+ * <p>带有此注释的类、方法和字段在次要版本（1.0、1.1、1.2）中都是稳定的。换句话说，使用@Public 注释类的应用程序将
+ *    针对同一主要版本的较新版本进行编译。
+ *
+ * <p>只有主要版本（1.0、2.0、3.0）可以使用此注释破坏接口。
+ *
  * Annotation for marking classes as public, stable interfaces.
  *
  * <p>Classes, methods and fields with this annotation are stable across minor releases (1.0, 1.1,

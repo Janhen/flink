@@ -32,18 +32,22 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * TypeInformation是Flink的类型系统的核心类。Flink需要用于用户函数输入或返回类型的所有类型的类型信息。
+ * TypeInformation 是 Flink 的类型系统的核心类。Flink 需要用于用户函数输入或返回类型的所有类型的类型信息。
  * 此类型信息类充当生成序列化器和比较器的工具，并执行语义检查，例如用作连接分组键的字段是否实际存在。
+ *
  * <p>类型信息也是编程语言对象模型和逻辑平面模式之间的桥梁。它将类型中的字段映射到平面模式中的列(字段)。
  * 不是一个类型的所有字段都映射到平面模式中的单独字段，通常整个类型都映射到一个字段。需要注意的是，
- * 模式必须包含某个类型的所有实例。因此，列表和数组中的元素不会分配给单个字段，而是将列表和数组视为一个字段，以考虑数组中的不同长度。
+ * 模式必须包含某个类型的所有实例。因此，列表和数组中的元素不会分配给单个字段，而是将列表和数组视为一个字段，以考虑数组
+ * 中的不同长度。
  *
  * <ul>
  *     <li>基本类型是不可分割的，被认为是单个字段。
  *     <li>数组和集合是一个字段
  *     <li>元组和case类代表的字段数量与类拥有字段的数量相等
  *  </ul>
- *  为了正确地表示这一点，每种类型都有一个<i> ity<i>(它直接包含的字段数量)和一个<i>总字段数量<i>(该类型的整个模式中的字段数量，包括嵌套类型)。
+ *
+ * <p>为了正确地表示这一点，每种类型都有一个<i> ity<i>(它直接包含的字段数量)和一个<i>总字段数量<i>(该类型的整个模式
+ *   中的字段数量，包括嵌套类型)。
  *
  * TypeInformation is the core class of Flink's type system. Flink requires a type information for
  * all types that are used as input or return type of a user function. This type information class
@@ -95,6 +99,9 @@ public abstract class TypeInformation<T> implements Serializable {
     private static final long serialVersionUID = -7742311969684489493L;
 
     /**
+     * 检查此类型信息是否代表基本类型。基本类型在 {@link BasicTypeInfo} 中定义并且是原语、它们的装箱类型、
+     * 字符串、日期、空...
+     *
      * Checks if this type information represents a basic type. Basic types are defined in {@link
      * BasicTypeInfo} and are primitives, their boxing types, Strings, Date, Void, ...
      *
@@ -104,7 +111,7 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract boolean isBasicType();
 
     /**
-     * 检查此类型信息是否表示Tuple类型。元组类型是Java API元组的子类。
+     * 检查此类型信息是否表示 Tuple 类型。元组类型是 Java API 元组的子类。
      *
      * Checks if this type information represents a Tuple type. Tuple types are subclasses of the
      * Java API tuples.
@@ -115,6 +122,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract boolean isTupleType();
 
     /**
+     * 获取这种类型的数量 - 没有嵌套的字段数。
+     *
      * Gets the arity of this type - the number of fields without nesting.
      *
      * @return Gets the number of fields in this type without nesting.
@@ -123,6 +132,9 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract int getArity();
 
     /**
+     * 获取此类型的逻辑字段数。在复合类型的情况下，这包括其嵌套和可传递嵌套字段。在上面的示例中，OuterType 类型
+     * 共有三个字段。
+     *
      * Gets the number of logical fields in this type. This includes its nested and transitively
      * nested fields, in the case of composite types. In the example above, the OuterType type has
      * three fields in total.
@@ -145,7 +157,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract Class<T> getTypeClass();
 
     /**
-     * 可选方法，用于为Flink提供关于泛型类型参数到子类型类型信息的映射的类型提取系统信息。在应该从输入类型推导出类型信息的情况下，此信息是必需的。
+     * 可选方法，用于为 Flink 提供关于泛型类型参数到子类型类型信息的映射的类型提取系统信息。在应该从输入类型推导出
+     * 类型信息的情况下，此信息是必需的。
      *
      * Optional method for giving Flink's type extraction system information about the mapping of a
      * generic type parameter to the type information of a subtype. This information is necessary in
@@ -168,6 +181,8 @@ public abstract class TypeInformation<T> implements Serializable {
     }
 
     /**
+     * 检查此类型是否可以用作键。作为最低限度，类型必须是可散列的并且可以作为键进行比较。
+     *
      * Checks whether this type can be used as a key. As a bare minimum, types have to be hashable
      * and comparable to be keys.
      *
@@ -177,6 +192,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract boolean isKeyType();
 
     /**
+     * 检查此类型是否可以用作排序的键。排序这种类型产生的顺序必须是有意义的。
+     *
      * Checks whether this type can be used as a key for sorting. The order produced by sorting this
      * type must be meaningful.
      */
@@ -186,6 +203,8 @@ public abstract class TypeInformation<T> implements Serializable {
     }
 
     /**
+     * 为该类型创建一个序列化程序。序列化程序可以使用 ExecutionConfig 进行参数化。
+     *
      * Creates a serializer for the type. The serializer may use the ExecutionConfig for
      * parameterization.
      *
@@ -205,6 +224,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract int hashCode();
 
     /**
+     * 如果给定的对象可以与此对象相等，则返回 true。如果不是，则返回 false。
+     *
      * Returns true if the given object can be equaled with this object. If not, it returns false.
      *
      * @param obj Object which wants to take part in the equality relation
@@ -215,7 +236,9 @@ public abstract class TypeInformation<T> implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
-     * 为给定类所描述的类型创建一个类型信息。<p>此方法仅适用于非泛型类型。对于泛型类型，使用 {@link #of(TypeHint)}方法。
+     * 为给定类所描述的类型创建一个类型信息。
+     *
+     * <p>此方法仅适用于非泛型类型。对于泛型类型，使用 {@link #of(TypeHint)} 方法。
      *
      * Creates a TypeInformation for the type described by the given class.
      *

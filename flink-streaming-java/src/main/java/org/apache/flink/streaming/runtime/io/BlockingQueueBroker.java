@@ -31,8 +31,10 @@ import java.util.concurrent.BlockingQueue;
 public class BlockingQueueBroker extends Broker<BlockingQueue<?>> {
 
     /** Singleton instance. */
+    // 单例。
     public static final BlockingQueueBroker INSTANCE = new BlockingQueueBroker();
 
     /** Cannot instantiate. */
+    // 无法实例化。
     private BlockingQueueBroker() {}
 }

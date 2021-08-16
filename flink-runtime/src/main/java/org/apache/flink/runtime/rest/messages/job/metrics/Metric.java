@@ -27,6 +27,8 @@ import javax.annotation.Nullable;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * Metric 和 Metric-Value-Pair 的响应类型。
+ *
  * Response type for a Metric and Metric-Value-Pair.
  *
  * @see org.apache.flink.runtime.rest.handler.legacy.metrics.MetricStore

@@ -28,6 +28,8 @@ import org.apache.flink.streaming.api.operators.StreamOperatorParameters;
 import org.apache.flink.streaming.api.operators.YieldingOperatorFactory;
 
 /**
+ * {@link AsyncWaitOperator} 的工厂。
+ *
  * The factory of {@link AsyncWaitOperator}.
  *
  * @param <OUT> The output type of the operator

@@ -43,6 +43,8 @@ import java.util.function.Supplier;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这个 runnable 为子任务执行所有涉及的后端快照的异步部分。
+ *
  * This runnable executes the asynchronous parts of all involved backend snapshots for the subtask.
  */
 final class AsyncCheckpointRunnable implements Runnable, Closeable {

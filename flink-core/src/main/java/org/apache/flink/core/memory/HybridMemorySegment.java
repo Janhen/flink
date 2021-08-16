@@ -38,10 +38,10 @@ import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
  *
  * <p>内存可以是堆上，堆外直接或堆外不安全的，这是透明的由这个类处理。
  *
- * <p>这个类专门用于对堆内存的字节访问和字节复制调用，同时重用来自MemorySegment的多字节类型访问和跨段操作。
+ * <p>这个类专门用于对堆内存的字节访问和字节复制调用，同时重用来自 MemorySegment 的多字节类型访问和跨段操作。
  *
- * <p>这个类包含了{@link org.apache.flink.core.memory.HeapMemorySegment}，但是对单个字节的操作效率稍低一些。
- * 注意，内存段通常不应该手动分配，而是通过{@link MemorySegmentFactory}分配。
+ * <p>这个类包含了 {@link org.apache.flink.core.memory.HeapMemorySegment}，但是对单个字节的操作效率稍低一些。
+ * 注意，内存段通常不应该手动分配，而是通过 {@link MemorySegmentFactory} 分配。
  *
  * This class represents a piece of memory managed by Flink.
  *
@@ -239,6 +239,8 @@ public final class HybridMemorySegment extends MemorySegment {
     // -------------------------------------------------------------------------
     //  Bulk Read and Write Methods
     // -------------------------------------------------------------------------
+
+    // 批量读取和写入方法
 
     @Override
     public final void get(DataOutput out, int offset, int length) throws IOException {

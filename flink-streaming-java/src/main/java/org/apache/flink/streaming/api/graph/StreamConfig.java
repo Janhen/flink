@@ -50,6 +50,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link StreamOperator} 的内部配置。这是由 {@link StreamingJobGraphGenerator} 创建和填充的。
+ *
  * Internal configuration for a {@link StreamOperator}. This is created and populated by the {@link
  * StreamingJobGraphGenerator}.
  */

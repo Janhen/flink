@@ -45,6 +45,7 @@ public class JsonUtils {
 
     static {
         // Allows for unescaped ASCII control characters in JSON values
+        // 允许在 JSON 值中使用未转义的 ASCII 控制字符
         JSON_FACTORY.enable(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS);
     }
 
@@ -55,6 +56,7 @@ public class JsonUtils {
             TypeFactory.defaultInstance().constructRawCollectionType(List.class);
 
     /** An LRU cache using a linked hash map. */
+    // 使用链接哈希映射的 LRU 缓存。
     public static class HashCache<K, V> extends LinkedHashMap<K, V> {
 
         private static final int CACHE_SIZE = 16;
@@ -74,6 +76,7 @@ public class JsonUtils {
     }
 
     /** An ThreadLocal cache using a linked hash map. */
+    // 使用 LinkedHashMap 的 ThreadLocal 缓存。
     public static class ThreadLocalHashCache<K, V> {
         private ThreadLocal<HashCache<K, V>> cache = new ThreadLocal<>();
 
@@ -157,6 +160,7 @@ public class JsonUtils {
         }
 
         // Cache pathExpr
+        // 缓存路径 Expr
         String[] pathExpr = pathExprCache.get(pathString);
         if (pathExpr == null) {
             pathExpr = pathString.split("\\.", -1);

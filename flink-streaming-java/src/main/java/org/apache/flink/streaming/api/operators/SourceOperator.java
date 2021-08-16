@@ -57,6 +57,12 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 基本源算子仅用于集成 FLIP-27 提出的源阅读器。它实现了 {@link PushingAsyncDataInput} 的接口，自然兼容运行时
+ * 堆栈中的一个输入处理。
+ *
+ * <p><b>关于序列化的重要说明：<b> SourceOperator 从 StreamOperator 继承了 {@link java.io.Serializable}
+ *    接口，但实际上是不可序列化的。操作符只能在其工厂的 StreamTask 中实例化。
+ *
  * Base source operator only used for integrating the source reader which is proposed by FLIP-27. It
  * implements the interface of {@link PushingAsyncDataInput} for naturally compatible with one input
  * processing in runtime stack.
@@ -73,10 +79,14 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
     private static final long serialVersionUID = 1405537676017904695L;
 
     // Package private for unit test.
+    // 用于单元测试的私有包。
     static final ListStateDescriptor<byte[]> SPLITS_STATE_DESC =
             new ListStateDescriptor<>("SourceReaderState", BytePrimitiveArraySerializer.INSTANCE);
 
     /**
+     * 源阅读器的工厂。这是一种解决方法，因为目前必须对 SourceReader 进行延迟初始化，这主要是因为读取器依赖的指标组
+     * 是延迟初始化的。
+     *
      * The factory for the source reader. This is a workaround, because currently the SourceReader
      * must be lazily initialized, which is mainly because the metrics groups that the reader relies
      * on is lazily initialized.
@@ -94,6 +104,7 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
     private final OperatorEventGateway operatorEventGateway;
 
     /** The factory for timestamps and watermark generators. */
+    // 时间戳和水印生成器的工厂。
     private final WatermarkStrategy<OUT> watermarkStrategy;
 
     /** The Flink configuration. */

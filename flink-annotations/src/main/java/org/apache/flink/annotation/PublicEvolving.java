@@ -24,6 +24,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 用于标记公共使用的类和方法的注释，但具有不断发展的接口。
+ *
+ * <P>类和与此注释方法旨在供公众使用，并有稳定的表现。然而，它们的接口和签名不被认为是稳定的，可能不同版本进行更改。
+ *
+ * <p>此注解也排除了的方法和类与注解的类内不断变化的接口的签名{@link Public}。
+ *
  * Annotation to mark classes and methods for public use, but with evolving interfaces.
  *
  * <p>Classes and methods with this annotation are intended for public use and have stable behavior.

@@ -62,6 +62,17 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
+ * 所有流操作符的基类。包含用户函数的运算符应该扩展类 {@link AbstractUdfStreamOperator} （它是此类的专门子类）。
+ *
+ * <p>对于具体实现，还必须实现以下两个接口之一，以将运算符标记为一元或二元：{@link OneInputStreamOperator} 或
+ *    {@link TwoInputStreamOperator}。
+ *
+ * <p>{@code StreamOperator} 的方法保证不会被并发调用。此外，如果使用计时器服务，还可以保证不会与
+ *    {@code StreamOperator} 上的方法同时调用计时器回调。
+ *
+ * <p>注意，这个类将来会被{@link AbstractStreamOperatorV2}删除和替换。然而，由于
+ *    {@link AbstractStreamOperatorV2} 目前处于实验阶段，{@link AbstractStreamOperator} 尚未被弃用。
+ *
  * Base class for all stream operators. Operators that contain a user function should extend the
  * class {@link AbstractUdfStreamOperator} instead (which is a specialized subclass of this class).
  *
@@ -94,6 +105,7 @@ public abstract class AbstractStreamOperator<OUT>
     // ----------- configuration properties -------------
 
     // A sane default for most operators
+    // 大多数 operator 的理智默认
     protected ChainingStrategy chainingStrategy = ChainingStrategy.HEAD;
 
     // ---------------- runtime fields ------------------
@@ -128,13 +140,16 @@ public abstract class AbstractStreamOperator<OUT>
 
     private transient StreamOperatorStateHandler stateHandler;
 
+    // J: 时间服务工厂， time service name -> time service impl
     private transient InternalTimeServiceManager<?> timeServiceManager;
 
     // --------------- Metrics ---------------------------
 
     /** Metric group for the operator. */
+    // operator 的指标组。
     protected transient OperatorMetricGroup metrics;
 
+    // J: 延迟统计
     protected transient LatencyStats latencyStats;
 
     // ---------------- time handler ------------------
@@ -312,6 +327,10 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 在处理任何元素之前立即调用此方法，它应包含运算符的初始化逻辑，例如状态初始化。
+     *
+     * <p>默认实现什么都不做。
+     *
      * This method is called immediately before any elements are processed, it should contain the
      * operator's initialization logic, e.g. state initialization.
      *
@@ -355,6 +374,7 @@ public abstract class AbstractStreamOperator<OUT>
     public void prepareSnapshotPreBarrier(long checkpointId) throws Exception {
         // the default implementation does nothing and accepts the checkpoint
         // this is purely for subclasses to override
+        // 默认实现什么都不做并接受检查点，这纯粹是为了让子类覆盖
     }
 
     @Override
@@ -375,6 +395,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 想要参与快照的具有状态的流操作符需要覆盖此钩子方法。
+     *
      * Stream operators with state, which want to participate in a snapshot need to override this
      * hook method.
      *
@@ -384,6 +406,8 @@ public abstract class AbstractStreamOperator<OUT>
     public void snapshotState(StateSnapshotContext context) throws Exception {}
 
     /**
+     * 具有可恢复状态的流操作符需要覆盖此钩子方法。
+     *
      * Stream operators with state which can be restored need to override this hook method.
      *
      * @param context context that allows to register different states.
@@ -406,6 +430,8 @@ public abstract class AbstractStreamOperator<OUT>
     // ------------------------------------------------------------------------
 
     /**
+     * 获取在此算子所属作业的执行环境上定义的执行配置。
+     *
      * Gets the execution config defined on the execution environment of the job to which this
      * operator belongs.
      *
@@ -428,6 +454,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 返回运营商的名称。如果运行时环境已定，则返回与子任务指标任务名称。否则，返回简单的类名。
+     *
      * Return the operator name. If the runtime context has been set, then the task name with
      * subtask index is returned. Otherwise, the simple class name is returned.
      *
@@ -443,6 +471,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 返回一个上下文，允许操作员查询有关执行的信息，并与广播变量和托管状态等系统进行交互。这也允许注册计时器。
+     *
      * Returns a context that allows the operator to query information about the execution and also
      * to interact with systems such as broadcast variables and managed state. This also allows to
      * register timers.
@@ -463,6 +493,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 返回负责获取当前处理时间和注册计时器的 {@link ProcessingTimeService}。
+     *
      * Returns the {@link ProcessingTimeService} responsible for getting the current processing time
      * and registering timers.
      */
@@ -472,6 +504,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 使用为此任务配置的状态后端创建分区状态句柄。
+     *
      * Creates a partitioned state handle, using the state backend configured for this task.
      *
      * @throws IllegalStateException Thrown, if the key/value state was already initialized.
@@ -490,6 +524,8 @@ public abstract class AbstractStreamOperator<OUT>
     }
 
     /**
+     * 使用为此任务配置的状态后端创建分区状态句柄。
+     *
      * Creates a partitioned state handle, using the state backend configured for this task.
      *
      * @throws IllegalStateException Thrown, if the key/value state was already initialized.
@@ -558,6 +594,7 @@ public abstract class AbstractStreamOperator<OUT>
 
     // ------- One input stream
     public void processLatencyMarker(LatencyMarker latencyMarker) throws Exception {
+        // 报告或转发延迟标记
         reportOrForwardLatencyMarker(latencyMarker);
     }
 
@@ -572,9 +609,11 @@ public abstract class AbstractStreamOperator<OUT>
 
     protected void reportOrForwardLatencyMarker(LatencyMarker marker) {
         // all operators are tracking latencies
+        // 所有 operator 都在跟踪延迟
         this.latencyStats.reportLatency(marker);
 
         // everything except sinks forwards latency markers
+        // 除了接收器转发延迟标记之外的所有内容
         this.output.emitLatencyMarker(marker);
     }
 

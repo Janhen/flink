@@ -28,10 +28,15 @@ import java.util.List;
 import java.util.Optional;
 
 /** Interface for stream element queues for the {@link AsyncWaitOperator}. */
+// {@link AsyncWaitOperator} 的流元素队列接口。
 @Internal
 public interface StreamElementQueue<OUT> {
 
     /**
+     * 尝试将给定元素放入队列。如果队列有剩余容量，则此操作成功，如果队列已满，则此操作失败。
+     *
+     * <p>此方法返回插入元素的句柄，允许设置计算结果。
+     *
      * Tries to put the given element in the queue. This operation succeeds if the queue has
      * capacity left and fails if the queue is full.
      *
@@ -44,6 +49,10 @@ public interface StreamElementQueue<OUT> {
     Optional<ResultFuture<OUT>> tryPut(StreamElement streamElement);
 
     /**
+     * 从这个队列的头部发出一个已完成的元素到给定的输出中。
+     *
+     * <p>如果没有完成任何元素，则不会发出任何元素（在进入任何临界区之前检查 {@link #hasCompletedElements()}）。
+     *
      * Emits one completed element from the head of this queue into the given output.
      *
      * <p>Will not emit any element if no element has been completed (check {@link
@@ -54,6 +63,8 @@ public interface StreamElementQueue<OUT> {
     void emitCompletedElement(TimestampedCollector<OUT> output);
 
     /**
+     * 检查是否至少有一个完整的头部元素。
+     *
      * Checks if there is at least one completed head element.
      *
      * @return True if there is a completed head element.
@@ -61,6 +72,10 @@ public interface StreamElementQueue<OUT> {
     boolean hasCompletedElements();
 
     /**
+     * 返回当前包含在此队列中的 {@link StreamElement} 集合以进行检查点。
+     *
+     * <p>这包括所有未发出、已完成和未完成的元素。
+     *
      * Returns the collection of {@link StreamElement} currently contained in this queue for
      * checkpointing.
      *
@@ -71,6 +86,8 @@ public interface StreamElementQueue<OUT> {
     List<StreamElement> values();
 
     /**
+     * 如果队列为空，则为真；否则为假。
+     *
      * True if the queue is empty; otherwise false.
      *
      * @return True if the queue is empty; otherwise false.
@@ -78,6 +95,8 @@ public interface StreamElementQueue<OUT> {
     boolean isEmpty();
 
     /**
+     * 返回队列的大小。
+     *
      * Return the size of the queue.
      *
      * @return The number of elements contained in this queue.

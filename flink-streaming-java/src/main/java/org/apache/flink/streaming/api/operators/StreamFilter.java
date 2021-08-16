@@ -22,6 +22,7 @@ import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /** A {@link StreamOperator} for executing {@link FilterFunction FilterFunctions}. */
+// 用于执行 {@link FilterFunction FilterFunctions} 的 {@link StreamOperator}。
 @Internal
 public class StreamFilter<IN> extends AbstractUdfStreamOperator<IN, FilterFunction<IN>>
         implements OneInputStreamOperator<IN, IN> {
@@ -30,6 +31,7 @@ public class StreamFilter<IN> extends AbstractUdfStreamOperator<IN, FilterFuncti
 
     public StreamFilter(FilterFunction<IN> filterFunction) {
         super(filterFunction);
+        // J: 为 filterFunction 增加链接策略
         chainingStrategy = ChainingStrategy.ALWAYS;
     }
 

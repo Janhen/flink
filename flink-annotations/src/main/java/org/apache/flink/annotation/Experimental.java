@@ -24,6 +24,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 用于标记类以供实验使用的注释。
+ *
  * Annotation to mark classes for experimental use.
  *
  * <p>Classes with this annotation are neither battle-tested nor stable, and may be changed or

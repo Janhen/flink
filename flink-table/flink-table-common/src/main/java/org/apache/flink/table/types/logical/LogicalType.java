@@ -69,6 +69,7 @@ public abstract class LogicalType implements Serializable {
 
     private final boolean isNullable;
 
+    // J: 类型 Root
     private final LogicalTypeRoot typeRoot;
 
     public LogicalType(boolean isNullable, LogicalTypeRoot typeRoot) {
@@ -77,6 +78,7 @@ public abstract class LogicalType implements Serializable {
     }
 
     /** Returns whether a value of this type can be {@code null}. */
+    // 返回此类型的值是否可以为 {@code null}。
     public boolean isNullable() {
         return isNullable;
     }
@@ -106,6 +108,10 @@ public abstract class LogicalType implements Serializable {
     }
 
     /**
+     * 返回一个完全序列化此实例的字符串。序列化的字符串可用于传输或持久化类型。
+     *
+     * <p>反向操作见{@link LogicalTypeParser}。
+     *
      * Returns a string that fully serializes this instance. The serialized string can be used for
      * transmitting or persisting a type.
      *
@@ -116,6 +122,10 @@ public abstract class LogicalType implements Serializable {
     public abstract String asSerializableString();
 
     /**
+     * 返回一个总结此类型的字符串以打印到控制台。实现可能会缩短长名称或跳过非常特定的属性。
+     *
+     * <p>使用 {@link #asSerializableString()} 作为完全序列化此实例的类型字符串。
+     *
      * Returns a string that summarizes this type for printing to a console. An implementation might
      * shorten long names or skips very specific properties.
      *
@@ -128,6 +138,14 @@ public abstract class LogicalType implements Serializable {
     }
 
     /**
+     * 返回给定类的实例在进入表生态系统时是否可以表示为此逻辑类型的值。这种方法有助于基于 JVM 的语言和关系类型系统之间
+     * 的互操作性。
+     *
+     * <p>支持的转换直接将输入类映射到逻辑类型，而不会损失精度或类型扩展。
+     *
+     * <p>例如，{@code java.lang.Long} 或 {@code long} 可以用作 {@code BIGINT} 的输入，而与
+     *   set nullability 无关。
+     *
      * Returns whether an instance of the given class can be represented as a value of this logical
      * type when entering the table ecosystem. This method helps for the interoperability between
      * JVM-based languages and the relational type system.

@@ -24,6 +24,7 @@ import org.apache.flink.api.dag.Transformation;
 import org.apache.flink.streaming.api.operators.StreamOperatorFactory;
 
 /** {@link AbstractMultipleInputTransformation} implementation for non-keyed streams. */
+// {@link AbstractMultipleInputTransformation} 非键控流的实现。
 @Internal
 public class MultipleInputTransformation<OUT> extends AbstractMultipleInputTransformation<OUT> {
     public MultipleInputTransformation(

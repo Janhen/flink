@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 表示应用 {@link org.apache.flink.streaming.api.operators.MultipleInputStreamOperator} 输入
+ * {@code Transformations} 的转换的基类。结果再次只有一个流。
+ *
  * Base class for transformations representing the application of a {@link
  * org.apache.flink.streaming.api.operators.MultipleInputStreamOperator} to input {@code
  * Transformations}. The result is again only one stream.

@@ -21,6 +21,8 @@ package org.apache.flink.table.planner.plan.utils;
 import org.apache.flink.table.api.config.ExecutionConfigOptions;
 
 /**
+ * {@link ExecutionConfigOptions#TABLE_EXEC_DISABLED_OPERATORS} 中使用的一些专用运算符类型。
+ *
  * Some dedicated operator type which is used in {@link
  * ExecutionConfigOptions#TABLE_EXEC_DISABLED_OPERATORS}.
  */

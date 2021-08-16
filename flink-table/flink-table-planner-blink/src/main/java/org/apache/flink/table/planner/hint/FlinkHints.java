@@ -46,6 +46,10 @@ public abstract class FlinkHints {
     }
 
     /**
+     * 合并来自 {@code hints} 的动态表选项和来自表定义 {@code props} 的静态表选项。
+     *
+     * <p>如果 {@code hints} 中的选项具有相同的选项键，它们将覆盖 {@code props} 中的选项。
+     *
      * Merges the dynamic table options from {@code hints} and static table options from table
      * definition {@code props}.
      *
@@ -56,6 +60,7 @@ public abstract class FlinkHints {
      * @param props Static table options defined in DDL or connect API
      * @return New options with merged dynamic table options, or the old {@code props} if there is
      *     no dynamic table options
+     *     具有合并动态表选项的新选项，如果没有动态表选项，则使用旧的 {@code props}
      */
     public static Map<String, String> mergeTableOptions(
             Map<String, String> hints, Map<String, String> props) {

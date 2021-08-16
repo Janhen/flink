@@ -22,6 +22,7 @@ package org.apache.flink.streaming.api.operators;
  * 设置和查询按键操作的当前按键。
  *
  * <p>主要用于定时器系统在创建定时器时查询键值，在触发定时器时设置正确的键上下文。
+ * 用于对键控操作的当前键进行排序和查询的接口。
  *
  * Inteface for setting and querying the current key of keyed operations.
  *

@@ -32,13 +32,13 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayDeque;
 
 /**
- * {@link CheckpointBarrierTracker}跟踪从哪个输入通道接收到的检查点障碍。一旦它为一个检查点ID观察了所有检查点屏
+ * {@link CheckpointBarrierTracker} 跟踪从哪个输入通道接收到的检查点障碍。一旦它为一个检查点 ID 观察了所有检查点屏
  * 障，它就通知它的侦听器一个完成的检查点。
  *
- * <p>不像{ @link CheckpointBarrierAligner}， BarrierTracker 不会阻塞已经发送屏障的输入通道，所以它不能用来获
- * 得“精确一次”的处理保证。但是，它可以用来获得“至少一次”处理保证。
+ * <p>不像 {@link CheckpointBarrierAligner}， BarrierTracker 不会阻塞已经发送屏障的输入通道，所以它不能用来获
+ * 得 “精确一次” 的处理保证。但是，它可以用来获得 “至少一次” 处理保证。
  *
- * 注意:此实现严格假设较新的检查点具有较高的检查点 id。
+ * 注意: 此实现严格假设较新的检查点具有较高的检查点 id。
  *
  * The {@link CheckpointBarrierTracker} keeps track of what checkpoint barriers have been received
  * from which input channels. Once it has observed all checkpoint barriers for a checkpoint ID, it
@@ -70,6 +70,8 @@ public class CheckpointBarrierTracker extends CheckpointBarrierHandler {
     private final int totalNumberOfInputChannels;
 
     /**
+     * 已收到一些（但不是全部）障碍的所有检查点，并且尚不知道它们是否被新检查点包含。
+     *
      * All checkpoints for which some (but not all) barriers have been received, and that are not
      * yet known to be subsumed by newer checkpoints.
      */
@@ -230,6 +232,7 @@ public class CheckpointBarrierTracker extends CheckpointBarrierHandler {
     }
 
     /** Simple class for a checkpoint ID with a barrier counter. */
+    // 带有屏障计数器的检查点 ID 的简单类。
     private static final class CheckpointBarrierCount {
 
         private final long checkpointId;

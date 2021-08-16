@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Base interface for custom metric reporters. */
+// 自定义指标报告器的基本接口。
 public abstract class AbstractReporter implements MetricReporter, CharacterFilter {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

@@ -27,7 +27,6 @@ import org.apache.flink.streaming.runtime.tasks.StreamTask;
 
 /**
  * 流状态标记告知 Task 是否会继续接受到上游的记录或者 watermark，在数据源算子中生成，向下游沿着 dataFlow 传播
- *
  * Stream Status元素通知流任务，它们是否应该继续期望从发送它们的输入流获得记录和水印。有两种状态，即
  * {@link StreamStatus#IDLE} 和 {@link StreamStatus#ACTIVE}。流状态元素在源生成，并可以通过拓扑的任务传播。
  * 它们直接推断发送任务的当前状态; 如果一个 {@link SourceStreamTask} 或 {@link StreamTask} 会发出一个
@@ -97,6 +96,7 @@ public final class StreamStatus extends StreamElement {
     public static final int IDLE_STATUS = -1;
     public static final int ACTIVE_STATUS = 0;
 
+    // J: 只有两个状态，通知下游的 ...
     public static final StreamStatus IDLE = new StreamStatus(IDLE_STATUS);
     public static final StreamStatus ACTIVE = new StreamStatus(ACTIVE_STATUS);
 

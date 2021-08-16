@@ -28,6 +28,9 @@ import org.apache.flink.util.OutputTag;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 用于执行 {@link ProcessFunction ProcessFunctions} 的
+ * {@link org.apache.flink.streaming.api.operators.StreamOperator}。
+ *
  * A {@link org.apache.flink.streaming.api.operators.StreamOperator} for executing {@link
  * ProcessFunction ProcessFunctions}.
  */
@@ -73,6 +76,7 @@ public class ProcessOperator<IN, OUT>
         this.currentWatermark = mark.getTimestamp();
     }
 
+    // J: ProcessFunction 中的 Context 的实现类
     private class ContextImpl extends ProcessFunction<IN, OUT>.Context implements TimerService {
         private StreamRecord<IN> element;
 

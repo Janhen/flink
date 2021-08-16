@@ -20,6 +20,8 @@ package org.apache.flink.streaming.api.operators;
 import org.apache.flink.annotation.Experimental;
 
 /**
+ * 需要访问 {@link MailboxExecutor} 以产生给下游运算符的运算符需要通过实现此接口的工厂创建。
+ *
  * An operator that needs access to the {@link MailboxExecutor} to yield to downstream operators
  * needs to be created through a factory implementing this interface.
  */
