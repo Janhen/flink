@@ -115,6 +115,8 @@ public abstract class KafkaDynamicTableFactoryBase
     }
 
     /**
+     * 构造版本特定的 Kafka 表源。
+     *
      * Constructs the version-specific Kafka table source.
      *
      * @param producedDataType Source produced data type
@@ -135,6 +137,8 @@ public abstract class KafkaDynamicTableFactoryBase
             long startupTimestampMillis);
 
     /**
+     * 构建版本特定的 Kafka 表 sink。
+     *
      * Constructs the version-specific Kafka table sink.
      *
      * @param consumedDataType Sink consumed data type
@@ -150,6 +154,7 @@ public abstract class KafkaDynamicTableFactoryBase
             Optional<FlinkKafkaPartitioner<RowData>> partitioner,
             EncodingFormat<SerializationSchema<RowData>> encodingFormat);
 
+    // J: 返回所有需要的选项
     @Override
     public Set<ConfigOption<?>> requiredOptions() {
         final Set<ConfigOption<?>> options = new HashSet<>();

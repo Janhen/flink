@@ -118,6 +118,8 @@ public class TableSchema {
     }
 
     /**
+     * 返回给定字段索引的指定数据类型。
+     *
      * Returns the specified data type for the given field index.
      *
      * @param fieldIndex the index of the field
@@ -168,6 +170,7 @@ public class TableSchema {
     }
 
     /** Returns the number of fields. */
+    // 返回字段的数量。
     public int getFieldCount() {
         return columns.size();
     }
@@ -178,6 +181,8 @@ public class TableSchema {
     }
 
     /**
+     * 返回给定字段索引的指定名称。
+     *
      * Returns the specified name for the given field index.
      *
      * @param fieldIndex the index of the field
@@ -394,6 +399,7 @@ public class TableSchema {
     }
 
     /** Table column and watermark specification sanity check. */
+    // 表列和水印规范健全性检查。
     private static void validateColumnsAndWatermarkSpecs(
             List<TableColumn> columns, List<WatermarkSpec> watermarkSpecs) {
         // Validate and create name to type mapping.

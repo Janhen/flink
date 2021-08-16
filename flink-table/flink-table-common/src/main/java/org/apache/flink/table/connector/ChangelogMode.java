@@ -37,6 +37,7 @@ import java.util.Set;
 @PublicEvolving
 public final class ChangelogMode {
 
+    // 仅插入模式
     private static final ChangelogMode INSERT_ONLY =
             ChangelogMode.newBuilder().addContainedKind(RowKind.INSERT).build();
 
@@ -49,6 +50,7 @@ public final class ChangelogMode {
     }
 
     /** Shortcut for a simple {@link RowKind#INSERT}-only changelog. */
+    // 简单的{@link RowKindINSERT}-only changelog的快捷方式。
     public static ChangelogMode insertOnly() {
         return INSERT_ONLY;
     }

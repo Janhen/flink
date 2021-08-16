@@ -33,6 +33,8 @@ public abstract class FlinkKafkaPartitioner<T> implements Serializable {
     private static final long serialVersionUID = -9086719227828020494L;
 
     /**
+     * 分区程序的初始化程序。在 Flink Kafka 生产者的每个并行 sink 实例上调用一次。如果有必要，应该重写此方法。
+     *
      * Initializer for the partitioner. This is called once on each parallel sink instance of the
      * Flink Kafka producer. This method should be overridden if necessary.
      *
@@ -44,6 +46,8 @@ public abstract class FlinkKafkaPartitioner<T> implements Serializable {
     }
 
     /**
+     * 确定记录应该写入的分区的 id。
+     *
      * Determine the id of the partition that the record should be written to.
      *
      * @param record the record value

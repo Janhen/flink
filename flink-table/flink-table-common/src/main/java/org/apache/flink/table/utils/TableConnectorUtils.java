@@ -30,7 +30,7 @@ public final class TableConnectorUtils {
     }
 
     /** Returns the table connector name used for logging and web UI. */
-    // 返回用于日志和web UI的表连接器名称。
+    // 返回用于日志和 web UI 的表连接器名称。
     public static String generateRuntimeName(Class<?> clazz, String[] fields) {
         String className = clazz.getSimpleName();
         if (null == fields) {

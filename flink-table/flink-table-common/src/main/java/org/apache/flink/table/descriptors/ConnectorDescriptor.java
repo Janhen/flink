@@ -30,6 +30,7 @@ import static org.apache.flink.table.descriptors.ConnectorDescriptorValidator.CO
 @PublicEvolving
 public abstract class ConnectorDescriptor extends DescriptorBase implements Descriptor {
 
+    // 类型
     private String type;
 
     private int version;
@@ -37,6 +38,8 @@ public abstract class ConnectorDescriptor extends DescriptorBase implements Desc
     private boolean formatNeeded;
 
     /**
+     * 构造一个 {@link ConnectorDescriptor}。
+     *
      * Constructs a {@link ConnectorDescriptor}.
      *
      * @param type string that identifies this connector
@@ -59,11 +62,14 @@ public abstract class ConnectorDescriptor extends DescriptorBase implements Desc
     }
 
     /** Returns if this connector requires a format descriptor. */
+    // 如果此连接器需要格式描述符，则返回。
     protected final boolean isFormatNeeded() {
         return formatNeeded;
     }
 
     /**
+     * 将此描述符转换为一组连接器属性。通常以 {@link ConnectorDescriptorValidator#CONNECTOR} 作为前缀。
+     *
      * Converts this descriptor into a set of connector properties. Usually prefixed with {@link
      * ConnectorDescriptorValidator#CONNECTOR}.
      */

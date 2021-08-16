@@ -24,6 +24,16 @@ import org.apache.flink.configuration.ConfigOption;
 import java.util.Set;
 
 /**
+ * 用于所有类型的工厂的基本接口，这些工厂从 Flink 的 Table & SQL API 中的键值对列表中创建对象实例。
+ *
+ * <p>工厂由 {@link Class} 和 {@link #factoryIdentifier()} 唯一标识。
+ *
+ * <p>可用工厂列表是使用Java的服务提供程序接口(SPI)发现的。实现这个接口的类可以添加到
+ *   {@code META_INF/services/org.apache.flink.table.factories.Factory} JAR 文件中的 Factory。
+ *
+ * <p>每个工厂声明一组必需和可选选项。此信息在发现期间不会使用，但在生成文档和执行验证时很有帮助。一个工厂可能会发现
+ *   更多的(嵌套的)工厂，嵌套工厂的选项不能在这个工厂的集合中声明。
+ *
  * Base interface for all kind of factories that create object instances from a list of key-value
  * pairs in Flink's Table & SQL API.
  *
@@ -58,6 +68,11 @@ import java.util.Set;
 public interface Factory {
 
     /**
+     * 返回相同工厂接口之间的唯一标识符。
+     *
+     * <p>为了一致性，标识符应该声明为一个小写单词(例如{@code kafka})。如果存在不同版本的多个工厂，一个版本
+     * 应该用"-"附加(例如{@code kafka-0.10})。
+     *
      * Returns a unique identifier among same factory interfaces.
      *
      * <p>For consistency, an identifier should be declared as one lower case word (e.g. {@code
@@ -67,6 +82,8 @@ public interface Factory {
     String factoryIdentifier();
 
     /**
+     * 返回一组{@link ConfigOption}，除了{@link #optionalOptions()}，该工厂的实现还需要它。
+     *
      * Returns a set of {@link ConfigOption} that an implementation of this factory requires in
      * addition to {@link #optionalOptions()}.
      *

@@ -40,6 +40,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /** Option utils for Kafka table source sink. */
+// Kafka 表源汇的选项 utils。
 public class KafkaOptions {
     private KafkaOptions() {}
 
@@ -53,14 +54,14 @@ public class KafkaOptions {
                     .noDefaultValue()
                     .withDescription("Required topic name from which the table is read");
 
-    // 需要Kafka服务器连接字符串
+    // 需要 Kafka 服务器连接字符串
     public static final ConfigOption<String> PROPS_BOOTSTRAP_SERVERS =
             ConfigOptions.key("properties.bootstrap.servers")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Required Kafka server connection string");
 
-    // Kafka consumer中需要消费组，不需要Kafka producer
+    // Kafka consumer 中需要消费组，不需要 Kafka producer
     public static final ConfigOption<String> PROPS_GROUP_ID =
             ConfigOptions.key("properties.group.id")
                     .stringType()
@@ -72,7 +73,7 @@ public class KafkaOptions {
     // Scan specific options
     // --------------------------------------------------------------------------------------------
 
-    // Kafka消费者的可选启动模式，有效的枚举值是“最早偏移量”、“最新偏移量”、“组偏移量”、“时间戳”“n或“具体偏移量
+    // Kafka 消费者的可选启动模式，有效的枚举值是“最早偏移量”、“最新偏移量”、“组偏移量”、“时间戳”“n或“具体偏移量
     public static final ConfigOption<String> SCAN_STARTUP_MODE =
             ConfigOptions.key("scan.startup.mode")
                     .stringType()
@@ -120,6 +121,7 @@ public class KafkaOptions {
     // --------------------------------------------------------------------------------------------
     // Option enumerations
     // --------------------------------------------------------------------------------------------
+    // 选项枚举
 
     // Start up offset.
     public static final String SCAN_STARTUP_MODE_VALUE_EARLIEST = "earliest-offset";
@@ -160,11 +162,13 @@ public class KafkaOptions {
     // Validation
     // --------------------------------------------------------------------------------------------
 
+    // 验证表选项
     public static void validateTableOptions(ReadableConfig tableOptions) {
         validateScanStartupMode(tableOptions);
         validateSinkPartitioner(tableOptions);
     }
 
+    // 验证扫描启动模式选项
     private static void validateScanStartupMode(ReadableConfig tableOptions) {
         tableOptions
                 .getOptional(SCAN_STARTUP_MODE)
@@ -211,6 +215,7 @@ public class KafkaOptions {
                         });
     }
 
+    // 验证写入 sink 分区器参数
     private static void validateSinkPartitioner(ReadableConfig tableOptions) {
         tableOptions
                 .getOptional(SINK_PARTITIONER)
@@ -331,7 +336,6 @@ public class KafkaOptions {
     /**
      * "无效属性'%s'的格式为" "分区:0，偏移量:42;分区:1，偏移量:300 "，但为'%s' "，
      *
-     *
      * Parses SpecificOffsets String to Map.
      *
      * <p>SpecificOffsets String format was given as following:
@@ -382,7 +386,7 @@ public class KafkaOptions {
     }
 
     /**
-     * 决定表选项是否包含以“properties”前缀开始的Kafka客户端属性。
+     * 决定表选项是否包含以“properties”前缀开始的 Kafka 客户端属性。
      *
      * Decides if the table options contains Kafka client properties that start with prefix
      * 'properties'.
@@ -392,6 +396,7 @@ public class KafkaOptions {
     }
 
     /** Returns a class value with the given class name. */
+    // 返回具有给定类名的类值。
     private static <T> FlinkKafkaPartitioner<T> initializePartitioner(
             String name, ClassLoader classLoader) {
         try {
@@ -419,6 +424,7 @@ public class KafkaOptions {
     // --------------------------------------------------------------------------------------------
 
     /** Kafka startup options. * */
+    // kafka 启动选项。
     public static class StartupOptions {
         public StartupMode startupMode;
         public Map<KafkaTopicPartition, Long> specificOffsets;

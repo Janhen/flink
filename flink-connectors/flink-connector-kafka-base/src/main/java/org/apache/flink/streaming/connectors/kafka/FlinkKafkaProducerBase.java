@@ -81,30 +81,40 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     private static final long serialVersionUID = 1L;
 
     /** Configuration key for disabling the metrics reporting. */
+    // 禁用度量报告的配置键。
     public static final String KEY_DISABLE_METRICS = "flink.disable-metrics";
 
     /** User defined properties for the Producer. */
+    // 生产者的用户定义属性。
     protected final Properties producerConfig;
 
     /** The name of the default topic this producer is writing data to. */
+    // 此生成器要写入数据的默认主题的名称。
     protected final String defaultTopicId;
 
     /**
+     * (Serializable)将 Flink中 使用的对象转换为。kafka 的 byte[]。
+     *
      * (Serializable) SerializationSchema for turning objects used with Flink into. byte[] for
      * Kafka.
      */
     protected final KeyedSerializationSchema<IN> schema;
 
     /** User-provided partitioner for assigning an object to a Kafka partition for each topic. */
+    // 用户提供的分区器，用于为每个主题分配一个对象到 Kafka 分区。
     protected final FlinkKafkaPartitioner<IN> flinkKafkaPartitioner;
 
     /** Partitions of each topic. */
+    // 每个主题的分区。
     protected final Map<String, int[]> topicPartitionsMap;
 
     /** Flag indicating whether to accept failures (and log them), or to fail on failures. */
+    // 指示是接受失败(并记录它们)，还是在失败时失败的标志。
     protected boolean logFailuresOnly;
 
     /**
+     * 如果为真，producer 将等待直到所有未完成的记录都发送给 broker。
+     *
      * If true, the producer will wait until all outstanding records have been send to the broker.
      */
     protected boolean flushOnCheckpoint = true;
@@ -112,21 +122,28 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     // -------------------------------- Runtime fields ------------------------------------------
 
     /** KafkaProducer instance. */
+    // KafkaProducer实例。
     protected transient KafkaProducer<byte[], byte[]> producer;
 
     /** The callback than handles error propagation or logging callbacks. */
+    // 回调比处理错误传播或记录回调。
     protected transient Callback callback;
 
     /** Errors encountered in the async producer are stored here. */
+    // 在异步生成器中遇到的错误存储在这里。
     protected transient volatile Exception asyncException;
 
     /** Lock for accessing the pending records. */
+    // 锁定用于访问挂起记录。
     protected final SerializableObject pendingRecordsLock = new SerializableObject();
 
     /** Number of unacknowledged records. */
+    // 未确认的记录数。
     protected long pendingRecords;
 
     /**
+     * 创建 FlinkKafkaProducer 的主构造函数。
+     *
      * The main constructor for creating a FlinkKafkaProducer.
      *
      * @param defaultTopicId The default topic to write data to
@@ -188,6 +205,9 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     // ---------------------------------- Properties --------------------------
 
     /**
+     * 定义生产者是否应该在错误时失败，或者只记录它们。如果设置为 true，则只记录异常，如果设置为 false，则最终会
+     * 抛出异常并导致流程序失败(并进入恢复)。
+     *
      * Defines whether the producer should fail on errors, or only log them. If this is set to true,
      * then exceptions will be only logged, if set to false, exceptions will be eventually thrown
      * and cause the streaming program to fail (and enter recovery).
@@ -199,6 +219,9 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     }
 
     /**
+     * 如果设置为 true, Flink 生产者将等待 Kafka 缓冲区中所有未完成的消息在检查点被 Kafka 生产者确认。这样，
+     * 生产者可以保证 Kafka 缓冲区中的消息是检查点的一部分。
+     *
      * If set to true, the Flink producer will wait for all outstanding messages in the Kafka
      * buffers to be acknowledged by the Kafka producer on a checkpoint. This way, the producer can
      * guarantee that messages in the Kafka buffers are part of the checkpoint.
@@ -211,6 +234,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
 
     /** Used for testing only. */
     @VisibleForTesting
+    // 仅用于测试。
     protected <K, V> KafkaProducer<K, V> getKafkaProducer(Properties props) {
         return new KafkaProducer<>(props);
     }
@@ -218,6 +242,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     // ----------------------------------- Utilities --------------------------
 
     /** Initializes the connection to Kafka. */
+    // 初始化到 Kafka 的连接。
     @Override
     public void open(Configuration configuration) throws Exception {
         if (schema instanceof KeyedSerializationSchemaWrapper) {
@@ -229,6 +254,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
 
         RuntimeContext ctx = getRuntimeContext();
 
+        // J: 自定义分区 open
         if (null != flinkKafkaPartitioner) {
             flinkKafkaPartitioner.open(
                     ctx.getIndexOfThisSubtask(), ctx.getNumberOfParallelSubtasks());
@@ -241,16 +267,21 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
                 defaultTopicId);
 
         // register Kafka metrics to Flink accumulators
+        // 将 Kafka 指标注册到 Flink 累加器
         if (!Boolean.parseBoolean(producerConfig.getProperty(KEY_DISABLE_METRICS, "false"))) {
+            // 获取到 kafka 中的 metrics
             Map<MetricName, ? extends Metric> metrics = this.producer.metrics();
 
             if (metrics == null) {
                 // MapR's Kafka implementation returns null here.
                 LOG.info("Producer implementation does not support metrics");
             } else {
+                // 增加 KafkaProducer 指标组
                 final MetricGroup kafkaMetricGroup =
                         getRuntimeContext().getMetricGroup().addGroup("KafkaProducer");
+                // J: 将 kafka 中的 metrics 放到 flink 中
                 for (Map.Entry<MetricName, ? extends Metric> metric : metrics.entrySet()) {
+                    // 增加 gauge 指标
                     kafkaMetricGroup.gauge(
                             metric.getKey().name(), new KafkaMetricWrapper(metric.getValue()));
                 }
@@ -259,12 +290,14 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
 
         if (flushOnCheckpoint
                 && !((StreamingRuntimeContext) this.getRuntimeContext()).isCheckpointingEnabled()) {
+            // J: 不符合约定的配置警告
             LOG.warn(
                     "Flushing on checkpoint is enabled, but checkpointing is not enabled. Disabling flushing.");
             flushOnCheckpoint = false;
         }
 
         if (logFailuresOnly) {
+            // 发送失败的时候写错误日志，不保存异步生成中的异常
             callback =
                     new Callback() {
                         @Override
@@ -292,6 +325,8 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     }
 
     /**
+     * 当新的数据到达 sink 时调用，并将其转发给 Kafka。
+     *
      * Called when new data arrives to the sink, and forwards it to Kafka.
      *
      * @param next The incoming data
@@ -299,6 +334,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     @Override
     public void invoke(IN next, Context context) throws Exception {
         // propagate asynchronous errors
+        // 异步传播错误
         checkErroneous();
 
         byte[] serializedKey = schema.serializeKey(next);
@@ -327,6 +363,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
                             serializedValue);
         }
         if (flushOnCheckpoint) {
+            // J: 等待的记录增长
             synchronized (pendingRecordsLock) {
                 pendingRecords++;
             }
@@ -341,16 +378,19 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
         }
 
         // make sure we propagate pending errors
+        // 确保我们传播挂起的错误
         checkErroneous();
     }
 
     // ------------------- Logic for handling checkpoint flushing -------------------------- //
+    // 处理检查点刷新的逻辑
 
     private void acknowledgeMessage() {
         if (flushOnCheckpoint) {
             synchronized (pendingRecordsLock) {
                 pendingRecords--;
                 if (pendingRecords == 0) {
+                    // 唤醒 ...
                     pendingRecordsLock.notifyAll();
                 }
             }
@@ -368,10 +408,12 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     @Override
     public void snapshotState(FunctionSnapshotContext ctx) throws Exception {
         // check for asynchronous errors and fail the checkpoint if necessary
+        // 检查异步错误并在必要时使检查点失败
         checkErroneous();
 
         if (flushOnCheckpoint) {
             // flushing is activated: We need to wait until pendingRecords is 0
+            // 刷新被激活:我们需要等待，直到 pendingRecords 为 0
             flush();
             synchronized (pendingRecordsLock) {
                 if (pendingRecords != 0) {
@@ -381,6 +423,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
 
                 // if the flushed requests has errors, we should propagate it also and fail the
                 // checkpoint
+                // 如果刷新的请求有错误，我们也应该传播它并使检查点失败
                 checkErroneous();
             }
         }
@@ -397,10 +440,12 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
         }
     }
 
+    // J: 根据配置 broker 验证并扩展参数
     public static Properties getPropertiesFromBrokerList(String brokerList) {
         String[] elements = brokerList.split(",");
 
         // validate the broker addresses
+        // 验证代理地址
         for (String broker : elements) {
             NetUtils.getCorrectHostnamePort(broker);
         }
@@ -413,10 +458,12 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     protected static int[] getPartitionsByTopic(
             String topic, KafkaProducer<byte[], byte[]> producer) {
         // the fetched list is immutable, so we're creating a mutable copy in order to sort it
+        // fetched list 是不可变的，所以要创建一个可变副本来排序
         List<PartitionInfo> partitionsList = new ArrayList<>(producer.partitionsFor(topic));
 
         // sort the partitions by partition id to make sure the fetched partition list is the same
         // across subtasks
+        // 按分区 id 对分区进行排序，以确保获取的分区列表在各个子任务中是相同的
         Collections.sort(
                 partitionsList,
                 new Comparator<PartitionInfo>() {

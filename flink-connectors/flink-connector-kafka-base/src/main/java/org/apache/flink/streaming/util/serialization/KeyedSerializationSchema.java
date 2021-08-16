@@ -23,7 +23,7 @@ import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import java.io.Serializable;
 
 /**
- * 序列化模式描述如何将数据对象转换为不同的序列化表示形式。大多数数据接收器(例如Apache Kafka)要求数据以特定的格式
+ * 序列化模式描述如何将数据对象转换为不同的序列化表示形式。大多数数据接收器(例如 Apache Kafka)要求数据以特定的格式
  * (例如字节串)传递给它们。
  *
  * The serialization schema describes how to turn a data object into a different serialized

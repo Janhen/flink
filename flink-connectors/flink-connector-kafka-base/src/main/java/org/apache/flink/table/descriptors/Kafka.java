@@ -44,6 +44,7 @@ import static org.apache.flink.table.descriptors.KafkaValidator.CONNECTOR_TOPIC;
 import static org.apache.flink.table.descriptors.KafkaValidator.CONNECTOR_TYPE_VALUE_KAFKA;
 
 /** Connector descriptor for the Apache Kafka message queue. */
+// Apache Kafka 消息队列的连接器描述符。
 @PublicEvolving
 public class Kafka extends ConnectorDescriptor {
 
@@ -53,6 +54,7 @@ public class Kafka extends ConnectorDescriptor {
     private Map<Integer, Long> specificOffsets;
     private long startTimestampMillis;
     private Map<String, String> kafkaProperties;
+    // J: 写入分区器类型
     private String sinkPartitionerType;
     private Class<? extends FlinkKafkaPartitioner> sinkPartitionerClass;
 

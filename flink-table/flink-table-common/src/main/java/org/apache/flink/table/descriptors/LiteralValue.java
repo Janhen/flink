@@ -28,6 +28,10 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 /**
+ * 字面值的描述符。文字值由类型和实际值组成。不允许使用表达式值。
+ *
+ * <p>如果没有设置类型，类型将自动从值派生。目前，BOOLEAN、INT、DOUBLE 和 VARCHAR 都支持此功能。
+ *
  * Descriptor for a literal value. A literal value consists of a type and the actual value.
  * Expression values are not allowed.
  *
@@ -43,6 +47,8 @@ public class LiteralValue extends HierarchyDescriptor {
     private Object value;
 
     /**
+     * 文字值的类型信息。例如 Types.BOOLEAN。
+     *
      * Type information of the literal value. E.g. Types.BOOLEAN.
      *
      * @param typeInfo type information describing the value
@@ -54,6 +60,8 @@ public class LiteralValue extends HierarchyDescriptor {
     }
 
     /**
+     * 输入字面值的字符串。如。“布尔”。
+     *
      * Type string of the literal value. E.g. "BOOLEAN".
      *
      * @param typeString type string describing the value

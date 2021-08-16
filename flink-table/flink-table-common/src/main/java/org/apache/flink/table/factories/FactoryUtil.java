@@ -58,6 +58,7 @@ public final class FactoryUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(FactoryUtil.class);
 
+    // 版本的整体物业设计。这个选项是为了将来的向后兼容性
     public static final ConfigOption<Integer> PROPERTY_VERSION =
             ConfigOptions.key("property-version")
                     .intType()
@@ -65,6 +66,7 @@ public final class FactoryUtil {
                     .withDescription(
                             "Version of the overall property design. This option is meant for future backwards compatibility.");
 
+    // 唯一标识用于访问外部系统中的数据的动态表的连接器。在发现表源和表接收器时使用它的值
     public static final ConfigOption<String> CONNECTOR =
             ConfigOptions.key("connector")
                     .stringType()
@@ -73,6 +75,7 @@ public final class FactoryUtil {
                             "Uniquely identifies the connector of a dynamic table that is used for accessing data in "
                                     + "an external system. Its value is used during table source and table sink discovery.");
 
+    // 定义用于编码关键数据的格式标识符。“该标识符用于发现合适的格式工厂”
     public static final ConfigOption<String> KEY_FORMAT =
             ConfigOptions.key("key.format")
                     .stringType()
@@ -81,6 +84,7 @@ public final class FactoryUtil {
                             "Defines the format identifier for encoding key data. "
                                     + "The identifier is used to discover a suitable format factory.");
 
+    // 定义编码值数据的格式标识符。“该标识符用于发现合适的格式工厂。”
     public static final ConfigOption<String> VALUE_FORMAT =
             ConfigOptions.key("value.format")
                     .stringType()
@@ -89,6 +93,7 @@ public final class FactoryUtil {
                             "Defines the format identifier for encoding value data. "
                                     + "The identifier is used to discover a suitable format factory.");
 
+    // 定义编码数据的格式标识符。”“该标识符用于发现合适的格式工厂。
     public static final ConfigOption<String> FORMAT =
             ConfigOptions.key("format")
                     .stringType()
@@ -102,6 +107,10 @@ public final class FactoryUtil {
     private static final String FORMAT_SUFFIX = ".format";
 
     /**
+     * 从{@link CatalogTable}中创建一个{@link DynamicTableSource}。
+     *
+     * <p>如果提供了{@link Catalog#getFactory()}，则会考虑{@link Catalog#getFactory()}。
+     *
      * Creates a {@link DynamicTableSource} from a {@link CatalogTable}.
      *
      * <p>It considers {@link Catalog#getFactory()} if provided.
@@ -135,6 +144,10 @@ public final class FactoryUtil {
     }
 
     /**
+     * 从{@link CatalogTable} 中创建一个 {@link DynamicTableSink}。
+     *
+     * <p>如果提供了 {@link Catalog#getFactory()}，则会考虑 {@link Catalog#getFactory()}。
+     *
      * Creates a {@link DynamicTableSink} from a {@link CatalogTable}.
      *
      * <p>It considers {@link Catalog#getFactory()} if provided.
@@ -199,6 +212,8 @@ public final class FactoryUtil {
     }
 
     /**
+     * 使用给定的工厂基类和标识符发现工厂。
+     *
      * Discovers a factory using the given factory base class and identifier.
      *
      * <p>This method is meant for cases where {@link #createTableFactoryHelper(DynamicTableFactory,
@@ -259,6 +274,10 @@ public final class FactoryUtil {
     }
 
     /**
+     * 验证工厂的必需和可选的 {@link ConfigOption}。
+     *
+     * <p>注意:它不检查剩余选项。
+     *
      * Validates the required and optional {@link ConfigOption}s of a factory.
      *
      * <p>Note: It does not check for left-over options.

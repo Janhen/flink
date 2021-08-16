@@ -26,6 +26,7 @@ import org.apache.flink.table.sources.wmstrategies.WatermarkStrategy;
 import java.util.Map;
 
 /** Rowtime descriptor for describing an event time attribute in the schema. */
+// 用于描述模式中的事件时间属性的行时间描述符。
 @PublicEvolving
 public class Rowtime implements Descriptor {
 
@@ -53,6 +54,8 @@ public class Rowtime implements Descriptor {
     public static final String ROWTIME_WATERMARKS_DELAY = "rowtime.watermarks.delay";
 
     /**
+     * 设置内置时间戳提取器，将现有的 {@link Long} 或 {@link Types#SQL_TIMESTAMP} 字段转换为 rowtime 属性。
+     *
      * Sets a built-in timestamp extractor that converts an existing {@link Long} or {@link
      * Types#SQL_TIMESTAMP} field into the rowtime attribute.
      *
@@ -66,6 +69,11 @@ public class Rowtime implements Descriptor {
     }
 
     /**
+     * 设置内置的时间戳提取器，该提取器将 DataStream API 记录中分配的时间戳转换为 rowtime 属性，从而保留来自源的
+     * 分配的时间戳。
+     *
+     * <p>注意:这个提取器只在流环境中工作。
+     *
      * Sets a built-in timestamp extractor that converts the assigned timestamps from a DataStream
      * API record into the rowtime attribute and thus preserves the assigned timestamps from the
      * source.

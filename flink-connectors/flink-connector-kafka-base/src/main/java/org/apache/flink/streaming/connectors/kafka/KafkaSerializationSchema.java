@@ -27,6 +27,9 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * {@link KafkaSerializationSchema} 定义如何将类型 {@code T}的 值序列化为
+ * {@link ProducerRecord ProducerRecords}。
+ *
  * A {@link KafkaSerializationSchema} defines how to serialize values of type {@code T} into {@link
  * ProducerRecord ProducerRecords}.
  *

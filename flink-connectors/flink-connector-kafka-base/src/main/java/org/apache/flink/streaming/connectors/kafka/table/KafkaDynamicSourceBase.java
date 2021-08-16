@@ -37,9 +37,9 @@ import java.util.Objects;
 import java.util.Properties;
 
 /**
- * 一个版本不可知的Kafka {@link ScanTableSource}。
+ * 一个版本不可知的 Kafka {@link ScanTableSource}。
  *
- * <p>版本特定的Kafka
+ * <p>版本特定的 Kafka
  * 消费者需要扩展这个类并覆盖{@link #createKafkaConsumer(String, Properties, DeserializationSchema)}}。
  *
  * A version-agnostic Kafka {@link ScanTableSource}.
@@ -53,11 +53,13 @@ public abstract class KafkaDynamicSourceBase implements ScanTableSource {
     // --------------------------------------------------------------------------------------------
     // Common attributes
     // --------------------------------------------------------------------------------------------
+    // 公共属性
     protected final DataType outputDataType;
 
     // --------------------------------------------------------------------------------------------
     // Scan format attributes
     // --------------------------------------------------------------------------------------------
+    // 扫描格式属性
 
     /** Scan format for decoding records from Kafka. */
     // 从 Kafka 扫描格式解码记录。
@@ -68,23 +70,31 @@ public abstract class KafkaDynamicSourceBase implements ScanTableSource {
     // --------------------------------------------------------------------------------------------
 
     /** The Kafka topic to consume. */
+    // 消费的 Kafka 主题。
     protected final String topic;
 
     /** Properties for the Kafka consumer. */
+    // Kafka 消费者的属性。
     protected final Properties properties;
 
     /**
+     * 包含的消费者的启动模式(默认是 {@link StartupMode#GROUP_OFFSETS})
+     *
      * The startup mode for the contained consumer (default is {@link StartupMode#GROUP_OFFSETS}).
      */
     protected final StartupMode startupMode;
 
     /**
+     * 特定的启动补偿;仅当启动模式为{@link StartupMode#SPECIFIC_OFFSETS}时相关。
+     *
      * Specific startup offsets; only relevant when startup mode is {@link
      * StartupMode#SPECIFIC_OFFSETS}.
      */
     protected final Map<KafkaTopicPartition, Long> specificStartupOffsets;
 
     /**
+     * 定位分区偏移的开始时间戳;仅当启动模式为{@link StartupMode#TIMESTAMP}时相关。
+     *
      * The start timestamp to locate partition offsets; only relevant when startup mode is {@link
      * StartupMode#TIMESTAMP}.
      */
@@ -179,6 +189,8 @@ public abstract class KafkaDynamicSourceBase implements ScanTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建一个版本特定的Kafka消费者。
+     *
      * Creates a version-specific Kafka consumer.
      *
      * @param topic Kafka topic to consume.
@@ -196,6 +208,8 @@ public abstract class KafkaDynamicSourceBase implements ScanTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 返回一个特定版本的Kafka消费者，并配置了起始位置。
+     *
      * Returns a version-specific Kafka consumer with the start position configured.
      *
      * @param topic Kafka topic to consume.

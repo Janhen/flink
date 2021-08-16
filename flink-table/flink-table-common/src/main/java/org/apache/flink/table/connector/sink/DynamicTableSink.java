@@ -95,6 +95,11 @@ import java.io.Serializable;
 public interface DynamicTableSink {
 
     /**
+     * 返回接收器在运行时接受的更改集。
+     *
+     * 规划者可以提出建议，但是水槽有最终的决定它需要什么。如果规划器不支持此模式，它将抛出一个错误。例如，接收器可以
+     * 返回它只支持 {@link ChangelogMode#insertOnly()}。
+     *
      * Returns the set of changes that the sink accepts during runtime.
      *
      * <p>The planner can make suggestions but the sink has the final decision what it requires. If
@@ -106,6 +111,16 @@ public interface DynamicTableSink {
     ChangelogMode getChangelogMode(ChangelogMode requestedMode);
 
     /**
+     * 返回用于写入数据的运行时实现的提供程序。
+     *
+     * <p>运行时实现可能存在不同的接口，这就是为什么{@link SinkRuntimeProvider}作为基础接口。具体的
+     *   {@link SinkRuntimeProvider}接口可能位于其他Flink模块中。
+     *
+     * <p>独立于提供者接口，表运行时期望接收器实现接受内部数据结构(见
+     * {@link org.apache.flink.table.data。RowData }取更多信息)。
+     *
+     * <p>给定的 {@link Context} 由规划器提供实用程序，用于创建对内部数据结构依赖最小的运行时实现。
+     *
      * Returns a provider of runtime implementation for writing the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link
@@ -160,6 +175,10 @@ public interface DynamicTableSink {
     interface Context {
 
         /**
+         * 返回运行时实现是否可以期望有限的行数。
+         *
+         * <p>该信息可能来自会话的执行模式和或查询类型。
+         *
          * Returns whether a runtime implementation can expect a finite number of rows.
          *
          * <p>This information might be derived from the session's execution mode and/or kind of
@@ -168,6 +187,8 @@ public interface DynamicTableSink {
         boolean isBounded();
 
         /**
+         * 创建描述给定的 {@link DataType} 的内部数据结构的类型信息。
+         *
          * Creates type information describing the internal data structures of the given {@link
          * DataType}.
          *
@@ -176,6 +197,12 @@ public interface DynamicTableSink {
         TypeInformation<?> createTypeInformation(DataType consumedDataType);
 
         /**
+         * 创建一个转换器，用于在Flink的内部数据结构和由给定的 {@link DataType} 指定的对象之间进行映射，该对象
+         * 可以被传递到运行时实现中。
+         *
+         * <p>例如，{@link RowData} 及其字段可以转换为 {@link Row}，或者结构化类型的内部表示可以转换回原始的
+         * (可能嵌套的) POJO。
+         *
          * Creates a converter for mapping between Flink's internal data structures and objects
          * specified by the given {@link DataType} that can be passed into a runtime implementation.
          *
@@ -189,6 +216,9 @@ public interface DynamicTableSink {
     }
 
     /**
+     * 用于在 Flink 的内部数据结构和由给定的 {@link DataType} 指定的对象之间进行映射的转换器，该对象可以传递到
+     * 运行时实现中。
+     *
      * Converter for mapping between Flink's internal data structures and objects specified by the
      * given {@link DataType} that can be passed into a runtime implementation.
      *
@@ -201,11 +231,17 @@ public interface DynamicTableSink {
     interface DataStructureConverter extends RuntimeConverter {
 
         /** Converts the given internal structure into an external object. */
+        // 将给定的内部结构转换为外部对象。
         @Nullable
         Object toExternal(@Nullable Object internalStructure);
     }
 
     /**
+     * 提供用于写入数据的实际运行时实现。
+     *
+     * <p>运行时实现可能存在不同的接口，这就是为什么 {@link SinkRuntimeProvider} 作为基础接口。具体的
+     *   {@link SinkRuntimeProvider} 接口可能位于其他 Flink 模块中。
+     *
      * Provides actual runtime implementation for writing the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link

@@ -39,7 +39,9 @@ public class KafkaTopicsDescriptor implements Serializable {
 
     private static final long serialVersionUID = -3807227764764900975L;
 
+    // 固定的分区名称
     private final List<String> fixedTopics;
+    // 正则匹配的 topic 名称
     private final Pattern topicPattern;
 
     public KafkaTopicsDescriptor(

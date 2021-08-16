@@ -39,6 +39,11 @@ import java.util.Optional;
 import java.util.Properties;
 
 /**
+ * 一个版本未知的 Kafka {@link AppendStreamTableSink}。
+ *
+ * <p>特定版本的 Kafka 消费者需要扩展这个类并覆盖
+ * {@link #createKafkaProducer(String, Properties, SerializationSchema, Optional)}}。
+ *
  * A version-agnostic Kafka {@link AppendStreamTableSink}.
  *
  * <p>The version-specific Kafka consumers need to extend this class and override {@link
@@ -48,6 +53,7 @@ import java.util.Properties;
 public abstract class KafkaTableSinkBase implements AppendStreamTableSink<Row> {
 
     /** The schema of the table. */
+    // 表的模式。
     private final TableSchema schema;
 
     /** The Kafka topic to write to. */
@@ -57,9 +63,11 @@ public abstract class KafkaTableSinkBase implements AppendStreamTableSink<Row> {
     protected final Properties properties;
 
     /** Serialization schema for encoding records to Kafka. */
+    // 将记录编码到 Kafka 的序列化模式。
     protected final SerializationSchema<Row> serializationSchema;
 
     /** Partitioner to select Kafka partition for each item. */
+    // 分区程序为每个项目选择 Kafka 分区。
     protected final Optional<FlinkKafkaPartitioner<Row>> partitioner;
 
     protected KafkaTableSinkBase(
@@ -78,6 +86,8 @@ public abstract class KafkaTableSinkBase implements AppendStreamTableSink<Row> {
     }
 
     /**
+     * 返回版本特定的 Kafka 生产者。
+     *
      * Returns the version-specific Kafka producer.
      *
      * @param topic Kafka topic to produce to.
@@ -99,6 +109,7 @@ public abstract class KafkaTableSinkBase implements AppendStreamTableSink<Row> {
         return dataStream
                 .addSink(kafkaProducer)
                 .setParallelism(dataStream.getParallelism())
+                // 运行时 sink 表对应的 name
                 .name(TableConnectorUtils.generateRuntimeName(this.getClass(), getFieldNames()));
     }
 

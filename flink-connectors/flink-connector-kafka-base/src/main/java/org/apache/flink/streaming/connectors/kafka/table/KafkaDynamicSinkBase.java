@@ -35,7 +35,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 /**
- * 一个版本无关的Kafka {@link DynamicTableSink}。
+ * 一个版本无关的 Kafka {@link DynamicTableSink}。
  *
  * 版本特定的 Kafka 消费者需要扩展这个类并重写
  * {@link #createKafkaProducer(String, Properties, SerializationSchema, Optional)}}。
@@ -49,12 +49,15 @@ import java.util.Properties;
 public abstract class KafkaDynamicSinkBase implements DynamicTableSink {
 
     /** Consumed data type of the table. */
+    // 使用的表数据类型。
     protected final DataType consumedDataType;
 
     /** The Kafka topic to write to. */
+    // 要写的 Kafka 主题。
     protected final String topic;
 
     /** Properties for the Kafka producer. */
+    // Kafka 生产者的属性。
     protected final Properties properties;
 
     /** Sink format for encoding records to Kafka. */

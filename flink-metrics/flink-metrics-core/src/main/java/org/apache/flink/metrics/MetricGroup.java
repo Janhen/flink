@@ -41,6 +41,8 @@ public interface MetricGroup {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建并注册一个新的 {@link org.apache.flink.metrics.Counter} 与Flink。
+     *
      * Creates and registers a new {@link org.apache.flink.metrics.Counter} with Flink.
      *
      * @param name name of the counter
@@ -95,6 +97,8 @@ public interface MetricGroup {
     <T, G extends Gauge<T>> G gauge(int name, G gauge);
 
     /**
+     * 注册一个新的 {@link org.apache.flink.metrics.Gauge} 与 Flink。
+     *
      * Registers a new {@link org.apache.flink.metrics.Gauge} with Flink.
      *
      * @param name name of the gauge

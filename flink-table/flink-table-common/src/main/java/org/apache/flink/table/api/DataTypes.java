@@ -923,6 +923,7 @@ public final class DataTypes {
     }
 
     /** Field definition with field name and data type. */
+    // 带有字段名和数据类型的字段定义。
     public static Field FIELD(String name, DataType dataType) {
         return new Field(
                 Preconditions.checkNotNull(name, "Field name must not be null."),

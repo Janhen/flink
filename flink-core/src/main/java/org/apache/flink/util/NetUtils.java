@@ -68,6 +68,8 @@ public class NetUtils {
     }
 
     /**
+     * 将"host:port"格式的字符串转换为{@link URL}。
+     *
      * Converts a string of the form "host:port" into an {@link URL}.
      *
      * @param hostPort The "host:port" string.
@@ -89,6 +91,10 @@ public class NetUtils {
     }
 
     /**
+     * 验证给定的 String 是否表示主机名:端口。
+     *
+     * <p>也适用于ipv6。
+     *
      * Validates if the given String represents a hostname:port.
      *
      * <p>Works also for ipv6.
