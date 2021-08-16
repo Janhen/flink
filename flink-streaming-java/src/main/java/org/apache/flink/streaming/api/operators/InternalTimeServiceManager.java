@@ -47,6 +47,11 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个实体，保持所有与时间相关的服务对扩展 {@link AbstractStreamOperator} 的所有操作符可用。现在，这只是一个
+ * {@link InternalTimerServiceImpl timer services}。
+ *
+ * <p><b>注:<b>这些服务仅对键控 operator 可用。
+ *
  * An entity keeping all the time-related services available to all operators extending the {@link
  * AbstractStreamOperator}. Right now, this is only a {@link InternalTimerServiceImpl timer
  * services}.
@@ -66,14 +71,20 @@ public class InternalTimeServiceManager<K> {
 
     @VisibleForTesting static final String EVENT_TIMER_PREFIX = TIMER_STATE_PREFIX + "/event_";
 
+    // J: 范围
     private final KeyGroupRange localKeyGroupRange;
     private final KeyContext keyContext;
 
+    // J: 优先队列，比 java 自带的 PriorityQueue 增加了对应元素在数组中的索引 ...
     private final PriorityQueueSetFactory priorityQueueSetFactory;
+    // J: 处理时间服务
     private final ProcessingTimeService processingTimeService;
 
+    // J: like cache ...
+    // time service name -> internal timer service impl
     private final Map<String, InternalTimerServiceImpl<K, ?>> timerServices;
 
+    // 使用遗留的同步快照
     private final boolean useLegacySynchronousSnapshots;
 
     InternalTimeServiceManager(
@@ -101,6 +112,7 @@ public class InternalTimeServiceManager<K> {
 
         TypeSerializer<K> keySerializer = keyedStateBackend.getKeySerializer();
         // the following casting is to overcome type restrictions.
+        // 下面的类型转换是为了克服类型限制。
         TimerSerializer<K, N> timerSerializer =
                 new TimerSerializer<>(keySerializer, namespaceSerializer);
         return getInternalTimerService(name, timerSerializer, triggerable);
@@ -133,6 +145,7 @@ public class InternalTimeServiceManager<K> {
                             localKeyGroupRange,
                             keyContext,
                             processingTimeService,
+                            // 定时器优先队列
                             createTimerPriorityQueue(
                                     PROCESSING_TIMER_PREFIX + name, timerSerializer),
                             createTimerPriorityQueue(EVENT_TIMER_PREFIX + name, timerSerializer));
@@ -159,6 +172,8 @@ public class InternalTimeServiceManager<K> {
     }
 
     //////////////////				Fault Tolerance Methods				///////////////////
+
+    //////////////////              容错方法                              //////////////////
 
     public void snapshotState(
             KeyedStateBackend<?> keyedStateBackend,

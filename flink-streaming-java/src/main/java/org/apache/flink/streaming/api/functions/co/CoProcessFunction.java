@@ -27,11 +27,15 @@ import org.apache.flink.util.OutputTag;
 
 /**
  * 处理两个流中的元素并产生单个输出流的函数。
- * <p>该函数将对输入流中的每个元素调用，并可以产生0个或多个输出元素。与{@link CoFlatMapFunction}相反，该函数还可以通过提供的{@link Context}查询时间
- * (事件和处理)和设置计时器。当响应set timer的触发时，函数可以发出更多的元素。
- * <p>连接流的一个示例用例是对另一个流(stream {@code stream a})中包含的元素应用一组随着时间变化的规则({@code stream a})。{@code
- * stream A}中包含的规则可以存储在状态中，并等待新元素到达{@code 流B}。在{@code 流B}
- * 上接收到一个新元素时，函数现在可以将之前存储的规则应用到元素上，并直接发出一个结果，或者注册一个计时器，以在将来触发一个动作。
+ *
+ * <p>该函数将对输入流中的每个元素调用，并可以产生 0 个或多个输出元素。与 {@link CoFlatMapFunction} 相反，该函数还
+ *   可以通过提供的 {@link Context} 查询时间(事件和处理)和设置计时器。当响应 set timer 的触发时，函数可以发出更
+ *   多的元素。
+ *
+ * <p>连接流的一个示例用例是对另一个流(stream {@code stream a})中包含的元素应用一组随着时间变化的规则(
+ *   {@code stream a})。{@code stream A} 中包含的规则可以存储在状态中，并等待新元素到达 {@code stream B}。
+ *   在{@code 流B} 上接收到一个新元素时，函数现在可以将之前存储的规则应用到元素上，并直接发出一个结果，或者注册一个
+ *   计时器，以在将来触发一个动作。
  *
  * A function that processes elements of two streams and produces a single output one.
  *
@@ -57,6 +61,11 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
     private static final long serialVersionUID = 1L;
 
     /**
+     * 该方法将为第一个连接流中的每个元素调用。
+     *
+     * <p>这个函数可以使用 {@link Collector} 参数输出 0 个或多个元素，也可以使用 {@link Context} 参数更新内部
+     *   状态或设置计时器。
+     *
      * This method is called for each element in the first of the connected streams.
      *
      * <p>This function can output zero or more elements using the {@link Collector} parameter and
@@ -93,6 +102,8 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
             throws Exception;
 
     /**
+     * 当使用 {@link TimerService} 设置的定时器触发时调用。
+     *
      * Called when a timer set using {@link TimerService} fires.
      *
      * @param timestamp The timestamp of the firing timer.
@@ -107,6 +118,10 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
     public void onTimer(long timestamp, OnTimerContext ctx, Collector<OUT> out) throws Exception {}
 
     /**
+     * 调用 {@link #processElement1(Object, Context, Collector)}
+     * {@link #processElement2(Object, Context, Collector)} 或
+     * {@link #onTimer(long, OnTimerContext, Collector)} 中可用的信息。
+     *
      * Information available in an invocation of {@link #processElement1(Object, Context,
      * Collector)}/ {@link #processElement2(Object, Context, Collector)} or {@link #onTimer(long,
      * OnTimerContext, Collector)}.
@@ -114,6 +129,11 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
     public abstract class Context {
 
         /**
+         * 当前正在处理的元素的时间戳或触发计时器的时间戳。
+         *
+         * <p>这可能是{@code null}，例如，如果你的程序的时间特征被设置为
+         * {@link org.apache.flink.streaming.api.TimeCharacteristic#ProcessingTime}。
+         *
          * Timestamp of the element currently being processed or timestamp of a firing timer.
          *
          * <p>This might be {@code null}, for example if the time characteristic of your program is
@@ -122,9 +142,12 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
         public abstract Long timestamp();
 
         /** A {@link TimerService} for querying time and registering timers. */
+        // 用于查询时间和注册计时器的 {@link TimerService}。
         public abstract TimerService timerService();
 
         /**
+         * 向由 {@link OutputTag} 标识的侧输出发出一条记录。
+         *
          * Emits a record to the side output identified by the {@link OutputTag}.
          *
          * @param outputTag the {@code OutputTag} that identifies the side output to emit to.
@@ -134,6 +157,8 @@ public abstract class CoProcessFunction<IN1, IN2, OUT> extends AbstractRichFunct
     }
 
     /**
+     * 调用{@link #onTimer(long, OnTimerContext, Collector)}中可用的信息。
+     *
      * Information available in an invocation of {@link #onTimer(long, OnTimerContext, Collector)}.
      */
     public abstract class OnTimerContext extends Context {

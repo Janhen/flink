@@ -125,11 +125,14 @@ public abstract class MemorySegment {
 
     /** The beginning of the byte array contents, relative to the byte array object. */
     // 相对于字节数组对象的字节数组内容的开头。
+    // J: 二进制字节数组的起始索引，相对于字节数组对象而言。
     @SuppressWarnings("restriction")
     protected static final long BYTE_ARRAY_BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
 
     /**
      * 标记字节顺序的常量。因为这是一个布尔常量，所以JIT编译器可以很好地使用它来积极地消除不适用的代码路径。
+     *
+     * J: 判断是否为Little Endian模式的字节存储顺序，若不是，就是 Big Endian 模式
      *
      * Constant that flags the byte order. Because this is a boolean constant, the JIT compiler can
      * use this well to aggressively eliminate the non-applicable code paths.
@@ -140,6 +143,11 @@ public abstract class MemorySegment {
     // ------------------------------------------------------------------------
 
     /**
+     * 相对于我们访问内存的堆字节数组对象。
+     *
+     * <p>是non-<tt>null<tt>如果内存在堆上，是<tt>null<tt>，如果内存不在堆上。如果我们有这个缓冲区，我们绝不能
+     *   使这个引用无效，否则内存段将指向堆外未定义的地址，在无序执行的情况下可能会导致分段错误。
+     *
      * The heap byte array object relative to which we access the memory.
      *
      * <p>Is non-<tt>null</tt> if the memory is on the heap, and is <tt>null</tt>, if the memory is
@@ -150,13 +158,15 @@ public abstract class MemorySegment {
     protected final byte[] heapMemory;
 
     /**
+     * 相对于堆内存字节数组的数据地址。如果堆内存字节数组为<tt>null<tt>，这将成为堆外的绝对内存地址。
+     *
      * The address to the data, relative to the heap memory byte array. If the heap memory byte
      * array is <tt>null</tt>, this becomes an absolute memory address outside the heap.
      */
     protected long address;
 
     /**
-     * 地址在最后一个可寻址字节之后的一个字节，即<tt>地址大小<tt>，而段未被丢弃。
+     * 地址在最后一个可寻址字节之后的一个字节，即<tt>address + size<tt>，而段未被丢弃。
      *
      * The address one byte after the last addressable byte, i.e. <tt>address + size</tt> while the
      * segment is not disposed.
@@ -164,6 +174,7 @@ public abstract class MemorySegment {
     protected final long addressLimit;
 
     /** The size in bytes of the memory segment. */
+    // 内存段的字节大小。
     protected final int size;
 
     /** Optional owner of the memory segment. */

@@ -28,6 +28,8 @@ import javax.annotation.Nullable;
 import java.util.Set;
 
 /**
+ * 内部计时器的快照，包含事件和处理计时器以及用于写入和读取它们的序列化器。
+ *
  * A snapshot of internal timers, containing event and processing timers and the serializers to use
  * to write / read them.
  */

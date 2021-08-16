@@ -397,6 +397,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查可抛出链是否包含特定类型的异常并返回它。它对使用提供的 {@link ClassLoader} 找到的
+     * {@link SerializedThrowable} 进行反序列化。
+     *
      * Checks whether a throwable chain contains a specific type of exception and returns it. It
      * deserializes any {@link SerializedThrowable} that are found using the provided {@link
      * ClassLoader}.
@@ -433,6 +436,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查可抛出链是否包含特定类型的异常并返回它。
+     *
      * Checks whether a throwable chain contains a specific type of exception and returns it.
      *
      * @param throwable the throwable chain to check.

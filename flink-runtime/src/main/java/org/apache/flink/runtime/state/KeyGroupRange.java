@@ -37,7 +37,9 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     /** The empty key-group */
     public static final KeyGroupRange EMPTY_KEY_GROUP_RANGE = new KeyGroupRange();
 
+    // J: 开始 Key ..
     private final int startKeyGroup;
+    // J: 结束 Key ...
     private final int endKeyGroup;
 
     /** Empty KeyGroup Constructor */
@@ -47,7 +49,7 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
-     * 定义范围[startKeyGroup, endKeyGroup]
+     * 定义范围 [startKeyGroup, endKeyGroup]
      *
      * Defines the range [startKeyGroup, endKeyGroup]
      *
@@ -63,6 +65,8 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
+     * 检查范围中是否包含单个键组。
+     *
      * Checks whether or not a single key-group is contained in the range.
      *
      * @param keyGroup Key-group to check for inclusion.
@@ -141,6 +145,7 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
                 + '}';
     }
 
+    // J: Range .. 迭代
     @Override
     public Iterator<Integer> iterator() {
         return new KeyGroupIterator();
@@ -173,7 +178,7 @@ public class KeyGroupRange implements KeyGroupsList, Serializable {
     }
 
     /**
-     * 也处理空键组创建的工厂方法。
+     * 处理空键组创建的工厂方法。
      *
      * Factory method that also handles creation of empty key-groups.
      *

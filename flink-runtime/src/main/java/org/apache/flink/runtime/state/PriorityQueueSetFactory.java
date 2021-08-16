@@ -24,9 +24,12 @@ import org.apache.flink.runtime.state.heap.HeapPriorityQueueElement;
 import javax.annotation.Nonnull;
 
 /** Factory for {@link KeyGroupedInternalPriorityQueue} instances. */
+// {@link KeyGroupedInternalPriorityQueue} 实例的工厂。
 public interface PriorityQueueSetFactory {
 
     /**
+     * 创建一个 {@link KeyGroupedInternalPriorityQueue}。
+     *
      * Creates a {@link KeyGroupedInternalPriorityQueue}.
      *
      * @param stateName unique name for associated with this queue.

@@ -25,6 +25,8 @@ import org.apache.flink.runtime.state.heap.HeapPriorityQueueSet;
 import javax.annotation.Nonnull;
 
 /**
+ * 实现与 {@link HeapPriorityQueueSet} 一起使用的 {@link InternalTimer}。
+ *
  * Implementation of {@link InternalTimer} to use with a {@link HeapPriorityQueueSet}.
  *
  * @param <K> Type of the keys to which timers are scoped.

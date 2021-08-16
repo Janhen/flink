@@ -24,6 +24,13 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 /**
+ * 用于 {@link HeapPriorityQueueElement} 对象的基础堆优先级队列。这个堆支持快速删除，因为它管理所包含的
+ * {@link HeapPriorityQueueElement} 的位置索引。堆实现是一个存储在数组中的简单二叉树。
+ * 堆数组中的元素索引从 1 而不是 0 开始，这使得热方法中的数组索引计算更简单。remove 的对象标识基于对象标识而不是等号。
+ * 我们使用来自 {@link HeapPriorityQueueElement} 的托管索引在队列数组中查找支持快速删除的元素。
+ *
+ * <p>未来可能的改进:
+ *   <li>我们还可以实现对堆的收缩。
  * Basic heap-based priority queue for {@link HeapPriorityQueueElement} objects. This heap supports
  * fast deletes because it manages position indexes of the contained {@link
  * HeapPriorityQueueElement}s. The heap implementation is a simple binary tree stored inside an

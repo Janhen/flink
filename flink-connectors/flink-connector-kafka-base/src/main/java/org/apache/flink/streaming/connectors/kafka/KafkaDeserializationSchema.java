@@ -27,7 +27,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import java.io.Serializable;
 
 /**
- * 反序列化模式描述了如何将Kafka ConsumerRecords转换为数据类型(Java/Scala 对象)，并由Flink处理。
+ * 反序列化模式描述了如何将 Kafka ConsumerRecords 转换为数据类型(Java/Scala 对象)，并由 Flink 处理。
  *
  * The deserialization schema describes how to turn the Kafka ConsumerRecords into data types
  * (Java/Scala objects) that are processed by Flink.

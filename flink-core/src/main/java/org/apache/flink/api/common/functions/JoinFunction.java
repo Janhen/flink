@@ -23,6 +23,20 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * Join 函数的接口。连接通过连接指定键上的元素来组合两个数据集。在每一对连接元素时调用此函数。
+ *
+ * <p>默认情况下，连接严格遵循 SQL 中“内部连接”的语义。语义是“内部连接”的语义，这意味着如果元素的键不在其他数据集中，则
+ *    过滤掉它们。
+ *
+ * <p>在两个数据集上使用 Join 的基本语法如下:
+ *
+ * ...
+ *
+ * <p> Join 函数是连接操作的可选部分。如果没有提供 JoinFunction，则操作的结果是一个由 2 元组组成的序列，其中元组中的
+ *   元素是那些将调用JoinFunction的元素。
+ *
+ * <p>注意:可以使用 {@link CoGroupFunction} 执行外部连接。
+ *
  * Interface for Join functions. Joins combine two data sets by joining their elements on specified
  * keys. This function is called with each pair of joining elements.
  *
@@ -56,6 +70,8 @@ import java.io.Serializable;
 public interface JoinFunction<IN1, IN2, OUT> extends Function, Serializable {
 
     /**
+     * 连接方法，每对连接的元素调用一次。
+     *
      * The join method, called once per joined pair of elements.
      *
      * @param first The element from first input.

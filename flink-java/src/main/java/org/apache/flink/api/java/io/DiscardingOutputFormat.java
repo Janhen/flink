@@ -23,6 +23,8 @@ import org.apache.flink.api.common.io.OutputFormat;
 import org.apache.flink.configuration.Configuration;
 
 /**
+ * 一种简单地丢弃所有元素的输出格式。
+ *
  * An output format that simply discards all elements.
  *
  * @param <T> The type of the elements accepted by the output format.

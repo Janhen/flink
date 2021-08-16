@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state.heap;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 可以由{@link HeapPriorityQueue} 管理的对象的接口。这样的对象一次只能包含在一个 {@link HeapPriorityQueue} 中。
+ *
  * Interface for objects that can be managed by a {@link HeapPriorityQueue}. Such an object can only
  * be contained in at most one {@link HeapPriorityQueue} at a time.
  */
@@ -36,11 +38,15 @@ public interface HeapPriorityQueueElement {
     int NOT_CONTAINED = Integer.MIN_VALUE;
 
     /**
+     * 返回该对象在 {@link HeapPriorityQueue} 的内部数组中的当前索引。
+     *
      * Returns the current index of this object in the internal array of {@link HeapPriorityQueue}.
      */
     int getInternalIndex();
 
     /**
+     * 设置该对象在 {@link HeapPriorityQueue} 中的当前索引，并且只能由所属的 {@link HeapPriorityQueue} 调用。
+     *
      * Sets the current index of this object in the {@link HeapPriorityQueue} and should only be
      * called by the owning {@link HeapPriorityQueue}.
      *

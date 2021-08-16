@@ -37,6 +37,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * {@link InternalPriorityQueue} 的这个实现在内部被划分为每个键组的子队列，本质上是作为堆的堆。如果子队列具有
+ * set 语义，则实例将具有元素的 set 语义。
+ *
  * This implementation of {@link InternalPriorityQueue} is internally partitioned into sub-queues
  * per key-group and essentially works as a heap-of-heaps. Instances will have set semantics for
  * elements if the sub-queues have set semantics.
@@ -49,6 +52,7 @@ public class KeyGroupPartitionedPriorityQueue<
         implements InternalPriorityQueue<T>, KeyGroupedInternalPriorityQueue<T> {
 
     /** A heap of heap sets. Each sub-heap represents the partition for a key-group. */
+    // 堆集的堆。每个子堆表示键组的分区。
     @Nonnull private final HeapPriorityQueue<PQ> heapOfKeyGroupedHeaps;
 
     /** All elements from keyGroupHeap, indexed by their key-group id, relative to firstKeyGroup. */

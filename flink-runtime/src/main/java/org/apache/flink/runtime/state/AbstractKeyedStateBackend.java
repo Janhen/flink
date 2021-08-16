@@ -42,8 +42,8 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * KeyedStateBackend的基本实现。状态可以使用
- * {@link #snapshot(long, long, CheckpointStreamFactory, CheckpointOptions)}检查指向流。
+ * KeyedStateBackend 的基本实现。状态可以使用
+ * {@link #snapshot(long, long, CheckpointStreamFactory, CheckpointOptions)} 检查指向流。
  *
  * Base implementation of KeyedStateBackend. The state can be checkpointed to streams using {@link
  * #snapshot(long, long, CheckpointStreamFactory, CheckpointOptions)}.
@@ -57,30 +57,39 @@ public abstract class AbstractKeyedStateBackend<K>
                 CheckpointListener {
 
     /** The key serializer. */
+    // key 的序列化器
     protected final TypeSerializer<K> keySerializer;
 
     /** Listeners to changes of ({@link #keyContext}). */
+    // 监听( {@link keyContext}) 的更改
     private final ArrayList<KeySelectionListener<K>> keySelectionListeners;
 
     /** So that we can give out state when the user uses the same key. */
+    // 这样我们就可以在用户使用相同密钥时给出状态。
     private final HashMap<String, InternalKvState<K, ?, ?>> keyValueStatesByName;
 
     /** For caching the last accessed partitioned state. */
+    // 用于缓存最后访问的分区状态。
     private String lastName;
 
     @SuppressWarnings("rawtypes")
     private InternalKvState lastState;
 
     /** The number of key-groups aka max parallelism. */
+    // 键组的数量也就是最大并行度。
     protected final int numberOfKeyGroups;
 
     /** Range of key-groups for which this backend is responsible. */
+    // 此后端负责的键组范围。
     protected final KeyGroupRange keyGroupRange;
 
     /** KvStateRegistry helper for this task. */
+    // 这个任务的 KvStateRegistry 帮助器。
     protected final TaskKvStateRegistry kvStateRegistry;
 
     /**
+     * 注册所有打开的流，所以如果使用这个后端的任务被关闭，它们可以被关闭。
+     *
      * Registry for all opened streams, so they can be closed if the task using this backend is
      * closed.
      */
@@ -93,9 +102,11 @@ public abstract class AbstractKeyedStateBackend<K>
     protected final TtlTimeProvider ttlTimeProvider;
 
     /** Decorates the input and output streams to write key-groups compressed. */
+    // 修饰输入和输出流以写入压缩的键组。
     protected final StreamCompressionDecorator keyGroupCompressionDecorator;
 
     /** The key context for this backend. */
+    // 此后端的关键上下文。
     protected final InternalKeyContext<K> keyContext;
 
     public AbstractKeyedStateBackend(
