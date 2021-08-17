@@ -30,6 +30,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * 一个 {@link WindowAssigner}，它根据元素的时间戳将元素窗口化为会话。窗户不能重叠。
+ *
  * A {@link WindowAssigner} that windows elements into sessions based on the timestamp of the
  * elements. Windows cannot overlap.
  *

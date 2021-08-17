@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 一个 {@link Window}，表示从 {@code start}（包含）到 {@code end}（不包含）的时间间隔。
+ *
  * A {@link Window} that represents a time interval from {@code start} (inclusive) to {@code end}
  * (exclusive).
  */
@@ -110,6 +112,8 @@ public class TimeWindow extends Window {
     }
 
     /**
+     * 如果此窗口与给定窗口相交，或者此窗口刚好在给定窗口之后或之前，则返回 {@code true}。
+     *
      * Returns {@code true} if this window intersects the given window or if this window is just
      * after or before the given window.
      */
@@ -118,6 +122,7 @@ public class TimeWindow extends Window {
     }
 
     /** Returns the minimal window covers both this window and the given window. */
+    // 返回覆盖此窗口和给定窗口的最小窗口。
     public TimeWindow cover(TimeWindow other) {
         return new TimeWindow(Math.min(start, other.start), Math.max(end, other.end));
     }
@@ -127,6 +132,7 @@ public class TimeWindow extends Window {
     // ------------------------------------------------------------------------
 
     /** The serializer used to write the TimeWindow type. */
+    // 用于编写 TimeWindow 类型的序列化程序
     public static class Serializer extends TypeSerializerSingleton<TimeWindow> {
         private static final long serialVersionUID = 1L;
 
@@ -187,6 +193,7 @@ public class TimeWindow extends Window {
         }
 
         /** Serializer configuration snapshot for compatibility and format evolution. */
+        // 用于兼容性和格式演变的串行器配置快照。
         @SuppressWarnings("WeakerAccess")
         public static final class TimeWindowSerializerSnapshot
                 extends SimpleTypeSerializerSnapshot<TimeWindow> {
@@ -254,6 +261,8 @@ public class TimeWindow extends Window {
     }
 
     /**
+     * 获取时间戳的窗口开始的方法。
+     *
      * Method to get the window start for a timestamp.
      *
      * @param timestamp epoch millisecond to get the window start.

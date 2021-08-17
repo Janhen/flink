@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 
 /**
+ * {@link Trigger}，一旦水印通过窗格所属的窗口的末尾就会触发。
+ *
  * A {@link Trigger} that fires once the watermark passes the end of the window to which a pane
  * belongs.
  *

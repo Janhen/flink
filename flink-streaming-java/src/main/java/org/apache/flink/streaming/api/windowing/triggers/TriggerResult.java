@@ -60,6 +60,7 @@ public enum TriggerResult {
     // ------------------------------------------------------------------------
 
     private final boolean fire;
+    // 清除
     private final boolean purge;
 
     TriggerResult(boolean fire, boolean purge) {

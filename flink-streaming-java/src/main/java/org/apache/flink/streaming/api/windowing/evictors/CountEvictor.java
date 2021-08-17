@@ -25,6 +25,8 @@ import org.apache.flink.streaming.runtime.operators.windowing.TimestampedValue;
 import java.util.Iterator;
 
 /**
+ * 保持一定数量元素的 {@link Evictor}。
+ *
  * An {@link Evictor} that keeps up to a certain amount of elements.
  *
  * @param <W> The type of {@link Window Windows} on which this {@code Evictor} can operate.
@@ -81,6 +83,8 @@ public class CountEvictor<W extends Window> implements Evictor<Object, W> {
     }
 
     /**
+     * 创建一个 {@code CountEvictor} 来保留给定数量的元素。驱逐是在窗口函数之前完成的。
+     *
      * Creates a {@code CountEvictor} that keeps the given number of elements. Eviction is done
      * before the window function.
      *
@@ -91,6 +95,8 @@ public class CountEvictor<W extends Window> implements Evictor<Object, W> {
     }
 
     /**
+     * 创建一个 {@code CountEvictor}，它在窗格中保留给定数量的元素 根据 doEvictAfter 的值，在窗口函数之前完成驱逐。
+     *
      * Creates a {@code CountEvictor} that keeps the given number of elements in the pane Eviction
      * is done before/after the window function based on the value of doEvictAfter.
      *

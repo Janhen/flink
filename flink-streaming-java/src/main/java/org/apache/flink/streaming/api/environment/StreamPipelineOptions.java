@@ -27,6 +27,9 @@ import org.apache.flink.configuration.description.TextElement;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 
 /**
+ * 用于作业执行的 {@link ConfigOption 配置选项}。这些是特定于流的选项。另请参阅
+ * {@link org.apache.flink.configuration.PipelineOptions}。
+ *
  * The {@link ConfigOption configuration options} for job execution. Those are stream specific
  * options. See also {@link org.apache.flink.configuration.PipelineOptions}.
  */

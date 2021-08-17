@@ -23,6 +23,7 @@ import org.apache.flink.runtime.state.VoidNamespace;
 import org.apache.flink.streaming.api.operators.InternalTimerService;
 
 /** Implementation of {@link TimerService} that uses a {@link InternalTimerService}. */
+// 使用 {@link InternalTimerService} 的 {@link TimerService} 的实现。
 @Internal
 public class SimpleTimerService implements TimerService {
 

@@ -27,12 +27,15 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** Type serializer for {@code Long}. */
+// 为 {@code Long} 键入序列化程序。
 @Internal
 public final class LongSerializer extends TypeSerializerSingleton<Long> {
 
     private static final long serialVersionUID = 1L;
 
     /** Sharable instance of the LongSerializer. */
+    // LongSerializer 的可共享实例。
+    // J: 饿汉单例
     public static final LongSerializer INSTANCE = new LongSerializer();
 
     private static final Long ZERO = 0L;
@@ -90,6 +93,7 @@ public final class LongSerializer extends TypeSerializerSingleton<Long> {
     // ------------------------------------------------------------------------
 
     /** Serializer configuration snapshot for compatibility and format evolution. */
+    // 用于兼容性和格式演变的串行器配置快照。
     @SuppressWarnings("WeakerAccess")
     public static final class LongSerializerSnapshot extends SimpleTypeSerializerSnapshot<Long> {
 

@@ -263,6 +263,8 @@ public class CheckpointConfig implements java.io.Serializable {
     }
 
     /**
+     * 尽管当前不可检查点的迭代反馈，检查是否强制检查点。
+     *
      * Checks whether checkpointing is forced, despite currently non-checkpointable iteration
      * feedback.
      *

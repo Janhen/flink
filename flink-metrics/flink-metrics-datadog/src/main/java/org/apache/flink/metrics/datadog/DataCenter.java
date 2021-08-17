@@ -18,6 +18,7 @@
 package org.apache.flink.metrics.datadog;
 
 /** The data center to connect to. */
+// 要连接的数据中心。
 enum DataCenter {
     US("com"),
     EU("eu");

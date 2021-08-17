@@ -24,6 +24,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * {@link MetricReporter MetricReporters} 的注释，支持工厂但希望与现有的基于反射的配置保持向后兼容性。
+ *
+ * <p>当一个带注释的报告器被配置为通过反射使用时，将使用给定的工厂。
+ *
+ * <p>注意：如果报告器作为插件加载，则此注释不起作用。对于这些情况，请改为使用
+ *   {@link InterceptInstantiationViaReflection} 注释工厂。
+ *
  * Annotation for {@link MetricReporter MetricReporters} that support factories but want to maintain
  * backwards-compatibility with existing reflection-based configurations.
  *
