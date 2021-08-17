@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Helper class for generating a JSON representation from a {@link StreamGraph}. */
+// 用于从 {@link StreamGraph} 生成 JSON 表示的助手类。
 @Internal
 public class JSONGenerator {
 
@@ -38,6 +39,7 @@ public class JSONGenerator {
     public static final String ID = "id";
     public static final String SIDE = "side";
     public static final String SHIP_STRATEGY = "ship_strategy";
+    // 前驱
     public static final String PREDECESSORS = "predecessors";
     public static final String TYPE = "type";
     public static final String PACT = "pact";
@@ -59,7 +61,9 @@ public class JSONGenerator {
         List<Integer> operatorIDs = new ArrayList<>(streamGraph.getVertexIDs());
         Comparator<Integer> operatorIDComparator =
                 Comparator.comparingInt(
+                                // sink id 排在前面
                                 (Integer id) -> streamGraph.getSinkIDs().contains(id) ? 1 : 0)
+                        // sink id 相等根据 id 排序
                         .thenComparingInt(id -> id);
         operatorIDs.sort(operatorIDComparator);
 
@@ -68,6 +72,7 @@ public class JSONGenerator {
         return json.toPrettyString();
     }
 
+    // J: 访问改树
     private void visit(
             ArrayNode jsonArray, List<Integer> toVisit, Map<Integer, Integer> edgeRemapings) {
 
@@ -159,6 +164,7 @@ public class JSONGenerator {
         }
     }
 
+    // 装饰边
     private void decorateEdge(ArrayNode inputArray, StreamEdge inEdge, int mappedInputID) {
         ObjectNode input = mapper.createObjectNode();
         inputArray.add(input);
@@ -167,6 +173,7 @@ public class JSONGenerator {
         input.put(SIDE, (inputArray.size() == 0) ? "first" : "second");
     }
 
+    // 装饰节点，添加节点相关的属性
     private void decorateNode(Integer vertexID, ObjectNode node) {
 
         StreamNode vertex = streamGraph.getStreamNode(vertexID);

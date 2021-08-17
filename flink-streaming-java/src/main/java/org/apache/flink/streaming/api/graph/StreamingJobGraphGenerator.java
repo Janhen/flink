@@ -96,10 +96,13 @@ public class StreamingJobGraphGenerator {
 
     private static final Logger LOG = LoggerFactory.getLogger(StreamingJobGraphGenerator.class);
 
+    // 管理内存分数量表
     private static final int MANAGED_MEMORY_FRACTION_SCALE = 16;
 
+    // 默认网络缓冲区超时
     private static final long DEFAULT_NETWORK_BUFFER_TIMEOUT = 100L;
 
+    // 未定义的网络缓冲区超时
     public static final long UNDEFINED_NETWORK_BUFFER_TIMEOUT = -1L;
 
     // ------------------------------------------------------------------------
@@ -118,8 +121,10 @@ public class StreamingJobGraphGenerator {
 
     private final Map<Integer, JobVertex> jobVertices;
     private final JobGraph jobGraph;
+    // 构建顶点
     private final Collection<Integer> builtVertices;
 
+    // 物理边顺序
     private final List<StreamEdge> physicalEdgesInOrder;
 
     private final Map<Integer, Map<Integer, StreamConfig>> chainedConfigs;

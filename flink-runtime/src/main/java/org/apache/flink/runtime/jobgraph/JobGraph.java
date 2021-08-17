@@ -48,12 +48,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * JobGraph 表示一个 Flink 数据流程序，位于 JobManager 接受的低级别。所有来自高级 api 的程序都被转换为 JobGraphs。
  *
- * <p> JobGraph是连接在一起形成DAG的顶点和中间结果的图。请注意，迭代(反馈边)目前不是在JobGraph中编码的，而是在某些
- * 特定的顶点中编码的，这些顶点在它们自己之间建立反馈通道。
+ * <p> JobGraph 是连接在一起形成 DAG 的顶点和中间结果的图。请注意，迭代(反馈边)目前不是在 JobGraph 中编码的，而是
+ * 在某些特定的顶点中编码的，这些顶点在它们自己之间建立反馈通道。
  *
- * <p> JobGraph定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
- *
- *
+ * <p> JobGraph 定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
  *
  * The JobGraph represents a Flink dataflow program, at the low level that the JobManager accepts.
  * All programs from higher level APIs are transformed into JobGraphs.
@@ -85,6 +83,7 @@ public class JobGraph implements Serializable {
     private final String jobName;
 
     /** The mode in which the job is scheduled */
+    // 作业调度的模式
     private ScheduleMode scheduleMode = ScheduleMode.LAZY_FROM_SOURCES;
 
     // --- checkpointing ---
@@ -97,6 +96,7 @@ public class JobGraph implements Serializable {
     private JobCheckpointingSettings snapshotSettings;
 
     /** Savepoint restore settings. */
+    // 保存点还原设置。
     private SavepointRestoreSettings savepointRestoreSettings = SavepointRestoreSettings.none();
 
     // --- attached resources ---
@@ -479,6 +479,7 @@ public class JobGraph implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 添加在任务管理器上运行作业所需的 JAR 文件的路径。
      * Adds the path of a JAR file required to run the job on a task manager.
      *
      * @param jar path of the JAR file required to run the job on a task manager
@@ -511,7 +512,7 @@ public class JobGraph implements Serializable {
     }
 
     /**
-     * 获取分配的用户jar路径的列表。
+     * 获取分配的用户 jar 路径的列表。
      *
      * Gets the list of assigned user jar paths.
      *
@@ -537,6 +538,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 获取分配的用户 jar 路径列表。
+     *
      * Gets the list of assigned user jar paths.
      *
      * @return The list of assigned user jar paths

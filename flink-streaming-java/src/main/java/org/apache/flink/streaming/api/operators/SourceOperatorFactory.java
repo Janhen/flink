@@ -36,12 +36,14 @@ import org.apache.flink.util.function.FunctionWithException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The Factory class for {@link SourceOperator}. */
+// {@link SourceOperator} 的工厂类。
 public class SourceOperatorFactory<OUT> extends AbstractStreamOperatorFactory<OUT>
         implements CoordinatedOperatorFactory<OUT>, ProcessingTimeServiceAware {
 
     private static final long serialVersionUID = 1L;
 
     /** The {@link Source} to create the {@link SourceOperator}. */
+    // 用于创建 {@link SourceOperator} 的 {@link Source}。
     private final Source<OUT, ?, ?> source;
 
     /** The event time setup (timestamp assigners, watermark generators, etc.). */
