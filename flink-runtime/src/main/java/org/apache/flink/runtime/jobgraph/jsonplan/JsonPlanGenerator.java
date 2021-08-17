@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import java.io.StringWriter;
 import java.util.List;
 
+// J: 生成执行计划
 public class JsonPlanGenerator {
 
     private static final String NOT_SET = "";

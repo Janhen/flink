@@ -65,6 +65,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 从 {@link Transformation} 的图中生成 {@link StreamGraph} 的生成器。
+ *
  * A generator that generates a {@link StreamGraph} from a graph of {@link Transformation}s.
  *
  * <p>This traverses the tree of {@code Transformations} starting from the sinks. At each

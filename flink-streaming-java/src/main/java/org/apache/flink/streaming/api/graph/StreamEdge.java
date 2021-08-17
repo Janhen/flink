@@ -30,9 +30,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 流拓扑中的边。像这样的一条边不一定会转化为a两个作业顶点之间的连接(由于链接优化)。
+ * 流拓扑中的边。像这样的一条边不一定会转化为 a 两个作业顶点之间的连接(由于链接优化)。
  *
- * J: 用来连接两个 StreamNode，一个 StreamNode 可以有多个出边、入边，StreamEdge 中包含了旁路输出、分区器、字段筛选输出
+ * J: 用来连接两个 StreamNode，一个 StreamNode 可以有多个出边、入边，StreamEdge 中包含了旁路输出、分区器、字段
+ * 筛选输出
  *
  * An edge in the streaming topology. One edge like this does not necessarily gets converted to a
  * connection between two job vertices (due to chaining/optimization).
@@ -56,19 +57,22 @@ public class StreamEdge implements Serializable {
     private final List<String> selectedNames;
 
     /** The side-output tag (if any) of this {@link StreamEdge}. */
-    // 这个{@link StreamEdge}的侧输出标记(如果有的话)。
+    // 这个 {@link StreamEdge} 的侧输出标记(如果有的话)。
     private final OutputTag outputTag;
 
     /** The {@link StreamPartitioner} on this {@link StreamEdge}. */
-    // {@link StreamPartitioner}在这个{@link StreamEdge}上。
+    // {@link StreamPartitioner} 在这个 {@link StreamEdge} 上。
     private StreamPartitioner<?> outputPartitioner;
 
     /** The name of the operator in the source vertex. */
+    // 源顶点中 operator 的名称。
     private final String sourceOperatorName;
 
     /** The name of the operator in the target vertex. */
+    // 目标顶点中 operator 的名称。
     private final String targetOperatorName;
 
+    // shuffle ...
     private final ShuffleMode shuffleMode;
 
     private long bufferTimeout;

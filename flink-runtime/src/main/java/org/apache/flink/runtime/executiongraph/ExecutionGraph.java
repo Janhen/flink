@@ -119,19 +119,32 @@ import static org.apache.flink.util.Preconditions.checkState;
  * ExecutionGraph 是协调数据流分布式执行的中心数据结构。它保持每个并行任务、每个中间流以及它们之间的通信的表示。
  *
  * <p>执行图包含以下结构:
- *   {@link ExecutionJobVertex} 表示在执行过程中来自 JobGraph 的一个顶点(通常是像“map”或“join”这样的操作)。
+ *   {@link ExecutionJobVertex} 表示在执行过程中来自 JobGraph 的一个顶点(通常是像 “map” 或 “join” 这样的操作)。
  *   它保存所有并行子任务的聚合状态。ExecutionJobVertex 在图中通过 {@link JobVertexID} 标识，它从 JobGraph
  *   对应的 JobVertex 中获取。
  *
  *   {@link ExecutionVertex} 表示一个并行子任务。对于每个 ExecutionJobVertex，其 ExecutionVertices 的数量
  *   与并行度相同。ExecutionVertex 由 ExecutionJobVertex 和并行子任务的索引标识
  *
- *   {@link Execution}是执行ExecutionVertex的一次尝试。ExecutionVertex可能有多个执行，以防出现故障，或者某些
- *   数据需要重新计算，因为在以后的操作请求时这些数据不再可用。一个Execution总是由{@link ExecutionAttemptID}标识。
- *   JobManager 和 TaskManager 之间关于任务部署和任务状态更新的所有消息总是使用 ExecutionAttemptID 来寻地址消
- *   息接收者。
+ *   {@link Execution} 是执行 ExecutionVertex 的一次尝试。ExecutionVertex 可能有多个执行，以防出现故障，或者
+ *   某些数据需要重新计算，因为在以后的操作请求时这些数据不再可用。一个 Execution 总是由 {@link ExecutionAttemptID}
+ *   标识。JobManager 和 TaskManager 之间关于任务部署和任务状态更新的所有消息总是使用 ExecutionAttemptID 来寻
+ *   地址消息接收者。
  *
- *  Execution Graph 有两种failover模式:<i> Global failover<i>和<i>local failover<i>。
+ * <h2>全局和本地故障转移<h2>
+ *
+ * Execution Graph 有两种 failover 模式:<i> Global failover<i>和<i>local failover<i>。
+ *
+ * <p>A <b>全局故障转移<b> 中止所有顶点的任务执行，并从上次完成的检查点重新启动整个数据流图。全局故障转移被认为是
+ *   “回退策略”，当本地故障转移不成功时，或者在 ExecutionGraph 的状态中发现问题可能将其标记为不一致（由错误引起）时使用。
+ *
+ * <p><b>本地故障转移<b> 在单个顶点执行（任务）失败时触发。本地故障转移由 {@link FailoverStrategy} 协调。本地故障
+ *   转移通常尝试尽可能少地重新启动，但尽可能多地尝试重新启动。
+ *
+ * <p>在本地故障转移和全局故障转移之间，全局故障转移始终优先，因为它是 ExecutionGraph 所依赖的核心机制，以恢复一致性。
+ *   ExecutionGraph 维护一个<i>全局修改版本<i>，它随着每次全局故障转移（以及其他全局操作，如作业取消或终端故障）而
+ *   增加。本地故障转移的范围始终由触发故障转移时执行图所具有的修改版本决定。如果在本地故障转移期间达到新的全局修改版本
+ *   （意味着存在并发全局故障转移），则故障转移策略必须在全局故障转移之前让步。
  *
  * The execution graph is the central data structure that coordinates the distributed execution of a
  * data flow. It keeps representations of each parallel task, each intermediate stream, and the
@@ -156,10 +169,6 @@ import static org.apache.flink.util.Preconditions.checkState;
  * </ul>
  *
  * <h2>Global and local failover</h2>
- *
- * <h2>全球及地方failover<h2>
- *
- * <p>执行图有两种故障转移模式:<i>全局故障转移<i>和<i>局部故障转移<i>。
  *
  * <p>The Execution Graph has two failover modes: <i>global failover</i> and <i>local failover</i>.
  *
@@ -193,7 +202,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final JobInformation jobInformation;
 
     /** Serialized job information or a blob key pointing to the offloaded job information. */
-    // 序列化作业信息或指向卸载作业信息的blob键。
+    // 序列化作业信息或指向卸载作业信息的 blob 键。
     private final Either<SerializedValue<JobInformation>, PermanentBlobKey> jobInformationOrBlobKey;
 
     /** The executor which is used to execute futures. */
@@ -201,6 +210,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final ScheduledExecutorService futureExecutor;
 
     /** The executor which is used to execute blocking io operations. */
+    // 用于执行阻塞 io 操作的 executor。
     private final Executor ioExecutor;
 
     /** Executor that runs tasks in the job manager's main thread. */
@@ -208,6 +218,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     @Nonnull private ComponentMainThreadExecutor jobMasterMainThreadExecutor;
 
     /** {@code true} if all source tasks are stoppable. */
+    // {@code true} 如果所有源任务都是可停止的。
     private boolean isStoppable = true;
 
     /** All job vertices that are part of this graph. */
@@ -238,8 +249,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final FailoverStrategy failoverStrategy;
 
     /**
-     * 时间戳(以毫秒为单位，由{@code System.currentTimeMillis()}在执行图转换到某个状态时返回。该数组的索引是枚
-     * 举值的序号，即图进入“RUNNING”状态的时间戳为 {@code stateTimestamps[RUNNING.ordinal()]}。
+     * 时间戳(以毫秒为单位，由 {@code System.currentTimeMillis()} 在执行图转换到某个状态时返回。该数组的索引是枚
+     * 举值的序号，即图进入 “RUNNING” 状态的时间戳为 {@code stateTimestamps[RUNNING.ordinal()]}。
      *
      * Timestamps (in milliseconds as returned by {@code System.currentTimeMillis()} when the
      * execution graph transitioned into a certain state. The index into this array is the ordinal
@@ -262,6 +273,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final SlotProviderStrategy slotProviderStrategy;
 
     /** The classloader for the user code. Needed for calls into user code classes. */
+    // 用户代码的类加载器。调用用户代码类时需要。
     private final ClassLoader userClassLoader;
 
     /** Registered KvState instances reported by the TaskManagers. */
@@ -283,6 +295,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // 分区发布策略
     private PartitionReleaseStrategy partitionReleaseStrategy;
 
+    // J: 默认执行拓扑
     private DefaultExecutionTopology executionTopology;
 
     // J: 内部失败监听器
@@ -320,12 +333,16 @@ public class ExecutionGraph implements AccessExecutionGraph {
     private final CompletableFuture<JobStatus> terminationFuture = new CompletableFuture<>();
 
     /**
+     * 在每次全局恢复时，此版本都会增加。该版本通过本地故障转移策略打破了并发重启尝试之间的冲突。
+     *
      * On each global recovery, this version is incremented. The version breaks conflicts between
      * concurrent restart attempts by local failover strategies.
      */
     private long globalModVersion;
 
     /**
+     * 导致作业失败的异常。这被设置为第一个无法恢复并触发作业失败的根异常。
+     *
      * The exception that caused the job to fail. This is set to the first root exception that was
      * not recoverable and triggered job failure.
      */
@@ -341,11 +358,14 @@ public class ExecutionGraph implements AccessExecutionGraph {
      */
     private ErrorInfo failureInfo;
 
+    // J: 分区追踪
     private final JobMasterPartitionTracker partitionTracker;
 
+    // J: 结果分区可用性检查
     private final ResultPartitionAvailabilityChecker resultPartitionAvailabilityChecker;
 
     /** Future for an ongoing or completed scheduling action. */
+    // 正在进行或已完成的调度操作的 future。
     @Nullable private CompletableFuture<Void> schedulingFuture;
 
     // ------ Fields that are relevant to the execution and need to be cleared before archiving
@@ -369,6 +389,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // ------ Fields that are only relevant for archived execution graphs ------------
     @Nullable private String stateBackendName;
 
+    // execution 执行计划
     private String jsonPlan;
 
     /** Shuffle master to register partitions for task deployment. */
@@ -466,6 +487,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 获取此执行图当前持有的作业顶点数。
+     *
      * Gets the number of job vertices currently held by this execution graph.
      *
      * @return The current number of job vertices.
@@ -509,11 +532,14 @@ public class ExecutionGraph implements AccessExecutionGraph {
             List<ExecutionJobVertex> verticesToCommitTo,
             List<MasterTriggerRestoreHook<?>> masterHooks,
             CheckpointIDCounter checkpointIDCounter,
+            // 已完成的 checkpoint store
             CompletedCheckpointStore checkpointStore,
             StateBackend checkpointStateBackend,
             CheckpointStatsTracker statsTracker) {
 
+        // 只有在 CREATE 状态下课开启 checkpoint
         checkState(state == JobStatus.CREATED, "Job must be in CREATED state");
+        // 不可重复创建
         checkState(checkpointCoordinator == null, "checkpointing already enabled");
 
         ExecutionVertex[] tasksToTrigger = collectExecutionVertices(verticesToTrigger);
@@ -713,6 +739,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 获取重启次数，包括完全重启和细粒度重启。如果恢复当前处于挂起状态，则此恢复包括在计数中。
+     *
      * Gets the number of restarts, including full restarts and fine grained restarts. If a recovery
      * is currently pending, this recovery is included in the count.
      *
@@ -795,6 +823,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 返回与此 ExecutionGraph 关联的 ExecutionContext。
+     *
      * Returns the ExecutionContext associated with this ExecutionGraph.
      *
      * @return ExecutionContext associated with this ExecutionGraph
@@ -804,6 +834,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 合并先前在 Executions 中执行的任务的所有累加器结果。
+     *
      * Merges all accumulator results from the tasks previously executed in the Executions.
      *
      * @return The accumulator map
@@ -824,6 +856,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 获取序列化的累加器映射。
+     *
      * Gets a serialized accumulator map.
      *
      * @return The accumulator map with serialized accumulator values.
@@ -859,6 +893,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 返回用户定义累加器的字符串化版本。
+     *
      * Returns the a stringified version of the user-defined accumulators.
      *
      * @return an Array containing the StringifiedAccumulatorResult objects
@@ -1072,6 +1108,14 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 暂停当前​​的 ExecutionGraph。
+     *
+     * <p>如果当前状态不是终止状态，则 JobStatus 将直接设置为 {@link JobStatus#SUSPENDED}。所有
+     *   ExecutionJobVertices 都将被取消并执行 onTerminalState()。
+     *
+     * <p>{@link JobStatus#SUSPENDED} 状态是一个本地终端状态，它会停止作业的执行，但不会将作业从 HA 作业存储中
+     *   移除，以便它可以被另一个 JobManager 恢复。
+     *
      * Suspends the current ExecutionGraph.
      *
      * <p>The JobStatus will be directly set to {@link JobStatus#SUSPENDED} iff the current state is
@@ -1143,6 +1187,11 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 全局执行图失败。此故障不会通过特定的故障转移策略恢复，但会导致所有任务完全重新启动。
+     *
+     * <p>这种全局故障是在无法再保证执行图状态的一致性的情况下触发的（例如，当捕获指示错误或意外调用竞争的意外异常时），
+     *   以及完全重新启动是恢复一致性的安全方法。
+     *
      * Fails the execution graph globally. This failure will not be recovered by a specific failover
      * strategy, but results in a full restart of all tasks.
      *
@@ -1296,6 +1345,9 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 返回此 {@link ExecutionGraph} 的终止未来。一旦 ExecutionGraph 达到此终止状态并且所有
+     * {@link Execution} 都已终止，终止 Future 将通过终端 {@link JobStatus} 完成。
+     *
      * Returns the termination future of this {@link ExecutionGraph}. The termination future is
      * completed with the terminal {@link JobStatus} once the ExecutionGraph reaches this terminal
      * state and all {@link Execution} have been terminated.
@@ -1391,6 +1443,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // ------------------------------------------------------------------------
 
     /**
+     * 每当顶点达到 FINISHED 状态（成功完成）时调用。一旦所有顶点都处于 FINISHED 状态，程序就成功完成了。
+     *
      * Called whenever a vertex reaches state FINISHED (completed successfully). Once all vertices
      * are in the FINISHED state, the program is successfully done.
      */
@@ -1603,6 +1657,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 更新 ExecutionVertex 的执行尝试之一的状态。如果新状态为“FINISHED”，这也会更新累加器。
+     *
      * Updates the state of one of the ExecutionVertex's Execution attempts. If the new status if
      * "FINISHED", this also updates the accumulators.
      *
@@ -1718,6 +1774,10 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 从任务状态更新中反序列化累加器。
+     *
+     * <p>这个方法永远不会抛出异常！
+     *
      * Deserializes accumulators from a task state update.
      *
      * <p>This method never throws an exception!
@@ -1733,6 +1793,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
             try {
                 return serializedAccumulators.deserializeUserAccumulators(userClassLoader);
             } catch (Throwable t) {
+                // 我们在这里捕获 Throwable 以包含如果类路径中缺少用户类可能发生的所有形式的链接错误
                 // we catch Throwable here to include all form of linking errors that may
                 // occur if user classes are missing in the classpath
                 LOG.error("Failed to deserialize final accumulator results.", t);
