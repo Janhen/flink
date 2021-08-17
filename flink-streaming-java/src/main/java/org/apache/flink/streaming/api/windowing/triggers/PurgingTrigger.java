@@ -23,6 +23,10 @@ import org.apache.flink.annotation.VisibleForTesting;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 
 /**
+ * 可以将任何 {@link Trigger} 变成清除 {@code Trigger} 的触发器。
+ *
+ * <p>当嵌套触发器触发时，这将返回 {@code FIRE_AND_PURGE} {@link TriggerResult}。
+ *
  * A trigger that can turn any {@link Trigger} into a purging {@code Trigger}.
  *
  * <p>When the nested trigger fires, this will return a {@code FIRE_AND_PURGE} {@link

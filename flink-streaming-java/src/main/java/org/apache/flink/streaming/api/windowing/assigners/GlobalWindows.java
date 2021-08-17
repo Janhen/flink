@@ -31,6 +31,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * 将所有元素分配给同一个 {@link GlobalWindow} 的 {@link WindowAssigner}。
+ *
+ * <p>如果您想使用 {@link Trigger} 和 {@link org.apache.flink.streaming.api.windowing.evictors.Evictor}
+ *   来执行灵活的、基于策略的窗口，请使用此选项。
+ *
  * A {@link WindowAssigner} that assigns all elements to the same {@link GlobalWindow}.
  *
  * <p>Use this if you want to use a {@link Trigger} and {@link
@@ -59,6 +64,9 @@ public class GlobalWindows extends WindowAssigner<Object, GlobalWindow> {
     }
 
     /**
+     * 创建一个新的 {@code GlobalWindows} {@link WindowAssigner}，将所有元素分配给同一个
+     * {@link GlobalWindow}。
+     *
      * Creates a new {@code GlobalWindows} {@link WindowAssigner} that assigns all elements to the
      * same {@link GlobalWindow}.
      *
@@ -69,6 +77,7 @@ public class GlobalWindows extends WindowAssigner<Object, GlobalWindow> {
     }
 
     /** A trigger that never fires, as default Trigger for GlobalWindows. */
+    // 永远不会触发的触发器，作为 GlobalWindows 的默认触发器。
     @Internal
     public static class NeverTrigger extends Trigger<Object, GlobalWindow> {
         private static final long serialVersionUID = 1L;

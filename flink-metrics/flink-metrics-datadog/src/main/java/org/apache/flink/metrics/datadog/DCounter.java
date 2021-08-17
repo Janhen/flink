@@ -23,6 +23,7 @@ import org.apache.flink.metrics.Counter;
 import java.util.List;
 
 /** Mapping of counter between Flink and Datadog. */
+// Flink 和 Datadog 之间的计数器映射。
 public class DCounter extends DMetric {
     private final Counter counter;
 
@@ -35,6 +36,10 @@ public class DCounter extends DMetric {
     }
 
     /**
+     * 这个方法的可见性一定不能改变，因为我们故意不将它映射到 Datadog 定义格式的 json 对象。
+     *
+     * <p>注意：DataDog 计数器计算报告间隔期间的事件数。
+     *
      * Visibility of this method must not be changed since we deliberately not map it to json object
      * in a Datadog-defined format.
      *

@@ -40,6 +40,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Datadog 的度量报告器。
+ *
+ * <p>指标范围内的变量将作为标签发送到 Datadog。
+ *
  * Metric Reporter for Datadog.
  *
  * <p>Variables in metrics scope will be sent to Datadog as tags.

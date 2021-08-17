@@ -20,10 +20,13 @@ package org.apache.flink.streaming.api.environment;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Factory class for stream execution environments. */
+// 流执行环境的工厂类。
 @PublicEvolving
 public interface StreamExecutionEnvironmentFactory {
 
     /**
+     * 从这个工厂创建一个 StreamExecutionEnvironment。
+     *
      * Creates a StreamExecutionEnvironment from this factory.
      *
      * @return A StreamExecutionEnvironment.

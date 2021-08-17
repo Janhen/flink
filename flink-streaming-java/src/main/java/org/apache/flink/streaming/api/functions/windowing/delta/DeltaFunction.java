@@ -22,6 +22,9 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * 该接口允许实现计算两个数据点之间的增量的函数。 Delta 函数可用于 delta 策略，并允许基于到达的数据点进行灵活的
+ * 自适应窗口。
+ *
  * This interface allows the implementation of a function which calculates the delta between two
  * data points. Delta functions might be used in delta policies and allow flexible adaptive
  * windowing based on the arriving data points.
@@ -32,6 +35,8 @@ import java.io.Serializable;
 public interface DeltaFunction<DATA> extends Serializable {
 
     /**
+     * 计算两个给定数据点之间的差值。
+     *
      * Calculates the delta between two given data points.
      *
      * @param oldDataPoint the old data point.
