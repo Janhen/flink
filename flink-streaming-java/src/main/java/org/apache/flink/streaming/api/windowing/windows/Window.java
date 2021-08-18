@@ -21,9 +21,10 @@ package org.apache.flink.streaming.api.windowing.windows;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
- * {@code Window}是将元素分组成有限bucket。Windows有一个最大的时间戳，这意味着在某个时间点，进入一个窗口的所有元素都会到达。
+ * {@code Window}是将元素分组成有限 bucket。Windows 有一个最大的时间戳，这意味着在某个时间点，进入一个窗口的所有
+ * 元素都会到达。
  *
- * <p>子类应该实现{@code equals()}和{@code hashCode()}，以便逻辑上相同的窗口被同等对待。
+ * <p>子类应该实现 {@code equals()} 和 {@code hashCode()}，以便逻辑上相同的窗口被同等对待。
  *
  * A {@code Window} is a grouping of elements into finite buckets. Windows have a maximum timestamp
  * which means that, at some point, all elements that go into one window will have arrived.
@@ -35,6 +36,8 @@ import org.apache.flink.annotation.PublicEvolving;
 public abstract class Window {
 
     /**
+     * 获取仍属于此窗口的最大时间戳。
+     *
      * Gets the largest timestamp that still belongs to this window.
      *
      * @return The largest timestamp that still belongs to this window.

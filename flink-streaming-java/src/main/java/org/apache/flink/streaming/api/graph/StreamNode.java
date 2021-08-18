@@ -45,15 +45,19 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Class representing the operators in the streaming programs, with all their properties. */
 // 表示流程序中的操作符及其所有属性的类
-// J: StreamNode 是 StreamGraph 中的节点，从 Transformation 转换而来，可以简单理解为一个 StreamNode 表示一个算子
+// J: StreamNode 是 StreamGraph 中的节点，从 Transformation 转换而来，可以简单理解为一个 StreamNode 表示
+// 一个算子
 @Internal
 public class StreamNode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private final int id;
+    // 并行度
     private int parallelism;
     /**
+     * 此流节点的最大并行度。最大并行度是动态缩放的上限和用于分区状态的键组数量。
+     *
      * Maximum parallelism for this stream node. The maximum parallelism is the upper limit for
      * dynamic scaling and the number of key groups used for partitioned state.
      */
@@ -63,7 +67,9 @@ public class StreamNode implements Serializable {
     private ResourceSpec preferredResources = ResourceSpec.DEFAULT;
     private int managedMemoryWeight = Transformation.DEFAULT_MANAGED_MEMORY_WEIGHT;
     private long bufferTimeout;
+    // 算子名称
     private final String operatorName;
+    // 共享 slot group
     private @Nullable String slotSharingGroup;
     private @Nullable String coLocationGroup;
     private KeySelector<?, ?>[] statePartitioners = new KeySelector[0];
@@ -74,12 +80,16 @@ public class StreamNode implements Serializable {
     private TypeSerializer<?>[] typeSerializersIn = new TypeSerializer[0];
     private TypeSerializer<?> typeSerializerOut;
 
+    // 节点的入边
     private List<StreamEdge> inEdges = new ArrayList<StreamEdge>();
+    // 节点的出边
     private List<StreamEdge> outEdges = new ArrayList<StreamEdge>();
 
     private final Class<? extends AbstractInvokable> jobVertexClass;
 
+    // J: 输入
     private InputFormat<?, ?> inputFormat;
+    // J: 输出
     private OutputFormat<?> outputFormat;
 
     private String transformationUID;
@@ -178,6 +188,8 @@ public class StreamNode implements Serializable {
     }
 
     /**
+     * 获取此流节点的最大并行度。
+     *
      * Get the maximum parallelism for this stream node.
      *
      * @return Maximum parallelism

@@ -81,10 +81,12 @@ public class StreamGraph implements Pipeline {
 
     private static final Logger LOG = LoggerFactory.getLogger(StreamGraph.class);
 
+    // J: 内部 source 名称前缀
     public static final String ITERATION_SOURCE_NAME_PREFIX = "IterationSource";
 
     public static final String ITERATION_SINK_NAME_PREFIX = "IterationSink";
 
+    // J: Flink job 名称
     private String jobName;
 
     // 执行时的配置
@@ -95,7 +97,6 @@ public class StreamGraph implements Pipeline {
     private SavepointRestoreSettings savepointRestoreSettings = SavepointRestoreSettings.none();
 
     // 调度的模式
-    // -
     private ScheduleMode scheduleMode;
 
     private boolean chaining;
@@ -110,16 +111,24 @@ public class StreamGraph implements Pipeline {
     // 用于指示是否默认将所有顶点放入同一个槽共享组的标志。
     private boolean allVerticesInSameSlotSharingGroupByDefault = true;
 
+    // J: graph nodes
     private Map<Integer, StreamNode> streamNodes;
+    // J: source， 存放 vertexID
     private Set<Integer> sources;
+    // J: sink, 存放 vertexID
     private Set<Integer> sinks;
+    // 虚拟选择 node
     private Map<Integer, Tuple2<Integer, List<String>>> virtualSelectNodes;
+    // 虚拟旁路输出 node
     private Map<Integer, Tuple2<Integer, OutputTag>> virtualSideOutputNodes;
+    // 虚拟分区 node
     private Map<Integer, Tuple3<Integer, StreamPartitioner<?>, ShuffleMode>> virtualPartitionNodes;
 
     protected Map<Integer, String> vertexIDtoBrokerID;
     protected Map<Integer, Long> vertexIDtoLoopTimeout;
+    // 使用的 state backend
     private StateBackend stateBackend;
+    // J: 迭代计算的 source sink
     private Set<Tuple2<StreamNode, StreamNode>> iterationSourceSinkPairs;
 
     public StreamGraph(
@@ -135,6 +144,7 @@ public class StreamGraph implements Pipeline {
     }
 
     /** Remove all registered nodes etc. */
+    // 删除所有注册的节点等。
     public void clear() {
         streamNodes = new HashMap<>();
         virtualSelectNodes = new HashMap<>();
@@ -217,6 +227,8 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 设置是否默认将所有顶点放入同一个槽共享组。
+     *
      * Set whether to put all vertices into the same slot sharing group by default.
      *
      * @param allVerticesInSameSlotSharingGroupByDefault indicates whether to put all vertices into
@@ -229,6 +241,8 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 获取是否默认将所有顶点放入同一个槽共享组
+     *
      * Gets whether to put all vertices into the same slot sharing group by default.
      *
      * @return whether to put all vertices into the same slot sharing group by default.
@@ -239,10 +253,12 @@ public class StreamGraph implements Pipeline {
 
     // Checkpointing
 
+    // J: 是否开启 pipeline chain
     public boolean isChainingEnabled() {
         return chaining;
     }
 
+    // J: 是否是迭代计算相关的
     public boolean isIterative() {
         return !vertexIDtoLoopTimeout.isEmpty();
     }
@@ -349,6 +365,7 @@ public class StreamGraph implements Pipeline {
 
         if (operatorFactory.isOutputTypeConfigurable() && outTypeInfo != null) {
             // sets the output type which must be know at StreamGraph creation time
+            // 设置在 StreamGraph 创建时必须知道的输出类型
             operatorFactory.setOutputType(outTypeInfo, executionConfig);
         }
 
@@ -391,6 +408,7 @@ public class StreamGraph implements Pipeline {
 
         if (taskOperatorFactory.isOutputTypeConfigurable()) {
             // sets the output type which must be know at StreamGraph creation time
+            // 设置在 StreamGraph 创建时必须知道的输出类型
             taskOperatorFactory.setOutputType(outTypeInfo, executionConfig);
         }
 
@@ -458,6 +476,10 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 添加一个新的虚拟节点，用于将下游顶点仅连接到具有选定名称的输出。
+     *
+     * <p>当从虚拟节点向下游节点添加一条边时，将与原始节点建立连接，仅使用此处给出的选定名称。
+     *
      * Adds a new virtual node that is used to connect a downstream vertex to only the outputs with
      * the selected names.
      *
@@ -480,6 +502,8 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 添加一个新的虚拟节点，用于将下游顶点仅连接到具有选定侧输出 {@link OutputTag} 的输出。
+     *
      * Adds a new virtual node that is used to connect a downstream vertex to only the outputs with
      * the selected side-output {@link OutputTag}.
      *
@@ -518,6 +542,10 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 添加一个新的虚拟节点，用于将下游顶点连接到具有特定分区的输入。
+     *
+     * <p>当从虚拟节点添加一条边到下游节点时，将连接到原始节点，但这里给出了分区。
+     *
      * Adds a new virtual node that is used to connect a downstream vertex to an input with a
      * certain partitioning.
      *
@@ -543,6 +571,7 @@ public class StreamGraph implements Pipeline {
     }
 
     /** Determines the slot sharing group of an operation across virtual nodes. */
+    // 确定跨虚拟节点的操作的插槽共享组。
     public String getSlotSharingGroup(Integer id) {
         if (virtualSideOutputNodes.containsKey(id)) {
             Integer mappedId = virtualSideOutputNodes.get(id).f0;
@@ -946,11 +975,13 @@ public class StreamGraph implements Pipeline {
     }
 
     /** Gets the assembled {@link JobGraph} with a random {@link JobID}. */
+    // 使用随机 {@link JobID} 获取组装的 {@link JobGraph}。
     public JobGraph getJobGraph() {
         return getJobGraph(null);
     }
 
     /** Gets the assembled {@link JobGraph} with a specified {@link JobID}. */
+    // 获取具有指定 {@link JobID} 的组装 {@link JobGraph}。
     public JobGraph getJobGraph(@Nullable JobID jobID) {
         return StreamingJobGraphGenerator.createJobGraph(this, jobID);
     }

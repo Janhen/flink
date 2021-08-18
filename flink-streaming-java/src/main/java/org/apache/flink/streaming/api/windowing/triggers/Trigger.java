@@ -31,6 +31,13 @@ import org.apache.flink.streaming.api.windowing.windows.Window;
 import java.io.Serializable;
 
 /**
+ * {@code Trigger} 确定何时应评估窗口的窗格以发出窗口该部分的结果。
+ *
+ * <p>窗格是具有相同键（由 {@link org.apache.flink.api.java.functions.KeySelector} 分配）和相同
+ * {@link Window} 的元素的桶。如果一个元素被
+ * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner} 分配给多个窗口，它可以在
+ * 多个窗格中。这些窗格都有自己的 {@code Trigger} 实例。
+ *
  * A {@code Trigger} determines when a pane of a window should be evaluated to emit the results for
  * that part of the window.
  *
@@ -122,6 +129,8 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 提供给 {@link Trigger} 方法的上下文对象，以允许它们注册计时器回调并处理状态。
+     *
      * A context object that is given to {@link Trigger} methods to allow them to register timer
      * callbacks and deal with state.
      */
@@ -131,6 +140,12 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         long getCurrentProcessingTime();
 
         /**
+         * 返回此 {@link Trigger} 的指标组。这与从用户函数中的 {@link RuntimeContext#getMetricGroup()}
+         * 返回的指标组相同。
+         *
+         * <p>不能多次调用创建度量对象的方法（例如 {@link MetricGroup#counter(int)}，而是调用一次并将度量对象
+         *   存储在一个字段中。
+         *
          * Returns the metric group for this {@link Trigger}. This is the same metric group that
          * would be returned from {@link RuntimeContext#getMetricGroup()} in a user function.
          *
@@ -141,9 +156,13 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         MetricGroup getMetricGroup();
 
         /** Returns the current watermark time. */
+        // 返回当前水印时间。
         long getCurrentWatermark();
 
         /**
+         * 注册系统时间回调。当当前系统时间超过指定时间时，
+         * {@link Trigger#onProcessingTime(long, Window, TriggerContext)} 以此处指定的时间被调用。
+         *
          * Register a system time callback. When the current system time passes the specified time
          * {@link Trigger#onProcessingTime(long, Window, TriggerContext)} is called with the time
          * specified here.
@@ -154,6 +173,9 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         void registerProcessingTimeTimer(long time);
 
         /**
+         * 注册一个事件时间回调。当当前水印经过指定时间时，
+         * {@link Trigger#onEventTime(long, Window, TriggerContext)} 会以此处指定的时间被调用。
+         *
          * Register an event-time callback. When the current watermark passes the specified time
          * {@link Trigger#onEventTime(long, Window, TriggerContext)} is called with the time
          * specified here.
@@ -165,12 +187,16 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         void registerEventTimeTimer(long time);
 
         /** Delete the processing time trigger for the given time. */
+        // 删除给定时间的处理时间触发器。
         void deleteProcessingTimeTimer(long time);
 
         /** Delete the event-time trigger for the given time. */
+        // 删除给定时间的事件时间触发器。
         void deleteEventTimeTimer(long time);
 
         /**
+         * 检索一个 {@link State} 对象，该对象可用于与范围限定为当前触发器调用的窗口和键的容错状态交互。
+         *
          * Retrieves a {@link State} object that can be used to interact with fault-tolerant state
          * that is scoped to the window and key of the current trigger invocation.
          *
@@ -184,6 +210,8 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         <S extends State> S getPartitionedState(StateDescriptor<S, ?> stateDescriptor);
 
         /**
+         * 检索一个 {@link ValueState} 对象，该对象可用于与范围限定为当前触发器调用的窗口和键的容错状态进行交互。
+         *
          * Retrieves a {@link ValueState} object that can be used to interact with fault-tolerant
          * state that is scoped to the window and key of the current trigger invocation.
          *
@@ -203,6 +231,8 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
                 String name, Class<S> stateType, S defaultState);
 
         /**
+         * 检索一个 {@link ValueState} 对象，该对象可用于与范围限定为当前触发器调用的窗口和键的容错状态进行交互。
+         *
          * Retrieves a {@link ValueState} object that can be used to interact with fault-tolerant
          * state that is scoped to the window and key of the current trigger invocation.
          *
@@ -223,6 +253,8 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
     }
 
     /**
+     * {@link TriggerContext} 的扩展，提供给 {@link Trigger#onMerge(Window, OnMergeContext)}。
+     *
      * Extension of {@link TriggerContext} that is given to {@link Trigger#onMerge(Window,
      * OnMergeContext)}.
      */

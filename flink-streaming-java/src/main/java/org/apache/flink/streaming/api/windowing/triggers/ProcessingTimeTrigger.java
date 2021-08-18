@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 
 /**
+ * {@link Trigger} 在当前系统时间超过窗格所属窗口的末尾时触发。
+ *
  * A {@link Trigger} that fires once the current system time passes the end of the window to which a
  * pane belongs.
  */
@@ -76,6 +78,7 @@ public class ProcessingTimeTrigger extends Trigger<Object, TimeWindow> {
     }
 
     /** Creates a new trigger that fires once system time passes the end of the window. */
+    // 创建一个新的触发器，一旦系统时间超过窗口末尾就会触发。
     public static ProcessingTimeTrigger create() {
         return new ProcessingTimeTrigger();
     }

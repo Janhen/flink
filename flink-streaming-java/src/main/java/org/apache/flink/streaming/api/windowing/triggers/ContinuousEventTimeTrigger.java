@@ -28,6 +28,9 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 
 /**
+ * 根据给定的时间间隔连续触发的 {@link Trigger}。这基于
+ * {@link org.apache.flink.streaming.api.watermark.Watermark Watermarks} 触发。
+ *
  * A {@link Trigger} that continuously fires based on a given time interval. This fires based on
  * {@link org.apache.flink.streaming.api.watermark.Watermark Watermarks}.
  *
@@ -41,6 +44,7 @@ public class ContinuousEventTimeTrigger<W extends Window> extends Trigger<Object
     private final long interval;
 
     /** When merging we take the lowest of all fire timestamps as the new fire timestamp. */
+    // 合并时，我们将所有 fire 时间戳中的最低者作为新的 fire 时间戳。
     private final ReducingStateDescriptor<Long> stateDesc =
             new ReducingStateDescriptor<>("fire-time", new Min(), LongSerializer.INSTANCE);
 

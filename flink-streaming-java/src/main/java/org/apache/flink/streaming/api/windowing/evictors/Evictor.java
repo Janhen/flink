@@ -27,7 +27,8 @@ import org.apache.flink.streaming.runtime.operators.windowing.TimestampedValue;
 import java.io.Serializable;
 
 /**
- * {@code Evictor} 可以在 WindowFunction 评估之后和窗口评估被 {@link org.apache.flink.streaming.api.windowing.triggers.Trigger} 触发之后从窗格中删除元素
+ * {@code Evictor} 可以在 WindowFunction 评估之后和窗口评估被
+ * {@link org.apache.flink.streaming.api.windowing.triggers.Trigger} 触发之后从窗格中删除元素
  *
  * <p>窗格是具有相同键（由 {@link org.apache.flink.api.java.functions.KeySelector} 分配）和相同
  *   {@link Window} 的元素的桶。一个元素可以在它的多个窗格中被
@@ -87,9 +88,16 @@ public interface Evictor<T, W extends Window> extends Serializable {
     interface EvictorContext {
 
         /** Returns the current processing time. */
+        // 返回当前处理时间。
         long getCurrentProcessingTime();
 
         /**
+         * 返回此 {@link Evictor} 的指标组。这与从用户函数中的 {@link RuntimeContext#getMetricGroup()}
+         * 返回的指标组相同。
+         *
+         * <p>不能多次调用创建度量对象的方法（例如 {@link MetricGroup#counter(int)}，而是调用一次并将度量
+         *   对象存储在一个字段中。
+         *
          * Returns the metric group for this {@link Evictor}. This is the same metric group that
          * would be returned from {@link RuntimeContext#getMetricGroup()} in a user function.
          *
@@ -100,6 +108,7 @@ public interface Evictor<T, W extends Window> extends Serializable {
         MetricGroup getMetricGroup();
 
         /** Returns the current watermark time. */
+        // 返回当前水印时间。
         long getCurrentWatermark();
     }
 }

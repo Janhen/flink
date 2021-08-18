@@ -24,6 +24,8 @@ import org.apache.flink.runtime.jobgraph.IntermediateResultPartitionID;
 public interface ResultPartitionAvailabilityChecker {
 
     /**
+     * 返回给定分区是否可用。
+     *
      * Returns whether the given partition is available.
      *
      * @param resultPartitionID ID of the result partition to query

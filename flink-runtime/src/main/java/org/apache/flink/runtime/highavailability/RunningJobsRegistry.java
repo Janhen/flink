@@ -23,6 +23,8 @@ import org.apache.flink.api.common.JobID;
 import java.io.IOException;
 
 /**
+ * 一个简单的注册表，用于跟踪某个作业是否正在等待执行、正在运行或已完成。
+ *
  * A simple registry that tracks if a certain job is pending execution, running, or completed.
  *
  * <p>This registry is used in highly-available setups with multiple master nodes, to determine
@@ -37,6 +39,7 @@ import java.io.IOException;
 public interface RunningJobsRegistry {
 
     /** The scheduling status of a job, as maintained by the {@code RunningJobsRegistry}. */
+    // 作业的调度状态，由 {@code RunningJobsRegistry} 维护。
     enum JobSchedulingStatus {
 
         /** Job has not been scheduled, yet. */

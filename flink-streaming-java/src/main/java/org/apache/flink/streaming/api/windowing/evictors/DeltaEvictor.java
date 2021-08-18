@@ -28,6 +28,10 @@ import org.apache.flink.shaded.guava18.com.google.common.collect.Iterables;
 import java.util.Iterator;
 
 /**
+ * 基于 {@link DeltaFunction} 和阈值保留元素的 {@link Evictor}。
+ *
+ * <p>驱逐从缓冲区的第一个元素开始，并从缓冲区中删除所有增量高于阈值的元素。
+ *
  * An {@link Evictor} that keeps elements based on a {@link DeltaFunction} and a threshold.
  *
  * <p>Eviction starts from the first element of the buffer and removes all elements from the buffer
@@ -88,6 +92,8 @@ public class DeltaEvictor<T, W extends Window> implements Evictor<T, W> {
     }
 
     /**
+     * 从给定的阈值和 {@code DeltaFunction} 创建一个 {@code DeltaEvictor}。驱逐是在窗口函数之前完成的。
+     *
      * Creates a {@code DeltaEvictor} from the given threshold and {@code DeltaFunction}. Eviction
      * is done before the window function.
      *
@@ -100,6 +106,9 @@ public class DeltaEvictor<T, W extends Window> implements Evictor<T, W> {
     }
 
     /**
+     * 从给定的阈值 {@code DeltaFunction} 创建一个 {@code DeltaEvictor}。根据 doEvictAfter 的值，在窗口
+     * 函数之前完成驱逐。
+     *
      * Creates a {@code DeltaEvictor} from the given threshold, {@code DeltaFunction}. Eviction is
      * done before/after the window function based on the value of doEvictAfter.
      *

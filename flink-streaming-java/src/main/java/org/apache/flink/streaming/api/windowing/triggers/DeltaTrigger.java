@@ -26,6 +26,10 @@ import org.apache.flink.streaming.api.functions.windowing.delta.DeltaFunction;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 
 /**
+ * 基于 {@link DeltaFunction} 和阈值触发的 {@link Trigger}。
+ *
+ * <p>此触发器计算最后触发的数据点与当前到达的数据点之间的增量。如果 delta 高于指定的阈值，它就会触发。
+ *
  * A {@link Trigger} that fires based on a {@link DeltaFunction} and a threshold.
  *
  * <p>This trigger calculates a delta between the data point which triggered last and the currently
@@ -39,6 +43,7 @@ public class DeltaTrigger<T, W extends Window> extends Trigger<T, W> {
 
     private final DeltaFunction<T> deltaFunction;
     private final double threshold;
+    // J: ..
     private final ValueStateDescriptor<T> stateDesc;
 
     private DeltaTrigger(
@@ -72,8 +77,8 @@ public class DeltaTrigger<T, W extends Window> extends Trigger<T, W> {
     public TriggerResult onProcessingTime(long time, W window, TriggerContext ctx)
             throws Exception {
         return TriggerResult.CONTINUE;
-    }
 
+    }
     @Override
     public void clear(W window, TriggerContext ctx) throws Exception {
         ctx.getPartitionedState(stateDesc).clear();

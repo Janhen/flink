@@ -37,11 +37,12 @@ import java.net.Proxy;
 import java.util.concurrent.TimeUnit;
 
 /** Http client talking to Datadog. */
+// Http 客户端与 Datadog 通信。
 public class DatadogHttpClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatadogHttpClient.class);
 
-    private static final String SERIES_URL_FORMAT =
-            "https://app.datadoghq.%s/api/v1/series?api_key=%s";
+    // J: url ...
+    private static final String SERIES_URL_FORMAT = "https://app.datadoghq.%s/api/v1/series?api_key=%s";
     private static final String VALIDATE_URL_FORMAT =
             "https://app.datadoghq.%s/api/v1/validate?api_key=%s";
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
@@ -129,6 +130,8 @@ public class DatadogHttpClient {
     }
 
     /**
+     * OkHttpClient 回调的处理程序。如果出现错误或失败，它会在警告级别记录错误。
+     *
      * A handler for OkHttpClient callback. In case of error or failure it logs the error at warning
      * level.
      */

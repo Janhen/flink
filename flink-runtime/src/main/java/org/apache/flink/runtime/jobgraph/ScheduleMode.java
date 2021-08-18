@@ -51,6 +51,7 @@ public enum ScheduleMode {
     }
 
     /** Returns whether we are allowed to deploy consumers lazily. */
+    // 返回是否允许我们懒惰地部署消费者。
     public boolean allowLazyDeployment() {
         return allowLazyDeployment;
     }

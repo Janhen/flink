@@ -111,8 +111,9 @@ import java.util.concurrent.ExecutionException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * treamExecutionEnvironment 是流程序在其中执行的上下文。{@link LocalStreamEnvironment}将在当前JVM中执行，
- * {@link RemoteStreamEnvironment}将在远程设置中执行。
+ * StreamExecutionEnvironment 是流程序在其中执行的上下文。{@link LocalStreamEnvironment} 将在当前 JVM 中执行，
+ * {@link RemoteStreamEnvironment} 将在远程设置中执行。
+ *
  * <p>环境提供了控制作业执行(例如设置并行度或容错检查点参数)和与外界交互(数据访问)的方法。
  *
  * The StreamExecutionEnvironment is the context in which a streaming program is executed. A {@link
@@ -174,6 +175,7 @@ public class StreamExecutionEnvironment {
     private StateBackend defaultStateBackend;
 
     /** The time characteristic used by the data streams. */
+    // 数据流使用的时间特性。
     private TimeCharacteristic timeCharacteristic = DEFAULT_TIME_CHARACTERISTIC;
 
     // J: 缓存的文件
@@ -201,6 +203,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 创建一个新的 {@link StreamExecutionEnvironment}，它将使用给定的 {@link Configuration} 来配置
+     * {@link PipelineExecutor}。
+     *
      * Creates a new {@link StreamExecutionEnvironment} that will use the given {@link
      * Configuration} to configure the {@link PipelineExecutor}.
      */
@@ -222,6 +227,11 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 创建一个新的 {@link StreamExecutionEnvironment}，它将使用给定的 {@link Configuration} 来配置
+     * {@link PipelineExecutor}。
+     *
+     * <p>此外，此构造函数允许指定 {@link PipelineExecutorServiceLoader} 和用户代码 {@link ClassLoader}。
+     *
      * Creates a new {@link StreamExecutionEnvironment} that will use the given {@link
      * Configuration} to configure the {@link PipelineExecutor}.
      *
@@ -281,6 +291,10 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 设置通过此环境执行的操作的并行度。在此处设置 x 的并行度将导致所有操作符（例如 map、batchReduce）以 x 个并行
+     * 实例运行。此方法覆盖此环境的默认并行度。 {@link LocalStreamEnvironment} 默认使用等于硬件上下文（CPU 内核
+     * 线程）数量的值。通过命令行客户端从 JAR 文件执行程序时，默认并行度是为该设置配置的并行度。
+     *
      * Sets the parallelism for operations executed through this environment. Setting a parallelism
      * of x here will cause all operators (such as map, batchReduce) to run with x parallel
      * instances. This method overrides the default parallelism for this environment. The {@link
@@ -296,6 +310,10 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 设置为程序定义的最大并行度。上限（含）为 Short.MAX_VALUE。
+     *
+     * <p>最大并行度指定了动态缩放的上限。它还定义了用于分区状态的密钥组的数量。
+     *
      * Sets the maximum degree of parallelism defined for the program. The upper limit (inclusive)
      * is Short.MAX_VALUE.
      *
@@ -329,6 +347,10 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 获取为程序定义的最大并行度。
+     *
+     * <p>最大并行度指定了动态缩放的上限。它还定义了用于分区状态的密钥组的数量。
+     *
      * Gets the maximum degree of parallelism defined for the program.
      *
      * <p>The maximum degree of parallelism specifies the upper limit for dynamic scaling. It also
@@ -373,6 +395,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 禁用流操作符的操作符链。运算符链允许非混洗操作位于同一线程中，完全避免序列化和反序列化。
+     *
      * Disables operator chaining for streaming operators. Operator chaining allows non-shuffle
      * operations to be co-located in the same thread fully avoiding serialization and
      * de-serialization.
@@ -386,6 +410,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 返回是否启用运算符链接。
+     *
      * Returns whether operator chaining is enabled.
      *
      * @return {@code true} if chaining is enabled, false otherwise.
@@ -400,6 +426,8 @@ public class StreamExecutionEnvironment {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取检查点配置，它定义了检查点间隔、检查点之间的延迟等值。
+     *
      * Gets the checkpoint config, which defines values like checkpoint interval, delay between
      * checkpoints, etc.
      *
@@ -411,7 +439,12 @@ public class StreamExecutionEnvironment {
 
     /**
      * 为流作业启用检查点。流数据流的分布式状态会定期被快照。如果出现故障，流数据流将从最近完成的检查点重新启动。
-     * 这个方法选择{@link CheckpointingModeEXACTLY_ONCE}保证。<p>作业在给定的时间间隔内定期绘制检查点。状态将存储在已配置的状态后端。
+     * 这个方法选择 {@link CheckpointingMode#EXACTLY_ONCE}保证。
+     *
+     * <p>作业在给定的时间间隔内定期绘制检查点。状态将存储在已配置的状态后端。
+     *
+     * <p>注意：目前不正确支持检查点迭代流数据流。因此，如果与启用的检查点一起使用，则不会启动迭代作业。要覆盖此机制，
+     *   请使用 {@link #enableCheckpointing(long, CheckpointingMode, boolean)} 方法。
      *
      * Enables checkpointing for the streaming job. The distributed state of the streaming dataflow
      * will be periodically snapshotted. In case of a failure, the streaming dataflow will be
@@ -434,6 +467,14 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 为流作业启用检查点。流数据流的分布式状态将被定期快照。如果发生故障，流数据流将从最近完成的检查点重新启动。
+     *
+     * <p>作业在给定的时间间隔内定期绘制检查点。系统使用给定的 {@link CheckpointingMode} 进行检查点设置
+     *   （“恰好一次”与“至少一次”）。状态将存储在配置的状态后端中。
+     *
+     * <p>注意：目前不正确支持检查点迭代流数据流。因此，如果与启用的检查点一起使用，则不会启动迭代作业。要覆盖此机制，
+     *  请使用 {@link #enableCheckpointing(long, CheckpointingMode, boolean)} 方法。
+     *
      * Enables checkpointing for the streaming job. The distributed state of the streaming dataflow
      * will be periodically snapshotted. In case of a failure, the streaming dataflow will be
      * restarted from the latest completed checkpoint.
@@ -545,10 +586,14 @@ public class StreamExecutionEnvironment {
 
     /**
      * 设置描述如何存储和检查点操作符状态的状态后端。它定义了在执行期间哪些数据结构保持状态(例如哈希表、RockDB或其他数据存储)，
-     * 以及检查点数据将在哪里持久化。< p >状态管理的状态后端包括键控状态,可以在{@link org.apache.flink.streaming.api.datastream.KeyedStream键流},
+     * 以及检查点数据将在哪里持久化。< p >状态管理的状态后端包括键控状态,可以在
+     * {@link org.apache.flink.streaming.api.datastream.KeyedStream},
      * 以及维护的状态直接由用户代码实现{@link org.apache.flink.streaming.api.checkpoint.CheckpointedFunction CheckpointedFunction}。
+     *
      * 例如，{@link org.apache.flink.time.state.memorystatebackend}
-     * 在堆内存中维护状态，作为对象。它是轻量级的，没有额外的依赖关系，但是只能对较小的状态(一些计数器)进行检查点。相反，{@link状态检查点(也作为堆对象维护)存储在文件中。当使用复制文件系统(如HDFS, S3, MapR FS, Alluxio等)时，这将保证状态不会丢失，单个节点的故障，流程序可以执行高可用性和强一致性(假设Flink运行在高可用模式)。
+     * 在堆内存中维护状态，作为对象。它是轻量级的，没有额外的依赖关系，但是只能对较小的状态(一些计数器)进行检查点。相反，
+     * {@link 状态检查点(也作为堆对象维护)存储在文件中。当使用复制文件系统(如 HDFS, S3, MapR FS, Alluxio 等)时，
+     * 这将保证状态不会丢失，单个节点的故障，流程序可以执行高可用性和强一致性(假设 Flink 运行在高可用模式)。
      *
      * Sets the state backend that describes how to store and checkpoint operator state. It defines
      * both which data structures hold state during execution (for example hash tables, RockDB, or
@@ -611,6 +656,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 返回指定的重启策略配置。
+     *
      * Returns the specified restart strategy configuration.
      *
      * @return The restart strategy configuration to be used
@@ -639,6 +686,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 获取系统将尝试重新执行失败任务的次数。 {@code -1} 值表示应使用系统默认值（如配置中所定义）。
+     *
      * Gets the number of times the system will try to re-execute failed tasks. A value of {@code
      * -1} indicates that the system default value (as defined in the configuration) should be used.
      *
@@ -656,8 +705,10 @@ public class StreamExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 将新的Kryo默认序列化器添加到运行时。注意，序列化器实例必须是可序列化的(如java.io. serializable所定义的)，
-     * 因为它可以通过java序列化分发到工作节点。
+     * 将新的 Kryo 默认序列化器添加到运行时。
+     *
+     * <p>注意，序列化器实例必须是可序列化的(如 java.io. serializable 所定义的)，因为它可以通过 java 序列化分发
+     *   到工作节点。
      *
      * Adds a new Kryo default serializer to the Runtime.
      *
@@ -687,10 +738,10 @@ public class StreamExecutionEnvironment {
     }
 
     /**
-     * 用Kryo序列化器注册给定类型。
+     * 用 Kryo 序列化器注册给定类型。
      *
-     * <p>注意，序列化器实例必须是可序列化的(如java.io. serializable所定义的)，因为它可以通过java序列化分发到工作
-     * 节点。
+     * <p>注意，序列化器实例必须是可序列化的(如 java.io. serializable 所定义的)，因为它可以通过 java 序列化分发
+     *   到工作节点。
      *
      * Registers the given type with a Kryo Serializer.
      *
@@ -843,8 +894,7 @@ public class StreamExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 创建包含数字序列的新数据流。这是一个并行源，如果你手动设置并行度为{@code 1}(使用
-     *
+     * 创建包含数字序列的新数据流。这是一个并行源，如果你手动设置并行度为 {@code 1}(使用
      * {@link org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator#setParallelism(int)}
      * )，生成的元素序列是有序的。
      *
@@ -1438,13 +1488,17 @@ public class StreamExecutionEnvironment {
     }
 
     /**
-     * 使用{@link org.apache.flink.api.common.io.InputFormat}创建输入数据流的通用方法。
-     * <p>因为所有的数据流都需要特定的类型信息，所以这个方法需要确定输入格式产生的数据的类型。它将尝试通过反射来确定数据类型，
-     * 除非输入格式实现了{@link org.apache.flink.api.java.typeutils.ResultTypeQueryable}接口。在后一种情况下，该方法将调用
-     * {@link org.apache.flink.api.java.typeutils.ResultTypeQueryable#getProducedType()}
-     * 方法来确定输入格式产生的数据类型。< p > < b >笔记检查点:< b >的{@link FileInputFormat},
-     * 源(执行{@link ContinuousFileMonitoringFunction})监视道路,创建{@link org.apache.flink.core.fs.FileInputSplit FileInputSplits}
-     * 要处理,将其转发到下游的读者阅读的实际数据,并退出,而不是等待读者读完。这意味着在源退出后不会再转发检查点屏障，因此没有检查点。
+     * 使用 {@link org.apache.flink.api.common.io.InputFormat} 创建输入数据流的通用方法。
+     *
+     * <p>因为所有的数据流都需要特定的类型信息，所以这个方法需要确定输入格式产生的数据的类型。它将尝试通过反射来确定
+     *   数据类型，除非输入格式实现了 {@link org.apache.flink.api.java.typeutils.ResultTypeQueryable}
+     *   接口。在后一种情况下，该方法将调用
+     *   {@link org.apache.flink.api.java.typeutils.ResultTypeQueryable#getProducedType()}
+     *   方法来确定输入格式产生的数据类型。< p > < b >笔记检查点:< b >的 {@link FileInputFormat},
+     *   源(执行 {@link ContinuousFileMonitoringFunction}) 监视道路,创建
+     *   {@link org.apache.flink.core.fs.FileInputSplit FileInputSplits}
+     *   要处理,将其转发到下游的读者阅读的实际数据,并退出,而不是等待读者读完。这意味着在源退出后不会再转发检查点屏障，
+     *   因此没有检查点。
      *
      * Generic method to create an input data stream with {@link
      * org.apache.flink.api.common.io.InputFormat}.
@@ -1557,10 +1611,13 @@ public class StreamExecutionEnvironment {
     }
 
     /**
-     * 将数据源添加到流拓扑。<p>默认情况下，源的并行度为1。为了支持并行执行，用户定义的源代码应该实现{@link org.apache.flink.stream .api.functions.source。
-     * 或扩展{@link org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction}。
-     * 在这些情况下，生成的源将具有环境的并行性。要在后面更改这个，调用{
-     * @link org.apache.flink.streaming.api.datastream.DataStreamSource#setParallelism(int)}
+     * 将数据源添加到流拓扑。
+     *
+     * <p>默认情况下，源的并行度为1。为了支持并行执行，用户定义的源代码应该实现
+     *   {@link org.apache.flink.streaming.api.functions.source.ParallelSourceFunction
+     *   或扩展 {@link org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction}。
+     *   在这些情况下，生成的源将具有环境的并行性。要在后面更改这个，调用
+     *   {@link org.apache.flink.streaming.api.datastream.DataStreamSource#setParallelism(int)}
      *
      * Adds a Data Source to the streaming topology.
      *
@@ -1594,8 +1651,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
-     * 广告一个带有自定义类型信息的数据源，从而打开一个{@link DataStream}。只有在非常特殊的情况下，用户才需要支持类型信息。
-     * 否则使用{@link addSource(org.apache.flink.stream.api.functions.sourcefunction)}
+     * 广告一个带有自定义类型信息的数据源，从而打开一个 {@link DataStream}。只有在非常特殊的情况下，用户才需要支持
+     * 类型信息。否则使用 {@link #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
      *
      * Ads a data source with a custom type information thus opening a {@link DataStream}. Only in
      * very special cases does the user need to support type information. Otherwise use {@link
@@ -1612,6 +1669,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 使用自定义类型信息广告数据源，从而打开 {@link DataStream}。只有在非常特殊的情况下，用户才需要支持类型信息。
+     * 否则使用 {@link #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
+     *
      * Ads a data source with a custom type information thus opening a {@link DataStream}. Only in
      * very special cases does the user need to support type information. Otherwise use {@link
      * #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
@@ -1638,6 +1698,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 向环境中添加数据 {@link Source} 以获取 {@link DataStream}。
+     *
      * Add a data {@link Source} to the environment to get a {@link DataStream}.
      *
      * @param source the user defined source
@@ -1654,6 +1716,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 向环境中添加数据 {@link Source} 以获取 {@link DataStream}。
+     *
      * Add a data {@link Source} to the environment to get a {@link DataStream}.
      *
      * @param source the user defined source
@@ -1867,6 +1931,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 流作业的 {@link org.apache.flink.streaming.api.graph.StreamGraph} 的获取者。此调用清除先前注册的
+     * {@link Transformation}。
+     *
      * Getter of the {@link org.apache.flink.streaming.api.graph.StreamGraph} of the streaming job.
      * This call clears previously registered {@link Transformation transformations}.
      *
@@ -1911,6 +1978,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 创建系统将用来执行程序的计划，并使用执行数据流图的 JSON 表示将其作为字符串返回。请注意，这需要在执行计划之前调用。
+     *
      * Creates the plan with which the system will execute the program, and returns it as a String
      * using a JSON representation of the execution data flow graph. Note that this needs to be
      * called, before the plan is executed.
@@ -1922,6 +1991,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 返回给定函数的“闭包清理”版本。仅在 {@link org.apache.flink.api.common.ExecutionConfig} 中未禁用闭包
+     * 清理时才进行清理
+     *
      * Returns a "closure-cleaned" version of the given function. Cleans only if closure cleaning is
      * not disabled in the {@link org.apache.flink.api.common.ExecutionConfig}
      */
@@ -1935,6 +2007,12 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 将运算符添加到调用 {@link #execute} 时应执行的运算符列表中。
+     *
+     * <p>当调用 {@link #execute()} 时，只会执行之前添加到列表中的操作符。
+     *
+     * <p>这不是供用户使用的。创建运算符的 API 方法必须调用此方法。
+     *
      * Adds an operator to the list of operators that should be executed when calling {@link
      * #execute}.
      *
@@ -2074,6 +2152,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 创建一个 {@link RemoteStreamEnvironment}。远程环境将程序（部分）发送到集群以执行。请注意，程序中使用的
+     * 所有文件路径都必须可从集群访问。执行将使用指定的并行度。
+     *
      * Creates a {@link RemoteStreamEnvironment}. The remote environment sends (parts of) the
      * program to a cluster for execution. Note that all file paths used in the program must be
      * accessible from the cluster. The execution will use the specified parallelism.

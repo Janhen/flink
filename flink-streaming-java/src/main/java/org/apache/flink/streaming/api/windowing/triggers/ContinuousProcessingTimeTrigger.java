@@ -28,6 +28,8 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 
 /**
+ * {@link Trigger} 根据给定的时间间隔连续触发，该时间间隔由运行作业的机器的时钟测量。
+ *
  * A {@link Trigger} that continuously fires based on a given time interval as measured by the clock
  * of the machine on which the job is running.
  *
@@ -40,6 +42,7 @@ public class ContinuousProcessingTimeTrigger<W extends Window> extends Trigger<O
     private final long interval;
 
     /** When merging we take the lowest of all fire timestamps as the new fire timestamp. */
+    // 合并时，我们将所有火灾时间戳中的最低者作为新的火灾时间戳。
     private final ReducingStateDescriptor<Long> stateDesc =
             new ReducingStateDescriptor<>("fire-time", new Min(), LongSerializer.INSTANCE);
 

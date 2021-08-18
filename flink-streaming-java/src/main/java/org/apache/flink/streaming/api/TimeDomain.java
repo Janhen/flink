@@ -26,8 +26,10 @@ package org.apache.flink.streaming.api;
 public enum TimeDomain {
 
     /** Time is based on the timestamp of events. */
+    // 时间基于事件的时间戳。
     EVENT_TIME,
 
     /** Time is based on the current processing-time of a machine where processing happens. */
+    // 时间基于发生处理的机器的当前处理时间。
     PROCESSING_TIME
 }

@@ -25,6 +25,7 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Savepoint restore settings. */
+// 保存点还原设置。
 public class SavepointRestoreSettings implements Serializable {
 
     private static final long serialVersionUID = 87377506900849777L;
@@ -33,12 +34,16 @@ public class SavepointRestoreSettings implements Serializable {
     private static final SavepointRestoreSettings NONE = new SavepointRestoreSettings(null, false);
 
     /** By default, be strict when restoring from a savepoint. */
+    // 默认情况下，从保存点恢复时要严格。
     private static final boolean DEFAULT_ALLOW_NON_RESTORED_STATE = false;
 
     /** Savepoint restore path. */
+    // 保存点还原路径。
     private final String restorePath;
 
     /**
+     * 如果保存点包含不属于作业的操作员的状态，则指示是否允许非恢复状态的标志。
+     *
      * Flag indicating whether non restored state is allowed if the savepoint contains state for an
      * operator that is not part of the job.
      */
@@ -74,6 +79,8 @@ public class SavepointRestoreSettings implements Serializable {
     }
 
     /**
+     * 如果保存点包含无法映射回作业的状态，则返回是否允许非恢复状态。
+     *
      * Returns whether non restored state is allowed if the savepoint contains state that cannot be
      * mapped back to the job.
      *

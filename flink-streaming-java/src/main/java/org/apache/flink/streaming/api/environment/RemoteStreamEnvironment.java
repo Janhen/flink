@@ -37,7 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** A {@link StreamExecutionEnvironment} for executing on a cluster. */
-// 用于在集群上执行的{@link StreamExecutionEnvironment}。
+// 用于在集群上执行的 {@link StreamExecutionEnvironment}。
 @Public
 public class RemoteStreamEnvironment extends StreamExecutionEnvironment {
 

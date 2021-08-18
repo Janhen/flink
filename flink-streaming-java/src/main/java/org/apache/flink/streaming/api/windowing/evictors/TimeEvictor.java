@@ -27,6 +27,9 @@ import org.apache.flink.streaming.runtime.operators.windowing.TimestampedValue;
 import java.util.Iterator;
 
 /**
+ * 一个 {@link Evictor} 将元素保留一段时间。早于 {@code current_time - keep_time} 的元素被驱逐。
+ * current_time 是与 {@link TimestampedValue} 关联的时间
+ *
  * An {@link Evictor} that keeps elements for a certain amount of time. Elements older than {@code
  * current_time - keep_time} are evicted. The current_time is time associated with {@link
  * TimestampedValue}
@@ -84,6 +87,8 @@ public class TimeEvictor<W extends Window> implements Evictor<Object, W> {
     }
 
     /**
+     * 如果 {@link TimestampedValue} 的 Iterable 中的第一个元素具有时间戳，则返回 true。
+     *
      * Returns true if the first element in the Iterable of {@link TimestampedValue} has a
      * timestamp.
      */
@@ -120,6 +125,8 @@ public class TimeEvictor<W extends Window> implements Evictor<Object, W> {
     }
 
     /**
+     * 创建一个 {@code TimeEvictor} 来保留给定数量的元素。驱逐是在窗口函数之前完成的。
+     *
      * Creates a {@code TimeEvictor} that keeps the given number of elements. Eviction is done
      * before the window function.
      *
@@ -130,6 +137,8 @@ public class TimeEvictor<W extends Window> implements Evictor<Object, W> {
     }
 
     /**
+     * 创建一个 {@code TimeEvictor} 来保留给定数量的元素。根据 doEvictAfter 的值，在窗口函数之前完成驱逐。
+     *
      * Creates a {@code TimeEvictor} that keeps the given number of elements. Eviction is done
      * before/after the window function based on the value of doEvictAfter.
      *
