@@ -55,6 +55,8 @@ public class TimeWindow extends Window {
     }
 
     /**
+     * 获取窗口的开始时间戳。这是属于此窗口的第一个时间戳。
+     *
      * Gets the starting timestamp of the window. This is the first timestamp that belongs to this
      * window.
      *
@@ -65,6 +67,8 @@ public class TimeWindow extends Window {
     }
 
     /**
+     * 获取此窗口的结束时间戳。结束时间戳是排他的，这意味着它是第一个不再属于此窗口的时间戳。
+     *
      * Gets the end timestamp of this window. The end timestamp is exclusive, meaning it is the
      * first timestamp that does not belong to this window any more.
      *
@@ -75,6 +79,10 @@ public class TimeWindow extends Window {
     }
 
     /**
+     * 获取仍然属于此窗口的最大时间戳。
+     *
+     * <p>此时间戳与{@code getEnd() - 1}相同。
+     *
      * Gets the largest timestamp that still belongs to this window.
      *
      * <p>This timestamp is identical to {@code getEnd() - 1}.
@@ -209,6 +217,10 @@ public class TimeWindow extends Window {
     // ------------------------------------------------------------------------
 
     /**
+     * 合并重叠的{@link TimeWindow}。通过合并
+     * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner WindowAssigners}
+     * 使用。
+     *
      * Merge overlapping {@link TimeWindow}s. For use by merging {@link
      * org.apache.flink.streaming.api.windowing.assigners.WindowAssigner WindowAssigners}.
      */

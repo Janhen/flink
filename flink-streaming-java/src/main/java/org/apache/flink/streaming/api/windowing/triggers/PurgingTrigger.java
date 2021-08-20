@@ -39,6 +39,7 @@ import org.apache.flink.streaming.api.windowing.windows.Window;
 public class PurgingTrigger<T, W extends Window> extends Trigger<T, W> {
     private static final long serialVersionUID = 1L;
 
+    // J: 内嵌的 trigger
     private Trigger<T, W> nestedTrigger;
 
     private PurgingTrigger(Trigger<T, W> nestedTrigger) {
@@ -49,12 +50,14 @@ public class PurgingTrigger<T, W extends Window> extends Trigger<T, W> {
     public TriggerResult onElement(T element, long timestamp, W window, TriggerContext ctx)
             throws Exception {
         TriggerResult triggerResult = nestedTrigger.onElement(element, timestamp, window, ctx);
+        // fire 时，清理 window
         return triggerResult.isFire() ? TriggerResult.FIRE_AND_PURGE : triggerResult;
     }
 
     @Override
     public TriggerResult onEventTime(long time, W window, TriggerContext ctx) throws Exception {
         TriggerResult triggerResult = nestedTrigger.onEventTime(time, window, ctx);
+        // 处理逻辑同上
         return triggerResult.isFire() ? TriggerResult.FIRE_AND_PURGE : triggerResult;
     }
 
@@ -67,6 +70,7 @@ public class PurgingTrigger<T, W extends Window> extends Trigger<T, W> {
 
     @Override
     public void clear(W window, TriggerContext ctx) throws Exception {
+        // 触发器清理
         nestedTrigger.clear(window, ctx);
     }
 

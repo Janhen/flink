@@ -21,7 +21,7 @@ package org.apache.flink.streaming.api.windowing.windows;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
- * {@code Window}是将元素分组成有限 bucket。Windows 有一个最大的时间戳，这意味着在某个时间点，进入一个窗口的所有
+ * {@code Window} 是将元素分组成有限 bucket。Windows 有一个最大的时间戳，这意味着在某个时间点，进入一个窗口的所有
  * 元素都会到达。
  *
  * <p>子类应该实现 {@code equals()} 和 {@code hashCode()}，以便逻辑上相同的窗口被同等对待。

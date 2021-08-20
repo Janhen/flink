@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * {@code SessionWindowTimeGapExtractor} 为动态会话窗口分配器提取会话时间间隔。
+ *
  * A {@code SessionWindowTimeGapExtractor} extracts session time gaps for Dynamic Session Window
  * Assigners.
  *
@@ -32,6 +34,8 @@ import java.io.Serializable;
 @PublicEvolving
 public interface SessionWindowTimeGapExtractor<T> extends Serializable {
     /**
+     * 提取会话时间间隔。
+     *
      * Extracts the session time gap.
      *
      * @param element The input element.

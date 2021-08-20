@@ -34,9 +34,16 @@ import java.io.Serializable;
  * {@code Trigger} 确定何时应评估窗口的窗格以发出窗口该部分的结果。
  *
  * <p>窗格是具有相同键（由 {@link org.apache.flink.api.java.functions.KeySelector} 分配）和相同
- * {@link Window} 的元素的桶。如果一个元素被
- * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner} 分配给多个窗口，它可以在
- * 多个窗格中。这些窗格都有自己的 {@code Trigger} 实例。
+ *   {@link Window} 的元素的桶。如果一个元素被
+ *   {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner} 分配给多个窗口，它可以在
+ *   多个窗格中。这些窗格都有自己的 {@code Trigger} 实例。
+ *
+ * <p>触发器不能在内部维护状态，因为它们可以为不同的键重新创建或重用。所有必要的状态都应该使用
+ *   {@link TriggerContext} 上可用的状态抽象来持久化。
+ *
+ * <p>当与 {@link org.apache.flink.streaming.api.windowing.assigners.MergingWindowAssigner} 一起使用时。
+ *   {@code Trigger} 必须从 {@link #canMerge()} 和 {@link #onMerge(Window, OnMergeContext)}
+ *   返回 {@code true}。
  *
  * A {@code Trigger} determines when a pane of a window should be evaluated to emit the results for
  * that part of the window.
@@ -97,6 +104,12 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
             throws Exception;
 
     /**
+     * 如果该触发器支持触发器状态的合并，并因此可以与
+     * {@link org.apache.flink.streaming.api.windowing.assigners.MergingWindowAssigner}
+     * 一起使用，则返回true。
+     *
+     * <p>如果这个返回 {@code true}，你必须正确地实现 {@link #onMerge(Window, OnMergeContext)}
+     *
      * Returns true if this trigger supports merging of trigger state and can therefore be used with
      * a {@link org.apache.flink.streaming.api.windowing.assigners.MergingWindowAssigner}.
      *
@@ -108,6 +121,9 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
     }
 
     /**
+     * 当几个窗口被 {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner} 合并为
+     * 一个窗口时调用。
+     *
      * Called when several windows have been merged into one window by the {@link
      * org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}.
      *
@@ -119,6 +135,11 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
     }
 
     /**
+     * 清除触发器对给定窗口可能仍然持有的任何状态。当窗口被清除时调用。使用
+     * {@link TriggerContext#registerEventTimeTimer(long)} 和
+     * {@link TriggerContext#registerProcessingTimeTimer(long)} 设置的计时器和使用
+     * {@link TriggerContext#getPartitionedState(StateDescriptor)} 获得的状态应该被删除。
+     *
      * Clears any state that the trigger might still hold for the given window. This is called when
      * a window is purged. Timers set using {@link TriggerContext#registerEventTimeTimer(long)} and
      * {@link TriggerContext#registerProcessingTimeTimer(long)} should be deleted here as well as
@@ -137,6 +158,7 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
     public interface TriggerContext {
 
         /** Returns the current processing time. */
+        // 返回当前处理时间。
         long getCurrentProcessingTime();
 
         /**
@@ -160,7 +182,7 @@ public abstract class Trigger<T, W extends Window> implements Serializable {
         long getCurrentWatermark();
 
         /**
-         * 注册系统时间回调。当当前系统时间超过指定时间时，
+         * 注册系统时间回调。当当前系统时间超过指定时间时,
          * {@link Trigger#onProcessingTime(long, Window, TriggerContext)} 以此处指定的时间被调用。
          *
          * Register a system time callback. When the current system time passes the specified time

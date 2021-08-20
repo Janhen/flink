@@ -51,6 +51,8 @@ public abstract class WindowAssigner<T, W extends Window> implements Serializabl
     private static final long serialVersionUID = 1L;
 
     /**
+     * 返回一个应该赋值给元素的窗口的 {@code Collection}。
+     *
      * Returns a {@code Collection} of windows that should be assigned to the element.
      *
      * @param element The element to which windows should be assigned.
@@ -61,15 +63,20 @@ public abstract class WindowAssigner<T, W extends Window> implements Serializabl
             T element, long timestamp, WindowAssignerContext context);
 
     /** Returns the default trigger associated with this {@code WindowAssigner}. */
+    // 返回与此 {@code WindowAssigner} 关联的默认触发器。
     public abstract Trigger<T, W> getDefaultTrigger(StreamExecutionEnvironment env);
 
     /**
+     * 返回一个 {@link TypeSerializer} 用于序列化由这个 {@code WindowAssigner} 分配的窗口。
+     *
      * Returns a {@link TypeSerializer} for serializing windows that are assigned by this {@code
      * WindowAssigner}.
      */
     public abstract TypeSerializer<W> getWindowSerializer(ExecutionConfig executionConfig);
 
     /**
+     * 如果元素是基于事件时间分配给窗口的，则返回 {@code true}，否则返回 {@code false}。
+     *
      * Returns {@code true} if elements are assigned to windows based on event time, {@code false}
      * otherwise.
      */

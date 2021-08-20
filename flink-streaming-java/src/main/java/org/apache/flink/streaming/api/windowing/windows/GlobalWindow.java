@@ -32,6 +32,8 @@ import java.io.IOException;
  * 放置所有数据的默认窗口（通过
  * {@link org.apache.flink.streaming.api.windowing.assigners.GlobalWindows}）。
  *
+ * J: countWindow... 使用此 window
+ *
  * The default window into which all data is placed (via {@link
  * org.apache.flink.streaming.api.windowing.assigners.GlobalWindows}).
  */
@@ -128,6 +130,7 @@ public class GlobalWindow extends Window {
         }
 
         /** Serializer configuration snapshot for compatibility and format evolution. */
+        // 序列化器配置快照的兼容性和格式演变。
         @SuppressWarnings("WeakerAccess")
         public static final class GlobalWindowSerializerSnapshot
                 extends SimpleTypeSerializerSnapshot<GlobalWindow> {
