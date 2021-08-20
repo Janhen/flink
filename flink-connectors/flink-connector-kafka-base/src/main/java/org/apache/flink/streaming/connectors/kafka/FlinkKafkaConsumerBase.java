@@ -84,6 +84,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <p> Kafka 版本特定行为主要定义在 {@link AbstractFetcher} 的特定子类中。
  *
+ * J: 实现 RichParallelSourceFunction, 支持多并行度从来源拉取数据
+ *
  * Base class of all Flink Kafka Consumer data sources. This implements the common behavior across
  * all Kafka versions.
  *

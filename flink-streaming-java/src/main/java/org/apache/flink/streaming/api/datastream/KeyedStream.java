@@ -83,6 +83,9 @@ import java.util.UUID;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个{@link KeyedStream}代表一个{@link DataStream}，其中的操作符状态是使用提供的{@link KeySelector}
+ * 按键划分的。{@code DataStream}支持的典型操作也可能在{@code KeyedStream}上，除了shuffle、forward和keyBy等分区方法。
+ *
  * A {@link KeyedStream} represents a {@link DataStream} on which operator state is partitioned by
  * key using a provided {@link KeySelector}. Typical operations supported by a {@code DataStream}
  * are also possible on a {@code KeyedStream}, with the exception of partitioning methods such as
@@ -634,6 +637,7 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
      * @param size The size of the window.
      */
     public WindowedStream<T, KEY, TimeWindow> timeWindow(Time size) {
+        // 自动推断生成窗口
         if (environment.getStreamTimeCharacteristic() == TimeCharacteristic.ProcessingTime) {
             return window(TumblingProcessingTimeWindows.of(size));
         } else {
@@ -642,6 +646,8 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
     }
 
     /**
+     * 将这个 {@code KeyedStream} 设置为滑动时间窗口。
+     *
      * Windows this {@code KeyedStream} into sliding time windows.
      *
      * <p>This is a shortcut for either {@code .window(SlidingEventTimeWindows.of(size, slide))} or
@@ -660,27 +666,40 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
     }
 
     /**
+     * Windows 这个 {@code KeyedStream} 变成滚动计数窗口
+     *
      * Windows this {@code KeyedStream} into tumbling count windows.
      *
      * @param size The size of the windows in number of elements.
      */
     public WindowedStream<T, KEY, GlobalWindow> countWindow(long size) {
+        // J: 指定按照 count 大小进行触发
         return window(GlobalWindows.create()).trigger(PurgingTrigger.of(CountTrigger.of(size)));
     }
 
     /**
+     * 将这个{@code KeyedStream}转换为滑动计数窗口。
+     *
      * Windows this {@code KeyedStream} into sliding count windows.
      *
      * @param size The size of the windows in number of elements.
      * @param slide The slide interval in number of elements.
      */
     public WindowedStream<T, KEY, GlobalWindow> countWindow(long size, long slide) {
+        // J: 指定 evictor 控制整体的 size
         return window(GlobalWindows.create())
                 .evictor(CountEvictor.of(size))
                 .trigger(CountTrigger.of(slide));
     }
 
     /**
+     * 将此数据流设置为 {@code WindowedStream}，该函数在键分组流上计算窗口。元素通过 {@link WindowAssigner}
+     * 放置到窗口中。元素的分组是通过键和窗口来完成的。
+     *
+     * <p> {@link org.apache.flink.streaming.api.windowing.triggers} 可以定义 Trigger 来指定窗口的计算
+     *   时间。然而，{@code WindowAssigners} 有一个默认的 {@code Trigger}，在没有指定 {@code Trigger}
+     *   时使用。
+     *
      * Windows this data stream to a {@code WindowedStream}, which evaluates windows over a key
      * grouped stream. Elements are put into windows by a {@link WindowAssigner}. The grouping of
      * elements is done both by key and by window.
@@ -695,6 +714,7 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
     @PublicEvolving
     public <W extends Window> WindowedStream<T, KEY, W> window(
             WindowAssigner<? super T, W> assigner) {
+        // 根据给定的 assigner 创建 windowedStream
         return new WindowedStream<>(this, assigner);
     }
 
@@ -1011,6 +1031,8 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
     }
 
     /**
+     * 将键控流作为可查询的 ValueState 实例发布。
+     *
      * Publishes the keyed stream as queryable ValueState instance.
      *
      * @param queryableStateName Name under which to the publish the queryable state instance

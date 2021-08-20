@@ -55,9 +55,11 @@ import static org.apache.flink.table.planner.plan.type.FlinkReturnTypes.STR_MAP_
 import static org.apache.flink.table.planner.plan.type.FlinkReturnTypes.VARCHAR_2000_NULLABLE;
 
 /** Operator table that contains only Flink-specific functions and operators. */
+// 只包含特定于 flink 的函数和操作符的操作符表。
 public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
 
     /** The table of contains Flink-specific operators. */
+    // 的表包含特定于flink的操作符。
     private static FlinkSqlOperatorTable instance;
 
     /** Returns the Flink operator table, creating it if necessary. */
@@ -484,6 +486,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                             OperandTypes.NUMERIC_INTEGER),
                     SqlFunctionCategory.STRING);
 
+    // SQL 操作函数，日期格式化
     public static final SqlFunction DATE_FORMAT =
             new SqlFunction(
                     "DATE_FORMAT",
