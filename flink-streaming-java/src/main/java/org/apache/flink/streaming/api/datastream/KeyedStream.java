@@ -101,14 +101,19 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class KeyedStream<T, KEY> extends DataStream<T> {
 
     /**
+     * 键选择器，如果从元素中分区，可以获取流的键。
+     *
      * The key selector that can get the key by which the stream if partitioned from the elements.
      */
     private final KeySelector<T, KEY> keySelector;
 
     /** The type of the key by which the stream is partitioned. */
+    // 对流进行分区的键的类型。
     private final TypeInformation<KEY> keyType;
 
     /**
+     * 使用给定的 {@link KeySelector} 创建一个新的 {@link KeyedStream}，以按键划分操作符状态
+     *
      * Creates a new {@link KeyedStream} using the given {@link KeySelector} to partition operator
      * state by key.
      *
@@ -119,10 +124,13 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
         this(
                 dataStream,
                 keySelector,
+                // 从 KeySelector 中抽取出 type
                 TypeExtractor.getKeySelectorTypes(keySelector, dataStream.getType()));
     }
 
     /**
+     * 使用给定的 {@link KeySelector} 创建一个新的 {@link KeyedStream}，以按键划分操作符状态。
+     *
      * Creates a new {@link KeyedStream} using the given {@link KeySelector} to partition operator
      * state by key.
      *
@@ -135,8 +143,10 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
             TypeInformation<KEY> keyType) {
         this(
                 dataStream,
+                // J: 指定分区 transformation
                 new PartitionTransformation<>(
                         dataStream.getTransformation(),
+                        // 指定 keyBy 使用的 StreamPartitioner，此处指定自定义的 StreamPartitioner?
                         new KeyGroupStreamPartitioner<>(
                                 keySelector,
                                 StreamGraphGenerator.DEFAULT_LOWER_BOUND_MAX_PARALLELISM)),
@@ -189,6 +199,7 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
             }
 
             if (typeInfo instanceof TupleTypeInfoBase) {
+                // 校验 tuple 下的类型
                 for (int i = 0; i < typeInfo.getArity(); i++) {
                     stack.push(((TupleTypeInfoBase) typeInfo).getTypeAt(i));
                 }
@@ -276,6 +287,7 @@ public class KeyedStream<T, KEY> extends DataStream<T> {
 
     @Override
     protected DataStream<T> setConnectionType(StreamPartitioner<T> partitioner) {
+        // J: 当前不支持自定义设置连接类型
         throw new UnsupportedOperationException("Cannot override partitioning for KeyedStream.");
     }
 

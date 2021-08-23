@@ -38,6 +38,26 @@ import java.lang.annotation.Target;
  *
  * <p>以下示例展示了如何显式指定数据类型，如何参数化提取逻辑，或如何接受任何数据类型作为输入数据类型:
  *
+ * <p>{@code @DataTypeHint("INT")} 定义一个带有默认转换类的 INT 数据类型。
+ *
+ * <p>{@code @DataTypeHint(value = "TIMESTAMP(3)", bridgedTo = java.sql.Timestamp.class)} 使用显式
+ *   转换类定义毫秒精度的 TIMESTAMP 数据类型。
+ *
+ * <p>{@code @DataTypeHint(value = "RAW", bridgedTo = MyCustomClass.class)} 使用 Flink 类
+ *   {@code MyCustomClass} 的默认序列化器定义 RAW 数据类型。
+ *
+ * <p>{@code @DataTypeHint(version = V1, allowRawGlobally = TRUE)} 通过请求提取逻辑版本 1 并允许此结构化
+ *   类型（以及可能的嵌套字段）中的 RAW 数据类型来参数化提取。
+ *
+ * <p>{@code @DataTypeHint(bridgedTo = MyPojo.class, allowRawGlobally = TRUE)} 定义应从给定的转换类中
+ *   提取类型，但使用参数化提取以允许 RAW 类型。
+ *
+ * <p>{@code @DataTypeHint(inputGroup = ANY)} 定义输入验证应该接受任何数据类型。
+ *
+ * <p>注意：所有提示参数都是可选的。除非注释不同，否则定义在结构化类型之上的提示参数由所有（深层）嵌套字段继承。例如，
+ *   如果封闭结构化类使用 {@code @DataTypeHint(defaultDecimalPrecision = 12, defaultDecimalScale = 2 )}。
+ *   单个字段注释允许偏离这些默认值。
+ *
  * A hint that influences the reflection-based extraction of a {@link DataType}.
  *
  * <p>Data type hints can parameterize or replace the default extraction logic of individual
@@ -156,6 +176,9 @@ public @interface DataTypeHint {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 此提示参数影响函数中 {@link TypeInference} 的提取。它添加了接受类似类型的预定义组的提示，即，不仅仅是一种
+     * 显式数据类型。
+     *
      * This hint parameter influences the extraction of a {@link TypeInference} in functions. It
      * adds a hint for accepting pre-defined groups of similar types, i.e., more than just one
      * explicit data type.
@@ -184,6 +207,12 @@ public @interface DataTypeHint {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 描述基于反射的数据类型提取的预期行为的版本。
+     *
+     * <p>这是为了将来的向后兼容性。每当提取逻辑发生变化时，旧函数和结构化类型类在相应版本化时仍应返回与以前相同的数据类型。
+     *
+     * <p>默认情况下，版本总是最新的。
+     *
      * Version that describes the expected behavior of the reflection-based data type extraction.
      *
      * <p>It is meant for future backward compatibility. Whenever the extraction logic is changed,

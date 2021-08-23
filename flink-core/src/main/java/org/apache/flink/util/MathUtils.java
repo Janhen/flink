@@ -125,6 +125,10 @@ public final class MathUtils {
     }
 
     /**
+     * 此函数散列一个整数值。
+     *
+     * <p>使用不同的哈希函数来跨机器分区数据和数据结构的内部分区是至关重要的。此散列函数用于跨机器分区。
+     *
      * This function hashes an integer value.
      *
      * <p>It is crucial to use different hash functions to partition data across machines and the

@@ -27,6 +27,8 @@ import org.apache.flink.util.Preconditions;
 /**
  * 分区程序根据密钥组索引选择目标通道。
  *
+ * J: 对应显示为 HASH partitioner
+ *
  * Partitioner selects the target channel based on the key group index.
  *
  * @param <T> Type of the elements in the Stream being partitioned
@@ -40,6 +42,7 @@ public class KeyGroupStreamPartitioner<T, K> extends StreamPartitioner<T>
 
     private int maxParallelism;
 
+    // 默认 maxParallelism 为  1 << 7
     public KeyGroupStreamPartitioner(KeySelector<T, K> keySelector, int maxParallelism) {
         Preconditions.checkArgument(maxParallelism > 0, "Number of key-groups must be > 0!");
         this.keySelector = Preconditions.checkNotNull(keySelector);
@@ -59,6 +62,7 @@ public class KeyGroupStreamPartitioner<T, K> extends StreamPartitioner<T>
             throw new RuntimeException(
                     "Could not extract key from " + record.getInstance().getValue(), e);
         }
+        // 按照 key 进行数据划分
         return KeyGroupRangeAssignment.assignKeyToParallelOperator(
                 key, maxParallelism, numberOfChannels);
     }

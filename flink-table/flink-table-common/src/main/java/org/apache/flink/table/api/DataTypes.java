@@ -75,12 +75,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * {@link DataType}可用于声明操作的输入或输出类型。这个类枚举Table & SQL API的所有预定义数据类型。
+ * {@link DataType} 可用于声明操作的输入或输出类型。这个类枚举 Table & SQL API 的所有预定义数据类型。
  *
- * <p>为了方便起见，这个类还包含用于创建{@link UnresolvedDataType}的方法，这些方法需要在后面的阶段解析。这对于表示
- * 为{@link Class}的更复杂类型(参见{@link #of(Class)})或需要在目录中查找的类型(参见{@link #of(String)})尤其有用。
+ * <p>为了方便起见，这个类还包含用于创建 {@link UnresolvedDataType} 的方法，这些方法需要在后面的阶段解析。这对于表示
+ *   为 {@link Class} 的更复杂类型(参见 {@link #of(Class)})或需要在目录中查找的类型(参见 {@link #of(String)})
+ *   尤其有用。
  *
- * <p>注意:规划人员可能不支持所有具有所需精度或参数的数据类型。在使用数据类型之前，请参阅网站文档中的规划器兼容性和限制部分。
+ * <p>注意: 规划人员可能不支持所有具有所需精度或参数的数据类型。在使用数据类型之前，请参阅网站文档中的规划器兼容性和
+ *   限制部分。
  *
  * A {@link DataType} can be used to declare input and/or output types of operations. This class
  * enumerates all pre-defined data types of the Table & SQL API.
@@ -164,6 +166,9 @@ public final class DataTypes {
     // CHECKSTYLE.OFF: MethodName
 
     /**
+     * 定长字符串的数据类型{@code CHAR(n)}，其中{@code n} 为代码点数。 {@code n} 的值必须介于 1 和
+     * {@link Integer#MAX_VALUE} 之间（两者都包括在内）。
+     *
      * Data type of a fixed-length character string {@code CHAR(n)} where {@code n} is the number of
      * code points. {@code n} must have a value between 1 and {@link Integer#MAX_VALUE} (both
      * inclusive).
@@ -175,6 +180,9 @@ public final class DataTypes {
     }
 
     /**
+     * 变长字符串{@code VARCHAR(n)} 的数据类型，其中{@code n} 是最大代码点数。 {@code n} 的值必须介于 1 和
+     * {@link Integer#MAX_VALUE} 之间（两者都包括在内）。
+     *
      * Data type of a variable-length character string {@code VARCHAR(n)} where {@code n} is the
      * maximum number of code points. {@code n} must have a value between 1 and {@link
      * Integer#MAX_VALUE} (both inclusive).
@@ -186,6 +194,8 @@ public final class DataTypes {
     }
 
     /**
+     * 定义了最大长度的变长字符串的数据类型。这是用于表示 JVM 字符串的 {@code VARCHAR(2147483647)} 的快捷方式。
+     *
      * Data type of a variable-length character string with defined maximum length. This is a
      * shortcut for {@code VARCHAR(2147483647)} for representing JVM strings.
      *
@@ -205,6 +215,9 @@ public final class DataTypes {
     }
 
     /**
+     * 固定长度二进制字符串（=字节序列）的数据类型{@code BINARY(n)}，其中{@code n} 是字节数。 {@code n} 的值
+     * 必须介于 1 和 {@link Integer#MAX_VALUE} 之间（两者都包括在内）。
+     *
      * Data type of a fixed-length binary string (=a sequence of bytes) {@code BINARY(n)} where
      * {@code n} is the number of bytes. {@code n} must have a value between 1 and {@link
      * Integer#MAX_VALUE} (both inclusive).
@@ -238,6 +251,10 @@ public final class DataTypes {
     }
 
     /**
+     * 具有固定精度和小数位数的十进制数的数据类型 {@code DECIMAL(p, s)} 其中 {@code p} 是数字中的位数（=精度），
+     * {@code s} 是位数小数点右侧的数字（=小数位数）。 {@code p} 的值必须介于 1 到 38（包括两者）之间。
+     * {@code s} 的值必须介于 0 和 {@code p} 之间（两者都包括在内）。
+     *
      * Data type of a decimal number with fixed precision and scale {@code DECIMAL(p, s)} where
      * {@code p} is the number of digits in a number (=precision) and {@code s} is the number of
      * digits to the right of the decimal point in a number (=scale). {@code p} must have a value
@@ -306,6 +323,10 @@ public final class DataTypes {
     }
 
     /**
+     * 由 {@code year-month-day} 组成的日期数据类型，其值范围从 {@code 0000-01-01} 到 {@code 9999-12-31}。
+     *
+     * <p>与 SQL 标准相比，范围从 {@code 0000} 年开始。
+     *
      * Data type of a date consisting of {@code year-month-day} with values ranging from {@code
      * 0000-01-01} to {@code 9999-12-31}.
      *
@@ -354,6 +375,14 @@ public final class DataTypes {
     }
 
     /**
+     * 不带时区的时间戳的数据类型 {@code TIMESTAMP(p)}，其中 {@code p} 是小数秒的位数（=精度）。 {@code p} 的
+     * 值必须介于 0 和 9 之间（包括这两个值）。
+     *
+     * <p>一个实例由 {@code year-month-day hour:minute:second[.fractional]} 组成，精度高达纳秒，值范围从
+     *   {@code 0000-01-01 00:00:00.000000000} 到 { @代码 9999-12-31 23:59:59.999999999}。
+     *
+     * <p>与 SQL 标准相比，不支持闰秒（23:59:60 和 23:59:61），因为语义更接近 {@link java.time.LocalDateTime}。
+     *
      * Data type of a timestamp WITHOUT time zone {@code TIMESTAMP(p)} where {@code p} is the number
      * of digits of fractional seconds (=precision). {@code p} must have a value between 0 and 9
      * (both inclusive).
@@ -394,6 +423,15 @@ public final class DataTypes {
     }
 
     /**
+     * 带有时区的时间戳的数据类型 {@code TIMESTAMP(p) WITH TIME ZONE}，其中 {@code p} 是小数秒的位数（=精度）。
+     * {@code p} 的值必须介于 0 和 9 之间（包括这两个值）。
+     *
+     * <p>一个实例由 {@code year-month-day hour:minute:second[.fractional] zone} 组成，精度最高为纳秒，
+     *   值范围为 {@code 0000-01-01 00:00:00.000000000 +14 :59} 到
+     *   {@code 9999-12-31 23:59:59.999999999 -14:59}。
+     *
+     * <p>与 SQL 标准相比，不支持闰秒（23:59:60 和 23:59:61），因为语义更接近 {@link java.time.OffsetDateTime}。
+     *
      * Data type of a timestamp WITH time zone {@code TIMESTAMP(p) WITH TIME ZONE} where {@code p}
      * is the number of digits of fractional seconds (=precision). {@code p} must have a value
      * between 0 and 9 (both inclusive).
@@ -488,6 +526,18 @@ public final class DataTypes {
     /**
      * 时间间隔的数据类型。有两种类型的时间间隔:以纳秒为粒度的白天时间间隔或以月为粒度的年-月间隔。
      *
+     * <p>一天时间间隔由 {@code +days hours:months:seconds.fractional} 组成，值范围从
+     *   {@code -999999 23:59:59.999999999} 到 {@code +999999 23:59:59.999999999 }.该类型必须参数化为
+     *   以下分辨率之一：天间隔、天到小时的间隔、天到分钟的间隔、天到秒的间隔、小时的间隔、小时到分钟的间隔、
+     *   小时到秒的间隔、分钟间隔、分钟到秒的间隔或秒的间隔。所有类型的分辨率的值表示都是相同的。例如，70 秒的间隔始终
+     *   以间隔天到秒的格式表示（具有默认精度）：{@code +00 00:01:10.000000}）。
+     *
+     * <p>年月间隔由 {@code +years-months} 组成，值范围从 {@code -9999-11} 到 {@code +9999-11}。该类型必须
+     *   参数化为以下分辨率之一：年间隔、年到月的间隔或月的间隔。所有类型的分辨率的值表示都是相同的。例如，50 个月的
+     *   间隔始终以年到月的间隔格式表示（默认年份精度）：{@code +04-02}。
+     *
+     * <p>示例：{@code INTERVAL(DAY(2))} 表示日间间隔或 {@code INTERVAL(YEAR(4))} 表示年月间隔。
+     *
      * Data type of a temporal interval. There are two types of temporal intervals: day-time
      * intervals with up to nanosecond granularity or year-month intervals with up to month
      * granularity.
@@ -521,6 +571,8 @@ public final class DataTypes {
     }
 
     /**
+     * 时间间隔的数据类型。有两种类型的时间间隔：具有高达纳秒级粒度的日间间隔或具有高达月粒度的年月间隔。
+     *
      * Data type of a temporal interval. There are two types of temporal intervals: day-time
      * intervals with up to nanosecond granularity or year-month intervals with up to month
      * granularity.
@@ -588,8 +640,8 @@ public final class DataTypes {
     }
 
     /**
-     * multiset的数据类型(=bag)。与set不同的是，它允许每个具有公共子类型的元素具有多个实例。每个唯一的值(包括{@code NULL})
-     * 被映射到某个多样性。
+     * multiset 的数据类型(=bag)。与 set不 同的是，它允许每个具有公共子类型的元素具有多个实例。每个唯一的值(包括
+     * {@code NULL}) 被映射到某个多样性。
      *
      * Data type of a multiset (=bag). Unlike a set, it allows for multiple instances for each of
      * its elements with a common subtype. Each unique value (including {@code NULL}) is mapped to
@@ -676,9 +728,11 @@ public final class DataTypes {
      * 字段序列的数据类型。字段由字段名、字段类型和可选描述组成。表中最特定的行类型是行类型。在本例中，行中的每一列对应
      * 于与列具有相同序数位置的行类型的字段。
      *
-     * <p>与SQL标准相比，可选字段描述简化了对复杂结构的处理。
+     * <p>与 SQL 标准相比，可选字段描述简化了对复杂结构的处理。
      *
-     * <p>使用{@link #FIELD(String, DataType)}或{@link #FIELD(String, DataType, String)}构造字段。
+     * <p>使用 {@link #FIELD(String, DataType)} 或 {@link #FIELD(String, DataType, String)} 构造字段。
+     *
+     * J: HBase 的列族指定对应的字段
      *
      * Data type of a sequence of fields. A field consists of a field name, field type, and an
      * optional description. The most specific type of a row of a table is a row type. In this case,
@@ -761,6 +815,9 @@ public final class DataTypes {
     }
 
     /**
+     * 用于表示无类型 {@code NULL} 值的数据类型。 null 类型除了 {@code NULL} 没有其他值，因此，它可以转换为类似于
+     * JVM 语义的任何可空类型。
+     *
      * Data type for representing untyped {@code NULL} values. A null type has no other value except
      * {@code NULL}, thus, it can be cast to any nullable type similar to JVM semantics.
      *
@@ -782,8 +839,9 @@ public final class DataTypes {
     /**
      * 任意序列化类型的数据类型。这种类型是表生态系统中的一个黑盒子，只在边缘反序列化。
      *
-     * <p>原始类型是SQL标准的扩展。这个方法假设存在一个{@link TypeSerializer}实例。使用{@link #RAW(Class)}自动
-     * 生成序列化器。
+     * <p>原始类型是 SQL 标准的扩展。
+     *
+     * <p>这个方法假设存在一个 {@link TypeSerializer} 实例。使用 {@link #RAW(Class)} 自动生成序列化器。
      *
      * Data type of an arbitrary serialized type. This type is a black box within the table
      * ecosystem and is only deserialized at the edges.
@@ -845,7 +903,7 @@ public final class DataTypes {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 分辨率以秒为单位，默认为6位小数秒。
+     * 分辨率以秒为单位，默认为 6 位小数秒。
      *
      * Resolution in seconds with 6 digits for fractional seconds by default.
      *
@@ -857,6 +915,9 @@ public final class DataTypes {
     }
 
     /**
+     * 以秒和（可能）小数秒为单位的分辨率。精度是小数秒的位数。它的值必须介于 0 和 9 之间（包括这两个值）。如果未
+     * 指定小数，则默认等于 6。
+     *
      * Resolution in seconds and (possibly) fractional seconds. The precision is the number of
      * digits of fractional seconds. It must have a value between 0 and 9 (both inclusive). If no
      * fractional is specified, it is equal to 6 by default.

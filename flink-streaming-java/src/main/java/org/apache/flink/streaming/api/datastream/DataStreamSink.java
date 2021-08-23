@@ -111,6 +111,8 @@ public class DataStreamSink<T> {
     }
 
     /**
+     * 设置此接收器的并行度。度数必须大于零。
+     *
      * Sets the parallelism for this sink. The degree must be higher than zero.
      *
      * @param parallelism The parallelism for this sink.

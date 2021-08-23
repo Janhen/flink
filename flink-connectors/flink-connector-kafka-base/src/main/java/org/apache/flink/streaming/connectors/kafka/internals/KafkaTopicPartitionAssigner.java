@@ -26,9 +26,15 @@ public class KafkaTopicPartitionAssigner {
 
     /**
      * 返回指定 Kafka 分区的目标子任务的索引。
-     * 单个主题分区的结果分布具有以下契约:
-     * 1. 均匀分布在子任务
-     * 2. 分区是轮循分布的(严格顺时针方向的w.r.t.升序子任务索引)，通过使用分区id作为起始索引的偏移量(即，使用主题名称确定的主题的分区0将被分配给的子任务的索引)。
+     *
+     * <p>单个主题分区的结果分布具有以下契约:
+     *
+     *   1. 均匀分布在子任务
+     *   2. 分区是轮循分布的(严格顺时针方向的 w.r.t.升序子任务索引)，通过使用分区 id 作为起始索引的偏移量
+     *     (即，使用主题名称确定的主题的分区0将被分配给的子任务的索引)。
+     *
+     * <p>以上契约至关重要，不可破坏。消费者子任务依靠这个契约在本地过滤掉它不应该订阅的分区，保证单个主题的所有分区
+     *   总是以均匀分布的方式分配给某个子任务。
      *
      * Returns the index of the target subtask that a specific Kafka partition should be assigned
      * to.
@@ -59,6 +65,7 @@ public class KafkaTopicPartitionAssigner {
         // here, the assumption is that the id of Kafka partitions are always ascending
         // starting from 0, and therefore can be used directly as the offset clockwise from the
         // start index
+        // 这里假设 Kafka 分区的 id 总是从 0 开始递增，因此可以直接用作从起始索引顺时针方向的偏移量
         return (startIndex + partition.getPartition()) % numParallelSubtasks;
     }
 }

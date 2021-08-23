@@ -38,6 +38,7 @@ public class ShufflePartitioner<T> extends StreamPartitioner<T> {
 
     @Override
     public int selectChannel(SerializationDelegate<StreamRecord<T>> record) {
+        // 选择随机的一个
         return random.nextInt(numberOfChannels);
     }
 

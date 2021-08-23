@@ -25,6 +25,9 @@ import org.apache.flink.util.Preconditions;
 public final class KeyGroupRangeAssignment {
 
     /**
+     * 如果用户未配置任何内容，则最大并行度的默认下限。我们有这个，所以允许用户一定程度的扩展，以防他们忘记明确配置
+     * 最大并行度。
+     *
      * The default lower bound for max parallelism if nothing was configured by the user. We have
      * this so allow users some degree of scale-up in case they forgot to configure maximum
      * parallelism explicitly.
@@ -40,6 +43,10 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键分配给并行运算符索引。
+     *
+     * J: 测试使其均匀分布
+     *
      * Assigns the given key to a parallel operator index.
      *
      * @param key the key to assign
@@ -54,6 +61,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键分配给键组索引。
+     *
      * Assigns the given key to a key-group index.
      *
      * @param key the key to assign
@@ -66,6 +75,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键分配给键组索引。
+     *
      * Assigns the given key to a key-group index.
      *
      * @param keyHash the hash of the key to assign
@@ -106,6 +117,11 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 在给定的并行度和最大并行度下计算键组所属的运算符的索引。
+     *
+     * <p>重要提示：maxParallelism 必须 <= Short.MAX_VALUE 以避免在此方法中出现舍入问题。如果我们想超越这个边界，
+     *   这个方法必须对 long 值执行算术运算。
+     *
      * Computes the index of the operator to which a key-group belongs under the given parallelism
      * and maximum parallelism.
      *

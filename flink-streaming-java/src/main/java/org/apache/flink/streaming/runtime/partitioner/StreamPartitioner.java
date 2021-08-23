@@ -25,12 +25,13 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import java.io.Serializable;
 
 /** A special {@link ChannelSelector} for use in streaming programs. */
-// 一个特殊的{@link ChannelSelector}用于流媒体程序。
+// 一个特殊的 {@link ChannelSelector} 用于 streaming 程序。
 @Internal
 public abstract class StreamPartitioner<T>
         implements ChannelSelector<SerializationDelegate<StreamRecord<T>>>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    // 写入到下游的并行度 ?
     protected int numberOfChannels;
 
     @Override

@@ -1657,7 +1657,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 更新 ExecutionVertex 的执行尝试之一的状态。如果新状态为“FINISHED”，这也会更新累加器。
+     * 更新 ExecutionVertex 的执行尝试之一的状态。如果新状态为 “FINISHED”，这也会更新累加器。
      *
      * Updates the state of one of the ExecutionVertex's Execution attempts. If the new status if
      * "FINISHED", this also updates the accumulators.
@@ -1739,6 +1739,7 @@ public class ExecutionGraph implements AccessExecutionGraph {
         }
     }
 
+    // 释放分区，根据中间结果的 partition id
     private void releasePartitions(final List<IntermediateResultPartitionID> releasablePartitions) {
         if (releasablePartitions.size() > 0) {
             final List<ResultPartitionID> partitionIds =
@@ -1803,6 +1804,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 调度或更新给定结果分区的使用者。
+     *
      * Schedule or updates consumers of the given result partition.
      *
      * @param partitionId specifying the result partition whose consumer shall be scheduled or
@@ -1834,8 +1837,10 @@ public class ExecutionGraph implements AccessExecutionGraph {
         return Collections.unmodifiableMap(currentExecutions);
     }
 
+    // Job 的一次执行(可能失败)
     void registerExecution(Execution exec) {
         assertRunningInJobMasterMainThread();
+        // 获取到上一个 execution, Job 只能单个执行 ...
         Execution previous = currentExecutions.putIfAbsent(exec.getAttemptId(), exec);
         if (previous != null) {
             failGlobal(
@@ -1862,6 +1867,8 @@ public class ExecutionGraph implements AccessExecutionGraph {
     }
 
     /**
+     * 在作业运行时更新累加器。最终累加器结果通过 UpdateTaskExecutionState 消息传输。
+     *
      * Updates the accumulators during the runtime of a job. Final accumulator results are
      * transferred through the UpdateTaskExecutionState message.
      *

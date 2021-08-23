@@ -291,6 +291,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 它创建了一个新的 {@link KeyedStream}，它使用提供的键来划分其操作符状态。
+     *
      * It creates a new {@link KeyedStream} that uses the provided key for partitioning its operator
      * states.
      *
@@ -303,6 +305,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 它创建了一个新的 {@link KeyedStream}，它使用提供的键和显式类型信息来划分其运算符状态。
+     *
      * It creates a new {@link KeyedStream} that uses the provided key with explicit type
      * information for partitioning its operator states.
      *
@@ -466,7 +470,7 @@ public class DataStream<T> {
     }
 
     /**
-     * 设置{@link DataStream}的分区，以便将输出元素均匀随机打乱到下一个操作。
+     * 设置 {@link DataStream} 的分区，以便将输出元素均匀随机打乱到下一个操作。
      *
      * Sets the partitioning of the {@link DataStream} so that the output elements are shuffled
      * uniformly randomly to the next operation.
@@ -1244,18 +1248,26 @@ public class DataStream<T> {
     }
 
     /**
+     * 用于设置 DataStream 分区器的内部函数。
+     *
+     * J: {@link KeyedStream} 不支持该操作
+     *
      * Internal function for setting the partitioner for the DataStream.
      *
      * @param partitioner Partitioner to set.
      * @return The modified DataStream.
      */
     protected DataStream<T> setConnectionType(StreamPartitioner<T> partitioner) {
+        // J: 使用指定的 partitioner 重新创建 stream
         return new DataStream<>(
                 this.getExecutionEnvironment(),
                 new PartitionTransformation<>(this.getTransformation(), partitioner));
     }
 
     /**
+     * 将给定的接收器添加到此 DataStream。一旦调用 {@link StreamExecutionEnvironment#execute()} 方法，只会
+     * 执行添加了接收器的流。
+     *
      * Adds the given sink to this DataStream. Only streams with sinks added will be executed once
      * the {@link StreamExecutionEnvironment#execute()} method is called.
      *
@@ -1265,6 +1277,7 @@ public class DataStream<T> {
     public DataStreamSink<T> addSink(SinkFunction<T> sinkFunction) {
 
         // read the output type of the input Transform to coax out errors about MissingTypeInfo
+        // 读取输入 Transform 的输出类型以消除有关 MissingTypeInfo 的错误
         transformation.getOutputType();
 
         // configure the type if needed

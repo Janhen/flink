@@ -40,12 +40,13 @@ public class RebalancePartitioner<T> extends StreamPartitioner<T> {
     public void setup(int numberOfChannels) {
         super.setup(numberOfChannels);
 
+        // 初始的时候选择一个随机数
         nextChannelToSendTo = ThreadLocalRandom.current().nextInt(numberOfChannels);
     }
 
     @Override
     public int selectChannel(SerializationDelegate<StreamRecord<T>> record) {
-        // J: rebance
+        // J: rebalance  逐个向上增加分配
         nextChannelToSendTo = (nextChannelToSendTo + 1) % numberOfChannels;
         return nextChannelToSendTo;
     }

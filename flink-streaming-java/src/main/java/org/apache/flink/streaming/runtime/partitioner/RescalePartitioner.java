@@ -25,12 +25,12 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 /**
  * 通过循环通过输出通道来平均分配数据的分区器。它只分布到下游节点的子集，因为
  * {@link org.apache.flink.streaming.api.graph.StreamingJobGraphGenerator}
- * 当遇到{@code RescalePartitioner}时，StreamingJobGraphGenerator
- * 实例化一个{@link DistributionPattern#POINTWISE}分布模式。
+ * 当遇到 {@code RescalePartitioner} 时，StreamingJobGraphGenerator
+ * 实例化一个 {@link DistributionPattern#POINTWISE} 分布模式。
  *
- * <p>上游操作向其发送元素的下游操作子集取决于上游和下游操作的并行度。例如，如果上游操作的并行度为2，而下游操作的并行度
- * 为4，那么一个上游操作将把元素分配给两个下游操作，而另一个上游操作将分配给另外两个下游操作。另一方面，如果下游操作的并
- * 行度为2，而上游操作的并行度为4，那么两个上游操作将分配给一个下游操作，而另外两个上游操作将分配给另一个下游操作。
+ * <p>上游操作向其发送元素的下游操作子集取决于上游和下游操作的并行度。例如，如果上游操作的并行度为 2，而下游操作的并行度
+ * 为 4，那么一个上游操作将把元素分配给两个下游操作，而另一个上游操作将分配给另外两个下游操作。另一方面，如果下游操作的并
+ * 行度为 2，而上游操作的并行度为 4，那么两个上游操作将分配给一个下游操作，而另外两个上游操作将分配给另一个下游操作。
  *
  * <p>如果不同的并行度不是彼此的倍数，那么一个或多个下游操作与上游操作的输入数量将不同。
  *

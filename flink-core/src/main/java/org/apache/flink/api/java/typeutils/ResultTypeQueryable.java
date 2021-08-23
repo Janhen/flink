@@ -22,8 +22,10 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /**
- * 这个接口可以通过函数和输入格式来实现，以告诉框架它们生成的数据类型。此方法可作为反射分析的替代方法，在生成的数据类
- * 型可能因参数化而不同的情况下非常有用。
+ * 这个接口可以通过函数和输入格式来实现，以告诉 framework 它们生成的数据类型。此方法可作为反射分析的替代方法，在生成的
+ * 数据类型可能因参数化而不同的情况下非常有用。
+ *
+ * J: 对于结果类型是 {@code List<T>} 之类带有的泛型的类型，实现
  *
  * This interface can be implemented by functions and input formats to tell the framework about
  * their produced data type. This method acts as an alternative to the reflection analysis that is

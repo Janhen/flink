@@ -63,7 +63,9 @@ public interface Constraint {
      * </ul>
      */
     enum ConstraintType {
+        // 限制类型，主键
         PRIMARY_KEY,
+        // 限制类型，唯一键
         UNIQUE_KEY
     }
 }

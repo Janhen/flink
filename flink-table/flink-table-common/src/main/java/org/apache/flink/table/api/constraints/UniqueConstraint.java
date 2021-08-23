@@ -52,6 +52,7 @@ public final class UniqueConstraint extends AbstractConstraint {
     }
 
     /** List of column names for which the primary key was defined. */
+    // 定义了主键的列名列表。
     public List<String> getColumns() {
         return columns;
     }

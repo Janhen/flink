@@ -107,6 +107,7 @@ public class NumberSequenceIterator extends SplittableIterator<Long> {
             return new NumberSequenceIterator[] {new NumberSequenceIterator(current, to)};
         }
 
+        // 在这里， numPartitions >= 2 ！！！
         // here, numPartitions >= 2 !!!
 
         long elementsPerSplit;
