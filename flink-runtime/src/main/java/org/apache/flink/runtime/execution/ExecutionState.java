@@ -22,7 +22,11 @@ package org.apache.flink.runtime.execution;
  * 任务在执行期间可能处于的所有状态的枚举。任务通常在状态 {@code CREATED} 中启动，并根据下图切换状态:
  *
  * <p>如果作业管理器故障转移，可以从 {@code CREATED} 状态进入 {@code RECONCILING} 状态，并且
- * {@code RECONCILING} 状态可以切换到任何现有的任务状态。
+ *   {@code RECONCILING} 状态可以切换到任何现有的任务状态。
+ *
+ * <p>可以从任何其他状态进入 {@code FAILED} 状态。
+ *
+ * <p>状态 {@code FINISHED}、{@code CANCELED} 和 {@code FAILED} 被认为是终端状态。
  *
  * An enumeration of all states that a task can be in during its execution. Tasks usually start in
  * the state {@code CREATED} and switch states according to this diagram:

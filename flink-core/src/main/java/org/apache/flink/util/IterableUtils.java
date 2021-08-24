@@ -25,9 +25,12 @@ import java.util.stream.StreamSupport;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A collection of utilities that expand the usage of {@link Iterable}. */
+// 扩展 {@link Iterable} 用法的实用程序集合。
 public class IterableUtils {
 
     /**
+     * 将给定的 {@link Iterable} 转换为 {@link Stream}。
+     *
      * Convert the given {@link Iterable} to a {@link Stream}.
      *
      * @param iterable to convert to a stream

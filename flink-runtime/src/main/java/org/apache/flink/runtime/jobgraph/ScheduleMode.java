@@ -33,6 +33,8 @@ public enum ScheduleMode {
      * 与 LAZY_FROM_SOURCES 相同，不同之处在于它使用批处理槽请求，支持执行槽数少于请求的作业。但是，
      * 用户需要确保作业不包含任何流水线洗牌(每个流水线区域都可以使用单个槽执行)。
      *
+     * J: 分阶段 slot 重用调度
+     *
      * Same as LAZY_FROM_SOURCES just with the difference that it uses batch slot requests which
      * support the execution of jobs with fewer slots than requested. However, the user needs to
      * make sure that the job does not contain any pipelined shuffles (every pipelined region can be
@@ -44,6 +46,7 @@ public enum ScheduleMode {
     // 立即安排所有任务
     EAGER(false);
 
+    // J: 是否允许 lazy 部署
     private final boolean allowLazyDeployment;
 
     ScheduleMode(boolean allowLazyDeployment) {

@@ -35,6 +35,7 @@ public interface SchedulingStrategy {
 
     /** Called when the scheduling is started (initial scheduling operation). */
     // 在调度开始时调用（初始调度操作）。
+    // J: 调度入口
     void startScheduling();
 
     /**
@@ -57,6 +58,8 @@ public interface SchedulingStrategy {
     void onExecutionStateChange(ExecutionVertexID executionVertexId, ExecutionState executionState);
 
     /**
+     * 当 {@link IntermediateResultPartition} 变为可消费时调用。
+     *
      * Called whenever an {@link IntermediateResultPartition} becomes consumable.
      *
      * @param resultPartitionId The id of the result partition

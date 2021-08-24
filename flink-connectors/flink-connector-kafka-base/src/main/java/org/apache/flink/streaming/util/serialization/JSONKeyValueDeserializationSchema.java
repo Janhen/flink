@@ -32,9 +32,11 @@ import static org.apache.flink.api.java.typeutils.TypeExtractor.getForClass;
 /**
  * 反序列化 JSON 字符串到 ObjectNode 的模式。
  *
- * <p>关键字段可以通过调用objectNode.get(" Key ").get(&lt;name>).as(&lt;type>)来访问
+ * <p>关键字段可以通过调用objectNode.get("Key").get(&lt;name>).as(&lt;type>)来访问
  *
- * <p>Value字段可以通过调用objectNode.get(" Value ").get(&lt;name>).as(&lt;type>)来访问
+ * <p>Value字段可以通过调用objectNode.get("Value").get(&lt;name>).as(&lt;type>)来访问
+ *
+ * J: 结果为 jackson 的 {@code ObjectNode}
  *
  * DeserializationSchema that deserializes a JSON String into an ObjectNode.
  *
@@ -51,6 +53,7 @@ public class JSONKeyValueDeserializationSchema implements KafkaDeserializationSc
 
     private static final long serialVersionUID = 1509391548173891955L;
 
+    // J: 是否将元数据包含进结果
     private final boolean includeMetadata;
     // J: Jackson ...
     private ObjectMapper mapper;
@@ -74,7 +77,7 @@ public class JSONKeyValueDeserializationSchema implements KafkaDeserializationSc
             node.set("value", mapper.readValue(record.value(), JsonNode.class));
         }
         if (includeMetadata) {
-            // 放入 kafka 消息的元数据信息
+            // 放入 kafka 消息的元数据信息到 metadata 下
             node.putObject("metadata")
                     .put("offset", record.offset())
                     .put("topic", record.topic())

@@ -39,11 +39,16 @@ import static org.apache.flink.runtime.execution.ExecutionState.FINISHED;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 当输入数据准备好时，调度顶点的批处理作业实例。
+ *
+ * J: 用于执行批处理作业的调度
+ *
  * {@link SchedulingStrategy} instance for batch job which schedule vertices when input data are
  * ready.
  */
 public class LazyFromSourcesSchedulingStrategy implements SchedulingStrategy {
 
+    // J: 是否处于创建执行状态
     private static final Predicate<SchedulingExecutionVertex> IS_IN_CREATED_EXECUTION_STATE =
             schedulingExecutionVertex -> CREATED == schedulingExecutionVertex.getState();
 
@@ -51,8 +56,10 @@ public class LazyFromSourcesSchedulingStrategy implements SchedulingStrategy {
 
     private final SchedulingTopology schedulingTopology;
 
+    // 各个 执行定点的部署选项
     private final Map<ExecutionVertexID, DeploymentOption> deploymentOptions;
 
+    // 输入依赖约束检查器
     private final InputDependencyConstraintChecker inputConstraintChecker;
 
     public LazyFromSourcesSchedulingStrategy(

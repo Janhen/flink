@@ -30,15 +30,22 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link SchedulingStrategy} 实例用于同时调度所有任务。
+ *
+ * J: 用于执行流计算作业的调度
+ *
  * {@link SchedulingStrategy} instance for streaming job which will schedule all tasks at the same
  * time.
  */
 public class EagerSchedulingStrategy implements SchedulingStrategy {
 
+    // J: 调度器操作
     private final SchedulerOperations schedulerOperations;
 
+    // 调度拓扑
     private final SchedulingTopology schedulingTopology;
 
+    // 部署选项
     private final DeploymentOption deploymentOption = new DeploymentOption(false);
 
     public EagerSchedulingStrategy(

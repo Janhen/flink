@@ -118,8 +118,10 @@ import java.util.List;
 @Public
 public class DataStream<T> {
 
+    // Stream 执行环境
     protected final StreamExecutionEnvironment environment;
 
+    // 算子的转换
     protected final Transformation<T> transformation;
 
     /**
@@ -137,6 +139,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 返回当前{@link StreamExecutionEnvironment}中{@link DataStream}的ID。
+     *
      * Returns the ID of the {@link DataStream} in the current {@link StreamExecutionEnvironment}.
      *
      * @return ID of the DataStream
@@ -147,6 +151,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 获取此 operator 的并行度。
+     *
      * Gets the parallelism for this operator.
      *
      * @return The parallelism set for this operator.
@@ -156,6 +162,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 获取此 operator 的最小资源。
+     *
      * Gets the minimum resources for this operator.
      *
      * @return The minimum resources set for this operator.
@@ -166,6 +174,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 获取此 operator 的首选资源。
+     *
      * Gets the preferred resources for this operator.
      *
      * @return The preferred resources set for this operator.
@@ -185,6 +195,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 调用{@link org.apache.flink.api.java.ClosureCleaner}
+     * 如果在{@link ExecutionConfig}中启用了闭包清理，则在给定的函数上执行 ClosureCleaner。
+     *
      * Invokes the {@link org.apache.flink.api.java.ClosureCleaner} on the given function if closure
      * cleaning is enabled in the {@link ExecutionConfig}.
      *
@@ -209,6 +222,9 @@ public class DataStream<T> {
     }
 
     /**
+     * 通过合并相同类型的{@link DataStream}输出，创建一个新的{@link DataStream}。使用此操作符合并的
+     * DataStreams将同时进行转换。
+     *
      * Creates a new {@link DataStream} by merging {@link DataStream} outputs of the same type with
      * each other. The DataStreams merged using this operator will be transformed simultaneously.
      *
@@ -382,6 +398,7 @@ public class DataStream<T> {
 
     /**
      * 使用自定义分区程序在指定的关键字段上分区POJO DataStream。此方法将键表达式带到分区上，并将接受该键类型的分区器。
+     *
      * <p>注意:此方法仅适用于单个字段的键。
      *
      * Partitions a POJO DataStream on the specified key fields using a custom partitioner. This
