@@ -23,6 +23,11 @@ import org.apache.flink.metrics.CharacterFilter;
 import java.util.Map;
 
 /**
+ * 将所有注册调用转发到可变父度量组的度量组，该组将可变报告器索引注入到对
+ * {@link org.apache.flink.metrics.MetricGroup#getMetricIdentifier(String)} 或
+ * {@link org.apache.flink.metrics.MetricGroup#getMetricIdentifier(String, CharacterFilter)} 的调用中。
+ * 这允许我们使用特定于报告者的分隔符，而无需报告者采取任何行动。
+ *
  * Metric group which forwards all registration calls to a variable parent metric group that injects
  * a variable reporter index into calls to {@link
  * org.apache.flink.metrics.MetricGroup#getMetricIdentifier(String)} or {@link

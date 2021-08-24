@@ -26,6 +26,7 @@ import org.apache.flink.metrics.MetricConfig;
 import org.influxdb.InfluxDB;
 
 /** Config options for {@link InfluxdbReporter}. */
+// {@link InfluxdbReporter} 的配置选项。
 @Documentation.SuffixOption
 public class InfluxdbReporterOptions {
 
@@ -53,22 +54,26 @@ public class InfluxdbReporterOptions {
                     .noDefaultValue()
                     .withDescription("the InfluxDB database to store metrics");
 
+    // （可选）指标的 InfluxDB 保留策略”
     public static final ConfigOption<String> RETENTION_POLICY =
             ConfigOptions.key("retentionPolicy")
                     .defaultValue("")
                     .withDescription("(optional) the InfluxDB retention policy for metrics");
 
+    // （可选）指标的 InfluxDB 一致性级别
     public static final ConfigOption<InfluxDB.ConsistencyLevel> CONSISTENCY =
             ConfigOptions.key("consistency")
                     .enumType(InfluxDB.ConsistencyLevel.class)
                     .defaultValue(InfluxDB.ConsistencyLevel.ONE)
                     .withDescription("(optional) the InfluxDB consistency level for metrics");
 
+    // （可选）指标的 InfluxDB 连接超时
     public static final ConfigOption<Integer> CONNECT_TIMEOUT =
             ConfigOptions.key("connectTimeout")
                     .defaultValue(10000)
                     .withDescription("(optional) the InfluxDB connect timeout for metrics");
 
+    // （可选）指标的 InfluxDB 写入超时
     public static final ConfigOption<Integer> WRITE_TIMEOUT =
             ConfigOptions.key("writeTimeout")
                     .defaultValue(10000)

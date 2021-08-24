@@ -24,6 +24,7 @@ import org.apache.flink.runtime.metrics.groups.AbstractMetricGroup;
 import org.apache.flink.runtime.metrics.scope.ScopeFormats;
 
 /** Metric registry which does nothing. */
+// 什么都不做的指标注册表。
 public class NoOpMetricRegistry implements MetricRegistry {
     private static final char delimiter = '.';
     private static final ScopeFormats scopeFormats = ScopeFormats.fromConfig(new Configuration());

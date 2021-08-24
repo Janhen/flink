@@ -139,6 +139,8 @@ public interface MetricGroup {
     <M extends Meter> M meter(String name, M meter);
 
     /**
+     * 向 Flink 注册一个新的 {@link Meter}。
+     *
      * Registers a new {@link Meter} with Flink.
      *
      * @param name name of the meter
@@ -163,6 +165,8 @@ public interface MetricGroup {
     MetricGroup addGroup(int name);
 
     /**
+     * 创建一个新的 MetricGroup 并将其添加到此组子组中。
+     *
      * Creates a new MetricGroup and adds it to this groups sub-groups.
      *
      * @param name name of the group
@@ -173,8 +177,8 @@ public interface MetricGroup {
     /**
      * 创建一个新的键值 MetricGroup 对。键组被添加到这个组的子组中，而值组被添加到键组的子组中。此方法返回值组。
      *
-     * <p>调用这个方法和{@code group.addGroup(key).addGroup(value)}的唯一区别是值组的
-     * {@link #getAllVariables()}返回一个额外的 {@code "<key>" ="value"} 对。
+     * <p>调用这个方法和 {@code group.addGroup(key).addGroup(value)} 的唯一区别是值组的
+     * {@link #getAllVariables()} 返回一个额外的 {@code "<key>" ="value"} 对。
      *
      * Creates a new key-value MetricGroup pair. The key group is added to this groups sub-groups,
      * while the value group is added to the key group's sub-groups. This method returns the value
@@ -195,6 +199,8 @@ public interface MetricGroup {
     // ------------------------------------------------------------------------
 
     /**
+     * 以范围组件的数组形式获取范围，例如 {@code ["host-7", "taskmanager-2", "window_word_count", "my-mapper"]}。
+     *
      * Gets the scope as an array of the scope components, for example {@code ["host-7",
      * "taskmanager-2", "window_word_count", "my-mapper"]}.
      *

@@ -29,6 +29,9 @@ public class MetricConfig extends Properties {
     }
 
     /**
+     * 在此属性列表中搜索具有指定键的属性。如果在此属性列表中找不到该键，则递归地检查默认属性列表及其默认值。如果未找到
+     * 该属性，该方法将返回默认值参数。
+     *
      * Searches for the property with the specified key in this property list. If the key is not
      * found in this property list, the default property list, and its defaults, recursively, are
      * then checked. The method returns the default value argument if the property is not found.

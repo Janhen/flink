@@ -29,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.flink.metrics.View.UPDATE_INTERVAL_SECONDS;
 
 /**
+ * ViewUpdater 负责更新实现 {@link View} 接口的所有指标。
+ *
  * The ViewUpdater is responsible for updating all metrics that implement the {@link View}
  * interface.
  */

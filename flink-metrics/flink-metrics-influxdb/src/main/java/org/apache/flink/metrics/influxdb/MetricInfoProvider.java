@@ -21,11 +21,14 @@ package org.apache.flink.metrics.influxdb;
 import org.apache.flink.metrics.MetricGroup;
 
 /**
+ * 为指标提供自定义信息的通用接口。请参阅 {@link AbstractReporter}。
+ *
  * A generic interface to provide custom information for metrics. See {@link AbstractReporter}.
  *
  * @param <MetricInfo> Custom metric information type
  */
 interface MetricInfoProvider<MetricInfo> {
 
+    //
     MetricInfo getMetricInfo(String metricName, MetricGroup group);
 }

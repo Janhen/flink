@@ -30,6 +30,10 @@ import org.apache.commons.math3.stat.ranking.NaNStrategy;
 import java.util.Arrays;
 
 /**
+ * {@link DescriptiveStatisticsHistogram} 返回的 DescriptiveStatistics 直方图统计实现。
+ *
+ * <p>统计信息获取 {@link DescriptiveStatistics} 实例的时间点快照，并允许从中检索优化的指标。
+ *
  * DescriptiveStatistics histogram statistics implementation returned by {@link
  * DescriptiveStatisticsHistogram}.
  *
@@ -80,6 +84,11 @@ public class DescriptiveStatisticsHistogramStatistics extends HistogramStatistic
     }
 
     /**
+     * 以优化的方式提取几个常用指标的函数，即尽可能少地运行数据计算。
+     *
+     * <p>请注意，对 {@link #evaluate(double[])} 或 {@link #evaluate(double[], int, int)} 的调用不会
+     *   返回值，而是填充此类，以便可以获取更多值从中检索。
+     *
      * Function to extract several commonly used metrics in an optimised way, i.e. with as few runs
      * over the data / calculations as possible.
      *
@@ -159,6 +168,8 @@ public class DescriptiveStatisticsHistogramStatistics extends HistogramStatistic
     }
 
     /**
+     * 计算最小值、最大值、平均值（第一时刻）以及一次遍历值数组的第二时刻。
+     *
      * Calculates min, max, mean (first moment), as well as the second moment in one go over the
      * value array.
      */

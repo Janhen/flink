@@ -39,6 +39,7 @@ public class Histogram implements Accumulator<Integer, TreeMap<Integer, Integer>
 
     private static final long serialVersionUID = 1L;
 
+    // 计数?
     private TreeMap<Integer, Integer> treeMap = new TreeMap<Integer, Integer>();
 
     @Override
@@ -61,11 +62,13 @@ public class Histogram implements Accumulator<Integer, TreeMap<Integer, Integer>
             if (ownValue == null) {
                 this.treeMap.put(entryFromOther.getKey(), entryFromOther.getValue());
             } else {
+                // 累加值
                 this.treeMap.put(entryFromOther.getKey(), entryFromOther.getValue() + ownValue);
             }
         }
     }
 
+    // 重置
     @Override
     public void resetLocal() {
         this.treeMap.clear();

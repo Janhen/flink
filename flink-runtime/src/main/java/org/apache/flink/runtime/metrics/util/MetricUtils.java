@@ -60,6 +60,7 @@ import java.util.function.Supplier;
 import static org.apache.flink.runtime.metrics.util.SystemResourcesMetricsInitializer.instantiateSystemMetrics;
 
 /** Utility class to register pre-defined metric sets. */
+// 用于注册预定义指标集的实用程序类
 public class MetricUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MetricUtils.class);
     private static final String METRIC_GROUP_STATUS_NAME = "Status";
@@ -70,6 +71,7 @@ public class MetricUtils {
 
     private MetricUtils() {}
 
+    // 实例化流程指标组
     public static ProcessMetricGroup instantiateProcessMetricGroup(
             final MetricRegistry metricRegistry,
             final String hostname,
@@ -85,6 +87,7 @@ public class MetricUtils {
         return processMetricGroup;
     }
 
+    // 实例化作业管理器指标组
     public static JobManagerMetricGroup instantiateJobManagerMetricGroup(
             final MetricRegistry metricRegistry, final String hostname) {
         final JobManagerMetricGroup jobManagerMetricGroup =
@@ -93,6 +96,7 @@ public class MetricUtils {
         return jobManagerMetricGroup;
     }
 
+    // 实例化任务管理器指标组
     public static Tuple2<TaskManagerMetricGroup, MetricGroup> instantiateTaskManagerMetricGroup(
             MetricRegistry metricRegistry,
             String hostName,
@@ -109,6 +113,7 @@ public class MetricUtils {
         return Tuple2.of(taskManagerMetricGroup, statusGroup);
     }
 
+    // 创建和初始化状态指标组
     private static MetricGroup createAndInitializeStatusMetricGroup(
             AbstractMetricGroup<?> parentMetricGroup) {
         MetricGroup statusGroup = parentMetricGroup.addGroup(METRIC_GROUP_STATUS_NAME);
@@ -117,7 +122,9 @@ public class MetricUtils {
         return statusGroup;
     }
 
+    // 实例化状态指标
     public static void instantiateStatusMetrics(MetricGroup metricGroup) {
+        // JVM度量
         MetricGroup jvm = metricGroup.addGroup("JVM");
 
         instantiateClassLoaderMetrics(jvm.addGroup("ClassLoader"));
@@ -157,12 +164,14 @@ public class MetricUtils {
                 .createAndStart();
     }
 
+    // 实例化类加载器指标
     private static void instantiateClassLoaderMetrics(MetricGroup metrics) {
         final ClassLoadingMXBean mxBean = ManagementFactory.getClassLoadingMXBean();
         metrics.<Long, Gauge<Long>>gauge("ClassesLoaded", mxBean::getTotalLoadedClassCount);
         metrics.<Long, Gauge<Long>>gauge("ClassesUnloaded", mxBean::getUnloadedClassCount);
     }
 
+    // 实例化垃圾收集器指标
     private static void instantiateGarbageCollectorMetrics(MetricGroup metrics) {
         List<GarbageCollectorMXBean> garbageCollectors =
                 ManagementFactory.getGarbageCollectorMXBeans();
@@ -175,6 +184,7 @@ public class MetricUtils {
         }
     }
 
+    // 实例化内存指标
     private static void instantiateMemoryMetrics(MetricGroup metrics) {
         instantiateHeapMemoryMetrics(metrics.addGroup(METRIC_GROUP_HEAP_NAME));
         instantiateNonHeapMemoryMetrics(metrics.addGroup(METRIC_GROUP_NONHEAP_NAME));
@@ -218,12 +228,14 @@ public class MetricUtils {
         }
     }
 
+    // 实例化堆内存指标
     @VisibleForTesting
     static void instantiateHeapMemoryMetrics(final MetricGroup metricGroup) {
         instantiateMemoryUsageMetrics(
                 metricGroup, () -> ManagementFactory.getMemoryMXBean().getHeapMemoryUsage());
     }
 
+    // 实例化非堆内存指标
     @VisibleForTesting
     static void instantiateNonHeapMemoryMetrics(final MetricGroup metricGroup) {
         instantiateMemoryUsageMetrics(
@@ -240,12 +252,14 @@ public class MetricUtils {
                 MetricNames.MEMORY_MAX, () -> memoryUsageSupplier.get().getMax());
     }
 
+    // 实例化线程指标
     private static void instantiateThreadMetrics(MetricGroup metrics) {
         final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
 
         metrics.<Integer, Gauge<Integer>>gauge("Count", mxBean::getThreadCount);
     }
 
+    // 实例化 CPU 指标
     private static void instantiateCPUMetrics(MetricGroup metrics) {
         try {
             final com.sun.management.OperatingSystemMXBean mxBean =

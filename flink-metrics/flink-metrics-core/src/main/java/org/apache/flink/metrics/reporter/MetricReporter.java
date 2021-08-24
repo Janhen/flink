@@ -31,6 +31,8 @@ import org.apache.flink.metrics.MetricGroup;
  *
  * <p>既不要求也不鼓励报告者支持两种实例化路径。
  *
+ * J: 当前已有 InfluxdbReporter、JMXReporter、PrometheusReporter、PrometheusPushGatewayReporter
+ *
  * Reporters are used to export {@link Metric Metrics} to an external backend.
  *
  * <p>Reporters are instantiated either a) via reflection, in which case they must be public,

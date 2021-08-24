@@ -22,6 +22,7 @@ import org.apache.flink.util.Preconditions;
 import java.util.Set;
 
 /** Encapsulates all settings that are defined per reporter. */
+// 封装每个报告器定义的所有设置。
 public class ReporterScopedSettings {
 
     private final int reporterIndex;

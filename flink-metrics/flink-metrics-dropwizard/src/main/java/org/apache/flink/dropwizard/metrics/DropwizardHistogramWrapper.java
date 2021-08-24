@@ -22,6 +22,8 @@ import org.apache.flink.metrics.Histogram;
 import org.apache.flink.metrics.HistogramStatistics;
 
 /**
+ * 使用 Dropwizard {@link com.codahale.metrics.Histogram} 作为 Flink {@link Histogram} 的包装器。
+ *
  * Wrapper to use a Dropwizard {@link com.codahale.metrics.Histogram} as a Flink {@link Histogram}.
  */
 public class DropwizardHistogramWrapper implements Histogram {

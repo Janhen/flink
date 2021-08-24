@@ -39,12 +39,14 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /** Utility for various network related tasks (such as finding free ports). */
+// 各种网络相关任务的实用程序（例如查找空闲端口）
 @Internal
 public class NetUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(NetUtils.class);
 
     /** The wildcard address to listen on all interfaces (either 0.0.0.0 or ::). */
+    // 在所有接口上侦听的通配符地址（0.0.0.0 或 ::）。
     private static final String WILDCARD_ADDRESS =
             new InetSocketAddress(0).getAddress().getHostAddress();
 
@@ -68,7 +70,7 @@ public class NetUtils {
     }
 
     /**
-     * 将"host:port"格式的字符串转换为{@link URL}。
+     * 将"host:port"格式的字符串转换为 {@link URL}。
      *
      * Converts a string of the form "host:port" into an {@link URL}.
      *
@@ -80,6 +82,8 @@ public class NetUtils {
     }
 
     /**
+     * 将“host:port”形式的字符串转换为 {@link InetSocketAddress}。
+     *
      * Converts a string of the form "host:port" into an {@link InetSocketAddress}.
      *
      * @param hostPort The "host:port" string.

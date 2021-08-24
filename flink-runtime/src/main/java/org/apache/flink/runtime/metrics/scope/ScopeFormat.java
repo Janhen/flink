@@ -27,6 +27,11 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 此类表示构建各种组件指标组的“范围”（或命名空间）的格式。组件度量标准组是例如“TaskManager”、“Task”或“Operator”。
+ *
+ * <p>用户定义的范围格式允许用户在范围中包含或排除某些标识符。属于“任务”组的度量范围可以例如包括任务尝试次数
+ *   （更细粒度的标识），或排除它（命名空间在故障和恢复期间的连续性）
+ *
  * This class represents the format after which the "scope" (or namespace) of the various component
  * metric groups is built. Component metric groups are for example "TaskManager", "Task", or
  * "Operator".

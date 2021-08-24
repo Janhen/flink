@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * 一个特殊的 {@link MetricGroup}，它不会在指标注册表和任何报告器中注册任何指标。
+ *
  * A special {@link MetricGroup} that does not register any metrics at the metrics registry and any
  * reporters.
  */

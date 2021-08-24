@@ -35,6 +35,11 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 守护线程探测系统资源。
+ *
+ * <p>为了准确一致地报告 CPU 和网络使用情况，我们必须定期探测 CPU ticks 和网络发送接收字节数，然后将这些值转换为 CPU
+ *   使用率和发送接收字节率。
+ *
  * Daemon thread probing system resources.
  *
  * <p>To accurately and consistently report CPU and network usage we have to periodically probe CPU

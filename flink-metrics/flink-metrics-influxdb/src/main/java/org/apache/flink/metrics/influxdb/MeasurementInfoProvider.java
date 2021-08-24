@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 class MeasurementInfoProvider implements MetricInfoProvider<MeasurementInfo> {
     @VisibleForTesting static final char SCOPE_SEPARATOR = '_';
 
+    // J: 正则过滤字符
     private static final CharacterFilter CHARACTER_FILTER =
             new CharacterFilter() {
                 private final Pattern notAllowedCharacters = Pattern.compile("[^a-zA-Z0-9:_]");
@@ -45,6 +46,7 @@ class MeasurementInfoProvider implements MetricInfoProvider<MeasurementInfo> {
 
     @Override
     public MeasurementInfo getMetricInfo(String metricName, MetricGroup group) {
+        // 从 flink 的 MetricGroup 中获取 tags
         return new MeasurementInfo(getScopedName(metricName, group), getTags(group));
     }
 

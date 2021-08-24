@@ -43,6 +43,8 @@ import static org.apache.flink.metrics.prometheus.PrometheusPushGatewayReporterO
 import static org.apache.flink.metrics.prometheus.PrometheusPushGatewayReporterOptions.RANDOM_JOB_NAME_SUFFIX;
 
 /**
+ * {@link MetricReporter} 通过 Prometheus {@link PushGateway} 导出 {@link Metric Metrics}。
+ *
  * {@link MetricReporter} that exports {@link Metric Metrics} via Prometheus {@link PushGateway}.
  */
 @PublicEvolving

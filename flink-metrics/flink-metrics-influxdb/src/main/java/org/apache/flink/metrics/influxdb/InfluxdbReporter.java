@@ -56,6 +56,8 @@ import static org.apache.flink.metrics.influxdb.InfluxdbReporterOptions.getInteg
 import static org.apache.flink.metrics.influxdb.InfluxdbReporterOptions.getString;
 
 /** {@link MetricReporter} that exports {@link Metric Metrics} via InfluxDB. */
+// {@link MetricReporter} 通过 InfluxDB 导出 {@link Metric Metrics}。
+// J: 定期主动报告
 @InstantiateViaFactory(
         factoryClassName = "org.apache.flink.metrics.influxdb.InfluxdbReporterFactory")
 public class InfluxdbReporter extends AbstractReporter<MeasurementInfo> implements Scheduled {
@@ -92,6 +94,7 @@ public class InfluxdbReporter extends AbstractReporter<MeasurementInfo> implemen
 
         int connectTimeout = getInteger(config, CONNECT_TIMEOUT);
         int writeTimeout = getInteger(config, WRITE_TIMEOUT);
+        // http 访问
         OkHttpClient.Builder client =
                 new OkHttpClient.Builder()
                         .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
@@ -122,8 +125,10 @@ public class InfluxdbReporter extends AbstractReporter<MeasurementInfo> implemen
 
     @Override
     public void report() {
+        // influxDb BatchPoints
         BatchPoints report = buildReport();
         if (report != null) {
+            // J: 数据写入 InfluxDB
             influxDB.write(report);
         }
     }
@@ -135,6 +140,7 @@ public class InfluxdbReporter extends AbstractReporter<MeasurementInfo> implemen
         report.retentionPolicy(retentionPolicy);
         report.consistency(consistency);
         try {
+            // J: 根据不同的 metric 构建对应的 Point
             for (Map.Entry<Gauge<?>, MeasurementInfo> entry : gauges.entrySet()) {
                 report.point(MetricMapper.map(entry.getValue(), timestamp, entry.getKey()));
             }
@@ -153,6 +159,7 @@ public class InfluxdbReporter extends AbstractReporter<MeasurementInfo> implemen
         } catch (ConcurrentModificationException | NoSuchElementException e) {
             // ignore - may happen when metrics are concurrently added or removed
             // report next time
+            // 忽略 - 下次同时添加或删除指标时可能会发生
             return null;
         }
         return report.build();

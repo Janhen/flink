@@ -42,6 +42,13 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.runtime.metrics.dump.MetricDumpSerialization.MetricDumpSerializer;
 
 /**
+ * MetricQueryService 在查询时创建当前在 Flink 注册的所有指标的键值表示。
+ *
+ * <p>它被实现为一个参与者并且可以被通知
+ *   - 通过调用 {@link #addMetric(String, Metric, AbstractMetricGroup)} 添加的度量
+ *   - 通过调用 {@link #removeMetric(Metric)} 删除的度量
+ *   - 通过调用 {@link #queryMetrics(Time)} 的指标转储请求
+ *
  * The MetricQueryService creates a key-value representation of all metrics currently registered
  * with Flink when queried.
  *

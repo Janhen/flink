@@ -31,6 +31,8 @@ package org.apache.flink.metrics;
 public interface Histogram extends Metric {
 
     /**
+     * 使用给定值更新直方图。
+     *
      * Update the histogram with the given value.
      *
      * @param value Value to update the histogram with
@@ -38,6 +40,8 @@ public interface Histogram extends Metric {
     void update(long value);
 
     /**
+     * 获取所见元素的计数。
+     *
      * Get the count of seen elements.
      *
      * @return Count of seen elements
@@ -45,6 +49,8 @@ public interface Histogram extends Metric {
     long getCount();
 
     /**
+     * 为当前记录的元素创建统计信息。
+     *
      * Create statistics for the currently recorded elements.
      *
      * @return Statistics about the currently recorded elements

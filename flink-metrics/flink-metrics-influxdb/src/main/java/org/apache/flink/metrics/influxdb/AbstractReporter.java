@@ -33,6 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 具有度量标准注册表的抽象报告器。它与 {@link org.apache.flink.metrics.reporter.AbstractReporter} 相同，
+ * 但具有度量的广义信息。
+ *
  * An abstract reporter with registry for metrics. It's same as {@link
  * org.apache.flink.metrics.reporter.AbstractReporter} but with generalized information of metric.
  *

@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 class MetricMapper {
 
+    // 单个值得指标 report 映射
     static Point map(MeasurementInfo info, Instant timestamp, Gauge<?> gauge) {
         Point.Builder builder = builder(info, timestamp);
         Object value = gauge.getValue();
@@ -42,10 +43,13 @@ class MetricMapper {
         return builder.build();
     }
 
+    // 根据 counter，仅给出总数
     static Point map(MeasurementInfo info, Instant timestamp, Counter counter) {
         return builder(info, timestamp).addField("count", counter.getCount()).build();
     }
 
+    // 根据 histogram 给出最大、平均、总数、50,99 等限定的百分值
+    // 信息更全面
     static Point map(MeasurementInfo info, Instant timestamp, Histogram histogram) {
         HistogramStatistics statistics = histogram.getStatistics();
         return builder(info, timestamp)
@@ -63,6 +67,7 @@ class MetricMapper {
                 .build();
     }
 
+    // 吞吐量指标信息转换
     static Point map(MeasurementInfo info, Instant timestamp, Meter meter) {
         return builder(info, timestamp)
                 .addField("count", meter.getCount())
@@ -70,6 +75,7 @@ class MetricMapper {
                 .build();
     }
 
+    // 基本的时间
     private static Point.Builder builder(MeasurementInfo info, Instant timestamp) {
         return Point.measurement(info.getName())
                 .tag(info.getTags())

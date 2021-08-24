@@ -21,9 +21,12 @@ package org.apache.flink.runtime.webmonitor.retriever;
 import java.util.concurrent.CompletableFuture;
 
 /** Retriever for {@link MetricQueryServiceGateway}. */
+// {@link MetricQueryServiceGateway} 的检索器。
 public interface MetricQueryServiceRetriever {
 
     /**
+     * 检索给定查询服务地址的 {@link MetricQueryServiceGateway}。
+     *
      * Retrieves for the given query service address a {@link MetricQueryServiceGateway}.
      *
      * @param rpcServiceAddress under which the QueryService can be reached

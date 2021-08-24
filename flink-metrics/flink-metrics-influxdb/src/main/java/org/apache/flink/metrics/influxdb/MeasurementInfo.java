@@ -20,8 +20,10 @@ package org.apache.flink.metrics.influxdb;
 
 import java.util.Map;
 
+// 测量信息
 final class MeasurementInfo {
     private final String name;
+    // 测量的 tag
     private final Map<String, String> tags;
 
     MeasurementInfo(String name, Map<String, String> tags) {

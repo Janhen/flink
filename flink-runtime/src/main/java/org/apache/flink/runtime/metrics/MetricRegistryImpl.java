@@ -59,6 +59,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * MetricRegistry 跟踪所有注册的 {@link Metric Metrics}。它充当 {@link MetricGroup MetricGroups} 和
+ * {@link MetricReporter MetricReporters} 之间的连接。
+ *
  * A MetricRegistry keeps track of all registered {@link Metric Metrics}. It serves as the
  * connection between {@link MetricGroup MetricGroups} and {@link MetricReporter MetricReporters}.
  */

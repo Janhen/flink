@@ -32,6 +32,7 @@ import java.util.Map;
  * measurements.
  */
 public class LatencyStats {
+    // J: 维护多个 Histogram
     private final Map<String, DescriptiveStatisticsHistogram> latencyStats = new HashMap<>();
     private final MetricGroup metricGroup;
     private final int historySize;
@@ -53,6 +54,7 @@ public class LatencyStats {
     }
 
     public void reportLatency(LatencyMarker marker) {
+        // J: 生成唯一名称
         final String uniqueName =
                 granularity.createUniqueHistogramName(marker, operatorId, subtaskIndex);
 
@@ -72,7 +74,7 @@ public class LatencyStats {
     }
 
     /** Granularity for latency metrics. */
-    //延迟指标的粒度。
+    // 延迟指标的粒度。
     public enum Granularity {
         SINGLE {
             @Override

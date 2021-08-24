@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Configuration object for {@link MetricRegistryImpl}. */
+// {@link MetricRegistryImpl} 的配置对象。
 public class MetricRegistryConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(MetricRegistryConfiguration.class);

@@ -26,9 +26,12 @@ import org.apache.flink.runtime.metrics.scope.ScopeFormats;
 import javax.annotation.Nullable;
 
 /** Interface for a metric registry. */
+// 度量注册表的接口
 public interface MetricRegistry {
 
     /**
+     * 返回全局分隔符。
+     *
      * Returns the global delimiter.
      *
      * @return global delimiter
@@ -57,6 +60,8 @@ public interface MetricRegistry {
     void unregister(Metric metric, String metricName, AbstractMetricGroup group);
 
     /**
+     * 返回范围格式。
+     *
      * Returns the scope formats.
      *
      * @return scope formats
@@ -64,6 +69,8 @@ public interface MetricRegistry {
     ScopeFormats getScopeFormats();
 
     /**
+     * 如果没有启动，则返回 {@link MetricQueryService} 的网关或 null。
+     *
      * Returns the gateway of the {@link MetricQueryService} or null, if none is started.
      *
      * @return Gateway of the MetricQueryService or null, if none is started

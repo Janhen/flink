@@ -21,6 +21,7 @@ package org.apache.flink.runtime.metrics.dump;
 import org.apache.flink.util.Preconditions;
 
 /** A container for a dumped metric that contains the scope, name and value(s) of the metric. */
+// 转储指标的容器，其中包含指标的范围、名称和值。
 public abstract class MetricDump {
     /** Categories to be returned by {@link MetricDump#getCategory()} to avoid instanceof checks. */
     public static final byte METRIC_CATEGORY_COUNTER = 0;

@@ -23,6 +23,9 @@ import org.apache.flink.metrics.HistogramStatistics;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
+ * {@link DescriptiveStatisticsHistogram} 使用 DescriptiveStatistics {@link DescriptiveStatistics}
+ * 作为 Flink {@link Histogram}。
+ *
  * The {@link DescriptiveStatisticsHistogram} use a DescriptiveStatistics {@link
  * DescriptiveStatistics} as a Flink {@link Histogram}.
  */
@@ -30,6 +33,7 @@ public class DescriptiveStatisticsHistogram implements org.apache.flink.metrics.
 
     private final CircularDoubleArray descriptiveStatistics;
 
+    // 指定 window 大小
     public DescriptiveStatisticsHistogram(int windowSize) {
         this.descriptiveStatistics = new CircularDoubleArray(windowSize);
     }
@@ -50,13 +54,16 @@ public class DescriptiveStatisticsHistogram implements org.apache.flink.metrics.
     }
 
     /** Fixed-size array that wraps around at the end and has a dynamic start position. */
+    // 固定大小的数组，在末尾环绕并具有动态开始位置。
     static class CircularDoubleArray {
+        // 支持数组
         private final double[] backingArray;
         private int nextPos = 0;
         private boolean fullSize = false;
         private long elementsSeen = 0;
 
         CircularDoubleArray(int windowSize) {
+            // 限定了大小
             this.backingArray = new double[windowSize];
         }
 

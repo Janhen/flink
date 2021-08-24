@@ -23,6 +23,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * {@link MetricReporterFactory MetricReporterFactories} 的 annotation，希望与现有的基于反射的配置保持
+ * 向后兼容性。
+ *
+ * <p>当 report 配置为通过反射使用时，将使用带注释的工厂。
+ *
  * Annotation for {@link MetricReporterFactory MetricReporterFactories} that want to maintain
  * backwards-compatibility with existing reflection-based configurations.
  *
