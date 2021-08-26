@@ -54,7 +54,7 @@ public class InfluxdbReporterOptions {
                     .noDefaultValue()
                     .withDescription("the InfluxDB database to store metrics");
 
-    // （可选）指标的 InfluxDB 保留策略”
+    // （可选）指标的 InfluxDB 保留策略
     public static final ConfigOption<String> RETENTION_POLICY =
             ConfigOptions.key("retentionPolicy")
                     .defaultValue("")
@@ -67,7 +67,7 @@ public class InfluxdbReporterOptions {
                     .defaultValue(InfluxDB.ConsistencyLevel.ONE)
                     .withDescription("(optional) the InfluxDB consistency level for metrics");
 
-    // （可选）指标的 InfluxDB 连接超时
+    // （可选）指标的 InfluxDB 连接超时 dsfs
     public static final ConfigOption<Integer> CONNECT_TIMEOUT =
             ConfigOptions.key("connectTimeout")
                     .defaultValue(10000)

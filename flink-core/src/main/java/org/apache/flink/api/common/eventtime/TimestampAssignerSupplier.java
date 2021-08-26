@@ -25,10 +25,10 @@ import org.apache.flink.metrics.MetricGroup;
 import java.io.Serializable;
 
 /**
- * {@link TimestampAssigner TimestampAssigners} 的供应商。供应商模式用于避免在 API 方法中使用 {@link TimestampAssigner}
- * {@link Serializable}。
+ * {@link TimestampAssigner TimestampAssigners} 的供 supplier。供应商模式用于避免在 API 方法中使用
+ * {@link TimestampAssigner} {@link Serializable}。
  *
- * <p>这个接口是{@link Serializable}，因为供应商可能会在分布式执行期间被运送给工人。
+ * <p>这个接口是 {@link Serializable}，因为 supplier 可能会在分布式执行期间被运送给工人。
  *
  * A supplier for {@link TimestampAssigner TimestampAssigners}. The supplier pattern is used to
  * avoid having to make {@link TimestampAssigner} {@link Serializable} for use in API methods.
@@ -48,6 +48,9 @@ public interface TimestampAssignerSupplier<T> extends Serializable {
     }
 
     /**
+     * {@link #createTimestampAssigner(Context)} 可用的附加信息。例如，这可以访问
+     * {@link org.apache.flink.metrics.MetricGroup MetricGroups}。
+     *
      * Additional information available to {@link #createTimestampAssigner(Context)}. This can be
      * access to {@link org.apache.flink.metrics.MetricGroup MetricGroups}, for example.
      */
