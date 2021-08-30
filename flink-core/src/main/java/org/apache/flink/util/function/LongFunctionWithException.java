@@ -21,11 +21,14 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.Public;
 
 /** Similar to {@link java.util.function.LongFunction} but can throw {@link Exception}. */
+// 类似于 {@link java.util.function.LongFunction} 但可以抛出 {@link Exception}。
 @Public
 @FunctionalInterface
 public interface LongFunctionWithException<R, E extends Throwable> {
 
     /**
+     * 将此函数应用于给定的参数。
+     *
      * Applies this function to the given argument.
      *
      * @param value the function argument

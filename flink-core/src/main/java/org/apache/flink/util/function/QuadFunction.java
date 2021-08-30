@@ -21,6 +21,8 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 接受三个参数的函数。
+ *
  * Function which takes three arguments.
  *
  * @param <S> type of the first argument

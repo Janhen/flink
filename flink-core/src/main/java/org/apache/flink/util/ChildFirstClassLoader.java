@@ -29,7 +29,7 @@ import java.util.function.Consumer;
 /**
  * URLClassLoader 的一种变体，它首先从 url 加载，然后才从父类加载。
  *
- * <p>{@link #getResourceAsStream(String)}内部使用{@link #getResource(String)}，所以我们不重写它。
+ * <p>{@link #getResourceAsStream(String)} 内部使用 {@link #getResource(String)}，所以我们不重写它。
  *
  * A variant of the URLClassLoader that first loads from the URLs and only after that from the
  * parent.

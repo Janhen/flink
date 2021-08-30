@@ -21,6 +21,8 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 这个接口基本上是 Java 的 {@link java.util.function.Consumer} 接口，增强了抛出异常的能力。
+ *
  * This interface is basically Java's {@link java.util.function.Consumer} interface enhanced with
  * the ability to throw an exception.
  *

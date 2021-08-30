@@ -23,7 +23,7 @@ import org.apache.flink.annotation.Public;
 /**
  * 当代码的动态实例化失败时抛出的异常。
  *
- * <p>这个异常应该“总结”动态代码加载和实例化时抛出的异常:
+ * <p>这个异常应该 “sum up” 动态代码加载和实例化时抛出的异常:
  *
  * An exception that is thrown if the dynamic instantiation of code fails.
  *

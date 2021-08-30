@@ -33,6 +33,8 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface TriFunction<S, T, U, R> {
 
     /**
+     * 将此函数应用于给定的参数。
+     *
      * Applies this function to the given arguments.
      *
      * @param s the first function argument

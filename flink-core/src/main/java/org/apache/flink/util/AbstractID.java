@@ -53,6 +53,7 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
     // --------------------------------------------------------------------------------------------
 
     /** Constructs a new ID with a specific bytes value. */
+    // 构造具有特定字节值的新 ID。
     public AbstractID(byte[] bytes) {
         if (bytes == null || bytes.length != SIZE) {
             throw new IllegalArgumentException(

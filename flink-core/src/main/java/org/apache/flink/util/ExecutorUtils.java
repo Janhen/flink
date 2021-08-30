@@ -26,13 +26,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /** Utilities for {@link java.util.concurrent.Executor Executors}. */
+// {@link java.util.concurrent.Executor Executors} 的实用程序。
 public class ExecutorUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExecutorUtils.class);
 
     /**
-     * 优雅地关闭给定的{@link ExecutorService}。调用将等待所有ExecutorServices终止的给定超时。如果
-     * ExecutorServices在此时间内没有终止，它们将被硬关闭
+     * 优雅地关闭给定的 {@link ExecutorService}。调用将等待所有 ExecutorServices 终止的给定超时。如果
+     * ExecutorServices 在此时间内没有终止，它们将被硬关闭
      *
      * Gracefully shutdown the given {@link ExecutorService}. The call waits the given timeout that
      * all ExecutorServices terminate. If the ExecutorServices do not terminate in this time, they
@@ -82,6 +83,10 @@ public class ExecutorUtils {
     }
 
     /**
+     * 以非阻塞方式关闭给定的 {@link ExecutorService}。关闭将由公共 fork-join 池中的线程执行。
+     *
+     * <p>执行程序服务将在给定的超时时间内正常关闭。之后将调用 {@link ExecutorService#shutdownNow()}。
+     *
      * Shuts the given {@link ExecutorService} down in a non-blocking fashion. The shut down will be
      * executed by a thread from the common fork-join pool.
      *
@@ -95,6 +100,7 @@ public class ExecutorUtils {
      */
     public static CompletableFuture<Void> nonBlockingShutdown(
             long timeout, TimeUnit unit, ExecutorService... executorServices) {
+        // J: 使用 CompletableFuture 内部的 ForkJoin 线程池处理 shutdown
         return CompletableFuture.supplyAsync(
                 () -> {
                     gracefulShutdown(timeout, unit, executorServices);

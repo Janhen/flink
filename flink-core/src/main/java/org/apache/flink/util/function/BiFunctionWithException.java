@@ -23,6 +23,8 @@ import org.apache.flink.util.ExceptionUtils;
 import java.util.function.BiFunction;
 
 /**
+ * {@link BiFunction} 可以抛出异常的接口。
+ *
  * {@link BiFunction} interface which can throw exceptions.
  *
  * @param <T> type of the first parameter
@@ -34,6 +36,8 @@ import java.util.function.BiFunction;
 public interface BiFunctionWithException<T, U, R, E extends Throwable> {
 
     /**
+     * 应用给定的值 t 和 u 以获得结果值。该操作可能会引发异常。
+     *
      * Apply the given values t and u to obtain the resulting value. The operation can throw an
      * exception.
      *
@@ -45,6 +49,8 @@ public interface BiFunctionWithException<T, U, R, E extends Throwable> {
     R apply(T t, U u) throws E;
 
     /**
+     * 将 {@link BiFunctionWithException} 转换为 {@link BiFunction}。
+     *
      * Convert at {@link BiFunctionWithException} into a {@link BiFunction}.
      *
      * @param biFunctionWithException function with exception to convert into a function

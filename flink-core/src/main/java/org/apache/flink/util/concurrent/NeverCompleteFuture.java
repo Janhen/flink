@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /** A future that never completes. */
+// 一个永远不会完成的 future
 @Internal
 public final class NeverCompleteFuture implements ScheduledFuture<Object> {
 

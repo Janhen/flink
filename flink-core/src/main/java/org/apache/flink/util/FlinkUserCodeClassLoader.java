@@ -29,6 +29,7 @@ import java.util.function.Consumer;
  * boolean)}.
  */
 public abstract class FlinkUserCodeClassLoader extends URLClassLoader {
+    // NOOP 异常处理程序
     public static final Consumer<Throwable> NOOP_EXCEPTION_HANDLER = classLoadingException -> {};
 
     private final Consumer<Throwable> classLoadingExceptionHandler;
@@ -54,9 +55,9 @@ public abstract class FlinkUserCodeClassLoader extends URLClassLoader {
     }
 
     /**
-     * 与{@link #loadClass(String, boolean)}相同，但没有异常处理。
+     * 与 {@link #loadClass(String, boolean)} 相同，但没有异常处理。
      *
-     * <p>扩展具体的类装入器应该实现这个，而不是{@link #loadClass(String, boolean)}。
+     * <p>扩展具体的类装入器应该实现这个，而不是 {@link #loadClass(String, boolean)}。
      *
      * Same as {@link #loadClass(String, boolean)} but without exception handling.
      *

@@ -40,6 +40,8 @@ public final class IOUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 从一个流复制到另一个流。
+     *
      * Copies from one stream to another.
      *
      * @param in InputStream to read from
@@ -151,7 +153,7 @@ public final class IOUtils {
     }
 
     /**
-     * 类似于readFully()。在循环中跳过字节
+     * 类似于 readFully()。在循环中跳过字节
      *
      * Similar to readFully(). Skips bytes in a loop.
      *
@@ -198,6 +200,8 @@ public final class IOUtils {
     }
 
     /**
+     * 关闭流忽略 {@link IOException}。只能在从异常处理程序中进行清理时调用。
+     *
      * Closes the stream ignoring {@link IOException}. Must only be called in cleaning up from
      * exception handlers.
      *

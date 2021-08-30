@@ -52,11 +52,14 @@ import org.apache.flink.annotation.PublicEvolving;
 public abstract class Clock {
 
     /** Gets the current absolute time, in milliseconds. */
+    // 获取当前绝对时间，以毫秒为单位。
     public abstract long absoluteTimeMillis();
 
     /** Gets the current relative time, in milliseconds. */
+    // 获取当前的相对时间，以毫秒为单位。
     public abstract long relativeTimeMillis();
 
     /** Gets the current relative time, in nanoseconds. */
+    // 获取当前的相对时间，以纳秒为单位。
     public abstract long relativeTimeNanos();
 }

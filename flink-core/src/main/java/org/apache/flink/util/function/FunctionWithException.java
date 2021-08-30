@@ -21,6 +21,8 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 可能引发异常的 {@link java.util.function.Function} 的功能接口。
+ *
  * A functional interface for a {@link java.util.function.Function} that may throw exceptions.
  *
  * @param <T> The type of the argument to the function.
@@ -32,6 +34,8 @@ import org.apache.flink.annotation.Public;
 public interface FunctionWithException<T, R, E extends Throwable> {
 
     /**
+     * 调用这个函数。
+     *
      * Calls this function.
      *
      * @param value The argument to the function.

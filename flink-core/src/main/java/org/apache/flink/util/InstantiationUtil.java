@@ -58,6 +58,7 @@ public final class InstantiationUtil {
     private static final Logger LOG = LoggerFactory.getLogger(InstantiationUtil.class);
 
     /** A custom ObjectInputStream that can load classes using a specific ClassLoader. */
+    // 可以使用特定 ClassLoader 加载类的自定义 ObjectInputStream。
     public static class ClassLoaderObjectInputStream extends ObjectInputStream {
 
         protected final ClassLoader classLoader;

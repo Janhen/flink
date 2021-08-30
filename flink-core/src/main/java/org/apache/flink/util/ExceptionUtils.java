@@ -42,6 +42,7 @@ import java.util.function.Predicate;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A collection of utility functions for dealing with exceptions and exception workflows. */
+// 一组用于处理异常和异常工作流的实用函数。
 @Internal
 public final class ExceptionUtils {
 
@@ -49,7 +50,7 @@ public final class ExceptionUtils {
     public static final String STRINGIFIED_NULL_EXCEPTION = "(null)";
 
     /**
-     * 用字符串表示异常的堆栈跟踪，如果异常为空，则用“(null)”表示。
+     * 用字符串表示异常的堆栈跟踪，如果异常为空，则用 “(null)” 表示。
      *
      * <p>这种方法力求完美，永不失败。
      *
@@ -78,7 +79,7 @@ public final class ExceptionUtils {
     }
 
     /**
-     * 检查给定的异常是否表明可能使JVM处于损坏状态，即只有通过干净地重新启动进程才能保证继续正常操作的状态。
+     * 检查给定的异常是否表明可能使 JVM 处于损坏状态，即只有通过干净地重新启动进程才能保证继续正常操作的状态。
      *
      * Checks whether the given exception indicates a situation that may leave the JVM in a
      * corrupted state, meaning a state where continued normal operation can only be guaranteed via
@@ -100,6 +101,12 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查给定的异常是否表示可能使 JVM 处于损坏状态或内存不足错误的情况。
+     *
+     * <p>请参阅 {@link ExceptionUtils#isJvmFatalError(Throwable)} 以获取致命的 JVM 错误列表。此方法另外将
+     *   {@link OutOfMemoryError} 分类为致命的，因为它可能发生在任何线程（不是分配大部分内存的线程）中，因此通常
+     *   无法通过销毁引发异常的特定线程来恢复。
+     *
      * Checks whether the given exception indicates a situation that may leave the JVM in a
      * corrupted state, or an out-of-memory error.
      *
@@ -118,7 +125,7 @@ public final class ExceptionUtils {
     /**
      * 尝试用附加信息丰富传递的异常。
      *
-     * <p>这个方法改进了直接和元空间{@link OutOfMemoryError}的错误消息。它增加了可能的原因和解决方法的描述。
+     * <p>这个方法改进了直接和元空间 {@link OutOfMemoryError} 的错误消息。它增加了可能的原因和解决方法的描述。
      *
      * Tries to enrich the passed exception with additional information.
      *
@@ -150,6 +157,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 重写 {@link OutOfMemoryError} 的错误消息。
+     *
      * Rewrites the error message of a {@link OutOfMemoryError}.
      *
      * @param oom original {@link OutOfMemoryError}
@@ -169,6 +178,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查给定的异常是否指示 JVM 元空间内存不足错误。
+     *
      * Checks whether the given exception indicates a JVM metaspace out-of-memory error.
      *
      * @param t The exception to check.
@@ -179,6 +190,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查给定的异常是否指示 JVM 直接内存不足错误。
+     *
      * Checks whether the given exception indicates a JVM direct out-of-memory error.
      *
      * @param t The exception to check.
@@ -201,6 +214,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 重新抛出给定的 {@code Throwable}，如果它表示对 JVM 来说是致命的错误。有关致命错误的定义，请参阅
+     * {@link ExceptionUtils#isJvmFatalError(Throwable)}。
+     *
      * Rethrows the given {@code Throwable}, if it represents an error that is fatal to the JVM. See
      * {@link ExceptionUtils#isJvmFatalError(Throwable)} for a definition of fatal errors.
      *
@@ -226,7 +242,7 @@ public final class ExceptionUtils {
     }
 
     /**
-     * 将一个新的异常作为{@link Throwable#addSuppressed(Throwable) suppressed exception}
+     * 将一个新的异常作为 {@link Throwable#addSuppressed(Throwable) suppressed exception}
      * 添加到之前的异常中，或者如果之前的异常不存在，则返回新的异常。
      *
      * Adds a new exception as a {@link Throwable#addSuppressed(Throwable) suppressed exception} to

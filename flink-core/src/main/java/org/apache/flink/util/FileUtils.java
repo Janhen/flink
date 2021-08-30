@@ -67,23 +67,29 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public final class FileUtils {
 
     /** Global lock to prevent concurrent directory deletes under Windows. */
+    // 防止Windows下并发目录删除的全局锁。
     private static final Object WINDOWS_DELETE_LOCK = new Object();
 
     /** The alphabet to construct the random part of the filename from. */
+    // 用于构建文件名随机部分的字母表。
     private static final char[] ALPHABET = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f'
     };
 
     /** The length of the random part of the filename. */
+    // 文件名随机部分的长度。
     private static final int RANDOM_FILE_NAME_LENGTH = 12;
 
     /**
+     * 分配给读取的数组的最大大小。有关更多信息，请参阅 {@link java.nio.file.Files} 中的 {@code MAX_BUFFER_SIZE}。
+     *
      * The maximum size of array to allocate for reading. See {@code MAX_BUFFER_SIZE} in {@link
      * java.nio.file.Files} for more.
      */
     private static final int MAX_BUFFER_SIZE = Integer.MAX_VALUE - 8;
 
     /** The size of the buffer used for reading. */
+    // 用于读取的缓冲区的大小。
     private static final int BUFFER_SIZE = 4096;
 
     private static final String JAR_FILE_EXTENSION = "jar";
@@ -104,6 +110,7 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /** Lists the given directory in a resource-leak-safe way. */
+    // 以资源泄漏安全的方式列出给定的目录。
     public static java.nio.file.Path[] listDirectory(java.nio.file.Path directory)
             throws IOException {
         try (Stream<java.nio.file.Path> stream = Files.list(directory)) {
@@ -114,6 +121,8 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 构造一个带有给定前缀的随机文件名和一个由十六进制字符生成的随机部分。
+     *
      * Constructs a random filename with the given prefix and a random part generated from hex
      * characters.
      *
@@ -154,6 +163,8 @@ public final class FileUtils {
     }
 
     /**
+     * 从文件中读取所有字节。该方法确保在读取所有字节或抛出 IO 错误或其他运行时异常时关闭文件。
+     *
      * Reads all the bytes from a file. The method ensures that the file is closed when all bytes
      * have been read or an I/O error, or other runtime exception, is thrown.
      *
@@ -183,6 +194,9 @@ public final class FileUtils {
     }
 
     /**
+     * 从输入流中读取所有字节。使用 {@code initialSize} 作为有关流将具有多少字节的提示，并使用
+     * {@code directBufferSize} 来限制用于读取的直接缓冲区的大小。
+     *
      * Reads all the bytes from an input stream. Uses {@code initialSize} as a hint about how many
      * bytes the stream will have and uses {@code directBufferSize} to limit the size of the direct
      * buffer used to read.
@@ -232,6 +246,12 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 递归删除给定的文件或目录。
+     *
+     * <p>如果文件或目录不存在，这不会抛出异常，而只是什么都不做。它认为要删除的文件不成功。
+     *
+     * <p>此方法对于其他并发删除尝试是安全的。
+     *
      * Removes the given file or directory recursively.
      *
      * <p>If the file or directory does not exist, this does not throw an exception, but simply does
@@ -250,6 +270,8 @@ public final class FileUtils {
     }
 
     /**
+     * 递归删除给定目录。
+     *
      * Deletes the given directory recursively.
      *
      * <p>If the directory does not exist, this does not throw an exception, but simply does
@@ -268,6 +290,11 @@ public final class FileUtils {
     }
 
     /**
+     * 递归删除给定目录，不报告发生的任何 IO 异常。
+     *
+     * <p>此方法与 {@link FileUtils#deleteDirectory(File)} 相同，不同之处在于它会吞下所有异常并可能让工作
+     *   悄悄地完成。
+     *
      * Deletes the given directory recursively, not reporting any I/O exceptions that occur.
      *
      * <p>This method is identical to {@link FileUtils#deleteDirectory(File)}, except that it
@@ -288,6 +315,10 @@ public final class FileUtils {
     }
 
     /**
+     * 删除目录中包含的所有文件，而不删除目录本身。
+     *
+     * <p>此方法对于其他并发删除尝试是安全的。
+     *
      * Removes all files contained within a directory, without removing the directory itself.
      *
      * <p>This method is safe against other concurrent deletion attempts.
@@ -409,6 +440,8 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 如果路径为空，则删除路径。如果路径是不包含任何其他目录文件的目录，则该路径只能为空。
+     *
      * Deletes the path if it is empty. A path can only be empty if it is a directory which does not
      * contain any other directories/files.
      *
@@ -444,6 +477,10 @@ public final class FileUtils {
     }
 
     /**
+     * 将所有文件从源复制到目标并设置可执行标志。路径可能位于不同的系统上。
+     *
+     * J: 可跨文件系统复制，根据 Uri 进行获取对应的 FileSystem
+     *
      * Copies all files from source to target and sets executable flag. Paths might be on different
      * systems.
      *
@@ -558,6 +595,8 @@ public final class FileUtils {
     }
 
     /**
+     * 递归列出 {@code directory}，返回满足 {@code fileFilter} 的文件。
+     *
      * List the {@code directory} recursively and return the files that satisfy the {@code
      * fileFilter}.
      *
@@ -593,6 +632,8 @@ public final class FileUtils {
     }
 
     /**
+     * 如果给定的路径是相对的，则将其绝对化。
+     *
      * Absolutize the given path if it is relative.
      *
      * @param pathToAbsolutize path which is being absolutized if it is a relative path
@@ -608,6 +649,8 @@ public final class FileUtils {
     }
 
     /**
+     * 如果给定路径是绝对路径，则相对于给定基本路径相对化给定路径。
+     *
      * Relativize the given path with respect to the given base path if it is absolute.
      *
      * @param basePath to relativize against
@@ -624,6 +667,8 @@ public final class FileUtils {
     }
 
     /**
+     * 返回由 {@code user.dir} 系统属性指定的当前工作目录。
+     *
      * Returns the current working directory as specified by the {@code user.dir} system property.
      *
      * @return current working directory
@@ -633,6 +678,8 @@ public final class FileUtils {
     }
 
     /**
+     * 检查给定文件是否具有 jar 扩展名
+     *
      * Checks whether the given file has a jar extension.
      *
      * @param file to check
@@ -645,6 +692,8 @@ public final class FileUtils {
     }
 
     /**
+     * 删除文件名的扩展名。
+     *
      * Remove the extension of the file name.
      *
      * @param fileName to strip
@@ -661,6 +710,8 @@ public final class FileUtils {
     }
 
     /**
+     * 将给定的 {@link java.nio.file.Path} 转换为文件 {@link URL}。如果给定的路径是相对的，则结果 url 是相对的。
+     *
      * Converts the given {@link java.nio.file.Path} into a file {@link URL}. The resulting url is
      * relative iff the given path is relative.
      *

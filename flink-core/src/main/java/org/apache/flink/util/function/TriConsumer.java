@@ -34,6 +34,8 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface TriConsumer<S, T, U> {
 
     /**
+     * 对给定的参数执行此操作。
+     *
      * Performs this operation on the given arguments.
      *
      * @param s first argument

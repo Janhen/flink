@@ -26,6 +26,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /** Utility class for Flink's functions. */
+// Flink 函数的实用程序类。
 public class FunctionUtils {
 
     private FunctionUtils() {
@@ -37,6 +38,8 @@ public class FunctionUtils {
     private static final Consumer<Object> IGNORE_FN = ignored -> {};
 
     /**
+     * 返回 {@code null} 的函数（类型：Void）。
+     *
      * Function which returns {@code null} (type: Void).
      *
      * @param <T> input type
@@ -48,6 +51,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 忽略输入的消费者。
+     *
      * Consumer which ignores the input.
      *
      * @param <T> type of the input
@@ -59,6 +64,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 在 {@link FunctionWithException} 处转换为 {@link Function}。
+     *
      * Convert at {@link FunctionWithException} into a {@link Function}.
      *
      * @param functionWithException function with exception to convert into a function
@@ -80,6 +87,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将 {@link ThrowingConsumer} 转换为 {@link Consumer}，将已检查的异常视为未检查。
+     *
      * Converts a {@link ThrowingConsumer} into a {@link Consumer} which throws checked exceptions
      * as unchecked.
      *
@@ -98,6 +107,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将 {@link SupplierWithException} 转换为 {@link Supplier}，将所有已检查的异常抛出为未检查。
+     *
      * Converts a {@link SupplierWithException} into a {@link Supplier} which throws all checked
      * exceptions as unchecked.
      *
@@ -118,6 +129,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将 {@link RunnableWithException} 转换为将返回 {@code result} 的 {@link Callable}。
+     *
      * Converts {@link RunnableWithException} into a {@link Callable} that will return the {@code
      * result}.
      */

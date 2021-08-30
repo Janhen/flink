@@ -32,6 +32,9 @@ import java.util.function.Consumer;
 import static java.util.Arrays.asList;
 
 /**
+ * 这个接口代表一个 {@link Iterator}，它也是 {@link AutoCloseable}。此接口的典型用例是基于本地资源（如文件、
+ * 网络或数据库连接）的迭代器。客户端必须在使用迭代器后调用 {@link #close()}。
+ *
  * This interface represents an {@link Iterator} that is also {@link AutoCloseable}. A typical
  * use-case for this interface are iterators that are based on native-resources such as files,
  * network, or database connections. Clients must call {@link #close()} after using the iterator.
@@ -149,7 +152,7 @@ public interface CloseableIterator<T> extends Iterator<T>, AutoCloseable {
     }
 
     /**
-     * 从{@link Iterator}到{@link CloseableIterator}的适配器。对{@link close()}不做任何操作。
+     * 从 {@link Iterator} 到 {@link CloseableIterator} 的适配器。对 {@link #close()} 不做任何操作。
      *
      * Adapter from {@link Iterator} to {@link CloseableIterator}. Does nothing on {@link #close()}.
      *

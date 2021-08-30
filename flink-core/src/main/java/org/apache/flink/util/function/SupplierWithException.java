@@ -21,6 +21,8 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 可能引发异常的 {@link java.util.function.Supplier} 的功能接口。
+ *
  * A functional interface for a {@link java.util.function.Supplier} that may throw exceptions.
  *
  * @param <R> The type of the result of the supplier.

@@ -21,6 +21,7 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Public;
 
 /** Base class of all Flink-specific unchecked exceptions. */
+// 所有 Flink 特定的未检查异常的基类。
 @Public
 public class FlinkRuntimeException extends RuntimeException {
 

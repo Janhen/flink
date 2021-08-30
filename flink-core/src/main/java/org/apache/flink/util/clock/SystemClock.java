@@ -21,6 +21,8 @@ package org.apache.flink.util.clock;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 返回系统进程时间的时钟。
+ *
  * A clock that returns the time of the system / process.
  *
  * <p>This clock uses {@link System#currentTimeMillis()} for <i>absolute time</i> and {@link
@@ -31,6 +33,7 @@ import org.apache.flink.annotation.PublicEvolving;
 @PublicEvolving
 public final class SystemClock extends Clock {
 
+    // J: 饿汉单例系统时钟
     private static final SystemClock INSTANCE = new SystemClock();
 
     public static SystemClock getInstance() {

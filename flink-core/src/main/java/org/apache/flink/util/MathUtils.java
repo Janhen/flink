@@ -22,6 +22,9 @@ package org.apache.flink.util;
 public final class MathUtils {
 
     /**
+     * 计算给定值以 2 为底的对数，向下取整。它对应于最高非零位的位置。对位置进行计数，从 0 开始，从最低有效位到最高
+     * 有效位。例如，<code>log2floor(16) = 4 <code> 和 <code>log2floor(10) = 3<code>。
+     *
      * Computes the logarithm of the given value to the base of 2, rounded down. It corresponds to
      * the position of the highest non-zero bit. The position is counted, starting with 0 from the
      * least significant bit to the most significant bit. For example, <code>log2floor(16) = 4

@@ -40,6 +40,7 @@ import static java.util.stream.Collectors.toList;
 public final class CollectionUtil {
 
     /** A safe maximum size for arrays in the JVM. */
+    // JVM 中数组的安全最大大小。
     public static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     private CollectionUtil() {
@@ -54,6 +55,7 @@ public final class CollectionUtil {
         return map == null || map.isEmpty();
     }
 
+    // J: 带有 index 的 stream
     public static <T, R> Stream<R> mapWithIndex(
             Collection<T> input, final BiFunction<T, Integer, R> mapper) {
         final AtomicInteger count = new AtomicInteger(0);
@@ -77,12 +79,13 @@ public final class CollectionUtil {
         return buckets.values();
     }
 
+    // J: 将一个集合转换成另一个集合
     public static <I, O> Collection<O> project(Collection<I> collection, Function<I, O> projector) {
         return collection.stream().map(projector).collect(toList());
     }
 
     /**
-     * 在列表中收集Iterable中的元素。如果iterable参数为null，该方法将返回一个空列表。
+     * 在列表中收集 Iterable 中的元素。如果 iterable 参数为 null，该方法将返回一个空列表。
      *
      * Collects the elements in the Iterable in a List. If the iterable argument is null, this
      * method returns an empty list.
