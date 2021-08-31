@@ -47,9 +47,11 @@ public class ResourceGuard implements AutoCloseable, Serializable {
     private static final long serialVersionUID = 1L;
 
     /** The object that serves as lock for count and the closed-flag. */
+    // 用作计数和关闭标志锁的对象。
     private final SerializableObject lock;
 
     /** Number of clients that have ongoing access to the resource. */
+    // 持续访问资源的客户端数量。
     private volatile int leaseCount;
 
     /** This flag indicated if it is still possible to acquire access to the resource. */

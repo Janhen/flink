@@ -21,6 +21,9 @@ package org.apache.flink.util;
 import java.util.function.Consumer;
 
 /**
+ * 这个类从包装的 runnable 中捕获所有 {@link Throwable Throwables}。当包装的 runnable 提交给
+ * UncaughtExceptionHandler 不可用的执行程序时，此类很有用。
+ *
  * This class catches all the {@link Throwable Throwables} from the wrapped runnable. This class is
  * useful when the wrapped runnable is submitted to an executor where the UncaughtExceptionHandler
  * is not usable.

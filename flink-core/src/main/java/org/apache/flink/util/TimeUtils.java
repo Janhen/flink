@@ -36,12 +36,16 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Collection of utilities about time intervals. */
+// 关于时间间隔的实用程序集合。
 public class TimeUtils {
 
     private static final Map<String, ChronoUnit> LABEL_TO_UNIT_MAP =
             Collections.unmodifiableMap(initMap());
 
     /**
+     * 将给定的字符串解析为 java {@link Duration}。字符串的格式为“{length value}{time unit label}”，
+     * 例如 “123ms”、“321 s”。如果未指定时间单位标签，则将其视为毫秒。
+     *
      * Parse the given string to a java {@link Duration}. The string is in format "{length
      * value}{time unit label}", e.g. "123ms", "321 s". If no time unit label is specified, it will
      * be considered as milliseconds.
@@ -107,6 +111,7 @@ public class TimeUtils {
         }
     }
 
+    // 初始化内部 map
     private static Map<String, ChronoUnit> initMap() {
         Map<String, ChronoUnit> labelToUnit = new HashMap<>();
         for (TimeUnit timeUnit : TimeUnit.values()) {
@@ -126,6 +131,8 @@ public class TimeUtils {
     }
 
     /**
+     * Pretty 将持续时间打印为不会丢失精度的最低粒度单位。
+     *
      * Pretty prints the duration as a lowest granularity unit that does not lose precision.
      *
      * <p>Examples:
@@ -176,6 +183,7 @@ public class TimeUtils {
     }
 
     /** Enum which defines time unit, mostly used to parse value from configuration file. */
+    // 定义时间单位的枚举，主要用于解析配置文件中的值。
     private enum TimeUnit {
         DAYS(ChronoUnit.DAYS, singular("d"), plural("day")),
         HOURS(ChronoUnit.HOURS, singular("h"), plural("hour")),
@@ -187,10 +195,13 @@ public class TimeUtils {
 
         private static final String PLURAL_SUFFIX = "s";
 
+        // 对外显示的 label
         private final List<String> labels;
 
+        // jdk8 的 计时码表
         private final ChronoUnit unit;
 
+        // J: 可变参数辅助定义枚举，传递的值都为数组
         TimeUnit(ChronoUnit unit, String[]... labels) {
             this.unit = unit;
             this.labels =
@@ -208,6 +219,8 @@ public class TimeUtils {
         }
 
         /**
+         * 复数
+         *
          * @param label the original label
          * @return both the singular format and plural format of the original label
          */

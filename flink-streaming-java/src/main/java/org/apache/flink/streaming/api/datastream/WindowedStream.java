@@ -77,6 +77,15 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code WindowedStream} 代表一个数据流，其中元素按键分组，对于每个键，元素流根据
+ * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}。窗口发射基于
+ * {@link org.apache.flink.streaming.api.windowing.triggers.Trigger} 触发。
+ *
+ * <p>从概念上分别针对每个键评估窗口，这意味着窗口可以在每个键的不同点触发。
+ *
+ * <p>如果指定了 {@link Evictor}，它将用于在 {@code Trigger} 触发评估之后但在实际评估窗口之前从窗口中驱逐元素。
+ *   使用驱逐窗口时，性能会显着下降，因为无法使用窗口结果的增量聚合。
+ *
  * A {@code WindowedStream} represents a data stream where elements are grouped by key, and for each
  * key, the stream of elements is split into windows based on a {@link
  * org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}. Window emission is triggered
@@ -102,21 +111,28 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class WindowedStream<T, K, W extends Window> {
 
     /** The keyed data stream that is windowed by this stream. */
+    // 由该流窗口化的键控数据流。
     private final KeyedStream<T, K> input;
 
     /** The window assigner. */
+    // 窗口分配器。
     private final WindowAssigner<? super T, W> windowAssigner;
 
     /** The trigger that is used for window evaluation/emission. */
+    // 用于窗口评估发射的触发器。
     private Trigger<? super T, ? super W> trigger;
 
     /** The evictor that is used for evicting elements before window evaluation. */
+    // 用于在窗口评估之前驱逐元素的驱逐器。
     private Evictor<? super T, ? super W> evictor;
 
     /** The user-specified allowed lateness. */
+    // 用户指定的允许延迟。
     private long allowedLateness = 0L;
 
     /**
+     * 用于后期数据的侧输出 {@code OutputTag}。如果未设置标签，则后期数据将被简单地删除。
+     *
      * Side output {@code OutputTag} for late data. If no tag is set late data will simply be
      * dropped.
      */
@@ -130,6 +146,7 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /** Sets the {@code Trigger} that should be used to trigger window emission. */
+    // 设置应该用于触发窗口发射的 {@code Trigger}。
     @PublicEvolving
     public WindowedStream<T, K, W> trigger(Trigger<? super T, ? super W> trigger) {
         if (windowAssigner instanceof MergingWindowAssigner && !trigger.canMerge()) {
@@ -149,6 +166,10 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /**
+     * 设置允许元素延迟的时间。超过指定时间到达水印之后的元素将被丢弃。默认情况下，允许的延迟为 {@code 0L}。
+     *
+     * <p>设置允许的延迟仅对事件时间窗口有效。
+     *
      * Sets the time by which elements are allowed to be late. Elements that arrive behind the
      * watermark by more than the specified time will be dropped. By default, the allowed lateness
      * is {@code 0L}.
@@ -165,6 +186,13 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /**
+     * 将迟到的数据发送到由给定的 {@link OutputTag} 标识的侧输出。在水印超过窗口末尾加上使用
+     * {@link #allowedLateness(Time)} 设置的允许延迟后，数据被认为是延迟的。
+     *
+     * <p>您可以在 {@link SingleOutputStreamOperator} 上使用
+     *   {@link SingleOutputStreamOperator#getSideOutput(OutputTag)} 获取延迟数据流，这些数据是由具有相同
+     *   {@link OutputTag} 的窗口操作产生的。
+     *
      * Send late arriving data to the side output identified by the given {@link OutputTag}. Data is
      * considered late after the watermark has passed the end of the window plus the allowed
      * lateness set using {@link #allowedLateness(Time)}.
@@ -182,6 +210,10 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /**
+     * 设置 {@code Evictor} 应该用于在发射之前从窗口中驱逐元素。
+     *
+     * <p>注意：当使用驱逐窗口时，性能会显着下降，因为无法使用窗口结果的增量聚合。
+     *
      * Sets the {@code Evictor} that should be used to evict elements from a window before emission.
      *
      * <p>Note: When using an evictor window performance will degrade significantly, since
@@ -776,6 +808,8 @@ public class WindowedStream<T, K, W extends Window> {
     // ------------------------------------------------------------------------
 
     /**
+     * 将给定的聚合函数应用于每个窗口。为每个元素调用聚合函数，以增量方式聚合值并将状态保持在每个键和窗口的一个累加器中。
+     *
      * Applies the given aggregation function to each window. The aggregation function is called for
      * each element, aggregating values incrementally and keeping the state to one accumulator per
      * key and window.
@@ -807,6 +841,8 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /**
+     * 将给定的聚合函数应用于每个窗口。为每个元素调用聚合函数，以增量方式聚合值并将状态保持在每个键和窗口的一个累加器中。
+     *
      * Applies the given aggregation function to each window. The aggregation function is called for
      * each element, aggregating values incrementally and keeping the state to one accumulator per
      * key and window.
@@ -1142,6 +1178,10 @@ public class WindowedStream<T, K, W extends Window> {
     // ------------------------------------------------------------------------
 
     /**
+     * 将给定的窗口函数应用于每个窗口。为每个键的每个窗口评估单独调用窗口函数。窗口函数的输出被解释为常规的非窗口流。
+     *
+     * <p>请注意，此函数要求缓冲窗口中的所有数据，直到评估该窗口，因为该函数不提供增量聚合的方法。
+     *
      * Applies the given window function to each window. The window function is called for each
      * evaluation of the window for each key individually. The output of the window function is
      * interpreted as a regular non-windowed stream.
@@ -1177,6 +1217,10 @@ public class WindowedStream<T, K, W extends Window> {
     }
 
     /**
+     * 将给定的窗口函数应用于每个窗口。为每个键的每个窗口评估单独调用窗口函数。窗口函数的输出被解释为常规的非窗口流。
+     *
+     * <p>请注意，此函数要求缓冲窗口中的所有数据，直到评估该窗口，因为该函数不提供增量聚合的方法。
+     *
      * Applies the given window function to each window. The window function is called for each
      * evaluation of the window for each key individually. The output of the window function is
      * interpreted as a regular non-windowed stream.
@@ -1552,6 +1596,8 @@ public class WindowedStream<T, K, W extends Window> {
     // ------------------------------------------------------------------------
 
     /**
+     * 应用对给定位置的数据流的每个窗口求和的聚合。
+     *
      * Applies an aggregation that sums every window of the data stream at the given position.
      *
      * @param positionToSum The position in the tuple/array to sum

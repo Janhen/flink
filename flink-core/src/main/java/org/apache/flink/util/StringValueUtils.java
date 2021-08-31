@@ -49,6 +49,11 @@ public final class StringValueUtils {
     }
 
     /**
+     * 用给定的字符替换字符串中的所有非单词字符。唯一未被替换的字符是符合 {@link Character#isLetter(char)} 或
+     * {@link Character#isDigit(char)} 的单词字符或数字字符的字符，以及下划线字符。
+     *
+     * J: 数字、字母、下划线
+     *
      * Replaces all non-word characters in a string by a given character. The only characters not
      * replaced are the characters that qualify as word characters or digit characters with respect
      * to {@link Character#isLetter(char)} or {@link Character#isDigit(char)}, as well as the

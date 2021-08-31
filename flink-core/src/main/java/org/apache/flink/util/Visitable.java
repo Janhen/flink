@@ -21,7 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Internal;
 
 /**
- * 此接口在遍历期间将类型标记为可访问的。中央方法<i>accept(…)<i>包含了如何在可访问对象上调用所提供的{@link Visitor}的逻辑，以及如何进一步遍历。
+ * 此接口在遍历期间将类型标记为可访问的。中央方法<i>accept(…)<i>包含了如何在可访问对象上调用所提供的
+ * {@link Visitor} 的逻辑，以及如何进一步遍历。
  *
  * This interface marks types as visitable during a traversal. The central method <i>accept(...)</i>
  * contains the logic about how to invoke the supplied {@link Visitor} on the visitable object, and
@@ -39,6 +40,9 @@ import org.apache.flink.annotation.Internal;
 public interface Visitable<T extends Visitable<T>> {
 
     /**
+     * 包含调用访问者并继续遍历的逻辑。通常调用访问者的 pre-visit 方法，然后将访问者发送给孩子（或前辈），然后调用
+     * post-visit 方法。
+     *
      * Contains the logic to invoke the visitor and continue the traversal. Typically invokes the
      * pre-visit method of the visitor, then sends the visitor to the children (or predecessors) and
      * then invokes the post-visit method.

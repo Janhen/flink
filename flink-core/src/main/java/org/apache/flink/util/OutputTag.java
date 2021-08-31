@@ -26,9 +26,11 @@ import org.apache.flink.api.java.typeutils.TypeExtractor;
 import java.io.Serializable;
 
 /**
- * {@link OutputTag}是一个有类型和命名的标记，用于标记操作符的端输出。
+ * {@link OutputTag} 是一个有类型和命名的标记，用于标记操作符的端输出。
  *
- * <p> {@code OutputTag}必须始终是一个匿名内部类，这样Flink就可以为泛型类型参数派生一个{@link TypeInformation}。<p>
+ * <p> {@code OutputTag} 必须始终是一个匿名内部类，这样Flink就可以为泛型类型参数派生一个 {@link TypeInformation}。
+ *
+ * <p>
  *
  * An {@link OutputTag} is a typed and named tag to use for tagging side outputs of an operator.
  *
@@ -50,9 +52,12 @@ public class OutputTag<T> implements Serializable {
 
     private final String id;
 
+    // 类型信息
     private final TypeInformation<T> typeInfo;
 
     /**
+     * 使用给定的 id 创建一个名为 {@code OutputTag} 的新名称。
+     *
      * Creates a new named {@code OutputTag} with the given id.
      *
      * @param id The id of the created {@code OutputTag}.
@@ -74,6 +79,8 @@ public class OutputTag<T> implements Serializable {
     }
 
     /**
+     * 使用给定的 id 和输出 {@link TypeInformation} 创建一个名为 {@code OutputTag} 的新名称。
+     *
      * Creates a new named {@code OutputTag} with the given id and output {@link TypeInformation}.
      *
      * @param id The id of the created {@code OutputTag}.

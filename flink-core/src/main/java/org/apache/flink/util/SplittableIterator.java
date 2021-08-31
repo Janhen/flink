@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /**
+ * 迭代器的抽象基类，可以将自身拆分为多个不相交的迭代器。这些迭代器的并集返回原始迭代器值。
+ *
  * Abstract base class for iterators that can split themselves into multiple disjoint iterators. The
  * union of these iterators returns the original iterator values.
  *

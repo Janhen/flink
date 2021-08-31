@@ -21,6 +21,7 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Internal;
 
 /** An enumeration indicating the operating system that the JVM runs on. */
+// 一个枚举，指示运行 JVM 的操作系统
 @Internal
 public enum OperatingSystem {
     LINUX,

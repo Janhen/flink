@@ -44,6 +44,8 @@ public final class StringUtils {
     };
 
     /**
+     * 给定一个字节数组，它将字节转换为字节的十六进制字符串表示形式。
+     *
      * Given an array of bytes it will convert the bytes to a hex string representation of the
      * bytes.
      *
@@ -95,9 +97,9 @@ public final class StringUtils {
     }
 
     /**
-     * 通过调用{@link Object#toString()}并格式化(可能嵌套)数组和{@code null}，将给定对象转换为字符串表示形式。
+     * 通过调用 {@link Object#toString()} 并格式化(可能嵌套)数组和 {@code null}，将给定对象转换为字符串表示形式。
      *
-     * <p>参见{@link Arrays#deepToString(Object[])}获取更多关于所用格式的信息。
+     * <p>参见 {@link Arrays#deepToString(Object[])} 获取更多关于所用格式的信息。
      *
      * Converts the given object into a string representation by calling {@link Object#toString()}
      * and formatting (possibly nested) arrays and {@code null}.
@@ -168,6 +170,8 @@ public final class StringUtils {
     }
 
     /**
+     * 创建一个长度在给定间隔内的随机字符串。该字符串仅包含可以表示为单个代码点的字符。
+     *
      * Creates a random string with a length within the given interval. The string contains only
      * characters that can be represented as a single code point.
      *

@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 /** Simple utilities for getting typed values from Properties. */
+// 用于从属性获取类型值的简单实用程序。
 public class PropertiesUtil {
 
     /**
@@ -57,6 +58,8 @@ public class PropertiesUtil {
     }
 
     /**
+     * 从属性中获取长。如果 long 无效，则此方法将引发异常。
+     *
      * Get long from properties. This method throws an exception if the long is not valid.
      *
      * @param config Properties
@@ -86,6 +89,8 @@ public class PropertiesUtil {
     }
 
     /**
+     * 从属性中获取长。此方法仅在 long 无效时记录。
+     *
      * Get long from properties. This method only logs if the long is not valid.
      *
      * @param config Properties
@@ -103,7 +108,7 @@ public class PropertiesUtil {
     }
 
     /**
-     * 从属性获取布尔值。如果解析值为“true”，这个方法将返回{@code true}。
+     * 从属性获取布尔值。如果解析值为 “true”，这个方法将返回{@code true}。
      *
      * Get boolean from properties. This method returns {@code true} iff the parsed value is "true".
      *

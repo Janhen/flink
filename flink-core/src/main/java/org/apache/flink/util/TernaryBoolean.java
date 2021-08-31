@@ -42,6 +42,8 @@ public enum TernaryBoolean {
     FALSE,
 
     /**
+     * “未定义”的值。在配置设置中，这通常意味着将使用默认值，或来自部署范围配置的值。
+     *
      * The value for 'undefined'. In a configuration setting, this typically means that the default
      * value will be used, or the value from a deployment-wide configuration.
      */

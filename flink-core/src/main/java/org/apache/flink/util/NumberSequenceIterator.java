@@ -23,8 +23,8 @@ import org.apache.flink.annotation.Public;
 import java.util.NoSuchElementException;
 
 /**
- * {@code NumberSequenceIterator}是一个返回数字序列(如{@code Long})的迭代器。迭代器是可分的(由{@link SplittableIterator}
- * 定义，也就是说，它可以被分成多个迭代器，每个迭代器返回一个数字序列的子序列。
+ * {@code NumberSequenceIterator} 是一个返回数字序列(如 {@code Long})的迭代器。迭代器是可分的(由
+ * {@link SplittableIterator} 定义，也就是说，它可以被分成多个迭代器，每个迭代器返回一个数字序列的子序列。
  *
  * The {@code NumberSequenceIterator} is an iterator that returns a sequence of numbers (as {@code
  * Long})s. The iterator is splittable (as defined by {@link SplittableIterator}, i.e., it can be
@@ -36,9 +36,11 @@ public class NumberSequenceIterator extends SplittableIterator<Long> {
     private static final long serialVersionUID = 1L;
 
     /** The last number returned by the iterator. */
+    // 迭代器返回的最后一个数字。
     private final long to;
 
     /** The next number to be returned. */
+    // 要返回的下一个数字。
     private long current;
 
     /**

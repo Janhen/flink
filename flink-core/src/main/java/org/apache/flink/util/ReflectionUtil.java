@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /** Utility for reflection operations on classes and generic type parametrization. */
+// 用于类和泛型类型参数化的反射操作的实用程序。
 @Internal
 @SuppressWarnings("unused")
 public final class ReflectionUtil {
@@ -158,6 +159,8 @@ public final class ReflectionUtil {
     }
 
     /**
+     * 从给定位置的给定类型的模板参数中提取完整的模板类型信息。
+     *
      * Extract the full template type information from the given type's template parameter at the
      * given position.
      *
@@ -175,6 +178,8 @@ public final class ReflectionUtil {
     }
 
     /**
+     * 从给定类型中提取完整的类型信息。
+     *
      * Extract the full type information from the given type.
      *
      * @param type to be analyzed

@@ -27,6 +27,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class ShutdownHookUtil {
 
     /** Adds a shutdown hook to the JVM and returns the Thread, which has been registered. */
+    // 向 JVM 添加关闭 hook 并返回已注册的 Thread。
     public static Thread addShutdownHook(
             final AutoCloseable service, final String serviceName, final Logger logger) {
 
@@ -51,6 +52,8 @@ public class ShutdownHookUtil {
     }
 
     /**
+     * 向 JVM 添加关闭 hook。
+     *
      * Adds a shutdown hook to the JVM.
      *
      * @param shutdownHook Shutdown hook to be registered.
@@ -90,6 +93,7 @@ public class ShutdownHookUtil {
         checkNotNull(logger);
 
         try {
+            // 从 JVM 中移除 hook
             Runtime.getRuntime().removeShutdownHook(shutdownHook);
         } catch (IllegalStateException e) {
             // race, JVM is in shutdown already, we can safely ignore this

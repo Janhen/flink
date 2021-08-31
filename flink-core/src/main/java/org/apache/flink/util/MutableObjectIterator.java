@@ -27,7 +27,8 @@ import java.io.IOException;
  *
  * <ul>
  *     <li>它有两个不同的<code>next()<code>，其中一个变体允许传递一个可以重用的对象，如果类型是可变的。
- *     <li>它将逻辑整合到一个 <code>next()<code> 函数中，而不是将其拆分为两个不同的函数，例如 <code>hasNext()<code> 和 <code>next()<code>
+ *     <li>它将逻辑整合到一个 <code>next()<code> 函数中，而不是将其拆分为两个不同的函数，例如
+ *       <code>hasNext()<code> 和 <code>next()<code>
  * <ul>
  *
  * A simple iterator interface. The key differences to the {@link java.util.Iterator} are
@@ -45,6 +46,8 @@ import java.io.IOException;
 public interface MutableObjectIterator<E> {
 
     /**
+     * 从集合中获取下一个元素。如果类型是可变的，则下一个元素的内容将放入给定的重用对象中。
+     *
      * Gets the next element from the collection. The contents of that next element is put into the
      * given reuse object, if the type is mutable.
      *
@@ -56,6 +59,8 @@ public interface MutableObjectIterator<E> {
     E next(E reuse) throws IOException;
 
     /**
+     * 从集合中获取下一个元素。迭代器实现必须获得一个新实例。
+     *
      * Gets the next element from the collection. The iterator implementation must obtain a new
      * instance.
      *

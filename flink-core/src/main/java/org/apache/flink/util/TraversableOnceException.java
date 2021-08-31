@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 一个异常，表明一个 {@link java.lang.Iterable} 只能被遍历一次，但已经尝试过一次额外的遍历。
+ *
  * An exception, indicating that an {@link java.lang.Iterable} can only be traversed once, but has
  * been attempted to traverse an additional time.
  */
@@ -30,6 +32,7 @@ public class TraversableOnceException extends RuntimeException {
     private static final long serialVersionUID = 7636881584773577290L;
 
     /** Creates a new exception with a default message. */
+    // 创建一个带有默认消息的新异常。
     public TraversableOnceException() {
         super(
                 "The Iterable can be iterated over only once. Only the first call to 'iterator()' will succeed.");

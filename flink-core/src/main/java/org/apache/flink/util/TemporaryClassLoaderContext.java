@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 以“try-with-resources”模式设置上下文类加载器。
+ *
  * Sets a context class loader in a "try-with-resources" pattern.
  *
  * <pre>{@code
@@ -45,6 +47,8 @@ import org.apache.flink.annotation.Public;
 public final class TemporaryClassLoaderContext implements AutoCloseable {
 
     /**
+     * 将上下文类加载器设置为给定的类加载器，并返回一个资源，当资源关闭时，该资源将其设置回当前的上下文类加载器。
+     *
      * Sets the context class loader to the given ClassLoader and returns a resource that sets it
      * back to the current context ClassLoader when the resource is closed.
      *

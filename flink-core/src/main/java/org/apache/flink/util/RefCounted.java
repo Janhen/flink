@@ -26,6 +26,7 @@ import org.apache.flink.annotation.Internal;
 public interface RefCounted {
 
     /** Increases the reference counter. */
+    // 增加参考计数器。
     void retain();
 
     /**

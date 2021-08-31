@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 包装另一个对象和代理（可能是该对象的方法的子集）的对象的接口。
+ *
  * Interface for objects that wrap another object and proxy (possibly a subset) of the methods of
  * that object.
  *

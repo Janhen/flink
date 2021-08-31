@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 本系统的处理器架构。
+ *
  * The processor architecture of the this system.
  *
  * <p>Note that the memory address size might be different than the actual hardware architecture,
