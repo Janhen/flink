@@ -33,12 +33,12 @@ import static org.apache.flink.util.Preconditions.checkState;
  * 更新，并将其转发到底层 {@link WatermarkOutput}。
  *
  * <p>多路复用输出可以是立即的也可以是延迟的。即时输出上的水印更新可能会直接影响组合水印状态，该状态将立即转发到底层输出。
- * 延迟输出上的水印更新只会更新内部状态，而不会直接更新组合水印状态。只有当 {@link #onPeriodicEmit()} 被调用时，延
- * 迟更新才会被合并并转发到底层输出。
+ *   延迟输出上的水印更新只会更新内部状态，而不会直接更新组合水印状态。只有当 {@link #onPeriodicEmit()} 被调用时，
+ *   延迟更新才会被合并并转发到底层输出。
  *
  * <p>要注册一个新的多路复用输出，您必须首先调用 {@link #registerNewOutput(String)}，然后使用您从中获得的输出 ID
- * 调用 {@link #getImmediateOutput(String)} 或 {@link #getDeferredOutput(String)} .您可以获得给定输出 ID
- * 的立即输出和延迟输出，也可以多次调用 getter。
+ *   调用 {@link #getImmediateOutput(String)} 或 {@link #getDeferredOutput(String)} .您可以获得给定输出
+ *   ID 的立即输出和延迟输出，也可以多次调用 getter。
  *
  * <p><b>警告：<b>此类不是线程安全的。
  *
@@ -64,6 +64,9 @@ import static org.apache.flink.util.Preconditions.checkState;
 public class WatermarkOutputMultiplexer {
 
     /**
+     * 我们用来发出多路复用水印更新的 {@link WatermarkOutput}。我们假设外部代码持有一个协调锁，所以我们在访问这个
+     * {@link WatermarkOutput} 时不会锁定这个类。
+     *
      * The {@link WatermarkOutput} that we use to emit our multiplexed watermark updates. We assume
      * that outside code holds a coordinating lock so we don't lock in this class when accessing
      * this {@link WatermarkOutput}.
@@ -71,17 +74,23 @@ public class WatermarkOutputMultiplexer {
     private final WatermarkOutput underlyingOutput;
 
     /** The combined watermark over the per-output watermarks. */
+    // 每个输出水印上的组合水印。
     private long combinedWatermark = Long.MIN_VALUE;
 
     /**
+     * map 视图，允许在请求给定 ID 的 {@link WatermarkOutput} 时找到它们。
+     *
      * Map view, to allow finding them when requesting the {@link WatermarkOutput} for a given id.
      */
     private final Map<String, OutputState> watermarkPerOutputId;
 
     /** List of all watermark outputs, for efficient access. */
+    // 所有水印输出的列表，以便高效访问。
     private final List<OutputState> watermarkOutputs;
 
     /**
+     * 创建一个新的 {@link WatermarkOutputMultiplexer}，它向给定的 {@link WatermarkOutput} 发出组合更新。
+     *
      * Creates a new {@link WatermarkOutputMultiplexer} that emits combined updates to the given
      * {@link WatermarkOutput}.
      */
@@ -92,6 +101,9 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 注册一个新的多路复用输出，它为该输出创建内部状态并返回一个输出 ID，该 ID 可用于为该输出获取延迟或立即
+     * {@link WatermarkOutput}。
+     *
      * Registers a new multiplexed output, which creates internal states for that output and returns
      * an output ID that can be used to get a deferred or immediate {@link WatermarkOutput} for that
      * output.
@@ -116,6 +128,8 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 返回给定输出 ID 的即时 {@link WatermarkOutput}。 <p>>参见 {@link WatermarkOutputMultiplexer} 了解立即和延迟输出的描述。
+     *
      * Returns an immediate {@link WatermarkOutput} for the given output ID.
      *
      * <p>>See {@link WatermarkOutputMultiplexer} for a description of immediate and deferred
@@ -129,6 +143,10 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 返回给定输出 ID 的延迟 {@link WatermarkOutput}。
+     *
+     * <p>>参见 {@link WatermarkOutputMultiplexer} 了解立即和延迟输出的描述。
+     *
      * Returns a deferred {@link WatermarkOutput} for the given output ID.
      *
      * <p>>See {@link WatermarkOutputMultiplexer} for a description of immediate and deferred
@@ -142,6 +160,9 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 告诉 {@link WatermarkOutputMultiplexer} 组合所有未完成的延迟水印更新，并可能向底层
+     * {@link WatermarkOutput} 发出新更新。
+     *
      * Tells the {@link WatermarkOutputMultiplexer} to combine all outstanding deferred watermark
      * updates and possibly emit a new update to the underlying {@link WatermarkOutput}.
      */
@@ -150,6 +171,9 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 检查我们是否需要更新组合水印。当新发出的每个输出水印高于迄今为止的最大值或者我们需要合并延迟的每个输出更新时，
+     * 应该调用。
+     *
      * Checks whether we need to update the combined watermark. Should be called when a newly
      * emitted per-output watermark is higher than the max so far or if we need to combined the
      * deferred per-output updates.
@@ -182,11 +206,14 @@ public class WatermarkOutputMultiplexer {
     }
 
     /** Per-output watermark state. */
+    // 每个输出水印状态。
     private static class OutputState {
         private long watermark = Long.MIN_VALUE;
         private boolean idle = false;
 
         /**
+         * 返回当前水印时间戳。如果输出当前空闲，这将抛出 {@link IllegalStateException}。
+         *
          * Returns the current watermark timestamp. This will throw {@link IllegalStateException} if
          * the output is currently idle.
          */
@@ -196,6 +223,10 @@ public class WatermarkOutputMultiplexer {
         }
 
         /**
+         * 如果水印是高级的，即如果新水印大于前一个，则返回 true。
+         *
+         * <p>设置水印将清除空闲标志。
+         *
          * Returns true if the watermark was advanced, that is if the new watermark is larger than
          * the previous one.
          *
@@ -252,6 +283,9 @@ public class WatermarkOutputMultiplexer {
     }
 
     /**
+     * 更新延迟输出的状态永远不会导致组合水印更新。只有当 {@link WatermarkOutputMultiplexer#onPeriodicEmit()}
+     * 被调用时，延迟更新才会被组合成底层 {@link WatermarkOutput} 的潜在组合更新。
+     *
      * Updating the state of a deferred output will never lead to a combined watermark update. Only
      * when {@link WatermarkOutputMultiplexer#onPeriodicEmit()} is called will the deferred updates
      * be combined into a potential combined update of the underlying {@link WatermarkOutput}.

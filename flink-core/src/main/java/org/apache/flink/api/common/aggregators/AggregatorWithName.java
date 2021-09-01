@@ -22,7 +22,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.types.Value;
 
 /** Simple utility class holding an {@link Aggregator} with the name it is registered under. */
-// 简单的工具类持有一个{@link Aggregator}与它注册的名称。
+// 简单的工具类持有一个 {@link Aggregator} 与它注册的名称。
 @PublicEvolving
 public class AggregatorWithName<T extends Value> {
 

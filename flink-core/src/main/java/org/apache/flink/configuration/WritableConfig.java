@@ -21,6 +21,8 @@ package org.apache.flink.configuration;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 对配置对象的写访问权限。允许存储用包含在 {@link ConfigOption} 中的元信息描述的值。
+ *
  * Write access to a configuration object. Allows storing values described with meta information
  * included in {@link ConfigOption}.
  */
@@ -28,6 +30,8 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface WritableConfig {
 
     /**
+     * 使用 {@link ConfigOption} 中包含的元数据存储给定值。该值应该可以通过 {@link ReadableConfig} 读取回来。
+     *
      * Stores a given value using the metadata included in the {@link ConfigOption}. The value
      * should be readable back through {@link ReadableConfig}.
      *

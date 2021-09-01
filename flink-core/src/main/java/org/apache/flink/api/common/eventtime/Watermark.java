@@ -28,15 +28,15 @@ import java.util.Date;
  * 水印是数据流中的进度指示器。水印表示时间戳小于或等于水印时间的事件不会在水之后发生。时间戳的水印表示流的事件时间已经
  * 进展到时间<i>T<i>。水印是在源创建的，并通过流和操作符传播。
  *
- * 在某些情况下，水印只是一种启发式，这意味着一些具有较低时间戳的事件可能仍然会出现。在这种情况下，就由 operator 的逻辑
- * 来决定如何处理“晚事件”。
+ * <p>在某些情况下，水印只是一种启发式，这意味着一些具有较低时间戳的事件可能仍然会出现。在这种情况下，就由 operator
+ *   的逻辑来决定如何处理“晚事件”。
  *
- * 例如，operator 可以忽略这些延迟事件，将它们路由到不同的流，或者向它们先前发出的结果发送更新。
+ * <p>例如，operator 可以忽略这些延迟事件，将它们路由到不同的流，或者向它们先前发出的结果发送更新。
  *
- * 当一个源到达输入的末尾时，它会发出一个带有时间戳{@code Long 的最终水印。MAX_VALUE}，表示“时间结束”。
+ * <p>当一个源到达输入的末尾时，它会发出一个带有时间戳 {@code Long 的最终水印。MAX_VALUE}，表示 “时间结束”。
  *
- * 注意: 流的时间以{@code Long.MIN_VALUE}的水印开始。这意味着流中时间戳为{@code Long 的所有记录。MIN_VALUE}\
- * 立即迟到。
+ * <p>注意: 流的时间以 {@code Long.MIN_VALUE} 的水印开始。这意味着流中时间戳为 {@code Long 的所有记录。MIN_VALUE}\
+ *   立即迟到。
  *
  * Watermarks are the progress indicators in the data streams. A watermark signifies that no events
  * with a timestamp smaller or equal to the watermark's time will occur after the water. A watermark

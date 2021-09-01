@@ -24,18 +24,19 @@ import org.apache.flink.types.Value;
 import java.io.Serializable;
 
 /**
- * Aggregator 是一种跨函数的并行实例聚合值的方法。Aggregator 收集关于在函数中执行的实际工作的简单统计信息(例如处理元素的数量)。聚合
- * 器是特定于迭代的，通常通过使用{@link ConvergenceCriterion}来检查迭代的收敛性。与{@link}(其结果在作业结束时可用)
- * 相反，聚合器在每个迭代超步中计算一次。它们的值可以用于检查收敛性(在迭代超步的末尾)，并且可以在下一个迭代超步中访问。
+ * Aggregator 是一种跨函数的并行实例聚合值的方法。Aggregator 收集关于在函数中执行的实际工作的简单统计信息
+ * (例如处理元素的数量)。聚合器是特定于迭代的，通常通过使用 {@link ConvergenceCriterion} 来检查迭代的收敛性。
+ * 与{@link}(其结果在作业结束时可用)相反，聚合器在每个迭代超步中计算一次。它们的值可以用于检查收敛性(在迭代超步的末尾)，
+ * 并且可以在下一个迭代超步中访问。
  *
- * <p>Aggregator 必须在通过函数使用它们的迭代处注册。在Java API中，当将聚合器和收敛准则一起使用时，方法是
- * “IterativeDataSet.registerAggregator(…)”或“IterativeDataSet.registerAggregationConvergenceCriterion(…)”。
- * 聚合器总是在一个名称下注册。该名称可用于在运行时从函数内部访问聚合器。下面的代码片段显示了一个典型的情况。这里，它在所
- * 有并行实例中计算一个函数过滤掉了多少个元素。
+ * <p>Aggregator 必须在通过函数使用它们的迭代处注册。在 Java API 中，当将聚合器和收敛准则一起使用时，方法是
+ *   “IterativeDataSet.registerAggregator(…)”或“IterativeDataSet.registerAggregationConvergenceCriterion(…)”。
+ *   聚合器总是在一个名称下注册。该名称可用于在运行时从函数内部访问聚合器。下面的代码片段显示了一个典型的情况。这里，
+ *   它在所有并行实例中计算一个函数过滤掉了多少个元素。
  *
- * <p>Aggregator 必须<i>分布式<i>：Aggregator 必须能够预聚合值，并且必须能够聚合这些预聚合值以形成最终聚合。许多聚合函数都满足这
- * 一条件（sum、min、max），而其他聚合函数可以采用这种形式：可以将 <i>count<i> 表示为 1 值的总和，还可以表示
- * <i>average<i > 通过总和和计数。
+ * <p>Aggregator 必须<i>分布式<i>：Aggregator 必须能够预聚合值，并且必须能够聚合这些预聚合值以形成最终聚合。许多
+ *   聚合函数都满足这一条件（sum、min、max），而其他聚合函数可以采用这种形式：可以将 <i>count<i> 表示为 1 值的总和，
+ *   还可以表示<i>average<i > 通过总和和计数。
  *
  * Aggregators are a means of aggregating values across parallel instances of a function.
  * Aggregators collect simple statistics (such as the number of processed elements) about the actual

@@ -28,7 +28,7 @@ public interface WatermarkOutput {
     /**
      * 发出给定的水印。
      *
-     * 发出水印还隐式地将流标记为<i>活动<i>，以先前标记为闲置结束。
+     * <p>发出水印还隐式地将流标记为<i>活动<i>，以先前标记为闲置结束。
      *
      * Emits the given watermark.
      *

@@ -36,6 +36,8 @@ import java.io.Serializable;
 public interface FlinkConnectorRateLimiter extends Serializable {
 
     /**
+     * 一种可用于基于 runtimeContext 创建和配置速率限制器的方法。
+     *
      * A method that can be used to create and configure a ratelimiter based on the runtimeContext.
      *
      * @param runtimeContext
@@ -43,6 +45,8 @@ public interface FlinkConnectorRateLimiter extends Serializable {
     void open(RuntimeContext runtimeContext);
 
     /**
+     * 为速率限制器设置所需的速率。
+     *
      * Sets the desired rate for the rate limiter.
      *
      * @param rate
@@ -50,6 +54,7 @@ public interface FlinkConnectorRateLimiter extends Serializable {
     void setRate(long rate);
 
     /** Acquires permits for the rate limiter. */
+    // 获得速率限制器的许可。
     void acquire(int permits);
 
     long getRate();

@@ -28,6 +28,8 @@ import java.io.Serializable;
 public interface DataDistribution extends IOReadableWritable, Serializable {
 
     /**
+     * 返回第 i 个存储桶的上限，假设分布将被拆分为 {@code totalBuckets} 存储桶。
+     *
      * Returns the i'th bucket's upper bound, given that the distribution is to be split into {@code
      * totalBuckets} buckets.
      *
@@ -50,6 +52,9 @@ public interface DataDistribution extends IOReadableWritable, Serializable {
     Object[] getBucketBoundary(int bucketNum, int totalNumBuckets);
 
     /**
+     * （复合）键中的字段数。这决定了记录中有多少字段定义了存储桶。字段数必须是函数
+     * {@link #getBucketBoundary(int, int)} 返回的数组的大小。
+     *
      * The number of fields in the (composite) key. This determines how many fields in the records
      * define the bucket. The number of fields must be the size of the array returned by the
      * function {@link #getBucketBoundary(int, int)}.

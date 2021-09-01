@@ -24,9 +24,10 @@ import org.apache.flink.metrics.MetricGroup;
 import java.io.Serializable;
 
 /**
- * {@link WatermarkGenerator WatermarkGenerators}的 supplier。supplier 模式用于避免在API方法中使用
+ * {@link WatermarkGenerator WatermarkGenerators} 的 supplier。supplier 模式用于避免在 API 方法中使用
  * {@link WatermarkGenerator} {@link Serializable}。
- * <p>这个接口是{@link Serializable}，因为  supplier 可能在分布式执行期间被运送到 workers。
+ *
+ * <p>这个接口是 {@link Serializable}，因为  supplier 可能在分布式执行期间被运送到 workers。
  *
  * A supplier for {@link WatermarkGenerator WatermarkGenerators}. The supplier pattern is used to
  * avoid having to make {@link WatermarkGenerator} {@link Serializable} for use in API methods.
@@ -39,15 +40,24 @@ import java.io.Serializable;
 public interface WatermarkGeneratorSupplier<T> extends Serializable {
 
     /** Instantiates a {@link WatermarkGenerator}. */
+    // 实例化一个 {@link WatermarkGenerator}。
     WatermarkGenerator<T> createWatermarkGenerator(Context context);
 
     /**
+     * {@link #createWatermarkGenerator(Context)} 可用的附加信息。例如，这可以访问
+     * {@link org.apache.flink.metrics.MetricGroup MetricGroups}。
+     *
      * Additional information available to {@link #createWatermarkGenerator(Context)}. This can be
      * access to {@link org.apache.flink.metrics.MetricGroup MetricGroups}, for example.
      */
     interface Context {
 
         /**
+         * 返回使用创建的 {@link WatermarkGenerator} 的上下文的指标组。
+         *
+         * <p>此类的实例可用于向 Flink 注册新指标并基于组名称创建嵌套层次结构。有关指标系统的更多信息，请参阅
+         *   {@link MetricGroup}。
+         *
          * Returns the metric group for the context in which the created {@link WatermarkGenerator}
          * is used.
          *

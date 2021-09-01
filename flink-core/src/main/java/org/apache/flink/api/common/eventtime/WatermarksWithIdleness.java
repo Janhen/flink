@@ -41,6 +41,7 @@ public class WatermarksWithIdleness<T> implements WatermarkGenerator<T> {
 
     private final WatermarkGenerator<T> watermarks;
 
+    // 空闲计时器
     private final IdlenessTimer idlenessTimer;
 
     /**
@@ -67,12 +68,14 @@ public class WatermarksWithIdleness<T> implements WatermarkGenerator<T> {
     @Override
     public void onEvent(T event, long eventTimestamp, WatermarkOutput output) {
         watermarks.onEvent(event, eventTimestamp, output);
+        // 激活空闲计时器
         idlenessTimer.activity();
     }
 
     @Override
     public void onPeriodicEmit(WatermarkOutput output) {
         if (idlenessTimer.checkIfIdle()) {
+            // 空闲
             output.markIdle();
         } else {
             watermarks.onPeriodicEmit(output);
@@ -85,16 +88,20 @@ public class WatermarksWithIdleness<T> implements WatermarkGenerator<T> {
     static final class IdlenessTimer {
 
         /** The clock used to measure elapsed time. */
+        // 用于测量经过时间的时钟。
         private final Clock clock;
 
         /** Counter to detect change. No problem if it overflows. */
+        // 计数器检测变化。如果溢出没有问题。
         private long counter;
 
         /** The value of the counter at the last activity check. */
+        // 上次活动检查时的计数器值。
         private long lastCounter;
 
         /**
-         * 第一次（相对于 {@link Clock#relativeTimeNanos()}）活动检查发现自上次检查以来没有发生任何活动。特殊值：0 = 无定时器。
+         * 第一次（相对于 {@link Clock#relativeTimeNanos()}）活动检查发现自上次检查以来没有发生任何活动。
+         * 特殊值：0 = 无定时器。
          *
          * The first time (relative to {@link Clock#relativeTimeNanos()}) when the activity check
          * found that no activity happened since the last check. Special value: 0 = no timer.

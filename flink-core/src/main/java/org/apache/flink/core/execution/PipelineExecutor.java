@@ -25,15 +25,16 @@ import org.apache.flink.configuration.Configuration;
 import java.util.concurrent.CompletableFuture;
 
 /** The entity responsible for executing a {@link Pipeline}, i.e. a user job. */
-// 负责执行{@link Pipeline}的实体，即用户作业。
+// 负责执行 {@link Pipeline} 的实体，即用户作业。
 @Internal
 public interface PipelineExecutor {
 
     /**
-     * 根据提供的配置执行一个{@link Pipeline}，并返回一个{@link JobClient}，它允许与正在执行的作业交互，例如取消
+     * 根据提供的配置执行一个 {@link Pipeline}，并返回一个 {@link JobClient}，它允许与正在执行的作业交互，例如取消
      * 它或获取一个保存点。
      *
-     * <p><b>注意:<b>调用者负责管理返回{@link JobClient}的生命周期。这意味着{@code close()}应该在调用点显式地调用。
+     * <p><b>注意:<b>调用者负责管理返回 {@link JobClient} 的生命周期。这意味着 {@code close()} 应该在调用点
+     *   显式地调用。
      *
      * Executes a {@link Pipeline} based on the provided configuration and returns a {@link
      * JobClient} which allows to interact with the job being executed, e.g. cancel it or take a

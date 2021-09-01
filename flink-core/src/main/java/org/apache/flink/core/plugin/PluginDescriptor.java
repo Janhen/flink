@@ -22,18 +22,25 @@ import java.net.URL;
 import java.util.Arrays;
 
 /** Descriptive meta information for a plugin. */
+// 插件的描述性元信息。
 public class PluginDescriptor {
 
     /** Unique identifier of the plugin. */
+    // 插件的唯一标识符。
     private final String pluginId;
 
     /**
+     * 插件资源代码的 URL。通常这包含将为插件加载的 jars 的 URL。
+     *
      * URLs to the plugin resources code. Usually this contains URLs of the jars that will be loaded
      * for the plugin.
      */
     private final URL[] pluginResourceURLs;
 
     /**
+     * 应从插件资源加载中排除的类的字符串模式。请参阅 {@link org.apache.flink.util.ChildFirstClassLoader}
+     * 的字段 alwaysParentFirstPatterns。
+     *
      * String patterns of classes that should be excluded from loading out of the plugin resources.
      * See {@link org.apache.flink.util.ChildFirstClassLoader}'s field alwaysParentFirstPatterns.
      */

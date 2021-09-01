@@ -31,10 +31,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /** Default implementation of {@link PluginManager}. */
-
-/**
- * J: 一些类加载的问题可参考 ...   flinkx 对于 yarn session 执行需要配置加载 。。。
- */
+/** J: 一些类加载的问题可参考 ...   flinkx 对于 yarn session 执行需要配置加载 。。。  */
 @Internal
 @ThreadSafe
 public class DefaultPluginManager implements PluginManager {

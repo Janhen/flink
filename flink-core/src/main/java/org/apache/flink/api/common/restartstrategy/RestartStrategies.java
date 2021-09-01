@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 这个类定义了生成RestartStrategyConfigurations的方法。这些配置用于在运行时创建RestartStrategies。
+ * 这个类定义了生成 RestartStrategyConfigurations 的方法。这些配置用于在运行时创建 RestartStrategies。
  * RestartStrategyConfigurations 用于从运行时模块解耦核心模块。
  *
  * This class defines methods to generate RestartStrategyConfigurations. These configurations are

@@ -23,6 +23,7 @@ import org.apache.flink.annotation.Internal;
 import java.math.BigDecimal;
 
 /** The GPU resource. */
+// GPU 资源。
 @Internal
 public class GPUResource extends Resource {
 

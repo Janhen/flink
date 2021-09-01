@@ -53,8 +53,8 @@ public class DistributedCache {
     /**
      * {@link DistributedCache} 中条目的元信息。
      *
-     * <p>根据我们在作业提交过程中所处的位置，条目对本地目录具有不同的语义。通过API注册后{@code filePath}表示原目录。
-     * 上传到集群后（包括压缩目录），{@code filePath} 表示 zip 的（服务器端）副本。
+     * <p>根据我们在作业提交过程中所处的位置，条目对本地目录具有不同的语义。通过API注册后 {@code filePath} 表示原目录。
+     *   上传到集群后（包括压缩目录），{@code filePath} 表示 zip 的（服务器端）副本。
      *
      * Meta info about an entry in {@link DistributedCache}.
      *

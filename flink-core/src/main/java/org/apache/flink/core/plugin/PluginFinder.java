@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * 该接口的实现提供了定位插件和创建相应的 {@link PluginDescriptor} 对象的机制。然后可以使用结果来初始化
+ * {@link PluginLoader}。
+ *
  * Implementations of this interface provide mechanisms to locate plugins and create corresponding
  * {@link PluginDescriptor} objects. The result can then be used to initialize a {@link
  * PluginLoader}.

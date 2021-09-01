@@ -34,12 +34,15 @@ import java.util.concurrent.CompletableFuture;
 public interface JobClient {
 
     /** Returns the {@link JobID} that uniquely identifies the job this client is scoped to. */
+    // 返回唯一标识此客户端范围的作业的 {@link JobID}。
     JobID getJobID();
 
     /** Requests the {@link JobStatus} of the associated job. */
+    // 请求关联作业的 {@link JobStatus}。
     CompletableFuture<JobStatus> getJobStatus();
 
     /** Cancels the associated job. */
+    // 取消关联的作业。
     CompletableFuture<Void> cancel();
 
     /**
@@ -66,7 +69,7 @@ public interface JobClient {
 
     /**
      * 触发关联作业的保存点。保存点将被写入给定的保存点目录，或者
-     * {@link org.apache.flink.configuration.CheckpointingOptions#SAVEPOINT_DIRECTORY}如果是null。
+     * {@link org.apache.flink.configuration.CheckpointingOptions#SAVEPOINT_DIRECTORY} 如果是 null。
      *
      * Triggers a savepoint for the associated job. The savepoint will be written to the given
      * savepoint directory, or {@link
@@ -87,7 +90,7 @@ public interface JobClient {
     CompletableFuture<Map<String, Object>> getAccumulators(ClassLoader classLoader);
 
     /**
-     * 返回提交作业的{@link JobExecutionResult 作业执行结果}。
+     * 返回提交作业的 {@link JobExecutionResult 作业执行结果}。
      *
      * Returns the {@link JobExecutionResult result of the job execution} of the submitted job.
      *

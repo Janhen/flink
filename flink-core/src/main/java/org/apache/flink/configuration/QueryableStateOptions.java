@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** The set of configuration options relating to Queryable State. */
+// 与可查询状态相关的一组配置选项。
 @PublicEvolving
 public class QueryableStateOptions {
 

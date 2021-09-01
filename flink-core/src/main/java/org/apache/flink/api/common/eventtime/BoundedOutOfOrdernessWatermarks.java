@@ -49,6 +49,8 @@ public class BoundedOutOfOrdernessWatermarks<T> implements WatermarkGenerator<T>
     private final long outOfOrdernessMillis;
 
     /**
+     * 使用给定的无序边界创建一个新的水印生成器。
+     *
      * Creates a new watermark generator with the given out-of-orderness bound.
      *
      * @param maxOutOfOrderness The bound for the out-of-orderness of the event timestamps.
@@ -60,6 +62,7 @@ public class BoundedOutOfOrdernessWatermarks<T> implements WatermarkGenerator<T>
         this.outOfOrdernessMillis = maxOutOfOrderness.toMillis();
 
         // start so that our lowest watermark would be Long.MIN_VALUE.
+        // 开始，我们的最低水印将是 Long.MIN_VALUE。
         this.maxTimestamp = Long.MIN_VALUE + outOfOrdernessMillis + 1;
     }
 
@@ -67,11 +70,13 @@ public class BoundedOutOfOrdernessWatermarks<T> implements WatermarkGenerator<T>
 
     @Override
     public void onEvent(T event, long eventTimestamp, WatermarkOutput output) {
+        // 取事件时间的最大值
         maxTimestamp = Math.max(maxTimestamp, eventTimestamp);
     }
 
     @Override
     public void onPeriodicEmit(WatermarkOutput output) {
+        // 输出水印
         output.emitWatermark(new Watermark(maxTimestamp - outOfOrdernessMillis - 1));
     }
 }

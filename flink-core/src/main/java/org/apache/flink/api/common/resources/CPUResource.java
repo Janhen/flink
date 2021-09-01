@@ -23,6 +23,7 @@ import org.apache.flink.annotation.Internal;
 import java.math.BigDecimal;
 
 /** Represents CPU resource. */
+// 代表 CPU 资源。
 @Internal
 public class CPUResource extends Resource {
 

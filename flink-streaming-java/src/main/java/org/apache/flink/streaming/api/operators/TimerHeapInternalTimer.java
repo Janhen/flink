@@ -37,15 +37,20 @@ public final class TimerHeapInternalTimer<K, N>
         implements InternalTimer<K, N>, HeapPriorityQueueElement {
 
     /** The key for which the timer is scoped. */
+    // 定时器作用域的键。
     @Nonnull private final K key;
 
     /** The namespace for which the timer is scoped. */
+    // 定时器作用域的命名空间。
     @Nonnull private final N namespace;
 
     /** The expiration timestamp. */
+    // 到期时间戳。
     private final long timestamp;
 
     /**
+     * 当它由定时器堆管理时，该字段保存该定时器的当前物理索引，以便我们可以支持快速删除。
+     *
      * This field holds the current physical index of this timer when it is managed by a timer heap
      * so that we can support fast deletes.
      */
@@ -102,6 +107,8 @@ public final class TimerHeapInternalTimer<K, N>
     }
 
     /**
+     * 可以调用此方法以指示不再将计时器管理为计时器堆，例如因为它被删除了。
+     *
      * This method can be called to indicate that the timer is no longer managed be a timer heap,
      * e.g. because it as removed.
      */

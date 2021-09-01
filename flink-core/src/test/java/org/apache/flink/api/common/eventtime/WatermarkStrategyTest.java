@@ -45,6 +45,7 @@ public class WatermarkStrategyTest {
         WatermarkStrategy<Object> wmStrategy = WatermarkStrategy.forMonotonousTimestamps();
 
         // ensure that the closure can be cleaned through the WatermarkStategies
+        // 确保可以通过 WatermarkStategies 清理闭包
         ClosureCleaner.clean(wmStrategy, ExecutionConfig.ClosureCleanerLevel.RECURSIVE, true);
 
         assertThat(

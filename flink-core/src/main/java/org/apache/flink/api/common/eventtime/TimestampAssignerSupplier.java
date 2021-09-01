@@ -57,6 +57,11 @@ public interface TimestampAssignerSupplier<T> extends Serializable {
     interface Context {
 
         /**
+         * 返回使用创建的 {@link TimestampAssigner} 的上下文的指标组。
+         *
+         * <p>此类的实例可用于向 Flink 注册新指标并基于组名称创建嵌套层次结构。有关指标系统的更多信息，请参阅
+         *   {@link MetricGroup}。
+         *
          * Returns the metric group for the context in which the created {@link TimestampAssigner}
          * is used.
          *

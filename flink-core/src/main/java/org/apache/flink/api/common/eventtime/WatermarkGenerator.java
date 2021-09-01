@@ -22,10 +22,10 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.api.common.ExecutionConfig;
 
 /**
- * {@code WatermarkGenerator}基于事件或周期性(以固定的时间间隔)生成水印。
+ * {@code WatermarkGenerator} 基于事件或周期性(以固定的时间间隔)生成水印。
  *
- * <p><b>注: 这个WatermarkGenerator包含了{@code AssignerWithPunctuatedWatermarks}和
- *           {@code AssignerWithPeriodicWatermarks}之间的区别。
+ * <p><b>注: 这个 WatermarkGenerator 包含了 {@code AssignerWithPunctuatedWatermarks} 和
+ *   {@code AssignerWithPeriodicWatermarks} 之间的区别。
  *
  * The {@code WatermarkGenerator} generates watermarks either based on events or periodically (in a
  * fixed interval).
@@ -37,12 +37,20 @@ import org.apache.flink.api.common.ExecutionConfig;
 public interface WatermarkGenerator<T> {
 
     /**
+     * 为每个事件调用，允许水印生成器检查并记住事件时间戳，或根据事件本身发出水印。
+     *
      * Called for every event, allows the watermark generator to examine and remember the event
      * timestamps, or to emit a watermark based on the event itself.
      */
     void onEvent(T event, long eventTimestamp, WatermarkOutput output);
 
     /**
+     * 定期调用，并且可能会发出或不发出新的水印。
+     *
+     * <p>调用此方法和生成 Watermark 的时间间隔取决于 {@link ExecutionConfig#getAutoWatermarkInterval()}。
+     *
+     * J: 对应配置的自动生成水印间隔?
+     *
      * Called periodically, and might emit a new watermark, or not.
      *
      * <p>The interval in which this method is called and Watermarks are generated depends on {@link

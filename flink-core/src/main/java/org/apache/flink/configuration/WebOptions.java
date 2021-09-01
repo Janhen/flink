@@ -24,6 +24,7 @@ import org.apache.flink.annotation.docs.Documentation;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Configuration options for the WebMonitorEndpoint. */
+// WebMonitorEndpoint 的配置选项。
 @PublicEvolving
 public class WebOptions {
 
