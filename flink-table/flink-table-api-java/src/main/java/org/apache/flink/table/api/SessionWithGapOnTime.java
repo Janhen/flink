@@ -24,6 +24,7 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /** Session window on time. */
+// 会话窗口准时。
 @PublicEvolving
 public final class SessionWithGapOnTime {
 

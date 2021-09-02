@@ -22,10 +22,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.expressions.Expression;
 
 /** A table that has been windowed and grouped for {@link GroupWindow}s. */
+// 已为 {@link GroupWindows}
 @PublicEvolving
 public interface WindowGroupedTable {
 
     /**
+     * 对窗口分组表执行选择操作。类似于 SQL SELECT 语句。字段表达式可以包含复杂的表达式和聚合。
+     *
      * Performs a selection operation on a window grouped table. Similar to an SQL SELECT statement.
      * The field expressions can contain complex expressions and aggregations.
      *
@@ -41,6 +44,8 @@ public interface WindowGroupedTable {
     Table select(String fields);
 
     /**
+     * 对窗口分组表执行选择操作。类似于 SQL SELECT 语句。字段表达式可以包含复杂的表达式和聚合。
+     *
      * Performs a selection operation on a window grouped table. Similar to an SQL SELECT statement.
      * The field expressions can contain complex expressions and aggregations.
      *
@@ -79,6 +84,9 @@ public interface WindowGroupedTable {
     AggregatedTable aggregate(String aggregateFunction);
 
     /**
+     * 对窗口分组表执行聚合操作。您必须使用 select 语句关闭 {@link #aggregate(Expression)}。如果输出类型是
+     * 复合类型，则输出将被展平。
+     *
      * Performs an aggregate operation on a window grouped table. You have to close the {@link
      * #aggregate(Expression)} with a select statement. The output will be flattened if the output
      * type is a composite type.
@@ -121,6 +129,9 @@ public interface WindowGroupedTable {
     FlatAggregateTable flatAggregate(String tableAggregateFunction);
 
     /**
+     * 对窗口分组表执行 flatAggregate 操作。 FlatAggregate 采用返回多行的 TableAggregateFunction。在
+     * flatAggregate 之后使用选择。
+     *
      * Performs a flatAggregate operation on a window grouped table. FlatAggregate takes a
      * TableAggregateFunction which returns multiple rows. Use a selection after flatAggregate.
      *

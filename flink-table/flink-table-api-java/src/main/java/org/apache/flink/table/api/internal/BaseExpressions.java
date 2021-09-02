@@ -47,6 +47,8 @@ import static org.apache.flink.table.functions.BuiltInFunctionDefinitions.*;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * 这些是 Java 和 Scala 常用操作，可用于为表达式操作构造 {@link Expression} AST
+ *
  * These are Java and Scala common operations that can be used to construct an {@link Expression}
  * AST for expression operations.
  *
@@ -66,6 +68,8 @@ public abstract class BaseExpressions<InType, OutType> {
     protected abstract OutType toApiSpecificExpression(Expression expression);
 
     /**
+     * 指定表达式的名称，即字段。
+     *
      * Specifies a name for an expression i.e. a field.
      *
      * @param name name for one field
@@ -82,6 +86,9 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 三值逻辑中的布尔与。这是一个中缀符号。另请参阅 {@link Expressions#and(Object, Object, Object...)}
+     * 以获取带有多个参数的前缀表示法。
+     *
      * Boolean AND in three-valued logic. This is an infix notation. See also {@link
      * Expressions#and(Object, Object, Object...)} for prefix notation with multiple arguments.
      *
@@ -92,6 +99,9 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 三值逻辑中的布尔 OR。这是一个中缀符号。另请参阅 {@link Expressions#or(Object, Object, Object...)}
+     * 以获取带有多个参数的前缀表示法。
+     *
      * Boolean OR in three-valued logic. This is an infix notation. See also {@link
      * Expressions#or(Object, Object, Object...)} for prefix notation with multiple arguments.
      *
@@ -137,26 +147,33 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns left plus right. */
+    // 返回左加右。
     public OutType plus(InType other) {
         return toApiSpecificExpression(unresolvedCall(PLUS, toExpr(), objectToExpression(other)));
     }
 
     /** Returns left minus right. */
+    // 返回左减右。
     public OutType minus(InType other) {
         return toApiSpecificExpression(unresolvedCall(MINUS, toExpr(), objectToExpression(other)));
     }
 
     /** Returns left divided by right. */
+    // 返回左除以右。
     public OutType dividedBy(InType other) {
         return toApiSpecificExpression(unresolvedCall(DIVIDE, toExpr(), objectToExpression(other)));
     }
 
     /** Returns left multiplied by right. */
+    // 返回左乘右。
     public OutType times(InType other) {
         return toApiSpecificExpression(unresolvedCall(TIMES, toExpr(), objectToExpression(other)));
     }
 
     /**
+     * 如果给定的表达式介于 lowerBound 和 upperBound 之间（包括两者），则返回 true。否则为假。参数必须是数字类型或
+     * 相同的可比较类型。
+     *
      * Returns true if the given expression is between lowerBound and upperBound (both inclusive).
      * False otherwise. The parameters must be numeric types or identical comparable types.
      *
@@ -190,6 +207,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 三元条件运算符决定应根据评估的布尔条件评估其他两个表达式中的哪一个。
+     *
+     * <p>例如 lit(42).isGreater(5).then("A", "B") 导致 "A"
+     *
      * Ternary conditional operator that decides which of two other expressions should be evaluated
      * based on a evaluated boolean condition.
      *
@@ -239,6 +260,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 类似于 COUNT(DISTINCT a) 等 SQL 不同聚合子句，声明聚合函数仅应用于不同的输入值。
+     *
      * Similar to a SQL distinct aggregation clause such as COUNT(DISTINCT a), declares that an
      * aggregation function is only applied on distinct input values.
      *
@@ -255,6 +278,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回所有输入值的数字字段的总和。如果所有值都为 null，则返回 null。
+     *
      * Returns the sum of the numeric field across all input values. If all values are null, null is
      * returned.
      */
@@ -263,6 +288,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回所有输入值的数字字段的总和。如果所有值都为空，则返回 0。
+     *
      * Returns the sum of the numeric field across all input values. If all values are null, 0 is
      * returned.
      */
@@ -281,6 +308,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns the number of input rows for which the field is not null. */
+    // 返回字段不为空的输入行数。
+    // J: 不指定 $("xx") 如何求整体总记录的 count?
     public OutType count() {
         return toApiSpecificExpression(unresolvedCall(COUNT, toExpr()));
     }
@@ -291,11 +320,13 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns the population standard deviation of an expression (the square root of varPop()). */
+    // 返回表达式的总体标准偏差（varPop() 的平方根）。
     public OutType stddevPop() {
         return toApiSpecificExpression(unresolvedCall(STDDEV_POP, toExpr()));
     }
 
     /** Returns the sample standard deviation of an expression (the square root of varSamp()). */
+    // 返回表达式的样本标准差（varSamp() 的平方根）。
     public OutType stddevSamp() {
         return toApiSpecificExpression(unresolvedCall(STDDEV_SAMP, toExpr()));
     }
@@ -311,11 +342,16 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns multiset aggregate of a given expression. */
+    // 返回给定表达式的多集聚合。
     public OutType collect() {
         return toApiSpecificExpression(unresolvedCall(COLLECT, toExpr()));
     }
 
     /**
+     * 将值转换为给定的数据类型。
+     *
+     * <p>例如"42".cast(DataTypes.INT()) 导致 42。
+     *
      * Converts a value to a given data type.
      *
      * <p>e.g. "42".cast(DataTypes.INT()) leads to 42.
@@ -348,6 +384,12 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 如果表达式存在于给定的表达式列表中，则返回 true。这是多个 OR 条件的简写。
+     *
+     * <p>如果测试集包含 null，则如果找不到元素则结果为 null，如果找到则为 true。如果元素为空，则结果始终为空。
+     *
+     * <p>例如 lit("42").in(1, 2, 3) 导致错误。
+     *
      * Returns true if an expression exists in a given list of expressions. This is a shorthand for
      * multiple OR conditions.
      *
@@ -367,6 +409,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 如果表达式存在于给定的表子查询中，则返回 true。子查询表必须由一列组成。此列必须与表达式具有相同的数据类型。
+     *
+     * <p>注意：流媒体环境尚不支持此操作。
+     *
      * Returns true if an expression exists in a given table sub-query. The sub-query table must
      * consist of one column. This column must have the same data type as the expression.
      *
@@ -378,11 +424,17 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns the start time (inclusive) of a window when applied on a window reference. */
+    // 当应用于窗口引用时，返回窗口的开始时间（包括）。
+    // J: 限制为 window 引用使用
     public OutType start() {
         return toApiSpecificExpression(unresolvedCall(WINDOW_START, toExpr()));
     }
 
     /**
+     * 当应用于窗口引用时，返回窗口的结束时间（不包括）。
+     *
+     * <p>例如如果窗口在 10:59:59.999 结束，则此属性将返回 11:00:00.000。
+     *
      * Returns the end time (exclusive) of a window when applied on a window reference.
      *
      * <p>e.g. if a window ends at 10:59:59.999 this property will return 11:00:00.000.
@@ -392,16 +444,19 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Calculates the remainder of division the given number by another one. */
+    // 计算给定数字除以另一个的余数。
     public OutType mod(InType other) {
         return toApiSpecificExpression(unresolvedCall(MOD, toExpr(), objectToExpression(other)));
     }
 
     /** Calculates the Euler's number raised to the given power. */
+    // 计算欧拉数的给定幂。
     public OutType exp() {
         return toApiSpecificExpression(unresolvedCall(EXP, toExpr()));
     }
 
     /** Calculates the base 10 logarithm of the given value. */
+    // 计算给定值的以 10 为底的对数。
     public OutType log10() {
         return toApiSpecificExpression(unresolvedCall(LOG10, toExpr()));
     }
@@ -412,6 +467,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Calculates the natural logarithm of the given value. */
+    // 计算给定值的自然对数。
     public OutType ln() {
         return toApiSpecificExpression(unresolvedCall(LN, toExpr()));
     }
@@ -427,6 +483,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Calculates the given number raised to the power of the other value. */
+    // 计算给定数字的另一个值的幂。
     public OutType power(InType other) {
         return toApiSpecificExpression(unresolvedCall(POWER, toExpr(), objectToExpression(other)));
     }
@@ -517,11 +574,14 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Rounds the given number to integer places right to the decimal point. */
+    // 将给定的数字四舍五入到小数点后的整数位。
     public OutType round(InType places) {
         return toApiSpecificExpression(unresolvedCall(ROUND, toExpr(), objectToExpression(places)));
     }
 
     /**
+     * 以二进制格式返回整数数值的字符串表示形式。如果数字为 null，则返回 null。例如。 “4”导致“100”，“12”导致“1100”。
+     *
      * Returns a string representation of an integer numeric value in binary format. Returns null if
      * numeric is null. E.g. "4" leads to "100", "12" leads to "1100".
      */
@@ -541,6 +601,9 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回截断到 n 位小数的数量。如果 n 为 0，则结​​果没有小数点或小数部分。 n 可以是负数，使值的小数点左边的 n
+     * 位变为零。例如。将 (42.345, 2) 截断为 42.34。
+     *
      * Returns a number of truncated to n decimal places. If n is 0,the result has no decimal point
      * or fractional part. n can be negative to cause n digits left of the decimal point of the
      * value to become zero. E.g. truncate(42.345, 2) to 42.34.
@@ -557,6 +620,8 @@ public abstract class BaseExpressions<InType, OutType> {
     // String operations
 
     /**
+     * 在给定索引处为给定长度创建给定字符串的子字符串。
+     *
      * Creates a substring of the given string at given index for a given length.
      *
      * @param beginIndex first character of the substring (starting at 1, inclusive)
@@ -582,6 +647,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Removes leading space characters from the given string. */
+    // 从给定的字符串中删除前导空格字符。
     public OutType trimLeading() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -608,6 +674,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Removes trailing space characters from the given string. */
+    // 从给定的字符串中删除尾随空格字符。
     public OutType trimTrailing() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -634,6 +701,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Removes leading and trailing space characters from the given string. */
+    // 从给定的字符串中删除前导和尾随空格字符。
     public OutType trim() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -698,6 +766,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 如果字符串与指定的 LIKE 模式匹配，则返回 true。
+     *
+     * <p>例如 “Jo_n%”匹配所有以“Jo(任意字母)n”开头的字符串
+     *
      * Returns true, if a string matches the specified LIKE pattern.
      *
      * <p>e.g. "Jo_n%" matches all strings that start with "Jo(arbitrary letter)n"
@@ -707,6 +779,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 如果字符串与指定的 SQL 正则表达式模式匹配，则返回 true。
+     *
+     * <p>例如 "A+" 匹配所有至少包含一个 A 的字符串
+     *
      * Returns true, if a string matches the specified SQL regex pattern.
      *
      * <p>e.g. "A+" matches all strings that consist of at least one A
@@ -717,6 +793,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回字符串在另一个字符串中的位置，从 1 开始。如果找不到字符串，则返回 0。
+     *
      * Returns the position of string in an other string starting at 1. Returns 0 if string could
      * not be found.
      *
@@ -750,6 +828,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 定义用于先前指定的窗口的聚合。
+     *
      * Defines an aggregation to be used for a previously specified over window.
      *
      * <p>For example:
@@ -765,6 +845,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 用从某个位置（从 1 开始）开始的字符串替换 string 的子字符串。
+     *
      * Replaces a substring of string with a string starting at a position (starting at 1).
      *
      * <p>e.g. lit("xxxxxtest").overlay("xxxx", 6) leads to "xxxxxxxxx"
@@ -795,6 +877,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回一个字符串，其中所有与正则表达式匹配的子字符串被连续替换。
+     *
      * Returns a string with all substrings that match the regular expression consecutively being
      * replaced.
      */
@@ -808,6 +892,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回使用指定正则表达式和正则表达式匹配组索引提取的字符串。
+     *
      * Returns a string extracted with a specified regular expression and a regex match group index.
      */
     public OutType regexpExtract(InType regex, InType extractIndex) {
@@ -820,6 +906,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns a string extracted with a specified regular expression. */
+    // 返回使用指定正则表达式提取的字符串。
     public OutType regexpExtract(InType regex) {
         return toApiSpecificExpression(
                 unresolvedCall(REGEXP_EXTRACT, toExpr(), objectToExpression(regex)));
@@ -853,6 +940,7 @@ public abstract class BaseExpressions<InType, OutType> {
     // Temporal operations
 
     /** Parses a date string in the form "yyyy-MM-dd" to a SQL Date. */
+    // 将格式为 “yyyy-MM-dd” 的日期字符串解析为 SQL 日期。
     public OutType toDate() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -862,6 +950,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Parses a time string in the form "HH:mm:ss" to a SQL Time. */
+    // 将 “HH:mm:ss” 形式的时间字符串解析为 SQL 时间。
     public OutType toTime() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -871,6 +960,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Parses a timestamp string in the form "yyyy-MM-dd HH:mm:ss[.SSS]" to a SQL Timestamp. */
+    // 将格式为 “yyyy-MM-dd HH:mm:ss[.SSS]” 的时间戳字符串解析为 SQL 时间戳。
     public OutType toTimestamp() {
         return toApiSpecificExpression(
                 unresolvedCall(
@@ -880,6 +970,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 提取时间点或时间间隔的部分内容。将部件作为长值返回。
+     *
+     * <p>例如 lit("2006-06-05").toDate().extract(DAY) 导致 5
+     *
      * Extracts parts of a time point or time interval. Returns the part as a long value.
      *
      * <p>e.g. lit("2006-06-05").toDate().extract(DAY) leads to 5
@@ -932,6 +1026,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 将 Flink 复合类型（例如 Tuple、POJO 等）及其所有直接子类型转换为平面表示，其中每个子类型都是一个单独的字段。
+     *
      * Converts a Flink composite type (such as Tuple, POJO, etc.) and all of its direct subtypes
      * into a flat representation where every subtype is a separate field.
      */
@@ -940,6 +1036,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 根据键或索引（从 1 开始）访问数组或映射的元素。
+     *
      * Accesses the element of an array or map based on a key or an index (starting at 1).
      *
      * @param index key or position of the element (array index starting at 1)
@@ -949,11 +1047,14 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Returns the number of elements of an array or number of entries of a map. */
+    // 返回数组的元素数或映射的条目数。
     public OutType cardinality() {
         return toApiSpecificExpression(unresolvedCall(CARDINALITY, toExpr()));
     }
 
     /**
+     * 返回具有单个元素的数组的唯一元素。如果数组为空，则返回 null。如果数组有多个元素，则抛出异常。
+     *
      * Returns the sole element of an array with a single element. Returns null if the array is
      * empty. Throws an exception if the array has more than one element.
      */
@@ -964,6 +1065,8 @@ public abstract class BaseExpressions<InType, OutType> {
     // Time definition
 
     /**
+     * 声明一个字段作为 rowtime 属性，用于指示、访问和工作在 Flink 的事件时间。
+     *
      * Declares a field as the rowtime attribute for indicating, accessing, and working in Flink's
      * event time.
      */
@@ -972,6 +1075,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 声明一个字段作为 proctime 属性，用于指示、访问和工作在 Flink 的处理时间。
+     *
      * Declares a field as the proctime attribute for indicating, accessing, and working in Flink's
      * processing time.
      */
@@ -980,6 +1085,10 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 创建给定年数的间隔。
+     *
+     * <p>生成的表达式的类型为 {@code DataTypes.INTERVAL}
+     *
      * Creates an interval of the given number of years.
      *
      * <p>The produced expression is of type {@code DataTypes.INTERVAL}
@@ -989,11 +1098,13 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Creates an interval of the given number of years. */
+    // 创建给定年数的间隔。
     public OutType years() {
         return year();
     }
 
     /** Creates an interval of the given number of quarters. */
+    // 创建给定季度数的间隔。
     public OutType quarter() {
         return toApiSpecificExpression(toMonthInterval(toExpr(), 3));
     }
@@ -1014,6 +1125,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Creates an interval of the given number of weeks. */
+    // 创建给定周数的间隔。
     public OutType week() {
         return toApiSpecificExpression(toMilliInterval(toExpr(), 7 * MILLIS_PER_DAY));
     }
@@ -1064,6 +1176,7 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /** Creates an interval of the given number of milliseconds. */
+    // 创建给定毫秒数的间隔。
     public OutType milli() {
         return toApiSpecificExpression(toMilliInterval(toExpr(), 1));
     }
@@ -1076,6 +1189,8 @@ public abstract class BaseExpressions<InType, OutType> {
     // Hash functions
 
     /**
+     * 返回字符串参数的 MD5 哈希值；如果字符串为空，则为空。
+     *
      * Returns the MD5 hash of the string argument; null if string is null.
      *
      * @return string of 32 hexadecimal digits or null
@@ -1085,6 +1200,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回字符串参数的 SHA-1 哈希值；如果字符串为空，则为空。
+     *
      * Returns the SHA-1 hash of the string argument; null if string is null.
      *
      * @return string of 40 hexadecimal digits or null
@@ -1121,6 +1238,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 返回字符串参数的 SHA-512 哈希值；如果字符串为空，则为空。
+     *
      * Returns the SHA-512 hash of the string argument; null if string is null.
      *
      * @return string of 128 hexadecimal digits or null
@@ -1130,6 +1249,8 @@ public abstract class BaseExpressions<InType, OutType> {
     }
 
     /**
+     * 使用 SHA-2 系列散列函数（SHA-224、SHA-256、SHA-384 或 SHA-512）返回给定字符串表达式的散列。
+     *
      * Returns the hash for the given string expression using the SHA-2 family of hash functions
      * (SHA-224, SHA-256, SHA-384, or SHA-512).
      *

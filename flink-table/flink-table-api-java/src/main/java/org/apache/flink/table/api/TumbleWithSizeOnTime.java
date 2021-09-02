@@ -24,6 +24,7 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /** Tumbling window on time. */
+// 按时翻滚窗口。
 @PublicEvolving
 public final class TumbleWithSizeOnTime {
 
@@ -36,6 +37,9 @@ public final class TumbleWithSizeOnTime {
     }
 
     /**
+     * 为此窗口分配一个别名，以下 {@code groupBy()} 和 {@code select()} 子句可以引用该别名。 {@code select()}
+     * 语句可以访问窗口属性，例如窗口开始或结束时间。
+     *
      * Assigns an alias for this window that the following {@code groupBy()} and {@code select()}
      * clause can refer to. {@code select()} statement can access window properties such as window
      * start or end time.
@@ -48,6 +52,9 @@ public final class TumbleWithSizeOnTime {
     }
 
     /**
+     * 为此窗口分配一个别名，以下 {@code groupBy()} 和 {@code select()} 子句可以引用该别名。 {@code select()}
+     * 语句可以访问窗口属性，例如窗口开始或结束时间。
+     *
      * Assigns an alias for this window that the following {@code groupBy()} and {@code select()}
      * clause can refer to. {@code select()} statement can access window properties such as window
      * start or end time.

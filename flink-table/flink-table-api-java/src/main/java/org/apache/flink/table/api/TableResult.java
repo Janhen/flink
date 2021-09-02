@@ -98,6 +98,11 @@ public interface TableResult {
     TableSchema getTableSchema();
 
     /**
+     * 返回表示结果类型的 {@link ResultKind}。
+     *
+     * <p>对于 DDL 操作和 USE 操作，结果类型始终为 {@link ResultKind#SUCCESS}。对于其他操作，结果类型始终为
+     *   {@link ResultKind#SUCCESS_WITH_CONTENT}。
+     *
      * Return the {@link ResultKind} which represents the result type.
      *
      * <p>For DDL operation and USE operation, the result kind is always {@link ResultKind#SUCCESS}.

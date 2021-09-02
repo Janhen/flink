@@ -23,6 +23,15 @@ import org.apache.flink.table.expressions.ApiExpressionUtils;
 import org.apache.flink.table.expressions.Expression;
 
 /**
+ * 组窗口规范。
+ *
+ * <p>Group 窗口基于时间或行计数间隔对行进行分组，因此本质上是一种特殊类型的 groupBy。就像 groupBy 一样，组窗口
+ *   允许计算元素组的聚合。
+ *
+ * <p>无限流表只能按时间或行间隔分组。因此需要窗口分组来在流表上应用聚合。
+ *
+ * <p>对于有限批处理表，组窗口为基于时间的 groupBy 提供了快捷方式。
+ *
  * A group window specification.
  *
  * <p>Group windows group rows based on time or row-count intervals and is therefore essentially a
@@ -38,6 +47,7 @@ import org.apache.flink.table.expressions.Expression;
 public abstract class GroupWindow {
 
     /** Alias name for the group window. */
+    // 组窗口的别名。
     private final Expression alias;
 
     private final Expression timeField;

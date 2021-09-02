@@ -21,6 +21,10 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * sql 解析期间发生的所有错误的异常。
+ *
+ * <p>此异常表示 SQL 解析失败。
+ *
  * Exception for all errors occurring during sql parsing.
  *
  * <p>This exception indicates that the SQL parse failed.

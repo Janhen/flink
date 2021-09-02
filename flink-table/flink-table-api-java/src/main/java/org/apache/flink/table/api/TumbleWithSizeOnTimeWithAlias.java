@@ -23,6 +23,7 @@ import org.apache.flink.table.expressions.ApiExpressionUtils;
 import org.apache.flink.table.expressions.Expression;
 
 /** Tumbling window on time with alias. Fully specifies a window. */
+// 使用别名按时滚动窗口。完全指定一个窗口。
 @PublicEvolving
 public final class TumbleWithSizeOnTimeWithAlias extends GroupWindow {
 

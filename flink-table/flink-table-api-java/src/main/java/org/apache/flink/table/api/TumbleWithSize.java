@@ -24,6 +24,12 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /**
+ * 翻滚的窗户。
+ *
+ * <p>对于流表，您可以按事件时间或处理时间属性指定分组。
+ *
+ * <p>对于批处理表，您可以在时间戳或长属性上指定分组。
+ *
  * Tumbling window.
  *
  * <p>For streaming tables you can specify grouping by a event-time or processing-time attribute.
@@ -41,6 +47,12 @@ public final class TumbleWithSize {
     }
 
     /**
+     * 指定对行进行分组的时间属性。
+     *
+     * <p>对于流表，您可以按事件时间或处理时间属性指定分组。
+     *
+     * <p>对于批处理表，您可以在时间戳或长属性上指定分组。
+     *
      * Specifies the time attribute on which rows are grouped.
      *
      * <p>For streaming tables you can specify grouping by a event-time or processing-time
@@ -56,6 +68,12 @@ public final class TumbleWithSize {
     }
 
     /**
+     * 指定对行进行分组的时间属性。
+     *
+     * <p>对于流表，您可以按事件时间或处理时间属性指定分组。
+     *
+     * <p>对于批处理表，您可以在时间戳或长属性上指定分组。
+     *
      * Specifies the time attribute on which rows are grouped.
      *
      * <p>For streaming tables you can specify grouping by a event-time or processing-time

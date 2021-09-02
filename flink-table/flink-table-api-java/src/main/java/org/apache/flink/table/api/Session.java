@@ -23,7 +23,8 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /**
- * 用于创建会话窗口的助手类。会话窗口的边界是由不活动的时间间隔定义的，即，如果在定义的间隔时间内没有事件出现，会话窗口将关闭。
+ * 用于创建会话窗口的助手类。会话窗口的边界是由不活动的时间间隔定义的，即，如果在定义的间隔时间内没有事件出现，会话
+ * 窗口将关闭。
  *
  * Helper class for creating a session window. The boundary of session windows are defined by
  * intervals of inactivity, i.e., a session window is closes if no event appears for a defined gap
@@ -61,6 +62,8 @@ public final class Session {
     }
 
     /**
+     * 创建会话窗口。会话窗口的边界由不活动的间隔定义，即，如果在定义的间隙期间没有事件出现，则会话窗口关闭。
+     *
      * Creates a session window. The boundary of session windows are defined by intervals of
      * inactivity, i.e., a session window is closes if no event appears for a defined gap period.
      *

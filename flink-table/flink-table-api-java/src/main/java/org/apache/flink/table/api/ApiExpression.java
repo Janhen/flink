@@ -33,6 +33,7 @@ import java.util.List;
  */
 public final class ApiExpression extends BaseExpressions<Object, ApiExpression>
         implements Expression {
+    // 包装的 expr
     private final Expression wrappedExpression;
 
     @Override

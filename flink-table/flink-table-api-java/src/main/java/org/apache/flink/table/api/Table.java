@@ -132,7 +132,7 @@ public interface Table {
      * 创建由该表备份的 {@link TemporalTableFunction} 作为历史表。时态表表示随时间变化的表的概念，Flink
      * 会跟踪这些变化。{@link TemporalTableFunction} 提供了访问这些数据的方法。
      *
-     * <p> 有关更多信息，请查看Flink关于时态表的文档。
+     * <p> 有关更多信息，请查看 Flink 关于时态表的文档。
      *
      * <p> 当前 {@link TemporalTableFunction} 只支持流。
      *
@@ -943,6 +943,13 @@ public interface Table {
     void insertInto(String tablePath);
 
     /**
+     * 通过将表的记录分配给由时间或行间隔定义的窗口来对表的记录进行分组。
+     *
+     * <p>对于无限大小的流表，需要分组到窗口中以定义可以计算基于组的聚合的有限组。
+     *
+     * <p><b>注意<b>：如果在 {@code groupBy(...)} 子句中添加了额外的分组属性，则在流表上计算窗口聚合只是一个并行
+     *   操作。如果 {@code groupBy(...)} 仅引用 GroupWindow 别名，则流表将由单个任务处理，即并行度为 1。
+     *
      * Groups the records of a table by assigning them to windows defined by a time or row interval.
      *
      * <p>For streaming tables of infinite size, grouping into windows is required to define finite
@@ -962,6 +969,17 @@ public interface Table {
     GroupWindowedTable window(GroupWindow groupWindow);
 
     /**
+     * 在表的记录上定义窗口。
+     *
+     * <p>over-window 为每条记录定义了一个记录间隔，在这些记录间隔上可以计算聚合函数。
+     *
+     * ...
+     *
+     * <p><b>注意<b>：如果窗口是分区的，那么在流表上计算窗口聚合只是一个并行操作。否则，整个流将由单个任务处理，即
+     *   并行度为 1。
+     *
+     * <p><b>注意<b>：当前不支持批处理表的覆盖窗口。
+     *
      * Defines over-windows on the records of a table.
      *
      * <p>An over-window defines for each record an interval of records over which aggregation
