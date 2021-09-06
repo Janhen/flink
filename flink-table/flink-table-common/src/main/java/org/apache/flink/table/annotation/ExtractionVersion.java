@@ -23,6 +23,9 @@ import org.apache.flink.annotation.PublicEvolving;
 /**
  * 描述基于反射的数据类型提取的预期行为的逻辑版本。
  *
+ * <p>这个枚举是为了将来的向后兼容性。每当提取逻辑发生变化时，旧函数和结构化类型类在相应版本化时仍应返回与以前相同的
+ *   数据类型。
+ *
  * Logical version that describes the expected behavior of the reflection-based data type
  * extraction.
  *

@@ -113,11 +113,11 @@ public interface DynamicTableSink {
     /**
      * 返回用于写入数据的运行时实现的提供程序。
      *
-     * <p>运行时实现可能存在不同的接口，这就是为什么{@link SinkRuntimeProvider}作为基础接口。具体的
-     *   {@link SinkRuntimeProvider}接口可能位于其他Flink模块中。
+     * <p>运行时实现可能存在不同的接口，这就是为什么 {@link SinkRuntimeProvider} 作为基础接口。具体的
+     *   {@link SinkRuntimeProvider} 接口可能位于其他 Flink 模块中。
      *
      * <p>独立于提供者接口，表运行时期望接收器实现接受内部数据结构(见
-     * {@link org.apache.flink.table.data。RowData }取更多信息)。
+     * {@link org.apache.flink.table.data。RowData}取更多信息)。
      *
      * <p>给定的 {@link Context} 由规划器提供实用程序，用于创建对内部数据结构依赖最小的运行时实现。
      *

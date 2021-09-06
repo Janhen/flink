@@ -25,6 +25,7 @@ import org.apache.flink.table.functions.python.PythonFunction;
 import java.lang.reflect.InvocationTargetException;
 
 /** Utilities for creating PythonFunction from the fully qualified name of a Python function. */
+// 用于从 Python 函数的完全限定名称创建 PythonFunction 的实用程序。
 @Internal
 public enum PythonFunctionUtils {
     ;

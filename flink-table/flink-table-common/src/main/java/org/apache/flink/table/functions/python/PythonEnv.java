@@ -24,6 +24,7 @@ import org.apache.flink.util.Preconditions;
 import java.io.Serializable;
 
 /** Python execution environments. */
+// Python 执行环境。
 @Internal
 public final class PythonEnv implements Serializable {
 

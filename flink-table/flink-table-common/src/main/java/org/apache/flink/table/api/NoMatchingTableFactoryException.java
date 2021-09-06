@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /** Exception for not finding a {@link TableFactory} for the given properties. */
+// 未找到给定属性的 {@link TableFactory} 的异常。
 public class NoMatchingTableFactoryException extends RuntimeException {
 
     // message that indicates the current matching step

@@ -50,7 +50,7 @@ public final class ChangelogMode {
     }
 
     /** Shortcut for a simple {@link RowKind#INSERT}-only changelog. */
-    // 简单的{@link RowKindINSERT}-only changelog的快捷方式。
+    // 简单的 {@link RowKindINSERT}-only changelog 的快捷方式。
     public static ChangelogMode insertOnly() {
         return INSERT_ONLY;
     }

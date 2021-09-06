@@ -100,6 +100,12 @@ import java.util.stream.Stream;
 public final class DataTypes {
 
     /**
+     * 创建一个未解析的类型，稍后通过分析给定的类将其解析为 {@link DataType}。
+     *
+     * <p>在解析过程中，使用 Java 反射，可以通过 {@link DataTypeHint} 注释支持嵌套结构化类型。
+     *
+     * <p>在反射提取需要更多信息或只是失败的情况下，它将抛出 {@link ValidationException}。
+     *
      * Creates an unresolved type that will be resolved to a {@link DataType} by analyzing the given
      * class later.
      *

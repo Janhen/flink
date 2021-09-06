@@ -176,6 +176,7 @@ public class TableSchema {
     }
 
     /** Returns all field names as an array. */
+    // 以数组形式返回所有字段名称。
     public String[] getFieldNames() {
         return this.columns.stream().map(TableColumn::getName).toArray(String[]::new);
     }
@@ -195,6 +196,8 @@ public class TableSchema {
     }
 
     /**
+     * 返回给定字段索引的 {@link TableColumn} 实例。
+     *
      * Returns the {@link TableColumn} instance for the given field index.
      *
      * @param fieldIndex the index of the field
@@ -207,6 +210,8 @@ public class TableSchema {
     }
 
     /**
+     * 返回给定字段名称的 {@link TableColumn} 实例。
+     *
      * Returns the {@link TableColumn} instance for the given field name.
      *
      * @param fieldName the name of the field
