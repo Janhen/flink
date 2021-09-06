@@ -479,6 +479,8 @@ public interface StreamTableEnvironment extends TableEnvironment {
     <T> void createTemporaryView(String path, DataStream<T> dataStream, Schema schema);
 
     /**
+     * 将给定的 {@link Table} 转换为 {@link DataStream}。
+     *
      * Converts the given {@link Table} into a {@link DataStream}.
      *
      * <p>Since the DataStream API does not support changelog processing natively, this method
