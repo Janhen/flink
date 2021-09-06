@@ -42,12 +42,13 @@ public class TableColumn {
     private final String name;
     // J: 列类型
     private final DataType type;
+    // 表达式
     @Nullable private final String expr;
 
     // ~ Constructors -----------------------------------------------------------
 
     /**
-     * 创建一个{@link TableColumn}实例。
+     * 创建一个 {@link TableColumn} 实例。
      *
      * Creates a {@link TableColumn} instance.
      *

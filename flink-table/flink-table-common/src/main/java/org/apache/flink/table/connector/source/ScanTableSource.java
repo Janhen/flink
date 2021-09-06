@@ -83,6 +83,8 @@ public interface ScanTableSource extends DynamicTableSource {
     ChangelogMode getChangelogMode();
 
     /**
+     * 返回用于读取数据的运行时实现的提供者。
+     *
      * Returns a provider of runtime implementation for reading the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link
@@ -106,6 +108,8 @@ public interface ScanTableSource extends DynamicTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过 {@link ScanRuntimeProvider} 创建运行时实现的上下文。
+     *
      * Context for creating runtime implementation via a {@link ScanRuntimeProvider}.
      *
      * <p>It offers utilities by the planner for creating runtime implementation with minimal
@@ -120,6 +124,8 @@ public interface ScanTableSource extends DynamicTableSource {
     }
 
     /**
+     * 提供用于读取数据的实际运行时实现。
+     *
      * Provides actual runtime implementation for reading the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link

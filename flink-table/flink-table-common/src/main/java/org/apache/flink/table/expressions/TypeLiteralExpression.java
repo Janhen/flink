@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 将 {@link DataType} 包装为文字的表达式。
+ *
  * Expression that wraps {@link DataType} as a literal.
  *
  * <p>Expressing a type is primarily needed for casting operations. This expression simplifies the

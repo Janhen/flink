@@ -24,6 +24,8 @@ import org.apache.flink.table.sources.FieldComputer;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 对输入中已解析的字段的引用。
+ *
  * A reference to a field in an input which has been resolved.
  *
  * <p>Note: This interface is added as a temporary solution. It is used to keep api compatible for

@@ -30,6 +30,10 @@ import org.apache.flink.streaming.api.windowing.windows.Window;
 /**
  * {@link Trigger} 根据给定的时间间隔连续触发，该时间间隔由运行作业的机器的时钟测量。
  *
+ * J: 可先指定 tumbleProcessingTimeWindow 5 分钟，之后指定 continuousProcessingTimeTrigger 按照 1 分钟触发
+ *
+ * J: 可以在窗口未结束时获取聚合结果
+ *
  * A {@link Trigger} that continuously fires based on a given time interval as measured by the clock
  * of the machine on which the job is running.
  *

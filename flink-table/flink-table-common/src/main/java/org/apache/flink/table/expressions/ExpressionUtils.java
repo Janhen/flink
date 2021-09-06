@@ -27,6 +27,8 @@ import java.util.Optional;
 public final class ExpressionUtils {
 
     /**
+     * 从表达式中提取给定类的值（不包括 null），假设它是一个 {@link ValueLiteralExpression}。
+     *
      * Extracts the value (excluding null) of a given class from an expression assuming it is a
      * {@link ValueLiteralExpression}.
      *

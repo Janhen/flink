@@ -21,6 +21,7 @@ package org.apache.flink.table.expressions;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Units for working with points in time. */
+// 用于处理时间点的单位。
 @PublicEvolving
 public enum TimePointUnit implements TableSymbol {
     YEAR,
