@@ -81,7 +81,7 @@ public class TimeWindow extends Window {
     /**
      * 获取仍然属于此窗口的最大时间戳。
      *
-     * <p>此时间戳与{@code getEnd() - 1}相同。
+     * <p>此时间戳与 {@code getEnd() - 1} 相同。
      *
      * Gets the largest timestamp that still belongs to this window.
      *
@@ -217,7 +217,7 @@ public class TimeWindow extends Window {
     // ------------------------------------------------------------------------
 
     /**
-     * 合并重叠的{@link TimeWindow}。通过合并
+     * 合并重叠的 {@link TimeWindow}。通过合并
      * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner WindowAssigners}
      * 使用。
      *
@@ -274,6 +274,8 @@ public class TimeWindow extends Window {
 
     /**
      * 获取时间戳的窗口开始的方法。
+     *
+     * J: 可手动指定时间窗口偏移的起始时间
      *
      * Method to get the window start for a timestamp.
      *

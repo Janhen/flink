@@ -26,6 +26,8 @@ import org.apache.flink.table.api.dataview.MapView
 import org.apache.flink.types.Row
 
 /**
+ * 包装一个累加器并添加一个映射来过滤不同的值。
+ *
   * Wraps an accumulator and adds a map to filter distinct values.
   *
   * @param distinctValueMap the [[MapView]] that stores the distinct filter hash map.
@@ -46,6 +48,8 @@ class DistinctAccumulator(var distinctValueMap: MapView[Row, JLong]) {
     }
 
   /**
+    * 检查参数是否唯一并将参数添加到不同的映射中。如果参数是唯一的（尚未出现在地图中），则返回 true，否则返回 false。
+    *
     * Checks if the parameters are unique and adds the parameters to the distinct map.
     * Returns true if the parameters are unique (haven't been in the map yet), false otherwise.
     *
@@ -64,6 +68,8 @@ class DistinctAccumulator(var distinctValueMap: MapView[Row, JLong]) {
   }
 
   /**
+    * 检查参数是否唯一并将参数添加到不同的映射中。如果参数是唯一的（尚未出现在地图中），则返回 true，否则返回 false。
+    *
     * Checks if the parameters are unique and adds the parameters to the distinct map.
     * Returns true if the parameters are unique (haven't been in the map yet), false otherwise.
     *
@@ -82,6 +88,9 @@ class DistinctAccumulator(var distinctValueMap: MapView[Row, JLong]) {
   }
 
   /**
+    * 从不同的映射中删除参数的一个实例并检查这是否是最后一个实例。
+    * 如果映射中没有参数的实例，则返回 true，否则返回 false。
+    *
     * Removes one instance of the parameters from the distinct map and checks if this was the last
     * instance.
     * Returns true if no instances of the parameters remain in the map, false otherwise.

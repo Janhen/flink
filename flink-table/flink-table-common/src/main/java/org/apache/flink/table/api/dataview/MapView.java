@@ -28,6 +28,17 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * {@link MapView} 为用户定义的聚合函数 [[AggregateFunction]] 使用的累加器提供 Map 功能
+ *
+ * <p>{@link MapView} 可以由 Java HashMap 或状态后端支持，具体取决于使用聚合函数的上下文。
+ *
+ * <p>在运行时 {@link MapView} 将被由 {@link org.apache.flink.api.common.state.MapState} 而不是
+ *   {@link HashMap} 支持的状态 MapView 替换，如果它在流媒体。
+ *
+ * <p>带有 {@link MapView} 和使用它的聚合函数的累加器类型示例：
+ *
+ * ...
+ *
  * A {@link MapView} provides Map functionality for accumulators used by user-defined aggregate
  * functions [[AggregateFunction]].
  *

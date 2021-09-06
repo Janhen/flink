@@ -26,6 +26,7 @@ import org.apache.flink.api.java.typeutils.TupleTypeInfo
 import org.apache.flink.table.functions.AggregateFunction
 
 /** The initial accumulator for count aggregate function */
+// count 聚合函数的初始累加器
 class CountAccumulator extends JTuple1[Long] {
   f0 = 0L //count
 }
