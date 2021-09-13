@@ -133,6 +133,7 @@ public class TimeEvictor<W extends Window> implements Evictor<Object, W> {
      * @param windowSize The amount of time for which to keep elements.
      */
     public static <W extends Window> TimeEvictor<W> of(Time windowSize) {
+
         return new TimeEvictor<>(windowSize.toMilliseconds());
     }
 
@@ -144,6 +145,7 @@ public class TimeEvictor<W extends Window> implements Evictor<Object, W> {
      *
      * @param windowSize The amount of time for which to keep elements.
      * @param doEvictAfter Whether eviction is done after window function.
+     *                     是否在窗口函数之后完成驱逐。
      */
     public static <W extends Window> TimeEvictor<W> of(Time windowSize, boolean doEvictAfter) {
         return new TimeEvictor<>(windowSize.toMilliseconds(), doEvictAfter);

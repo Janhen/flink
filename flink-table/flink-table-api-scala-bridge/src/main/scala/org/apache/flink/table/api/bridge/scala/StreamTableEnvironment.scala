@@ -28,6 +28,20 @@ import org.apache.flink.table.expressions.Expression
 import org.apache.flink.table.functions.{AggregateFunction, TableAggregateFunction, TableFunction}
 
 /**
+  * 此表环境是创建与特定于 Scala 的 [[DataStream]] API 集成的表和 SQL API 程序的入口点和中央上下文。
+  *
+  * 它统一用于有界和无界数据处理。
+  *
+  * 流表环境负责：
+  *
+  * - 将 [[DataStream]] 转换为 [[Table]]，反之亦然。
+  * - 连接到外部系统。
+  * - 从目录中注册和检索 [[Table]] 和其他元对象。
+  * - 执行 SQL 语句。
+  * - 提供更多配置选项。
+  *
+  * 注意：如果您不打算使用 [[DataStream]] API，则 [[TableEnvironment]] 适用于纯表程序。
+  *
   * This table environment is the entry point and central context for creating Table and SQL
   * API programs that integrate with the Scala-specific [[DataStream]] API.
   *

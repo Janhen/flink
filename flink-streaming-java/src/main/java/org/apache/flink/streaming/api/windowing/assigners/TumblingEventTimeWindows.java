@@ -31,7 +31,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * 一个{@link WindowAssigner}，根据元素的时间戳将窗口元素转换为窗口元素。窗户不能重叠。<p>例如，为了窗口进入窗口1分钟
+ * 一个 {@link WindowAssigner}，根据元素的时间戳将窗口元素转换为窗口元素。窗户不能重叠。
+ *
+ * <p>例如，为了窗口进入窗口 1 分钟
  *
  * A {@link WindowAssigner} that windows elements into windows based on the timestamp of the
  * elements. Windows cannot overlap.
@@ -80,6 +82,7 @@ public class TumblingEventTimeWindows extends WindowAssigner<Object, TimeWindow>
 
     @Override
     public Trigger<Object, TimeWindow> getDefaultTrigger(StreamExecutionEnvironment env) {
+        // 默认的事件时间触发器
         return EventTimeTrigger.create();
     }
 
@@ -89,7 +92,8 @@ public class TumblingEventTimeWindows extends WindowAssigner<Object, TimeWindow>
     }
 
     /**
-     * 创建一个新的{@code TumblingEventTimeWindows} {@link WindowAssigner}，根据元素的时间戳将元素分配给时间窗口。
+     * 创建一个新的 {@code TumblingEventTimeWindows} {@link WindowAssigner}，根据元素的时间戳将元素分配给
+     * 时间窗口。
      *
      * Creates a new {@code TumblingEventTimeWindows} {@link WindowAssigner} that assigns elements
      * to time windows based on the element timestamp.
@@ -102,12 +106,16 @@ public class TumblingEventTimeWindows extends WindowAssigner<Object, TimeWindow>
     }
 
     /**
-     * 创建一个新的{@code TumblingEventTimeWindows} {@link WindowAssigner}，根据元素的时间戳和偏移量将元素分配给时间窗口。
-     * <p>例如，如果您想要一个以小时为单位的窗口流，但是窗口从每个小时的第15分钟开始，您可以使用{@code of(time .hours(1)， time .minutes(15))}，
-     * 那么您将得到从0:15:00,1:15:00,2:15:00开始的时间窗口，等等。
-     * <p>相反，如果你生活在一个不使用UTC±00:00时间的地方，例如中国使用UTC+08:00，并且你想要一个一天大小的时间窗口，
-     * 并且窗口在当地时间的每一个00:00:00开始，你可以使用{@code of(time .days(1)， time .hours(-8))}。
-     * offset的参数是{@code time. hours(-8))}，因为UTC+08:00比UTC时间早8小时。
+     * 创建一个新的 {@code TumblingEventTimeWindows} {@link WindowAssigner}，根据元素的时间戳和偏移量将元素
+     * 分配给时间窗口。
+     *
+     * <p>例如，如果您想要一个以小时为单位的窗口流，但是窗口从每个小时的第15分钟开始，您可以使用
+     *   {@code of(time .hours(1)， time .minutes(15))}，那么您将得到从 0:15:00,1:15:00,2:15:00 开始的
+     *   时间窗口，等等。
+     *
+     * <p>相反，如果你生活在一个不使用 UTC±00:00时间的地方，例如中国使用 UTC+08:00，并且你想要一个一天大小的时间
+     * 窗口，并且窗口在当地时间的每一个 00:00:00开始，你可以使用 {@code of(Time.days(1),Time.hours(-8))}。
+     * offset 的参数是 {@code Time.hours(-8))}，因为 UTC+08:00 比 UTC 时间早 8 小时。
      *
      * Creates a new {@code TumblingEventTimeWindows} {@link WindowAssigner} that assigns elements
      * to time windows based on the element timestamp and offset.

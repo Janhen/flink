@@ -169,6 +169,8 @@ public interface StreamTableEnvironment extends TableEnvironment {
     }
 
     /**
+     * 在 TableEnvironment 目录中以唯一名称注册 {@link TableFunction}。注册的函数可以在 Table API 和 SQL 查询中引用。
+     *
      * Registers a {@link TableFunction} under a unique name in the TableEnvironment's catalog.
      * Registered functions can be referenced in Table API and SQL queries.
      *
@@ -517,6 +519,12 @@ public interface StreamTableEnvironment extends TableEnvironment {
     <T> void createTemporaryView(String path, DataStream<T> dataStream, Expression... fields);
 
     /**
+     * 将给定的 {@link Table} 转换为指定类型的附加 {@link DataStream}。
+     *
+     * <p>{@link Table} 必须只有插入（追加）更改。如果 {@link Table} 也被更新或删除更改修改，则转换将失败。
+     *
+     * <p>{@link Table} 的字段映射到 {@link DataStream} 字段如下：
+     *
      * Converts the given {@link Table} into an append {@link DataStream} of a specified type.
      *
      * <p>The {@link Table} must only have insert (append) changes. If the {@link Table} is also
@@ -560,10 +568,12 @@ public interface StreamTableEnvironment extends TableEnvironment {
     <T> DataStream<T> toAppendStream(Table table, TypeInformation<T> typeInfo);
 
     /**
-     * 将给定的{@link Table}转换为添加和收回消息的{@link DataStream}。该消息将被编码为{@link Tuple2}。
-     * 第一个字段是一个{@link Boolean}标志，
-     * 第二个字段保存指定类型{@link T}的记录。
+     * 将给定的 {@link Table} 转换为添加和收回消息的 {@link DataStream}。该消息将被编码为 {@link Tuple2}。
+     * 第一个字段是一个 {@link Boolean} 标志，
+     * 第二个字段保存指定类型 {@link T} 的记录。
+     *
      * <p> true {@link Boolean}标志表示添加消息，false标志表示收回消息。
+     *
      * <p> {@link Table}字段映射到{@link DataStream}字段如下:
      *
      * Converts the given {@link Table} into a {@link DataStream} of add and retract messages. The
