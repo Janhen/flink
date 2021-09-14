@@ -25,6 +25,8 @@ import org.apache.flink.table.expressions.ExpressionParser;
 import java.util.Arrays;
 
 /**
+ * 用于创建窗口的助手类。与 SQL 类似，窗口聚合计算每个输入行在其相邻行范围内的聚合。
+ *
  * Helper class for creating an over window. Similar to SQL, over window aggregates compute an
  * aggregate for each input row over a range of its neighboring rows.
  *

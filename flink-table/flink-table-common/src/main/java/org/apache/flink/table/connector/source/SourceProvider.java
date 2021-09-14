@@ -24,6 +24,8 @@ import org.apache.flink.api.connector.source.Source;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * {@link Source} 实例的提供者作为 {@link ScanTableSource} 的运行时实现。
+ *
  * Provider of a {@link Source} instance as a runtime implementation for {@link ScanTableSource}.
  */
 @PublicEvolving

@@ -23,6 +23,8 @@ import org.apache.flink.api.common.io.InputFormat;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * {@link InputFormat} 实例的提供者作为 {@link ScanTableSource} 的运行时实现
+ *
  * Provider of an {@link InputFormat} instance as a runtime implementation for {@link
  * ScanTableSource}.
  */

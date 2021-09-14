@@ -22,6 +22,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.catalog.exceptions.CatalogException;
 
 /**
+ * 此接口用于 {@link Catalog} 侦听临时对象操作。当目录实现此接口时，它会在对属于该目录的临时对象执行某些操作时得到通知。
+ *
  * This interface is for a {@link Catalog} to listen on temporary object operations. When a catalog
  * implements this interface, it'll get informed when certain operations are performed on temporary
  * objects belonging to that catalog.

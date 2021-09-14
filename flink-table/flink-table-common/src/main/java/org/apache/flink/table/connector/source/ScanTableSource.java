@@ -32,6 +32,8 @@ import org.apache.flink.types.RowKind;
 import java.io.Serializable;
 
 /**
+ * 一个 {@link DynamicTableSource}，它在运行时扫描外部存储系统中的所有行。
+ *
  * A {@link DynamicTableSource} that scans all rows from an external storage system during runtime.
  *
  * <p>The scanned rows don't have to contain only insertions but can also contain updates and

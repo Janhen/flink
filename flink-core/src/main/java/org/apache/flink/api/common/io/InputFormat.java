@@ -79,6 +79,11 @@ public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<
     void configure(Configuration parameters);
 
     /**
+     * 从此格式描述的输入中获取基本统计信息。如果输入格式不知道如何创建这些统计信息，它可能会返回 null。此方法可选择
+     * 获取统计信息的缓存版本。输入格式可能会检查它们并决定是否直接返回它们，而无需花费精力重新收集统计信息。
+     *
+     * <p>调用此方法时，保证配置了输入格式。
+     *
      * Gets the basic statistics from the input described by this format. If the input format does
      * not know how to create those statistics, it may return null. This method optionally gets a
      * cached version of the statistics. The input format may examine them and decide whether it

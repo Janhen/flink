@@ -24,6 +24,8 @@ import org.apache.flink.types.RowKind;
 import java.io.Serializable;
 
 /**
+ * {@link DynamicTableSource} 在运行时通过一个或多个键查找外部存储系统的行。
+ *
  * A {@link DynamicTableSource} that looks up rows of an external storage system by one or more keys
  * during runtime.
  *
