@@ -27,12 +27,14 @@ import java.util.function.Function;
 /** Configurations for KafkaSource. */
 public class KafkaSourceOptions {
 
+    // 为Kafka消费者使用的前缀。
     public static final ConfigOption<String> CLIENT_ID_PREFIX =
             ConfigOptions.key("client.id.prefix")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The prefix to use for the Kafka consumers.");
 
+    // 分区发现间隔
     public static final ConfigOption<Long> PARTITION_DISCOVERY_INTERVAL_MS =
             ConfigOptions.key("partition.discovery.interval.ms")
                     .longType()

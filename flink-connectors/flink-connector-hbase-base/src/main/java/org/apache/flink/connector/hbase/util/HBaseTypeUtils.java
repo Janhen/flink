@@ -35,6 +35,7 @@ import java.util.Arrays;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPrecision;
 
 /** A utility class to process data exchange with HBase type system. */
+// 一个处理与HBase类型系统的数据交换的实用程序类。
 @Internal
 public class HBaseTypeUtils {
 

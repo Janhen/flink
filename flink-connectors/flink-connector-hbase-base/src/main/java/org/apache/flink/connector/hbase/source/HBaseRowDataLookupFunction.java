@@ -49,6 +49,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * HBaseRowDataLookupFunction是一个标准的用户定义表函数，它可以在tableAPI中使用，也可以用于SQL中的时态表连接计划。
+ * 它以{@link RowData}的形式查找结果。
+ *
  * The HBaseRowDataLookupFunction is a standard user-defined table function, it can be used in
  * tableAPI and also useful for temporal table join plan in SQL. It looks up the result as {@link
  * RowData}.

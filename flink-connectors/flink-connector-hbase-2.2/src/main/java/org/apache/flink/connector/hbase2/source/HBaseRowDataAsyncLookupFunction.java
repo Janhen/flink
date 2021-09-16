@@ -59,6 +59,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * HBaseRowDataAsyncLookupFunction 是一个通过 rowkey 以异步方式查找 HBase数 据的实现。它以 {@link RowData}
+ * 的形式查找结果。
+ *
  * The HBaseRowDataAsyncLookupFunction is an implemenation to lookup HBase data by rowkey in async
  * fashion. It looks up the result as {@link RowData}.
  */
@@ -74,6 +77,7 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
     private final HBaseTableSchema hbaseTableSchema;
     private final String nullStringLiteral;
 
+    // J: HBase2.0 的异步连接
     private transient AsyncConnection asyncConnection;
     private transient AsyncTable<ScanResultConsumer> table;
     private transient HBaseSerde serde;
@@ -81,6 +85,7 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
     private final long cacheMaxSize;
     private final long cacheExpireMs;
     private final int maxRetryTimes;
+    // J: use guava cache
     private transient Cache<Object, RowData> cache;
 
     /** The size for thread pool. */

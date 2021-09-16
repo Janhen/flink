@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 委托给实际源读取器的混合源读取器。
+ *
  * Hybrid source reader that delegates to the actual source reader.
  *
  * <p>This reader processes splits from a sequence of sources as determined by the enumerator. The

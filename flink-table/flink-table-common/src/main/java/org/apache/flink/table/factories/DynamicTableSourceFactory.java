@@ -23,6 +23,8 @@ import org.apache.flink.table.catalog.CatalogTable;
 import org.apache.flink.table.connector.source.DynamicTableSource;
 
 /**
+ * 从{@link CatalogTable}和其他上下文信息中创建一个{@link DynamicTableSource}实例。
+ *
  * Creates a {@link DynamicTableSource} instance from a {@link CatalogTable} and additional context
  * information.
  *

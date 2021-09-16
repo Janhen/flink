@@ -27,6 +27,10 @@ import org.apache.flink.types.Row;
 import org.apache.hadoop.conf.Configuration;
 
 /**
+ * 创建一个 TableSource，用于扫描 HBase 表。
+ *
+ * 可配合 tableEnv 进行 registerTableSourceInternal
+ *
  * Creates a TableSource to scan an HBase table.
  *
  * <p>The table name and required HBase configuration is passed during {@link HBaseTableSource}

@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * HBase 的验证器。支持更多特性，例如批读写，async api(从 hbase 版本 2.0.0 支持)，LookupFunction 缓存。
+ *
  * The validator for HBase. More features to be supported, e.g., batch read/write, async api(support
  * from hbase version 2.0.0), Caching for LookupFunction.
  */

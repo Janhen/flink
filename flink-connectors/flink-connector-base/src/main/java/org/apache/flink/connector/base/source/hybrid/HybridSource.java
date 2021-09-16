@@ -35,6 +35,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 基于配置的源链切换底层源的混合源。
+ *
+ * <p>一个简单的例子，使用FileSource和KafkaSource固定Kafka的起始位置:
+ *
+ * ...
+ *
+ * <p>一个更复杂的例子，Kafka的起始位置来自前面的源代码:
+ *
  * Hybrid source that switches underlying sources based on configured source chain.
  *
  * <p>A simple example with FileSource and KafkaSource with fixed Kafka start position:

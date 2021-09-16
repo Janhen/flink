@@ -31,6 +31,7 @@ public class EncodingUtilsTest {
     @Test
     public void testObjectStringEncoding() {
         final MyPojo pojo = new MyPojo(33, "Hello");
+        // base64 编码 pojo?
         final String base64 = EncodingUtils.encodeObjectToString(pojo);
         assertEquals(pojo, EncodingUtils.decodeStringToObject(base64, Serializable.class));
     }

@@ -40,12 +40,14 @@ import java.util.Optional;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /** Helps to specify an HBase Table's schema. */
+// 帮助指定一个HBase Table的模式。
 @Internal
 public class HBaseTableSchema implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     // A Map with key as column family.
+    // 以键作为列族的映射。
     private final Map<String, Map<String, DataType>> familyMap = new LinkedHashMap<>();
 
     // information about rowkey
@@ -153,6 +155,8 @@ public class HBaseTableSchema implements Serializable {
     }
 
     /**
+     * 返回特定列族中所有已注册的列限定符的名称。
+     *
      * Returns the names of all registered column qualifiers of a specific column family.
      *
      * @param family The name of the column family for which the column qualifier names are

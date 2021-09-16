@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.function.Consumer;
 
 /** The default fetch task that fetches the records into the element queue. */
+// 将记录获取到元素队列中的默认获取任务。
 class FetchTask<E, SplitT extends SourceSplit> implements SplitFetcherTask {
     private final SplitReader<E, SplitT> splitReader;
     private final FutureCompletingBlockingQueue<RecordsWithSplitIds<E>> elementsQueue;

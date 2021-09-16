@@ -26,6 +26,8 @@ import org.apache.flink.types.Row;
 import org.apache.hadoop.hbase.client.Mutation;
 
 /**
+ * 遗留实现
+ *
  * Legacy implementation for {@link
  * org.apache.flink.connector.hbase.source.AbstractHBaseTableSource}.
  */

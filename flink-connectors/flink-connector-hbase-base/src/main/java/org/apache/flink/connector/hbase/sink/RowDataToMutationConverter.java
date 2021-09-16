@@ -48,10 +48,13 @@ public class RowDataToMutationConverter implements HBaseMutationConverter<RowDat
 
     @Override
     public Mutation convertToMutation(RowData record) {
+        // 根据 RowKind 处理 HBase 的 upsert 数据流
         RowKind kind = record.getRowKind();
+        // 插入和更新操作哦
         if (kind == RowKind.INSERT || kind == RowKind.UPDATE_AFTER) {
             return serde.createPutMutation(record);
         } else {
+            // 删除操作
             return serde.createDeleteMutation(record);
         }
     }

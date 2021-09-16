@@ -47,6 +47,7 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasFa
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Utilities for HBase serialization and deserialization. */
+// 用于 HBase 序列化和反序列化的实用程序。
 public class HBaseSerde {
 
     private static final byte[] EMPTY_BYTES = new byte[] {};

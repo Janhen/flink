@@ -38,6 +38,8 @@ public class SerdeUtils {
     private SerdeUtils() {}
 
     /**
+     * 序列化从子任务id到已分配拆分列表的映射。序列化格式如下:
+     *
      * Serialize a mapping from subtask ids to lists of assigned splits. The serialized format is
      * following:
      *
@@ -89,6 +91,8 @@ public class SerdeUtils {
     }
 
     /**
+     * 反序列化由{@link #serializeSplitAssignments(Map, SimpleVersionedSerializer)}返回的给定字节。
+     *
      * Deserialize the given bytes returned by {@link #serializeSplitAssignments(Map,
      * SimpleVersionedSerializer)}.
      *

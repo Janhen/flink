@@ -129,6 +129,9 @@ public class HBaseOptions {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 检查 HBase 表是否定义了行键。行键被定义为原子类型，列族和限定符被定义为 row 类型。模式中不应该有多个原子类型列。
+     * PRIMARY KEY 约束是可选的，如果存在，则必须在单行键字段上定义主键约束。
+     *
      * Checks that the HBase table have row key defined. A row key is defined as an atomic type, and
      * column families and qualifiers are defined as ROW type. There shouldn't be multiple atomic
      * type columns in the schema. The PRIMARY KEY constraint is optional, if exist, the primary key

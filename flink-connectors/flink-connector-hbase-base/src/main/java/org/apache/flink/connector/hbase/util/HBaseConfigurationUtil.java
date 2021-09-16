@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 
 /** This class helps to do serialization for hadoop Configuration and HBase-related classes. */
+// 这个类有助于对hadoop Configuration和hbase相关类进行序列化。
 @Internal
 public class HBaseConfigurationUtil {
 

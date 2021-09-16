@@ -48,6 +48,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * HBase的sink函数。
+ *
+ * <p>这个类在发送请求到集群之前利用{@link BufferedMutator}缓冲多个
+ * {@link org.apache.hadoop.hbase.client.Mutation Mutations}。缓冲策略可以通过
+ * {@code bufferFlushMaxSizeInBytes}、{@code bufferFlushMaxMutations}和
+ * {@code bufferFlushIntervalMillis}配置。
+ *
  * The sink function for HBase.
  *
  * <p>This class leverage {@link BufferedMutator} to buffer multiple {@link
@@ -71,15 +78,23 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
     private final HBaseMutationConverter<T> mutationConverter;
 
     private transient Connection connection;
+    // J: 缓存对应的转换后的 HBase 的 Mutation，借助 HBase 的 BufferedMutator 实现按时间、存放大小、
+    // 存放记录数控制缓存写入，BufferedMutator 是线程安全的
     private transient BufferedMutator mutator;
 
+    // J: 声明为 transient 避免序列化传输
     private transient ScheduledExecutorService executor;
     private transient ScheduledFuture scheduledFuture;
+    // 挂起的请求数
     private transient AtomicLong numPendingRequests;
 
     private transient volatile boolean closed = false;
 
     /**
+     * 这是从{@link BufferedMutator.ExceptionListener} 如果抛出{@link Throwable}。
+     *
+     * <p>将在处理每个输入元素之前和关闭接收器时检查并重新抛出错误。
+     *
      * This is set from inside the {@link BufferedMutator.ExceptionListener} if a {@link Throwable}
      * was thrown.
      *
@@ -88,6 +103,7 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
      */
     private final AtomicReference<Throwable> failureThrowable = new AtomicReference<>();
 
+    // 在 sink 中处理 bufferSize, bufferCount, bufferIntervalMillis
     public HBaseSinkFunction(
             String hTableName,
             org.apache.hadoop.conf.Configuration conf,
@@ -138,6 +154,7 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
                                     } catch (Exception e) {
                                         // fail the sink and skip the rest of the items
                                         // if the failure handler decides to throw an exception
+                                        // 如果失败处理程序决定抛出异常，则失败接收器并跳过其余项
                                         failureThrowable.compareAndSet(null, e);
                                     }
                                 },
@@ -191,9 +208,11 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
     public void invoke(T value, Context context) throws Exception {
         checkErrorAndRethrow();
 
+        // 将 element 转换为 HBase 的 mutation
         mutator.mutate(mutationConverter.convertToMutation(value));
 
         // flush when the buffer number of mutations greater than the configured max size.
+        // 当缓冲区 mutations 数量大于配置的最大大小时刷新。
         if (bufferFlushMaxMutations > 0
                 && numPendingRequests.incrementAndGet() >= bufferFlushMaxMutations) {
             flush();
@@ -203,6 +222,7 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
     private void flush() throws IOException {
         // BufferedMutator is thread-safe
         mutator.flush();
+        // 重置计数
         numPendingRequests.set(0);
         checkErrorAndRethrow();
     }
@@ -239,6 +259,7 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
 
     @Override
     public void snapshotState(FunctionSnapshotContext context) throws Exception {
+        // J: 在当前有记录被缓存的情况下，阻塞刷新，避免 checkpoint 丢失恢复的时候丢失数据
         while (numPendingRequests.get() != 0) {
             flush();
         }
@@ -254,6 +275,7 @@ public class HBaseSinkFunction<T> extends RichSinkFunction<T>
             throws RetriesExhaustedWithDetailsException {
         // fail the sink and skip the rest of the items
         // if the failure handler decides to throw an exception
+        // 如果失败处理程序决定抛出异常，则失败接收器并跳过其余项
         failureThrowable.compareAndSet(null, exception);
     }
 }

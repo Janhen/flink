@@ -21,6 +21,8 @@ package org.apache.flink.table.descriptors;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 描述符的验证器。我们将验证方法和实用程序放在单独的类中，以保持描述符接口的整洁。
+ *
  * Validator for a descriptor. We put the validation methods and utilities in separate classes to
  * keep the descriptor interfaces clean.
  */

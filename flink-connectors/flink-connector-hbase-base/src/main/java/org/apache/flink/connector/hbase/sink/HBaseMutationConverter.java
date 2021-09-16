@@ -27,6 +27,8 @@ import org.apache.hadoop.hbase.client.Put;
 import java.io.Serializable;
 
 /**
+ * 一个转换器，用于将输入记录转换为 HBase {@link Mutation}。
+ *
  * A converter used to converts the input record into HBase {@link Mutation}.
  *
  * @param <T> type of input record.
@@ -38,6 +40,8 @@ public interface HBaseMutationConverter<T> extends Serializable {
     void open();
 
     /**
+     * 将输入的记录转换为 HBase {@link Mutation}。一个突变可以是{@link Put}或{@link Delete}。
+     *
      * Converts the input record into HBase {@link Mutation}. A mutation can be a {@link Put} or
      * {@link Delete}.
      */

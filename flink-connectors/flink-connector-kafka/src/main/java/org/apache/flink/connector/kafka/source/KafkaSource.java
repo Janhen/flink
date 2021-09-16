@@ -58,6 +58,9 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
+ * Kafka 的源代码实现。请使用 {@link KafkaSourceBuilder} 来构 造{@link KafkaSource}。下面的例子展示了如何
+ * 创建一个 afkaSource 发出<code> String<code>类型的记录。
+ *
  * The Source implementation of Kafka. Please use a {@link KafkaSourceBuilder} to construct a {@link
  * KafkaSource}. The following example shows how to create a KafkaSource emitting records of <code>
  * String</code> type.
@@ -82,6 +85,7 @@ public class KafkaSource<OUT>
                 ResultTypeQueryable<OUT> {
     private static final long serialVersionUID = -8755372893283732098L;
     // Users can choose only one of the following ways to specify the topics to consume from.
+    // 用户只能选择以下一种方式来指定要使用的主题。
     private final KafkaSubscriber subscriber;
     // Users can specify the starting / stopping offset initializer.
     private final OffsetsInitializer startingOffsetsInitializer;

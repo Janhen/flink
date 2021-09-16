@@ -33,6 +33,7 @@ import javax.sql.XADataSource;
 import java.util.function.Function;
 
 /** Facade to create JDBC {@link SinkFunction sinks}. */
+// Facade 创建 JDBC {@link SinkFunction sink}
 @PublicEvolving
 public class JdbcSink {
 

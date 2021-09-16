@@ -37,6 +37,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /** IT case for the {@link Source} with a coordinator. */
+// 带有协调器的{@link Source}的IT案例。
 public class CoordinatedSourceITCase extends AbstractTestBase {
 
     @Test

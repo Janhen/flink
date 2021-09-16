@@ -74,6 +74,7 @@ import static org.apache.flink.table.descriptors.Schema.SCHEMA_NAME;
 import static org.apache.flink.table.descriptors.Schema.SCHEMA_TYPE;
 
 /** Factory for creating configured instances of {@link HBaseTableSource} or sink. */
+// 用于创建{@link HBaseTableSource}或接收器的配置实例的工厂。
 @Internal
 public class HBase2TableFactory
         implements StreamTableSourceFactory<Row>, StreamTableSinkFactory<Tuple2<Boolean, Row>> {

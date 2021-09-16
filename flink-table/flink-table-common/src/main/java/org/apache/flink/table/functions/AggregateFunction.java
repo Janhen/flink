@@ -28,6 +28,8 @@ import org.apache.flink.table.types.extraction.TypeInferenceExtractor;
 import org.apache.flink.table.types.inference.TypeInference;
 
 /**
+ * 用户定义聚合函数的基类。用户定义的聚合函数将多行标量值映射为新的标量值。
+ *
  * Base class for a user-defined aggregate function. A user-defined aggregate function maps scalar
  * values of multiple rows to a new scalar value.
  *

@@ -89,9 +89,11 @@ public class KafkaSourceBuilder<OUT> {
     // The subscriber specifies the partitions to subscribe to.
     private KafkaSubscriber subscriber;
     // Users can specify the starting / stopping offset initializer.
+    // 用户可以指定开始、停止偏移初始化式。
     private OffsetsInitializer startingOffsetsInitializer;
     private OffsetsInitializer stoppingOffsetsInitializer;
     // Boundedness
+    // 有界性
     private Boundedness boundedness;
     private KafkaRecordDeserializationSchema<OUT> deserializationSchema;
     // The configurations.
@@ -127,6 +129,9 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 设置一个KafkaSource应该消费的主题列表。列表中的所有主题都应该存在于Kafka集群中。否则将引发异常。要允许惰性
+     * 创建一些主题，请使用{@link #setTopicPattern(Pattern)}代替
+     *
      * Set a list of topics the KafkaSource should consume from. All the topics in the list should
      * have existed in the Kafka cluster. Otherwise an exception will be thrown. To allow some of
      * the topics to be created lazily, please use {@link #setTopicPattern(Pattern)} instead.
@@ -340,6 +345,9 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 为KafkaSource和KafkaConsumer设置一个任意属性。有效的密钥可以在{@link ConsumerConfig}和
+     * {@link KafkaSourceOptions}中找到。
+     *
      * Set an arbitrary property for the KafkaSource and KafkaConsumer. The valid keys can be found
      * in {@link ConsumerConfig} and {@link KafkaSourceOptions}.
      *

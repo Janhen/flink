@@ -30,6 +30,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Scan;
 
 /** {@link InputFormat} subclass that wraps the access for HTables. */
+// {@link InputFormat} 封装 htable 访问的子类。
 @Experimental
 public abstract class HBaseInputFormat<T extends Tuple> extends AbstractTableInputFormat<T> {
 

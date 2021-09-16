@@ -22,6 +22,8 @@ import org.apache.flink.api.connector.source.Source;
 import org.apache.flink.api.connector.source.SourceEvent;
 
 /**
+ * 事件从{@link HybridSourceSplitEnumerator}发送到{@link HybridSourceReader}，以切换到指定的阅读器。
+ *
  * Event sent from {@link HybridSourceSplitEnumerator} to {@link HybridSourceReader} to switch to
  * the indicated reader.
  */

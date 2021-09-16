@@ -32,6 +32,8 @@ import org.apache.flink.types.Row;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 用户定义的异步表函数的基类。用户定义的异步表函数将0、1或多个标量值映射为0、1或多行(或结构化类型)。
+ *
  * Base class for a user-defined asynchronous table function. A user-defined asynchronous table
  * function maps zero, one, or multiple scalar values to zero, one, or multiple rows (or structured
  * types).

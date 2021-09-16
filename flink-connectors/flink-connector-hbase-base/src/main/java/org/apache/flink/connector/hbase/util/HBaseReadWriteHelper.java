@@ -31,6 +31,9 @@ import org.apache.hadoop.hbase.client.Scan;
 import java.nio.charset.Charset;
 
 /**
+ * HBase的读写助手。该helper可以创建一个{@link Scan}和{@link Get}用于扫描或查找HBase表，创建一个{@link Put}和
+ * {@link Delete}用于写入HBase表，并支持将HBase {@link Result}转换为Flink {@link Row}。
+ *
  * A read and write helper for HBase. The helper can used to create a {@link Scan} and {@link Get}
  * for scanning or lookuping a HBase table, and create a {@link Put} and {@link Delete} for writing
  * to HBase table, and supports converting the HBase {@link Result} to Flink {@link Row}.
@@ -165,6 +168,8 @@ public class HBaseReadWriteHelper {
     }
 
     /**
+     * 返回一个 Put 实例，该实例向 HBase 表写入记录。
+     *
      * Returns an instance of Put that writes record to HBase table.
      *
      * @return The appropriate instance of Put for this use case.
@@ -198,6 +203,8 @@ public class HBaseReadWriteHelper {
     }
 
     /**
+     * 返回一个Delete实例，该实例从HBase表中删除记录。
+     *
      * Returns an instance of Delete that remove record from HBase table.
      *
      * @return The appropriate instance of Delete for this use case.

@@ -21,6 +21,7 @@ package org.apache.flink.table.descriptors;
 import org.apache.flink.annotation.Internal;
 
 /** Validator for {@link ConnectorDescriptor}. */
+// {@link ConnectorDescriptor} 的验证器。
 @Internal
 public abstract class ConnectorDescriptorValidator implements DescriptorValidator {
 

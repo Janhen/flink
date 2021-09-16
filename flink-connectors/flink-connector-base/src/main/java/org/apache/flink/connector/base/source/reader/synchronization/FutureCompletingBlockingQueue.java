@@ -37,6 +37,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 一个自定义的阻塞队列实现，结合{@link CompletableFuture}，用于从生产线程到消费线程的数据交接。这个
+ * FutureCompletingBlockingQueue有以下特性:
+ *
  * A custom implementation of blocking queue in combination with a {@link CompletableFuture} that is
  * used in the hand-over of data from a producing thread to a consuming thread. This
  * FutureCompletingBlockingQueue has the following features:

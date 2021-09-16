@@ -38,6 +38,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
+ * {@link InputFormat} 封装 htable 访问的子类。返回结果为 {@link Row}
+ *
  * {@link InputFormat} subclass that wraps the access for HTables. Returns the result as {@link Row}
  */
 @Internal

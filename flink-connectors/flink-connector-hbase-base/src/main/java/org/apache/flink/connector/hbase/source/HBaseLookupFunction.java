@@ -43,6 +43,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
+ * HBaseLookupFunction是一个标准的用户定义表函数，它可以用于tableAPI，也可以用于SQL中的时态表连接计划。它以
+ * {@link Row}的形式查找结果。
+ *
  * The HBaseLookupFunction is a standard user-defined table function, it can be used in tableAPI and
  * also useful for temporal table join plan in SQL. It looks up the result as {@link Row}.
  */

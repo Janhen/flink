@@ -19,6 +19,7 @@
 package org.apache.flink.connector.base.source.hybrid;
 
 /** The state of hybrid source enumerator. */
+// 混合源枚举器的状态。
 public class HybridSourceEnumeratorState {
     private final int currentSourceIndex;
     private byte[] wrappedStateBytes;

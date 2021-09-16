@@ -28,12 +28,14 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** Configuration parameters for REST communication. */
+// 配置REST通信参数。
 @Internal
 public class RestOptions {
 
     private static final String REST_PORT_KEY = "rest.port";
 
     /** The address that the server binds itself to. */
+    // 服务器绑定自己的地址。
     @Documentation.Section(Documentation.Sections.COMMON_HOST_PORT)
     public static final ConfigOption<String> BIND_ADDRESS =
             key("rest.bind-address")
@@ -44,6 +46,7 @@ public class RestOptions {
                     .withDescription("The address that the server binds itself.");
 
     /** The port range that the server could bind itself to. */
+    // 服务器可以绑定自己的端口范围。
     @Documentation.Section(Documentation.Sections.COMMON_HOST_PORT)
     public static final ConfigOption<String> BIND_PORT =
             key("rest.bind-port")
@@ -66,6 +69,8 @@ public class RestOptions {
                             "The address that should be used by clients to connect to the server. Attention: This option is respected only if the high-availability configuration is NONE.");
 
     /**
+     * 如果未指定{@link #BIND_PORT}，则REST客户端连接和REST服务器绑定的端口。
+     *
      * The port that the REST client connects to and the REST server binds to if {@link #BIND_PORT}
      * has not been specified.
      */
@@ -82,6 +87,8 @@ public class RestOptions {
                                     .build());
 
     /**
+     * 客户端等待leader地址(例如Dispatcher或WebMonitorEndpoint)的时间(以毫秒为单位)。
+     *
      * The time in ms that the client waits for the leader address, e.g., Dispatcher or
      * WebMonitorEndpoint.
      */
@@ -130,6 +137,7 @@ public class RestOptions {
                             "The maximum time in ms for the client to establish a TCP connection.");
 
     /** The maximum time in ms for a connection to stay idle before failing. */
+    // 连接在失败前保持空闲的最大时间(以毫秒为单位)。
     @Documentation.Section(Documentation.Sections.EXPERT_REST)
     public static final ConfigOption<Long> IDLENESS_TIMEOUT =
             key("rest.idleness-timeout")
@@ -138,6 +146,8 @@ public class RestOptions {
                             "The maximum time in ms for a connection to stay idle before failing.");
 
     /** The maximum content length that the server will handle. */
+    // 服务器将处理的最大内容长度。
+    // J: 对应 taskmanager 返回日志长度受此限制..
     @Documentation.Section(Documentation.Sections.EXPERT_REST)
     public static final ConfigOption<Integer> SERVER_MAX_CONTENT_LENGTH =
             key("rest.server.max-content-length")
@@ -153,6 +163,7 @@ public class RestOptions {
                     .withDescription(
                             "The maximum content length in bytes that the client will handle.");
 
+    // 用于异步处理请求的线程数
     @Documentation.Section(Documentation.Sections.EXPERT_REST)
     public static final ConfigOption<Integer> SERVER_NUM_THREADS =
             key("rest.server.numThreads")
@@ -170,6 +181,7 @@ public class RestOptions {
                                     + "increasing will allocate more time for the REST server's processing.");
 
     /** Enables the experimental flame graph feature. */
+    // 启用实验火焰图形特征。
     @Documentation.Section(Documentation.Sections.EXPERT_REST)
     public static final ConfigOption<Boolean> ENABLE_FLAMEGRAPH =
             key("rest.flamegraph.enabled")

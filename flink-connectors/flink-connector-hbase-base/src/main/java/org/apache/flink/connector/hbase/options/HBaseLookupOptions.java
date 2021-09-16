@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /** Options for the HBase lookup. */
+// HBase 查找选项。
 @Internal
 public class HBaseLookupOptions implements Serializable {
     private static final long serialVersionUID = 1L;
