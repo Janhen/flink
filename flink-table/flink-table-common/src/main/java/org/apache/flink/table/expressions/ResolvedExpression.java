@@ -25,6 +25,8 @@ import org.apache.flink.table.types.DataType;
 import java.util.List;
 
 /**
+ * 已完全解决和验证的表达式。
+ *
  * Expression that has been fully resolved and validated.
  *
  * <p>Compared to {@link Expression}, resolved expressions do not contain unresolved subexpressions
@@ -40,6 +42,9 @@ import java.util.List;
 public interface ResolvedExpression extends Expression {
 
     /**
+     * 返回完全序列化此实例的字符串。序列化字符串可用于存储查询，例如，
+     * {@link org.apache.flink.table.catalog。Catalog} 作为视图。
+     *
      * Returns a string that fully serializes this instance. The serialized string can be used for
      * storing the query in, for example, a {@link org.apache.flink.table.catalog.Catalog} as a
      * view.

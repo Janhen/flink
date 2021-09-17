@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 完成 {@link ScheduledFuture} 实现。
+ *
  * Completed {@link ScheduledFuture} implementation.
  *
  * @param <T> type of the {@link ScheduledFuture}

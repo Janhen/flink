@@ -23,6 +23,10 @@ import java.util.HashSet;
 import java.util.Objects;
 
 /**
+ * 一个 ClassLoader，它过滤掉某些类(通过名称)，并在它们应该被加载时抛出 ClassNotFoundException。
+ *
+ * <p>当试图从类装入器中消除某些类时，这个实用程序是有用的，强制通过另一个类装入器装入它们。
+ *
  * A ClassLoader that filters out certain classes (by name) and throws a ClassNotFoundException when
  * they should be loaded.
  *

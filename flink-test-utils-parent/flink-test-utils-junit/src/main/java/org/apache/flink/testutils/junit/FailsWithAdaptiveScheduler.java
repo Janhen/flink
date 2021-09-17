@@ -19,4 +19,5 @@
 package org.apache.flink.testutils.junit;
 
 /** Marker for explicitly ignoring a test which fails with adaptive scheduler. */
+// 用于显式忽略使用自适应调度器失败的测试的标记
 public interface FailsWithAdaptiveScheduler {}

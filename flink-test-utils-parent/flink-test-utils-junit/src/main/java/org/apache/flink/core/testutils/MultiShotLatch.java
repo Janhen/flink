@@ -19,6 +19,8 @@
 package org.apache.flink.core.testutils;
 
 /**
+ * 用于在测试中同步部分代码的锁存器。与 {@link OneShotLatch} 相比，一旦 {@link #await()} 返回，它将重置状态。
+ *
  * Latch for synchronizing parts of code in tests. In contrast to {@link OneShotLatch} this will
  * reset the state once {@link #await()} returns.
  *

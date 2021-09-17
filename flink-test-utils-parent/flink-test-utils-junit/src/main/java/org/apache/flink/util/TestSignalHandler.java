@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import sun.misc.Signal;
 
 /**
+ * 这个信号处理程序信号记录器基于Apache Hadoop的org.apache.hadoop.util.SignalLogger。
+ *
  * This signal handler / signal logger is based on Apache Hadoop's
  * org.apache.hadoop.util.SignalLogger.
  *

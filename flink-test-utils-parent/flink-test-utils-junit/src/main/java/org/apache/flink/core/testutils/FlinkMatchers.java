@@ -36,6 +36,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /** Some reusable hamcrest matchers for Flink. */
+// 一些可重复使用的 hamcrest 匹配 Flink。
 public class FlinkMatchers {
 
     // ------------------------------------------------------------------------

@@ -78,6 +78,8 @@ import java.io.Serializable;
 public interface DynamicTableSink {
 
     /**
+     * 返回接收器在运行时接受的更改集。
+     *
      * Returns the set of changes that the sink accepts during runtime.
      *
      * <p>The planner can make suggestions but the sink has the final decision what it requires. If

@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * 接口用于所有想要参与归档与作业相关的json响应的类。
+ *
  * Interface for all classes that want to participate in the archiving of job-related json
  * responses.
  */

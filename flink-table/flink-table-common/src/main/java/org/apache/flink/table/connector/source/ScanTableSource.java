@@ -34,6 +34,10 @@ import java.io.Serializable;
 /**
  * 一个 {@link DynamicTableSource}，它在运行时扫描外部存储系统中的所有行。
  *
+ * ...
+ *
+ * <p>A {@link ScanTableSource}可以实现以下能力，这些能力可能会在规划过程中改变实例:
+ *
  * A {@link DynamicTableSource} that scans all rows from an external storage system during runtime.
  *
  * <p>The scanned rows don't have to contain only insertions but can also contain updates and

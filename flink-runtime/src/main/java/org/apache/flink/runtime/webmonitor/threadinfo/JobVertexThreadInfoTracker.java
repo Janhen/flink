@@ -60,6 +60,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link ExecutionJobVertex} 的线程信息跟踪器。
+ *
  * Tracker of thread infos for {@link ExecutionJobVertex}.
  *
  * @param <T> Type of the derived statistics to return.

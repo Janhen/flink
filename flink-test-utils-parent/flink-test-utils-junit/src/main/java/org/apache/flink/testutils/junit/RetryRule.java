@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nullable;
 
 /**
+ * 对失败的测试重试固定次数的规则。
+ *
  * A rule to retry failed tests for a fixed number of times.
  *
  * <p>Add the {@link RetryRule} to your test class and annotate the class and/or tests with either
@@ -185,6 +187,8 @@ public class RetryRule implements TestRule {
         }
 
         /**
+         * 在出现特定异常的失败情况下重试测试。
+         *
          * Retry a test in case of a failure with a specific exception.
          *
          * @throws Throwable

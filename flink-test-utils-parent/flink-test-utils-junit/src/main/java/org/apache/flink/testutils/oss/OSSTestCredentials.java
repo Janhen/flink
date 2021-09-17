@@ -23,6 +23,7 @@ import org.junit.Assume;
 import javax.annotation.Nullable;
 
 /** Access to credentials to access OSS buckets during integration tests. */
+// 在集成测试期间访问OSS桶的凭据访问权。
 public class OSSTestCredentials {
     @Nullable private static final String ENDPOINT = System.getenv("ARTIFACTS_OSS_ENDPOINT");
 

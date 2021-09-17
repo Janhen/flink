@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.Optional;
 
 /**
+ * JDBC 恰好一次接收选项。
+ *
  * JDBC exactly once sink options.
  *
  * <p><b>maxCommitAttempts</b> - maximum number of commit attempts to make per transaction; must be
@@ -107,6 +109,7 @@ public class JdbcExactlyOnceOptions implements Serializable {
     public static class JDBCExactlyOnceOptionsBuilder {
         private boolean recoveredAndRollback = DEFAULT_RECOVERED_AND_ROLLBACK;
         private int maxCommitAttempts = DEFAULT_MAX_COMMIT_ATTEMPTS;
+        // 允许无序提交
         private boolean allowOutOfOrderCommits = DEFAULT_ALLOW_OUT_OF_ORDER_COMMITS;
         private Optional<Integer> timeoutSec = Optional.empty();
         private boolean transactionPerConnection = DEFAULT_TRANSACTION_PER_CONNECTION;

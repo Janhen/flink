@@ -38,6 +38,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 该类充当一个网络代理——侦听本地端口并将所有网络转发到远程主机端口。它允许在通信中模拟网络故障。
+ *
  * This class acts as a network proxy - listening on local port and forwarding all of the network to
  * the remote host/port. It allows to simulate a network failures in the communication.
  */

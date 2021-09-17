@@ -28,6 +28,10 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonPro
 import java.util.List;
 
 /**
+ * 作业顶点的火焰图表示。
+ *
+ * <p>通过对正在运行的任务的堆栈跟踪进行采样来收集统计信息。
+ *
  * Flame Graph representation for a job vertex.
  *
  * <p>Statistics are gathered by sampling stack traces of running tasks.

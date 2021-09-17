@@ -65,6 +65,8 @@ import org.apache.flink.table.data.RowData;
 public interface SupportsWatermarkPushDown {
 
     /**
+     * 提供一个{@link WatermarkStrategy}，它定义了如何在流源中生成{@link Watermark}。
+     *
      * Provides a {@link WatermarkStrategy} which defines how to generate {@link Watermark}s in the
      * stream source.
      *

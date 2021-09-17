@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.webmonitor.stats;
 
 /** Represents one or more statistics samples. */
+// 表示一个或多个统计样本
 public interface Statistics {
 
     /**

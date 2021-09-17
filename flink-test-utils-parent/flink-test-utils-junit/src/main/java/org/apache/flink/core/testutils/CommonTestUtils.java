@@ -72,6 +72,10 @@ public class CommonTestUtils {
     }
 
     /**
+     * 创建包含给定字符串的临时文件。该文件是使用平台的默认编码编写的。
+     *
+     * <p>临时文件在 JVM 退出时被自动删除。
+     *
      * Creates a temporary file that contains the given string. The file is written with the
      * platform's default encoding.
      *
@@ -82,6 +86,7 @@ public class CommonTestUtils {
      */
     public static String createTempFile(String contents) throws IOException {
         File f = File.createTempFile("flink_test_", ".tmp");
+        // JVM 退出时删除
         f.deleteOnExit();
 
         try (BufferedWriter out = new BufferedWriter(new FileWriter(f))) {
@@ -152,6 +157,8 @@ public class CommonTestUtils {
     }
 
     /**
+     * 检查给定的 throwable 是否包含给定的原因作为原因。原因不是在类型相等时检查的，而是在类型相等时检查的。
+     *
      * Checks whether the given throwable contains the given cause as a cause. The cause is not
      * checked on equality but on type equality.
      *
@@ -174,6 +181,7 @@ public class CommonTestUtils {
     }
 
     /** Checks whether an exception with a message occurs when running a piece of code. */
+    // 当运行一段代码时，检查是否出现带有消息的异常。
     public static void assertThrows(
             String msg, Class<? extends Exception> expected, Callable<?> code) {
         try {

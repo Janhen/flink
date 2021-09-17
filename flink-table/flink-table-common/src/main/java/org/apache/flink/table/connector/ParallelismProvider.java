@@ -24,6 +24,8 @@ import org.apache.flink.table.connector.sink.OutputFormatProvider;
 import java.util.Optional;
 
 /**
+ * 其他连接器提供程序的并行提供程序。它允许表达连接器运行时实现的自定义并行性。否则并行度由规划器决定。
+ *
  * Parallelism provider for other connector providers. It allows to express a custom parallelism for
  * the connector runtime implementation. Otherwise the parallelism is determined by the planner.
  *

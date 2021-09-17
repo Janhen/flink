@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * 允许将可用分区传递给规划器，并将分区下推到 {@link ScanTableSource} 中。
+ *
  * Enables to pass available partitions to the planner and push down partitions into a {@link
  * ScanTableSource}.
  *

@@ -53,6 +53,7 @@ public class Whitebox {
         }
     }
 
+    // 从层级结构中获取属性
     private static Field getFieldFromHierarchy(Class<?> clazz, String field) {
         Field f = getField(clazz, field);
         while (f == null && clazz != Object.class) {

@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * ScheduledTask 表示在稍后时间点执行的任务。
+ *
  * ScheduledTask represents a task which is executed at a later point in time.
  *
  * @param <T> type of the result

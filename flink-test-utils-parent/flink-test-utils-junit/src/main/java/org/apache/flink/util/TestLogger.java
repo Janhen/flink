@@ -29,6 +29,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
+ * 添加自动测试名称日志记录。每个想要记录当前执行的测试以及失败原因的测试，都必须扩展这个类。
+ *
  * Adds automatic test name logging. Every test which wants to log which test is currently executed
  * and why it failed, simply has to extend this class.
  */

@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * MetricListener 监听提供的根度量值组下的度量值和组注册，并将它们存储在一个内部 HashMap 中用于获取。
+ *
  * A MetricListener listens metric and group registration under the provided root metric group, and
  * stores them in an internal HashMap for fetching.
  */

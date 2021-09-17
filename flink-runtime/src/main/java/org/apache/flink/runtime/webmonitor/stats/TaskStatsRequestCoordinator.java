@@ -44,6 +44,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 封装从单个任务请求统计信息并组合它们的响应的通用功能。
+ *
  * Encapsulates the common functionality for requesting statistics from individual tasks and
  * combining their responses.
  *

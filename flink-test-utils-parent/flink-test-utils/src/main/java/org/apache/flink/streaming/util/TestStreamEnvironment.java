@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /** A {@link StreamExecutionEnvironment} that executes its jobs on {@link MiniCluster}. */
+// 一个在 {@link MiniCluster} 上执行其任务的 {@link StreamExecutionEnvironment}。
 public class TestStreamEnvironment extends StreamExecutionEnvironment {
     private static final boolean RANDOMIZE_CHECKPOINTING_CONFIG =
             Boolean.parseBoolean(System.getProperty("checkpointing.randomization", "false"));

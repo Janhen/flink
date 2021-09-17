@@ -24,6 +24,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 与 {@link RetryRule} 一起使用的注释。
+ *
  * Annotation to use with {@link RetryRule}.
  *
  * <p>Add the {@link RetryRule} to your test class and annotate the class and/or tests with {@link

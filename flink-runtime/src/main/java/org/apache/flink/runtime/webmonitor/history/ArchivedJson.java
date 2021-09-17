@@ -30,6 +30,10 @@ import java.io.StringWriter;
 import java.util.Objects;
 
 /**
+ * 一个简单的容器，用于处理程序的JSON响应和将为其返回响应的REST url。
+ *
+ * <p>这些是由{@link JsonArchivist}创建的，并由{@link FsJobArchivist}用于创建类似于REST API的目录结构
+ *
  * A simple container for a handler's JSON response and the REST URLs for which the response
  * would've been returned.
  *

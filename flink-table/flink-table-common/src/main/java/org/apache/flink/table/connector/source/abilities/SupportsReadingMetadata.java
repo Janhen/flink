@@ -83,6 +83,8 @@ import java.util.Map;
 public interface SupportsReadingMetadata {
 
     /**
+     * 返回可由该表源生成用于读取的元数据键及其对应数据类型的映射。
+     *
      * Returns the map of metadata keys and their corresponding data types that can be produced by
      * this table source for reading.
      *
@@ -112,6 +114,8 @@ public interface SupportsReadingMetadata {
     Map<String, DataType> listReadableMetadata();
 
     /**
+     * 提供生成的{@link RowData}必须作为附加元数据列包含的元数据键的列表。
+     *
      * Provides a list of metadata keys that the produced {@link RowData} must contain as appended
      * metadata columns.
      *
