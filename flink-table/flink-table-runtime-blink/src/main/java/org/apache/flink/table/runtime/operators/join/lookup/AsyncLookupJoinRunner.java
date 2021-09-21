@@ -41,6 +41,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /** The async join runner to lookup the dimension table. */
+// 用于查找维度表的异步连接运行程序
 public class AsyncLookupJoinRunner extends RichAsyncFunction<RowData, RowData> {
     private static final long serialVersionUID = -6664660022391632480L;
 

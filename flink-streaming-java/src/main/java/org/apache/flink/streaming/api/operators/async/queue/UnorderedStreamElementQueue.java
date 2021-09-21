@@ -59,6 +59,7 @@ public final class UnorderedStreamElementQueue<OUT> implements StreamElementQueu
     private final int capacity;
 
     /** Queue of queue entries segmented by watermarks. */
+    // 被水印分割的队列条目
     private final Deque<Segment<OUT>> segments;
 
     private int numberOfEntries;

@@ -56,6 +56,7 @@ public final class OrderedStreamElementQueue<OUT> implements StreamElementQueue<
         Preconditions.checkArgument(capacity > 0, "The capacity must be larger than 0.");
 
         this.capacity = capacity;
+        // 数组实现的双端队列控制
         this.queue = new ArrayDeque<>(capacity);
     }
 

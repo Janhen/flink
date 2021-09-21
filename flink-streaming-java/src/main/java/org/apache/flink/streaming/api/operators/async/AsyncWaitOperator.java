@@ -56,6 +56,10 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * {@link AsyncWaitOperator}允许异步处理传入的流记录。为此，操作符创建了一个{@link ResultFuture}，并将其
+ * 传递给{@link AsyncFunction}。在异步函数中，用户可以任意完成异步收集器。一旦异步收集器完成，操作符的发射器就会
+ * 将结果发送给下游操作符。
+ *
  * The {@link AsyncWaitOperator} allows to asynchronously process incoming stream records. For that
  * the operator creates an {@link ResultFuture} which is passed to an {@link AsyncFunction}. Within
  * the async function, the user can complete the async collector arbitrarily. Once the async
@@ -163,6 +167,7 @@ public class AsyncWaitOperator<IN, OUT>
 
         this.isObjectReuseEnabled = getExecutionConfig().isObjectReuseEnabled();
 
+        // 状态恢复的时候，从状态中取出所有为完成的消息，重新处理一遍
         if (recoveredStreamElements != null) {
             for (StreamElement element : recoveredStreamElements.get()) {
                 if (element.isRecord()) {
@@ -220,6 +225,7 @@ public class AsyncWaitOperator<IN, OUT>
     public void snapshotState(StateSnapshotContext context) throws Exception {
         super.snapshotState(context);
 
+        // 清楚状态
         ListState<StreamElement> partitionableState =
                 getOperatorStateBackend()
                         .getListState(
@@ -227,6 +233,7 @@ public class AsyncWaitOperator<IN, OUT>
         partitionableState.clear();
 
         try {
+            // 将所有未完成处理请求对应的消息加入状态中
             partitionableState.addAll(queue.values());
         } catch (Exception e) {
             partitionableState.clear();
@@ -243,6 +250,7 @@ public class AsyncWaitOperator<IN, OUT>
     @Override
     public void initializeState(StateInitializationContext context) throws Exception {
         super.initializeState(context);
+        // 初始化恢复的流元素
         recoveredStreamElements =
                 context.getOperatorStateStore()
                         .getListState(

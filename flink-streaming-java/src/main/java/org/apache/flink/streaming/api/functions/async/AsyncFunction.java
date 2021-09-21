@@ -25,6 +25,8 @@ import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 用于实现异步 I/O 操作的函数
+ *
  * A function to trigger Async I/O operation.
  *
  * <p>For each #asyncInvoke, an async io operation can be triggered, and once it has been done, the

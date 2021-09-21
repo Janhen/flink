@@ -93,6 +93,7 @@ public abstract class AbstractUdfStreamOperator<OUT, F extends Function>
     @Override
     public void initializeState(StateInitializationContext context) throws Exception {
         super.initializeState(context);
+        // 恢复功能状态
         StreamingFunctionUtils.restoreFunctionState(context, userFunction);
     }
 

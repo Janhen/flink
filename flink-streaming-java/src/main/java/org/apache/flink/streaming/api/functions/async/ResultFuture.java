@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Collection;
 
 /**
+ * 收集数据或是错误在处理异步 i/o 时
  * {@link ResultFuture} collects data / error in user codes while processing async i/o.
  *
  * @param <OUT> Output type

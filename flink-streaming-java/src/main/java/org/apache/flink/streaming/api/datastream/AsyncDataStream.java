@@ -28,6 +28,8 @@ import org.apache.flink.streaming.api.operators.async.AsyncWaitOperatorFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 将{@link AsyncFunction}应用于数据流的helper类。
+ *
  * A helper class to apply {@link AsyncFunction} to a data stream.
  *
  * <pre>{@code

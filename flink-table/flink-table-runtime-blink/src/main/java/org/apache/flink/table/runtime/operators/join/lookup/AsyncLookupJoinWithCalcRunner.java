@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /** The async join runner with an additional calculate function on the dimension table. */
+// 在维度表上带有额外计算函数的异步连接运行程序。
 public class AsyncLookupJoinWithCalcRunner extends AsyncLookupJoinRunner {
 
     private static final long serialVersionUID = 8758670006385551407L;
