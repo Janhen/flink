@@ -81,6 +81,7 @@ public class MultiInputTransformationTranslator<OUT>
     @Override
     protected Collection<Integer> translateForStreamingInternal(
             final AbstractMultipleInputTransformation<OUT> transformation, final Context context) {
+        // 多个输入源的 translate
         return translateInternal(transformation, context);
     }
 

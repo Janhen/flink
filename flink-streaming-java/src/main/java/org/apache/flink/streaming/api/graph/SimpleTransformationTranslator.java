@@ -79,6 +79,8 @@ public abstract class SimpleTransformationTranslator<OUT, T extends Transformati
             final T transformation, final Context context);
 
     /**
+     * 将给定的{@link Transformation}转换为流格式执行的运行时实现。
+     *
      * Translates a given {@link Transformation} to its runtime implementation for STREAMING-style
      * execution.
      *

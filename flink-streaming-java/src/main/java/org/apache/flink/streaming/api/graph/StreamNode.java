@@ -74,7 +74,9 @@ public class StreamNode {
     private TypeSerializer<?>[] typeSerializersIn = new TypeSerializer[0];
     private TypeSerializer<?> typeSerializerOut;
 
+    // 入边
     private List<StreamEdge> inEdges = new ArrayList<StreamEdge>();
+    // 出边
     private List<StreamEdge> outEdges = new ArrayList<StreamEdge>();
 
     private final Class<? extends AbstractInvokable> jobVertexClass;

@@ -76,6 +76,8 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     @Deprecated public static final int PARALLELISM_AUTO_MAX = Integer.MAX_VALUE;
 
     /**
+     * 指示使用默认并行度的标志值。此值可用于将并行度重置回默认状态。
+     *
      * The flag value indicating use of the default parallelism. This value can be used to reset the
      * parallelism back to the default state.
      */
@@ -1018,6 +1020,8 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     }
 
     /**
+     * 在执行配置处注册的自定义用户配置对象的抽象类。
+     *
      * Abstract class for a custom user configuration object registered at the execution config.
      *
      * <p>This user config is accessible at runtime through

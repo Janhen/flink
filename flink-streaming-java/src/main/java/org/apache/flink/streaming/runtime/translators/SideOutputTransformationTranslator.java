@@ -51,6 +51,7 @@ public class SideOutputTransformationTranslator<OUT>
     @Override
     protected Collection<Integer> translateForStreamingInternal(
             final SideOutputTransformation<OUT> transformation, final Context context) {
+        // 旁路输出 translate
         return translateInternal(transformation, context);
     }
 

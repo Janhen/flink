@@ -51,6 +51,7 @@ public class PartitionTransformationTranslator<OUT>
     @Override
     protected Collection<Integer> translateForStreamingInternal(
             final PartitionTransformation<OUT> transformation, final Context context) {
+        // 分区的算子转换
         return translateInternal(transformation, context);
     }
 
@@ -72,6 +73,7 @@ public class PartitionTransformationTranslator<OUT>
 
         for (Integer inputId : context.getStreamNodeIds(input)) {
             final int virtualId = Transformation.getNewNodeId();
+            // 添加虚拟的分区节点
             streamGraph.addVirtualPartitionNode(
                     inputId,
                     virtualId,

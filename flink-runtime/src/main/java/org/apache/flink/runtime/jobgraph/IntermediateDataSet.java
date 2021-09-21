@@ -26,6 +26,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * JobVertex 产生的数据抽象
+ *
  * An intermediate data set is the data set produced by an operator - either a source or any
  * intermediate operation.
  *
@@ -39,6 +41,7 @@ public class IntermediateDataSet implements java.io.Serializable {
 
     private final JobVertex producer; // the operation that produced this data set
 
+    // JobEdge 作为 IntermediateDataSet 的消费者
     private final List<JobEdge> consumers = new ArrayList<JobEdge>();
 
     // The type of partition to use at runtime

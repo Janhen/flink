@@ -124,6 +124,9 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     protected final boolean produceUpdates;
 
     /**
+     * 窗口的移位时区，如果proctime或rowtime类型为TIMESTAMP_LTZ，则移位时区为tablecconfig中配置的时区用户，
+     * 其他情况下，时区为UTC，这意味着在分配窗口时永远不会移位。
+     *
      * The shift timezone of the window, if the proctime or rowtime type is TIMESTAMP_LTZ, the shift
      * timezone is the timezone user configured in TableConfig, other cases the timezone is UTC
      * which means never shift when assigning windows.
@@ -428,6 +431,8 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     protected abstract void emitWindowResult(W window) throws Exception;
 
     /**
+     * 注册一个定时器来清除窗口的内容。
+     *
      * Registers a timer to cleanup the content of the window.
      *
      * @param window the window whose state to discard

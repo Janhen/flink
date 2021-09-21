@@ -36,6 +36,9 @@ public enum ShuffleMode {
     BATCH,
 
     /**
+     * shuffle模式未定义。它让框架决定洗牌模式。框架最终会选择{@link ShuffleMode#BATCH}或
+     * {@link ShuffleMode#PIPELINED}中的一个。
+     *
      * The shuffle mode is undefined. It leaves it up to the framework to decide the shuffle mode.
      * The framework will pick one of {@link ShuffleMode#BATCH} or {@link ShuffleMode#PIPELINED} in
      * the end.

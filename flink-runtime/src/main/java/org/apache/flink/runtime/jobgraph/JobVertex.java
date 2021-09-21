@@ -66,6 +66,7 @@ public class JobVertex implements java.io.Serializable {
     private final List<OperatorIDPair> operatorIDs;
 
     /** List of produced data sets, one per writer. */
+    // 产生的数据集列表，每个 writer 一个，类型为 IntermediateDataSet
     private final ArrayList<IntermediateDataSet> results = new ArrayList<>();
 
     /** List of edges with incoming data. One per Reader. */
@@ -130,6 +131,8 @@ public class JobVertex implements java.io.Serializable {
     private String operatorPrettyName;
 
     /**
+     * 可选的，用于运算符结果的优化器属性的JSON，将包含在JSON计划中。
+     *
      * Optional, the JSON for the optimizer properties of the operator result, to be included in the
      * JSON plan.
      */

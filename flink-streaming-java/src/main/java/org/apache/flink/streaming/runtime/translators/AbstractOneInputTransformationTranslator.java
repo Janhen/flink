@@ -74,6 +74,7 @@ abstract class AbstractOneInputTransformationTranslator<IN, OUT, OP extends Tran
             streamGraph.setOneInputStateKey(transformationId, stateKeySelector, keySerializer);
         }
 
+        // J: 对于算子并行度设置为默认的，自动从 ExecutionConfig 中取出整体的并行度设置
         int parallelism =
                 transformation.getParallelism() != ExecutionConfig.PARALLELISM_DEFAULT
                         ? transformation.getParallelism()

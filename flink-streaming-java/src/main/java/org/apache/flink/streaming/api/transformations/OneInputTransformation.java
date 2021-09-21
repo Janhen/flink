@@ -46,6 +46,7 @@ public class OneInputTransformation<IN, OUT> extends PhysicalTransformation<OUT>
 
     private final Transformation<IN> input;
 
+    // 算子工厂
     private final StreamOperatorFactory<OUT> operatorFactory;
 
     private KeySelector<IN, ?> stateKeySelector;

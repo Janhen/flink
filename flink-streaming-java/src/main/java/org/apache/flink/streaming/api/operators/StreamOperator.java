@@ -95,6 +95,8 @@ public interface StreamOperator<OUT>
     // ------------------------------------------------------------------------
 
     /**
+     * 当操作符应该执行快照时，在它发出自己的检查点屏障之前调用此方法。
+     *
      * This method is called when the operator should do a snapshot, before it emits its own
      * checkpoint barrier.
      *
@@ -136,6 +138,8 @@ public interface StreamOperator<OUT>
     // ------------------------------------------------------------------------
     //  miscellaneous
     // ------------------------------------------------------------------------
+
+    // 其他项
 
     void setKeyContextElement1(StreamRecord<?> record) throws Exception;
 

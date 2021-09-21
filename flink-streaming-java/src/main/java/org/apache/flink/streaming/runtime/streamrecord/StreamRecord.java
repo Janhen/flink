@@ -20,6 +20,8 @@ package org.apache.flink.streaming.runtime.streamrecord;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 数据流中的一个值。这将存储值和一个可选的关联时间戳。
+ *
  * One value in a data stream. This stores the value and an optional associated timestamp.
  *
  * @param <T> The type encapsulated with the stream record.
@@ -31,6 +33,7 @@ public final class StreamRecord<T> extends StreamElement {
     private T value;
 
     /** The timestamp of the record. */
+    // 记录的时间戳。
     private long timestamp;
 
     /** Flag whether the timestamp is actually set. */

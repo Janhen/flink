@@ -25,6 +25,8 @@ import org.apache.flink.configuration.ReadableConfig;
 import java.util.Collection;
 
 /**
+ * {@code TransformationTranslator}负责根据执行模式将给定的{@link Transformation}转换为其运行时实现。
+ *
  * A {@code TransformationTranslator} is responsible for translating a given {@link Transformation}
  * to its runtime implementation depending on the execution mode.
  *
@@ -47,6 +49,8 @@ public interface TransformationTranslator<OUT, T extends Transformation<OUT>> {
     Collection<Integer> translateForBatch(final T transformation, final Context context);
 
     /**
+     * 将给定的{@link Transformation}转换为流格式执行的运行时实现。
+     *
      * Translates a given {@link Transformation} to its runtime implementation for STREAMING-style
      * execution.
      *

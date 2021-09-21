@@ -132,6 +132,7 @@ public class StreamGraphGenerator {
 
     public static final String DEFAULT_SLOT_SHARING_GROUP = "default";
 
+    // 基于 transformations 生成 StreamGraph
     private final List<Transformation<?>> transformations;
 
     private final ExecutionConfig executionConfig;
@@ -166,6 +167,7 @@ public class StreamGraphGenerator {
 
     private boolean shouldExecuteInBatchMode;
 
+    // 维护算子翻译映射
     @SuppressWarnings("rawtypes")
     private static final Map<
                     Class<? extends Transformation>,
@@ -292,6 +294,7 @@ public class StreamGraphGenerator {
         this.savepointRestoreSettings = savepointRestoreSettings;
     }
 
+    // 逐个将 transformation 进行转换
     public StreamGraph generate() {
         streamGraph = new StreamGraph(executionConfig, checkpointConfig, savepointRestoreSettings);
         shouldExecuteInBatchMode = shouldExecuteInBatchMode(runtimeExecutionMode);
@@ -441,6 +444,7 @@ public class StreamGraphGenerator {
         }
 
         // call at least once to trigger exceptions about MissingTypeInfo
+        // 至少调用一次来触发关于MissingTypeInfo的异常
         transform.getOutputType();
 
         @SuppressWarnings("unchecked")
@@ -699,6 +703,7 @@ public class StreamGraphGenerator {
         checkNotNull(translator);
         checkNotNull(transform);
 
+        // 确保上游节点已经完成连接
         final List<Collection<Integer>> allInputIds = getParentInputIds(transform.getInputs());
 
         // the recursive call might have already transformed this
@@ -706,6 +711,7 @@ public class StreamGraphGenerator {
             return alreadyTransformed.get(transform);
         }
 
+        // 将算子确定 slot 共享组，未指定则使用默认
         final String slotSharingGroup =
                 determineSlotSharingGroup(
                         transform.getSlotSharingGroup(),
@@ -745,6 +751,9 @@ public class StreamGraphGenerator {
     }
 
     /**
+     * <p>如果用户指定了一个组名，则按原样执行。如果没有指定任何内容，并且所有输入操作都具有相同的组名，则使用此名称。
+     *   否则选择默认组。
+     *
      * Determines the slot sharing group for an operation based on the slot sharing group set by the
      * user and the slot sharing groups of the inputs.
      *

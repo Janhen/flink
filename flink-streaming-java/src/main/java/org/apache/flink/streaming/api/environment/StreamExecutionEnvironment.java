@@ -158,6 +158,7 @@ public class StreamExecutionEnvironment {
     /** Settings that control the checkpointing behavior. */
     private final CheckpointConfig checkpointCfg = new CheckpointConfig();
 
+    // DataStream 所有的 transformation
     protected final List<Transformation<?>> transformations = new ArrayList<>();
 
     private long bufferTimeout = StreamingJobGraphGenerator.UNDEFINED_NETWORK_BUFFER_TIMEOUT;
@@ -2069,6 +2070,7 @@ public class StreamExecutionEnvironment {
     @Internal
     public void addOperator(Transformation<?> transformation) {
         Preconditions.checkNotNull(transformation, "transformation must not be null.");
+        // 增加算子操作
         this.transformations.add(transformation);
     }
 

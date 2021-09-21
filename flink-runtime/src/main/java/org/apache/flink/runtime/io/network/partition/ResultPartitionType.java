@@ -90,9 +90,11 @@ public enum ResultPartitionType {
     private final boolean hasBackPressure;
 
     /** Does this partition use a limited number of (network) buffers? */
+    // 这个分区使用有限数量的(网络)缓冲区吗?
     private final boolean isBounded;
 
     /** This partition will not be released after consuming if 'isPersistent' is true. */
+    // 如果'isPersistent'为真，这个分区在使用后不会被释放。
     private final boolean isPersistent;
 
     /**

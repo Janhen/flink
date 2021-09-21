@@ -92,6 +92,7 @@ public class SourceTransformationTranslator<OUT, SplitT extends SourceSplit, Enu
                         ? transformation.getParallelism()
                         : executionConfig.getParallelism();
 
+        // 为算子设置并行度
         streamGraph.setParallelism(transformationId, parallelism);
         streamGraph.setMaxParallelism(transformationId, transformation.getMaxParallelism());
         return Collections.singleton(transformationId);

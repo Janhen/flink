@@ -105,12 +105,16 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     // Configuration values and user functions
     // ------------------------------------------------------------------------
 
+    //窗口指派
     protected final WindowAssigner<? super IN, W> windowAssigner;
 
+    // 窗口 key
     private final KeySelector<IN, K> keySelector;
 
+    // 窗口额外的触发器
     private final Trigger<? super IN, ? super W> trigger;
 
+    // append 的状态
     private final StateDescriptor<? extends AppendingState<IN, ACC>, ?> windowStateDescriptor;
 
     /** For serializing the key in checkpoints. */
@@ -137,6 +141,7 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
      */
     protected final OutputTag<IN> lateDataOutputTag;
 
+    // 当前延迟数据被丢弃的个数 metric
     private static final String LATE_ELEMENTS_DROPPED_METRIC_NAME = "numLateRecordsDropped";
 
     protected transient Counter numLateRecordsDropped;
@@ -173,6 +178,7 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     // State that needs to be checkpointed
     // ------------------------------------------------------------------------
 
+    // 窗口中的时间处理服务
     protected transient InternalTimerService<W> internalTimerService;
 
     /** Creates a new {@code WindowOperator} based on the given policies and user functions. */

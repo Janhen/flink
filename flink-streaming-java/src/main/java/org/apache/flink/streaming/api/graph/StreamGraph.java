@@ -461,6 +461,7 @@ public class StreamGraph implements Pipeline {
         }
     }
 
+    // 添加节点
     protected StreamNode addNode(
             Integer vertexID,
             @Nullable String slotSharingGroup,
@@ -473,6 +474,7 @@ public class StreamGraph implements Pipeline {
             throw new RuntimeException("Duplicate vertexID " + vertexID);
         }
 
+        // 生成顶点放入
         StreamNode vertex =
                 new StreamNode(
                         vertexID,
@@ -482,6 +484,7 @@ public class StreamGraph implements Pipeline {
                         operatorName,
                         vertexClass);
 
+        // 维护 StreamOperator 与 vertexClass 信息
         streamNodes.put(vertexID, vertex);
 
         return vertex;
@@ -526,6 +529,10 @@ public class StreamGraph implements Pipeline {
     }
 
     /**
+     * 添加一个新的虚拟节点，该节点用于将下游顶点连接到具有特定分区的输入。
+     *
+     * <p>当从虚拟节点向下游节点添加一条边时，将连接到原始节点，但使用这里给出的分区。
+     *
      * Adds a new virtual node that is used to connect a downstream vertex to an input with a
      * certain partitioning.
      *
@@ -564,6 +571,7 @@ public class StreamGraph implements Pipeline {
         }
     }
 
+    // 在每一个物理节点的转换上，调用添加 Edge
     public void addEdge(Integer upStreamVertexID, Integer downStreamVertexID, int typeNumber) {
         addEdgeInternal(
                 upStreamVertexID,
@@ -584,6 +592,7 @@ public class StreamGraph implements Pipeline {
             OutputTag outputTag,
             ShuffleMode shuffleMode) {
 
+        // 判断是不是虚拟节点上的边，如果是，则找到虚拟节点上游对应的物理节点
         if (virtualSideOutputNodes.containsKey(upStreamVertexID)) {
             int virtualId = upStreamVertexID;
             upStreamVertexID = virtualSideOutputNodes.get(virtualId).f0;
@@ -599,6 +608,7 @@ public class StreamGraph implements Pipeline {
                     outputTag,
                     shuffleMode);
         } else if (virtualPartitionNodes.containsKey(upStreamVertexID)) {
+            // 虚拟分区节点处理，递归连接
             int virtualId = upStreamVertexID;
             upStreamVertexID = virtualPartitionNodes.get(virtualId).f0;
             if (partitioner == null) {
@@ -614,13 +624,16 @@ public class StreamGraph implements Pipeline {
                     outputTag,
                     shuffleMode);
         } else {
+            // 对两个物理节点处理
             StreamNode upstreamNode = getStreamNode(upStreamVertexID);
             StreamNode downstreamNode = getStreamNode(downStreamVertexID);
 
+            // 无分区器在上游和下游算子上指定，则使用 forward 分区，否则使用 rebalance。
             // If no partitioner was specified and the parallelism of upstream and downstream
             // operator matches use forward partitioning, use rebalance otherwise.
             if (partitioner == null
                     && upstreamNode.getParallelism() == downstreamNode.getParallelism()) {
+                // 分区空切并行度一致
                 partitioner = new ForwardPartitioner<Object>();
             } else if (partitioner == null) {
                 partitioner = new RebalancePartitioner<Object>();
@@ -646,6 +659,7 @@ public class StreamGraph implements Pipeline {
                 shuffleMode = ShuffleMode.UNDEFINED;
             }
 
+            // 创建 StreamEdge，保留 StreamPartitioner 等属性
             StreamEdge edge =
                     new StreamEdge(
                             upstreamNode,

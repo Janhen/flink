@@ -22,6 +22,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.types.Row;
 
 /**
+ * 表示某个历史表上的时态表函数的类。 {@link TemporalTableFunction} 也是 {@link TableFunction} 的一个实例。
+ *
+ * <p>目前 {@link TemporalTableFunction} 仅在流媒体中受支持。
+ *
  * Class representing temporal table function over some history table. A {@link
  * TemporalTableFunction} is also an instance of {@link TableFunction}.
  *

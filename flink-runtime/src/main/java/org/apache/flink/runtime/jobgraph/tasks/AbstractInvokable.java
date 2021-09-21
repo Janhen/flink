@@ -38,6 +38,8 @@ import java.util.concurrent.Future;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这是TaskManager可以执行的每个任务的抽象基类。具体任务扩展了该类，例如流和批处理任务。
+ * 
  * This is the abstract base class for every task that can be executed by a TaskManager. Concrete
  * tasks extend this class, for example the streaming and batch tasks.
  *

@@ -61,6 +61,8 @@ public class TimeWindowUtil {
     }
 
     /**
+     * 根据时间戳米尔斯和给定的移位时区得到一个计时器时间。
+     *
      * Get a timer time according to the timestamp mills and the given shift timezone.
      *
      * @param utcTimestampMills the timestamp mills.
