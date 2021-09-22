@@ -37,6 +37,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * {@link StreamingFileSink}中不同活动桶的管理器。
+ *
+ * <p>该类负责所有与桶相关的操作，实际的{@link StreamingFileSink}只是将该类提供的功能插入到操作符的生命周期中。
+ *
  * The manager of the different active buckets in the {@link StreamingFileSink}.
  *
  * <p>This class is responsible for all bucket-related operations and the actual {@link

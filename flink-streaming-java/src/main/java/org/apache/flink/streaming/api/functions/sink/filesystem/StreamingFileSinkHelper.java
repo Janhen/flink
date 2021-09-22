@@ -32,6 +32,8 @@ import org.apache.flink.streaming.runtime.tasks.ProcessingTimeService;
 import javax.annotation.Nullable;
 
 /**
+ * 帮助{@link StreamingFileSink}。这个helper可以被{@link RichSinkFunction}或{@link StreamOperator}使用。
+ *
  * Helper for {@link StreamingFileSink}. This helper can be used by {@link RichSinkFunction} or
  * {@link StreamOperator}.
  */
@@ -49,6 +51,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
 
     // --------------------------- fields -----------------------------
 
+    // 桶间隔
     private final long bucketCheckInterval;
 
     private final ProcessingTimeService procTimeService;
@@ -57,6 +60,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
 
     private final ListState<byte[]> bucketStates;
 
+    // 最大分区计数
     private final ListState<Long> maxPartCountersState;
 
     public StreamingFileSinkHelper(
@@ -90,6 +94,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
 
     @Override
     public void onProcessingTime(long timestamp) throws Exception {
+        // 注册
         final long currentTime = procTimeService.getCurrentProcessingTime();
         buckets.onProcessingTime(currentTime);
         procTimeService.registerTimer(currentTime + bucketCheckInterval, this);

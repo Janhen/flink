@@ -115,12 +115,16 @@ public interface Sink<InputT, CommT, WriterStateT, GlobalCommT> extends Serializ
         void registerProcessingTimer(long time, ProcessingTimeCallback processingTimerCallback);
 
         /**
+         * 一个可以通过{@link #registerProcessingTimer(long, ProcessingTimeCallback)}注册的回调函数。
+         *
          * A callback that can be registered via {@link #registerProcessingTimer(long,
          * ProcessingTimeCallback)}.
          */
         interface ProcessingTimeCallback {
 
             /**
+             * 使用回调寄存器所对应的时间调用此方法。
+             *
              * This method is invoked with the time which the callback register for.
              *
              * @param time The time this callback was registered for.

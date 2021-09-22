@@ -42,6 +42,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 接收将其输入元素发送到bucket中的{@link FileSystem}文件。这与检查点机制集成在一起，以提供精确的一次语义。
+ *
  * Sink that emits its input elements to {@link FileSystem} files within buckets. This is integrated
  * with the checkpointing mechanism to provide exactly once semantics.
  *
@@ -95,6 +97,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
     // ------------------------ configuration fields --------------------------
 
+    // 桶xx间隔
     private final long bucketCheckInterval;
 
     private final BucketsBuilder<IN, ?, ? extends BucketsBuilder<IN, ?, ?>> bucketsBuilder;
@@ -104,6 +107,8 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     private transient StreamingFileSinkHelper<IN> helper;
 
     /**
+     * 创建一个新的{@code StreamingFileSink}，它使用给定的bucket属性将文件写入给定的基本目录。
+     *
      * Creates a new {@code StreamingFileSink} that writes files to the given base directory with
      * the give buckets properties.
      */
@@ -189,8 +194,10 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
         // 桶检查间隔
         private long bucketCheckInterval;
 
+        // 基本路径
         private final Path basePath;
 
+        // 编码器
         private Encoder<IN> encoder;
 
         // 桶指派
@@ -201,6 +208,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
         private BucketFactory<IN, BucketID> bucketFactory;
 
+        // 输出文件配置
         private OutputFileConfig outputFileConfig;
 
         protected RowFormatBuilder(
@@ -337,6 +345,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
         private BucketAssigner<IN, BucketID> bucketAssigner;
 
+        // 检查点回滚策略
         private CheckpointRollingPolicy<IN, BucketID> rollingPolicy;
 
         private BucketFactory<IN, BucketID> bucketFactory;
@@ -468,6 +477,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
     @Override
     public void initializeState(FunctionInitializationContext context) throws Exception {
+        // 初始化状态处理
         this.helper =
                 new StreamingFileSinkHelper<>(
                         bucketsBuilder.createBuckets(getRuntimeContext().getIndexOfThisSubtask()),

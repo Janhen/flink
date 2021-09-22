@@ -24,6 +24,7 @@ import org.apache.flink.core.fs.Path;
 import java.io.IOException;
 
 /** An interface for factories that create the different {@link InProgressFileWriter writers}. */
+// 用于创建不同的{@link InProgressFileWriter writer}的工厂的接口。
 @Internal
 public interface BucketWriter<IN, BucketID> {
 

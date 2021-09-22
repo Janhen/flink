@@ -21,6 +21,8 @@ package org.apache.flink.streaming.runtime.tasks;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 可以在{@link ProcessingTimeService}中注册的处理时间回调的接口。
+ *
  * Interface for processing-time callbacks that can be registered at a {@link
  * ProcessingTimeService}.
  */
@@ -29,6 +31,11 @@ import org.apache.flink.annotation.Internal;
 public interface ProcessingTimeCallback {
 
     /**
+     * 使用调度触发器的时间戳调用此方法。
+     *
+     * <p>如果触发由于某种原因被延迟(触发计时器被阻塞，JVM由于垃圾收集而停止)，则提供给这个函数的时间戳仍然是调度
+     *    触发器的原始时间戳。
+     *
      * This method is invoked with the timestamp for which the trigger was scheduled.
      *
      * <p>If the triggering is delayed for whatever reason (trigger timer was blocked, JVM stalled
