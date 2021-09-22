@@ -22,6 +22,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.connector.sink.DynamicTableSink;
 
 /**
+ * 允许覆盖{@link DynamicTableSink}中的现有数据。
+ *
+ * <p>默认情况下，如果没有实现该接口，则不能使用SQL {@code INSERT OVERWRITE}子句覆盖现有的表或分区。
+ *
  * Enables to overwrite existing data in a {@link DynamicTableSink}.
  *
  * <p>By default, if this interface is not implemented, existing tables or partitions cannot be

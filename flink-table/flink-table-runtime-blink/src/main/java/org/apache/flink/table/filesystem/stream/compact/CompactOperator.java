@@ -57,6 +57,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
+ * 接收压缩单元以进行压缩。压缩完成后发送分区提交信息。
+ *
  * Receives compaction units to do compaction. Send partition commit information after compaction
  * finished.
  *

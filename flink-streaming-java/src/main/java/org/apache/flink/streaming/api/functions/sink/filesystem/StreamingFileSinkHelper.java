@@ -40,6 +40,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
 
     // -------------------------- state descriptors ---------------------------
 
+    // bucket 桶信息保存
     private static final ListStateDescriptor<byte[]> BUCKET_STATE_DESC =
             new ListStateDescriptor<>("bucket-states", BytePrimitiveArraySerializer.INSTANCE);
 

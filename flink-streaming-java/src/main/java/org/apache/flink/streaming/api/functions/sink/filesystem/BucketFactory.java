@@ -41,6 +41,7 @@ public interface BucketFactory<IN, BucketID> extends Serializable {
             final OutputFileConfig outputFileConfig)
             throws IOException;
 
+    // 恢复桶
     Bucket<IN, BucketID> restoreBucket(
             final int subtaskIndex,
             final long initialPartCounter,

@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 一种以批量方式对数据进行编码的编码器，一次将许多记录编码在一起。
+ *
  * An encoder that encodes data in a bulk fashion, encoding many records together at a time.
  *
  * <p>Examples for bulk encoding are most compressed formats, including formats like Parquet and ORC
@@ -38,6 +40,8 @@ import java.io.Serializable;
 public interface BulkWriter<T> {
 
     /**
+     * 向编码器添加元素。编码器可以临时缓冲元素，也可以立即将其写入流。
+     *
      * Adds an element to the encoder. The encoder may temporarily buffer the element, or
      * immediately write it to the stream.
      *
@@ -51,6 +55,8 @@ public interface BulkWriter<T> {
     void addElement(T element) throws IOException;
 
     /**
+     * 将所有中间缓冲数据刷新到输出流。预计经常刷新可能会降低编码的效率。
+     *
      * Flushes all intermediate buffered data to the output stream. It is expected that flushing
      * often may reduce the efficiency of the encoding.
      *

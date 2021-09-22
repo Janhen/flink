@@ -38,6 +38,8 @@ class BucketState<BucketID> {
     private final Path bucketPath;
 
     /**
+     * 当前打开的部件文件的创建时间，或{@code Long。MAX_VALUE}如果没有打开的部分文件。
+     *
      * The creation time of the currently open part file, or {@code Long.MAX_VALUE} if there is no
      * open part file.
      */

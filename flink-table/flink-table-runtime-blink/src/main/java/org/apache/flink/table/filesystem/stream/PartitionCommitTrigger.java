@@ -28,6 +28,8 @@ import java.util.List;
 import static org.apache.flink.table.filesystem.FileSystemOptions.SINK_PARTITION_COMMIT_TRIGGER;
 
 /**
+ * 分区提交触发。看到{@link PartitionTimeCommitTrigger}。看到{@link ProcTimeCommitTrigger}
+ *
  * Partition commit trigger. See {@link PartitionTimeCommitTrigger}. See {@link
  * ProcTimeCommitTrigger}.
  */

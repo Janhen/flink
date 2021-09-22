@@ -24,6 +24,8 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import java.util.Map;
 
 /**
+ * 允许在{@link DynamicTableSink}中写入分区数据。
+ *
  * Enables to write partitioned data in a {@link DynamicTableSink}.
  *
  * <p>Partitions split the data stored in an external system into smaller portions that are

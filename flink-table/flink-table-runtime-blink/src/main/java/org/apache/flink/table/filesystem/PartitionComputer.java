@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 /**
+ * 从记录和项目的非分区列为输出写入器计算分区路径。
+ *
  * Compute partition path from record and project non-partition columns for output writer.
  *
  * <p>See {@link RowPartitionComputer}.

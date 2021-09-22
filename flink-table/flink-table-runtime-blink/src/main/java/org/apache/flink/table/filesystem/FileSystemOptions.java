@@ -34,6 +34,7 @@ public class FileSystemOptions {
     public static final ConfigOption<String> PATH =
             key("path").stringType().noDefaultValue().withDescription("The path of a directory");
 
+    // 默认的分区名称
     public static final ConfigOption<String> PARTITION_DEFAULT_NAME =
             key("partition.default-name")
                     .stringType()
@@ -42,12 +43,14 @@ public class FileSystemOptions {
                             "The default partition name in case the dynamic partition"
                                     + " column value is null/empty string.");
 
+    // 滚动前的最大部分文件大小
     public static final ConfigOption<MemorySize> SINK_ROLLING_POLICY_FILE_SIZE =
             key("sink.rolling-policy.file-size")
                     .memoryType()
                     .defaultValue(MemorySize.ofMebiBytes(128))
                     .withDescription("The maximum part file size before rolling.");
 
+    // 回滚恢复间隔
     public static final ConfigOption<Duration> SINK_ROLLING_POLICY_ROLLOVER_INTERVAL =
             key("sink.rolling-policy.rollover-interval")
                     .durationType()
@@ -65,6 +68,7 @@ public class FileSystemOptions {
                             "The interval for checking time based rolling policies. "
                                     + "This controls the frequency to check whether a part file should rollover based on 'sink.rolling-policy.rollover-interval'.");
 
+    // 在接收阶段启用动态分区字段洗牌数据的选项，这可以大大减少文件系统接收的文件数量，但可能导致数据倾斜
     public static final ConfigOption<Boolean> SINK_SHUFFLE_BY_PARTITION =
             key("sink.shuffle-by-partition.enable")
                     .booleanType()
@@ -129,6 +133,7 @@ public class FileSystemOptions {
                                             "This is a synonym for the deprecated 'streaming-source.consume-order' option.")
                                     .build());
 
+    // 从头开始消费
     public static final ConfigOption<String> STREAMING_SOURCE_CONSUME_START_OFFSET =
             key("streaming-source.consume-start-offset")
                     .stringType()
@@ -146,6 +151,8 @@ public class FileSystemOptions {
                                                     "For 'partition-name' it is the name of the partition, e.g. 'pt_year=2020/pt_mon=10/pt_day=01'."))
                                     .build());
 
+    // 分区的时间抽取类型
+    // 时间提取器从分区值中提取时间。这可以是'default'或自定义提取器类。对于'default'，可以配置时间戳模式
     public static final ConfigOption<String> PARTITION_TIME_EXTRACTOR_KIND =
             key("partition.time-extractor.kind")
                     .stringType()
@@ -155,6 +162,7 @@ public class FileSystemOptions {
                                     + "This can either be 'default' or a custom extractor class. "
                                     + "For 'default', you can configure a timestamp pattern.");
 
+    // 用于实现 PartitionTimeExtractor 接口的提取器类
     public static final ConfigOption<String> PARTITION_TIME_EXTRACTOR_CLASS =
             key("partition.time-extractor.class")
                     .stringType()
@@ -162,6 +170,7 @@ public class FileSystemOptions {
                     .withDescription(
                             "The extractor class for implement PartitionTimeExtractor interface.");
 
+    // 在 `partition.time-extractor.kind` 设置为 default 时，可指定时间戳的格式化
     public static final ConfigOption<String> PARTITION_TIME_EXTRACTOR_TIMESTAMP_PATTERN =
             key("partition.time-extractor.timestamp-pattern")
                     .stringType()
@@ -182,6 +191,7 @@ public class FileSystemOptions {
                                                     "If the timestamp is in fields dt and hour, you can use '$dt $hour:00:00'."))
                                     .build());
 
+    // 在查找连接中构建表的缓存TTL(例如10分钟)
     public static final ConfigOption<Duration> LOOKUP_JOIN_CACHE_TTL =
             key("lookup.join.cache.ttl")
                     .durationType()
@@ -189,6 +199,7 @@ public class FileSystemOptions {
                     .withDescription(
                             "The cache TTL (e.g. 10min) for the build table in lookup join.");
 
+    // 分区提交的触发器类型，支持的值是
     public static final ConfigOption<String> SINK_PARTITION_COMMIT_TRIGGER =
             key("sink.partition-commit.trigger")
                     .stringType()
@@ -207,6 +218,7 @@ public class FileSystemOptions {
                                                             + "the watermark passes the time extracted from partition values plus delay)"))
                                     .build());
 
+    // 该分区在延迟时间之前不会提交。" + " day分区为'1 d'， hour分区为'1 h'。"
     public static final ConfigOption<Duration> SINK_PARTITION_COMMIT_DELAY =
             key("sink.partition-commit.delay")
                     .durationType()
@@ -218,6 +230,7 @@ public class FileSystemOptions {
                                                     + "The value should be '1 d' for day partitions and '1 h' for hour partitions.")
                                     .build());
 
+    // 指定时区，默认为 UTC
     public static final ConfigOption<String> SINK_PARTITION_COMMIT_WATERMARK_TIME_ZONE =
             key("sink.partition-commit.watermark-time-zone")
                     .stringType()
@@ -231,6 +244,7 @@ public class FileSystemOptions {
                                     + " the the value should be the user configured local time zone. The option value is either a full name"
                                     + " such as 'America/Los_Angeles', or a custom timezone id such as 'GMT-08:00'.");
 
+    // 提交分区的策略是通知下游的应用程序该分区已经完成写入，该分区已经准备好被读取
     public static final ConfigOption<String> SINK_PARTITION_COMMIT_POLICY_KIND =
             key("sink.partition-commit.policy.kind")
                     .stringType()
@@ -254,6 +268,7 @@ public class FileSystemOptions {
                             "The partition commit policy class for implement"
                                     + " PartitionCommitPolicy interface. Only work in custom commit policy");
 
+    // 成功文件分区提交策略的文件名，默认为“_SUCCESS”。
     public static final ConfigOption<String> SINK_PARTITION_COMMIT_SUCCESS_FILE_NAME =
             key("sink.partition-commit.success-file.name")
                     .stringType()
@@ -262,6 +277,7 @@ public class FileSystemOptions {
                             "The file name for success-file partition commit policy,"
                                     + " default is '_SUCCESS'.");
 
+    // 是否在流接收器中启用自动压缩。数据将被写入临时文件。检查点完成后，对检查点生成的临时文件进行压缩。"压缩前临时文件是不可见的。
     public static final ConfigOption<Boolean> AUTO_COMPACTION =
             key("auto-compaction")
                     .booleanType()

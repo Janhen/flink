@@ -26,6 +26,10 @@ import org.apache.flink.core.fs.Path;
 public interface FileLifeCycleListener<BucketID> {
 
     /**
+     * 通知新文件已被打开。
+     *
+     * <p>注意，这并不意味着文件已经在文件系统中创建。它只是在逻辑上创建的，实际的文件将在提交后生成。
+     *
      * Notifies a new file has been opened.
      *
      * <p>Note that this does not mean that the file has been created in the file system. It is only

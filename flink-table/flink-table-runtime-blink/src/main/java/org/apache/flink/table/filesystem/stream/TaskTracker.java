@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
+ * 跟踪上游任务，确定是否已经接收到检查点的所有上游数据。
+ *
  * Track the upstream tasks to determine whether all the upstream data of a checkpoint has been
  * received.
  */

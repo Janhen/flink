@@ -49,6 +49,7 @@ import java.util.List;
 import static org.apache.flink.table.filesystem.FileSystemOptions.SINK_PARTITION_COMMIT_POLICY_KIND;
 
 /** Helper for creating streaming file sink. */
+// 帮助创建流文件接收器
 public class StreamingSink {
     private StreamingSink() {}
 
@@ -74,6 +75,8 @@ public class StreamingSink {
     }
 
     /**
+     * 通过输入流使用压缩操作符创建文件写入器。此外，它还可以向下游发送{@link PartitionCommitInfo}。
+     *
      * Create a file writer with compaction operators by input stream. In addition, it can emit
      * {@link PartitionCommitInfo} to down stream.
      */
@@ -115,6 +118,7 @@ public class StreamingSink {
                         (SupplierWithException<BucketWriter<T, String>, IOException> & Serializable)
                                 bucketsBuilder::createBucketWriter);
 
+        // 压缩操作
         CompactOperator<T> compacter =
                 new CompactOperator<>(fsSupplier, readFactory, writerFactory);
 

@@ -179,20 +179,24 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     }
 
     /** A builder for configuring the sink for row-wise encoding formats. */
+    // 用于为按行编码格式配置接收器的构建器
     @PublicEvolving
     public static class RowFormatBuilder<IN, BucketID, T extends RowFormatBuilder<IN, BucketID, T>>
             extends StreamingFileSink.BucketsBuilder<IN, BucketID, T> {
 
         private static final long serialVersionUID = 1L;
 
+        // 桶检查间隔
         private long bucketCheckInterval;
 
         private final Path basePath;
 
         private Encoder<IN> encoder;
 
+        // 桶指派
         private BucketAssigner<IN, BucketID> bucketAssigner;
 
+        // 回滚策略
         private RollingPolicy<IN, BucketID> rollingPolicy;
 
         private BucketFactory<IN, BucketID> bucketFactory;

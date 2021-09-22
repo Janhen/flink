@@ -22,6 +22,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 由上游发送的消息。
+ *
+ * <p>需要确保分区已经准备好提交。也就是说，分区中的文件变成了可读的，而不是临时的。
+ *
  * The message sent by upstream.
  *
  * <p>Need to ensure that the partitions are ready to commit. That is to say, the files in the

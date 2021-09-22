@@ -27,6 +27,8 @@ import java.util.Map;
 import static org.apache.flink.table.utils.PartitionPathUtils.generatePartitionPath;
 
 /**
+ * 动态分区写入器同时写入多个分区，可能会消耗更多内存。
+ *
  * Dynamic partition writer to writing multiple partitions at the same time, it maybe consumes more
  * memory.
  */

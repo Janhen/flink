@@ -1145,6 +1145,8 @@ public class DataStream<T> {
     }
 
     /**
+     * 方法，用于传递用户定义的操作符以及将转换DataStream的类型信息。
+     *
      * Method for passing user defined operators along with the type information that will transform
      * the DataStream.
      *

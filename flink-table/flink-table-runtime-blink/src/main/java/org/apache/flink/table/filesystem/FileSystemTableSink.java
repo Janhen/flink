@@ -162,13 +162,17 @@ public class FileSystemTableSink extends AbstractFileSystemTable
                 partitionKeys.toArray(new String[0]));
     }
 
+    // 批量写入 sink，当前流批一体?
     private DataStreamSink<RowData> createBatchSink(
             DataStream<RowData> inputStream, Context sinkContext, final int parallelism) {
         FileSystemOutputFormat.Builder<RowData> builder = new FileSystemOutputFormat.Builder<>();
         builder.setPartitionComputer(partitionComputer());
         builder.setDynamicGrouped(dynamicGrouping);
+        // 指定分区键的列
         builder.setPartitionColumns(partitionKeys.toArray(new String[0]));
+        // 格式化工厂
         builder.setFormatFactory(createOutputFormatFactory(sinkContext));
+        // 元数据工厂
         builder.setMetaStoreFactory(new EmptyMetaStoreFactory(path));
         builder.setOverwrite(overwrite);
         builder.setStaticPartitions(staticPartitions);
@@ -183,6 +187,7 @@ public class FileSystemTableSink extends AbstractFileSystemTable
                 .name("Filesystem");
     }
 
+    // 流式处理 sink
     private DataStreamSink<?> createStreamingSink(
             DataStream<RowData> dataStream, Context sinkContext, final int parallelism) {
         FileSystemFactory fsFactory = FileSystem::get;
@@ -272,6 +277,7 @@ public class FileSystemTableSink extends AbstractFileSystemTable
                 tableOptions);
     }
 
+    // 压缩文件读取
     private Optional<CompactReader.Factory<RowData>> createCompactReaderFactory(Context context) {
         DataType producedDataType = schema.toRowDataType();
         if (bulkReaderFormat != null) {
@@ -397,6 +403,7 @@ public class FileSystemTableSink extends AbstractFileSystemTable
             return;
         }
         if (!requestChangelogMode.containsOnly(RowKind.INSERT)) {
+            // 只允许为 INSERT only ...
             throw new ValidationException(
                     String.format(
                             "Currently, filesystem sink doesn't support setting parallelism (%d) by '%s' "
