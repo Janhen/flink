@@ -89,11 +89,14 @@ public class ElasticsearchSink<T> extends ElasticsearchSinkBase<T, RestHighLevel
         private final List<HttpHost> httpHosts;
         private final ElasticsearchSinkFunction<T> elasticsearchSinkFunction;
 
+        // J: 将 Map 参数限制住指定的几个配置
         private Map<String, String> bulkRequestsConfig = new HashMap<>();
         private ActionRequestFailureHandler failureHandler = new NoOpFailureHandler();
         private RestClientFactory restClientFactory = restClientBuilder -> {};
 
         /**
+         * 创建一个新的{@code ElasticsearchSink}，使用{@link RestHighLevelClient}连接到集群。
+         *
          * Creates a new {@code ElasticsearchSink} that connects to the cluster using a {@link
          * RestHighLevelClient}.
          *

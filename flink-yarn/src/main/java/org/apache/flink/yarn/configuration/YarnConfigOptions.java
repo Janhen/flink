@@ -253,6 +253,7 @@ public class YarnConfigOptions {
                     .withDescription(
                             "A semicolon-separated list of files and/or directories to be shipped to the YARN cluster.");
 
+    // 要发送到YARN集群的归档文件列表(以分号分隔)。这些归档文件将在本地化时被解包，它们可以是以下任何类型:" + "\".tar.gz\"， \".tar\"， \"。tgz \”,\“。dst \”,\“. jar \”,\“zip \”。
     public static final ConfigOption<List<String>> SHIP_ARCHIVES =
             key("yarn.ship-archives")
                     .stringType()

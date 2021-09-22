@@ -51,6 +51,7 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Testing job for localizing resources of LocalResourceType.ARCHIVE in per job cluster mode. */
+// 本地化LocalResourceType资源的测试工作。在每个作业集群模式下进行归档。
 public class YarnTestArchiveJob {
     private static final List<String> LIST = ImmutableList.of("test1", "test2");
 
@@ -95,6 +96,7 @@ public class YarnTestArchiveJob {
     public static JobGraph getArchiveJobGraph(File testDirectory, Configuration config)
             throws IOException {
 
+        // 归档
         final String archive = testDirectory.getAbsolutePath().concat(".tar.gz");
         archiveFilesInDirectory(testDirectory, archive);
         config.set(YarnConfigOptions.SHIP_ARCHIVES, Collections.singletonList(archive));
@@ -115,6 +117,7 @@ public class YarnTestArchiveJob {
         return env.getStreamGraph().getJobGraph();
     }
 
+    // RichSource + ResultTypeQueryable
     private static class SourceFunctionWithArchive<T> extends RichSourceFunction<T>
             implements ResultTypeQueryable<T> {
 

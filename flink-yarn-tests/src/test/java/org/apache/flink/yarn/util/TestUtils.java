@@ -58,6 +58,7 @@ public class TestUtils {
     }
 
     /** Filename filter which finds the test jar for the given name. */
+    // 文件名过滤器，它为给定的名称找到测试jar。
     public static class TestJarFinder implements FilenameFilter {
 
         private final String jarName;

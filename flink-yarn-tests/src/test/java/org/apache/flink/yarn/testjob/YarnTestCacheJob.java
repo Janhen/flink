@@ -39,6 +39,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** Testing job for distributed cache in per job cluster mode. */
+// 在每个作业集群模式下测试分布式缓存的作业
 public class YarnTestCacheJob {
     private static final List<String> LIST = ImmutableList.of("test1", "test2");
     private static final String TEST_DIRECTORY_NAME = "test_directory";
@@ -51,6 +52,7 @@ public class YarnTestCacheJob {
                         .getContextClassLoader()
                         .getResource("cache.properties")
                         .getFile();
+        // J: 注册缓存
         env.registerCachedFile(testDirectory.getAbsolutePath(), TEST_DIRECTORY_NAME);
         env.registerCachedFile(cacheFilePath, "cacheFile", false);
 
@@ -71,8 +73,10 @@ public class YarnTestCacheJob {
         @Override
         public void open(Configuration config) throws IOException {
             // access cached file via RuntimeContext and DistributedCache
+            // 通过RuntimeContext和DistributedCache访问缓存文件
             final File cacheFile = getRuntimeContext().getDistributedCache().getFile("cacheFile");
             final FileInputStream inputStream = new FileInputStream(cacheFile);
+            // 读取分布式 cache 中的 properties 文件
             properties = new Properties();
             properties.load(inputStream);
             checkArgument(
