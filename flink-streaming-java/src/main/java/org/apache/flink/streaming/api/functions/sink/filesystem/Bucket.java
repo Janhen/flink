@@ -40,6 +40,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 桶是{@link StreamingFileSink}输出的目录组织。
+ *
+ * <p>对于{@code StreamingFileSink}中的每个传入元素，查询用户指定的{@link BucketAssigner}，以查看该元素应该
+ *   写入到哪个桶中。
+ *
  * A bucket is the directory organization of the output of the {@link StreamingFileSink}.
  *
  * <p>For each incoming element in the {@code StreamingFileSink}, the user-specified {@link
@@ -256,6 +261,7 @@ public class Bucket<IN, BucketID> {
                         + outputFileConfig.getPartSuffix());
     }
 
+    // 关闭分区文件
     private InProgressFileWriter.PendingFileRecoverable closePartFile() throws IOException {
         InProgressFileWriter.PendingFileRecoverable pendingFileRecoverable = null;
         if (inProgressPart != null) {
@@ -363,9 +369,12 @@ public class Bucket<IN, BucketID> {
     }
 
     void onProcessingTime(long timestamp) throws IOException {
+        // 回应该在处理时间进行回滚的时候，处理
         if (inProgressPart != null
                 && rollingPolicy.shouldRollOnProcessingTime(inProgressPart, timestamp)) {
             if (LOG.isDebugEnabled()) {
+                // 由于处理时间滚动策略(创建@{}，最后更新@{}和当前时间为{}的正在进行中的文件)，子任务{}关闭
+                // 桶id={}的正在进行的部分文件
                 LOG.debug(
                         "Subtask {} closing in-progress part file for bucket id={} due to processing time rolling policy "
                                 + "(in-progress file created @ {}, last updated @ {} and current time is {}).",

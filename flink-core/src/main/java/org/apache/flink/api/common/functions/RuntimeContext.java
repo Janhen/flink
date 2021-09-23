@@ -132,6 +132,8 @@ public interface RuntimeContext {
     ClassLoader getUserCodeClassLoader();
 
     /**
+     * 为用户代码类装入器版本注册一个自定义钩子。
+     *
      * Registers a custom hook for the user code class loader release.
      *
      * <p>The release hook is executed just before the user code class loader is being released.
@@ -148,6 +150,9 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 添加这个蓄电池。如果同一个Task中已经存在累加器，则抛出异常。注意，在Flink作业中，Accumulator名称必须有一个
+     * 唯一的名称。否则，当作业完成后，将来自不同任务的不兼容的累加器组合在JobManager上时，将得到一个错误。
+     *
      * Add this accumulator. Throws an exception if the accumulator already exists in the same Task.
      * Note that the Accumulator name must have an unique name across the Flink job. Otherwise you
      * will get an error when incompatible accumulators from different Tasks are combined at the
@@ -181,6 +186,8 @@ public interface RuntimeContext {
     Histogram getHistogram(String name);
 
     /**
+     * 通过resourceName获取特定的外部资源信息。
+     *
      * Get the specific external resource information by the resourceName.
      *
      * @param resourceName of the required external resource
@@ -230,6 +237,8 @@ public interface RuntimeContext {
             String name, BroadcastVariableInitializer<T, C> initializer);
 
     /**
+     * 返回{@link DistributedCache}以获取文件的本地临时文件副本，否则无法在本地访问。
+     *
      * Returns the {@link DistributedCache} to get the local temporary file copies of files
      * otherwise not locally accessible.
      *

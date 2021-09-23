@@ -27,12 +27,16 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 @PublicEvolving
 public interface Input<IN> {
     /**
+     * 处理到达{@link MultipleInputStreamOperator}输入的一个元素。该方法保证不会与该操作符的其他方法同时调用。
+     *
      * Processes one element that arrived on this input of the {@link MultipleInputStreamOperator}.
      * This method is guaranteed to not be called concurrently with other methods of the operator.
      */
     void processElement(StreamRecord<IN> element) throws Exception;
 
     /**
+     * 处理这个双输入操作符的第一个输入时到达的{@link Watermark}。该方法保证不会与该操作符的其他方法同时调用。
+     *
      * Processes a {@link Watermark} that arrived on the first input of this two-input operator.
      * This method is guaranteed to not be called concurrently with other methods of the operator.
      *
@@ -41,6 +45,8 @@ public interface Input<IN> {
     void processWatermark(Watermark mark) throws Exception;
 
     /**
+     * 处理这个双输入操作符的第一个输入时到达的{@link LatencyMarker}。该方法保证不会与该操作符的其他方法同时调用。
+     *
      * Processes a {@link LatencyMarker} that arrived on the first input of this two-input operator.
      * This method is guaranteed to not be called concurrently with other methods of the operator.
      *

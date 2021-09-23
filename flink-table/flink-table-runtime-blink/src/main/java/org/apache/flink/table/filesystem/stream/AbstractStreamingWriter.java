@@ -34,6 +34,8 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 文件系统接收器的操作符。它是{@link StreamingFileSink}的操作符版本。它可以向下游发送文件和桶信息
+ *
  * Operator for file system sink. It is a operator version of {@link StreamingFileSink}. It can send
  * file and bucket information to downstream.
  */
@@ -44,6 +46,7 @@ public abstract class AbstractStreamingWriter<IN, OUT> extends AbstractStreamOpe
 
     // ------------------------ configuration fields --------------------------
 
+    // 桶检查间隔
     private final long bucketCheckInterval;
 
     private final StreamingFileSink.BucketsBuilder<
@@ -54,6 +57,7 @@ public abstract class AbstractStreamingWriter<IN, OUT> extends AbstractStreamOpe
 
     private transient Buckets<IN, String> buckets;
 
+    // 委派 helper 处理 processElement 元素
     private transient StreamingFileSinkHelper<IN> helper;
 
     private transient long currentWatermark;
@@ -137,6 +141,7 @@ public abstract class AbstractStreamingWriter<IN, OUT> extends AbstractStreamOpe
 
     @Override
     public void processElement(StreamRecord<IN> element) throws Exception {
+        // 实际元素过来的处理逻辑
         helper.onElement(
                 element.getValue(),
                 getProcessingTimeService().getCurrentProcessingTime(),
@@ -162,6 +167,7 @@ public abstract class AbstractStreamingWriter<IN, OUT> extends AbstractStreamOpe
     public void dispose() throws Exception {
         super.dispose();
         if (helper != null) {
+            // helper 关闭
             helper.close();
         }
     }

@@ -58,12 +58,15 @@ public class DefaultBucketFactoryImpl<IN, BucketID> implements BucketFactory<IN,
             final int subtaskIndex,
             final long initialPartCounter,
             final BucketWriter<IN, BucketID> bucketWriter,
+            // 桶的回滚策略
             final RollingPolicy<IN, BucketID> rollingPolicy,
             final BucketState<BucketID> bucketState,
+            // 文件监听
             @Nullable final FileLifeCycleListener<BucketID> fileListener,
             final OutputFileConfig outputFileConfig)
             throws IOException {
 
+        // 桶信息恢复
         return Bucket.restore(
                 subtaskIndex,
                 initialPartCounter,

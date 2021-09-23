@@ -142,6 +142,8 @@ public class HBaseWriteOptions implements Serializable {
         }
 
         /**
+         * 可选的。定义HBase接收操作符的并行性。默认情况下，并行度由使用与上游链接操作符相同并行度的框架决定。
+         *
          * Optional. Defines the parallelism of the HBase sink operator. By default, the parallelism
          * is determined by the framework using the same parallelism of the upstream chained
          * operator.

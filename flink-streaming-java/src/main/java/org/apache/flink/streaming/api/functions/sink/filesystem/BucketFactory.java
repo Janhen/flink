@@ -27,9 +27,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /** A factory able to create {@link Bucket buckets} for the {@link StreamingFileSink}. */
+// 一个能够为{@link StreamingFileSink}创建{@link Bucket buckets}的工厂。
 @Internal
 public interface BucketFactory<IN, BucketID> extends Serializable {
 
+    // 获取新的桶
     Bucket<IN, BucketID> getNewBucket(
             final int subtaskIndex,
             final BucketID bucketId,

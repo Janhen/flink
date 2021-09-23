@@ -77,6 +77,8 @@ public interface OperatorStateStore {
     <S> ListState<S> getListState(ListStateDescriptor<S> stateDescriptor) throws Exception;
 
     /**
+     * 创建(或恢复)列表状态。每个州都用一个唯一的名字注册。提供的序列化器用于在检查点(snapshotrestore)情况下反序列化状态。
+     *
      * Creates (or restores) a list state. Each state is registered under a unique name. The
      * provided serializer is used to de/serialize the state in case of checkpointing
      * (snapshot/restore).
@@ -100,6 +102,8 @@ public interface OperatorStateStore {
     <S> ListState<S> getUnionListState(ListStateDescriptor<S> stateDescriptor) throws Exception;
 
     /**
+     * 返回包含当前注册的所有状态的名称的集合。
+     *
      * Returns a set with the names of all currently registered states.
      *
      * @return set of names for all registered states.
@@ -107,6 +111,8 @@ public interface OperatorStateStore {
     Set<String> getRegisteredStateNames();
 
     /**
+     * 返回包含当前注册的所有广播状态的名称的集合。
+     *
      * Returns a set with the names of all currently registered broadcast states.
      *
      * @return set of names for all registered broadcast states.

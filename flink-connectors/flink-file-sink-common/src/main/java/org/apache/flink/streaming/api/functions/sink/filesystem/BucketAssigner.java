@@ -27,6 +27,8 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * BucketAssigner与文件接收器一起使用，以确定每个传入元素应该放入的桶。
+ *
  * A BucketAssigner is used with a file sink to determine the bucket each incoming element should be
  * put into.
  *
@@ -46,6 +48,8 @@ import java.io.Serializable;
 public interface BucketAssigner<IN, BucketID> extends Serializable {
 
     /**
+     * 返回所提供元素应放入其中的桶的标识符。
+     *
      * Returns the identifier of the bucket the provided element should be put into.
      *
      * @param element The current element being processed.

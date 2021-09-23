@@ -135,6 +135,14 @@ public class Buckets<IN, BucketID> {
     }
 
     /**
+     * 从失败中恢复后初始化状态。
+     *
+     * <p>在这个过程:
+     *   <li>将部件计数器的初始值设置为之前跨所有任务和桶使用的最大值。这保证了我们不会覆盖有效的数据，
+     *   <li>为以前的检查点(在我们恢复的最后一个成功检查点之前)提交任何挂起的文件，
+     *   <li>继续写入每个桶的前一个正在进行中的文件，并且
+     *   <li>如果收到相同桶的多个状态，合并它们。
+     *
      * Initializes the state after recovery from a failure.
      *
      * <p>During this process:
@@ -157,6 +165,7 @@ public class Buckets<IN, BucketID> {
             final ListState<byte[]> bucketStates, final ListState<Long> partCounterState)
             throws Exception {
 
+        // 初始化分区计数器
         initializePartCounter(partCounterState);
 
         LOG.info(
@@ -164,10 +173,12 @@ public class Buckets<IN, BucketID> {
                 subtaskIndex,
                 maxPartCounter);
 
+        // 初始化激活的 bucket
         initializeActiveBuckets(bucketStates);
     }
 
     private void initializePartCounter(final ListState<Long> partCounterState) throws Exception {
+        // 找出 part counter 中最大的分区计数
         long maxCounter = 0L;
         for (long partCounter : partCounterState.get()) {
             maxCounter = Math.max(partCounter, maxCounter);
@@ -184,6 +195,7 @@ public class Buckets<IN, BucketID> {
         }
     }
 
+    // 处理恢复的桶状态
     private void handleRestoredBucketState(final BucketState<BucketID> recoveredState)
             throws Exception {
         final BucketID bucketId = recoveredState.getBucketId();
@@ -208,12 +220,14 @@ public class Buckets<IN, BucketID> {
     private void updateActiveBucketId(
             final BucketID bucketId, final Bucket<IN, BucketID> restoredBucket) throws IOException {
         if (!restoredBucket.isActive()) {
+            // 未激活处理
             notifyBucketInactive(restoredBucket);
             return;
         }
 
         final Bucket<IN, BucketID> bucket = activeBuckets.get(bucketId);
         if (bucket != null) {
+            // 桶信息合并
             bucket.merge(restoredBucket);
         } else {
             activeBuckets.put(bucketId, restoredBucket);
@@ -338,6 +352,7 @@ public class Buckets<IN, BucketID> {
     }
 
     public void onProcessingTime(long timestamp) throws Exception {
+        // 将激活的桶全部执行 onProcessingTime
         for (Bucket<IN, BucketID> bucket : activeBuckets.values()) {
             bucket.onProcessingTime(timestamp);
         }
@@ -345,10 +360,12 @@ public class Buckets<IN, BucketID> {
 
     public void close() {
         if (activeBuckets != null) {
+            // 所有激活的桶进行处理部分文件
             activeBuckets.values().forEach(Bucket::disposePartFile);
         }
     }
 
+    // 组装桶路径
     private Path assembleBucketPath(BucketID bucketId) {
         final String child = bucketId.toString();
         if ("".equals(child)) {

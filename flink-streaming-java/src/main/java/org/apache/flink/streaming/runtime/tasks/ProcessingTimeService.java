@@ -34,6 +34,8 @@ public interface ProcessingTimeService {
     long getCurrentProcessingTime();
 
     /**
+     * 注册一个要在(处理)时间为{@code timestamp}时执行的任务。
+     *
      * Registers a task to be executed when (processing) time is {@code timestamp}.
      *
      * @param timestamp Time when the task is to be executed (in processing time)

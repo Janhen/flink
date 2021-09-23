@@ -73,6 +73,7 @@ public final class FactoryUtil {
                     .withDescription(
                             "Version of the overall property design. This option is meant for future backwards compatibility.");
 
+    // 连接类型
     public static final ConfigOption<String> CONNECTOR =
             ConfigOptions.key("connector")
                     .stringType()
@@ -81,6 +82,7 @@ public final class FactoryUtil {
                             "Uniquely identifies the connector of a dynamic table that is used for accessing data in "
                                     + "an external system. Its value is used during table source and table sink discovery.");
 
+    // 数据格式化类型
     public static final ConfigOption<String> FORMAT =
             ConfigOptions.key("format")
                     .stringType()
@@ -89,6 +91,7 @@ public final class FactoryUtil {
                             "Defines the format identifier for encoding data. "
                                     + "The identifier is used to discover a suitable format factory.");
 
+    // 写入的并行度，默认无值
     public static final ConfigOption<Integer> SINK_PARALLELISM =
             ConfigOptions.key("sink.parallelism")
                     .intType()
@@ -284,6 +287,8 @@ public final class FactoryUtil {
     }
 
     /**
+     * 使用给定的工厂基类和标识符发现工厂。
+     *
      * Discovers a factory using the given factory base class and identifier.
      *
      * <p>This method is meant for cases where {@link #createTableFactoryHelper(DynamicTableFactory,
@@ -346,6 +351,10 @@ public final class FactoryUtil {
     }
 
     /**
+     * 验证工厂的必需和可选的{@link ConfigOption}。
+     *
+     * <p>注意:它不检查剩余选项。
+     *
      * Validates the required and optional {@link ConfigOption}s of a factory.
      *
      * <p>Note: It does not check for left-over options.
@@ -455,6 +464,7 @@ public final class FactoryUtil {
         return discoverFactory(context.getClassLoader(), CatalogFactory.class, catalogType);
     }
 
+    // 丰富未匹配连接器错误信息
     private static ValidationException enrichNoMatchingConnectorError(
             Class<?> factoryClass, DefaultDynamicTableContext context, String connectorOption) {
         final DynamicTableFactory factory;
@@ -497,6 +507,7 @@ public final class FactoryUtil {
         }
     }
 
+    // SPI 方式的? 找对应文件去发现
     private static List<Factory> discoverFactories(ClassLoader classLoader) {
         try {
             final List<Factory> result = new LinkedList<>();

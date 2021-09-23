@@ -29,6 +29,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** This class holds configuration constants used by filesystem(Including hive) connector. */
+// 这个类保存文件系统(包括 hive)连接器使用的配置常量。
 public class FileSystemOptions {
 
     public static final ConfigOption<String> PATH =
@@ -60,6 +61,8 @@ public class FileSystemOptions {
                                     + " (by default long enough to avoid too many small files). The frequency at which"
                                     + " this is checked is controlled by the 'sink.rolling-policy.check-interval' option.");
 
+    // 基于时间的滚动策略检查间隔。这控制了根据'sink.roll-policy.rollover-interval'检查零件文件是否
+    // 应该滚动的频率");
     public static final ConfigOption<Duration> SINK_ROLLING_POLICY_CHECK_INTERVAL =
             key("sink.rolling-policy.check-interval")
                     .durationType()
@@ -78,6 +81,7 @@ public class FileSystemOptions {
                                     + " phase, this can greatly reduce the number of file for filesystem sink but may"
                                     + " lead data skew.");
 
+    // 注意:请确保每个分区文件都应该以原子的方式写入，否则读取器可能会得到不完整的数据。
     public static final ConfigOption<Boolean> STREAMING_SOURCE_ENABLE =
             key("streaming-source.enable")
                     .booleanType()
@@ -91,6 +95,9 @@ public class FileSystemOptions {
                                                     + " atomically, otherwise the reader may get incomplete data.")
                                     .build());
 
+    // 选项设置分区为读取，支持的值是
+    //   All(读取所有分区)
+    //   Latest(按照“streaming-source.partition.order”的顺序读取Latest分区。，这只在Hive源表作为时态表时有效)"
     public static final ConfigOption<String> STREAMING_SOURCE_PARTITION_INCLUDE =
             key("streaming-source.partition.include")
                     .stringType()
@@ -105,12 +112,18 @@ public class FileSystemOptions {
                                                     "latest (read latest partition in order of 'streaming-source.partition.order', this only works when a streaming Hive source table is used as a temporal table)"))
                                     .build());
 
+    // 连续监控分区文件的时间间隔
     public static final ConfigOption<Duration> STREAMING_SOURCE_MONITOR_INTERVAL =
             key("streaming-source.monitor-interval")
                     .durationType()
                     .noDefaultValue()
                     .withDescription("Time interval for consecutively monitoring partition/file.");
 
+    // 流源的分区顺序，支持的值为
+    //   create-time: 比较 partition file 的创建时间，不是 Hive meta store 中的分区创建时间，而是文件系统中 folder file 的修改时间;
+    //                例如，在文件夹中添加新文件可能会影响数据的使用方式)
+    //   partition-time: 比较从分区名称提取的时间
+    //   partition-name:按字典顺序比较分区名称
     public static final ConfigOption<String> STREAMING_SOURCE_PARTITION_ORDER =
             key("streaming-source.partition-order")
                     .stringType()
@@ -260,6 +273,7 @@ public class FileSystemOptions {
                                     + " custom: use policy class to create a commit policy."
                                     + " Support to configure multiple policies: 'metastore,success-file'.");
 
+    // 用于实现PartitionCommitPolicy接口的分区提交策略类。只能在自定义提交策略中工作
     public static final ConfigOption<String> SINK_PARTITION_COMMIT_POLICY_CLASS =
             key("sink.partition-commit.policy.class")
                     .stringType()

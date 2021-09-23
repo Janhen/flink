@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 /** Interface of a state handle for operator state. */
+// 操作符状态的状态句柄的接口
 public interface OperatorStateHandle extends StreamStateHandle {
 
     /** Returns a map of meta data for all contained states by their name. */
@@ -40,13 +41,18 @@ public interface OperatorStateHandle extends StreamStateHandle {
     StreamStateHandle getDelegateStateHandle();
 
     /**
+     * 确定在恢复期间如何将{@link OperatorStreamStateHandle}分配给任务的模式。
+     *
      * The modes that determine how an {@link OperatorStreamStateHandle} is assigned to tasks during
      * restore.
      */
     enum Mode {
+        // 状态句柄中的操作符状态分区被分割并分配给每个任务。
         SPLIT_DISTRIBUTE, // The operator state partitions in the state handle are split and
         // distributed to one task each.
+        // 操作符状态分区在恢复并发送到所有任务时被联合。
         UNION, // The operator state partitions are UNION-ed upon restoring and sent to all tasks.
+        // 操作符状态是相同的，因为状态是从广播产生的
         BROADCAST // The operator states are identical, as the state is produced from a broadcast
         // stream.
     }
