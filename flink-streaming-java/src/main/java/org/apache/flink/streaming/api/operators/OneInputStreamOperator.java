@@ -22,6 +22,9 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 具有一个输入的流操作符的接口。使用{@link org.apache.flink.streaming.api.operators。如果希望实现
+ * 自定义操作符，则可以使用AbstractStreamOperator}作为基类。
+ *
  * Interface for stream operators with one input. Use {@link
  * org.apache.flink.streaming.api.operators.AbstractStreamOperator} as a base class if you want to
  * implement a custom operator.

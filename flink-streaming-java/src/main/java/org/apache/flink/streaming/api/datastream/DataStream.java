@@ -1167,6 +1167,10 @@ public class DataStream<T> {
     }
 
     /**
+     * 方法，用于传递由给定工厂创建的用户定义的操作符以及将转换DataStream的类型信息。
+     *
+     * <p>该方法使用相当新的操作符工厂，并且应该只在需要定制工厂时使用。
+     *
      * Method for passing user defined operators created by the given factory along with the type
      * information that will transform the DataStream.
      *

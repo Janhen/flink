@@ -82,8 +82,11 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
     private transient AsyncTable<ScanResultConsumer> table;
     private transient HBaseSerde serde;
 
+    // 本地缓存最大大小
     private final long cacheMaxSize;
+    // 本地缓存最大时间
     private final long cacheExpireMs;
+    //
     private final int maxRetryTimes;
     // J: use guava cache
     private transient Cache<Object, RowData> cache;
@@ -109,18 +112,21 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
     @Override
     public void open(FunctionContext context) {
         LOG.info("start open ...");
+        // 初始化异步线程池查找线程
         final ExecutorService threadPool =
                 Executors.newFixedThreadPool(
                         THREAD_POOL_SIZE,
                         new ExecutorThreadFactory(
                                 "hbase-aysnc-lookup-worker", Threads.LOGGING_EXCEPTION_HANDLER));
         Configuration config = prepareRuntimeConfiguration();
+        // 根据配置获得异步连接
         CompletableFuture<AsyncConnection> asyncConnectionFuture =
                 ConnectionFactory.createAsyncConnection(config);
         try {
             asyncConnection = asyncConnectionFuture.get();
             table = asyncConnection.getTable(TableName.valueOf(hTableName), threadPool);
 
+            // lookup cache 使用 guava 缓存处理
             this.cache =
                     cacheMaxSize <= 0 || cacheExpireMs <= 0
                             ? null
@@ -130,6 +136,7 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
                                     .maximumSize(cacheMaxSize)
                                     .build();
             if (cache != null && context != null) {
+                // 汇报 lookup 缓存命中比率情况
                 context.getMetricGroup()
                         .gauge("lookupCacheHitRate", (Gauge<Double>) () -> cache.stats().hitRate());
             }
@@ -137,11 +144,14 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
             LOG.error("Exception while creating connection to HBase.", e);
             throw new RuntimeException("Cannot create connection to HBase.", e);
         }
+        // 初始化序列化和反序列化
         this.serde = new HBaseSerde(hbaseTableSchema, nullStringLiteral);
         LOG.info("end open.");
     }
 
     /**
+     * 查找函数的调用入口点。
+     *
      * The invoke entry point of lookup function.
      *
      * @param future The result or exception is returned.
@@ -165,6 +175,8 @@ public class HBaseRowDataAsyncLookupFunction extends AsyncTableFunction<RowData>
     }
 
     /**
+     * 执行异步获取结果。
+     *
      * Execute async fetch result .
      *
      * @param resultFuture The result or exception is returned.
