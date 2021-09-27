@@ -30,6 +30,8 @@ import org.apache.flink.table.types.extraction.TypeInferenceExtractor;
 import org.apache.flink.table.types.inference.TypeInference;
 
 /**
+ * 用户定义的标量函数的基类。用户定义的标量函数将零、一个或多个标量值映射到一个新的标量值。
+ *
  * Base class for a user-defined scalar function. A user-defined scalar function maps zero, one, or
  * multiple scalar values to a new scalar value.
  *

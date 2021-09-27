@@ -41,6 +41,10 @@ import java.io.Serializable;
 public interface RuntimeConverter extends Serializable {
 
     /**
+     * 在运行时初始化转换器。
+     *
+     * <p>应该在运行时类的{@code open()}方法中调用。
+     *
      * Initializes the converter during runtime.
      *
      * <p>This should be called in the {@code open()} method of a runtime class.

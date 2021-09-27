@@ -27,6 +27,7 @@ import org.apache.flink.table.expressions.ResolvedExpression;
 import java.util.List;
 
 /** A {@link Format} for a {@link DynamicTableSource} for reading rows by {@link BulkFormat}. */
+// {@link DynamicTableSource}的{@link Format}用于通过{@link BulkFormat}读取行。
 @Internal
 public interface BulkDecodingFormat<T> extends DecodingFormat<BulkFormat<T, FileSourceSplit>> {
 

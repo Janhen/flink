@@ -29,6 +29,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 使用旧类型系统堆栈的用户定义表聚合函数的“标记”函数定义。
+ *
+ * <p>一旦我们引入了新的类型推断，这个类就可以被删除
+ *
  * A "marker" function definition of an user-defined table aggregate function that uses the old type
  * system stack.
  *

@@ -31,6 +31,8 @@ import java.util.Objects;
 public final class TableStats {
 
     /**
+     * 表统计信息的未知定义:Unknown {@link #rowCount}为-1。Unknown {@link #colStats}在map中不存在。
+     *
      * Unknown definition for table stats: Unknown {@link #rowCount} is -1. Unknown {@link
      * #colStats} is not exist in map.
      */
@@ -40,6 +42,7 @@ public final class TableStats {
     private final long rowCount;
 
     /** colStats statistics of table columns. */
+    // colStats表列的统计信息。
     private final Map<String, ColumnStats> colStats;
 
     public TableStats(long rowCount) {

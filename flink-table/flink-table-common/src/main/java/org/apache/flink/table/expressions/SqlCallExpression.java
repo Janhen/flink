@@ -25,6 +25,13 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 对SQL表达式的调用。
+ *
+ * <p>给定的字符串在规划过程中被解析并转换为{@link Expression}。在运行时只计算翻译后的表达式
+ *
+ * <p>注意:实际上，这个类属于{@code flink-table-api-java}模块，然而，由于这个表达式在定义可持久化的计算列和水印
+ *   策略时对目录至关重要，我们将它保留在{@code flink-table-common}中，以保持目录的依赖性较低。
+ *
  * A call to a SQL expression.
  *
  * <p>The given string is parsed and translated into an {@link Expression} during planning. Only the

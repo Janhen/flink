@@ -21,6 +21,7 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Exception for an operation on a nonexistent table. */
+// 在不存在的表上执行操作时出现异常。
 @PublicEvolving
 public class TableNotExistException extends RuntimeException {
 

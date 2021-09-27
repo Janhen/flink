@@ -30,15 +30,19 @@ import java.util.function.BinaryOperator;
 public final class ColumnStats {
 
     /** number of distinct values. */
+    // 不同值的数目。
     private final Long ndv;
 
     /** number of nulls. */
+    // 空值得数量
     private final Long nullCount;
 
     /** average length of column values. */
+    // 列值的平均长度。
     private final Double avgLen;
 
     /** max length of column values. */
+    // 列值的最大长度。
     private final Integer maxLen;
 
     /**
@@ -48,6 +52,7 @@ public final class ColumnStats {
     @Deprecated private final Number maxValue;
 
     /** max value of column values, null if the value is unknown or not comparable. */
+    // 列值的最大值，如果值未知或不具有可比性，则为空。
     private final Comparable<?> max;
 
     /**

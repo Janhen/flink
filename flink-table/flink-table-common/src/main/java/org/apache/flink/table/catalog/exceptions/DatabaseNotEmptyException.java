@@ -19,6 +19,7 @@
 package org.apache.flink.table.catalog.exceptions;
 
 /** Exception for trying to drop on a database that is not empty. */
+// 尝试删除非空数据库时的异常
 public class DatabaseNotEmptyException extends Exception {
     private static final String MSG = "Database %s in catalog %s is not empty.";
 

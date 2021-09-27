@@ -24,9 +24,10 @@ import org.apache.flink.annotation.PublicEvolving;
 // 对{@link FunctionDefinition}的语义进行分类。
 @PublicEvolving
 public enum FunctionKind {
+    //
     SCALAR,
 
-    // 表格
+    // 表
     TABLE,
 
     // 异步表

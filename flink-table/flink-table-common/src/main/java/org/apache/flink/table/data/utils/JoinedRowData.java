@@ -31,6 +31,7 @@ import org.apache.flink.types.RowKind;
 import java.util.Objects;
 
 /** An implementation of {@link RowData} which is backed by two concatenated {@link RowData}. */
+// {@link RowData}的一个实现，由两个连接的{@link RowData}支持
 @Internal
 public class JoinedRowData implements RowData {
 

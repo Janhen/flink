@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /** Exception for finding more than one {@link TableFactory} for the given properties. */
+// 为给定的属性找到多个{@link TableFactory}的异常
 public class AmbiguousTableFactoryException extends RuntimeException {
 
     // factories that match the properties

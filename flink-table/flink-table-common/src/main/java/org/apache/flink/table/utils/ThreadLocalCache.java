@@ -24,6 +24,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 为每个线程提供具有最大缓存大小的线程本地缓存。
+ *
+ * <p>注意:值不能为空。
+ *
  * Provides a thread local cache with a maximum cache size per thread.
  *
  * <p>Note: Values must not be null.

@@ -152,6 +152,12 @@ public interface DynamicTableSink {
         <T> TypeInformation<T> createTypeInformation(DataType consumedDataType);
 
         /**
+         * 创建一个转换器，用于在Flink的内部数据结构和由给定的{@link DataType}指定的对象之间进行映射，该对象可以
+         * 被传递到运行时实现中。
+         *
+         * <p>例如，{@link RowData}及其字段可以转换为{@link Row}，或者结构化类型的内部表示可以转换回原始的
+         *    (可能嵌套的)POJO。
+         *
          * Creates a converter for mapping between Flink's internal data structures and objects
          * specified by the given {@link DataType} that can be passed into a runtime implementation.
          *

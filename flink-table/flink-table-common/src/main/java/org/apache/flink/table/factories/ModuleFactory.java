@@ -24,6 +24,8 @@ import org.apache.flink.table.module.Module;
 import java.util.Map;
 
 /**
+ * 基于基于字符串的属性创建已配置模块实例的工厂。更多信息请参见{@link TableFactory}。
+ *
  * A factory to create configured module instances based on string-based properties. See also {@link
  * TableFactory} for more information.
  */

@@ -21,5 +21,6 @@ package org.apache.flink.table.expressions;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** The base interface for all table symbols. Symbols might be time units or other enumerations. */
+// 所有表符号的基本接口。符号可以是时间单位或其他枚举。
 @PublicEvolving
 public interface TableSymbol {}

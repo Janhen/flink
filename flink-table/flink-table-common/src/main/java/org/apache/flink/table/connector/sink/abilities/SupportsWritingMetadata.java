@@ -32,6 +32,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 支持写元数据列的{@link DynamicTableSink}接口。
+ *
+ * <p>元数据列向表的模式添加额外的列。表接收器负责在已使用行的末尾接受请求的元数据列，并将它们持久化。这包括可能将
+ *    元数据列转发到所包含的格式。
+ *
  * Interface for {@link DynamicTableSink}s that support writing metadata columns.
  *
  * <p>Metadata columns add additional columns to the table's schema. A table sink is responsible for

@@ -31,6 +31,9 @@ import org.apache.flink.table.types.inference.TypeInference;
 import org.apache.flink.util.Collector;
 
 /**
+ * 用户定义表函数的基类。用户定义的表函数将0、1或多个标量值映射为0、1或多行(或结构化类型)。如果输出记录只包含一个字段，
+ * 则可以省略结构化记录，并且可以发出一个标量值，该标量值将由运行时隐式包装到一行中。
+ *
  * Base class for a user-defined table function. A user-defined table function maps zero, one, or
  * multiple scalar values to zero, one, or multiple rows (or structured types). If an output record
  * consists of only one field, the structured record can be omitted, and a scalar value can be
@@ -135,9 +138,11 @@ import org.apache.flink.util.Collector;
 public abstract class TableFunction<T> extends UserDefinedFunction {
 
     /** The code generated collector used to emit rows. */
+    // 生成用于发出行的收集器的代码。
     private Collector<T> collector;
 
     /** Internal use. Sets the current collector. */
+    // 内部使用。设置当前收集器。
     public final void setCollector(Collector<T> collector) {
         this.collector = collector;
     }
@@ -185,6 +190,8 @@ public abstract class TableFunction<T> extends UserDefinedFunction {
     }
 
     /**
+     * 发出(隐式或显式)输出行。
+     *
      * Emits an (implicit or explicit) output row.
      *
      * <p>If null is emitted as an explicit row, it will be skipped by the runtime. For implicit

@@ -49,6 +49,10 @@ import static org.apache.flink.api.java.typeutils.TypeExtractionUtils.getAllDecl
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 用于处理{@link UserDefinedFunction}的子类的实用程序。这个类的目的是保持面向用户的api整洁，并从这里提供方法常量。
+ *
+ * <p>它包含用于在目录中注册函数期间实例化、验证和提取类型的方法。
+ *
  * Utility for dealing with subclasses of {@link UserDefinedFunction}. The purpose of this class is
  * to keep the user-facing APIs clean and offer methods/constants from here.
  *

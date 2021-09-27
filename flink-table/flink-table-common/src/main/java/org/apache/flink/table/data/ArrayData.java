@@ -32,6 +32,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPr
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getScale;
 
 /**
+ * 内部数据结构的基本接口，表示{@link ArrayType}的数据。
+ *
  * Base interface of an internal data structure representing data of {@link ArrayType}.
  *
  * <p>Note: All elements of this data structure must be internal data structures and must be of the

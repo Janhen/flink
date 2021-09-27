@@ -52,6 +52,17 @@ import java.util.stream.IntStream;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRoot;
 
 /**
+ * 表或视图的模式。
+ *
+ * <p>模式表示SQL中{@code CREATE TABLE (schema) WITH (options)} DDL语句的模式部分。它定义了不同类型的列、
+ *   约束、时间属性和水印策略。可以跨不同的目录引用对象(如函数或类型)。
+ *
+ * <p>在API和编目中使用该类来定义一个未解析的模式，该模式将被转换为{@link ResolvedSchema}。该类的一些方法执行
+ *   基本验证，但是主要验证发生在解析过程中。因此，一个未解决的模式可能是不完整的，可能在以后的阶段被丰富或与不同的
+ *   模式合并。
+ *
+ * <p>因为该类的实例未解析，所以不应该直接持久化它。{@link #toString()}只显示所包含对象的摘要。
+ *
  * Schema of a table or view.
  *
  * <p>A schema represents the schema part of a {@code CREATE TABLE (schema) WITH (options)} DDL
@@ -70,10 +81,13 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 @PublicEvolving
 public final class Schema {
 
+    // 未解析的列
     private final List<UnresolvedColumn> columns;
 
+    // 未解析的水印
     private final List<UnresolvedWatermarkSpec> watermarkSpecs;
 
+    // 未解析的主键约束
     private final @Nullable UnresolvedPrimaryKey primaryKey;
 
     private Schema(
@@ -178,6 +192,7 @@ public final class Schema {
         }
 
         /** Adopts all fields of the given row as physical columns of the schema. */
+        // 采用给定行的所有字段作为模式的物理列
         public Builder fromRowDataType(DataType dataType) {
             Preconditions.checkNotNull(dataType, "Data type must not be null.");
             Preconditions.checkArgument(
@@ -191,6 +206,7 @@ public final class Schema {
         }
 
         /** Adopts the given field names and field data types as physical columns of the schema. */
+        // 使用给定的字段名和字段数据类型作为模式的物理列
         public Builder fromFields(String[] fieldNames, AbstractDataType<?>[] fieldDataTypes) {
             Preconditions.checkNotNull(fieldNames, "Field names must not be null.");
             Preconditions.checkNotNull(fieldDataTypes, "Field data types must not be null.");
@@ -203,6 +219,7 @@ public final class Schema {
         }
 
         /** Adopts the given field names and field data types as physical columns of the schema. */
+        // 使用给定的字段名和字段数据类型作为模式的物理列
         public Builder fromFields(
                 List<String> fieldNames, List<? extends AbstractDataType<?>> fieldDataTypes) {
             Preconditions.checkNotNull(fieldNames, "Field names must not be null.");
@@ -216,6 +233,7 @@ public final class Schema {
         }
 
         /** Adopts all columns from the given list. */
+        // 采用给定列表中的所有列。
         public Builder fromColumns(List<UnresolvedColumn> unresolvedColumns) {
             columns.addAll(unresolvedColumns);
             return this;
@@ -323,6 +341,16 @@ public final class Schema {
         }
 
         /**
+         * 声明附加到此模式的元数据列。
+         *
+         * <p>元数据列允许访问表的每一行的连接器和或格式化特定字段。例如，元数据列可以用来读写Kafka记录的时间戳，
+         *   以进行基于时间的操作。连接器和格式文档列出了每个组件的可用元数据字段。
+         *
+         * <p>每个元数据字段都由基于字符串的键标识，并具有文档化的数据类型。为方便起见，如果列的数据类型与元数据字段
+         *   的数据类型不同，运行时将执行显式强制类型转换。当然，这要求这两种数据类型是兼容的。
+         *
+         * <p>注意:此方法假设元数据键等于列名，并且元数据列可以同时用于读写。
+         *
          * Declares a metadata column that is appended to this schema.
          *
          * <p>Metadata columns allow to access connector and/or format specific fields for every row
@@ -346,6 +374,12 @@ public final class Schema {
         }
 
         /**
+         * 声明附加到此模式的元数据列。
+         *
+         * <p>参见{@link #column(String, AbstractDataType)}获取详细解释。
+         *
+         * <p>此方法使用的类型字符串可以很容易地持久化到持久目录中。
+         *
          * Declares a metadata column that is appended to this schema.
          *
          * <p>See {@link #column(String, AbstractDataType)} for a detailed explanation.
@@ -360,6 +394,19 @@ public final class Schema {
         }
 
         /**
+         * 声明附加到此模式的元数据列。
+         *
+         * <p>元数据列允许访问表的每一行的连接器和或格式化特定字段。例如，元数据列可以用来读写Kafka记录的时间戳，以
+         *   进行基于时间的操作。连接器和格式文档列出了每个组件的可用元数据字段。
+         *
+         * <p>每个元数据字段都由基于字符串的键标识，并具有文档化的数据类型。为方便起见，如果列的数据类型与元数据字段
+         *   的数据类型不同，运行时将执行显式强制类型转换。当然，这要求这两种数据类型是兼容的。
+         *
+         * <p>默认情况下，元数据列可以同时用于读写。然而，在许多情况下，外部系统提供的只读元数据字段比可写字段更多。
+         *   因此，可以通过设置{@code isVirtual}标志为{@code true}来排除元数据列的持久化。
+         *
+         * <p>注意:此方法假设元数据键等于列名。
+         *
          * Declares a metadata column that is appended to this schema.
          *
          * <p>Metadata columns allow to access connector and/or format specific fields for every row
@@ -475,6 +522,19 @@ public final class Schema {
         }
 
         /**
+         * 声明给定的列应该作为事件时间(即行时间)属性，并将相应的水印策略指定为表达式。
+         *
+         * <p>该列的类型必须为{@code TIMESTAMP(3)}或{@code TIMESTAMP_LTZ(3)}，并且是模式中的顶级列。它可能
+         *   是一个计算列。
+         *
+         * <p>框架在运行时对每条记录计算水印生成表达式。框架将周期性地发出最大的生成水印。如果当前水印仍然与前一个相同，
+         *   或为空，或返回的水印值小于上次发出的水印值，则不会发出新的水印。水印在配置定义的时间间隔内发出。
+         *
+         * <p>任何标量表达式都可以用于为内存中临时表声明水印策略。但是，目前只有SQL表达式可以持久化到目录中。表达式
+         *   的返回数据类型必须是{@code TIMESTAMP(3)}。支持用户定义的函数(也在不同的目录中定义)。
+         *
+         * <p>Example: {@code .watermark("ts", $("ts).minus(lit(5).seconds())}
+         *
          * Declares that the given column should serve as an event-time (i.e. rowtime) attribute and
          * specifies a corresponding watermark strategy as an expression.
          *
@@ -507,6 +567,8 @@ public final class Schema {
         }
 
         /**
+         * 声明给定的列应该作为事件时间(即行时间)属性，并将相应的水印策略指定为表达式。
+         *
          * Declares that the given column should serve as an event-time (i.e. rowtime) attribute and
          * specifies a corresponding watermark strategy as an expression.
          *
@@ -521,6 +583,11 @@ public final class Schema {
         }
 
         /**
+         * 为一组给定列声明一个主键约束。主键唯一地标识表中的一行。主列中的任何一列都不能为空。主键仅提供信息。它将
+         * 不会被执行。它可以用于优化。数据所有者有责任确保数据的唯一性。
+         *
+         * <p>主键将被分配一个随机名称。
+         *
          * Declares a primary key constraint for a set of given columns. Primary key uniquely
          * identify a row in a table. Neither of columns in a primary can be nullable. The primary
          * key is informational only. It will not be enforced. It can be used for optimizations. It
@@ -553,6 +620,9 @@ public final class Schema {
         }
 
         /**
+         * 为一组给定列声明一个主键约束。主键唯一地标识表中的一行。主列中的任何一列都不能为空。主键仅提供信息。它将
+         * 不会被执行。它可以用于优化。数据所有者有责任确保数据的唯一性。
+         *
          * Declares a primary key constraint for a set of given columns. Primary key uniquely
          * identify a row in a table. Neither of columns in a primary can be nullable. The primary
          * key is informational only. It will not be enforced. It can be used for optimizations. It
@@ -640,6 +710,7 @@ public final class Schema {
     // --------------------------------------------------------------------------------------------
 
     /** Super class for all kinds of columns in an unresolved schema. */
+    // 用于未解析模式中所有类型列的超类。
     public abstract static class UnresolvedColumn {
         final String columnName;
 
@@ -675,6 +746,8 @@ public final class Schema {
     }
 
     /**
+     * 声明一个物理列，该物理列将在模式解析期间解析为{@link PhysicalColumn}。
+     *
      * Declaration of a physical column that will be resolved to {@link PhysicalColumn} during
      * schema resolution.
      */
@@ -718,6 +791,8 @@ public final class Schema {
     }
 
     /**
+     * 声明将在模式解析期间解析为{@link ComputedColumn}的计算列。
+     *
      * Declaration of a computed column that will be resolved to {@link ComputedColumn} during
      * schema resolution.
      */
@@ -761,6 +836,8 @@ public final class Schema {
     }
 
     /**
+     * 声明将在模式解析期间解析为{@link MetadataColumn}的元数据列。
+     *
      * Declaration of a metadata column that will be resolved to {@link MetadataColumn} during
      * schema resolution.
      */
@@ -833,6 +910,8 @@ public final class Schema {
     }
 
     /**
+     * 声明将在模式解析期间解析为{@link WatermarkSpec}的水印策略。
+     *
      * Declaration of a watermark strategy that will be resolved to {@link WatermarkSpec} during
      * schema resolution.
      */
@@ -882,6 +961,7 @@ public final class Schema {
     }
 
     /** Super class for all kinds of constraints in an unresolved schema. */
+    // 用于解析模式中所有类型约束的超类。
     public abstract static class UnresolvedConstraint {
 
         private final String constraintName;
@@ -918,6 +998,8 @@ public final class Schema {
     }
 
     /**
+     * 声明一个主键，该主键将在模式解析期间解析为{@link UniqueConstraint}。
+     *
      * Declaration of a primary key that will be resolved to {@link UniqueConstraint} during schema
      * resolution.
      */

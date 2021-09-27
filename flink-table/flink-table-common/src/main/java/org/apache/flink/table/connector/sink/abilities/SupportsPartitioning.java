@@ -24,7 +24,10 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import java.util.Map;
 
 /**
- * 允许在{@link DynamicTableSink}中写入分区数据。
+ * 允许在 {@link DynamicTableSink} 中写入分区数据。
+ *
+ * <p>Partitions将存储在外部系统中的数据分割为更小的部分，由一个或多个基于字符串的分区键标识。单个分区表示为
+ *    {@code Map < String, String >}，它将每个分区键映射到一个分区值。分区键及其顺序由目录表定义。
  *
  * Enables to write partitioned data in a {@link DynamicTableSink}.
  *

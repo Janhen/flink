@@ -22,6 +22,7 @@ import org.apache.flink.table.catalog.CatalogFunction;
 import org.apache.flink.table.functions.FunctionDefinition;
 
 /** A factory to create {@link FunctionDefinition}. */
+// 一个工厂创建{@link函数定义}。
 public interface FunctionDefinitionFactory {
 
     /**

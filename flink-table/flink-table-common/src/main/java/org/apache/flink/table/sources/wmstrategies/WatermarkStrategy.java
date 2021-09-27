@@ -28,6 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 提供为行时属性生成水印的策略。
+ *
+ * <p>水印策略是{@code PeriodicWatermarkAssigner}或{@code PunctuatedWatermarkAssigner}。
+ *
  * Provides a strategy to generate watermarks for a rowtime attribute.
  *
  * <p>A watermark strategy is either a {@code PeriodicWatermarkAssigner} or {@code

@@ -26,6 +26,8 @@ import org.apache.flink.table.data.RowData;
 import java.util.Optional;
 
 /**
+ * 作为{@link DynamicTableSink}的运行时实现的{@link OutputFormat}实例的提供者。
+ *
  * Provider of an {@link OutputFormat} instance as a runtime implementation for {@link
  * DynamicTableSink}.
  */

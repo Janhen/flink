@@ -21,6 +21,7 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Exception for an operation on a nonexistent catalog. */
+// 对不存在的目录进行操作时，会出现异常。
 @PublicEvolving
 public class CatalogNotExistException extends RuntimeException {
 

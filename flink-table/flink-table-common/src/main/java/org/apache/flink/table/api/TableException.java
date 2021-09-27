@@ -21,6 +21,10 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 在表处理过程中所有错误的异常。
+ *
+ * <p>此异常表明发生了内部错误或某个特性还不受支持。通常，这种异常并不表示用户的错误。
+ *
  * General Exception for all errors during table handling.
  *
  * <p>This exception indicates that an internal error occurred or that a feature is not supported

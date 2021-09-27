@@ -23,6 +23,10 @@ import org.apache.flink.table.types.inference.InputTypeStrategies;
 import org.apache.flink.table.types.logical.LogicalTypeFamily;
 
 /**
+ * 在{@link DataTypeHint}中，通常用于接受不止一个数据类型作为输入参数的预定义相似类型组的列表。
+ *
+ * <p>该列表通过注释公开了{@link LogicalTypeFamily}和{@link InputTypeStrategies}的组合，以便于内联使用。
+ *
  * A list of commonly used pre-defined groups of similar types for accepting more than just one data
  * type as an input argument in {@link DataTypeHint}s.
  *

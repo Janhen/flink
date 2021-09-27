@@ -21,6 +21,7 @@ package org.apache.flink.table.catalog.exceptions;
 import org.apache.flink.table.catalog.ObjectPath;
 
 /** Exception for trying to create a function that already exists. */
+// 尝试创建已经存在的函数时出现异常
 public class FunctionAlreadyExistException extends Exception {
 
     private static final String MSG = "Function %s already exists in Catalog %s.";

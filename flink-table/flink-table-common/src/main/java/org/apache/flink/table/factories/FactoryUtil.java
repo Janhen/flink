@@ -63,6 +63,8 @@ public final class FactoryUtil {
     private static final Logger LOG = LoggerFactory.getLogger(FactoryUtil.class);
 
     /**
+     * 描述属性版本。这可以用于在属性格式改变时的向后兼容性。
+     *
      * Describes the property version. This can be used for backwards compatibility in case the
      * property format changes.
      */
@@ -111,12 +113,18 @@ public final class FactoryUtil {
     public static final String FORMAT_SUFFIX = ".format";
 
     /**
+     * 用于可模板化的选项的键的占位符符号。详情见 {@link Factory}。
+     *
      * The placeholder symbol to be used for keys of options which can be templated. See {@link
      * Factory} for details.
      */
     public static final String PLACEHOLDER_SYMBOL = "#";
 
     /**
+     * 从{@link CatalogTable}中创建一个{@link DynamicTableSource}。
+     *
+     * <p>如果提供了{@link Catalog#getFactory()}，则会考虑{@link Catalog#getFactory()}。
+     *
      * Creates a {@link DynamicTableSource} from a {@link CatalogTable}.
      *
      * <p>It considers {@link Catalog#getFactory()} if provided.

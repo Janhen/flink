@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** A strategy which indicates the watermarks should be preserved from the underlying datastream. */
+// 一种策略，它指示应该从底层数据流中保留水印。
 @PublicEvolving
 public final class PreserveWatermarks extends WatermarkStrategy {
 

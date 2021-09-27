@@ -26,6 +26,10 @@ import org.apache.flink.table.connector.source.DynamicTableSource;
 import org.apache.flink.table.factories.DynamicTableFactory;
 
 /**
+ * 连接器格式的基本接口。
+ *
+ * <p>根据外部系统的类型，连接器可能支持不同的行读取和写入编码。该接口是构建实际运行时实现之前的中间表示。
+ *
  * Base interface for connector formats.
  *
  * <p>Depending on the kind of external system, a connector might support different encodings for

@@ -26,6 +26,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * 模块定义了一组元数据，包括函数、用户定义的类型、操作符、规则等。来自模块的元数据被视为用户可以利用的内置或系统元数据。
+ *
  * Modules define a set of metadata, including functions, user defined types, operators, rules, etc.
  * Metadata from modules are regarded as built-in or system metadata that users can take advantages
  * of.

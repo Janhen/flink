@@ -67,6 +67,7 @@ import static org.apache.flink.table.utils.TimestampStringUtils.timestampToStrin
 import static org.apache.flink.table.utils.TimestampStringUtils.unixTimeToString;
 
 /** Utilities for print formatting. */
+// 用于打印格式的实用程序。
 @Internal
 public class PrintUtils {
 
@@ -79,6 +80,8 @@ public class PrintUtils {
     private PrintUtils() {}
 
     /**
+     * 以画面形式显示结果。
+     *
      * Displays the result in a tableau form.
      *
      * <p>For example:
@@ -111,6 +114,11 @@ public class PrintUtils {
     }
 
     /**
+     * 以画面形式显示结果。
+     *
+     * <p><b>注意:<b>请确保要打印的数据足够小，以存储在java堆内存中，如果列的宽度是从内容派生的(
+     *   ' deriveColumnWidthByType '为false)。
+     *
      * Displays the result in a tableau form.
      *
      * <p><b>NOTE:</b> please make sure the data to print is small enough to be stored in java heap
@@ -243,6 +251,10 @@ public class PrintUtils {
     }
 
     /**
+     * 对包含TIMESTAMP、TIMESTAMP_LTZ和TIME类型数据的字段进行规范化。
+     *
+     * <p>该方法还支持嵌套类型ARRAY, ROW, MAP。
+     *
      * Normalizes field that contains TIMESTAMP, TIMESTAMP_LTZ and TIME type data.
      *
      * <p>This method also supports nested type ARRAY, ROW, MAP.
