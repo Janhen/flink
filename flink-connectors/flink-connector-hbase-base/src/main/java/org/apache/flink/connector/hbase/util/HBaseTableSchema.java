@@ -40,7 +40,7 @@ import java.util.Optional;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /** Helps to specify an HBase Table's schema. */
-// 帮助指定一个HBase Table的模式。
+// 帮助指定一个 HBase Table 的模式。
 @Internal
 public class HBaseTableSchema implements Serializable {
 
@@ -57,6 +57,8 @@ public class HBaseTableSchema implements Serializable {
     private String charset = "UTF-8";
 
     /**
+     * 将由family、qualifier和type定义的列添加到表模式中。
+     *
      * Adds a column defined by family, qualifier, and type to the table schema.
      *
      * @param family the family name
@@ -92,6 +94,8 @@ public class HBaseTableSchema implements Serializable {
     }
 
     /**
+     * 在表模式中设置行键信息。
+     *
      * Sets row key information in the table schema.
      *
      * @param rowKeyName the row key field name
@@ -139,6 +143,8 @@ public class HBaseTableSchema implements Serializable {
     }
 
     /**
+     * 返回所有已注册列族的HBase标识符。
+     *
      * Returns the HBase identifiers of all registered column families.
      *
      * @return The HBase identifiers of all registered column families.

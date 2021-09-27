@@ -51,6 +51,7 @@ import static org.apache.flink.table.runtime.types.LogicalTypeDataTypeConverter.
 import static org.apache.flink.table.typeutils.TimeIndicatorTypeInfo.ROWTIME_STREAM_MARKER;
 
 /** Stream {@link ExecNode} to connect a given {@link DataStream} and consume data from it. */
+// 流{@link ExecNode}连接给定的{@link DataStream}并从其中消费数据。
 public class StreamExecDataStreamScan extends ExecNodeBase<RowData>
         implements StreamExecNode<RowData>, MultipleTransformationTranslator<RowData> {
     private final DataStream<?> dataStream;

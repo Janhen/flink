@@ -73,6 +73,8 @@ import static org.apache.flink.table.types.utils.TypeConversions.fromDataTypeToL
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * 从不同的{@link TypeInformation}中提取字段名称和索引的实用工具方法。
+ *
  * Utility methods for extracting names and indices of fields from different {@link
  * TypeInformation}s.
  */
@@ -646,6 +648,7 @@ public class FieldInfoUtils {
             return createFieldInfo(unresolvedReference, null);
         }
 
+        // J: 访问者设计模式?
         @Override
         public FieldInfo visit(UnresolvedCallExpression unresolvedCall) {
             if (unresolvedCall.getFunctionDefinition() == BuiltInFunctionDefinitions.AS) {
@@ -759,12 +762,14 @@ public class FieldInfoUtils {
         return isProctimeAttribute(type.getLogicalType());
     }
 
+    // 判断表达式是否是用于定义 RowTime 的
     private static boolean isRowTimeExpression(Expression origExpr) {
         return origExpr instanceof UnresolvedCallExpression
                 && ((UnresolvedCallExpression) origExpr).getFunctionDefinition()
                         == BuiltInFunctionDefinitions.ROWTIME;
     }
 
+    // 判断是否是 ProcTime 表达式
     private static boolean isProcTimeExpression(Expression origExpr) {
         return origExpr instanceof UnresolvedCallExpression
                 && ((UnresolvedCallExpression) origExpr).getFunctionDefinition()
@@ -796,6 +801,7 @@ public class FieldInfoUtils {
         return duplicates;
     }
 
+    // 创建时间戳属性
     private static FieldInfo createTimeAttributeField(
             UnresolvedReferenceExpression reference, TimestampKind kind, @Nullable String alias) {
         final int idx;

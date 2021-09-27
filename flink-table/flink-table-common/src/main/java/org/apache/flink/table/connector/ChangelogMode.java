@@ -35,9 +35,11 @@ import java.util.Set;
 @PublicEvolving
 public final class ChangelogMode {
 
+    // 仅插入  append
     private static final ChangelogMode INSERT_ONLY =
             ChangelogMode.newBuilder().addContainedKind(RowKind.INSERT).build();
 
+    // 支持 upsert，插入、删除、更新后的
     private static final ChangelogMode UPSERT =
             ChangelogMode.newBuilder()
                     .addContainedKind(RowKind.INSERT)
@@ -45,6 +47,7 @@ public final class ChangelogMode {
                     .addContainedKind(RowKind.DELETE)
                     .build();
 
+    // 所有的模式
     private static final ChangelogMode ALL =
             ChangelogMode.newBuilder()
                     .addContainedKind(RowKind.INSERT)

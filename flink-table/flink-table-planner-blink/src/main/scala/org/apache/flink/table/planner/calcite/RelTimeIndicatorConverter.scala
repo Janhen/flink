@@ -45,6 +45,8 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable
 
 /**
+  * 遍历[[RelNode]]树并转换类型为[[TimeIndicatorRelDataType]]的字段。如果一个计算访问了一个time属性，那么它将被物化。转发在某些情况下是允许的，但不是所有情况。
+  *
   * Traverses a [[RelNode]] tree and converts fields with [[TimeIndicatorRelDataType]] type. If a
   * time attribute is accessed for a calculation, it will be materialized. Forwarding is allowed in
   * some cases, but not all.

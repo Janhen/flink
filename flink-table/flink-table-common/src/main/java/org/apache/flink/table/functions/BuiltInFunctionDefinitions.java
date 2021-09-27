@@ -80,6 +80,8 @@ public final class BuiltInFunctionDefinitions {
     // New stack built-in functions
     // --------------------------------------------------------------------------------------------
 
+    // 新的堆栈内置函数
+
     public static final BuiltInFunctionDefinition TYPE_OF =
             BuiltInFunctionDefinition.newBuilder()
                     .name("TYPEOF")
@@ -98,6 +100,7 @@ public final class BuiltInFunctionDefinitions {
                     .runtimeClass("org.apache.flink.table.runtime.functions.scalar.TypeOfFunction")
                     .build();
 
+    // 是否为空
     public static final BuiltInFunctionDefinition IF_NULL =
             BuiltInFunctionDefinition.newBuilder()
                     .name("IFNULL")
@@ -112,6 +115,7 @@ public final class BuiltInFunctionDefinitions {
                     .runtimeClass("org.apache.flink.table.runtime.functions.scalar.IfNullFunction")
                     .build();
 
+    // 来源水印，指明运行时调用的，是 ScanTableSource 的能力，自动将 rowtime 加上原来的 DataStream 水印
     public static final BuiltInFunctionDefinition SOURCE_WATERMARK =
             BuiltInFunctionDefinition.newBuilder()
                     .name("SOURCE_WATERMARK")
@@ -336,6 +340,7 @@ public final class BuiltInFunctionDefinitions {
                             TypeStrategies.aggArg0(LogicalTypeMerging::findSumAggType, true))
                     .build();
 
+    //
     public static final BuiltInFunctionDefinition SUM0 =
             BuiltInFunctionDefinition.newBuilder()
                     .name("sum0")
@@ -344,6 +349,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(
                             TypeStrategies.aggArg0(LogicalTypeMerging::findSumAggType, false))
                     .build();
+
 
     public static final BuiltInFunctionDefinition STDDEV_POP =
             BuiltInFunctionDefinition.newBuilder()
@@ -388,6 +394,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 去重的
     public static final BuiltInFunctionDefinition DISTINCT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("distinct")
@@ -399,6 +406,7 @@ public final class BuiltInFunctionDefinitions {
     // String functions
     // --------------------------------------------------------------------------------------------
 
+    // 字符长度
     public static final BuiltInFunctionDefinition CHAR_LENGTH =
             BuiltInFunctionDefinition.newBuilder()
                     .name("charLength")
@@ -415,6 +423,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(argument(0)))
                     .build();
 
+    // 模糊查询
     public static final BuiltInFunctionDefinition LIKE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("like")
@@ -436,6 +445,7 @@ public final class BuiltInFunctionDefinitions {
 
     // we need LOWERCASE here to maintain compatibility for the string-based expression DSL
     // which exposes LOWER as lowerCase()
+    // 我们这里需要LOWERCASE来维护基于字符串的表达式DSL的兼容性，它将LOWER暴露为LOWERCASE ()
     public static final BuiltInFunctionDefinition LOWERCASE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("lowerCase")
@@ -444,6 +454,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(argument(0)))
                     .build();
 
+    // 类似
     public static final BuiltInFunctionDefinition SIMILAR =
             BuiltInFunctionDefinition.newBuilder()
                     .name("similar")
@@ -525,6 +536,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.INT())))
                     .build();
 
+    // 覆盖?
     public static final BuiltInFunctionDefinition OVERLAY =
             BuiltInFunctionDefinition.newBuilder()
                     .name("overlay")
@@ -543,6 +555,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(STRING_CONCAT))
                     .build();
 
+    // 字符拼接
     public static final BuiltInFunctionDefinition CONCAT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("concat")
@@ -569,6 +582,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.STRING())))
                     .build();
 
+    // 向左边填充
     public static final BuiltInFunctionDefinition LPAD =
             BuiltInFunctionDefinition.newBuilder()
                     .name("lpad")
@@ -593,6 +607,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.STRING())))
                     .build();
 
+    // 正则表达式抽取
     public static final BuiltInFunctionDefinition REGEXP_EXTRACT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("regexpExtract")
@@ -625,6 +640,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.STRING())))
                     .build();
 
+    // 生成 uuid
     public static final BuiltInFunctionDefinition UUID =
             BuiltInFunctionDefinition.newBuilder()
                     .name("uuid")
@@ -671,6 +687,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.STRING())))
                     .build();
 
+    // 正则替换
     public static final BuiltInFunctionDefinition REGEXP_REPLACE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("regexpReplace")
@@ -720,6 +737,7 @@ public final class BuiltInFunctionDefinitions {
                     .build();
 
     /** Combines numeric subtraction and "datetime - interval" arithmetic. */
+    // 结合数字减法和“日期时间-间隔”算法。
     public static final BuiltInFunctionDefinition MINUS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("minus")
@@ -1096,6 +1114,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.STRING())))
                     .build();
 
+    // 清除
     public static final BuiltInFunctionDefinition TRUNCATE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("truncate")
@@ -1112,6 +1131,8 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
     // Time functions
     // --------------------------------------------------------------------------------------------
+
+    // 时间函数
 
     public static final BuiltInFunctionDefinition EXTRACT =
             BuiltInFunctionDefinition.newBuilder()
@@ -1141,6 +1162,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 当前的 row time 时间戳
     public static final BuiltInFunctionDefinition CURRENT_ROW_TIMESTAMP =
             BuiltInFunctionDefinition.newBuilder()
                     .name("currentRowTimestamp")
@@ -1169,6 +1191,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 格式化
     public static final BuiltInFunctionDefinition DATE_FORMAT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("dateFormat")
@@ -1176,12 +1199,15 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 时间差值
     public static final BuiltInFunctionDefinition TIMESTAMP_DIFF =
             BuiltInFunctionDefinition.newBuilder()
                     .name("timestampDiff")
                     .kind(SCALAR)
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
+
+    // 数据类型转换为 timestamp_ltz，支持时区操作
     public static final BuiltInFunctionDefinition TO_TIMESTAMP_LTZ =
             BuiltInFunctionDefinition.newBuilder()
                     .name("toTimestampLtz")
@@ -1243,6 +1269,8 @@ public final class BuiltInFunctionDefinitions {
     // Composite type functions
     // --------------------------------------------------------------------------------------------
 
+    // 复合类型的功能
+
     public static final BuiltInFunctionDefinition FLATTEN =
             BuiltInFunctionDefinition.newBuilder()
                     .name("flatten")
@@ -1273,6 +1301,8 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
     // Crypto hash functions
     // --------------------------------------------------------------------------------------------
+
+    // 加密哈希函数
 
     public static final BuiltInFunctionDefinition MD5 =
             BuiltInFunctionDefinition.newBuilder()
@@ -1355,6 +1385,7 @@ public final class BuiltInFunctionDefinitions {
     // Ordering
     // --------------------------------------------------------------------------------------------
 
+    // 用于排序的字段
     public static final BuiltInFunctionDefinition ORDER_ASC =
             BuiltInFunctionDefinition.newBuilder()
                     .name("asc")
@@ -1373,6 +1404,7 @@ public final class BuiltInFunctionDefinitions {
     // Time attributes
     // --------------------------------------------------------------------------------------------
 
+    // 内嵌函数定义 proc time
     public static final BuiltInFunctionDefinition PROCTIME =
             BuiltInFunctionDefinition.newBuilder()
                     .name("proctime")
@@ -1380,6 +1412,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 内嵌函数定义 row time
     public static final BuiltInFunctionDefinition ROWTIME =
             BuiltInFunctionDefinition.newBuilder()
                     .name("rowtime")
@@ -1390,6 +1423,8 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
     // Over window
     // --------------------------------------------------------------------------------------------
+
+    // 开窗
 
     public static final BuiltInFunctionDefinition OVER =
             BuiltInFunctionDefinition.newBuilder()
@@ -1430,6 +1465,8 @@ public final class BuiltInFunctionDefinitions {
     // Column functions
     // --------------------------------------------------------------------------------------------
 
+    // 列函数
+
     public static final BuiltInFunctionDefinition WITH_COLUMNS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("withColumns")
@@ -1455,6 +1492,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 类型转换
     public static final BuiltInFunctionDefinition CAST =
             BuiltInFunctionDefinition.newBuilder()
                     .name("cast")
@@ -1487,6 +1525,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.argument(0))
                     .build();
 
+    // 流记录时间戳
     public static final BuiltInFunctionDefinition STREAM_RECORD_TIMESTAMP =
             BuiltInFunctionDefinition.newBuilder()
                     .name("streamRecordTimestamp")

@@ -36,10 +36,13 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /** Logic to validate {@link TableSource} types. */
+// 验证{@link TableSource}类型的逻辑。
 @Internal
 public class TableSourceValidation {
 
     /**
+     * 验证TableSource。
+     *
      * Validates a TableSource.
      *
      * <ul>

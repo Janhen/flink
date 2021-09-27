@@ -26,6 +26,8 @@ import java.lang
 import org.apache.calcite.sql.`type`.SqlTypeName.TIMESTAMP
 
 /**
+ * 为事件时间或处理时间创建一个时间指示器类型，但具有与基本SQL类型类似的属性。
+ *
   * Creates a time indicator type for event-time or processing-time, but with similar properties
   * as a basic SQL type.
   */

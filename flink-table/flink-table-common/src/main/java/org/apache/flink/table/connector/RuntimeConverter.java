@@ -23,6 +23,12 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * 用于在运行时转换数据的基本接口。
+ *
+ * <p>该接口的实例由规划器提供。它们用于数据结构之间的转换或执行其他映射转换。
+ *
+ * <p>因为运行时转换器是{@link Serializable}，实例可以直接传递到运行时实现中，存储在成员变量中，并在执行时使用。
+ *
  * Base interface for converting data during runtime.
  *
  * <p>Instances of this interface are provided by the planner. They are used for converting between

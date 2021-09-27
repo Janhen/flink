@@ -52,10 +52,13 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * Flink目录数据库和方解石模式之间的映射。表被注册为模式中的表。
+ *
  * A mapping between Flink catalog's database and Calcite's schema. Tables are registered as tables
  * in the schema.
  */
 class DatabaseCalciteSchema implements Schema {
+    // 是否是 stream, flink 批流一体
     private final boolean isStreamingMode;
     private final String catalogName;
     private final String databaseName;

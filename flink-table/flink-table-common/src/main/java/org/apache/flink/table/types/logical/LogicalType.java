@@ -32,6 +32,14 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 描述值的数据类型的逻辑类型。它并不意味着传输或存储的具体物理表示，而是定义了基于jvm的语言和表生态系统之间的边界。
+ *
+ * <p>逻辑类型的定义类似于SQL标准的“数据类型”术语，但也包含关于值是否为空的信息，以便有效地处理标量表达式。
+ *
+ * <p>该类的子类定义内置类型或用户定义类型的特征。每个逻辑类型都必须支持可空性。
+ *
+ * <p>该类的实例使用其他信息(如数字精度或预期长度)描述完全参数化的不可变类型。
+ *
  * A logical type that describes the data type of a value. It does not imply a concrete physical
  * representation for transmission or storage but defines the boundaries between JVM-based languages
  * and the table ecosystem.

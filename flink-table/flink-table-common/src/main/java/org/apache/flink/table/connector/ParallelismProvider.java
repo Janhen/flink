@@ -37,6 +37,10 @@ import java.util.Optional;
 public interface ParallelismProvider {
 
     /**
+     * 返回此实例的并行度。
+     *
+     * <p>并行度表示在执行期间将生成多少个源或接收器的并行实例。
+     *
      * Returns the parallelism for this instance.
      *
      * <p>The parallelism denotes how many parallel instances of a source or sink will be spawned

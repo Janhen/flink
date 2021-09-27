@@ -35,6 +35,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * 描述从{@link DataStream}读取数据的关系操作。
+ *
+ * J: 将 DataStream 转换成一个 Table 的过程中，需要生成表结构，此类用于描述。。。
+ *
  * Describes a relational operation that reads from a {@link DataStream}.
  *
  * <p>This operation may expose only part, or change the order of the fields available in a {@link
@@ -53,8 +57,11 @@ public class JavaDataStreamQueryOperation<E> implements QueryOperation {
      */
     @Nullable private final ObjectIdentifier identifier;
 
+    // 原始的 dataStream
     private final DataStream<E> dataStream;
+    // 字段索引映射关系
     private final int[] fieldIndices;
+    // 表结构
     private final ResolvedSchema resolvedSchema;
 
     public JavaDataStreamQueryOperation(

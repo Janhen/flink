@@ -29,6 +29,7 @@ import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.type.SqlTypeName;
 
 /** Function to access the timestamp of a StreamRecord. */
+// 函数访问StreamRecord的时间戳。
 public class StreamRecordTimestampSqlFunction extends SqlFunction {
 
     public StreamRecordTimestampSqlFunction() {

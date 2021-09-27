@@ -43,6 +43,10 @@ import static org.apache.flink.table.api.DataTypes.ROW;
 import static org.apache.flink.table.types.utils.DataTypeUtils.removeTimeAttribute;
 
 /**
+ * 由列、约束和水印规范组成的表或视图的模式。
+ *
+ * <p>这个类是将{@link Schema}解析为最终经过验证的表示的结果。
+ *
  * Schema of a table or view consisting of columns, constraints, and watermark specifications.
  *
  * <p>This class is the result of resolving a {@link Schema} into a final validated representation.
@@ -60,8 +64,11 @@ import static org.apache.flink.table.types.utils.DataTypeUtils.removeTimeAttribu
 @PublicEvolving
 public final class ResolvedSchema {
 
+    // 所有的列
     private final List<Column> columns;
+    // 水印描述
     private final List<WatermarkSpec> watermarkSpecs;
+    // 唯一键约束(Upsert)
     private final @Nullable UniqueConstraint primaryKey;
 
     public ResolvedSchema(

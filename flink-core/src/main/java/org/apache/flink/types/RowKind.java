@@ -21,6 +21,7 @@ package org.apache.flink.types;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Lists all kinds of changes that a row can describe in a changelog. */
+// 列出一行可以在变更日志中描述的所有类型的变更。
 @PublicEvolving
 public enum RowKind {
 

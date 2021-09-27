@@ -18,8 +18,9 @@
 
 package org.apache.flink.table.calcite
 
-import java.util
 import java.nio.charset.Charset
+import java.util
+
 import org.apache.calcite.avatica.util.TimeUnit
 import org.apache.calcite.jdbc.JavaTypeFactoryImpl
 import org.apache.calcite.rel.`type`._
@@ -44,9 +45,12 @@ import org.apache.flink.table.typeutils.{TimeIndicatorTypeInfo, TimeIntervalType
 import org.apache.flink.types.Row
 
 import scala.collection.JavaConverters._
-import scala.collection.mutable
 
 /**
+ * Flink特定的类型工厂，表示Flink的[[TypeInformation]]和 calcite 的[[RelDataType]]之间的接口。
+ *
+ * J: 与 calcite 交互
+ *
   * Flink specific type factory that represents the interface between Flink's [[TypeInformation]]
   * and Calcite's [[RelDataType]].
   */
