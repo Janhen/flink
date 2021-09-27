@@ -33,7 +33,7 @@ class TimeIndicatorRelDataType(
     val typeSystem: RelDataTypeSystem,
     val originalType: BasicSqlType,
     val nullable: Boolean,
-    val isEventTime: Boolean)
+    val isEventTime: Boolean)  //
   extends BasicSqlType(
     typeSystem,
     originalType.getSqlTypeName,

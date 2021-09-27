@@ -63,6 +63,7 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
     private final KafkaCollector kafkaCollector;
 
     /** The handover of data and exceptions between the consumer thread and the task thread. */
+    // 使用者线程和任务线程之间的数据和异常切换。
     final Handover handover;
 
     /**
@@ -121,18 +122,22 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
     //  Fetcher work methods
     // ------------------------------------------------------------------------
 
+    // 实际获取 kafka 数据源的方法
     @Override
     public void runFetchLoop() throws Exception {
         try {
             // kick off the actual Kafka consumer
+            // 启动实际的Kafka消费者
             consumerThread.start();
 
             while (running) {
+                // 在我们得到下一个记录之前，它会自动地重新抛出在消费线程中遇到的异常
                 // this blocks until we get the next records
                 // it automatically re-throws exceptions encountered in the consumer thread
                 final ConsumerRecords<byte[], byte[]> records = handover.pollNext();
 
                 // get the records for each topic partition
+                // 获取每个主题分区的记录
                 for (KafkaTopicPartitionState<T, TopicPartition> partition :
                         subscribedPartitionStates()) {
 
@@ -180,6 +185,7 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
 
             // emit the actual records. this also updates offset state atomically and emits
             // watermarks
+            // 发出实际的记录。这也会自动更新偏移状态并发出水印
             emitRecordsWithTimestamps(
                     kafkaCollector.getRecords(), partition, record.offset(), record.timestamp());
 

@@ -32,9 +32,12 @@ import java.util.Map;
 public class LatencyStats {
     private final Map<String, DescriptiveStatisticsHistogram> latencyStats = new HashMap<>();
     private final MetricGroup metricGroup;
+    // 历史大小
     private final int historySize;
     private final int subtaskIndex;
+    // 算子 ID
     private final OperatorID operatorId;
+    // 粒度
     private final Granularity granularity;
 
     public LatencyStats(
@@ -70,6 +73,7 @@ public class LatencyStats {
     }
 
     /** Granularity for latency metrics. */
+    // 延迟度量的粒度
     public enum Granularity {
         SINGLE {
             @Override
@@ -87,6 +91,7 @@ public class LatencyStats {
                 return base;
             }
         },
+        // 算子
         OPERATOR {
             @Override
             String createUniqueHistogramName(
@@ -103,6 +108,7 @@ public class LatencyStats {
                 return base.addGroup("source_id", String.valueOf(marker.getOperatorId()));
             }
         },
+        // 子任务
         SUBTASK {
             @Override
             String createUniqueHistogramName(

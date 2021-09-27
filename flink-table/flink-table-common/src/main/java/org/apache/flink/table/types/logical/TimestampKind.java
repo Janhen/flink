@@ -21,6 +21,8 @@ package org.apache.flink.table.types.logical;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 用于将时间属性元数据附加到带有或不带有时区的时间戳的内部时间戳类型。
+ *
  * Internal timestamp kind for attaching time attribute metadata to timestamps with or without a
  * time zone.
  */

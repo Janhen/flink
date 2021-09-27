@@ -322,6 +322,8 @@ public class StreamOperatorStateHandler {
     }
 
     /**
+     * 使用为此任务配置的状态后端创建分区状态句柄。
+     *
      * Creates a partitioned state handle, using the state backend configured for this task.
      *
      * @throws IllegalStateException Thrown, if the key/value state was already initialized.
@@ -379,6 +381,7 @@ public class StreamOperatorStateHandler {
     }
 
     /** Custom state handling hooks to be invoked by {@link StreamOperatorStateHandler}. */
+    // 由{@link StreamOperatorStateHandler}调用的自定义状态处理钩子。
     public interface CheckpointedStreamOperator {
         void initializeState(StateInitializationContext context) throws Exception;
 

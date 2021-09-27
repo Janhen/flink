@@ -154,8 +154,10 @@ public class JdbcBatchingOutputFormat<
         }
     }
 
+    // 覆盖父类方法，声明为 final 不可变、synchronized 同步的
     @Override
     public final synchronized void writeRecord(In record) throws IOException {
+        // 此处处理异步异常
         checkFlushException();
 
         try {
@@ -174,6 +176,7 @@ public class JdbcBatchingOutputFormat<
         jdbcStatementExecutor.addToBatch(extracted);
     }
 
+    // 声明为 synchronized 加锁处理
     @Override
     public synchronized void flush() throws IOException {
         checkFlushException();

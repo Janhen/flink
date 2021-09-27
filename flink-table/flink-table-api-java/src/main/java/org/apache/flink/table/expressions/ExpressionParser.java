@@ -24,6 +24,10 @@ import org.apache.flink.table.delegation.PlannerExpressionParser;
 import java.util.List;
 
 /**
+ * 字符串内表达式的解析器。它解析的表达式与 Scala Expression DSL 所接受的表达式完全相同。
+ *
+ * <p>{@link ExpressionParser}使用{@link PlannerExpressionParser}来解析表达式。
+ *
  * Parser for expressions inside a String. This parses exactly the same expressions that would be
  * accepted by the Scala Expression DSL.
  *

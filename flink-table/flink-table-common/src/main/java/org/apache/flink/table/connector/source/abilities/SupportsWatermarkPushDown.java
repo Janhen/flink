@@ -28,6 +28,8 @@ import org.apache.flink.table.connector.source.SourceProvider;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 允许将水印策略下推到{@link ScanTableSource}中。
+ *
  * Enables to push down a watermark strategy into a {@link ScanTableSource}.
  *
  * <p>The concept of watermarks defines when time operations based on an event time attribute will

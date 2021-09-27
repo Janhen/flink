@@ -22,13 +22,15 @@ import org.apache.calcite.rel.`type`.RelDataTypeSystem
 import org.apache.calcite.sql.`type`.BasicSqlType
 
 /**
+ * 为事件时间或处理时间创建一个时间指示器类型，但具有与基本SQL类型类似的属性。
+ *
   * Creates a time indicator type for event-time or processing-time, but with similar properties
   * as a basic SQL type.
   */
 class TimeIndicatorRelDataType(
     typeSystem: RelDataTypeSystem,
     originalType: BasicSqlType,
-    val isEventTime: Boolean)
+    val isEventTime: Boolean)  // 通过 isEventTime 区分是事件时间还是处理时间
   extends BasicSqlType(
     typeSystem,
     originalType.getSqlTypeName,

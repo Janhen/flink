@@ -37,6 +37,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 这个类实现创建(并可能恢复)状态后端的逻辑。恢复逻辑考虑多个要进行恢复的快照的优先选项，其中所有选项都应该为后端重新
+ * 创建相同的状态。当我们无法从具有最高优先级的快照(通常是“最快”恢复的快照)进行恢复时，我们将退回到具有下一个最高
+ * 优先级的快照。我们还负责清除失败的恢复尝试。我们只有在恢复调用期间出现问题时才会重新尝试，并且只有在所有快照替代方案
+ * 都耗尽且全部失败后才会停止。
+ *
  * This class implements the logic that creates (and potentially restores) a state backend. The
  * restore logic considers multiple, prioritized options of snapshots to restore from, where all of
  * the options should recreate the same state for the backend. When we fail to restore from the

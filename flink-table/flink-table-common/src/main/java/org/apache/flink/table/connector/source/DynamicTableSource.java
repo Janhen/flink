@@ -34,6 +34,8 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * 来自外部存储系统的动态表的源。
+ *
  * Source of a dynamic table from an external storage system.
  *
  * <p>Dynamic tables are the core concept of Flink's Table & SQL API for processing both bounded and

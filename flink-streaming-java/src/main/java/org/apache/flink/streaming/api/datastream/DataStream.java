@@ -860,7 +860,9 @@ public class DataStream<T> {
         final WatermarkStrategy<T> cleanedStrategy = clean(watermarkStrategy);
         // match parallelism to input, to have a 1:1 source -> timestamps/watermarks relationship
         // and chain
+        // 匹配并行输入，使源->时间戳与水印的关系与链成1:1
         final int inputParallelism = getTransformation().getParallelism();
+        // 通过 Transformation 进行处理
         final TimestampsAndWatermarksTransformation<T> transformation =
                 new TimestampsAndWatermarksTransformation<>(
                         "Timestamps/Watermarks",

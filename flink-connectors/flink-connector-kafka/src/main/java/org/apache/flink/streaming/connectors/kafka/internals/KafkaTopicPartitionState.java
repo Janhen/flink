@@ -66,6 +66,8 @@ public class KafkaTopicPartitionState<T, KPH> {
     }
 
     /**
+     * 获取Kafka分区的描述符。
+     *
      * Gets Kafka's descriptor for the Kafka Partition.
      *
      * @return The Kafka partition descriptor.

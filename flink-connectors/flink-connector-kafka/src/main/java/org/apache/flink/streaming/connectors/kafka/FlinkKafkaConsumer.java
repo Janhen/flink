@@ -74,9 +74,12 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
     private static final long serialVersionUID = 1L;
 
     /** Configuration key to change the polling timeout. * */
+    // 修改轮询超时的配置键。
     public static final String KEY_POLL_TIMEOUT = "flink.poll-timeout";
 
     /**
+     * 来自Kafka的Javadoc:如果数据不可用，在轮询中等待的时间，以毫秒为单位。如果为0，则立即返回当前可用的任何记录。
+     *
      * From Kafka's Javadoc: The time, in milliseconds, spent waiting in poll if data is not
      * available. If 0, returns immediately with any records that are available now.
      */

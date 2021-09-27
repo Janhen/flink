@@ -22,6 +22,11 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.connector.source.ScanTableSource;
 
 /**
+ * 允许完全依赖于{@link ScanTableSource}本身提供的水印策略。
+ *
+ * <p>水印的概念定义了何时触发基于事件时间属性的时间操作。水印告诉操作符，时间戳较早或等于水印时间戳的元素不应到达该
+ *   操作符。因此，水印是延迟和完整性之间的权衡。
+ *
  * Enables to fully rely on the watermark strategy provided by the {@link ScanTableSource} itself.
  *
  * <p>The concept of watermarks defines when time operations based on an event time attribute will
@@ -49,5 +54,6 @@ import org.apache.flink.table.connector.source.ScanTableSource;
 public interface SupportsSourceWatermark {
 
     /** Instructs the source to emit source-specific watermarks during runtime. */
+    // 指示源在运行时发出特定于源的水印。
     void applySourceWatermark();
 }

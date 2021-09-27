@@ -98,8 +98,11 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
 
     private static final long serialVersionUID = 1L;
 
+    // J: 丢弃的延迟数据数量
     private static final String LATE_ELEMENTS_DROPPED_METRIC_NAME = "numLateRecordsDropped";
+    // J: 丢弃的延迟数据比率
     private static final String LATE_ELEMENTS_DROPPED_RATE_METRIC_NAME = "lateRecordsDroppedRate";
+    // 水印延迟指标名
     private static final String WATERMARK_LATENCY_METRIC_NAME = "watermarkLatency";
 
     // ------------------------------------------------------------------------
@@ -136,6 +139,11 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     private final int rowtimeIndex;
 
     /**
+     * 元素允许的延迟。这用于:
+     *
+     *   <li>决定一个元素是否应该由于延迟而从窗口中删除。
+     *   <li>当系统时间超过{@code 窗口时，清除窗口状态。maxTimestamp + allowedlate} landmark。
+     *
      * The allowed lateness for elements. This is used for:
      *
      * <ul>
@@ -152,12 +160,15 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
 
     // --------------------------------------------------------------------------------
 
+    // 内部窗口处理函数
     protected transient InternalWindowProcessFunction<K, W> windowFunction;
 
     /** This is used for emitting elements with a given timestamp. */
+    // 这用于发出带有给定时间戳的元素。
     protected transient TimestampedCollector<RowData> collector;
 
     /** Flag to prevent duplicate function.close() calls in close() and dispose(). */
+    // 标志以防止在close()和dispose()中重复调用function.close()。
     private transient boolean functionsClosed = false;
 
     private transient InternalTimerService<W> internalTimerService;

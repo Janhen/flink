@@ -101,6 +101,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     public static final int MAX_NUM_PENDING_CHECKPOINTS = 100;
 
     /**
+     * 执行分区发现的默认间隔，以毫秒为单位({@code Long。MIN_VALUE}，即默认禁用)。
+     *
      * The default interval to execute partition discovery, in milliseconds ({@code Long.MIN_VALUE},
      * i.e. disabled by default).
      */
@@ -114,6 +116,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
             "flink.partition-discovery.interval-millis";
 
     /** State name of the consumer's partition offset states. */
+    // 使用者的分区偏移状态的状态名。
     private static final String OFFSETS_STATE_NAME = "topic-partition-offset-states";
 
     // ------------------------------------------------------------------------
@@ -127,6 +130,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     protected final KafkaDeserializationSchema<T> deserializer;
 
     /**
+     * 源将要读取的主题分区集，以及从它们开始读取的初始偏移量。
+     *
      * The set of topic partitions that the source will read, with their initial offsets to start
      * reading from.
      */
@@ -140,12 +145,15 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private SerializedValue<WatermarkStrategy<T>> watermarkStrategy;
 
     /**
+     * 决定是否在检查点提交的用户设置标志。注意:此标志不代表最终的偏移提交模式。
+     *
      * User-set flag determining whether or not to commit on checkpoints. Note: this flag does not
      * represent the final offset commit mode.
      */
     private boolean enableCommitOnCheckpoints = true;
 
     /** User-set flag to disable filtering restored partitions with current topics descriptor. */
+    // 用户设置标志以禁用使用当前主题描述符过滤恢复的分区。
     private boolean filterRestoredPartitionsWithCurrentTopicsDescriptor = true;
 
     /**
@@ -162,6 +170,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private StartupMode startupMode = StartupMode.GROUP_OFFSETS;
 
     /**
+     * 特定的启动补偿;只有当启动模式为{@link StartupMode# specific_offset}时才相关。
+     *
      * Specific startup offsets; only relevant when startup mode is {@link
      * StartupMode#SPECIFIC_OFFSETS}.
      */
@@ -753,6 +763,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
                         getRuntimeContext(), metricGroup -> metricGroup.addGroup("user")));
     }
 
+    // 读取 kafka 来源数据
     @Override
     public void run(SourceContext<T> sourceContext) throws Exception {
         if (subscribedPartitionsToStartOffsets == null) {
@@ -760,6 +771,9 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
         }
 
         // initialize commit metrics and default offset callback method
+        // 初始化提交指标和默认偏移量回调方法
+        // commitsSucceeded -
+        // commitsFailed -
         this.successfulCommits =
                 this.getRuntimeContext()
                         .getMetricGroup()
@@ -768,6 +782,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
                 this.getRuntimeContext().getMetricGroup().counter(COMMITS_FAILED_METRICS_COUNTER);
         final int subtaskIndex = this.getRuntimeContext().getIndexOfThisSubtask();
 
+        // 提交后回调，对应增加失败和成功提交数量
         this.offsetCommitCallback =
                 new KafkaCommitCallback() {
                     @Override
@@ -822,9 +837,14 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
         //                 thread running the main fetcher loop
         //  2) Old state - partition discovery is disabled and only the main fetcher loop is
         // executed
+        // 根据我们是否恢复到当前的状态版本(1.3)，剩余的逻辑分支到2个路径:
+        // 1)新的状态分区发现循环作为单独的线程执行，这个线程运行主获取循环
+        // 2)旧的状态分区发现被禁用，只执行主fetcher循环
         if (discoveryIntervalMillis == PARTITION_DISCOVERY_DISABLED) {
+            // 不带有分区发现方式的消费
             kafkaFetcher.runFetchLoop();
         } else {
+            // 带有分区发现的消费
             runWithPartitionDiscovery();
         }
     }
@@ -855,6 +875,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     }
 
     private void createAndStartDiscoveryLoop(AtomicReference<Exception> discoveryLoopErrorRef) {
+        // 分区发现线程
         discoveryLoopThread =
                 new Thread(
                         () -> {

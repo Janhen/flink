@@ -56,6 +56,10 @@ public final class Handover implements Closeable {
     private boolean wakeupProducer;
 
     /**
+     * 投票从回归开始的下一个元素，可能会阻塞直到下一个元素可用。此方法的行为类似于从阻塞队列中轮询。
+     *
+     * <p>如果生产者({@link #reportError(Throwable)})提交了一个异常，那么该异常将被抛出，而不是返回一个元素。
+     *
      * Polls the next element from the Handover, possibly blocking until the next element is
      * available. This method behaves similar to polling from a blocking queue.
      *
@@ -75,6 +79,7 @@ public final class Handover implements Closeable {
 
             ConsumerRecords<byte[], byte[]> n = next;
             if (n != null) {
+                // 返回该记录
                 next = null;
                 lock.notifyAll();
                 return n;
@@ -90,6 +95,9 @@ public final class Handover implements Closeable {
     }
 
     /**
+     * 从生产者手中交出一个元素。如果切换已经有一个还没有被消费者线程拾取的元素，这个调用就会阻塞，直到消费者
+     * 拾取前一个元素。
+     *
      * Hands over an element from the producer. If the Handover already has an element that was not
      * yet picked up by the consumer thread, this call blocks until the consumer picks up that
      * previous element.

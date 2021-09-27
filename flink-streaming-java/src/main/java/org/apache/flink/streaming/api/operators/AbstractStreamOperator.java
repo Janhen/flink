@@ -65,6 +65,14 @@ import java.util.Optional;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 所有流操作符的基类。包含用户函数的操作符应该扩展类{@link AbstractUdfStreamOperator}(它是该类的一个特殊子类)。
+ *
+ * <p>对于具体实现，也必须实现以下两个接口之一，以将操作符标记为一元或二元:{@link OneInputStreamOperator}或
+ *   {@link TwoInputStreamOperator}。
+ *
+ * <p> {@code StreamOperator}的方法保证不会被并发调用。同样，如果使用计时器服务，计时器回调也保证不会与
+ *   {@code StreamOperator}上的方法并发调用。
+ *
  * Base class for all stream operators. Operators that contain a user function should extend the
  * class {@link AbstractUdfStreamOperator} instead (which is a specialized subclass of this class).
  *

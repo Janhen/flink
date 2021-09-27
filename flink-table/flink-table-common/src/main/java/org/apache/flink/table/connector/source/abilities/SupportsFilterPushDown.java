@@ -26,6 +26,8 @@ import org.apache.flink.table.expressions.ResolvedExpression;
 import java.util.List;
 
 /**
+ * 允许将过滤器下推到{@link ScanTableSource}中。
+ *
  * Enables to push down filters into a {@link ScanTableSource}.
  *
  * <p>Given the following SQL:
