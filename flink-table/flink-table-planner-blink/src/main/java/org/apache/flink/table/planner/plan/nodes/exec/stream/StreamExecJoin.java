@@ -52,6 +52,12 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link StreamExecNode} 用于常规连接。
+ *
+ * <p>常规连接是最通用的连接类型，其中连接输入任意一侧的任何新记录或更改都是可见的，并且会影响整个连接结果。
+ *
+ * J: 会为 StreamExecJoin 操作生成一个 TwoInputTransformation 变换
+ *
  * {@link StreamExecNode} for regular Joins.
  *
  * <p>Regular joins are the most generic type of join in which any new records or changes to either
@@ -64,12 +70,15 @@ public class StreamExecJoin extends ExecNodeBase<RowData>
     public static final String FIELD_NAME_LEFT_UNIQUE_KEYS = "leftUniqueKeys";
     public static final String FIELD_NAME_RIGHT_UNIQUE_KEYS = "rightUniqueKeys";
 
+    // join 的秒数信息
     @JsonProperty(FIELD_NAME_JOIN_SPEC)
     private final JoinSpec joinSpec;
 
+    // 左边的唯一键
     @JsonProperty(FIELD_NAME_LEFT_UNIQUE_KEYS)
     private final List<int[]> leftUniqueKeys;
 
+    // 右边的唯一键
     @JsonProperty(FIELD_NAME_RIGHT_UNIQUE_KEYS)
     private final List<int[]> rightUniqueKeys;
 
@@ -113,6 +122,7 @@ public class StreamExecJoin extends ExecNodeBase<RowData>
         final ExecEdge leftInputEdge = getInputEdges().get(0);
         final ExecEdge rightInputEdge = getInputEdges().get(1);
 
+        // 对上游输入做变换
         final Transformation<RowData> leftTransform =
                 (Transformation<RowData>) leftInputEdge.translateToPlan(planner);
         final Transformation<RowData> rightTransform =
@@ -140,8 +150,10 @@ public class StreamExecJoin extends ExecNodeBase<RowData>
         long minRetentionTime = tableConfig.getMinIdleStateRetentionTime();
 
         AbstractStreamingJoinOperator operator;
+        // join 类型
         FlinkJoinType joinType = joinSpec.getJoinType();
         if (joinType == FlinkJoinType.ANTI || joinType == FlinkJoinType.SEMI) {
+            // 当为 ANTI, SEMI 使用 StreamingSemiAntiJoinOperator
             operator =
                     new StreamingSemiAntiJoinOperator(
                             joinType == FlinkJoinType.ANTI,
@@ -156,6 +168,8 @@ public class StreamExecJoin extends ExecNodeBase<RowData>
             boolean leftIsOuter = joinType == FlinkJoinType.LEFT || joinType == FlinkJoinType.FULL;
             boolean rightIsOuter =
                     joinType == FlinkJoinType.RIGHT || joinType == FlinkJoinType.FULL;
+            // LEFT, RIGHT, FULL, INNER 使用 StreamingJoinOperator, 内部使用 KeyedState，因此会将状态的
+            // KeySelector 设置为关联键。
             operator =
                     new StreamingJoinOperator(
                             leftTypeInfo,
@@ -170,6 +184,7 @@ public class StreamExecJoin extends ExecNodeBase<RowData>
         }
 
         final RowType returnType = (RowType) getOutputType();
+        // 变换为 TwoInputTransformation
         final TwoInputTransformation<RowData, RowData, RowData> transform =
                 new TwoInputTransformation<>(
                         leftTransform,

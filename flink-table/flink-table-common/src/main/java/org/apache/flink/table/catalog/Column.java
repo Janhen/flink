@@ -30,6 +30,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * 在{@link ResolvedSchema}中表示列。
+ *
  * Representation of a column in a {@link ResolvedSchema}.
  *
  * <p>A table column describes either a {@link PhysicalColumn}, {@link ComputedColumn}, or {@link

@@ -35,6 +35,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * JoinSpec描述了如何连接两个表。
+ *
+ * <p>这个类对应 {@link org.apache.calcite.rel.core.Join} rel节 点。
+ *
  * JoinSpec describes how two tables will be joined.
  *
  * <p>This class corresponds to {@link org.apache.calcite.rel.core.Join} rel node.
@@ -60,10 +64,12 @@ public class JoinSpec {
     private final int[] rightKeys;
 
     /** whether to filter null values or not for each corresponding index join key. */
+    // 是否为每个对应的索引连接键过滤空值
     @JsonProperty(FIELD_NAME_FILTER_NULLS)
     private final boolean[] filterNulls;
 
     /** Non Equi join conditions. */
+    // 非Equi连接条件
     @JsonProperty(FIELD_NAME_NON_EQUI_CONDITION)
     private final @Nullable RexNode nonEquiCondition;
 
@@ -114,6 +120,7 @@ public class JoinSpec {
     }
 
     /** Gets number of keys in join key. */
+    // 获取连接键中的键数
     @JsonIgnore
     public int getJoinKeySize() {
         return leftKeys.length;

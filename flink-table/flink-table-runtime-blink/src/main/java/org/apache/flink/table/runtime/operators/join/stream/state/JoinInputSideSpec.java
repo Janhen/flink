@@ -30,15 +30,23 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link JoinInputSideSpec}是ap规范，它描述了Join的输入端信息。
+ *
+ * J: 根据输入侧不同的特点(是否包含唯一键、关联键是否包含唯一键), 设计几种不同的状态存储结构，
+ *   JoinKeyContainsUniqueKey, InputSideHasUniqueKey 和 InputSideHasNoUniqueKey
+ *
  * The {@link JoinInputSideSpec} is ap specification which describes input side information of a
  * Join.
  */
 public class JoinInputSideSpec implements Serializable {
     private static final long serialVersionUID = 3178408082297179959L;
 
+    // 输入端 hash 唯一键
     private final boolean inputSideHasUniqueKey;
+    // join 的键包含唯一键
     private final boolean joinKeyContainsUniqueKey;
     @Nullable private final InternalTypeInfo<RowData> uniqueKeyType;
+    // 唯一键选择器
     @Nullable private final KeySelector<RowData, RowData> uniqueKeySelector;
 
     private JoinInputSideSpec(

@@ -26,6 +26,7 @@ import org.apache.flink.configuration.ConfigOptions;
 public class SqlClientOptions {
     private SqlClientOptions() {}
 
+    // 在表模式下要缓存的行数。如果行数超过指定的值，它将以FIFO样式重新尝试该行。
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Integer> EXECUTION_MAX_TABLE_RESULT_ROWS =
             ConfigOptions.key("sql-client.execution.max-table-result.rows")

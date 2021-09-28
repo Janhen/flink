@@ -171,6 +171,7 @@ public class PipelineOptions {
                                                     + " would cause the program to fail.")
                                     .build());
 
+    // 注册一个自定义的、可序列化的用户配置对象。配置可以通过操作符访问。
     public static final ConfigOption<Map<String, String>> GLOBAL_JOB_PARAMETERS =
             key("pipeline.global-job-parameters")
                     .mapType()
@@ -188,6 +189,8 @@ public class PipelineOptions {
                                     + " maximum parallelism. The maximum parallelism specifies the upper limit for dynamic scaling and"
                                     + " the number of key groups used for partitioned state.");
 
+    // 当启用时，Flink内部用于反序列化和向用户代码函数传递数据的对象将被重用。请记住，当操作的用户代码函数不知道
+    // 这种行为时，这可能会导致错误。
     public static final ConfigOption<Boolean> OBJECT_REUSE =
             key("pipeline.object-reuse")
                     .booleanType()
@@ -253,6 +256,8 @@ public class PipelineOptions {
                             "Operator chaining allows non-shuffle operations to be co-located in the same thread "
                                     + "fully avoiding serialization and de-serialization.");
 
+    // 要在指定名称下注册到分布式缓存中的文件。在本地路径下的(分布式)运行时中的任何用户定义函数都可以访问这些文件。
+    // 文件可以是本地文件(通过BlobServer分发)，也可以是分布式文件系统中的文件。如果需要，运行时将临时复制文件到本地缓存。
     public static final ConfigOption<List<String>> CACHED_FILES =
             key("pipeline.cached-files")
                     .stringType()

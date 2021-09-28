@@ -37,6 +37,13 @@ import java.util.Map;
 import static java.time.ZoneId.SHORT_IDS;
 
 /**
+ * 配置当前{@link TableEnvironment}会话，以调整表和SQL API程序。
+ *
+ * <p>对于常见或重要的配置选项，这个类提供了带有详细内联文档的getter和setter方法。
+ *
+ * <p>对于更高级的配置，用户可以通过{@link #getConfiguration()}直接访问底层的键值映射。目前，只有Blink规划器支持
+ *   键值选项。用户还可以通过此对象配置底层执行参数。如。
+ *
  * Configuration for the current {@link TableEnvironment} session to adjust Table & SQL API
  * programs.
  *
@@ -65,18 +72,23 @@ import static java.time.ZoneId.SHORT_IDS;
 @PublicEvolving
 public class TableConfig {
     /** Defines if all fields need to be checked for NULL first. */
+    // 定义是否需要首先检查所有字段是否为NULL
     private Boolean nullCheck = true;
 
     /** Defines the configuration of Planner for Table API and SQL queries. */
+    // 为表API和SQL查询定义Planner的配置。
     private PlannerConfig plannerConfig = PlannerConfig.EMPTY_CONFIG;
 
     /**
+     * 定义十进制除法计算的默认上下文。我们使用Scala的默认MathContext.DECIMAL128
+     *
      * Defines the default context for decimal division calculation. We use Scala's default
      * MathContext.DECIMAL128.
      */
     private MathContext decimalContext = MathContext.DECIMAL128;
 
     /** A configuration object to hold all key/value configuration. */
+    // 一个配置对象，用来保存所有的键值配置。
     private final Configuration configuration = new Configuration();
 
     /** Gives direct access to the underlying key-value map for advanced configuration. */
@@ -108,6 +120,9 @@ public class TableConfig {
     }
 
     /**
+     * 返回当前会话时区id。它用于从{@code TIMESTAMP WITH LOCAL TIME ZONE}转换为
+     * {@code TIMESTAMP WITH LOCAL TIME ZONE}。更多细节见{@link #setLocalTimeZone(ZoneId)}。
+     *
      * Returns the current session time zone id. It is used when converting to/from {@code TIMESTAMP
      * WITH LOCAL TIME ZONE}. See {@link #setLocalTimeZone(ZoneId)} for more details.
      *
@@ -122,6 +137,11 @@ public class TableConfig {
     }
 
     /**
+     * 设置当前会话时区id。当从{@link DataTypes#TIMESTAMP_WITH_LOCAL_TIME_ZONE()}转换到
+     * {@link DataTypes#TIMESTAMP_WITH_LOCAL_TIME_ZONE()}时使用。在内部，带有本地时区的时间戳总是用UTC
+     * 时区表示。然而，当转换为不包含时区的数据类型时(例如:TIMESTAMP, time，或者简单的STRING)，会话时区会在转换
+     * 期间被使用。
+     *
      * Sets the current session time zone id. It is used when converting to/from {@link
      * DataTypes#TIMESTAMP_WITH_LOCAL_TIME_ZONE()}. Internally, timestamps with local time zone are
      * always represented in the UTC time zone. However, when converting to data types that don't
@@ -334,6 +354,9 @@ public class TableConfig {
     }
 
     /**
+     * 设置一个可以通过{@link org.apache.flink.table.functions.FunctionContext#getJobParameter(String, String)}
+     * 访问的自定义用户参数。。
+     *
      * Sets a custom user parameter that can be accessed via {@link
      * org.apache.flink.table.functions.FunctionContext#getJobParameter(String, String)}.
      *

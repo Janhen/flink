@@ -47,6 +47,11 @@ import static org.apache.flink.runtime.state.KeyGroupRangeAssignment.DEFAULT_LOW
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 这个{@link ExecNode}表示流输入元素分区的更改。
+ *
+ * J: 为 StreamExecExchange 操作生成一个 PartitionTransformation 变换，用来确定上游算子输出的记录转发到
+ *   下游算子的分区
+ *
  * This {@link ExecNode} represents a change of partitioning of the input elements for stream.
  *
  * <p>TODO Remove this class once FLINK-21224 is finished.

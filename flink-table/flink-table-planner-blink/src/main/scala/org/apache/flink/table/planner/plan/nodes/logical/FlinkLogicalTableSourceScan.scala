@@ -40,6 +40,8 @@ import java.util.function.Supplier
 import scala.collection.JavaConversions._
 
 /**
+  * [[TableScan]] 的子类，它是一个关系操作符，返回Flink中[[DynamicTableSource]]的内容。
+  *
   * Sub-class of [[TableScan]] that is a relational operator
   * which returns the contents of a [[DynamicTableSource]] in Flink.
   */

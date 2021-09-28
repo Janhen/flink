@@ -27,9 +27,12 @@ import org.apache.calcite.rel.RelNode
 /**
  * Base class for flink physical relational expression.
  */
+// flink物理关系表达式的基类。
 trait FlinkPhysicalRel extends FlinkRelNode {
 
   /**
+   * 尝试通过当前节点的后代满足所需的特征。如果后代节点可以满足要求的特征，而当前节点不会销毁它，则返回转换后的输入的新节点。
+   *
    * Try to satisfy required traits by descendant of current node. If descendant can satisfy
    * required traits, and current node will not destroy it, then returns the new node with
    * converted inputs.
@@ -41,6 +44,8 @@ trait FlinkPhysicalRel extends FlinkRelNode {
   def satisfyTraits(requiredTraitSet: RelTraitSet): Option[RelNode] = None
 
   /**
+   * 将这个物理的RelNode转换为[[ExecNode]]。
+   *
    * Translate this physical RelNode into an [[ExecNode]].
    *
    * NOTE: This method only needs to create the corresponding ExecNode,

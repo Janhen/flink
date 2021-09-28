@@ -454,6 +454,8 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 使用给定类型在基于位置的字段模式中创建固定长度的行，并将给定值赋给行字段。
+     *
      * Creates a fixed-length row in position-based field mode with given kind and assigns the given
      * values to the row's fields.
      *

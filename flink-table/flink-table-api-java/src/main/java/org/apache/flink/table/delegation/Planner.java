@@ -29,6 +29,11 @@ import org.apache.flink.table.operations.QueryOperation;
 import java.util.List;
 
 /**
+ * 这个接口有两个用途:
+ *
+ *   <li>SQL parser via {@link #getParser()} -将SQL字符串转换为Table API的特定对象，例如{@link操作}的树
+ *   <li>relational planner -提供一种方法来规划，优化并将{@link ModifyOperation}的树转换为可运行的形式({@link Transformation})
+ *
  * This interface serves two purposes:
  *
  * <ul>
@@ -54,6 +59,8 @@ import java.util.List;
 public interface Planner {
 
     /**
+     * 检索一个提供解析SQL字符串方法的{@link Parser}。
+     *
      * Retrieves a {@link Parser} that provides methods for parsing a SQL string.
      *
      * @return initialized {@link Parser}
@@ -61,6 +68,8 @@ public interface Planner {
     Parser getParser();
 
     /**
+     * 将一个{@link ModifyOperation}的关系树转换为一组可运行的{@link Transformation}。
+     *
      * Converts a relational tree of {@link ModifyOperation}s into a set of runnable {@link
      * Transformation}s.
      *
@@ -120,6 +129,11 @@ public interface Planner {
     String explainJsonPlan(String jsonPlan, ExplainDetail... extraDetails);
 
     /**
+     * 将一个json计划转换为一组可运行的{@link Transformation}。
+     *
+     * <p> json计划是给定语句的优化ExecNode计划的字符串json表示。可以将ExecNode计划序列化为json计划，也可以将
+     *   json计划反序列化为ExecNode计划。
+     *
      * Converts a json plan into a set of runnable {@link Transformation}s.
      *
      * <p>The json plan is the string json representation of an optimized ExecNode plan for the

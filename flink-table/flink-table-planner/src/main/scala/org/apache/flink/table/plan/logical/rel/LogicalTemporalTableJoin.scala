@@ -29,6 +29,8 @@ import org.apache.calcite.sql.{SqlFunction, SqlFunctionCategory, SqlKind}
 import org.apache.flink.util.Preconditions.checkArgument
 
 /**
+ * 表示表与[[org.apache.flink.table.functions.TemporalTableFunction]]之间的连接
+ *
   * Represents a join between a table and [[org.apache.flink.table.functions.TemporalTableFunction]]
   *
   * @param cluster
@@ -36,6 +38,8 @@ import org.apache.flink.util.Preconditions.checkArgument
   * @param left
   * @param right     table scan (or other more complex table expression) of underlying
   *                  [[org.apache.flink.table.functions.TemporalTableFunction]]
+ *                  底层[[org.apache.flink.table.functions.TemporalTableFunction]]的表扫描(或其他更
+ *                  复杂的表表达式)
   * @param condition must contain [[LogicalTemporalTableJoin#TEMPORAL_JOIN_CONDITION]] with
   *                  correctly defined references to rightTimeAttribute,
   *                  rightPrimaryKeyExpression and leftTimeAttribute. We can not implement
@@ -44,6 +48,10 @@ import org.apache.flink.util.Preconditions.checkArgument
   *                  pruning/renaming/reordering, etc. Later rightTimeAttribute,
   *                  rightPrimaryKeyExpression and leftTimeAttribute will be extracted from
   *                  the condition.
+ *                  必须包含[[LogicalTemporalTableJoin#TEMPORAL_JOIN_CONDITION]]和正确定义的对
+ *                  rightTimeAttribute, rightPrimaryKeyExpression和leftTimeAttribute的引用。我们不能
+ *                  将这些引用实现为单独的字段，因为方解石的优化规则存在问题，如投影下推、列修剪重命名排序等。稍后将
+ *                  从条件中提取rightTimeAttribute、rightPrimaryKeyExpression和leftTimeAttribute。
   */
 class LogicalTemporalTableJoin private(
     cluster: RelOptCluster,

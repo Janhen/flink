@@ -32,6 +32,8 @@ import java.util
 import scala.collection.JavaConversions._
 
 /**
+  * 对关系表达式的物理分布的描述。详情请参见[[RelDistribution]]。
+  *
   * Description of the physical distribution of a relational expression.
   * See [[RelDistribution]] for more details.
   *

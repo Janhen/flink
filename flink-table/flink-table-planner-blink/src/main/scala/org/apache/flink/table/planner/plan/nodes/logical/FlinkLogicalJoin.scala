@@ -34,7 +34,7 @@ import java.util.Collections
 import scala.collection.JavaConversions._
 
 /**
-  * [[Join]]的子类，是一个关系表达式，它根据Flink中的某些条件将两个关系表达式组合在一起。
+  * [[Join]] 的子类，是一个关系表达式，它根据 Flink 中的某些条件将两个关系表达式组合在一起。
   *
   * Sub-class of [[Join]] that is a relational expression
   * which combines two relational expressions according to some condition in Flink.
@@ -44,7 +44,9 @@ class FlinkLogicalJoin(
     traitSet: RelTraitSet,
     left: RelNode,
     right: RelNode,
+    // join 起来的条件，对应类为 calcite.rex 包下的
     condition: RexNode,
+    // join 类型，对应类为 calcite.rel.core 中的
     joinType: JoinRelType)
   extends Join(cluster, traitSet, Collections.emptyList[RelHint](),
     left, right, condition, Set.empty[CorrelationId], joinType)
@@ -82,6 +84,8 @@ class FlinkLogicalJoin(
 }
 
 /**
+  * 支持所有连接
+  *
   * Support all joins.
   */
 private class FlinkLogicalJoinConverter

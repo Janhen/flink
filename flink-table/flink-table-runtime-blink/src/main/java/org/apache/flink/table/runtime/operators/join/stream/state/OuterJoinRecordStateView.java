@@ -22,6 +22,12 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * {@link OuterJoinRecordStateView}是{@link JoinRecordStateView}的扩展。
+ * {@link OuterJoinRecordStateView}用于存储Join的外部输入侧的记录，例如左Join的左边，full Join的两边。
+ *
+ * <p>我们应该与记录一起存储的附加信息是关联的数量，也就是与该记录相关联的另一端记录的数量。当发送一个空填充行时，这是
+ *   一个重要的信息，以避免每次都重新计算相关的数字。
+ *
  * A {@link OuterJoinRecordStateView} is an extension to {@link JoinRecordStateView}. The {@link
  * OuterJoinRecordStateView} is used to store records for the outer input side of the Join, e.g. the
  * left side of left join, the both side of full join.
@@ -43,6 +49,8 @@ public interface OuterJoinRecordStateView extends JoinRecordStateView {
     void addRecord(RowData record, int numOfAssociations) throws Exception;
 
     /**
+     * 更新属于该记录的关联数。
+     *
      * Updates the number of associations belongs to the record.
      *
      * @param record the record to update

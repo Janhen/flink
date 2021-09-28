@@ -35,6 +35,13 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPr
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getScale;
 
 /**
+ * 内部数据结构的基本接口，表示{@link RowType}和其他(可能嵌套的)结构化类型的数据，如表生态系统中的
+ * {@link StructuredType}。
+ *
+ * <p>运行时通过Table API或SQL管道传递的所有顶级记录都是这个接口的实例。每个{@link RowData}包含一个
+ *   {@link RowKind}，它表示一行在变更日志中描述的变更类型。{@link RowKind}只是行的元数据信息，因此不是表模式
+ *   的一部分，也就是说，不是一个专用字段。
+ *
  * Base interface for an internal data structure representing data of {@link RowType} and other
  * (possibly nested) structured types such as {@link StructuredType} in the table ecosystem.
  *

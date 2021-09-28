@@ -72,6 +72,7 @@ public final class OuterJoinRecordStateViews {
 
     // ------------------------------------------------------------------------------------------
 
+    // join 键包含唯一键
     private static final class JoinKeyContainsUniqueKey implements OuterJoinRecordStateView {
 
         private final ValueState<Tuple2<RowData, Integer>> recordState;
@@ -140,6 +141,7 @@ public final class OuterJoinRecordStateViews {
         }
     }
 
+    // 输入端有唯一键的存储
     private static final class InputSideHasUniqueKey implements OuterJoinRecordStateView {
 
         // stores record in the mapping <UK, <Record, associated-num>>
@@ -202,6 +204,7 @@ public final class OuterJoinRecordStateViews {
         }
     }
 
+    // 输入端没有唯一键的状态存储 MapState
     private static final class InputSideHasNoUniqueKey implements OuterJoinRecordStateView {
 
         // stores record in the mapping <Record, <appear-times, associated-num>>

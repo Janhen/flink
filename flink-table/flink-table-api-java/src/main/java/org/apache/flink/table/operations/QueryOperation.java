@@ -25,7 +25,7 @@ import org.apache.flink.table.catalog.ResolvedSchema;
 import java.util.List;
 
 /**
- * 表示面向用户的{@link Table} API背后的操作结构的基类。
+ * 表示面向用户的 {@link Table} API背 后的操作结构的基类。
  *
  * <p>它表示一个操作，该操作可以是关系查询的一个节点。它有一个模式，可以用来验证应用在这个模式之上的
  *   {@link QueryOperation}。
@@ -39,9 +39,13 @@ import java.util.List;
 public interface QueryOperation extends Operation {
 
     /** Resolved schema of this operation. */
+    // 此操作的已解析模式。
     ResolvedSchema getResolvedSchema();
 
     /**
+     * 返回完全序列化此实例的字符串。序列化的字符串可以用来存储查询，例如
+     * {@link org.apache.flink.table.catalog。Catalog}作为视图。
+     *
      * Returns a string that fully serializes this instance. The serialized string can be used for
      * storing the query in e.g. a {@link org.apache.flink.table.catalog.Catalog} as a view.
      *

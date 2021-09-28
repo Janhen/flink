@@ -68,6 +68,7 @@ import static org.apache.flink.table.runtime.types.LogicalTypeDataTypeConverter.
 import static org.apache.flink.table.util.TimestampStringUtils.fromLocalDateTime;
 
 /** Visit expression to generator {@link RexNode}. */
+// 访问表达式生成器 {@link RexNode}。
 public class ExpressionConverter implements ExpressionVisitor<RexNode> {
 
     private static final List<CallExpressionConvertRule> FUNCTION_CONVERT_CHAIN =

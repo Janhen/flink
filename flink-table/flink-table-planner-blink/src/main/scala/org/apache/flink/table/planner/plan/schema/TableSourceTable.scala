@@ -30,6 +30,9 @@ import org.apache.calcite.rel.`type`.RelDataType
 import java.util
 
 /**
+ * 一个[[FlinkPreparingTableBase]]实现，它定义了翻译方解石所需的上下文变量。使用[[DynamicTableSource]]
+ * 将[[org.apache.calcite.plan.RelOptTable]]转换为Flink特定的关系表达式。
+ *
  * A [[FlinkPreparingTableBase]] implementation which defines the context variables
  * required to translate the Calcite [[org.apache.calcite.plan.RelOptTable]] to the Flink specific
  * relational expression with [[DynamicTableSource]].

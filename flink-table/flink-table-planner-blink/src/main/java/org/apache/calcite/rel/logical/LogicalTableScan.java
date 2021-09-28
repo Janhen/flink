@@ -34,6 +34,13 @@ import org.apache.calcite.schema.Table;
 import java.util.List;
 
 /**
+ * <code>LogicalTableScan<code>从{@link RelOptTable}中读取所有行。
+ *
+ * <p>这个类是从方解石复制的，因为{@link #explainTerms}应该考虑提示。
+ *
+ * <p>如果表是一个<code>net.sf.藏红花。JdbcTable<code>，那么这确实是可能的。但是对于其他类型的表，可能有许多方法
+ *   从表中读取数据。对于某些类型的表，除非应用某些收缩约束，否则甚至不可能读取所有的行。
+ *
  * A <code>LogicalTableScan</code> reads all the rows from a {@link RelOptTable}.
  *
  * <p>This class is copied from Calcite because the {@link #explainTerms} should consider hints.

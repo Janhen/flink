@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A RexShuttle that converts Hive function calls so that Flink recognizes them. */
+// 一个RexShuttle，转换Hive函数调用，以便Flink识别它们。
 public class SqlFunctionConverter extends RexShuttle {
 
     // need reflection to get some fields from RexWindow

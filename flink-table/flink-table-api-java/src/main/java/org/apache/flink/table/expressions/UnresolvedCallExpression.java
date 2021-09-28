@@ -33,6 +33,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * 调用由 {@link FunctionDefinition} 标识的函数的未解析调用表达式。
+ *
  * Unresolved call expression for calling a function identified by a {@link FunctionDefinition}.
  *
  * <p>This is a purely API facing expression with unvalidated arguments and unknown output data

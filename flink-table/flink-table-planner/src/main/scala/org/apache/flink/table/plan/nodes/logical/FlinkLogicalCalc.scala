@@ -27,9 +27,11 @@ import org.apache.calcite.rel.metadata.RelMetadataQuery
 import org.apache.calcite.rex.RexProgram
 import org.apache.flink.table.plan.nodes.{CommonCalc, FlinkConventions}
 
+// 逻辑计算
 class FlinkLogicalCalc(
     cluster: RelOptCluster,
     traitSet: RelTraitSet,
+    // 逻辑计划首先被转换为 Flink SQL 内部的 RelNode
     input: RelNode,
     calcProgram: RexProgram)
   extends Calc(cluster, traitSet, input, calcProgram)
@@ -40,12 +42,14 @@ class FlinkLogicalCalc(
     new FlinkLogicalCalc(cluster, traitSet, child, program)
   }
 
+  // 计算自己的成本
   override def computeSelfCost(planner: RelOptPlanner, mq: RelMetadataQuery): RelOptCost = {
     val child = this.getInput
     val rowCnt = mq.getRowCount(child)
     computeSelfCost(calcProgram, planner, rowCnt)
   }
 
+  // 估计行数
   override def estimateRowCount(metadata: RelMetadataQuery): Double = {
     val child = this.getInput
     val rowCnt = metadata.getRowCount(child)

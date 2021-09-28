@@ -24,11 +24,14 @@ import org.apache.flink.types.RowKind;
 public enum ResultMode {
 
     /** Collects results and returns them as table snapshots. */
+    // 收集结果并将其作为表快照返回。
     TABLE,
 
     /** A result that is represented as a changelog consisting of records with {@link RowKind}. */
+    // 表示为由{@link RowKind}的记录组成的更改日志的结果。
     CHANGELOG,
 
     /** Print result in tableau mode. */
+    // 打印结果在tableau模式。
     TABLEAU
 }

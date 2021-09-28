@@ -28,6 +28,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * 一个尚未解析目标函数的调用表达式。
+ *
+ * <p>不是{@link FunctionDefinition}，调用由函数名标识，需要在目录中查找
+ *
  * A call expression where the target function has not been resolved yet.
  *
  * <p>Instead of a {@link FunctionDefinition}, the call is identified by the function's name and

@@ -31,6 +31,8 @@ import org.apache.calcite.rel.RelDistribution.Type._
 import org.apache.calcite.rel.{RelCollation, RelCollationTraitDef, RelCollations, RelNode}
 
 /**
+  * 将[[AbstractConverter]]转换为满足目标特征的RelNode的规则。
+  *
   * Rule which converts an [[AbstractConverter]] to a RelNode which satisfies the target traits.
   */
 class FlinkExpandConversionRule(flinkConvention: Convention)

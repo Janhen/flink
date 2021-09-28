@@ -68,6 +68,7 @@ public final class JoinRecordStateViews {
 
     // ------------------------------------------------------------------------------------
 
+    // join 的键包含唯一键，使用 ValueState 存储状态
     private static final class JoinKeyContainsUniqueKey implements JoinRecordStateView {
 
         private final ValueState<RowData> recordState;
@@ -109,6 +110,7 @@ public final class JoinRecordStateViews {
         }
     }
 
+    // 输入端游唯一键，使用 MapState，同时定义唯一键选择器
     private static final class InputSideHasUniqueKey implements JoinRecordStateView {
 
         // stores record in the mapping <UK, Record>
@@ -151,6 +153,7 @@ public final class JoinRecordStateViews {
         }
     }
 
+    // 输入端没有唯一键的状态存储， -> MapState
     private static final class InputSideHasNoUniqueKey implements JoinRecordStateView {
 
         private final MapState<RowData, Integer> recordState;

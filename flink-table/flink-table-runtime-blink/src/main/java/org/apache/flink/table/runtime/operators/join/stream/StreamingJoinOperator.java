@@ -33,11 +33,14 @@ import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 import org.apache.flink.types.RowKind;
 
 /** Streaming unbounded Join operator which supports INNER/LEFT/RIGHT/FULL JOIN. */
+// 支持INNER/LEFT/RIGHT/FULL Join的流无边界连接操作符
+// J: Flink 为 StreamExecJoin 操作生成一个 TwoInputTransformation 变换，内部算子为 StreamingJoinOperator
 public class StreamingJoinOperator extends AbstractStreamingJoinOperator {
 
     private static final long serialVersionUID = -376944622236540545L;
 
     // whether left side is outer side, e.g. left is outer but right is not when LEFT OUTER JOIN
+    // 是否左部分是爱步， 当left outer JOIN时，left是outer，而right不是
     private final boolean leftIsOuter;
     // whether right side is outer side, e.g. right is outer but left is not when RIGHT OUTER JOIN
     private final boolean rightIsOuter;

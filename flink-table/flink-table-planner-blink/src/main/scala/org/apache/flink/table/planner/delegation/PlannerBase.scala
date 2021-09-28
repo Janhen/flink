@@ -66,6 +66,10 @@ import java.util.TimeZone
 import _root_.scala.collection.JavaConversions._
 
 /**
+ * 对blink Planner执行[[Planner]]。它只支持流用例。(新
+ * [[org.apache.flink.table.sources。InputFormatTableSource]]应该可以工作，但将作为流源处理，并且不会
+ * 应用特定于批处理的优化)。
+ *
   * Implementation of [[Planner]] for blink planner. It supports only streaming use cases.
   * (The new [[org.apache.flink.table.sources.InputFormatTableSource]] should work, but will be
   * handled as streaming sources, and no batch specific optimizations will be applied).

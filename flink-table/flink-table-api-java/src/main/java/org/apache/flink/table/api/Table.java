@@ -27,6 +27,8 @@ import org.apache.flink.table.operations.QueryOperation;
 import org.apache.flink.table.sinks.TableSink;
 
 /**
+ * Table是Table API的核心组件。与批处理和流式API的DataSet和DataStream类似，Table API是围绕{@link Table}构建的。
+ *
  * A Table is the core component of the Table API. Similar to how the batch and streaming APIs have
  * DataSet and DataStream, the Table API is built around {@link Table}.
  *

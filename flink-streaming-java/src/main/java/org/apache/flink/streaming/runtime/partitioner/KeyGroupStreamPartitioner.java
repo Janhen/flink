@@ -28,6 +28,8 @@ import org.apache.flink.util.Preconditions;
 import java.util.Objects;
 
 /**
+ * 分区程序根据密钥组索引选择目标通道。
+ *
  * Partitioner selects the target channel based on the key group index.
  *
  * @param <T> Type of the elements in the Stream being partitioned

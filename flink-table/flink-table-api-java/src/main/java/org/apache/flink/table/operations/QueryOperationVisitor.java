@@ -21,6 +21,8 @@ package org.apache.flink.table.operations;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 实现访问器模式的类。它允许在{@link QueryOperation}树的顶部进行类型安全逻辑。
+ *
  * Class that implements visitor pattern. It allows type safe logic on top of tree of {@link
  * QueryOperation}s.
  */

@@ -163,6 +163,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * {@code SqlNode}的混合工具类，允许将DDL命令转换为{@link Operation}
+ *
+ * <p>对于每一种{@link SqlNode}，都需要有相应的#convert(type)方法，'type'参数应该是受支持的{@link SqlNode}的子类。
+ *
+ * <p>每个#convert()都应该返回一个{@link Operation}，该操作可以在
+ *   {@link org.apache.flink.table.delegation.Planner}中使用。
+ *
  * Mix-in tool class for {@code SqlNode} that allows DDL commands to be converted to {@link
  * Operation}.
  *
@@ -191,6 +198,9 @@ public class SqlToOperationConverter {
     }
 
     /**
+     * 这是执行各种DDLDML {@code SqlNode}的主要入口，不同的SqlNode将在#convert(type)方法中实现，其'type'参数
+     * 是{@code SqlNode}的子类。
+     *
      * This is the main entrance for executing all kinds of DDL/DML {@code SqlNode}s, different
      * SqlNode will have it's implementation in the #convert(type) method whose 'type' argument is
      * subclass of {@code SqlNode}.
@@ -202,7 +212,9 @@ public class SqlToOperationConverter {
     public static Optional<Operation> convert(
             FlinkPlannerImpl flinkPlanner, CatalogManager catalogManager, SqlNode sqlNode) {
         // validate the query
+        // 结合元数据验证 Sql 的合法性
         final SqlNode validated = flinkPlanner.validate(sqlNode);
+        // 将 SqlNode 转化为 Operation
         SqlToOperationConverter converter =
                 new SqlToOperationConverter(flinkPlanner, catalogManager);
         if (validated instanceof SqlCreateCatalog) {
@@ -986,7 +998,9 @@ public class SqlToOperationConverter {
 
     private PlannerQueryOperation toQueryOperation(FlinkPlannerImpl planner, SqlNode validated) {
         // transform to a relational tree
+        // 使用 SqlToRelConverter 将 SqlNode 转换成 RelNode
         RelRoot relational = planner.rel(validated);
+        // 将 RelNode 封装成 PlannerQueryOperation
         return new PlannerQueryOperation(relational.project());
     }
 }

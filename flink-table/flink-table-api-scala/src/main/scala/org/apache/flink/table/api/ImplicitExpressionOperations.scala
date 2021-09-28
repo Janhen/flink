@@ -26,6 +26,8 @@ import org.apache.flink.table.functions.BuiltInFunctionDefinitions._
 import scala.language.implicitConversions
 
 /**
+  * 这些都是可以用来构造用于表达式操作的[[Expression]] AST的操作。
+  *
   * These are all the operations that can be used to construct an [[Expression]] AST for
   * expression operations.
   */
