@@ -25,6 +25,8 @@ import java.util.Optional;
 public interface CatalogPartition {
 
     /**
+     * 获取与分区关联的属性映射。
+     *
      * Get a map of properties associated with the partition.
      *
      * @return a map of properties with the partition

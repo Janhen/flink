@@ -19,6 +19,7 @@
 package org.apache.flink.table.runtime.generated;
 
 /** Describes a generated {@link NamespaceTableAggsHandleFunction}. */
+// 描述生成的{@link NamespaceTableAggsHandleFunction}。
 public class GeneratedNamespaceTableAggsHandleFunction<N>
         extends GeneratedClass<NamespaceTableAggsHandleFunction<N>> {
 

@@ -52,14 +52,22 @@ public class GenericInMemoryCatalog extends AbstractCatalog {
 
     public static final String DEFAULT_DB = "default";
 
+    // 所有的数据库
     private final Map<String, CatalogDatabase> databases;
+    // 对应路径下的表
     private final Map<ObjectPath, CatalogBaseTable> tables;
+    // 对应路径下的函数
     private final Map<ObjectPath, CatalogFunction> functions;
+    // 对应路径下的分区信息
     private final Map<ObjectPath, Map<CatalogPartitionSpec, CatalogPartition>> partitions;
 
+    // 对应路径下的表统计信息
     private final Map<ObjectPath, CatalogTableStatistics> tableStats;
+    // 对应路径下的列统计信息
     private final Map<ObjectPath, CatalogColumnStatistics> tableColumnStats;
+    // 对应路径下的分区统计信息
     private final Map<ObjectPath, Map<CatalogPartitionSpec, CatalogTableStatistics>> partitionStats;
+    // 对应路径下的分区列统计信息
     private final Map<ObjectPath, Map<CatalogPartitionSpec, CatalogColumnStatistics>>
             partitionColumnStats;
 

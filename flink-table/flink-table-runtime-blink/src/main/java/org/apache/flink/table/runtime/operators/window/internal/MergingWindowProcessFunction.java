@@ -33,6 +33,8 @@ import java.util.List;
 import static org.apache.flink.table.runtime.util.TimeWindowUtil.toEpochMillsForTimer;
 
 /**
+ * {@link InternalWindowProcessFunction}的实现用于{@link MergingWindowAssigner}。
+ *
  * The implementation of {@link InternalWindowProcessFunction} for {@link MergingWindowAssigner}.
  *
  * @param <W> The type of {@code Window} that assigner assigns.

@@ -23,6 +23,8 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 生成的类的包装器，定义了一个{@link #newInstance(ClassLoader)}方法来轻松地通过引用对象获得实例
+ *
  * A wrapper for generated class, defines a {@link #newInstance(ClassLoader)} method to get an
  * instance by reference objects easily.
  */
@@ -30,8 +32,10 @@ public abstract class GeneratedClass<T> implements Serializable {
 
     private final String className;
     private final String code;
+    // 引用
     private final Object[] references;
 
+    // 编译的类
     private transient Class<T> compiledClass;
 
     protected GeneratedClass(String className, String code, Object[] references) {

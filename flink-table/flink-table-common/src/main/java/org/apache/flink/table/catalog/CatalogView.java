@@ -26,6 +26,14 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
+ * 表示{@link Catalog}中视图的未解析元数据。
+ *
+ * <p>包含SQL {@code CREATE VIEW}语句中可以表达的所有特征。在使用之前，框架会将这个接口的实例解析到
+ *   {@link ResolvedCatalogView}。
+ *
+ * <p>目录实现者可以使用{@link #of(Schema, String, String, String, Map)}作为这个接口的基本实现，也可以创建
+ *   一个自定义类，允许传递特定于目录的对象(如果需要)。
+ *
  * Represents the unresolved metadata of a view in a {@link Catalog}.
  *
  * <p>It contains all characteristics that can be expressed in a SQL {@code CREATE VIEW} statement.
@@ -40,6 +48,10 @@ import java.util.Map;
 public interface CatalogView extends CatalogBaseTable {
 
     /**
+     * 创建此接口的基本实现。
+     *
+     * <p>签名类似于SQL {@code CREATE VIEW}语句。
+     *
      * Creates a basic implementation of this interface.
      *
      * <p>The signature is similar to a SQL {@code CREATE VIEW} statement.
@@ -66,6 +78,8 @@ public interface CatalogView extends CatalogBaseTable {
     }
 
     /**
+     * 视图定义的原始文本，它也保留了原始格式。
+     *
      * Original text of the view definition that also preserves the original formatting.
      *
      * @return the original string literal provided by the user.
@@ -73,6 +87,8 @@ public interface CatalogView extends CatalogBaseTable {
     String getOriginalQuery();
 
     /**
+     * 这是必需的，因为在定义视图的会话结束后，context(例如当前DB)会丢失。作为一个例子，扩展查询文本将处理这一点。
+     *
      * Expanded text of the original view definition This is needed because the context such as
      * current DB is lost after the session, in which view is defined, is gone. Expanded query text
      * takes care of this, as an example.

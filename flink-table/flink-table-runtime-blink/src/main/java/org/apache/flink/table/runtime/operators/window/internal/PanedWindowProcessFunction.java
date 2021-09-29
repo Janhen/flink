@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 为{@link PanedWindowAssigner}实现{@link InternalWindowProcessFunction}。
+ *
  * The implementation of {@link InternalWindowProcessFunction} for {@link PanedWindowAssigner}.
  *
  * @param <W> The type of {@code Window} that assigner assigns.

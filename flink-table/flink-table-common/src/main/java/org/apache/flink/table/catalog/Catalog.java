@@ -44,6 +44,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 该接口负责从已注册的编目中读取和写入元数据，如databasetableviewsUDFs。它连接已注册的目录和Flink的Table API。
+ * 该接口只处理永久元数据对象。为了处理临时对象，目录还可以实现{@link TemporaryOperationListener}接口。
+ *
+ * J: 能够支持数据库、表、函数、甚至于分区等多种抽象
+ *
  * This interface is responsible for reading and writing metadata such as database/table/views/UDFs
  * from a registered catalog. It connects a registered catalog and Flink's Table API. This interface
  * only processes permanent metadata objects. In order to process temporary objects, a catalog can
@@ -149,6 +154,8 @@ public interface Catalog {
     boolean databaseExists(String databaseName) throws CatalogException;
 
     /**
+     * 创建数据库
+     *
      * Create a database.
      *
      * @param name Name of the database to be created
@@ -274,6 +281,11 @@ public interface Catalog {
             throws TableNotExistException, TableAlreadyExistException, CatalogException;
 
     /**
+     * 创建表
+     *
+     * <p>框架将确保使用完全验证的{@link ResolvedCatalogTable}或{@link ResolvedCatalogView}调用这个方法。
+     *   对于持久目录实现，这些实例很容易序列化。
+     *
      * Creates a new table or view.
      *
      * <p>The framework will make sure to call this method with fully validated {@link
@@ -391,6 +403,8 @@ public interface Catalog {
             throws CatalogException;
 
     /**
+     * 创建一个分区。
+     *
      * Create a partition.
      *
      * @param tablePath path of the table.
@@ -480,6 +494,8 @@ public interface Catalog {
     boolean functionExists(ObjectPath functionPath) throws CatalogException;
 
     /**
+     * 创建一个函数。函数名应该以不区分大小写的方式处理。
+     *
      * Create a function. Function name should be handled in a case insensitive way.
      *
      * @param functionPath path of the function

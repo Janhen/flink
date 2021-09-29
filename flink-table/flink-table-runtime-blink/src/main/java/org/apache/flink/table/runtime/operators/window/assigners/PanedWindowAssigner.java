@@ -21,6 +21,8 @@ package org.apache.flink.table.runtime.operators.window.assigners;
 import org.apache.flink.table.runtime.operators.window.Window;
 
 /**
+ * 一个{@code WindowAssigner}窗口可以分割成窗格。
+ *
  * A {@code WindowAssigner} that window can be split into panes.
  *
  * @param <W> The type of {@code Window} that this assigner assigns.

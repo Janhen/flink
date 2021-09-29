@@ -58,6 +58,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于处理表、视图、函数和类型等目录对象的管理器。它封装了所有可用的目录并存储临时对象。
+ *
  * A manager for dealing with catalog objects such as tables, views, functions, and types. It
  * encapsulates all available catalogs and stores temporary objects.
  */

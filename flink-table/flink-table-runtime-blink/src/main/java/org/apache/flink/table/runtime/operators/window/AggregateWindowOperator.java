@@ -36,6 +36,15 @@ import java.time.ZoneId;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于分组窗口聚合的{@link WindowOperator}。
+ *
+ * <p>当一个元素到达时，它被分配一个键使用{@link KeySelector}，它被
+ * 分配到零或多个窗口使用{@link WindowAssigner}。在此基础上，将元素放入窗格中。窗格是具有相同键和相同
+ * {@code Window}的元素桶。如果一个元素被{@code WindowAssigner}分配给多个窗口，那么它可以在多个窗格中。
+ *
+ * <p>每个窗格都有自己的{@code Trigger}实例。该触发器决定何时应该处理窗格的内容以发出结果。当触发器触发时，将调用
+ *   给定的{@link NamespaceAggsHandleFunction#getValue(Object)}来生成为{@code trigger}所属窗格发出的结果。
+ *
  * A {@link WindowOperator} for grouped window aggregates.
  *
  * <p>When an element arrives it gets assigned a key using a {@link KeySelector} and it gets
@@ -62,6 +71,8 @@ public class AggregateWindowOperator<K, W extends Window> extends WindowOperator
     private transient JoinedRowData reuseOutput;
 
     /**
+     * 比较两个相等的RowData的util。由于不同的RowData不能直接等于，所以我们使用生成的util代码来处理这个问题。
+     *
      * The util to compare two RowData equals to each other. As different RowData can't be equals
      * directly, we use a code generated util to handle this.
      */

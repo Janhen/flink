@@ -24,6 +24,8 @@ import java.util.Optional;
 public interface CatalogFunction {
 
     /**
+     * 获取支持该函数的类的全名。
+     *
      * Get the full name of the class backing the function.
      *
      * @return the full name of the class
@@ -38,6 +40,8 @@ public interface CatalogFunction {
     CatalogFunction copy();
 
     /**
+     * 获取函数的简要描述。
+     *
      * Get a brief description of the function.
      *
      * @return an optional short description of the function
@@ -45,6 +49,8 @@ public interface CatalogFunction {
     Optional<String> getDescription();
 
     /**
+     * 获取函数的详细描述。
+     *
      * Get a detailed description of the function.
      *
      * @return an optional long description of the function
@@ -52,6 +58,8 @@ public interface CatalogFunction {
     Optional<String> getDetailedDescription();
 
     /**
+     * 区分函数是否是泛型函数。
+     *
      * Distinguish if the function is a generic function.
      *
      * @return whether the function is a generic function
@@ -59,6 +67,8 @@ public interface CatalogFunction {
     boolean isGeneric();
 
     /**
+     * 获取用于定义函数的语言。
+     *
      * Get the language used for the definition of function.
      *
      * @return the language type of the function definition

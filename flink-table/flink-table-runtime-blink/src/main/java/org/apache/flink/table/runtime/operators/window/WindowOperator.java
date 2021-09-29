@@ -67,6 +67,20 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个基于{@link WindowAssigner}和{@link Trigger}实现窗口逻辑的操作符。
+ *
+ * <p>这是{@link AggregateWindowOperator}和{@link TableAggregateWindowOperator}的基类。
+ *   {@link AggregateWindowOperator}和{@link TableAggregateWindowOperator}之间的最大区别是
+ *   {@link AggregateWindowOperator}对每个聚合组只发出一个结果，而{@link TableAggregateWindowOperator}
+ *   可以为每个聚合组发出多个结果。
+ *
+ * <p>当一个元素到达时，它被分配一个键使用{@link KeySelector}，它被分配到零或多个窗口使用{@link WindowAssigner}。
+ *   在此基础上，将元素放入窗格中。窗格是具有相同键和相同{@code Window}的元素桶。如果一个元素被
+ *   {@code WindowAssigner}分配给多个窗口，那么它可以在多个窗格中。
+ *
+ * <p>参数类型:{@code <IN>}: RowData {@code <OUT>}: JoinedRowData(KEY, AGG_RESULT) {@code <KEY>}:
+ *   GenericRowData {@code <AGG_RESULT>}: GenericRowData {@code <ACC>}: GenericRowData
+ *
  * An operator that implements the logic for windowing based on a {@link WindowAssigner} and {@link
  * Trigger}.
  *
@@ -114,16 +128,21 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     private final Trigger<W> trigger;
 
     /** For serializing the window in checkpoints. */
+    // 用于在检查点中序列化窗口。
     private final TypeSerializer<W> windowSerializer;
 
     private final LogicalType[] inputFieldTypes;
 
+    // 累加器类型
     private final LogicalType[] accumulatorTypes;
 
+    // 聚合结果类型
     private final LogicalType[] aggResultTypes;
 
+    // 窗口属性类型
     private final LogicalType[] windowPropertyTypes;
 
+    // 生产更新？
     protected final boolean produceUpdates;
 
     /**
@@ -136,6 +155,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
      */
     protected final ZoneId shiftTimeZone;
 
+    // 事件时间索引
     private final int rowtimeIndex;
 
     /**
@@ -156,6 +176,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
 
     // --------------------------------------------------------------------------------
 
+    // 命名空间聚合处理
     protected NamespaceAggsHandleFunctionBase<W> windowAggregator;
 
     // --------------------------------------------------------------------------------
@@ -266,6 +287,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
         triggerContext = new TriggerContext();
         triggerContext.open();
 
+        // 窗口聚合状态
         StateDescriptor<ValueState<RowData>, RowData> windowStateDescriptor =
                 new ValueStateDescriptor<>("window-aggs", new RowDataSerializer(accumulatorTypes));
         this.windowState =
@@ -274,6 +296,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
 
         if (produceUpdates) {
             LogicalType[] valueTypes = ArrayUtils.addAll(aggResultTypes, windowPropertyTypes);
+            // 之前的聚合状态
             StateDescriptor<ValueState<RowData>, RowData> previousStateDescriptor =
                     new ValueStateDescriptor<>("previous-aggs", new RowDataSerializer(valueTypes));
             this.previousState =
@@ -281,13 +304,16 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
                             getOrCreateKeyedState(windowSerializer, previousStateDescriptor);
         }
 
+        // 编译生成的代码
         compileGeneratedCode();
 
         WindowContext windowContext = new WindowContext();
         windowAggregator.open(
+                // 每个窗口状态数据视图存储
                 new PerWindowStateDataViewStore(
                         getKeyedStateBackend(), windowSerializer, getRuntimeContext()));
 
+        // 合并窗口指定
         if (windowAssigner instanceof MergingWindowAssigner) {
             this.windowFunction =
                     new MergingWindowProcessFunction<>(
@@ -296,12 +322,14 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
                             windowSerializer,
                             allowedLateness);
         } else if (windowAssigner instanceof PanedWindowAssigner) {
+            // 窗格窗口指定
             this.windowFunction =
                     new PanedWindowProcessFunction<>(
                             (PanedWindowAssigner<W>) windowAssigner,
                             windowAggregator,
                             allowedLateness);
         } else {
+            // 通用窗口处理
             this.windowFunction =
                     new GeneralWindowProcessFunction<>(
                             windowAssigner, windowAggregator, allowedLateness);
@@ -310,6 +338,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
 
         // metrics
         this.numLateRecordsDropped = metrics.counter(LATE_ELEMENTS_DROPPED_METRIC_NAME);
+        // 初始化窗口丢弃的数量
         this.lateRecordsDroppedRate =
                 metrics.meter(
                         LATE_ELEMENTS_DROPPED_RATE_METRIC_NAME,
@@ -356,15 +385,21 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
         RowData inputRow = record.getValue();
         long timestamp;
         if (windowAssigner.isEventTime()) {
+            // 若为事件时间指派，则取事件时间
             timestamp = inputRow.getLong(rowtimeIndex);
         } else {
+            // 取处理时间
             timestamp = internalTimerService.currentProcessingTime();
         }
 
+        // 根据时区确定新的时间戳
         timestamp = TimeWindowUtil.toUtcTimestampMills(timestamp, shiftTimeZone);
 
         // the windows which the input row should be placed into
+        // 根据时间戳确定输入行应该放入的窗口，返回多个
+        // 分配状态名称空间
         Collection<W> affectedWindows = windowFunction.assignStateNamespace(inputRow, timestamp);
+        // 标记当前 element 是否被丢弃
         boolean isElementDropped = true;
         for (W window : affectedWindows) {
             isElementDropped = false;
@@ -376,6 +411,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
             }
             windowAggregator.setAccumulators(window, acc);
 
+            // 是否是聚合的累积操作
             if (RowDataUtil.isAccumulateMsg(inputRow)) {
                 windowAggregator.accumulate(inputRow);
             } else {
@@ -386,20 +422,25 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
         }
 
         // the actual window which the input row is belongs to
+        // 输入行所属的实际窗口
         Collection<W> actualWindows = windowFunction.assignActualWindows(inputRow, timestamp);
         for (W window : actualWindows) {
             isElementDropped = false;
             triggerContext.window = window;
+            // 根据当前元素的时间戳和输入行确定是否触发
             boolean triggerResult = triggerContext.onElement(inputRow, timestamp);
             if (triggerResult) {
+                // 将窗口结果发送
                 emitWindowResult(window);
             }
             // register a clean up timer for the window
+            // 为窗口注册一个清理计时器
             registerCleanupTimer(window);
         }
 
         if (isElementDropped) {
             // markEvent will increase numLateRecordsDropped
+            // markEvent 将增加 numLateRecordsDropped
             lateRecordsDroppedRate.markEvent();
         }
     }
