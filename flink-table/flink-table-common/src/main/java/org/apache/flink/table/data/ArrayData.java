@@ -137,6 +137,8 @@ public interface ArrayData {
     // ------------------------------------------------------------------------------------------
 
     /**
+     * 创建用于在给定位置获取内部数组数据结构中的元素的访问器。
+     *
      * Creates an accessor for getting elements in an internal array data structure at the given
      * position.
      *
@@ -228,6 +230,8 @@ public interface ArrayData {
     }
 
     /**
+     * 用于在运行时获取数组元素的访问器。
+     *
      * Accessor for getting the elements of an array during runtime.
      *
      * @see #createElementGetter(LogicalType)

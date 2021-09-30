@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * {@link DynamicTableSource}的{@link Format}用于读取行。
+ *
  * A {@link Format} for a {@link DynamicTableSource} for reading rows.
  *
  * @param <I> runtime interface needed by the table source
@@ -36,6 +38,8 @@ import java.util.Map;
 public interface DecodingFormat<I> extends Format {
 
     /**
+     * 创建配置为生成给定数据类型的数据的运行时解码器实现。
+     *
      * Creates runtime decoder implementation that is configured to produce data of the given data
      * type.
      */

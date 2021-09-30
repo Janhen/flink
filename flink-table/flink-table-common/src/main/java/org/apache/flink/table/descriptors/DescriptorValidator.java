@@ -30,5 +30,6 @@ import org.apache.flink.annotation.Internal;
 public interface DescriptorValidator {
 
     /** Performs basic validation such as completeness tests. */
+    // 执行基本的验证，如完整性测试。
     void validate(DescriptorProperties properties);
 }

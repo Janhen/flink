@@ -34,6 +34,8 @@ import java.util.Base64;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
+ * 用于字符串编码的通用实用程序。这个类用于避免对其他项目的额外依赖。
+ *
  * General utilities for string-encoding. This class is used to avoid additional dependencies to
  * other projects.
  */

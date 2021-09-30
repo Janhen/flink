@@ -28,6 +28,8 @@ import org.apache.flink.table.sources.TableSource;
 import java.util.Map;
 
 /**
+ * 在批处理或流环境中基于基于字符串的属性创建已配置表源实例的工厂。更多信息请参见{@link TableFactory}。
+ *
  * A factory to create configured table source instances in a batch or stream environment based on
  * string-based properties. See also {@link TableFactory} for more information.
  *

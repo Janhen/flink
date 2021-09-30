@@ -26,6 +26,7 @@ import static org.apache.flink.table.descriptors.FileSystemValidator.CONNECTOR_P
 import static org.apache.flink.table.descriptors.FileSystemValidator.CONNECTOR_TYPE_VALUE;
 
 /** Connector descriptor for a file system. */
+// 文件系统的连接器描述符。
 @PublicEvolving
 public class FileSystem extends ConnectorDescriptor {
 

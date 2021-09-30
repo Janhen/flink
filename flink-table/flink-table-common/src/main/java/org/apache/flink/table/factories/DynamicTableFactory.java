@@ -28,6 +28,16 @@ import org.apache.flink.table.connector.sink.DynamicTableSink;
 import org.apache.flink.table.connector.source.DynamicTableSource;
 
 /**
+ * 基本接口，用于从目录和会话信息为外部存储系统配置动态表连接器。
+ *
+ * <p>动态表是Flink的Table & SQL API的核心概念，以统一的方式处理有界和无界数据。
+ *
+ * <p>实现{@link DynamicTableSourceFactory}来构造一个{@link DynamicTableSource}。
+ *
+ * <p>实现{@link DynamicTableSinkFactory}来构造{@link DynamicTableSink}。
+ *
+ * <p>选项{@link FactoryUtil#PROPERTY_VERSION}和{@link FactoryUtil#CONNECTOR}是隐式添加的，不能声明。
+ *
  * Base interface for configuring a dynamic table connector for an external storage system from
  * catalog and session information.
  *

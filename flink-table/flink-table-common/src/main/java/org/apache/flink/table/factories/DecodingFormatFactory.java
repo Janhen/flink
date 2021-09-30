@@ -26,6 +26,8 @@ import org.apache.flink.table.connector.source.LookupTableSource;
 import org.apache.flink.table.connector.source.ScanTableSource;
 
 /**
+ * 为{@link ScanTableSource}和{@link LookupTableSource}配置{@link DecodingFormat}的基本接口。
+ *
  * Base interface for configuring a {@link DecodingFormat} for {@link ScanTableSource} and {@link
  * LookupTableSource}.
  *

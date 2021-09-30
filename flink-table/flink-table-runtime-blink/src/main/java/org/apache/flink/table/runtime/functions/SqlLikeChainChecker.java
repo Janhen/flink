@@ -30,6 +30,11 @@ import java.util.StringTokenizer;
 import static org.apache.flink.table.data.binary.BinaryStringData.fromString;
 
 /**
+ * String Like util:匹配一个跳棋链序列。
+ *
+ * <p>它有4个链场景(没有转义或单个字符通配符)1)锚定左“abc%def%”2)锚定右“%abc%def”3)un锚定“%abc%def%”4)锚定
+ *   在两边“abc%def”
+ *
  * String Like util: Matches a chained sequence of checkers.
  *
  * <p>This has 4 chain scenarios cases in it (has no escaping or single char wildcards) 1) anchored

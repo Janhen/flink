@@ -21,6 +21,7 @@ package org.apache.flink.table.descriptors;
 import org.apache.flink.annotation.Internal;
 
 /** Validator for {@link FormatDescriptor}. */
+// 验证器{@link FormatDescriptor}。
 @Internal
 public abstract class FormatDescriptorValidator implements DescriptorValidator {
 
@@ -31,6 +32,8 @@ public abstract class FormatDescriptorValidator implements DescriptorValidator {
     public static final String FORMAT_TYPE = "format.type";
 
     /**
+     * 用于描述属性版本的键。当属性格式改变时，此属性可用于向后兼容。
+     *
      * Key for describing the property version. This property can be used for backwards
      * compatibility in case the property format changes.
      */
@@ -43,6 +46,7 @@ public abstract class FormatDescriptorValidator implements DescriptorValidator {
     public static final String FORMAT_VERSION = "format.version";
 
     /** Key for deriving the schema of the format from the table's schema. */
+    // 键，用于从表的模式派生格式的模式。
     public static final String FORMAT_DERIVE_SCHEMA = "format.derive-schema";
 
     @Override

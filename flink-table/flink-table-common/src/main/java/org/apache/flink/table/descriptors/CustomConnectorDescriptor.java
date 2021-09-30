@@ -23,6 +23,7 @@ import org.apache.flink.annotation.Internal;
 import java.util.Map;
 
 /** Describes a custom connector to an other system. */
+// 描述到其他系统的自定义连接器。
 @Internal
 public class CustomConnectorDescriptor extends ConnectorDescriptor {
 

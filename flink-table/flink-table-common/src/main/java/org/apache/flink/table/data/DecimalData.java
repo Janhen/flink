@@ -31,6 +31,10 @@ import java.math.RoundingMode;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 表示{@link DecimalType}的数据的内部数据结构。
+ *
+ * <p>该数据结构是不可变的，如果值足够小，可以以紧凑的表示形式(长值)存储十进制值。
+ *
  * An internal data structure representing data of {@link DecimalType}.
  *
  * <p>This data structure is immutable and might store decimal values in a compact representation
@@ -112,6 +116,8 @@ public final class DecimalData implements Comparable<DecimalData> {
     }
 
     /**
+     * 返回一个长字符串，描述这个{@link DecimalData}的<i>未缩放值<i>。
+     *
      * Returns a long describing the <i>unscaled value</i> of this {@link DecimalData}.
      *
      * @throws ArithmeticException if this {@link DecimalData} does not exactly fit in a long.

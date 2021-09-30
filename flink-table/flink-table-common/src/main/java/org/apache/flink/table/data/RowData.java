@@ -42,6 +42,15 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getSc
  *   {@link RowKind}，它表示一行在变更日志中描述的变更类型。{@link RowKind}只是行的元数据信息，因此不是表模式
  *   的一部分，也就是说，不是一个专用字段。
  *
+ * <p>备注:该数据结构的所有字段必须是内部数据结构。
+ *
+ * ...
+ *
+ * <p>{@link GenericRowData}用于公共使用，具有稳定的行为。如果需要内部数据结构，建议使用这个类构造
+ *   {@link RowData}的实例。
+ *
+ * <p> Flink的Table API和SQL数据类型到内部数据结构的映射如下表所示:
+ *
  * Base interface for an internal data structure representing data of {@link RowType} and other
  * (possibly nested) structured types such as {@link StructuredType} in the table ecosystem.
  *

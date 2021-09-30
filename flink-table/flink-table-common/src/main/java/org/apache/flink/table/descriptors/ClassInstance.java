@@ -32,6 +32,8 @@ import static org.apache.flink.types.Either.Left;
 import static org.apache.flink.types.Either.Right;
 
 /**
+ * 类实例的描述符。类实例是从带有公共构造函数(带或不带参数)的类创建的JavaScala对象。
+ *
  * Descriptor for a class instance. A class instance is a Java/Scala object created from a class
  * with a public constructor (with or without parameters).
  */
@@ -55,6 +57,9 @@ public class ClassInstance extends HierarchyDescriptor {
     }
 
     /**
+     * 添加文字类型的构造函数参数值。类型是由值自动派生的。目前，BOOLEAN、INT、DOUBLE和VARCHAR都支持此功能。
+     * 不允许使用表达式值。
+     *
      * Adds a constructor parameter value of literal type. The type is automatically derived from
      * the value. Currently, this is supported for: BOOLEAN, INT, DOUBLE, and VARCHAR. Expression
      * values are not allowed.
@@ -206,6 +211,7 @@ public class ClassInstance extends HierarchyDescriptor {
     }
 
     /** Internal method for properties conversion. */
+    // 属性转换的内部方法。
     @Override
     public void addPropertiesWithPrefix(String keyPrefix, DescriptorProperties properties) {
         if (className != null) {

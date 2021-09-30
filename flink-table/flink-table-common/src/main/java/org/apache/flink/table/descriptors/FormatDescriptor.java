@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Map;
 
 /** Describes the format of data. */
+// 描述数据的格式。
 @PublicEvolving
 public abstract class FormatDescriptor extends DescriptorBase implements Descriptor {
 
@@ -51,6 +52,8 @@ public abstract class FormatDescriptor extends DescriptorBase implements Descrip
     }
 
     /**
+     * 将此描述符转换为一组格式属性。通常以{@link FormatDescriptorValidator#FORMAT}作为前缀。
+     *
      * Converts this descriptor into a set of format properties. Usually prefixed with {@link
      * FormatDescriptorValidator#FORMAT}.
      */

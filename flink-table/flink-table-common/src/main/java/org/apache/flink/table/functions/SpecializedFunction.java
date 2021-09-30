@@ -25,6 +25,8 @@ import org.apache.flink.table.catalog.DataTypeFactory;
 import org.apache.flink.table.types.inference.CallContext;
 
 /**
+ * 一个{@link FunctionDefinition}，它可以提供一个运行时实现(即函数体)，专门针对给定的调用和会话。
+ *
  * A {@link FunctionDefinition} that can provide a runtime implementation (i.e. the function's body)
  * that is specialized for the given call and session.
  *

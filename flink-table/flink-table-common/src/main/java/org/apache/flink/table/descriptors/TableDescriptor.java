@@ -33,6 +33,8 @@ import static org.apache.flink.table.descriptors.StreamTableDescriptorValidator.
 import static org.apache.flink.table.descriptors.StreamTableDescriptorValidator.UPDATE_MODE_VALUE_UPSERT;
 
 /**
+ * 描述由连接器(在给定的更新模式下)和格式组成的表。
+ *
  * Describes a table consisting of a connector (in a given update mode) and a format.
  *
  * @param <D> return type for builder pattern
@@ -40,8 +42,10 @@ import static org.apache.flink.table.descriptors.StreamTableDescriptorValidator.
 @PublicEvolving
 public abstract class TableDescriptor<D extends TableDescriptor<D>> extends DescriptorBase {
 
+    // 连接器描述
     private final ConnectorDescriptor connectorDescriptor;
 
+    // 格式化器描述
     private @Nullable FormatDescriptor formatDescriptor;
 
     private @Nullable String updateMode;
@@ -52,6 +56,7 @@ public abstract class TableDescriptor<D extends TableDescriptor<D>> extends Desc
     }
 
     /** Specifies the format that defines how to read data from a connector. */
+    // 指定定义如何从连接器读取数据的格式。
     @SuppressWarnings("unchecked")
     public D withFormat(FormatDescriptor format) {
         formatDescriptor = Preconditions.checkNotNull(format, "Format must not be null.");
@@ -59,6 +64,10 @@ public abstract class TableDescriptor<D extends TableDescriptor<D>> extends Desc
     }
 
     /**
+     * 声明如何在动态表和外部连接器之间执行转换。
+     *
+     * <p>在追加模式下，动态表和外部连接器只交换INSERT消息。
+     *
      * Declares how to perform the conversion between a dynamic table and an external connector.
      *
      * <p>In append mode, a dynamic table and an external connector only exchange INSERT messages.

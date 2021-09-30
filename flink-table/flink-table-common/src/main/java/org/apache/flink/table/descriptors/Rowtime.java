@@ -26,6 +26,7 @@ import org.apache.flink.table.sources.wmstrategies.WatermarkStrategy;
 import java.util.Map;
 
 /** Rowtime descriptor for describing an event time attribute in the schema. */
+// 用于描述模式中的事件时间属性的行时间描述符。
 @PublicEvolving
 public class Rowtime implements Descriptor {
 
@@ -34,14 +35,18 @@ public class Rowtime implements Descriptor {
     // TODO: Put these fields into RowtimeValidator once it is also ported into table-common.
     // TODO: Because these fields have polluted this API class.
     public static final String ROWTIME = "rowtime";
+    // 事件时间类型  TIMESTAMP? TIMESTAMP_LTZ?
     public static final String ROWTIME_TIMESTAMPS_TYPE = "rowtime.timestamps.type";
+    // 从指定属性来
     public static final String ROWTIME_TIMESTAMPS_TYPE_VALUE_FROM_FIELD = "from-field";
+    // 直接从来源表/DataStream 中来?
     public static final String ROWTIME_TIMESTAMPS_TYPE_VALUE_FROM_SOURCE = "from-source";
     public static final String ROWTIME_TIMESTAMPS_TYPE_VALUE_CUSTOM = "custom";
     public static final String ROWTIME_TIMESTAMPS_FROM = "rowtime.timestamps.from";
     public static final String ROWTIME_TIMESTAMPS_CLASS = "rowtime.timestamps.class";
     public static final String ROWTIME_TIMESTAMPS_SERIALIZED = "rowtime.timestamps.serialized";
 
+    // 事件时间水印类型
     public static final String ROWTIME_WATERMARKS_TYPE = "rowtime.watermarks.type";
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_PERIODIC_ASCENDING =
             "periodic-ascending";

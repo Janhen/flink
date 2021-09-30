@@ -28,6 +28,8 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import java.io.IOException;
 
 /**
+ * 处理流中的元素并清除状态的函数。
+ *
  * A function that processes elements of a stream, and could cleanup state.
  *
  * @param <K> Type of the key.

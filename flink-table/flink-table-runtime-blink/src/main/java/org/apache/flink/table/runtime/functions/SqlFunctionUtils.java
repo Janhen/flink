@@ -51,6 +51,12 @@ import static org.apache.flink.table.data.DecimalDataUtils.castFrom;
 import static org.apache.flink.table.data.DecimalDataUtils.doubleValue;
 
 /**
+ * 内置标量运行时函数。
+ *
+ * <p>注意:在这里添加函数之前，检查Calcite是否在{@code org.apache.calcite.runtime.SqlFunctions}中提供了它。
+ *   此外，确保有效地实现该功能。有时候，创建{@code org.apache.flink.table.codegen.calls是有意义的。而不是使用
+ *   CallGenerator}来避免大量的对象创建和重用实例。
+ *
  * Built-in scalar runtime functions.
  *
  * <p>NOTE: Before you add functions here, check if Calcite provides it in {@code

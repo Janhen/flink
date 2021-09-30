@@ -24,6 +24,8 @@ import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.co.CoProcessFunction;
 
 /**
+ * 为{@link ProcessFunction}和{@link CoProcessFunction}清理状态的基础接口。
+ *
  * Base interface for clean up state, both for {@link ProcessFunction} and {@link
  * CoProcessFunction}.
  */
@@ -38,6 +40,7 @@ public interface CleanupState {
             throws Exception {
 
         // last registered timer
+        // 上次注册的计时器
         Long curCleanupTime = cleanupTimeState.value();
 
         // check if a cleanup timer is registered and

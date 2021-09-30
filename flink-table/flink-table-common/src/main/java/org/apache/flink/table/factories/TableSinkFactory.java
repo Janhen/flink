@@ -29,6 +29,8 @@ import org.apache.flink.table.sinks.TableSink;
 import java.util.Map;
 
 /**
+ * 在批处理或流环境中基于基于字符串的属性创建已配置的表接收实例的工厂。更多信息请参见{@link TableFactory}。
+ *
  * A factory to create configured table sink instances in a batch or stream environment based on
  * string-based properties. See also {@link TableFactory} for more information.
  *
@@ -38,6 +40,8 @@ import java.util.Map;
 public interface TableSinkFactory<T> extends TableFactory {
 
     /**
+     * 使用给定的属性创建和配置一个{@link TableSink}。
+     *
      * Creates and configures a {@link TableSink} using the given properties.
      *
      * @param properties normalized properties describing a table sink.
@@ -51,6 +55,8 @@ public interface TableSinkFactory<T> extends TableFactory {
     }
 
     /**
+     * 基于给定的{@link CatalogTable}实例创建和配置一个{@link TableSink}。
+     *
      * Creates and configures a {@link TableSink} based on the given {@link CatalogTable} instance.
      *
      * @param tablePath path of the given {@link CatalogTable}

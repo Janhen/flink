@@ -46,11 +46,14 @@ import static org.apache.flink.table.descriptors.ConnectorDescriptorValidator.CO
 import static org.apache.flink.table.descriptors.FormatDescriptorValidator.FORMAT_PROPERTY_VERSION;
 
 /** Unified class to search for a {@link TableFactory} of provided type and properties. */
+// 统一类搜索提供的类型和属性的{@link TableFactory}。
 public class TableFactoryService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TableFactoryService.class);
 
     /**
+     * 查找给定类和描述符的表工厂。
+     *
      * Finds a table factory of the given class and descriptor.
      *
      * @param factoryClass desired factory class

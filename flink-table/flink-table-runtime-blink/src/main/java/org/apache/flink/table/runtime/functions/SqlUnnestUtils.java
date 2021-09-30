@@ -38,6 +38,7 @@ import org.apache.flink.table.types.utils.DataTypeUtils;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRoot;
 
 /** Utility for handling SQL's {@code UNNEST}. */
+// 用于处理SQL的{@code UNNEST}的实用程序。
 @Internal
 public final class SqlUnnestUtils {
 
@@ -99,6 +100,7 @@ public final class SqlUnnestUtils {
     }
 
     /** Table function that unwraps the elements of a collection (array or multiset). */
+    // 打开集合(数组或多集)元素的表函数。
     public static final class CollectionUnnestTableFunction extends UnnestTableFunction {
 
         private static final long serialVersionUID = 1L;

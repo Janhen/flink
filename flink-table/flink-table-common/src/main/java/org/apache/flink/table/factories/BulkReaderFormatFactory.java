@@ -26,6 +26,8 @@ import org.apache.flink.table.connector.format.BulkDecodingFormat;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 配置文件系统连接器的{@link BulkFormat}的基本接口。
+ *
  * Base interface for configuring a {@link BulkFormat} for file system connector.
  *
  * @see FactoryUtil#createTableFactoryHelper(DynamicTableFactory, DynamicTableFactory.Context)

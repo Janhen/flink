@@ -27,6 +27,7 @@ import java.util.List;
 @Internal
 public class StreamTableDescriptorValidator implements DescriptorValidator {
 
+    // 流式表更新模式
     public static final String UPDATE_MODE = "update-mode";
     public static final String UPDATE_MODE_VALUE_APPEND = "append";
     public static final String UPDATE_MODE_VALUE_RETRACT = "retract";

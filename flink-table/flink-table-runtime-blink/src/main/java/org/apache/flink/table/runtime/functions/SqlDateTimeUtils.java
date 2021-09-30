@@ -59,6 +59,9 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 
 /**
+ * 用于datetime类型的实用函数:date, time, timestamp。目前，把日期时间函数放在不同的类中有点麻烦，因为运行时模块
+ * 不依赖 calcite。
+ *
  * Utility functions for datetime types: date, time, timestamp. Currently, it is a bit messy putting
  * date time functions in various classes because the runtime module does not depend on calcite..
  */
@@ -92,13 +95,16 @@ public class SqlDateTimeUtils {
     private static final String TIME_FORMAT_STRING = "HH:mm:ss";
 
     /** The SimpleDateFormat string for ISO timestamps, "yyyy-MM-dd HH:mm:ss". */
+    // ISO时间戳的SimpleDateFormat字符串，"yyyy-MM-dd HH:mm:ss"。
     private static final String TIMESTAMP_FORMAT_STRING =
             DATE_FORMAT_STRING + " " + TIME_FORMAT_STRING;
 
     /** The UTC time zone. */
+    // UTC时区。
     public static final TimeZone UTC_ZONE = TimeZone.getTimeZone("UTC");
 
     /** The local time zone. */
+    // 本地时区。
     private static final TimeZone LOCAL_TZ = TimeZone.getDefault();
 
     /** The valid minimum epoch milliseconds ('0000-01-01 00:00:00.000 UTC+0'). */
@@ -113,6 +119,7 @@ public class SqlDateTimeUtils {
     /** The valid maximum epoch seconds ('9999-12-31 23:59:59 UTC+0'). */
     private static final long MAX_EPOCH_SECONDS = 253402300799L;
 
+    // 默认数据格式化
     private static final String[] DEFAULT_DATETIME_FORMATS =
             new String[] {
                 "yyyy-MM-dd HH:mm:ss",
@@ -128,6 +135,9 @@ public class SqlDateTimeUtils {
             };
 
     /**
+     * SimpleDateFormat的ThreadLocal缓存映射，因为SimpleDateFormat不是线程安全的。(string_format) = >
+     * 格式化程序
+     *
      * A ThreadLocal cache map for SimpleDateFormat, because SimpleDateFormat is not thread-safe.
      * (string_format) => formatter
      */
@@ -140,6 +150,7 @@ public class SqlDateTimeUtils {
             };
 
     /** A ThreadLocal cache map for DateTimeFormatter. (string_format) => formatter */
+    // DateTimeFormatter的ThreadLocal缓存映射。(string_format) = >格式化程序
     private static final ThreadLocalCache<String, DateTimeFormatter> DATETIME_FORMATTER_CACHE =
             new ThreadLocalCache<String, DateTimeFormatter>() {
                 @Override
@@ -149,6 +160,7 @@ public class SqlDateTimeUtils {
             };
 
     /** A ThreadLocal cache map for TimeZone. (string_zone_id) => TimeZone */
+    // TimeZone的ThreadLocal缓存映射。(string_zone_id) = >时区
     private static final ThreadLocalCache<String, TimeZone> TIMEZONE_CACHE =
             new ThreadLocalCache<String, TimeZone>() {
                 @Override

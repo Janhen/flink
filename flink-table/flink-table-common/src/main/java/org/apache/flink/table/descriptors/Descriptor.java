@@ -23,6 +23,12 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Map;
 
 /**
+ * 接口，该接口添加一组用于描述DDL信息的基于字符串的规范化属性。
+ *
+ * <p>描述符的典型特征是:—描述符有一个默认构造函数—描述符本身包含很少的逻辑—相应的验证器验证正确性(目标:有一个单点验证)
+ *
+ * <p>描述符类似于构建器模式中的构建器，因此，对于构建属性来说是可变的。
+ *
  * Interface that adds a set of string-based, normalized properties for describing DDL information.
  *
  * <p>Typical characteristics of a descriptor are: - descriptors have a default constructor -
@@ -36,5 +42,6 @@ import java.util.Map;
 public interface Descriptor {
 
     /** Converts this descriptor into a set of properties. */
+    // 将此描述符转换为一组属性。
     Map<String, String> toProperties();
 }

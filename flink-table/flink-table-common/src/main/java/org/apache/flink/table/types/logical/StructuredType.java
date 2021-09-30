@@ -40,6 +40,12 @@ import static org.apache.flink.table.utils.EncodingUtils.escapeIdentifier;
 import static org.apache.flink.table.utils.EncodingUtils.escapeSingleQuotes;
 
 /**
+ * 用户定义的对象结构化类型的逻辑类型。结构化类型包含零个、一个或多个属性。每个属性由一个名称和一个类型组成。一个类型
+ * 不能被定义为它的一个属性类型(传递)使用它自己。
+ *
+ * <p>有两种结构化类型。存储在目录中并由{@link ObjectIdentifier}标识的类型，或由实现{@link Class}标识的匿名
+ *   定义的、未注册的类型(通常反射提取)。
+ *
  * Logical type of a user-defined object structured type. Structured types contain zero, one or more
  * attributes. Each attribute consists of a name and a type. A type cannot be defined so that one of
  * its attribute types (transitively) uses itself.

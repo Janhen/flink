@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 表示{@link Catalog}中表的未解析元数据。
+ *
  * Represents the unresolved metadata of a table in a {@link Catalog}.
  *
  * <p>It contains all characteristics that can be expressed in a SQL {@code CREATE TABLE} statement.
@@ -43,6 +45,10 @@ import java.util.Map;
 public interface CatalogTable extends CatalogBaseTable {
 
     /**
+     * 创建此接口的基本实现。
+     *
+     * <p>签名类似于SQL {@code CREATE TABLE}语句。
+     *
      * Creates a basic implementation of this interface.
      *
      * <p>The signature is similar to a SQL {@code CREATE TABLE} statement.

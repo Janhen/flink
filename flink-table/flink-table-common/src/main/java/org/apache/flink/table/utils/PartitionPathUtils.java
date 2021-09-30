@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Utils for file system. */
+// 文件系统的Utils。
 @Internal
 public class PartitionPathUtils {
 

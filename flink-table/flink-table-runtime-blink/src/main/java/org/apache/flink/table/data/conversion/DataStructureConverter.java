@@ -25,6 +25,10 @@ import org.apache.flink.table.types.DataType;
 import java.io.Serializable;
 
 /**
+ * 内部和外部数据结构之间的转换器。
+ *
+ * <p>转换器是可序列化的，可以传递给运行时操作符。然而，转换器不是线程安全的。
+ *
  * Converter between internal and external data structure.
  *
  * <p>Converters are serializable and can be passed to runtime operators. However, converters are
@@ -82,6 +86,10 @@ public interface DataStructureConverter<I, E> extends Serializable {
     }
 
     /**
+     * 返回此转换是否为无操作。
+     *
+     * <p>标识转换意味着该类型已经是一个内部数据结构。
+     *
      * Returns whether this conversion is a no-op.
      *
      * <p>An identity conversion means that the type is already an internal data structure.

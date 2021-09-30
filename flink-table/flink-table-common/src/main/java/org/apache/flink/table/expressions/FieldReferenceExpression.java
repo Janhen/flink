@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 对输入中某个字段的引用。参考包含:
+ *
  * A reference to a field in an input. The reference contains:
  *
  * <ul>

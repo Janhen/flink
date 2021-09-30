@@ -24,10 +24,15 @@ import org.apache.flink.table.types.logical.CharType;
 import org.apache.flink.table.types.logical.VarCharType;
 
 /** An internal data structure representing data of {@link CharType} and {@link VarCharType}. */
+// 表示{@link CharType}和{@link VarCharType}数据的内部数据结构。
 @PublicEvolving
 public interface StringData extends Comparable<StringData> {
 
     /**
+     * 将此{@link StringData}对象转换为UTF-8字节数组。
+     *
+     * <p>注意:返回的字节数组可能被重用。
+     *
      * Converts this {@link StringData} object to a UTF-8 byte array.
      *
      * <p>Note: The returned byte array may be reused.
@@ -35,6 +40,7 @@ public interface StringData extends Comparable<StringData> {
     byte[] toBytes();
 
     /** Converts this {@link StringData} object to a {@link String}. */
+    // 将这个{@link StringData}对象转换为{@link String}。
     String toString();
 
     // ------------------------------------------------------------------------------------------
@@ -42,16 +48,20 @@ public interface StringData extends Comparable<StringData> {
     // ------------------------------------------------------------------------------------------
 
     /** Creates an instance of {@link StringData} from the given {@link String}. */
+    // 从给定的{@link String}中创建{@link StringData}的实例。
     static StringData fromString(String str) {
         return BinaryStringData.fromString(str);
     }
 
     /** Creates an instance of {@link StringData} from the given UTF-8 byte array. */
+    // 从给定的UTF-8字节数组创建{@link StringData}的实例。
     static StringData fromBytes(byte[] bytes) {
         return BinaryStringData.fromBytes(bytes);
     }
 
     /**
+     * 从给定的UTF-8字节数组中创建一个{@link StringData}的实例，该实例具有偏移量和字节数。
+     *
      * Creates an instance of {@link StringData} from the given UTF-8 byte array with offset and
      * number of bytes.
      */

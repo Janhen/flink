@@ -24,6 +24,10 @@ import org.apache.flink.table.sources.FieldComputer;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 在已解析的输入中对某个字段的引用。
+ *
+ * <p>备注:该接口是临时添加的。它用于保持api与{@link FieldComputer}的兼容性。从长远来看，该接口是可以被移除的。
+ *
  * A reference to a field in an input which has been resolved.
  *
  * <p>Note: This interface is added as a temporary solution. It is used to keep api compatible for

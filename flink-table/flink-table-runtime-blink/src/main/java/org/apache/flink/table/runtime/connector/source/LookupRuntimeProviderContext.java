@@ -32,6 +32,7 @@ import static org.apache.flink.table.types.utils.DataTypeUtils.validateInputData
 @Internal
 public final class LookupRuntimeProviderContext implements LookupTableSource.LookupContext {
 
+    // J: 查找表键，对于 HBase，只支持 rowkey 进行关联
     private final int[][] lookupKeys;
 
     public LookupRuntimeProviderContext(int[][] lookupKeys) {

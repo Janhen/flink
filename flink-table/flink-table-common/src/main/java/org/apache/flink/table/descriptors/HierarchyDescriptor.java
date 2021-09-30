@@ -21,12 +21,16 @@ package org.apache.flink.table.descriptors;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 可以存在于任意级别的描述符(被其他描述符递归地包含)。
+ *
  * A descriptor that may exist in an arbitrary level (be recursively included by other descriptors).
  */
 @PublicEvolving
 public abstract class HierarchyDescriptor implements Descriptor {
 
     /**
+     * 属性转换的内部方法。所有属性键都将以给定键前缀作为前缀。
+     *
      * Internal method for properties conversion. All the property keys will be prefixed with the
      * given key prefix.
      */

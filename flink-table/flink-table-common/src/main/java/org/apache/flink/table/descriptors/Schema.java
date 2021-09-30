@@ -36,6 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 描述表的模式。
+ *
+ * <p>注意:默认情况下字段名匹配的是准确的名称(区分大小写)。
+ *
  * Describes a schema of a table.
  *
  * <p>Note: Field names are matched by the exact name by default (case sensitive).
@@ -57,6 +61,7 @@ public class Schema implements Descriptor {
     public static final String SCHEMA_FROM = "from";
 
     // maps a field name to a list of properties that describe type, origin, and the time attribute
+    // 将字段名映射到描述类型、起源和时间属性的属性列表
     private final Map<String, LinkedHashMap<String, String>> tableSchema = new LinkedHashMap<>();
 
     private String lastField;
@@ -168,6 +173,8 @@ public class Schema implements Descriptor {
     }
 
     /**
+     * 将前面定义的字段指定为处理时间属性。
+     *
      * Specifies the previously defined field as a processing-time attribute.
      *
      * <p>E.g. field("proctime", Types.SQL_TIMESTAMP).proctime()
@@ -182,6 +189,8 @@ public class Schema implements Descriptor {
     }
 
     /**
+     * 将前面定义的字段指定为事件时间属性。
+     *
      * Specifies the previously defined field as an event-time attribute.
      *
      * <p>E.g. field("rowtime", Types.SQL_TIMESTAMP).rowtime(...)

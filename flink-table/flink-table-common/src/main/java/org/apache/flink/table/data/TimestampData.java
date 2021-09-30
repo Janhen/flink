@@ -30,6 +30,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
+ * 一个内部数据结构，表示{@link TimestampType}和{@link LocalZonedTimestampType}的数据。
+ *
+ * <p>该数据结构是不可变的，自{@code 1970-01-01 00:00:00}以来由毫秒和毫秒的纳米组成。如果值足够小，它可以以紧凑的
+ *   表示形式存储(作为长值)。
+ *
  * An internal data structure representing data of {@link TimestampType} and {@link
  * LocalZonedTimestampType}.
  *

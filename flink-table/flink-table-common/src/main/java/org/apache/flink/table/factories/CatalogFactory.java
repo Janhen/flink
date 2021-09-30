@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 基于基于字符串的属性创建配置目录实例的工厂。更多信息请参见{@link Factory}。
+ *
  * A factory to create configured catalog instances based on string-based properties. See also
  * {@link Factory} for more information.
  *

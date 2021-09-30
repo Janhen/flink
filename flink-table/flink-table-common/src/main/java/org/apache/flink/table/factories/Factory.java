@@ -24,6 +24,10 @@ import org.apache.flink.configuration.ConfigOption;
 import java.util.Set;
 
 /**
+ * 用于所有类型的工厂的基本接口，这些工厂从Flink的Table & SQL API中的键值对列表中创建对象实例。
+ *
+ * <p>工厂由{@link Class}和{@link #factoryIdentifier()}唯一标识。
+ *
  * Base interface for all kind of factories that create object instances from a list of key-value
  * pairs in Flink's Table & SQL API.
  *

@@ -35,6 +35,7 @@ class DataStructureConverterWrapper implements DynamicTableSource.DataStructureC
 
     private static final long serialVersionUID = 1L;
 
+    // 结构转换
     private final DataStructureConverter<Object, Object> structureConverter;
 
     DataStructureConverterWrapper(DataStructureConverter<Object, Object> structureConverter) {

@@ -38,6 +38,18 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * 将动态表汇聚到外部存储系统。
+ *
+ * <p>动态表是Flink的Table & SQL API的核心概念，以统一的方式处理有界和无界数据。根据定义，动态表可以随时间变化。
+ *
+ * <p>对于常规批处理场景，接收器只能接受仅插入的行，并写出有边界的流。
+ *
+ * <p>对于更改数据捕获(CDC)场景，接收可以通过插入、更新和删除行写出有界或无界流。参见{@link RowKind}。
+ *
+ * <p> {@link DynamicTableSink}的实例可以被视为最终生成具体运行时实现的工厂，用于写入实际数据。
+ *
+ * <p>根据可选声明的能力，规划器可以对实例应用更改，从而改变生成的运行时实现。
+ *
  * Sink of a dynamic table to an external storage system.
  *
  * <p>Dynamic tables are the core concept of Flink's Table & SQL API for processing both bounded and

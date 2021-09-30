@@ -26,18 +26,24 @@ import org.apache.flink.annotation.Internal;
 public abstract class ConnectorDescriptorValidator implements DescriptorValidator {
 
     /** Prefix for connector-related properties. */
+    // 连接器相关属性的前缀。
     public static final String CONNECTOR = "connector";
 
     /** Key for describing the type of the connector. Usually used for factory discovery. */
+    // 用于描述连接器类型的键。通常用于工厂发现。
     public static final String CONNECTOR_TYPE = "connector.type";
 
     /**
+     * 用于描述属性版本的键。当属性格式改变时，此属性可用于向后兼容。
+     *
      * Key for describing the property version. This property can be used for backwards
      * compatibility in case the property format changes.
      */
     public static final String CONNECTOR_PROPERTY_VERSION = "connector.property-version";
 
     /**
+     * 用于描述连接器版本的键。这个属性可以用于不同的连接器版本(例如Kafka 0.10或Kafka 0.11)。
+     *
      * Key for describing the version of the connector. This property can be used for different
      * connector versions (e.g. Kafka 0.10 or Kafka 0.11).
      */

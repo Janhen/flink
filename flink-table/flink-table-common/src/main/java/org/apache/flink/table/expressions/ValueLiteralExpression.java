@@ -51,6 +51,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * 常量字面值的表达式。
+ *
+ * <p>按照设计，这个类可以接受{@link DataType}所描述的任何值。然而，建议使用带有默认转换的实例(参见
+ *   {@link DataType# getconverversionclass()})。
+ *
+ * <p>该表达式对Equals/hashCode的支持取决于该值对Equals/hashCode的支持。
+ *
+ * <p>数据类型可以通过基于值的提取自动从非空值中提取(参见{@link ValueDataTypeConverter})。
+ *
+ * <p>符号(从{@link TableSymbol}扩展的枚举)被认为是文字值。
+ *
  * Expression for constant literal values.
  *
  * <p>By design, this class can take any value described by a {@link DataType}. However, it is

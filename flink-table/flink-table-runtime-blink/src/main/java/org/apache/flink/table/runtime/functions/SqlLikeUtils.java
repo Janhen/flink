@@ -18,6 +18,10 @@
 package org.apache.flink.table.runtime.functions;
 
 /**
+ * 用于将SQL {@code LIKE}和{@code SIMILAR}操作符转换为正则表达式的实用程序。
+ *
+ * <p>注意:这是从 calcite 复制来暴露一些私有方法
+ *
  * Utilities for converting SQL {@code LIKE} and {@code SIMILAR} operators to regular expressions.
  *
  * <p>Note: THIS IS COPIED FROM CALCITE to EXPOSE SOME PRIVATE METHOD
@@ -59,6 +63,7 @@ public class SqlLikeUtils {
     }
 
     /** Translates a SQL LIKE pattern to Java regex pattern. */
+    // 将SQL LIKE模式转换为Java正则表达式模式。
     static String sqlToRegexLike(String sqlPattern, char escapeChar) {
         int i;
         final int len = sqlPattern.length();
@@ -184,6 +189,7 @@ public class SqlLikeUtils {
     }
 
     /** Translates a SQL SIMILAR pattern to Java regex pattern, with optional escape string. */
+    // 将SQL SIMILAR模式转换为Java regex模式，带有可选的转义字符串。
     static String sqlToRegexSimilar(String sqlPattern, CharSequence escapeStr) {
         final char escapeChar;
         if (escapeStr != null) {
@@ -198,6 +204,7 @@ public class SqlLikeUtils {
     }
 
     /** Translates SQL SIMILAR pattern to Java regex pattern. */
+    // 将SQL SIMILAR模式转换为Java regex模式。
     static String sqlToRegexSimilar(String sqlPattern, char escapeChar) {
         similarEscapeRuleChecking(sqlPattern, escapeChar);
 
