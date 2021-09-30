@@ -39,6 +39,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /** SHOW PARTITIONS sql call. */
+// 显示分区sql调用。
 public class SqlShowPartitions extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

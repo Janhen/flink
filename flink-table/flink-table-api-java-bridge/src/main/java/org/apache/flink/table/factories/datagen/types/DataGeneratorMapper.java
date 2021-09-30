@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 /** Utility for mapping the output of a {@link DataGenerator}. */
+// 用于映射{@link datgenerator}的输出的实用程序。
 @Internal
 public class DataGeneratorMapper<A, B> implements DataGenerator<B> {
 

@@ -28,10 +28,13 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /** Stateful and re-scalable data generator. */
+// 有状态和可伸缩的数据生成器。
 @Experimental
 public interface DataGenerator<T> extends Serializable, Iterator<T> {
 
     /**
+     * 为{@link DataGenerator}打开和初始化状态。看到{@link CheckpointedFunction # initializeState}。
+     *
      * Open and initialize state for {@link DataGenerator}. See {@link
      * CheckpointedFunction#initializeState}.
      *
@@ -42,5 +45,6 @@ public interface DataGenerator<T> extends Serializable, Iterator<T> {
             throws Exception;
 
     /** Snapshot state for {@link DataGenerator}. See {@link CheckpointedFunction#snapshotState}. */
+    // {@link datgenerator}的快照状态。看到{@link CheckpointedFunction # snapshotState}。
     default void snapshotState(FunctionSnapshotContext context) throws Exception {}
 }

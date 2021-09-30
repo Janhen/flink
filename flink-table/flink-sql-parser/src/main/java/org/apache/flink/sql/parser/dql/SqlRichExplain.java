@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** EXPLAIN (PLAN FOR)* STATEMENT sql call. */
+// EXPLAIN (PLAN FOR)语句的sql调用。
 public class SqlRichExplain extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

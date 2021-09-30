@@ -25,6 +25,7 @@ import org.apache.flink.configuration.ConfigOptions;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** {@link ConfigOption}s for {@link DataGenTableSourceFactory}. */
+// {@link DataGenTableSourceFactory}的ConfigOption。
 @Internal
 public class DataGenOptions {
 
@@ -41,12 +42,14 @@ public class DataGenOptions {
     public static final String SEQUENCE = "sequence";
     public static final String RANDOM = "random";
 
+    // 以控制发出速率。
     public static final ConfigOption<Long> ROWS_PER_SECOND =
             key("rows-per-second")
                     .longType()
                     .defaultValue(ROWS_PER_SECOND_DEFAULT_VALUE)
                     .withDescription("Rows per second to control the emit rate.");
 
+    // 要发出的行总数。默认情况下，源是不受限制的
     public static final ConfigOption<Long> NUMBER_OF_ROWS =
             key("number-of-rows")
                     .longType()
@@ -55,6 +58,8 @@ public class DataGenOptions {
                             "Total number of rows to emit. By default, the source is unbounded.");
 
     /** Placeholder {@link ConfigOption}. Not used for retrieving values. */
+    // 占位符{@link ConfigOption}。不用于检索值。
+    // 这个'#'字段的生成器。可以是'sequence'或'random'。
     public static final ConfigOption<String> FIELD_KIND =
             ConfigOptions.key(String.format("%s.#.%s", FIELDS, KIND))
                     .stringType()
@@ -62,6 +67,8 @@ public class DataGenOptions {
                     .withDescription("Generator of this '#' field. Can be 'sequence' or 'random'.");
 
     /** Placeholder {@link ConfigOption}. Not used for retrieving values. */
+    // 占位符{@link ConfigOption}。不用于检索值。
+    // 为类型为“随机”的字段生成的最小值。字段类型可能的最小值。
     public static final ConfigOption<String> FIELD_MIN =
             ConfigOptions.key(String.format("%s.#.%s", FIELDS, MIN))
                     .stringType()
@@ -70,6 +77,7 @@ public class DataGenOptions {
                             "Minimum value to generate for fields of kind 'random'. Minimum value possible for the type of the field.");
 
     /** Placeholder {@link ConfigOption}. Not used for retrieving values. */
+    // 为类型为“随机”的字段生成的最大值。字段类型可能的最大值。
     public static final ConfigOption<String> FIELD_MAX =
             ConfigOptions.key(String.format("%s.#.%s", FIELDS, MAX))
                     .stringType()
@@ -93,6 +101,7 @@ public class DataGenOptions {
                     .withDescription("Start value of sequence generator.");
 
     /** Placeholder {@link ConfigOption}. Not used for retrieving values. */
+    // 占位符{@link ConfigOption}。不用于检索值。
     public static final ConfigOption<String> FIELD_END =
             ConfigOptions.key(String.format("%s.#.%s", FIELDS, END))
                     .stringType()

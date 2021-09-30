@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** SHOW [FULL] MODULES sql call. */
+// 显示[FULL]模块的sql调用。
 public class SqlShowModules extends SqlCall {
     public static final SqlOperator OPERATOR =
             new SqlSpecialOperator("SHOW MODULES", SqlKind.OTHER);

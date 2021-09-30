@@ -31,6 +31,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 描述[EXTENDED] [[catalogName.]] dataBasesName]。sqlIdentifier sql调用。这里，我们在className中添加
+ * Rich，以区别于方解石原来的SqlDescribeTable。.
+ *
  * DESCRIBE [ EXTENDED] [[catalogName.] dataBasesName].sqlIdentifier sql call. Here we add Rich in
  * className to distinguish from calcite's original SqlDescribeTable.
  */

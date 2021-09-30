@@ -200,6 +200,14 @@ public interface DynamicTableSink {
     }
 
     /**
+     * 提供用于写入数据的实际运行时实现。
+     *
+     * <p>运行时实现可能存在不同的接口，这就是为什么{@link SinkRuntimeProvider}作为基础接口。具体的
+     *   {@link SinkRuntimeProvider}接口可能位于其他Flink模块中。
+     *
+     * <p>看到{@code org.apache.flink.table.connector.sink。在{@code flink-table-api-java-bridge}
+     *   中的SinkFunctionProvider。
+     *
      * Provides actual runtime implementation for writing the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link

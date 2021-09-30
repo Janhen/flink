@@ -29,6 +29,8 @@ import org.apache.calcite.util.ImmutableNullableList;
 import java.util.List;
 
 /**
+ * ALTER TABLE (catalog_name。][db_name。]table_name ADD [CONSTRAINT constraint_name] (PRIMARY KEY | UNIQUE) (column，…)[[NOT] forced]。
+ *
  * ALTER TABLE [catalog_name.][db_name.]table_name ADD [CONSTRAINT constraint_name] (PRIMARY KEY |
  * UNIQUE) (column, ...) [[NOT] ENFORCED].
  */

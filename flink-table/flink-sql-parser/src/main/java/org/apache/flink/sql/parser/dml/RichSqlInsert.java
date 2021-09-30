@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /** A {@link SqlInsert} that have some extension functions like partition, overwrite. * */
+// 一个{@link SqlInsert}，有一些扩展功能，如分区，覆盖。
 public class RichSqlInsert extends SqlInsert {
     private final SqlNodeList staticPartitions;
 

@@ -34,6 +34,8 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * DDL的属性，一个键-值对，键作为组件标识符，值作为字符串字面值。
+ *
  * Properties of a DDL, a key-value pair with key as component identifier and value as string
  * literal.
  */

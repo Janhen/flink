@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** SHOW [USER] FUNCTIONS Sql Call. */
+// SHOW [USER] FUNCTIONS Sql Call。
 public class SqlShowFunctions extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

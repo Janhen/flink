@@ -31,6 +31,7 @@ import org.apache.calcite.util.ImmutableNullableList;
 import java.util.List;
 
 /** UNLOAD MODULE sql call. */
+// 卸载模块sql调用。
 public class SqlUnloadModule extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

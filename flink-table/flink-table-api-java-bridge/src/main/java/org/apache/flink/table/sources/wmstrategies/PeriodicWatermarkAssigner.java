@@ -22,10 +22,13 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.streaming.api.watermark.Watermark;
 
 /** A periodic watermark assigner. */
+// 一种周期性的水印分配器。
 @PublicEvolving
 public abstract class PeriodicWatermarkAssigner extends WatermarkStrategy {
 
     /**
+     * 使用下一个时间戳更新赋值器。
+     *
      * Updates the assigner with the next timestamp.
      *
      * @param timestamp The next timestamp to update the assigner.
@@ -33,6 +36,8 @@ public abstract class PeriodicWatermarkAssigner extends WatermarkStrategy {
     public abstract void nextTimestamp(long timestamp);
 
     /**
+     * 返回当前水印。
+     *
      * Returns the current watermark.
      *
      * @return The current watermark.

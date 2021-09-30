@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** BEGIN STATEMENT SET. */
+// 语句集开始。
 public class SqlBeginStatementSet extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

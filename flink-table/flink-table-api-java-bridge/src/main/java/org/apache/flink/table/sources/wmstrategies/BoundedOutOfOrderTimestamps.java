@@ -26,6 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 一种用于行时间属性的水印策略，行时间属性在有限的时间间隔内是无序的。
+ *
+ * <p>发出的水印是观测到的最大时间戳减去指定的延迟。
+ *
  * A watermark strategy for rowtime attributes which are out-of-order by a bounded time interval.
  *
  * <p>Emits watermarks which are the maximum observed timestamp minus the specified delay.

@@ -29,6 +29,11 @@ import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.util.Litmus;
 
 /**
+ * 解析SQL MAP类型，即MAP&lt;INT NOT NULL, TIMESTAMP NULL&gt;，键和值可以指定一个后缀来指明类型是否为空，
+ * 默认为空。
+ *
+ * <p>MAP类型不属于标准SQL。
+ *
  * Parse SQL MAP type, i.e. MAP&lt;INT NOT NULL, TIMESTAMP NULL&gt;, the key and value can specify a
  * suffix to indicate if the type is nullable, default is nullable.
  *

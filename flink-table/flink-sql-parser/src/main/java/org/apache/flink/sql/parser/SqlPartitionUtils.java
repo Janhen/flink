@@ -26,11 +26,17 @@ import org.apache.calcite.util.NlsString;
 import java.util.LinkedHashMap;
 
 /** Utils methods for partition DDLs. */
+// 分区ddl的Utils方法。
 public class SqlPartitionUtils {
 
     private SqlPartitionUtils() {}
 
     /**
+     * 获取静态分区键值对作为字符串。
+     *
+     * <p>对于字符字面值，我们返回未加引号和未转义的值。对于其他类型，我们使用{@link SqlLiteral#toString()}来
+     *   获取值literal的字符串格式。
+     *
      * Get static partition key value pair as strings.
      *
      * <p>For character literals we return the unquoted and unescaped values. For other types we use

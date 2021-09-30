@@ -30,6 +30,7 @@ import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
 
 /** Generates random {@link DecimalData} values. */
+// 生成随机的{@link DecimalData}值。
 public class DecimalDataRandomGenerator implements DataGenerator<DecimalData> {
 
     private final int precision;

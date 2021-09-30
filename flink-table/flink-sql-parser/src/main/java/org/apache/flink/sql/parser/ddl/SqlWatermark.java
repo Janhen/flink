@@ -33,6 +33,8 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * CREATE TABLE DDL中的Watermark语句，例如{@code Watermark FOR ts AS ts - INTERVAL '5' SECOND}。
+ *
  * Watermark statement in CREATE TABLE DDL, e.g. {@code WATERMARK FOR ts AS ts - INTERVAL '5'
  * SECOND}.
  */

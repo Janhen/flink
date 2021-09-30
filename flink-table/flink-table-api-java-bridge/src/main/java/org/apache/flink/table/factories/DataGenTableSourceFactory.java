@@ -40,6 +40,8 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.table.factories.FactoryUtil.CONNECTOR;
 
 /**
+ * 用于在流环境中创建{@link DataGenTableSource}的配置实例的工厂。
+ *
  * Factory for creating configured instances of {@link DataGenTableSource} in a stream environment.
  */
 @PublicEvolving

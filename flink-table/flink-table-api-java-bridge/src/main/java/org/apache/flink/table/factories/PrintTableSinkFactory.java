@@ -41,6 +41,10 @@ import java.util.Set;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 打印将每行写入标准输出或标准错误流的表接收器工厂。它是专为:
+ *   -易于测试的流工作。
+ *   -非常有用的生产调试。
+ *
  * Print table sink factory writing every row to the standard output or standard error stream. It is
  * designed for: - easy test for streaming job. - very useful in production debugging.
  *
@@ -56,6 +60,7 @@ public class PrintTableSinkFactory implements DynamicTableSinkFactory {
 
     public static final String IDENTIFIER = "print";
 
+    // 标识打印并以值的输出作为前缀的消息。
     public static final ConfigOption<String> PRINT_IDENTIFIER =
             key("print-identifier")
                     .stringType()
@@ -63,6 +68,7 @@ public class PrintTableSinkFactory implements DynamicTableSinkFactory {
                     .withDescription(
                             "Message that identify print and is prefixed to the output of the value.");
 
+    // 如果格式应该打印到标准错误而不是标准输出，则为。
     public static final ConfigOption<Boolean> STANDARD_ERROR =
             key("standard-error")
                     .booleanType()

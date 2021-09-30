@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** SHOW Tables sql call. */
+// 显示表的sql调用。
 public class SqlShowTables extends SqlCall {
 
     public static final SqlSpecialOperator OPERATOR =

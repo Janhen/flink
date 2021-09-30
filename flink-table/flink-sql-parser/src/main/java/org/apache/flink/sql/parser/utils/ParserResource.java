@@ -23,6 +23,7 @@ import org.apache.flink.sql.parser.impl.ParseException;
 import org.apache.calcite.runtime.Resources;
 
 /** Compiler-checked resources for the Flink SQL parser. */
+// Flink SQL解析器的编译器检查的资源。
 public interface ParserResource {
 
     /** Resources. */

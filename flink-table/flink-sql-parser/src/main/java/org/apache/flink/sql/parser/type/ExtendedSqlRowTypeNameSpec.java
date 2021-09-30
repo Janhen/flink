@@ -55,6 +55,8 @@ public class ExtendedSqlRowTypeNameSpec extends SqlTypeNameSpec {
     private final boolean unparseAsStandard;
 
     /**
+     * 创建ROW类型规范。
+     *
      * Creates a ROW type specification.
      *
      * @param pos parser position

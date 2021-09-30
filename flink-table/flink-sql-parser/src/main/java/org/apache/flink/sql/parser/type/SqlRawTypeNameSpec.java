@@ -35,6 +35,10 @@ import org.apache.calcite.util.NlsString;
 import java.util.Objects;
 
 /**
+ * 表示原始类型，如{@code raw ('org.my.Class'， 'sW3Djsds…')}。
+ *
+ * <p>原始类型不属于标准SQL。
+ *
  * Represents a raw type such as {@code RAW('org.my.Class', 'sW3Djsds...')}.
  *
  * <p>The raw type does not belong to standard SQL.
