@@ -33,6 +33,8 @@ import org.apache.flink.table.factories.datagen.types.RowDataGenerator;
 import org.apache.flink.table.sources.StreamTableSource;
 
 /**
+ * {@link StreamTableSource}从给定的间隔中精确地发出每个数字一次，可能是并行的。看到{@link StatefulSequenceSource}。
+ *
  * A {@link StreamTableSource} that emits each number from a given interval exactly once, possibly
  * in parallel. See {@link StatefulSequenceSource}.
  */

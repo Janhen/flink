@@ -41,6 +41,7 @@ import org.apache.flink.table.types.logical.VarCharType;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Creates a sequential {@link DataGeneratorContainer} for a particular logical type. */
+// 为特定的逻辑类型创建一个连续的{@link DataGeneratorContainer}。
 @Internal
 public class SequenceGeneratorVisitor extends DataGenVisitorBase {
 

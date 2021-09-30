@@ -66,6 +66,7 @@ import static org.apache.flink.table.descriptors.Schema.SCHEMA_TYPE;
 @PublicEvolving
 public class SchemaValidator implements DescriptorValidator {
 
+    // 是否是 流模式的环境
     private final boolean isStreamEnvironment;
     private final boolean supportsSourceTimestamps;
     private final boolean supportsSourceWatermarks;

@@ -52,10 +52,13 @@ import static org.apache.flink.table.descriptors.Rowtime.ROWTIME_WATERMARKS_TYPE
 import static org.apache.flink.table.descriptors.Rowtime.ROWTIME_WATERMARKS_TYPE_VALUE_PERIODIC_BOUNDED;
 
 /** Validator for {@link Rowtime}. */
+// 验证器{@link Rowtime}。
 @PublicEvolving
 public class RowtimeValidator implements DescriptorValidator {
 
+    // 是否支持来源时间戳
     private final boolean supportsSourceTimestamps;
+    // 是否支持来源水印
     private final boolean supportsSourceWatermarks;
     private final String prefix;
 

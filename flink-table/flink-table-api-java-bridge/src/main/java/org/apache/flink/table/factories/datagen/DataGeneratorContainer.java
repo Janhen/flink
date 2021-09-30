@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** Container class for wrapping a {@link DataGenerator with its configuration options}. */
+// 容器类，用于用配置选项包装一个{@link datgenerator}。
 @Internal
 public class DataGeneratorContainer {
 

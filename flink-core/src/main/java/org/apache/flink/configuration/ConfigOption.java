@@ -29,6 +29,8 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code ConfigOption}描述一个配置参数。它封装了配置键、该键的旧版本和配置参数的可选默认值。
+ *
  * A {@code ConfigOption} describes a configuration parameter. It encapsulates the configuration
  * key, deprecated older versions of the key, and an optional default value for the configuration
  * parameter.

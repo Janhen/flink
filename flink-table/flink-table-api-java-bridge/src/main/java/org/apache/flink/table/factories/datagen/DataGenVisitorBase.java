@@ -40,6 +40,8 @@ import java.util.function.Supplier;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 
 /**
+ * 将{@link LogicalType LogicalTypes}转换为{@link DataGeneratorContainer}的基类。
+ *
  * Base class for translating {@link LogicalType LogicalTypes} to {@link DataGeneratorContainer}'s.
  */
 public abstract class DataGenVisitorBase extends LogicalTypeDefaultVisitor<DataGeneratorContainer> {

@@ -58,6 +58,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** Creates a random {@link DataGeneratorContainer} for a particular logical type. */
+// 为特定的逻辑类型创建一个随机的{@link DataGeneratorContainer}。
 @Internal
 @SuppressWarnings("unchecked")
 public class RandomGeneratorVisitor extends DataGenVisitorBase {

@@ -27,6 +27,7 @@ import org.apache.flink.table.data.GenericRowData;
 import org.apache.flink.table.data.RowData;
 
 /** Data generator for Flink's internal {@link RowData} type. */
+// Flink的内部{@link RowData}类型的数据生成器。
 @Internal
 public class RowDataGenerator implements DataGenerator<RowData> {
 

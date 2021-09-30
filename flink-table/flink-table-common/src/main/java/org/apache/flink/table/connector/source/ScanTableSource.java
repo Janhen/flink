@@ -71,6 +71,8 @@ import java.io.Serializable;
 public interface ScanTableSource extends DynamicTableSource {
 
     /**
+     * 返回计划程序在运行时可预期的更改集。
+     *
      * Returns the set of changes that the planner can expect during runtime.
      *
      * @see RowKind
