@@ -89,6 +89,10 @@ public class AsyncDataStream {
     }
 
     /**
+     * 添加一个AsyncWaitOperator。输出流记录的顺序可以重新排序。
+     *
+     * J: 设置 timeout, capacity 在满了的情况下，会反压上游节点
+     *
      * Add an AsyncWaitOperator. The order of output stream records may be reordered.
      *
      * @param in Input {@link DataStream}

@@ -125,6 +125,8 @@ public class TableFactoryService {
     }
 
     /**
+     * 查找给定类、属性映射和类装入器的表工厂。
+     *
      * Finds a table factory of the given class, property map, and classloader.
      *
      * @param factoryClass desired factory class
@@ -185,6 +187,10 @@ public class TableFactoryService {
     }
 
     /**
+     * 搜索使用Java服务提供者的工厂。
+     *
+     * J: Java SPI 实现
+     *
      * Searches for factories using Java service providers.
      *
      * @return all factories in the classpath
@@ -193,6 +199,7 @@ public class TableFactoryService {
         try {
             List<TableFactory> result = new LinkedList<>();
             ClassLoader cl = classLoader.orElse(Thread.currentThread().getContextClassLoader());
+            // 加载 SPI 服务 ...
             ServiceLoader.load(TableFactory.class, cl).iterator().forEachRemaining(result::add);
             return result;
         } catch (ServiceConfigurationError e) {

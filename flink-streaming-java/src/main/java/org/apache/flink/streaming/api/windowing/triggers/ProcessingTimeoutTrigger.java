@@ -27,6 +27,13 @@ import org.apache.flink.streaming.api.windowing.windows.Window;
 import java.time.Duration;
 
 /**
+ * 一个{@link Trigger}可以将任何{@link Trigger}变成一个超时{@code Trigger}。
+ *
+ * <p>将在第一个到达的元素上设置一个可配置的处理时间超时。使用
+ * {@link #of(Trigger, Duration, boolean, boolean)}，还可以通过指定{@code resetTimerOnNewRecord}
+ * 来为每个到达的元素重新创建计时器，你还可以通过{@code shouldClearOnTimeout}指定是否在超时时调用
+ * {@link Trigger#clear(Window, TriggerContext)}。
+ *
  * A {@link Trigger} that can turn any {@link Trigger} into a timeout {@code Trigger}.
  *
  * <p>On the first arriving element a configurable processing-time timeout will be set. Using {@link
@@ -43,11 +50,16 @@ public class ProcessingTimeoutTrigger<T, W extends Window> extends Trigger<T, W>
 
     private static final long serialVersionUID = 1L;
 
+    // 内嵌的触发器
     private final Trigger<T, W> nestedTrigger;
+    // 时间间隔
     private final long interval;
+    // 重置超时
     private final boolean resetTimerOnNewRecord;
+    // 是否在超时的时候清空
     private final boolean shouldClearOnTimeout;
 
+    // 超时的状态
     private final ValueStateDescriptor<Long> timeoutStateDesc;
 
     private ProcessingTimeoutTrigger(

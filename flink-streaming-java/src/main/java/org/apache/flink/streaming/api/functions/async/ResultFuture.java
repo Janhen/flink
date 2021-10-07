@@ -24,6 +24,7 @@ import java.util.Collection;
 
 /**
  * 收集数据或是错误在处理异步 i/o 时
+ *
  * {@link ResultFuture} collects data / error in user codes while processing async i/o.
  *
  * @param <OUT> Output type
@@ -31,6 +32,12 @@ import java.util.Collection;
 @PublicEvolving
 public interface ResultFuture<OUT> {
     /**
+     * 使用结果对象集合完成结果future。
+     *
+     * <p>注意，在用户代码中应该只调用它一次。多次调用该函数将导致数据丢失。
+     *
+     * <p>将所有结果放入{@link Collection}中，然后发出输出。
+     *
      * Completes the result future with a collection of result objects.
      *
      * <p>Note that it should be called for exactly one time in the user code. Calling this function
@@ -43,6 +50,8 @@ public interface ResultFuture<OUT> {
     void complete(Collection<OUT> result);
 
     /**
+     * 用一个异常完成结果future。
+     *
      * Completes the result future exceptionally with an exception.
      *
      * @param error A Throwable object.
