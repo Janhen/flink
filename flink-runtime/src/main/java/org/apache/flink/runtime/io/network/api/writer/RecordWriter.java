@@ -39,6 +39,10 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 一个抽象的面向记录的运行时结果编写器。
+ *
+ * <p> RecordWriter包装运行时的{@link ResultPartitionWriter}，并负责通道选择和将记录序列化为字节。
+ *
  * An abstract record-oriented runtime result writer.
  *
  * <p>The RecordWriter wraps the runtime's {@link ResultPartitionWriter} and takes care of channel
@@ -54,6 +58,7 @@ public abstract class RecordWriter<T extends IOReadableWritable> implements Avai
 
     private static final Logger LOG = LoggerFactory.getLogger(RecordWriter.class);
 
+    // J: 被包装的运行时 ResultPartitionWriter
     protected final ResultPartitionWriter targetPartition;
 
     protected final int numberOfChannels;

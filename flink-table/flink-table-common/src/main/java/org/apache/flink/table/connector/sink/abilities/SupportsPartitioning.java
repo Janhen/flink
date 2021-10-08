@@ -93,6 +93,8 @@ import java.util.Map;
 public interface SupportsPartitioning {
 
     /**
+     * 提供分区的静态部分
+     *
      * Provides the static part of a partition.
      *
      * <p>A single partition maps each partition key to a partition value. Depending on the
@@ -105,6 +107,8 @@ public interface SupportsPartitioning {
     void applyStaticPartition(Map<String, String> partition);
 
     /**
+     * 返回数据在被接收器使用之前是否需要按分区分组。默认情况下，运行时不需要这样做，记录以任意分区顺序到达。
+     *
      * Returns whether data needs to be grouped by partition before it is consumed by the sink. By
      * default, this is not required from the runtime and records arrive in arbitrary partition
      * order.

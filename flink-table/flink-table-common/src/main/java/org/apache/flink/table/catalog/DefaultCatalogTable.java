@@ -37,7 +37,9 @@ class DefaultCatalogTable implements CatalogTable {
 
     private final Schema schema;
     private final @Nullable String comment;
+    // 表的分区键
     private final List<String> partitionKeys;
+    // 表的配置选项，可通过 /* option +zxxxx */ hint 进行制定?
     private final Map<String, String> options;
 
     DefaultCatalogTable(

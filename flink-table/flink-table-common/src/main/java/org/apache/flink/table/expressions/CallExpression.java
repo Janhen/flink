@@ -54,6 +54,7 @@ public final class CallExpression implements ResolvedExpression {
 
     private final FunctionDefinition functionDefinition;
 
+    // 已解析的表达式
     private final List<ResolvedExpression> args;
 
     private final DataType dataType;

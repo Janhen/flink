@@ -26,14 +26,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * {@link LatencyStats}对象用于跟踪和报告跨度量的延迟行为。
+ *
  * The {@link LatencyStats} objects are used to track and report on the behavior of latencies across
  * measurements.
  */
 public class LatencyStats {
+    // 相关的直方图统计信息
     private final Map<String, DescriptiveStatisticsHistogram> latencyStats = new HashMap<>();
     private final MetricGroup metricGroup;
     // 历史大小
     private final int historySize;
+    // 自任务的索引
     private final int subtaskIndex;
     // 算子 ID
     private final OperatorID operatorId;
@@ -54,6 +58,7 @@ public class LatencyStats {
     }
 
     public void reportLatency(LatencyMarker marker) {
+        // 根据 marker，算子 id，子任务索引创建唯一的直方图名称
         final String uniqueName =
                 granularity.createUniqueHistogramName(marker, operatorId, subtaskIndex);
 
@@ -69,12 +74,14 @@ public class LatencyStats {
         }
 
         long now = System.currentTimeMillis();
+        // 与 flink 处理时间相比，延迟的时间
         latencyHistogram.update(now - marker.getMarkedTime());
     }
 
     /** Granularity for latency metrics. */
     // 延迟度量的粒度
     public enum Granularity {
+        // 单个并行度的?
         SINGLE {
             @Override
             String createUniqueHistogramName(

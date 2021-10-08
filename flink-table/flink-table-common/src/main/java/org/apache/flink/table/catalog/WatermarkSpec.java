@@ -35,8 +35,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @PublicEvolving
 public final class WatermarkSpec {
 
+    // 事件时间属性
     private final String rowtimeAttribute;
 
+    // 水印表达式
     private final ResolvedExpression watermarkExpression;
 
     private WatermarkSpec(String rowtimeAttribute, ResolvedExpression watermarkExpression) {

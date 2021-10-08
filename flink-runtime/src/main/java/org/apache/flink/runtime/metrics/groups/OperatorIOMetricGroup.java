@@ -24,6 +24,8 @@ import org.apache.flink.metrics.MeterView;
 import org.apache.flink.runtime.metrics.MetricNames;
 
 /**
+ * 包含可共享的预定义io相关度量的度量组。指标注册被转发到父操作员指标组。
+ *
  * Metric group that contains shareable pre-defined IO-related metrics. The metrics registration is
  * forwarded to the parent operator metric group.
  */
@@ -32,6 +34,7 @@ public class OperatorIOMetricGroup extends ProxyMetricGroup<OperatorMetricGroup>
     private final Counter numRecordsIn;
     private final Counter numRecordsOut;
 
+    // 输入输出每秒的速率
     private final Meter numRecordsInRate;
     private final Meter numRecordsOutRate;
 

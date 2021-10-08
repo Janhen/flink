@@ -22,14 +22,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Column statistics value of string type. */
+// 列的类型是 string 时，对应的统计信息
 public class CatalogColumnStatisticsDataString extends CatalogColumnStatisticsDataBase {
     /** max length of all values. */
+    // 列中最大长度
     private final Long maxLength;
 
     /** average length of all values. */
     private final Double avgLength;
 
     /** number of distinct values. */
+    // 不同值的数目
     private final Long ndv;
 
     public CatalogColumnStatisticsDataString(

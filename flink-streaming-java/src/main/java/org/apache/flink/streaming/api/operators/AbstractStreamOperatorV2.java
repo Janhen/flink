@@ -83,20 +83,26 @@ public abstract class AbstractStreamOperatorV2<OUT>
     /** The logger used by the operator class and its subclasses. */
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractStreamOperatorV2.class);
 
+    // 流相关配置
     protected final StreamConfig config;
     protected final Output<StreamRecord<OUT>> output;
     private final StreamingRuntimeContext runtimeContext;
+    // 执行配置
     private final ExecutionConfig executionConfig;
+    // 用户代码类加载器
     private final ClassLoader userCodeClassLoader;
     private final CloseableRegistry cancelables;
+    // 流中输入的所有水印
     private final long[] inputWatermarks;
 
     /** Metric group for the operator. */
     protected final OperatorMetricGroup metrics;
 
+    // 延迟相关的统计
     protected final LatencyStats latencyStats;
     protected final ProcessingTimeService processingTimeService;
 
+    // 与流相关的算子状态处理器
     private StreamOperatorStateHandler stateHandler;
     private InternalTimeServiceManager<?> timeServiceManager;
 
@@ -116,6 +122,7 @@ public abstract class AbstractStreamOperatorV2<OUT>
                     environment
                             .getMetricGroup()
                             .getOrAddOperator(config.getOperatorID(), config.getOperatorName());
+            // 初始化当前输出的记录数 metric
             countingOutput =
                     new CountingOutput(
                             parameters.getOutput(),

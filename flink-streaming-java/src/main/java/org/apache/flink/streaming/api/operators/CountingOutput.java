@@ -25,8 +25,10 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import org.apache.flink.util.OutputTag;
 
 /** Wrapping {@link Output} that updates metrics on the number of emitted elements. */
+// 包装{@link Output}，更新发出的元素数量的度量
 public class CountingOutput<OUT> implements Output<StreamRecord<OUT>> {
     private final Output<StreamRecord<OUT>> output;
+    // 记录记录输出数量的 metric
     private final Counter numRecordsOut;
 
     public CountingOutput(Output<StreamRecord<OUT>> output, Counter counter) {

@@ -130,6 +130,8 @@ public @interface FunctionHint {
     DataTypeHint[] input() default @DataTypeHint();
 
     /**
+     * 定义在{@link input()}中定义的最后一个参数类型应被视为一个变长参数。
+     *
      * Defines that the last argument type defined in {@link #input()} should be treated as a
      * variable-length argument.
      *

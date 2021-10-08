@@ -24,6 +24,9 @@ import org.apache.flink.table.catalog.ObjectPath;
 import java.util.List;
 
 /**
+ * 与分区表的分区键列表相比，PartitionSpec无效的例外。例如，当PartitionSpec的大小超过分区键列表的大小时，
+ * 或者PartitionSpec的大小是'n'，但它的键不匹配分区键列表中的第一个'n'键时，会抛出。
+ *
  * Exception for invalid PartitionSpec compared with partition key list of a partitioned Table. For
  * example, it is thrown when the size of PartitionSpec exceeds the size of partition key list, or
  * when the size of PartitionSpec is 'n' but its keys don't match the first 'n' keys in partition

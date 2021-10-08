@@ -22,10 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Column statistics value base class. */
+// 基本的列统计信息
 public abstract class CatalogColumnStatisticsDataBase {
     /** number of null values. */
     private final Long nullCount;
 
+    // 列的配置项
     private final Map<String, String> properties;
 
     public CatalogColumnStatisticsDataBase(Long nullCount) {

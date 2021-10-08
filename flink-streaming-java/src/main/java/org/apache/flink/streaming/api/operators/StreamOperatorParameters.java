@@ -30,6 +30,10 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 /**
+ * Helper类构造{@link AbstractStreamOperatorV2}。包装两个内部参数，以简化用户构造扩展
+ * {@link AbstractStreamOperatorV2}的类，并允许在{@link AbstractStreamOperatorV2}的构造函数中进行向后
+ * 兼容的更改。
+ *
  * Helper class to construct {@link AbstractStreamOperatorV2}. Wraps couple of internal parameters
  * to simplify for users construction of classes extending {@link AbstractStreamOperatorV2} and to
  * allow for backward compatible changes in the {@link AbstractStreamOperatorV2}'s constructor.
@@ -42,10 +46,14 @@ public class StreamOperatorParameters<OUT> {
     private final StreamTask<?, ?> containingTask;
     private final StreamConfig config;
     private final Output<StreamRecord<OUT>> output;
+    // 处理时间提供器
     private final Supplier<ProcessingTimeService> processingTimeServiceFactory;
+    // 算子事件分配器
     private final OperatorEventDispatcher operatorEventDispatcher;
 
     /**
+     * ProcessingTimeService是惰性创建的，但被缓存，这样我们就不会创建多个ProcessingTimeService。
+     *
      * The ProcessingTimeService, lazily created, but cached so that we don't create more than one.
      */
     @Nullable private ProcessingTimeService processingTimeService;

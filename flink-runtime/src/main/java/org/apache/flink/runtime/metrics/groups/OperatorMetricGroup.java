@@ -31,11 +31,13 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Special {@link org.apache.flink.metrics.MetricGroup} representing an Operator. */
+// 特殊的{@link org.apache.flink.metrics。表示Operator的MetricGroup}。
 @Internal
 public class OperatorMetricGroup extends ComponentMetricGroup<TaskMetricGroup> {
     private final String operatorName;
     private final OperatorID operatorID;
 
+    // IO 相关的 metric
     private final OperatorIOMetricGroup ioMetrics;
 
     public OperatorMetricGroup(

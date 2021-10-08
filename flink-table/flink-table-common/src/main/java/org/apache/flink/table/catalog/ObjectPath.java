@@ -26,6 +26,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** A database name and object (table/view/function) name combo in a catalog. */
+// 目录中的数据库名称和对象(tableviewfunction)名称组合
 public class ObjectPath implements Serializable {
     private final String databaseName;
     private final String objectName;

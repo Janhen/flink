@@ -111,6 +111,8 @@ public @interface DataTypeHint {
     String value() default "";
 
     /**
+     * 添加一个提示，当进入或离开表生态系统时，应该使用给定的类表示数据。
+     *
      * Adds a hint that data should be represented using the given class when entering or leaving
      * the table ecosystem.
      *
@@ -131,6 +133,9 @@ public @interface DataTypeHint {
     Class<?> bridgedTo() default void.class;
 
     /**
+     * 添加定义自定义序列化器的提示，该序列化器应用于序列化和反序列化不透明的RAW类型。如果{@link value()}被显式
+     * 定义为非参数化的{@code RAW}字符串，或者(可能嵌套的)结构化类型中的字段需要作为不透明类型处理，则使用它。
+     *
      * Adds a hint that defines a custom serializer that should be used for serializing and
      * deserializing opaque RAW types. It is used if {@link #value()} is explicitly defined as an
      * unparameterized {@code RAW} string or if (possibly nested) fields in a structured type need
@@ -186,6 +191,8 @@ public @interface DataTypeHint {
     ExtractionVersion version() default ExtractionVersion.UNKNOWN;
 
     /**
+     * 定义RAW数据类型可用于所有不能映射到任何sql类数据类型或导致错误的类。
+     *
      * Defines that a RAW data type may be used for all classes that cannot be mapped to any
      * SQL-like data type or cause an error.
      *

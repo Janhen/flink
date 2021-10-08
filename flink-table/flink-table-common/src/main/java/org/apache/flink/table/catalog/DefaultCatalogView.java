@@ -34,9 +34,13 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 class DefaultCatalogView implements CatalogView {
 
+    // view 结构
     private final Schema schema;
+    // table/function/view 的注释信息?
     private final @Nullable String comment;
+    // 原始的查询
     private final String originalQuery;
+    // 扩展的查询
     private final String expandedQuery;
     private final Map<String, String> options;
 

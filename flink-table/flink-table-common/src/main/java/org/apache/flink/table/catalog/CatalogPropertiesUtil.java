@@ -48,6 +48,7 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Utilities for de/serializing {@link Catalog} objects into a map of string properties. */
+// 用于将{@link Catalog}对象反序列化为字符串属性映射的实用程序。
 @Internal
 public final class CatalogPropertiesUtil {
 
@@ -142,6 +143,7 @@ public final class CatalogPropertiesUtil {
 
     private static final String WATERMARK_STRATEGY = "strategy";
 
+    // 水印策略表达式
     private static final String WATERMARK_STRATEGY_EXPR = compoundKey(WATERMARK_STRATEGY, EXPR);
 
     private static final String WATERMARK_STRATEGY_DATA_TYPE =
@@ -488,6 +490,7 @@ public final class CatalogPropertiesUtil {
         }
     }
 
+    // 复合键
     private static String compoundKey(Object... components) {
         return Stream.of(components).map(Object::toString).collect(Collectors.joining(SEPARATOR));
     }

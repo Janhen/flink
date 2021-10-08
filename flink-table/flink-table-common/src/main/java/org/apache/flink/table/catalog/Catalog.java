@@ -635,6 +635,8 @@ public interface Catalog {
             throws PartitionNotExistException, CatalogException;
 
     /**
+     * 更新表分区的列统计信息。
+     *
      * Update the column statistics of a table partition.
      *
      * @param tablePath path of the table

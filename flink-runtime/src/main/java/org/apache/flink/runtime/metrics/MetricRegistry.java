@@ -26,6 +26,7 @@ import org.apache.flink.runtime.metrics.scope.ScopeFormats;
 import javax.annotation.Nullable;
 
 /** Interface for a metric registry. */
+// 用于度量注册中心的接口
 public interface MetricRegistry {
 
     /**
@@ -64,6 +65,8 @@ public interface MetricRegistry {
     ScopeFormats getScopeFormats();
 
     /**
+     * 返回{@link MetricQueryService}的网关，如果没有启动，则返回null。
+     *
      * Returns the gateway of the {@link MetricQueryService} or null, if none is started.
      *
      * @return Gateway of the MetricQueryService or null, if none is started

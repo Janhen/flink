@@ -41,17 +41,22 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Implementation of {@link Output} that sends data using a {@link RecordWriter}. */
+// 使用{@link RecordWriter}发送数据的{@link Output}实现。
 @Internal
 public class RecordWriterOutput<OUT> implements WatermarkGaugeExposingOutput<StreamRecord<OUT>> {
 
     private RecordWriter<SerializationDelegate<StreamElement>> recordWriter;
 
+    // 委派的序列化器
     private SerializationDelegate<StreamElement> serializationDelegate;
 
+    // 流状态xxx
     private final StreamStatusProvider streamStatusProvider;
 
+    // 是否支持不对齐的检查点
     private final boolean supportsUnalignedCheckpoints;
 
+    // 测出流 ...
     private final OutputTag outputTag;
 
     private final WatermarkGauge watermarkGauge = new WatermarkGauge();
@@ -87,6 +92,7 @@ public class RecordWriterOutput<OUT> implements WatermarkGaugeExposingOutput<Str
     public void collect(StreamRecord<OUT> record) {
         if (this.outputTag != null) {
             // we are not responsible for emitting to the main output.
+            // 不负责发送到主输出
             return;
         }
 
@@ -95,6 +101,7 @@ public class RecordWriterOutput<OUT> implements WatermarkGaugeExposingOutput<Str
 
     @Override
     public <X> void collect(OutputTag<X> outputTag, StreamRecord<X> record) {
+        // 根据 outputTag 的 id 相等确定是否将 record 写入到 RecordWriter
         if (OutputTag.isResponsibleFor(this.outputTag, outputTag)) {
             pushToRecordWriter(record);
         }

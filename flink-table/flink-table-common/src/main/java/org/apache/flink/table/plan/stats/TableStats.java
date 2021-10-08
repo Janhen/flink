@@ -42,7 +42,7 @@ public final class TableStats {
     private final long rowCount;
 
     /** colStats statistics of table columns. */
-    // colStats表列的统计信息。
+    // colStats 表列的统计信息。
     private final Map<String, ColumnStats> colStats;
 
     public TableStats(long rowCount) {

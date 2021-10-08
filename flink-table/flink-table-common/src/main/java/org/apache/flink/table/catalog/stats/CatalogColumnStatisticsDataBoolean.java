@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Column statistics value of boolean type. */
+// 列类型为 bool 时的统计信息
 public class CatalogColumnStatisticsDataBoolean extends CatalogColumnStatisticsDataBase {
     /** number of "true" values. */
     private final Long trueCount;

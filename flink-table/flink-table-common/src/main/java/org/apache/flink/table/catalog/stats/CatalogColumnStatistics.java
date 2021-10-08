@@ -29,6 +29,7 @@ public class CatalogColumnStatistics {
             new CatalogColumnStatistics(new HashMap<>());
 
     /** A map of column name and column statistic data. */
+    // 列名称和列统计数据的映射
     private final Map<String, CatalogColumnStatisticsDataBase> columnStatisticsData;
 
     private final Map<String, String> properties;

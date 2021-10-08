@@ -29,8 +29,10 @@ import org.apache.flink.util.XORShiftRandom;
 
 import java.util.Random;
 
+// 广播输出收集器
 class BroadcastingOutputCollector<T> implements WatermarkGaugeExposingOutput<StreamRecord<T>> {
 
+    // J: 下游所有的 ...
     protected final Output<StreamRecord<T>>[] outputs;
     private final Random random = new XORShiftRandom();
     private final StreamStatusProvider streamStatusProvider;
@@ -45,6 +47,7 @@ class BroadcastingOutputCollector<T> implements WatermarkGaugeExposingOutput<Str
     @Override
     public void emitWatermark(Watermark mark) {
         watermarkGauge.setCurrentWatermark(mark.getTimestamp());
+        // 确定流状态为激活的，向保存的所有 output 写入水印
         if (streamStatusProvider.getStreamStatus().isActive()) {
             for (Output<StreamRecord<T>> output : outputs) {
                 output.emitWatermark(mark);
@@ -60,6 +63,7 @@ class BroadcastingOutputCollector<T> implements WatermarkGaugeExposingOutput<Str
             outputs[0].emitLatencyMarker(latencyMarker);
         } else {
             // randomly select an output
+            // 对于延迟的，随机选择一个输出
             outputs[random.nextInt(outputs.length)].emitLatencyMarker(latencyMarker);
         }
     }
@@ -78,6 +82,7 @@ class BroadcastingOutputCollector<T> implements WatermarkGaugeExposingOutput<Str
 
     @Override
     public <X> void collect(OutputTag<X> outputTag, StreamRecord<X> record) {
+        // 输出到指定的测出流...
         for (Output<StreamRecord<T>> output : outputs) {
             output.collect(outputTag, record);
         }

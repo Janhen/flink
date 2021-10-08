@@ -24,6 +24,7 @@ import org.apache.flink.configuration.ConfigOptions;
 import org.apache.flink.table.factories.Factory;
 
 /** A collection of {@link ConfigOption} which are consistently used in multiple catalogs. */
+// 在多个目录中一致使用的{@link ConfigOption}集合。
 @Internal
 public class CommonCatalogOptions {
 
