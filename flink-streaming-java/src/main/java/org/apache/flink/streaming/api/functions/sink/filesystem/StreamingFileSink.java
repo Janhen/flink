@@ -100,10 +100,12 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     // 桶xx间隔
     private final long bucketCheckInterval;
 
+    // 桶构建
     private final BucketsBuilder<IN, ?, ? extends BucketsBuilder<IN, ?, ?>> bucketsBuilder;
 
     // --------------------------- runtime fields -----------------------------
 
+    // 运行时辅助类
     private transient StreamingFileSinkHelper<IN> helper;
 
     /**
@@ -127,6 +129,8 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     // --------------------------- Sink Builders  -----------------------------
 
     /**
+     * 用行编码格式创建{@link StreamingFileSink}的构建器。
+     *
      * Creates the builder for a {@link StreamingFileSink} with row-encoding format.
      *
      * @param basePath the base path where all the buckets are going to be created as
@@ -168,6 +172,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
         private static final long serialVersionUID = 1L;
 
+        // 默认桶检查间隔 1min
         public static final long DEFAULT_BUCKET_CHECK_INTERVAL = 60L * 1000L;
 
         @SuppressWarnings("unchecked")
@@ -206,6 +211,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
         // 回滚策略
         private RollingPolicy<IN, BucketID> rollingPolicy;
 
+        // 桶工厂
         private BucketFactory<IN, BucketID> bucketFactory;
 
         // 输出文件配置
@@ -315,6 +321,8 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     }
 
     /**
+     * 使用行格式的香草{@link StreamingFileSink}的构建器。
+     *
      * Builder for the vanilla {@link StreamingFileSink} using a row format.
      *
      * @param <IN> record type
@@ -330,6 +338,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
     }
 
     /** A builder for configuring the sink for bulk-encoding formats, e.g. Parquet/ORC. */
+    // 用于为批量编码格式配置接收器的构建器，例如Parquet/ORC
     @PublicEvolving
     public static class BulkFormatBuilder<
                     IN, BucketID, T extends BulkFormatBuilder<IN, BucketID, T>>
@@ -477,7 +486,7 @@ public class StreamingFileSink<IN> extends RichSinkFunction<IN>
 
     @Override
     public void initializeState(FunctionInitializationContext context) throws Exception {
-        // 初始化状态处理
+        // 初始化状态处理，懒加载?
         this.helper =
                 new StreamingFileSinkHelper<>(
                         bucketsBuilder.createBuckets(getRuntimeContext().getIndexOfThisSubtask()),

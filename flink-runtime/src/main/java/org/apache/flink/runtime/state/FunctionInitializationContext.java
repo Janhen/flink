@@ -21,6 +21,8 @@ package org.apache.flink.runtime.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 这个接口提供了一个上下文，用户函数可以通过注册到托管状态(即由状态后端管理的状态)来初始化
+ *
  * This interface provides a context in which user functions can initialize by registering to
  * managed state (i.e. state that is managed by state backends).
  *

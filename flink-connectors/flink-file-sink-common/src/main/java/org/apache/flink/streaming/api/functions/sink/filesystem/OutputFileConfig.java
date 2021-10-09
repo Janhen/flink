@@ -24,6 +24,8 @@ import org.apache.flink.util.Preconditions;
 import java.io.Serializable;
 
 /**
+ * 部件文件名配置。这允许为部件文件名定义前缀和后缀。
+ *
  * Part file name configuration. This allow to define a prefix and a suffix to the part file name.
  */
 public class OutputFileConfig implements Serializable {

@@ -58,6 +58,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
     // 处理时间服务
     private final ProcessingTimeService procTimeService;
 
+    // 写入的桶
     private final Buckets<IN, ?> buckets;
 
     // bucket 缓存的数据
@@ -108,6 +109,7 @@ public class StreamingFileSinkHelper<IN> implements ProcessingTimeCallback {
     public void onProcessingTime(long timestamp) throws Exception {
         // 获得 ...
         final long currentTime = procTimeService.getCurrentProcessingTime();
+        // 对应桶根据当前时间处理
         buckets.onProcessingTime(currentTime);
         // 将元素放到 ...
         procTimeService.registerTimer(currentTime + bucketCheckInterval, this);

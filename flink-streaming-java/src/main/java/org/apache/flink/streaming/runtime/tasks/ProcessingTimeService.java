@@ -22,6 +22,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 定义当前处理时间并处理所有相关操作，例如为将来要执行的任务注册计时器。
+ *
  * Defines the current processing time and handles all related actions, such as register timers for
  * tasks to be executed in the future.
  *
@@ -46,6 +48,8 @@ public interface ProcessingTimeService {
     ScheduledFuture<?> registerTimer(long timestamp, ProcessingTimeCallback target);
 
     /**
+     * 注册一个以固定速率重复执行的任务。
+     *
      * Registers a task to be executed repeatedly at a fixed rate.
      *
      * <p>This call behaves similar to {@link

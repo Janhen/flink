@@ -44,6 +44,7 @@ public class TestProcessingTimeService implements TimerService {
     private volatile boolean isQuiesced;
 
     // sorts the timers by timestamp so that they are processed in the correct order.
+    // 按时间戳对计时器进行排序，以便按照正确的顺序处理它们。
     private final PriorityQueue<Tuple2<Long, CallbackTask>> priorityQueue;
 
     public TestProcessingTimeService() {

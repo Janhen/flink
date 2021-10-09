@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /** The state of the {@link Bucket} that is to be checkpointed. */
+// 要被检查点的{@link Bucket}的状态
+// J: 对应恢复的时候从检查点获取过来的数据结构?
 @Internal
 class BucketState<BucketID> {
 

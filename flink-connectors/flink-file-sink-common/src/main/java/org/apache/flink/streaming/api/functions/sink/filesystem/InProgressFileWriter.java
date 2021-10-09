@@ -23,10 +23,13 @@ import org.apache.flink.annotation.Internal;
 import java.io.IOException;
 
 /** The {@link Bucket} uses the {@link InProgressFileWriter} to write element to a part file. */
+// {@link Bucket}使用{@link InProgressFileWriter}将元素写入部件文件
 @Internal
 public interface InProgressFileWriter<IN, BucketID> extends PartFileInfo<BucketID> {
 
     /**
+     * 向 part 文件中写入一个元素
+     *
      * Write a element to the part file.
      *
      * @param element the element to be written.
@@ -54,6 +57,7 @@ public interface InProgressFileWriter<IN, BucketID> extends PartFileInfo<BucketI
     // ------------------------------------------------------------------------
 
     /** A handle can be used to recover in-progress file.. */
+    // 句柄可以用来恢复正在进行的文件
     interface InProgressFileRecoverable extends PendingFileRecoverable {}
 
     /** The handle can be used to recover pending file. */

@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /** A {@code SimpleVersionedSerializer} used to serialize the {@link BucketState BucketState}. */
+// {@code SimpleVersionedSerializer}用于序列化{@link BucketState BucketState}
 @Internal
 class BucketStateSerializer<BucketID> implements SimpleVersionedSerializer<BucketState<BucketID>> {
 

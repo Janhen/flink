@@ -22,6 +22,7 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.core.fs.Path;
 
 /** Listener about the status of file. */
+// 监听文件的状态
 @Internal
 public interface FileLifeCycleListener<BucketID> {
 

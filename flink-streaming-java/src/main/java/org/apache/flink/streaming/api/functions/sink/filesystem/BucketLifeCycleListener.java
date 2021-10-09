@@ -21,6 +21,7 @@ package org.apache.flink.streaming.api.functions.sink.filesystem;
 import org.apache.flink.annotation.Internal;
 
 /** Listener about the status of {@link Bucket}. */
+// 监听{@link Bucket}的状态
 @Internal
 public interface BucketLifeCycleListener<IN, BucketID> {
 
@@ -32,6 +33,8 @@ public interface BucketLifeCycleListener<IN, BucketID> {
     void bucketCreated(Bucket<IN, BucketID> bucket);
 
     /**
+     * 通知桶变为非活动状态。到目前为止收到的所有记录都提交之后，桶就变为非活动状态
+     *
      * Notifies a bucket become inactive. A bucket becomes inactive after all the records received
      * so far have been committed.
      *
