@@ -38,6 +38,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * MemorySize是一个字节数的表示，以不同的单位可见。
+ *
  * MemorySize is a representation of a number of bytes, viewable in different units.
  *
  * <h2>Parsing</h2>

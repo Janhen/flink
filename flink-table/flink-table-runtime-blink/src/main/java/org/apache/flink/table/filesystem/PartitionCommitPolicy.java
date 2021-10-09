@@ -31,6 +31,12 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
+ * 提交分区的策略。
+ *
+ * <p>实现的提交方法需要是幂等的，因为同一个分区可能被提交多次。
+ *
+ * <p>默认实现:见{@link MetastoreCommitPolicy}。看到{@link SuccessFileCommitPolicy}。
+ *
  * Policy for commit a partition.
  *
  * <p>The implemented commit method needs to be idempotent because the same partition may be
@@ -84,6 +90,7 @@ public interface PartitionCommitPolicy {
     }
 
     /** Create a policy chain from config. */
+    // 从config创建策略链
     static List<PartitionCommitPolicy> createPolicyChain(
             ClassLoader cl,
             String policyKind,
@@ -124,6 +131,7 @@ public interface PartitionCommitPolicy {
     }
 
     /** Validate commit policy. */
+    // 验证提交策略
     static void validatePolicyChain(boolean isEmptyMetastore, String policyKind) {
         if (policyKind != null) {
             String[] policyStrings = policyKind.split(",");
