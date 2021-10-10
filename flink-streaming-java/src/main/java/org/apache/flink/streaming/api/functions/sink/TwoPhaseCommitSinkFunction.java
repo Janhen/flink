@@ -63,6 +63,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 这是一个推荐的基类，用于所有打算只实现一次语义的{@link SinkFunction}。它通过在{@link CheckpointedFunction}和
+ * {@link CheckpointListener}上实现两阶段提交算法来实现。用户应该提供自定义的{@code TXN}(事务句柄)，并实现抽象
+ * 方法处理该事务句柄。
+ *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
  * exactly-once semantic. It does that by implementing two phase commit algorithm on top of the
  * {@link CheckpointedFunction} and {@link CheckpointListener}. User should provide custom {@code

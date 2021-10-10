@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /** Time extractor to extract time from partition values. */
+// 时间提取器从分区值中提取时间
 @Experimental
 public interface PartitionTimeExtractor extends Serializable {
 

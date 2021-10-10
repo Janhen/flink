@@ -36,7 +36,9 @@ import static org.apache.flink.table.utils.PartitionPathUtils.generatePartitionP
 public class DynamicPartitionWriter<T> implements PartitionWriter<T> {
 
     private final Context<T> context;
+    // 分区临时文件管理器
     private final PartitionTempFileManager manager;
+    // 分区计算
     private final PartitionComputer<T> computer;
     private final Map<String, OutputFormat<T>> formats;
 
@@ -55,6 +57,7 @@ public class DynamicPartitionWriter<T> implements PartitionWriter<T> {
 
         if (format == null) {
             // create a new format to write new partition.
+            // 创建一个新的格式来写入新的分区
             format = context.createNewOutputFormat(manager.createPartitionDir(partition));
             formats.put(partition, format);
         }

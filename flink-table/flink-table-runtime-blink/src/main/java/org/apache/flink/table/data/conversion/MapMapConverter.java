@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Converter for {@link MapType}/{@link MultisetType} of {@link Map} external type. */
+// {@link Map}外部类型的{@link MultisetType}的转换器
 @Internal
 public class MapMapConverter<K, V> implements DataStructureConverter<MapData, Map<K, V>> {
 

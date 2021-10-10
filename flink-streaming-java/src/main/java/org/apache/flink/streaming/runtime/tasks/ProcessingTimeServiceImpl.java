@@ -36,6 +36,7 @@ class ProcessingTimeServiceImpl implements ProcessingTimeService {
 
     private final AtomicInteger numRunningTimers;
 
+    // 静默完成的 future
     private final CompletableFuture<Void> quiesceCompletedFuture;
 
     private volatile boolean quiesced;
@@ -54,6 +55,7 @@ class ProcessingTimeServiceImpl implements ProcessingTimeService {
 
     @Override
     public long getCurrentProcessingTime() {
+        // 从 timer service 获得当前处理时间
         return timerService.getCurrentProcessingTime();
     }
 

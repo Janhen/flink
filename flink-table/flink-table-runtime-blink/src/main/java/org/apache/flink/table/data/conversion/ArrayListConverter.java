@@ -31,6 +31,8 @@ import java.util.List;
 import static org.apache.commons.lang3.ClassUtils.primitiveToWrapper;
 
 /** Converter for {@link ArrayType} of {@link List} external type. */
+// {@link List}外部类型的{@link ArrayType}的转换器
+// J: java 集合类型有 flink 内部类型转换，flink 类型提供序列化、字节码生成等特性，提高性能，以及方便扩展?
 @Internal
 public class ArrayListConverter<E> implements DataStructureConverter<ArrayData, List<E>> {
 

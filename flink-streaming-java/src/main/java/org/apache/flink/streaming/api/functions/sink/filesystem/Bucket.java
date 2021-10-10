@@ -40,7 +40,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 桶是{@link StreamingFileSink}输出的目录组织。
+ * 桶是 {@link StreamingFileSink} 输出的目录组织
  *
  * <p>对于{@code StreamingFileSink}中的每个传入元素，查询用户指定的{@link BucketAssigner}，以查看该元素应该
  *   写入到哪个桶中。
@@ -63,6 +63,7 @@ public class Bucket<IN, BucketID> {
 
     private final BucketWriter<IN, BucketID> bucketWriter;
 
+    // 回滚策略 {是否在检查点回滚, 根据事件确定是否回滚(如大小), 根据 processTime 确定是否回滚}
     private final RollingPolicy<IN, BucketID> rollingPolicy;
 
     private final NavigableMap<Long, InProgressFileWriter.InProgressFileRecoverable>
@@ -71,10 +72,13 @@ public class Bucket<IN, BucketID> {
     private final NavigableMap<Long, List<InProgressFileWriter.PendingFileRecoverable>>
             pendingFileRecoverablesPerCheckpoint;
 
+    // 输出文件配置，如确定文件前缀、后缀
     private final OutputFileConfig outputFileConfig;
 
+    // 监听文件，是否被打开..
     @Nullable private final FileLifeCycleListener<BucketID> fileListener;
 
+    // 目录下文件 part 计数?
     private long partCounter;
 
     @Nullable private InProgressFileWriter<IN, BucketID> inProgressPart;
@@ -108,6 +112,7 @@ public class Bucket<IN, BucketID> {
     }
 
     /** Constructor to restore a bucket from checkpointed state. */
+    // 构造函数从检查点状态恢复桶。
     private Bucket(
             final int subtaskIndex,
             final long initialPartCounter,
@@ -249,8 +254,10 @@ public class Bucket<IN, BucketID> {
     }
 
     /** Constructor a new PartPath and increment the partCounter. */
+    // 构造一个新的PartPath并增加partCounter
     private Path assembleNewPartPath() {
         long currentPartCounter = partCounter++;
+        // 路径  <prefix>-<subtask-index>-<current-part-counter><suffix>
         return new Path(
                 bucketPath,
                 outputFileConfig.getPartPrefix()
@@ -278,6 +285,7 @@ public class Bucket<IN, BucketID> {
         }
     }
 
+    // 接收检查点
     BucketState<BucketID> onReceptionOfCheckpoint(long checkpointId) throws IOException {
         prepareBucketForCheckpointing(checkpointId);
 
@@ -299,6 +307,7 @@ public class Bucket<IN, BucketID> {
                 pendingFileRecoverablesPerCheckpoint);
     }
 
+    // 为检查点准备 bucket
     private void prepareBucketForCheckpointing(long checkpointId) throws IOException {
         if (inProgressPart != null && rollingPolicy.shouldRollOnCheckpoint(inProgressPart)) {
             if (LOG.isDebugEnabled()) {
@@ -339,6 +348,7 @@ public class Bucket<IN, BucketID> {
         cleanupInProgressFileRecoverables(checkpointId);
     }
 
+    // 正在清理的文件可恢复性文件
     private void cleanupInProgressFileRecoverables(long checkpointId) throws IOException {
         Iterator<Map.Entry<Long, InProgressFileWriter.InProgressFileRecoverable>> it =
                 inProgressFileRecoverablesPerCheckpoint
@@ -448,6 +458,8 @@ public class Bucket<IN, BucketID> {
     }
 
     /**
+     * 从提供的{@link BucketState}中恢复一个{@code Bucket}
+     *
      * Restores a {@code Bucket} from the state included in the provided {@link BucketState}.
      *
      * @param subtaskIndex the index of the subtask creating the bucket.

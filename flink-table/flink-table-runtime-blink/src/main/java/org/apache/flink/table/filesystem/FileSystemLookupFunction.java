@@ -40,6 +40,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 文件系统连接器表的查找函数
+ *
+ * <p> hive连接器和文件系统连接器共享读写文件代码。目前，这个函数只在hive连接器中使用
+ *
  * Lookup function for filesystem connector tables.
  *
  * <p>The hive connector and filesystem connector share read/write files code. Currently, this
@@ -53,6 +57,7 @@ public class FileSystemLookupFunction<P> extends TableFunction<RowData> {
     // into cache
     private static final int MAX_RETRIES = 3;
     // interval between retries
+    // 重试时间间隔
     private static final Duration RETRY_INTERVAL = Duration.ofSeconds(10);
 
     private final PartitionFetcher<P> partitionFetcher;
