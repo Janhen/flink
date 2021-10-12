@@ -43,8 +43,11 @@ import java.util.function.Supplier;
  */
 @Experimental
 public class StreamOperatorParameters<OUT> {
+    // 流任务
     private final StreamTask<?, ?> containingTask;
+    // 流相关的配置
     private final StreamConfig config;
+    // 下游输出
     private final Output<StreamRecord<OUT>> output;
     // 处理时间提供器
     private final Supplier<ProcessingTimeService> processingTimeServiceFactory;

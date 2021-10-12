@@ -166,6 +166,7 @@ public class ExecutionCheckpointingOptions {
                                             TextElement.code(MAX_CONCURRENT_CHECKPOINTS.key()))
                                     .build());
 
+    // 对其超时
     public static final ConfigOption<Duration> ALIGNMENT_TIMEOUT =
             ConfigOptions.key("execution.checkpointing.alignment-timeout")
                     .durationType()

@@ -77,11 +77,13 @@ public class StreamSource<OUT, SRC extends SourceFunction<OUT>>
 
         final Configuration configuration =
                 this.getContainingTask().getEnvironment().getTaskManagerInfo().getConfiguration();
+        // 获取延迟统计的跟踪间隔
         final long latencyTrackingInterval =
                 getExecutionConfig().isLatencyTrackingConfigured()
                         ? getExecutionConfig().getLatencyTrackingInterval()
                         : configuration.getLong(MetricOptions.LATENCY_INTERVAL);
 
+        // 延迟发送器
         LatencyMarksEmitter<OUT> latencyEmitter = null;
         if (latencyTrackingInterval > 0) {
             latencyEmitter =
@@ -185,9 +187,11 @@ public class StreamSource<OUT, SRC extends SourceFunction<OUT>>
     }
 
     private static class LatencyMarksEmitter<OUT> {
+        // 异步调度
         private final ScheduledFuture<?> latencyMarkTimer;
 
         public LatencyMarksEmitter(
+                // 处理时间，控制定时
                 final ProcessingTimeService processingTimeService,
                 final Output<StreamRecord<OUT>> output,
                 long latencyTrackingInterval,
@@ -202,6 +206,7 @@ public class StreamSource<OUT, SRC extends SourceFunction<OUT>>
                                     try {
                                         // ProcessingTimeService callbacks are executed under the
                                         // checkpointing lock
+                                        // ProcessingTimeService回调在检查点锁下执行
                                         output.emitLatencyMarker(
                                                 new LatencyMarker(
                                                         processingTimeService

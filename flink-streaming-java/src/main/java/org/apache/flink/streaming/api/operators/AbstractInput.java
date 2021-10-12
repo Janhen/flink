@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 用于扩展{@link AbstractStreamOperatorV2}的{@link Input}接口的基本抽象实现。
+ *
  * Base abstract implementation of {@link Input} interface intended to be used when extending {@link
  * AbstractStreamOperatorV2}.
  */
@@ -62,6 +64,7 @@ public abstract class AbstractInput<IN, OUT> implements Input<IN> {
 
     @Override
     public void processLatencyMarker(LatencyMarker latencyMarker) throws Exception {
+        // 记录或转发 LatencyMarker
         owner.reportOrForwardLatencyMarker(latencyMarker);
     }
 

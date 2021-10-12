@@ -29,6 +29,8 @@ import org.apache.flink.util.Disposable;
 import java.io.Serializable;
 
 /**
+ * 流操作符的基本接口。
+ *
  * Basic interface for stream operators. Implementers would implement one of {@link
  * org.apache.flink.streaming.api.operators.OneInputStreamOperator} or {@link
  * org.apache.flink.streaming.api.operators.TwoInputStreamOperator} to create operators that process

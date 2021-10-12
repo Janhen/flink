@@ -111,10 +111,12 @@ public abstract class AbstractStreamOperatorV2<OUT>
     private long combinedWatermark = Long.MIN_VALUE;
 
     public AbstractStreamOperatorV2(StreamOperatorParameters<OUT> parameters, int numberOfInputs) {
+        // 根据输入的数量构建输入水印
         inputWatermarks = new long[numberOfInputs];
         Arrays.fill(inputWatermarks, Long.MIN_VALUE);
         final Environment environment = parameters.getContainingTask().getEnvironment();
         config = parameters.getStreamConfig();
+        // 输出计数 counter
         CountingOutput<OUT> countingOutput;
         OperatorMetricGroup operatorMetricGroup;
         try {
@@ -122,7 +124,7 @@ public abstract class AbstractStreamOperatorV2<OUT>
                     environment
                             .getMetricGroup()
                             .getOrAddOperator(config.getOperatorID(), config.getOperatorName());
-            // 初始化当前输出的记录数 metric
+            // 初始化当前输出的记录数 metric, io metric
             countingOutput =
                     new CountingOutput(
                             parameters.getOutput(),
@@ -144,6 +146,7 @@ public abstract class AbstractStreamOperatorV2<OUT>
             output = countingOutput;
         }
 
+        // 延迟统计
         latencyStats =
                 createLatencyStats(
                         environment.getTaskManagerInfo().getConfiguration(),
@@ -165,9 +168,11 @@ public abstract class AbstractStreamOperatorV2<OUT>
                         environment.getExternalResourceInfoProvider());
     }
 
+    // 创建延迟统计
     private LatencyStats createLatencyStats(
             Configuration taskManagerConfig, int indexInSubtaskGroup) {
         try {
+            // 获得配置的历史延迟数
             int historySize = taskManagerConfig.getInteger(MetricOptions.LATENCY_HISTORY_SIZE);
             if (historySize <= 0) {
                 LOG.warn(
@@ -193,6 +198,7 @@ public abstract class AbstractStreamOperatorV2<OUT>
                         granularity);
             }
             TaskManagerJobMetricGroup jobMetricGroup = this.metrics.parent().parent();
+            //
             return new LatencyStats(
                     jobMetricGroup.addGroup("latency"),
                     historySize,
@@ -482,6 +488,7 @@ public abstract class AbstractStreamOperatorV2<OUT>
 
     protected void reportOrForwardLatencyMarker(LatencyMarker marker) {
         // all operators are tracking latencies
+        // 所有 operator 都跟踪延迟
         this.latencyStats.reportLatency(marker);
 
         // everything except sinks forwards latency markers

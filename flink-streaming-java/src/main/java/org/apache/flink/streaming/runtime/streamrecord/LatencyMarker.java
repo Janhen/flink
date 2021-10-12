@@ -22,6 +22,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.runtime.jobgraph.OperatorID;
 
 /**
+ * 特殊的记录类型，携带源操作符上的创建时间戳和操作符的vertexId和子任务索引。
+ *
+ * <p>在接收点，可以使用标记来近似记录通过数据流所需的时间。
+ *
  * Special record type carrying a timestamp of its creation time at a source operator and the
  * vertexId and subtask index of the operator.
  *
@@ -34,6 +38,7 @@ public final class LatencyMarker extends StreamElement {
     // ------------------------------------------------------------------------
 
     /** The time the latency mark is denoting. */
+    // 延迟标记所表示的时间
     private final long markedTime;
 
     private final OperatorID operatorId;

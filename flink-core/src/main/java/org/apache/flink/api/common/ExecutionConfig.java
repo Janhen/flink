@@ -127,6 +127,8 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     private long autoWatermarkInterval = 200;
 
     /**
+     * 将延迟跟踪标记从源发送到接收的间隔(以毫秒为单位)
+     *
      * Interval in milliseconds for sending latency tracking marks from the sources to the sinks.
      */
     private long latencyTrackingInterval = MetricOptions.LATENCY_INTERVAL.defaultValue();
@@ -251,6 +253,10 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     }
 
     /**
+     * 将延迟跟踪标记从源发送到接收的间隔。Flink将以指定的间隔从源发送延迟跟踪标记。
+     *
+     * <p>设置跟踪间隔<= 0禁用延迟跟踪。
+     *
      * Interval for sending latency tracking marks from the sources to the sinks. Flink will send
      * latency tracking marks from the sources at the specified interval.
      *
@@ -1100,6 +1106,7 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
                 .<GlobalJobParameters>map(MapBasedJobParameters::new)
                 .ifPresent(this::setGlobalJobParameters);
 
+        // 延迟统计只读
         configuration
                 .getOptional(MetricOptions.LATENCY_INTERVAL)
                 .ifPresent(this::setLatencyTrackingInterval);

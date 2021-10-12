@@ -33,9 +33,11 @@ import java.util.Map;
  */
 public class LatencyStats {
     // 相关的直方图统计信息
+    // marker,operatorId,subtaskIndex -> histogram
     private final Map<String, DescriptiveStatisticsHistogram> latencyStats = new HashMap<>();
+    // 度量组
     private final MetricGroup metricGroup;
-    // 历史大小
+    // 历史大小，由该大小确定 DescriptiveStatisticsHistogram 中的 CircularDoubleArray 容器大小
     private final int historySize;
     // 自任务的索引
     private final int subtaskIndex;
@@ -66,6 +68,7 @@ public class LatencyStats {
         if (latencyHistogram == null) {
             latencyHistogram = new DescriptiveStatisticsHistogram(this.historySize);
             this.latencyStats.put(uniqueName, latencyHistogram);
+            // 算子
             granularity
                     .createSourceMetricGroups(metricGroup, marker, operatorId, subtaskIndex)
                     .addGroup("operator_id", String.valueOf(operatorId))
@@ -73,6 +76,7 @@ public class LatencyStats {
                     .histogram("latency", latencyHistogram);
         }
 
+        // 获得标记的延迟时间
         long now = System.currentTimeMillis();
         // 与 flink 处理时间相比，延迟的时间
         latencyHistogram.update(now - marker.getMarkedTime());

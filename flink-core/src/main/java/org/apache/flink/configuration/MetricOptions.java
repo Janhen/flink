@@ -123,6 +123,7 @@ public class MetricOptions {
                     .withDescription(
                             "Defines the scope format string that is applied to all metrics scoped to an operator.");
 
+    // 定义从源发出延迟跟踪标记的时间间隔。如果设置为0或负值，则禁用延迟跟踪。启用该特性会对集群的性能产生显著的影响
     public static final ConfigOption<Long> LATENCY_INTERVAL =
             key("metrics.latency.interval")
                     .defaultValue(0L)
@@ -131,6 +132,10 @@ public class MetricOptions {
                                     + " Disables latency tracking if set to 0 or a negative value. Enabling this feature can significantly"
                                     + " impact the performance of the cluster.");
 
+    // 对于延迟的粒度，默认为算子级别
+    // single   - 在不区分源和子任务的情况下跟踪延迟
+    // operator — 在区分源而不是子任务时跟踪延迟
+    // subtask  — 在区分源和子任务时跟踪延迟
     public static final ConfigOption<String> LATENCY_SOURCE_GRANULARITY =
             key("metrics.latency.granularity")
                     .defaultValue("operator")
@@ -148,6 +153,7 @@ public class MetricOptions {
                                     .build());
 
     /** The number of measured latencies to maintain at each operator. */
+    // 在每个操作符上要维护的可测量的延迟数
     public static final ConfigOption<Integer> LATENCY_HISTORY_SIZE =
             key("metrics.latency.history-size")
                     .defaultValue(128)

@@ -80,6 +80,7 @@ public class StreamConfig implements Serializable {
     private static final String NUMBER_OF_NETWORK_INPUTS = "numberOfNetworkInputs";
     private static final String CHAINED_OUTPUTS = "chainedOutputs";
     private static final String CHAINED_TASK_CONFIG = "chainedTaskConfig_";
+    // 是否是流水线的子任务
     private static final String IS_CHAINED_VERTEX = "isChainedSubtask";
     private static final String CHAIN_INDEX = "chainIndex";
     private static final String VERTEX_NAME = "vertexID";
@@ -97,19 +98,25 @@ public class StreamConfig implements Serializable {
     private static final String GRAPH_CONTAINING_LOOPS = "graphContainingLoops";
 
     private static final String CHECKPOINTING_ENABLED = "checkpointing";
+    // 检查点模式
     private static final String CHECKPOINT_MODE = "checkpointMode";
 
     private static final String SAVEPOINT_DIR = "savepointdir";
     private static final String CHECKPOINT_STORAGE = "checkpointstorage";
     private static final String STATE_BACKEND = "statebackend";
+    // 时间服务
     private static final String TIMER_SERVICE_PROVIDER = "timerservice";
+    // 状态分区器
     private static final String STATE_PARTITIONER = "statePartitioner";
 
+    // 状态 key
     private static final String STATE_KEY_SERIALIZER = "statekeyser";
 
+    // 时间字符
     private static final String TIME_CHARACTERISTIC = "timechar";
 
     private static final String MANAGED_MEMORY_FRACTION_PREFIX = "managedMemFraction.";
+    // 状态后端是否使用管理内存
     private static final ConfigOption<Boolean> STATE_BACKEND_USE_MANAGED_MEMORY =
             ConfigOptions.key("statebackend.useManagedMemory")
                     .booleanType()
@@ -168,6 +175,8 @@ public class StreamConfig implements Serializable {
     }
 
     /**
+     * 对于给定的用例，此操作符应该使用的槽中托管内存总数的一部分。
+     *
      * Fraction of total managed memory in the slot that this operator should use for the given use
      * case.
      */
@@ -724,6 +733,8 @@ public class StreamConfig implements Serializable {
     }
 
     /**
+     * 对 operator 不同输入的要求。每个输入可以有不同的需求。
+     *
      * Requirements of the different inputs of an operator. Each input can have a different
      * requirement. For all {@link #SORTED} inputs, records are sorted/grouped by key and all
      * records of a given key are passed to the operator consecutively before moving on to the next
