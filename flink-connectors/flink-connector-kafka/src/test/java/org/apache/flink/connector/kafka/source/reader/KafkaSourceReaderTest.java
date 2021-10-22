@@ -25,6 +25,7 @@ import org.apache.flink.api.connector.source.SourceReaderContext;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.KafkaSourceBuilder;
+import org.apache.flink.connector.kafka.source.KafkaSourceOptions;
 import org.apache.flink.connector.kafka.source.KafkaSourceTestEnv;
 import org.apache.flink.connector.kafka.source.KafkaSourceTestUtils;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
@@ -60,6 +61,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -204,11 +206,21 @@ public class KafkaSourceReaderTest extends SourceReaderTestBase<KafkaPartitionSp
 
             // The completion of the last checkpoint should subsume all the previous checkpoitns.
             assertEquals(checkpointId, reader.getOffsetsToCommit().size());
-            reader.notifyCheckpointComplete(checkpointId);
-            pollUntil(
-                    reader,
-                    output,
-                    () -> reader.getOffsetsToCommit().isEmpty(),
+
+            long lastCheckpointId = checkpointId;
+            waitUtil(
+                    () -> {
+                        try {
+                            reader.notifyCheckpointComplete(lastCheckpointId);
+                        } catch (Exception exception) {
+                            throw new RuntimeException(
+                                    "Caught unexpected exception when polling from the reader",
+                                    exception);
+                        }
+                        return reader.getOffsetsToCommit().isEmpty();
+                    },
+                    Duration.ofSeconds(60),
+                    Duration.ofSeconds(1),
                     "The offset commit did not finish before timeout.");
         }
 
@@ -237,6 +249,32 @@ public class KafkaSourceReaderTest extends SourceReaderTestBase<KafkaPartitionSp
             reader.snapshotState(checkpointId);
             assertEquals(1, reader.getOffsetsToCommit().size());
             assertTrue(reader.getOffsetsToCommit().get(checkpointId).isEmpty());
+        }
+    }
+
+    @Test
+    public void testDisableOffsetCommit() throws Exception {
+        final Properties properties = new Properties();
+        properties.setProperty(KafkaSourceOptions.COMMIT_OFFSETS_ON_CHECKPOINT.key(), "false");
+        try (KafkaSourceReader<Integer> reader =
+                (KafkaSourceReader<Integer>)
+                        createReader(
+                                Boundedness.CONTINUOUS_UNBOUNDED,
+                                new TestingReaderContext(),
+                                (ignore) -> {},
+                                properties)) {
+            reader.addSplits(
+                    getSplits(NUM_SPLITS, NUM_RECORDS_PER_SPLIT, Boundedness.CONTINUOUS_UNBOUNDED));
+            ValidatingSourceOutput output = new ValidatingSourceOutput();
+            long checkpointId = 0;
+            do {
+                checkpointId++;
+                reader.pollNext(output);
+                // Create a checkpoint for each message consumption, but not complete them.
+                reader.snapshotState(checkpointId);
+                // Offsets to commit should be always empty because offset commit is disabled
+                assertEquals(0, reader.getOffsetsToCommit().size());
+            } while (output.count() < TOTAL_NUM_RECORDS);
         }
     }
 
@@ -397,6 +435,17 @@ public class KafkaSourceReaderTest extends SourceReaderTestBase<KafkaPartitionSp
             SourceReaderContext context,
             Consumer<Collection<String>> splitFinishedHook)
             throws Exception {
+        Properties properties = new Properties();
+        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        return createReader(boundedness, context, splitFinishedHook, properties);
+    }
+
+    private SourceReader<Integer, KafkaPartitionSplit> createReader(
+            Boundedness boundedness,
+            SourceReaderContext context,
+            Consumer<Collection<String>> splitFinishedHook,
+            Properties props)
+            throws Exception {
         KafkaSourceBuilder<Integer> builder =
                 KafkaSource.<Integer>builder()
                         .setClientIdPrefix("KafkaSourceReaderTest")
@@ -407,9 +456,8 @@ public class KafkaSourceReaderTest extends SourceReaderTestBase<KafkaPartitionSp
                         .setProperty(
                                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                                 KafkaSourceTestEnv.brokerConnectionStrings)
-                        .setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId)
-                        .setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
-
+                        .setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
+                        .setProperties(props);
         if (boundedness == Boundedness.BOUNDED) {
             builder.setBounded(OffsetsInitializer.latest());
         }

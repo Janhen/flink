@@ -87,7 +87,6 @@ import org.apache.flink.streaming.api.functions.source.StatefulSequenceSource;
 import org.apache.flink.streaming.api.functions.source.TimestampedFileInputSplit;
 import org.apache.flink.streaming.api.graph.StreamGraph;
 import org.apache.flink.streaming.api.graph.StreamGraphGenerator;
-import org.apache.flink.streaming.api.graph.StreamingJobGraphGenerator;
 import org.apache.flink.streaming.api.operators.StreamSource;
 import org.apache.flink.util.DynamicCodeLoadingException;
 import org.apache.flink.util.ExceptionUtils;
@@ -161,7 +160,7 @@ public class StreamExecutionEnvironment {
     // DataStream 所有的 transformation
     protected final List<Transformation<?>> transformations = new ArrayList<>();
 
-    private long bufferTimeout = StreamingJobGraphGenerator.UNDEFINED_NETWORK_BUFFER_TIMEOUT;
+    private long bufferTimeout = ExecutionOptions.BUFFER_TIMEOUT.defaultValue().toMillis();
 
     protected boolean isChainingEnabled = true;
 
@@ -368,7 +367,7 @@ public class StreamExecutionEnvironment {
      * @param timeoutMillis The maximum time between two output flushes.
      */
     public StreamExecutionEnvironment setBufferTimeout(long timeoutMillis) {
-        if (timeoutMillis < -1) {
+        if (timeoutMillis < ExecutionOptions.DISABLED_NETWORK_BUFFER_TIMEOUT) {
             throw new IllegalArgumentException("Timeout of buffer must be non-negative or -1");
         }
 

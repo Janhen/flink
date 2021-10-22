@@ -29,6 +29,7 @@ import org.apache.flink.api.connector.source.SourceReader;
 import org.apache.flink.api.connector.source.SourceReaderContext;
 import org.apache.flink.api.connector.source.SourceSplit;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.configuration.MetricOptions;
 import org.apache.flink.core.io.InputStatus;
 import org.apache.flink.core.io.SimpleVersionedSerializer;
 import org.apache.flink.metrics.MetricGroup;
@@ -50,6 +51,8 @@ import org.apache.flink.util.CollectionUtil;
 import org.apache.flink.util.FlinkRuntimeException;
 import org.apache.flink.util.UserCodeClassLoader;
 import org.apache.flink.util.function.FunctionWithException;
+
+import javax.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.List;
@@ -129,6 +132,8 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
 
     /** Indicating whether the source operator has been closed. */
     private boolean closed;
+
+    private @Nullable LatencyMarkerEmitter<OUT> latencyMarerEmitter;
 
     public SourceOperator(
             FunctionWithException<SourceReaderContext, SourceReader<OUT, SplitT>, Exception>
@@ -267,6 +272,9 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
         if (eventTimeLogic != null) {
             eventTimeLogic.stopPeriodicWatermarkEmits();
         }
+        if (latencyMarerEmitter != null) {
+            latencyMarerEmitter.close();
+        }
         if (sourceReader != null) {
             sourceReader.close();
         }
@@ -280,6 +288,9 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
         // are released if the task does not finish normally.
         if (!closed && sourceReader != null) {
             sourceReader.close();
+        }
+        if (latencyMarerEmitter != null) {
+            latencyMarerEmitter.close();
         }
     }
 
@@ -296,8 +307,29 @@ public class SourceOperator<OUT, SplitT extends SourceSplit> extends AbstractStr
 
         // this creates a batch or streaming output based on the runtime mode
         currentMainOutput = eventTimeLogic.createMainOutput(output);
+        initializeLatencyMarkerEmitter(output);
         lastInvokedOutput = output;
         return sourceReader.pollNext(currentMainOutput);
+    }
+
+    private void initializeLatencyMarkerEmitter(DataOutput<OUT> output) {
+        long latencyTrackingInterval =
+                getExecutionConfig().isLatencyTrackingConfigured()
+                        ? getExecutionConfig().getLatencyTrackingInterval()
+                        : getContainingTask()
+                                .getEnvironment()
+                                .getTaskManagerInfo()
+                                .getConfiguration()
+                                .getLong(MetricOptions.LATENCY_INTERVAL);
+        if (latencyTrackingInterval > 0) {
+            latencyMarerEmitter =
+                    new org.apache.flink.streaming.api.operators.LatencyMarkerEmitter<>(
+                            getProcessingTimeService(),
+                            output::emitLatencyMarker,
+                            latencyTrackingInterval,
+                            getOperatorID(),
+                            getRuntimeContext().getIndexOfThisSubtask());
+        }
     }
 
     @Override
