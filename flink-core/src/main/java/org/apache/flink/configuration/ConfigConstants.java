@@ -27,6 +27,8 @@ import java.nio.charset.StandardCharsets;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 该类包含配置的所有常量。这包括配置键和默认值。
+ *
  * This class contains all constants for the configuration. That includes the configuration keys and
  * the default values.
  */
@@ -216,6 +218,7 @@ public final class ConfigConstants {
     @Deprecated public static final String TASK_MANAGER_TMP_DIR_KEY = "taskmanager.tmp.dirs";
 
     /** The config parameter defining the taskmanager log file location. */
+    // 定义taskmanager日志文件位置的配置参数。
     public static final String TASK_MANAGER_LOG_PATH_KEY = "taskmanager.log.path";
 
     /** @deprecated Use {@link TaskManagerOptions#MANAGED_MEMORY_SIZE} instead */
@@ -1786,24 +1789,30 @@ public final class ConfigConstants {
     public static final String ENV_FLINK_CONF_DIR = "FLINK_CONF_DIR";
 
     /** The environment variable name which contains the location of the lib folder. */
+    // 环境变量名，其中包含lib文件夹的位置。
     public static final String ENV_FLINK_LIB_DIR = "FLINK_LIB_DIR";
 
     /** The environment variable name which contains the location of the opt directory. */
     public static final String ENV_FLINK_OPT_DIR = "FLINK_OPT_DIR";
 
     /** The environment variable name which contains the location of the plugins folder. */
+    // 环境变量名，包含插件文件夹的位置。
     public static final String ENV_FLINK_PLUGINS_DIR = "FLINK_PLUGINS_DIR";
 
     /**
+     * 如果没有通过{@link #ENV_FLINK_PLUGINS_DIR}指定，则默认的Flink插件目录。
+     *
      * The default Flink plugins directory if none has been specified via {@link
      * #ENV_FLINK_PLUGINS_DIR}.
      */
     public static final String DEFAULT_FLINK_PLUGINS_DIRS = "plugins";
 
     /** The environment variable name which contains the location of the bin directory. */
+    // 包含bin目录位置的环境变量名。
     public static final String ENV_FLINK_BIN_DIR = "FLINK_BIN_DIR";
 
     /** The environment variable name which contains the Flink installation root directory. */
+    // 包含Flink安装根目录的环境变量名
     public static final String ENV_FLINK_HOME_DIR = "FLINK_HOME";
 
     /** The user lib directory name. */

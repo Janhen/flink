@@ -33,6 +33,7 @@ import java.net.InetSocketAddress;
 import static org.apache.flink.client.cli.CliFrontend.setJobManagerAddressInConfig;
 
 /** The default CLI which is used for interaction with standalone clusters. */
+// 默认的CLI，用于与独立集群交互。
 public class DefaultCLI extends AbstractCustomCommandLine {
 
     public static final String ID = "default";

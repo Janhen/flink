@@ -422,6 +422,7 @@ class RelTimeIndicatorConverter(rexBuilder: RexBuilder) extends RelShuttle {
   }
 }
 
+// 实时指标转换器
 object RelTimeIndicatorConverter {
 
   def convert(rootRel: RelNode, rexBuilder: RexBuilder): RelNode = {

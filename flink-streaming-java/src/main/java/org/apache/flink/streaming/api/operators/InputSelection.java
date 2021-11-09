@@ -22,6 +22,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /** Describe the input selection that stream operators want to read records. */
+// 描述流操作符想要读取记录的输入选择。
 @PublicEvolving
 public final class InputSelection implements Serializable {
 

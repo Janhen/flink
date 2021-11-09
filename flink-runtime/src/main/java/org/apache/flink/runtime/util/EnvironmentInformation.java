@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * 实用程序类，它提供对JVM执行环境的访问，如执行用户、启动选项或JVM版本。
+ *
  * Utility class that gives access to the execution environment of the JVM, like the executing user,
  * startup options, or the JVM version.
  */
@@ -81,11 +83,13 @@ public class EnvironmentInformation {
     }
 
     /** @return The last known commit id of this version of the software. */
+    // 这个版本的软件的最后一个已知的提交id。
     public static String getGitCommitId() {
         return getVersionsInstance().gitCommitId;
     }
 
     /** @return The last known abbreviated commit id of this version of the software. */
+    // 这个版本软件的最后一个已知的缩写提交id。
     public static String getGitCommitIdAbbrev() {
         return getVersionsInstance().gitCommitIdAbbrev;
     }
@@ -382,6 +386,8 @@ public class EnvironmentInformation {
     }
 
     /**
+     * 记录有关环境的信息，如代码修订、当前用户、Java版本和JVM参数。
+     *
      * Logs information about the environment, like code revision, current user, Java version, and
      * JVM parameters.
      *

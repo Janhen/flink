@@ -47,6 +47,8 @@ class StreamOptimizer(
   extends Optimizer(calciteConfig, planningConfigurationBuilder) {
 
   /**
+    * 从原始关系节点树生成优化的[[RelNode]]树。
+    *
     * Generates the optimized [[RelNode]] tree from the original relational node tree.
     *
     * @param relNode The root node of the relational expression tree.

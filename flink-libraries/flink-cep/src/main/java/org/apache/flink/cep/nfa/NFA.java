@@ -60,6 +60,11 @@ import java.util.Stack;
 import static org.apache.flink.cep.nfa.MigrationUtils.deserializeComputationStates;
 
 /**
+ * 非确定性有限自动机实现
+ *
+ * <p>对于键控的输入流，{@link org.apache.flink.cep.operator.CepOperator CEP操作符}为每个键控的输入流保留一个
+ *   NFA，对于非键控的流保留一个全局NFA。当事件被处理时，它会更新NFA的内部状态机。
+ *
  * Non-deterministic finite automaton implementation.
  *
  * <p>The {@link org.apache.flink.cep.operator.CepOperator CEP operator} keeps one NFA per key, for

@@ -25,6 +25,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
 /** Custom command-line interface to load hooks for the command-line interface. */
+// 自定义命令行接口，用于加载命令行接口的钩子。
 public interface CustomCommandLine {
 
     /**

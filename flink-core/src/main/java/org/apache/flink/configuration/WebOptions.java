@@ -45,6 +45,8 @@ public class WebOptions {
             key("web.port").defaultValue(8081).withDeprecatedKeys("jobmanager.web.port");
 
     /**
+     * 定义web前端所有响应的访问-控制-允许- origin报头的配置参数。
+     *
      * The config parameter defining the Access-Control-Allow-Origin header for all responses from
      * the web-frontend.
      */

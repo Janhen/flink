@@ -36,6 +36,9 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link CustomCommandLine}的一个通用实现，只期望执行。target参数明确指定，并简单地将用-D指定的其余选项转发
+ * 到相应的{@link PipelineExecutor}以进行进一步解析。
+ *
  * A generic implementation of the {@link CustomCommandLine} that only expects the execution.target
  * parameter to be explicitly specified and simply forwards the rest of the options specified with
  * -D to the corresponding {@link PipelineExecutor} for further parsing.
