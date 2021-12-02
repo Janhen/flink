@@ -142,6 +142,12 @@ public class BackendRestorerProcedure<T extends Closeable & Disposable, S extend
 
                 collectedException = ExceptionUtils.firstOrSuppressed(ex, collectedException);
 
+                if (backendCloseableRegistry.isClosed()) {
+                    throw new FlinkException(
+                            "Stopping restore attempts for already cancelled task.",
+                            collectedException);
+                }
+
                 LOG.warn(
                         "Exception while restoring {} from alternative ({}/{}), will retry while more "
                                 + "alternatives are available.",
@@ -149,12 +155,6 @@ public class BackendRestorerProcedure<T extends Closeable & Disposable, S extend
                         alternativeIdx,
                         restoreOptions.size(),
                         ex);
-
-                if (backendCloseableRegistry.isClosed()) {
-                    throw new FlinkException(
-                            "Stopping restore attempts for already cancelled task.",
-                            collectedException);
-                }
             }
         }
 
