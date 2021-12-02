@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import java.util.Set;
 
 /** An interface for the elements passed from the fetchers to the source reader. */
+// 从读取器传递给源读取器的元素的接口。
 public interface RecordsWithSplitIds<E> {
 
     /**

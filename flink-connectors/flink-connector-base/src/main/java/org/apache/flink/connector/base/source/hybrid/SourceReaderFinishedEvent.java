@@ -21,6 +21,8 @@ package org.apache.flink.connector.base.source.hybrid;
 import org.apache.flink.api.connector.source.SourceEvent;
 
 /**
+ * 从HybridSourceReader发送到枚举数的源事件，以指示当前读取器已完成，并可以发送下一个读取器的拆分。
+ *
  * A source event sent from the HybridSourceReader to the enumerator to indicate that the current
  * reader has finished and splits for the next reader can be sent.
  */

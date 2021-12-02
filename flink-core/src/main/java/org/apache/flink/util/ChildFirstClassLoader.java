@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
+ * URLClassLoader的一个变体，它首先从url加载，然后才从父url加载。
+ *
  * A variant of the URLClassLoader that first loads from the URLs and only after that from the
  * parent.
  *

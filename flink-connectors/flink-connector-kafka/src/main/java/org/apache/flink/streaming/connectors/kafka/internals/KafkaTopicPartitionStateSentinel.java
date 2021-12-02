@@ -20,6 +20,10 @@ package org.apache.flink.streaming.connectors.kafka.internals;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 魔法值用于表示在实际读取分区之前的特殊偏移状态。
+ *
+ * <p>所有值都是负的。负偏移量不被Kafka使用(无效)，所以我们选择一个可能(希望)Kafka不使用的数字作为其他任何东西的魔术数字。
+ *
  * Magic values used to represent special offset states before partitions are actually read.
  *
  * <p>The values are all negative. Negative offsets are not used by Kafka (invalid), so we pick a

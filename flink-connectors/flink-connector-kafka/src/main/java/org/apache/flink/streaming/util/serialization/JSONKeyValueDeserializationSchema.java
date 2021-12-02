@@ -30,6 +30,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import static org.apache.flink.api.java.typeutils.TypeExtractor.getForClass;
 
 /**
+ * 将JSON字符串反序列化为对象节点的模式。
+ *
  * DeserializationSchema that deserializes a JSON String into an ObjectNode.
  *
  * <p>Key fields can be accessed by calling objectNode.get("key").get(&lt;name>).as(&lt;type>)

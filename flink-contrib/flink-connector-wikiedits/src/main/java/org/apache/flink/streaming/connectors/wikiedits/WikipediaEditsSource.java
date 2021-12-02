@@ -24,6 +24,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 这个类是一个SourceFunction，它从IRC通道<code># zh .wikipedia<code>读取{@link WikipediaEditEvent}实例。
+ *
  * This class is a SourceFunction that reads {@link WikipediaEditEvent} instances from the IRC
  * channel <code>#en.wikipedia</code>.
  */
@@ -81,6 +83,7 @@ public class WikipediaEditsSource extends RichSourceFunction<WikipediaEditEvent>
             try {
                 while (isRunning) {
                     // Query for the next edit event
+                    // 查询下一个编辑事件
                     WikipediaEditEvent edit = ircStream.getEdits().poll(100, TimeUnit.MILLISECONDS);
 
                     if (edit != null) {

@@ -45,6 +45,8 @@ import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 
 /**
+ * 包装实际的分割枚举数并促进源切换。当源开关发生时，枚举器被延迟创建以支持运行时位置转换。
+ *
  * Wraps the actual split enumerators and facilitates source switching. Enumerators are created
  * lazily when source switch occurs to support runtime position conversion.
  *

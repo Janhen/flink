@@ -31,6 +31,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * 这是注册表的抽象基类，它允许注册{@link Closeable}的实例，如果注册表关闭，这些实例将全部关闭。
+ *
  * This is the abstract base class for registries that allow to register instances of {@link
  * Closeable}, which are all closed if this registry is closed.
  *

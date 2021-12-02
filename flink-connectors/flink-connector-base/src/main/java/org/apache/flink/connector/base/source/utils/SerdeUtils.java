@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /** A util class with some helper method for serde in the sources. */
+// 一个util类，在源代码中带有一些用于serde的帮助器方法。
 public class SerdeUtils {
 
     /** Private constructor for util class. */

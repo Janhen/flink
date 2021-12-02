@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /** The internal fetcher runnable responsible for polling message from the external system. */
+// 内部获取器负责轮询来自外部系统的消息。
 public class SplitFetcher<E, SplitT extends SourceSplit> implements Runnable {
     private static final Logger LOG = LoggerFactory.getLogger(SplitFetcher.class);
     private static final SplitFetcherTask WAKEUP_TASK = new DummySplitFetcherTask("WAKEUP_TASK");

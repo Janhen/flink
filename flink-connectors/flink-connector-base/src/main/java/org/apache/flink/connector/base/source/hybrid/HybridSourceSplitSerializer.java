@@ -27,6 +27,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /** Serializes splits by delegating to the source-indexed underlying split serializer. */
+// 通过委托给源索引的底层拆分序列化器来序列化拆分。
 public class HybridSourceSplitSerializer implements SimpleVersionedSerializer<HybridSourceSplit> {
 
     public HybridSourceSplitSerializer() {}

@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /** An interface for the deserialization of Kafka records. */
+// 用于 kafka 记录反序列化的接口。
 public interface KafkaRecordDeserializationSchema<T> extends Serializable, ResultTypeQueryable<T> {
 
     /**

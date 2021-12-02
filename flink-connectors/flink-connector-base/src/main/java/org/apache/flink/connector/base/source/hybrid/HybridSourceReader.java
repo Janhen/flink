@@ -39,6 +39,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * 委托给实际源读取器的混合源读取器。
  *
+ * <p>此读取器进程从由枚举数确定的源序列中拆分。当前的源代码提供{@link SwitchSourceEvent}，并且读者不需要预先知道
+ *   源代码的数量和顺序。在给定的时间点，一个潜在的阅读器处于活动状态。
+ *
  * Hybrid source reader that delegates to the actual source reader.
  *
  * <p>This reader processes splits from a sequence of sources as determined by the enumerator. The

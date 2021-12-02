@@ -21,9 +21,13 @@ package org.apache.flink.connector.base.source.reader.fetcher;
 import java.io.IOException;
 
 /** An interface similar to {@link Runnable} but allows throwing exceptions and wakeup. */
+// 类似{@link Runnable}的接口，但允许抛出异常和唤醒。
 public interface SplitFetcherTask {
 
     /**
+     * 运行逻辑。此方法允许在唤醒时抛出中断的异常，但实现不需要这样做。最好是优雅地完成工作并返回一个布尔值来指示是否
+     * 已经完成了所有的工作，还是需要更多的调用。
+     *
      * Run the logic. This method allows throwing an interrupted exception on wakeup, but the
      * implementation does not have to. It is preferred to finish the work elegantly and return a
      * boolean to indicate whether all the jobs have been done or more invocation is needed.
@@ -34,5 +38,6 @@ public interface SplitFetcherTask {
     boolean run() throws IOException;
 
     /** Wake up the running thread. */
+    // 唤醒正在运行的线程。
     void wakeUp();
 }

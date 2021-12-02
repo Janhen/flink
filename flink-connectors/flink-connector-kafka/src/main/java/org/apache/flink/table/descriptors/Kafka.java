@@ -44,6 +44,7 @@ import static org.apache.flink.table.descriptors.KafkaValidator.CONNECTOR_TOPIC;
 import static org.apache.flink.table.descriptors.KafkaValidator.CONNECTOR_TYPE_VALUE_KAFKA;
 
 /** Connector descriptor for the Apache Kafka message queue. */
+// Apache Kafka消息队列的连接器描述符。
 @PublicEvolving
 public class Kafka extends ConnectorDescriptor {
 

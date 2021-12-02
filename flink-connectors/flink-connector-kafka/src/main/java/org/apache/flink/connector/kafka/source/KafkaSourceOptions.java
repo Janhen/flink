@@ -43,6 +43,7 @@ public class KafkaSourceOptions {
                             "The interval in milliseconds for the Kafka source to discover "
                                     + "the new partitions. A non-positive value disables the partition discovery.");
 
+    // 是否将KafkaConsumer的度量注册到Flink度量组
     public static final ConfigOption<Boolean> REGISTER_KAFKA_CONSUMER_METRICS =
             ConfigOptions.key("register.consumer.metrics")
                     .booleanType()
@@ -50,6 +51,7 @@ public class KafkaSourceOptions {
                     .withDescription(
                             "Whether to register metrics of KafkaConsumer into Flink metric group");
 
+    // 是否在检查点上提交消耗偏移量。
     public static final ConfigOption<Boolean> COMMIT_OFFSETS_ON_CHECKPOINT =
             ConfigOptions.key("commit.offsets.on.checkpoint")
                     .booleanType()

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Sources that participated in switching with cached serializers. */
+// 参与使用缓存的序列化器进行切换的源。
 class SwitchedSources {
     private final Map<Integer, Source> sources = new HashMap<>();
     private final Map<Integer, SimpleVersionedSerializer<SourceSplit>> cachedSerializers =

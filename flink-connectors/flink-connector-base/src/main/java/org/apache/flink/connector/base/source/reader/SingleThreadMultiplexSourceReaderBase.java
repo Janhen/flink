@@ -29,6 +29,9 @@ import org.apache.flink.connector.base.source.reader.synchronization.FutureCompl
 import java.util.function.Supplier;
 
 /**
+ * 一个用于{@link SourceReader}的基，该基使用一个{@link SplitReader}用一个线程进行读取拆分。拆分可以一个接
+ * 一个地读取(就像在一个文件源中一样)，也可以通过修改拆分阅读器中的订阅(就像在Kafka源中一样)来并发读取。
+ *
  * A base for {@link SourceReader}s that read splits with one thread using one {@link SplitReader}.
  * The splits can be read either one after the other (like in a file source) or concurrently by
  * changing the subscription in the split reader (like in the Kafka Source).

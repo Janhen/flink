@@ -62,6 +62,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_FIXED = "fixed";
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_ROUND_ROBIN = "round-robin";
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_CUSTOM = "custom";
+    // sink 的分区器类
     public static final String CONNECTOR_SINK_PARTITIONER_CLASS =
             "connector.sink-partitioner-class";
 

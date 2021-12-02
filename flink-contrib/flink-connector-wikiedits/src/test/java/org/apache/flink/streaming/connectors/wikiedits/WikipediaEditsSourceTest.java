@@ -44,6 +44,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /** Tests for the WikipediaEditsSource. */
+// 测试WikipediaEditsSource。
 public class WikipediaEditsSourceTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(WikipediaEditsSourceTest.class);
@@ -51,6 +52,7 @@ public class WikipediaEditsSourceTest {
     @Rule public RetryRule retryRule = new RetryRule();
 
     /** We first check the connection to the IRC server. If it fails, this test is ignored. */
+    // 我们首先检查到IRC服务器的连接。如果失败，则忽略此测试
     @Test
     @RetryOnFailure(times = 1)
     public void testWikipediaEditsSource() throws Exception {
@@ -62,6 +64,7 @@ public class WikipediaEditsSourceTest {
             try {
                 executorService = Executors.newSingleThreadExecutor();
                 BlockingQueue<Object> collectedEvents = new ArrayBlockingQueue<>(1);
+                // J: 异常原子引用包裹
                 AtomicReference<Exception> asyncError = new AtomicReference<>();
 
                 // Execute the source in a different thread and collect events into the queue.

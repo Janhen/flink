@@ -36,9 +36,11 @@ class WikipediaEditEventIrcStream implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(WikipediaEditEventIrcStream.class);
 
     /** Bounded queue of edit events from the channel. */
+    // 通道中编辑事件的有界队列。
     private final BlockingQueue<WikipediaEditEvent> edits = new ArrayBlockingQueue<>(128);
 
     /** IRC connection (NOTE: this is a separate Thread). */
+    // IRC连接(注意:这是一个单独的线程)。
     private IRCConnection conn;
 
     WikipediaEditEventIrcStream(String host, int port) {
@@ -84,6 +86,7 @@ class WikipediaEditEventIrcStream implements AutoCloseable {
     // IRC channel listener
     // ------------------------------------------------------------------------
 
+    // IRC频道侦听器
     private static class WikipediaIrcChannelListener implements IRCEventListener {
 
         private final BlockingQueue<WikipediaEditEvent> edits;
@@ -96,6 +99,7 @@ class WikipediaEditEventIrcStream implements AutoCloseable {
         public void onPrivmsg(String target, IRCUser user, String msg) {
             LOG.debug("[{}] {}: {}.", target, user.getNick(), msg);
 
+            // J: build event
             WikipediaEditEvent event =
                     WikipediaEditEvent.fromRawEvent(System.currentTimeMillis(), target, msg);
 

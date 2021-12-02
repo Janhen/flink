@@ -33,6 +33,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 一个集合类，用于处理{@link KafkaSourceReader}中的度量。
+ *
+ * <p> Kafka源阅读器的所有度量都注册在“KafkaSourceReader”组下，该组是
+ *   {@link org.apache.flink.runtime.metrics.groups.OperatorMetricGroup}的子组。与特定主题分区相关的度量
+ *   将在组“KafkaSourceReader.topic.{topic_name}.partition.{partition_id}”中注册。
+ *
  * A collection class for handling metrics in {@link KafkaSourceReader}.
  *
  * <p>All metrics of Kafka source reader are registered under group "KafkaSourceReader", which is a

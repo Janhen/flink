@@ -23,14 +23,17 @@ import org.apache.flink.configuration.ConfigOptions;
 import org.apache.flink.configuration.Configuration;
 
 /** The options tht can be set for the {@link SourceReaderBase}. */
+// 可以为{@link SourceReaderBase}设置的选项。
 public class SourceReaderOptions {
 
+    // 关闭源读取器时的超时
     public static final ConfigOption<Long> SOURCE_READER_CLOSE_TIMEOUT =
             ConfigOptions.key("source.reader.close.timeout")
                     .longType()
                     .defaultValue(30000L)
                     .withDescription("The timeout when closing the source reader");
 
+    // 源读取器中元素队列的容量。
     public static final ConfigOption<Integer> ELEMENT_QUEUE_CAPACITY =
             ConfigOptions.key("source.reader.element.queue.capacity")
                     .intType()

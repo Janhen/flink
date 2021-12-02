@@ -21,6 +21,8 @@ package org.apache.flink.api.connector.source;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 河流的边界流可以是“有界的”(有有限记录的流)或“无界的”(有无限记录的流)。
+ *
  * The boundedness of a stream. A stream could either be "bounded" (a stream with finite records) or
  * "unbounded" (a stream with infinite records).
  */
@@ -42,6 +44,8 @@ public enum Boundedness {
     BOUNDED,
 
     /**
+     * 一个CONTINUOUS_UNBOUNDED流是一个有无限记录的流。
+     *
      * A CONTINUOUS_UNBOUNDED stream is a stream with infinite records.
      *
      * <p>In the context of sources, an infinite stream expects the source implementation to run

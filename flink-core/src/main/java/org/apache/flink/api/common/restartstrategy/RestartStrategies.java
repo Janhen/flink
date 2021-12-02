@@ -93,12 +93,16 @@ public class RestartStrategies {
     }
 
     /**
+     * 生成一个ExponentialDelayRestartStrategyConfiguration。
+     *
      * Generates a ExponentialDelayRestartStrategyConfiguration.
      *
      * @param initialBackoff Starting duration between restarts
      * @param maxBackoff The highest possible duration between restarts
      * @param backoffMultiplier Delay multiplier how many times is the delay longer than before
+     *                          延迟乘法器是延时比以前长多少倍
      * @param resetBackoffThreshold How long the job must run smoothly to reset the time interval
+     *                              作业必须平稳运行多长时间才能重置时间间隔
      * @param jitterFactor How much the delay may differ (in percentage)
      */
     public static ExponentialDelayRestartStrategyConfiguration exponentialDelayRestart(

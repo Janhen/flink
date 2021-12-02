@@ -164,6 +164,11 @@ public class HybridSource<T> implements Source<T, HybridSourceSplit, HybridSourc
     }
 
     /**
+     * {@link HybridSource}的底层源的工厂。
+     *
+     * <p>该工厂允许在图构建时构建源，或在开关时间延迟。提供以特定源允许的任何方式设置起始位置的能力。未来的便利可以
+     *   建立在它之上，例如一个默认的实现，识别可选的接口，以通用格式转移位置。
+     *
      * Factory for underlying sources of {@link HybridSource}.
      *
      * <p>This factory permits building of a source at graph construction time or deferred at switch
@@ -203,6 +208,7 @@ public class HybridSource<T> implements Source<T, HybridSourceSplit, HybridSourc
     }
 
     /** Entry for list of underlying sources. */
+    // 底层源列表的条目。
     static class SourceListEntry implements Serializable {
         protected final SourceFactory factory;
         protected final Boundedness boundedness;

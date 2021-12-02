@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Instances of this class represent edits made on Wikipedia. */
+// 该类的实例表示对Wikipedia的编辑。
 public class WikipediaEditEvent {
 
     // Metadata

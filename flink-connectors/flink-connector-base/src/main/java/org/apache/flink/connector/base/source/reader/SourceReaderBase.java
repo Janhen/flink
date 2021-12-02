@@ -45,6 +45,9 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个{@link SourceReader}的抽象实现，它在邮箱主线程和SourceReader内部线程之间提供一些同步。这个类允许用户
+ * 只提供{@link SplitReader}并快照拆分状态。
+ *
  * An abstract implementation of {@link SourceReader} which provides some sychronization between the
  * mail box main thread and the SourceReader internal threads. This class allows user to just
  * provide a {@link SplitReader} and snapshot the split state.
@@ -60,15 +63,18 @@ public abstract class SourceReaderBase<E, T, SplitT extends SourceSplit, SplitSt
     private static final Logger LOG = LoggerFactory.getLogger(SourceReaderBase.class);
 
     /** A queue to buffer the elements fetched by the fetcher thread. */
+    // 一个用来缓冲fetcher线程获取的元素的队列。
     private final FutureCompletingBlockingQueue<RecordsWithSplitIds<E>> elementsQueue;
 
     /** The state of the splits. */
     private final Map<String, SplitContext<T, SplitStateT>> splitStates;
 
     /** The record emitter to handle the records read by the SplitReaders. */
+    // 用于处理splitreader读取的记录的记录发射器。
     protected final RecordEmitter<E, T, SplitStateT> recordEmitter;
 
     /** The split fetcher manager to run split fetchers. */
+    // 拆分获取器管理器来运行拆分获取器。
     protected final SplitFetcherManager<E, SplitT> splitFetcherManager;
 
     /** The configuration for the reader. */

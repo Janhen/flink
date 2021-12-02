@@ -47,6 +47,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /** The source reader for Kafka partitions. */
+// Kafka分区的源阅读器。
 public class KafkaSourceReader<T>
         extends SingleThreadMultiplexSourceReaderBase<
                 Tuple3<T, Long, Long>, T, KafkaPartitionSplit, KafkaPartitionSplitState> {

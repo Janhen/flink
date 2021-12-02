@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 /** Source split that wraps the actual split type. */
+// 封装实际拆分类型的源拆分。
 public class HybridSourceSplit implements SourceSplit {
 
     private final byte[] wrappedSplitBytes;

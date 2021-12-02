@@ -19,6 +19,7 @@
 package org.apache.flink.connector.kafka.source.split;
 
 /** This class extends KafkaPartitionSplit to track a mutable current offset. */
+// 这个类扩展了KafkaPartitionSplit来跟踪一个可变的当前偏移量。
 public class KafkaPartitionSplitState extends KafkaPartitionSplit {
 
     private long currentOffset;

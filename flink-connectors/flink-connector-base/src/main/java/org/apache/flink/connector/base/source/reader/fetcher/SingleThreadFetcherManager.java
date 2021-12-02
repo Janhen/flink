@@ -31,6 +31,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
+ * 一个带有单个抓取线程(IO线程)的读取管理器，可以并发处理所有的拆分。
+ *
  * A Fetcher Manager with a single fetching thread (I/O thread) that handles all splits
  * concurrently.
  *
