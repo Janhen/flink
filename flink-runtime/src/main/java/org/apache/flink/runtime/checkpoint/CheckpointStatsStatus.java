@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.checkpoint;
 
 /** Status of the tracked checkpoint. */
+// 被跟踪检查点的状态。
 public enum CheckpointStatsStatus {
 
     /** Checkpoint that is still in progress. */

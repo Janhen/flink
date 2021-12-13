@@ -28,6 +28,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 单个任务操作符的统计信息，它收集子任务的所有统计信息，并提供关于所有子任务的汇总统计信息。
+ *
  * Statistics for a single task/operator that gathers all statistics of its subtasks and provides
  * summary statistics about all subtasks.
  */

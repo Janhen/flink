@@ -35,6 +35,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 检查点统计的跟踪器。
+ *
+ * <p>这与{@link CheckpointCoordinator}紧密集成，以简化细粒度统计信息的收集。
+ *
  * Tracker for checkpoint statistics.
  *
  * <p>This is tightly integrated with the {@link CheckpointCoordinator} in order to ease the

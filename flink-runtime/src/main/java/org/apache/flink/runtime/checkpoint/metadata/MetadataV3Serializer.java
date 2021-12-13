@@ -40,6 +40,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
+ * 检查点元数据格式版本3的(反)序列化器。这种格式是在Apache Flink 1.11.0中引入的。
+ *
+ * 与格式版本2相比，这删除了一些未使用的字段并引入了 operator 协调器状态。
+ *
  * (De)serializer for checkpoint metadata format version 3. This format was introduced with Apache
  * Flink 1.11.0.
  *
@@ -88,6 +92,8 @@ public class MetadataV3Serializer extends MetadataV2V3SerializerBase implements 
     //  version-specific serialization formats
     // ------------------------------------------------------------------------
 
+    // 特定于版本的序列化格式
+    // 序列化 operator 的 状态
     @Override
     protected void serializeOperatorState(OperatorState operatorState, DataOutputStream dos)
             throws IOException {
@@ -111,6 +117,7 @@ public class MetadataV3Serializer extends MetadataV2V3SerializerBase implements 
         }
     }
 
+    // 序列化 SubTask 的状态
     @Override
     protected void serializeSubtaskState(OperatorSubtaskState subtaskState, DataOutputStream dos)
             throws IOException {

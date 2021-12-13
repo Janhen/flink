@@ -45,6 +45,21 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * CompletedCheckpoint描述了在所有必需的任务(以及它们的状态)确认它之后的一个被认为是成功的检查点。
+ * CompletedCheckpoint类包含检查点的所有元数据，例如，检查点ID、时间戳，以及作为检查点一部分的所有状态的句柄。
+ *
+ * <h2> CompletedCheckpoint实例的大小<h2>
+ *
+ * <p>在大多数情况下，CompletedCheckpoint对象非常小，因为检查点状态的句柄只是指针(例如文件路径)。然而，一些状态后端
+ *   实现可能选择将一些有效负载数据直接存储在元数据中(例如，为了避免许多小文件)。如果这些阈值增加到较大的值，那么
+ *   CompletedCheckpoint对象的内存消耗可能会非常大。
+ *
+ * <h2>元数据持久化</h2>
+ *
+ * <p> CompletedCheckpoint的元数据也持久化在外部存储系统中。检查点有一个外部指针，它指向元数据。例如，在文件系统中
+ *   存储检查点时，该指针是指向检查点文件夹或元数据文件的文件路径。对于在数据库表中存储元数据的状态后端，指针可以是表名
+ *   和行键。该指针被编码为String。
+ *
  * A CompletedCheckpoint describes a checkpoint after all required tasks acknowledged it (with their
  * state) and that is considered successful. The CompletedCheckpoint class contains all the metadata
  * of the checkpoint, i.e., checkpoint ID, timestamps, and the handles to all states that are part
@@ -81,9 +96,11 @@ public class CompletedCheckpoint implements Serializable, Checkpoint {
     private final long checkpointID;
 
     /** The timestamp when the checkpoint was triggered. */
+    // 触发检查点的时间戳。
     private final long timestamp;
 
     /** The duration of the checkpoint (completion timestamp - trigger timestamp). */
+    // 检查点的持续时间(完成时间戳-触发时间戳)。
     private final long duration;
 
     /** States of the different operator groups belonging to this checkpoint. */
@@ -93,18 +110,23 @@ public class CompletedCheckpoint implements Serializable, Checkpoint {
     private final CheckpointProperties props;
 
     /** States that were created by a hook on the master (in the checkpoint coordinator). */
+    // 由主服务器上的钩子创建的状态(在检查点协调器中)。
     private final Collection<MasterState> masterHookStates;
 
     /** The location where the checkpoint is stored. */
+    // 检查点存储的位置。
     private final CompletedCheckpointStorageLocation storageLocation;
 
     /** The state handle to the externalized meta data. */
+    // 外部化元数据的状态句柄。
     private final StreamStateHandle metadataHandle;
 
     /** External pointer to the completed checkpoint (for example file path). */
+    // 指向已完成检查点的外部指针(例如文件路径)。
     private final String externalPointer;
 
     /** Optional stats tracker callback for discard. */
+    // 可选的统计跟踪器回调为丢弃。
     @Nullable private transient volatile CompletedCheckpointStats.DiscardCallback discardCallback;
 
     // ------------------------------------------------------------------------

@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 /**
+ * 一个操作符任务的一个并行子任务的链接状态的容器。这是{@link TaskState}的一部分。
+ *
  * Container for the chained state of one parallel subtask of an operator/task. This is part of the
  * {@link TaskState}.
  */

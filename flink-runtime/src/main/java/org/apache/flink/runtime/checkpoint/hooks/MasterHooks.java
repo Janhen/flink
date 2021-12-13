@@ -41,6 +41,7 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
 
 /** Collection of methods to deal with checkpoint master hooks. */
+// 处理检查点主钩子的方法集合。
 public class MasterHooks {
 
     // ------------------------------------------------------------------------
@@ -96,6 +97,8 @@ public class MasterHooks {
     // ------------------------------------------------------------------------
 
     /**
+     * 触发主控钩和返回一个可完成的未来与状态。
+     *
      * Trigger master hook and return a completable future with state.
      *
      * @param hook The master hook given
@@ -152,6 +155,7 @@ public class MasterHooks {
                                                             + " is stateful but creates no serializer"));
                                 }
                             })
+                    // J: 异常处理
                     .exceptionally(
                             (throwable) -> {
                                 throw new CompletionException(
@@ -173,6 +177,10 @@ public class MasterHooks {
     // ------------------------------------------------------------------------
 
     /**
+     * 调用给定检查点主钩子的恢复方法，并将给定的主状态传递给它们，在找到具有匹配名称的状态的地方。
+     *
+     * 如果找到state，但没有找到同名的钩子，该方法抛出一个异常，除非设置了{@code allowUnmatchedState}标志。
+     *
      * Calls the restore method given checkpoint master hooks and passes the given master state to
      * them where state with a matching name is found.
      *
@@ -292,6 +300,8 @@ public class MasterHooks {
     // ------------------------------------------------------------------------
 
     /**
+     * 包装一个钩子，以便在钩子被调用时应用用户代码类加载器。
+     *
      * Wraps a hook such that the user-code classloader is applied when the hook is invoked.
      *
      * @param hook the hook to wrap

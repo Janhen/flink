@@ -32,18 +32,23 @@ public class CheckpointStatsCounts implements Serializable {
     private static final long serialVersionUID = -5229425063269482528L;
 
     /** Number of restored checkpoints. */
+    // 恢复的检查点数量。
     private long numRestoredCheckpoints;
 
     /** Number of total checkpoints (in progress, completed, failed). */
+    // 总数的检查点(在进行中，完成，失败)。
     private long numTotalCheckpoints;
 
     /** Number of in progress checkpoints. */
+    // 正在进行中的检查点数量。
     private int numInProgressCheckpoints;
 
     /** Number of successfully completed checkpoints. */
+    // 成功完成的检查点数量。
     private long numCompletedCheckpoints;
 
     /** Number of failed checkpoints. */
+    // 失败的检查点数量。
     private long numFailedCheckpoints;
 
     /** Creates the initial zero checkpoint counts. */

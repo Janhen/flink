@@ -32,6 +32,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 基于数组的检查点统计历史。
+ *
  * An array based history of checkpoint stats.
  *
  * <p>The size of the array is constrained by the maximum allowed size. The array starts empty an

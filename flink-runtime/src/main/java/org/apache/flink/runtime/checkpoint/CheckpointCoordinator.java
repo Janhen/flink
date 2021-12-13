@@ -98,110 +98,145 @@ public class CheckpointCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(CheckpointCoordinator.class);
 
     /** The number of recent checkpoints whose IDs are remembered. */
+    // 最近有多少个检查点的身份被记住。
+    // J: 对应保存在 flink web ui 上面的计数，以及每次 checkpoint 的耗时等信息
     private static final int NUM_GHOST_CHECKPOINT_IDS = 16;
 
     // ------------------------------------------------------------------------
 
     /** Coordinator-wide lock to safeguard the checkpoint updates. */
+    // 协调范围的锁，以保护检查点更新。
     private final Object lock = new Object();
 
     /** The job whose checkpoint this coordinator coordinates. */
     private final JobID job;
 
     /** Default checkpoint properties. * */
+    // 默认的检查点属性。
     private final CheckpointProperties checkpointProperties;
 
     /** The executor used for asynchronous calls, like potentially blocking I/O. */
+    // 用于异步调用的执行器，比如可能阻塞IO。
     private final Executor executor;
 
+    // 负责检查点清理和计数尚未清理的检查点数量
     private final CheckpointsCleaner checkpointsCleaner;
 
     /** The operator coordinators that need to be checkpointed. */
+    // 需要检查的操作符协调器。
     private final Collection<OperatorCoordinatorCheckpointContext> coordinatorsToCheckpoint;
 
     /** Map from checkpoint ID to the pending checkpoint. */
+    // 从检查点ID映射到挂起的检查点。
     @GuardedBy("lock")
     private final Map<Long, PendingCheckpoint> pendingCheckpoints;
 
     /**
+     * 完成检查点。实现可能是阻塞的。确保对访问此功能的方法的调用不会阻塞作业管理器actor并异步运行。
+     *
      * Completed checkpoints. Implementations can be blocking. Make sure calls to methods accessing
      * this don't block the job manager actor and run asynchronously.
      */
     private final CompletedCheckpointStore completedCheckpointStore;
 
     /**
+     * 根检查点状态后端，负责初始化检查点、存储元数据和清理检查点。
+     *
      * The root checkpoint state backend, which is responsible for initializing the checkpoint,
      * storing the metadata, and cleaning up the checkpoint.
      */
     private final CheckpointStorageCoordinatorView checkpointStorageView;
 
     /** A list of recent checkpoint IDs, to identify late messages (vs invalid ones). */
+    // 最近的检查点id列表，用于识别延迟消息(与无效消息相比)。
     private final ArrayDeque<Long> recentPendingCheckpoints;
 
     /**
+     * 检查点ID计数器，以确保ID上升。在作业管理器失败的情况下，这些任务需要在作业管理器之间升序。
+     *
      * Checkpoint ID counter to ensure ascending IDs. In case of job manager failures, these need to
      * be ascending across job managers.
      */
     private final CheckpointIDCounter checkpointIdCounter;
 
     /**
+     * 基本检查点间隔。实际触发时间可能受到并发检查点的最大值和最小暂停值的影响
+     *
      * The base checkpoint interval. Actual trigger time may be affected by the max concurrent
      * checkpoints and minimum-pause values
      */
     private final long baseInterval;
 
     /** The max time (in ms) that a checkpoint may take. */
+    // 检查点可能花费的最大时间(以毫秒为单位)。
     private final long checkpointTimeout;
 
     /**
+     * 触发检查点后延迟的最小时间(毫秒)。允许执行检查点尝试之间的最小处理时间
+     *
      * The min time(in ms) to delay after a checkpoint could be triggered. Allows to enforce minimum
      * processing time between checkpoint attempts
      */
     private final long minPauseBetweenCheckpoints;
 
     /**
+     * 处理检查点超时并触发周期性检查点的计时器。它必须是单线程的。最终它将被主线程执行器所取代。
+     *
      * The timer that handles the checkpoint timeouts and triggers periodic checkpoints. It must be
      * single-threaded. Eventually it will be replaced by main thread executor.
      */
     private final ScheduledExecutor timer;
 
     /** The master checkpoint hooks executed by this checkpoint coordinator. */
+    // 此检查点协调器执行的主检查点挂钩。
     private final HashMap<String, MasterTriggerRestoreHook<?>> masterHooks;
 
+    // 非对其检查点是否开启
     private final boolean unalignedCheckpointsEnabled;
 
+    // 对齐超时时间
     private final long alignmentTimeout;
 
     /** Actor that receives status updates from the execution graph this coordinator works for. */
+    // 从协调器工作的执行图接收状态更新的Actor。
     private JobStatusListener jobStatusListener;
 
     /** The number of consecutive failed trigger attempts. */
+    // 连续失败的触发尝试次数。
     private final AtomicInteger numUnsuccessfulCheckpointsTriggers = new AtomicInteger(0);
 
     /** A handle to the current periodic trigger, to cancel it when necessary. */
+    // 当前周期性触发器的句柄，在必要时取消它。
     private ScheduledFuture<?> currentPeriodicTrigger;
 
     /**
+     * 最后一个检查点完成时的时间戳(通过{@link Clock#relativeTimeMillis()})。
+     *
      * The timestamp (via {@link Clock#relativeTimeMillis()}) when the last checkpoint completed.
      */
     private long lastCheckpointCompletionRelativeTime;
 
     /**
+     * 标记一个被触发的检查点是否应该立即调度下一个检查点。非易失性，因为只在同步范围内访问
+     *
      * Flag whether a triggered checkpoint should immediately schedule the next checkpoint.
      * Non-volatile, because only accessed in synchronized scope
      */
     private boolean periodicScheduling;
 
     /** Flag marking the coordinator as shut down (not accepting any messages any more). */
+    // 将协调器标记为已关闭(不再接受任何消息)的标志。
     private volatile boolean shutdown;
 
     /** Optional tracker for checkpoint statistics. */
+    // 检查点统计数据的可选跟踪器。
     @Nullable private CheckpointStatsTracker statsTracker;
 
     /** A factory for SharedStateRegistry objects. */
     private final SharedStateRegistryFactory sharedStateRegistryFactory;
 
     /** Registry that tracks state which is shared across (incremental) checkpoints. */
+    // 跟踪检查点之间共享的状态的注册表。
     private SharedStateRegistry sharedStateRegistry;
 
     private boolean isPreferCheckpointForRecovery;
@@ -210,15 +245,20 @@ public class CheckpointCoordinator {
 
     private final Clock clock;
 
+    // 是否是 EOS 数据一致性模式
     private final boolean isExactlyOnceMode;
 
     /** Flag represents there is an in-flight trigger request. */
+    // 标志表示有一个正在运行的触发请求。
     private boolean isTriggering = false;
 
+    // 检查点请求决策者
     private final CheckpointRequestDecider requestDecider;
 
+    // 检查点计划计算器
     private final CheckpointPlanCalculator checkpointPlanCalculator;
 
+    // 执行尝试映射提供者
     private final ExecutionAttemptMappingProvider attemptMappingProvider;
 
     // --------------------------------------------------------------------------------------------
@@ -445,6 +485,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 以给定的保存点目录为目标触发同步保存点。
+     *
      * Triggers a synchronous savepoint with the given savepoint directory as a target.
      *
      * @param terminate flag indicating if the job should terminate or just suspend
@@ -487,6 +529,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 触发一个新的标准检查点，并使用给定的时间戳作为检查点时间戳。返回值是一个future。当检查点触发完成或发生错误时，它就完成了。
+     *
      * Triggers a new standard checkpoint and uses the given timestamp as the checkpoint timestamp.
      * The return value is a future. It completes when the checkpoint triggered finishes or an error
      * occurred.
@@ -666,6 +710,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 异步初始化检查点触发器。它将被期望在io线程中执行，因为它可能是耗时的。
+     *
      * Initialize the checkpoint trigger asynchronously. It will expected to be executed in io
      * thread due to it might be time-consuming.
      *
@@ -739,6 +785,7 @@ public class CheckpointCoordinator {
             }
         }
 
+        // J: checkpoint 触发记录
         LOG.info(
                 "Triggering checkpoint {} (type={}) @ {} for job {}.",
                 checkpointID,
@@ -833,6 +880,7 @@ public class CheckpointCoordinator {
     }
 
     /** Trigger request is successful. NOTE, it must be invoked if trigger request is successful. */
+    // 触发请求成功。说明触发请求成功时必须调用。
     private void onTriggerSuccess() {
         isTriggering = false;
         numUnsuccessfulCheckpointsTriggers.set(0);
@@ -840,6 +888,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 如果没有适当的初始化，触发器请求就会提前失败。没有资源要释放，但是完成承诺需要在这里手动失败。
+     *
      * The trigger request is failed prematurely without a proper initialization. There is no
      * resource to release, but the completion promise needs to fail manually here.
      *
@@ -940,6 +990,8 @@ public class CheckpointCoordinator {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 收到一个挂起的检查点的{@link DeclineCheckpoint}消息。
+     *
      * Receives a {@link DeclineCheckpoint} message for a pending checkpoint.
      *
      * @param message Checkpoint decline from the task manager
@@ -1243,6 +1295,7 @@ public class CheckpointCoordinator {
         // the 'min delay between checkpoints'
         lastCheckpointCompletionRelativeTime = clock.relativeTimeMillis();
 
+        // J: 记录已完成的 job 检查点，记录检查点大小和耗时
         LOG.info(
                 "Completed checkpoint {} for job {} ({} bytes in {} ms).",
                 checkpointId,
@@ -1858,12 +1911,15 @@ public class CheckpointCoordinator {
             try {
                 triggerCheckpoint(true);
             } catch (Exception e) {
+                // J: 触发 ck 失败
                 LOG.error("Exception while triggering checkpoint for job {}.", job, e);
             }
         }
     }
 
     /**
+     * 异步地丢弃属于给定作业、执行尝试id和检查点id的给定状态对象。
+     *
      * Discards the given state object asynchronously belonging to the given job, execution attempt
      * id and checkpoint id.
      *
@@ -1900,12 +1956,14 @@ public class CheckpointCoordinator {
         }
     }
 
+    // 中止等待检查点
     private void abortPendingCheckpoint(
             PendingCheckpoint pendingCheckpoint, CheckpointException exception) {
 
         abortPendingCheckpoint(pendingCheckpoint, exception, null);
     }
 
+    // 中止等待检查点
     private void abortPendingCheckpoint(
             PendingCheckpoint pendingCheckpoint,
             CheckpointException exception,
@@ -1913,6 +1971,7 @@ public class CheckpointCoordinator {
 
         assert (Thread.holdsLock(lock));
 
+        // 等待的检查点没有被处理
         if (!pendingCheckpoint.isDisposed()) {
             try {
                 // release resource here
@@ -1926,11 +1985,14 @@ public class CheckpointCoordinator {
 
                 if (pendingCheckpoint.getProps().isSavepoint()
                         && pendingCheckpoint.getProps().isSynchronous()) {
+                    // 当前为保存点，且是同步的 -> 处理同步保存点失败
                     failureManager.handleSynchronousSavepointFailure(exception);
                 } else if (executionAttemptID != null) {
+                    // 当前有执行尝试的，处理 Task 级别的检查点异常
                     failureManager.handleTaskLevelCheckpointException(
                             exception, pendingCheckpoint.getCheckpointId(), executionAttemptID);
                 } else {
+                    // 处理 Job 级别的检查点异常
                     failureManager.handleJobLevelCheckpointException(
                             exception, pendingCheckpoint.getCheckpointId());
                 }
@@ -1965,6 +2027,8 @@ public class CheckpointCoordinator {
     }
 
     /**
+     * 取消检查点。如果检查点没有在配置的时间内完成，那么它可能会被取消。
+     *
      * The canceller of checkpoint. The checkpoint might be cancelled if it doesn't finish in a
      * configured period.
      */

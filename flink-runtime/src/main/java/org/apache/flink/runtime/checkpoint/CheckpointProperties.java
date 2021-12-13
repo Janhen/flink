@@ -28,6 +28,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * The configuration of a checkpoint. This describes whether
  *
+ * 检查点的配置。这个描述是否
+ *   <li>检查点是常规检查点或保存点。
+ *   <li>当检查点应该被垃圾收集时。
+ *
  * <ul>
  *   <li>The checkpoint is s regular checkpoint or a savepoint.
  *   <li>When the checkpoint should be garbage collected.

@@ -28,6 +28,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 成功完成检查点的统计信息。
+ *
  * Statistics for a successfully completed checkpoint.
  *
  * <p>The reported statistics are immutable except for the discarded flag, which is updated via the

@@ -35,6 +35,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个简单的容器类，它包含一个操作符的所有子任务的rawmanaged操作符状态和键组状态句柄，因此表示一个逻辑操作符的完整状态。
+ *
  * Simple container class which contains the raw/managed operator state and key-group state handles
  * from all sub tasks of an operator and therefore represents the complete state of a logical
  * operator.
@@ -50,6 +52,7 @@ public class OperatorState implements CompositeStateHandle {
     private final Map<Integer, OperatorSubtaskState> operatorSubtaskStates;
 
     /** The state of the operator coordinator. Null, if no such state exists. */
+    // 操作符协调器的状态。如果不存在这种状态，则为空。
     @Nullable private ByteStreamStateHandle coordinatorState;
 
     /** The parallelism of the operator when it was checkpointed. */

@@ -57,6 +57,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 挂起检查点是已经启动但尚未被所有需要确认它的任务确认的检查点。一旦所有任务都确认了它，它就变成了
+ * {@link CompletedCheckpoint}。
+ *
  * A pending checkpoint is a checkpoint that has been started, but has not been acknowledged by all
  * tasks that need to acknowledge it. Once all tasks have acknowledged it, it becomes a {@link
  * CompletedCheckpoint}.
@@ -67,10 +70,13 @@ import static org.apache.flink.util.Preconditions.checkState;
 public class PendingCheckpoint implements Checkpoint {
 
     /** Result of the {@link PendingCheckpoint#acknowledgedTasks} method. */
+    // {@link PendingCheckpoint# acknowledgement tasks}方法的结果。
     public enum TaskAcknowledgeResult {
         SUCCESS, // successful acknowledge of the task
+        // 确认消息是一个副本
         DUPLICATE, // acknowledge message is a duplicate
         UNKNOWN, // unknown task acknowledged
+        // 挂起检查点已被丢弃
         DISCARDED // pending checkpoint has been discarded
     }
 
@@ -447,6 +453,7 @@ public class PendingCheckpoint implements Checkpoint {
                                 metrics.getUnalignedCheckpoint(),
                                 true);
 
+                // J: 跟踪检查点的统计内容
                 LOG.trace(
                         "Checkpoint {} stats for {}: size={}Kb, duration={}ms, sync part={}ms, async part={}ms",
                         checkpointId,

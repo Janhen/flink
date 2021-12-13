@@ -23,6 +23,8 @@ import java.io.Serializable;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 检查点的单个子任务的统计信息。
+ *
  * Statistics for a single subtask that is part of a checkpoint.
  *
  * <p>Collects data that is spread over different close places: {@link CheckpointMetaData}, {@link
@@ -37,15 +39,19 @@ public class SubtaskStateStats implements Serializable {
     private final int subtaskIndex;
 
     /** Timestamp when the ack from this sub task was received at the coordinator. */
+    // 从协调器接收到此子任务的ack的时间戳。
     private final long ackTimestamp;
 
     /** Size of the checkpointed state at this subtask. */
+    // 此子任务上检查点状态的大小。
     private final long stateSize;
 
     /** Checkpoint duration at the operator (sync part) in milliseconds. */
+    // operator(同步部分)处的检查点持续时间(毫秒)。
     private final long syncCheckpointDuration;
 
     /** Checkpoint duration at the operator (async part) in milliseconds. */
+    // operator(异步部分)上的检查点持续时间(毫秒)。
     private final long asyncCheckpointDuration;
 
     private final long processedData;
@@ -53,15 +59,19 @@ public class SubtaskStateStats implements Serializable {
     private final long persistedData;
 
     /** Alignment duration in milliseconds. */
+    // 对齐持续时间，以毫秒为单位。
     private final long alignmentDuration;
 
     /** Checkpoint start delay in milliseconds. */
+    // 检查点启动延迟(毫秒)。
     private final long checkpointStartDelay;
 
     /** Is the checkpoint completed as an unaligned checkpoint. */
+    // 是作为未对齐检查点完成的检查点。
     private final boolean unalignedCheckpoint;
 
     /** Is the checkpoint completed by this subtask. */
+    // 是由此子任务完成的检查点。
     private final boolean completed;
 
     SubtaskStateStats(int subtaskIndex, long ackTimestamp) {

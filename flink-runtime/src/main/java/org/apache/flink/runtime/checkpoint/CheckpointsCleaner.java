@@ -30,6 +30,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 委托类负责检查点清理和计数尚未清理的检查点数量。
+ *
  * Delegate class responsible for checkpoints cleaning and counting the number of checkpoints yet to
  * clean.
  */

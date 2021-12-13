@@ -30,15 +30,19 @@ public class CheckpointStatsSnapshot implements Serializable {
     private static final long serialVersionUID = 8914278419087217964L;
 
     /** Snapshot of the checkpoint counts. */
+    // 检查点计数的快照。
     private final CheckpointStatsCounts counts;
 
     /** Snapshot of the completed checkpoints summary stats. */
+    // 完成检查点汇总统计的快照。
     private final CompletedCheckpointStatsSummary summary;
 
     /** Snapshot of the checkpoint history. */
+    // 检查点历史的快照。
     private final CheckpointStatsHistory history;
 
     /** The latest restored checkpoint operation. */
+    // 最近恢复的检查点操作。
     @Nullable private final RestoredCheckpointStats latestRestoredCheckpoint;
 
     public static CheckpointStatsSnapshot empty() {

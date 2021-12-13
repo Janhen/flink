@@ -33,9 +33,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class CheckpointFailureManager {
 
     public static final int UNLIMITED_TOLERABLE_FAILURE_NUMBER = Integer.MAX_VALUE;
+    // 超过检查点容忍的失败阈值
     public static final String EXCEEDED_CHECKPOINT_TOLERABLE_FAILURE_MESSAGE =
             "Exceeded checkpoint tolerable failure threshold.";
 
+    // 容忍检查点失败的次数
     private final int tolerableCpFailureNumber;
     private final FailJobCallback failureCallback;
     private final AtomicInteger continuousFailureCounter;
@@ -54,6 +56,8 @@ public class CheckpointFailureManager {
     }
 
     /**
+     * 使用处理程序回调处理作业级检查点异常。
+     *
      * Handle job level checkpoint exception with a handler callback.
      *
      * @param exception the checkpoint exception.
@@ -87,14 +91,17 @@ public class CheckpointFailureManager {
                 e -> failureCallback.failJobDueToTaskFailure(e, executionAttemptID));
     }
 
+    // 处理检查点异常
     private void handleCheckpointException(
             CheckpointException exception,
             long checkpointId,
             Consumer<FlinkRuntimeException> errorHandler) {
+        //
         if (checkpointId > lastSucceededCheckpointId) {
             checkFailureCounter(exception, checkpointId);
             if (continuousFailureCounter.get() > tolerableCpFailureNumber) {
                 clearCount();
+                // 处理失败
                 errorHandler.accept(
                         new FlinkRuntimeException(EXCEEDED_CHECKPOINT_TOLERABLE_FAILURE_MESSAGE));
             }
@@ -119,6 +126,7 @@ public class CheckpointFailureManager {
             case JOB_FAILURE:
             case JOB_FAILOVER_REGION:
                 // for compatibility purposes with user job behavior
+                // J: 为了与用户作业行为兼容
             case CHECKPOINT_DECLINED_TASK_NOT_READY:
             case CHECKPOINT_DECLINED_TASK_CLOSING:
             case CHECKPOINT_DECLINED_TASK_NOT_CHECKPOINTING:
@@ -136,10 +144,14 @@ public class CheckpointFailureManager {
                 // ignore
                 break;
 
+                // J: 异步任务检查点失败。
             case CHECKPOINT_ASYNC_EXCEPTION:
+                // J: 检查点是拒绝。
             case CHECKPOINT_DECLINED:
+                // J: 检查点未完成前已过期。
             case CHECKPOINT_EXPIRED:
                 // we should make sure one checkpoint only be counted once
+                // 我们应该确保一个检查点只清点一次
                 if (countedCheckpointIds.add(checkpointId)) {
                     continuousFailureCounter.incrementAndGet();
                 }
