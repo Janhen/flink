@@ -29,6 +29,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 这个变量是{@link org.apache.flink.api.common.JobExecutionResult}的一个变体，它以序列化的形式保存它的累
+ * 加器数据。
+ *
  * A variant of the {@link org.apache.flink.api.common.JobExecutionResult} that holds its
  * accumulator data in serialized form.
  */

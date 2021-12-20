@@ -25,6 +25,7 @@ import org.apache.flink.runtime.io.network.partition.ResultPartition;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Collects metrics of a result partition. */
+// 收集结果分区的指标。
 public class ResultPartitionMetrics {
 
     private final ResultPartition partition;

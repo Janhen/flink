@@ -21,6 +21,7 @@ package org.apache.flink.runtime.rest.util;
 import org.apache.flink.configuration.ConfigConstants;
 
 /** This class contains constants to be used by rest components. */
+// 该类包含其他组件使用的常量。
 public enum RestConstants {
     ;
 

@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 该类表示广播变量的单个物化，并维护它的引用计数。如果引用计数达到零，则该变量不再可访问，最终将被垃圾回收。
+ *
  * This class represents a single materialization of a broadcast variable and maintains a reference
  * count for it. If the reference count reaches zero the variable is no longer accessible and will
  * eventually be garbage-collected.

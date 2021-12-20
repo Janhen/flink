@@ -97,6 +97,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.shaded.netty4.io.netty.handler.codec.http.HttpResponseStatus.REQUEST_ENTITY_TOO_LARGE;
 
 /** This client is the counter-part to the {@link RestServerEndpoint}. */
+// 该客户机是{@link RestServerEndpoint}的对应部分。
 public class RestClient implements AutoCloseableAsync {
     private static final Logger LOG = LoggerFactory.getLogger(RestClient.class);
 

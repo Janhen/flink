@@ -21,6 +21,8 @@ package org.apache.flink.runtime.io.compression;
 import java.nio.ByteBuffer;
 
 /**
+ * 每次压缩整个字节数组的压缩器。它将读写来自外部的字节数组，减少复制时间。
+ *
  * A compressor which compresses a whole byte array each time. It will read from and write to byte
  * arrays given from the outside, reducing copy time.
  */

@@ -21,6 +21,8 @@ package org.apache.flink.runtime.heartbeat;
 import org.apache.flink.runtime.clusterframework.types.ResourceID;
 
 /**
+ * 与{@link HeartbeatManager}交互的接口。心跳监听器用于以下事情:
+ *
  * Interface for the interaction with the {@link HeartbeatManager}. The heartbeat listener is used
  * for the following things:
  *

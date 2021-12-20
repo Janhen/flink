@@ -21,6 +21,8 @@ package org.apache.flink.runtime.heartbeat;
 import org.apache.flink.runtime.clusterframework.types.ResourceID;
 
 /**
+ * 心跳管理器必须能够启动停止监视{@link HeartbeatTarget}，并报告该目标的心跳超时。
+ *
  * A heartbeat manager has to be able to start/stop monitoring a {@link HeartbeatTarget}, and report
  * heartbeat timeouts for this target.
  *

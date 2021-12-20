@@ -32,6 +32,7 @@ import java.net.URL;
 import java.util.Optional;
 
 /** Utility class for the HistoryServer. */
+// HistoryServer的实用程序类。
 public enum HistoryServerUtils {
     ;
 

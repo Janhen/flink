@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 默认的{@link BroadcastVariableInitializer}实现，它将广播变量初始化为一个列表。
+ *
  * The default {@link BroadcastVariableInitializer} implementation that initializes the broadcast
  * variable into a list.
  */
@@ -47,6 +49,7 @@ public class DefaultBroadcastVariableInitializer<T>
 
     @SuppressWarnings("unchecked")
     public static <E> DefaultBroadcastVariableInitializer<E> instance() {
+        // J: 单例模式获取
         return (DefaultBroadcastVariableInitializer<E>) INSTANCE;
     }
 

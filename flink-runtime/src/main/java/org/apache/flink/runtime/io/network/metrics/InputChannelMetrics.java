@@ -27,6 +27,7 @@ import org.apache.flink.runtime.metrics.MetricNames;
 import org.apache.flink.util.Preconditions;
 
 /** Collects metrics for {@link RemoteInputChannel} and {@link LocalInputChannel}. */
+// 收集{@link RemoteInputChannel}和{@link LocalInputChannel}的度量。
 public class InputChannelMetrics {
 
     private static final String IO_NUM_BYTES_IN_LOCAL = MetricNames.IO_NUM_BYTES_IN + "Local";

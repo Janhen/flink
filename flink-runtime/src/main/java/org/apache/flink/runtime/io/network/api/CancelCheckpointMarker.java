@@ -25,6 +25,9 @@ import org.apache.flink.runtime.event.RuntimeEvent;
 import java.io.IOException;
 
 /**
+ * CancelCheckpointMarker在数据流中传递，类似于{@link CheckpointBarrier}，但它表示应该取消某个检查点。
+ * 该检查点的任何正在进行的校准都需要取消，并应恢复常规处理。
+ *
  * The CancelCheckpointMarker travels through the data streams, similar to the {@link
  * CheckpointBarrier}, but signals that a certain checkpoint should be canceled. Any in-progress
  * alignment for that checkpoint needs to be canceled and regular processing should be resumed.

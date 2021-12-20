@@ -29,6 +29,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Base class for resources one can specify. */
+// 可以指定的资源的基类。
 @Internal
 public abstract class Resource<T extends Resource<T>>
         implements Serializable, Comparable<Resource> {

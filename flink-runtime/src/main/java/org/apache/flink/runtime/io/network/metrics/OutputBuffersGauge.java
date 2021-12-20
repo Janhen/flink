@@ -22,6 +22,7 @@ import org.apache.flink.metrics.Gauge;
 import org.apache.flink.runtime.io.network.partition.ResultPartition;
 
 /** Gauge metric measuring the number of queued output buffers for {@link ResultPartition}s. */
+// 度量度量{@link ResultPartition}的排队输出缓冲区的数量。
 public class OutputBuffersGauge implements Gauge<Integer> {
 
     private final ResultPartition[] resultPartitions;

@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
+ * 所有版本的REST API的枚举。
+ *
  * An enum for all versions of the REST API.
  *
  * <p>REST API versions are global and thus apply to every REST component.

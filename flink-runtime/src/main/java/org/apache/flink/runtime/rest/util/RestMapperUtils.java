@@ -23,6 +23,7 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMap
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.SerializationFeature;
 
 /** This class contains utilities for mapping requests and responses to/from JSON. */
+// 这个类包含将请求和响应映射到JSON的实用程序。
 public class RestMapperUtils {
     private static final ObjectMapper objectMapper;
 

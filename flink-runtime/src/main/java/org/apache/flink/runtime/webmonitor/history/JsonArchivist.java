@@ -33,6 +33,8 @@ import java.util.Collection;
 public interface JsonArchivist {
 
     /**
+     * 返回一个包含{@link ArchivedJson}s的{@link Collection}，其中包含给定作业的JSON响应及其各自的REST URL。
+     *
      * Returns a {@link Collection} of {@link ArchivedJson}s containing JSON responses and their
      * respective REST URL for a given job.
      *

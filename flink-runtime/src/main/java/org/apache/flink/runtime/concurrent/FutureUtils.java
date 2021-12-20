@@ -113,6 +113,8 @@ public class FutureUtils {
     }
 
     /**
+     * 只有在可以重试异常的情况下，才按照给定的次数重试给定的操作。
+     *
      * Retry the given operation the given number of times in case of a failure only when an
      * exception is retryable.
      *
@@ -137,6 +139,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在出现故障时重试提供的操作的辅助方法。
+     *
      * Helper method which retries the provided operation in case of a failure.
      *
      * @param resultFuture to complete
@@ -199,6 +203,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在失败之间的给定延迟时间内重试给定的操作。
+     *
      * Retry the given operation with the given delay in between failures.
      *
      * @param operation to retry
@@ -224,6 +230,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在失败之间的给定延迟时间内重试给定的操作。
+     *
      * Retry the given operation with the given delay in between failures.
      *
      * @param operation to retry
@@ -288,6 +296,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在给定的延迟下安排操作。
+     *
      * Schedule the operation with the given delay.
      *
      * @param operation to schedule
@@ -486,6 +496,8 @@ public class FutureUtils {
     }
 
     /**
+     * 如果{@link #retry(Supplier, int, Executor)}操作失败，则返回的future将被完成。
+     *
      * Exception with which the returned future is completed if the {@link #retry(Supplier, int,
      * Executor)} operation fails.
      */

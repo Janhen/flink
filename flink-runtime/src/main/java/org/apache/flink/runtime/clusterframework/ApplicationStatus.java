@@ -21,6 +21,7 @@ package org.apache.flink.runtime.clusterframework;
 import org.apache.flink.api.common.JobStatus;
 
 /** The status of an application. */
+// 应用程序的状态。
 public enum ApplicationStatus {
 
     /** Application finished successfully */

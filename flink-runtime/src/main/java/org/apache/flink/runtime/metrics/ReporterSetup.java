@@ -56,6 +56,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
+ * 封装实例化和配置{@link MetricReporter}所需的一切。
+ *
  * Encapsulates everything needed for the instantiation and configuration of a {@link
  * MetricReporter}.
  */

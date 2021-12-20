@@ -28,6 +28,9 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 检查点屏障用于在整个流拓扑中对齐检查点。当JobManager指示源发出这些障碍时，这些障碍就会被发出。当操作符在其中一个
+ * 输入上接收到CheckpointBarrier时，它知道这是检查点前和检查点后数据之间的点。
+ *
  * Checkpoint barriers are used to align checkpoints throughout the streaming topology. The barriers
  * are emitted by the sources when instructed to do so by the JobManager. When operators receive a
  * CheckpointBarrier on one of its inputs, it knows that this is the point between the

@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * 接口，用于希望参与归档与作业相关的json响应的所有类，但只提供{@link AccessExecutionGraph}相关信息。
+ *
  * Interface for all classes that want to participate in the archiving of job-related json responses
  * but only provide {@link AccessExecutionGraph}-related information.
  */

@@ -36,6 +36,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * 描述TaskExecutor进程的不同资源维度的细节。
+ *
+ *   <li>框架堆内存
+ *   <li>框架非堆内存
+ *   <li>Task堆内存
+ *   <li>Task 非堆内存
+ *   <li>网络内存
+ *   <li>管理的内存
+ *   <li>JVM 元空间
+ *   <li>JVM 负载
+ *
  * Describe the specifics of different resource dimensions of the TaskExecutor process.
  *
  * <p>A TaskExecutor's memory consists of the following components.

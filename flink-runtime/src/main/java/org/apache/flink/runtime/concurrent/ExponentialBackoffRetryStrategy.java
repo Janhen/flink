@@ -23,12 +23,16 @@ import org.apache.flink.util.Preconditions;
 import java.time.Duration;
 
 /**
+ * {@link RetryStrategy}的一个实现，该实现具有带上限的指数回退。
+ *
  * An implementation of {@link RetryStrategy} that retries that has an exponential backoff with a
  * cap.
  */
 public class ExponentialBackoffRetryStrategy implements RetryStrategy {
+    // 剩余的重试
     private final int remainingRetries;
     private final Duration currentRetryDelay;
+    // 最大的重试延迟
     private final Duration maxRetryDelay;
 
     /**

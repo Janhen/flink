@@ -39,6 +39,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 封装池{@link MemorySegment}实例。
+ *
+ * <p>注意:在netty堆栈中使用此缓冲区之前，必须通过{@link #setAllocator(ByteBufAllocator)}设置缓冲区分配器!
+ *
  * Wrapper for pooled {@link MemorySegment} instances.
  *
  * <p><strong>NOTE:</strong> before using this buffer in the netty stack, a buffer allocator must be

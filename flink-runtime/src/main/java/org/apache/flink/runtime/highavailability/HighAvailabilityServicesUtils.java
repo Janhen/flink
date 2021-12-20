@@ -52,6 +52,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.StringUtils.isNullOrWhitespaceOnly;
 
 /** Utils class to instantiate {@link HighAvailabilityServices} implementations. */
+// Utils类实例化{@link HighAvailabilityServices}实现。
 public class HighAvailabilityServicesUtils {
 
     public static HighAvailabilityServices createAvailableOrEmbeddedServices(

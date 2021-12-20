@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** Main accumulator registry which encapsulates user-defined accumulators. */
+// 主累加器注册表，封装用户定义的累加器。
 public class AccumulatorRegistry {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AccumulatorRegistry.class);

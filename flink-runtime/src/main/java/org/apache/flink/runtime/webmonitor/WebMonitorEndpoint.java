@@ -168,6 +168,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
+ * 服务于web前端Rest调用的Rest端点。
+ *
  * Rest endpoint which serves the web frontend REST calls.
  *
  * @param <T> type of the leader gateway

@@ -52,6 +52,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 执行图是协调数据流的分布式执行的中心数据结构。它保存每个并行任务、每个中间流的表示，以及它们之间的通信。
+ *
  * The execution graph is the central data structure that coordinates the distributed execution of a
  * data flow. It keeps representations of each parallel task, each intermediate stream, and the
  * communication between them.

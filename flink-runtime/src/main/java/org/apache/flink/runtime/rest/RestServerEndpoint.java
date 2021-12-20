@@ -75,6 +75,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /** An abstract class for netty-based REST server endpoints. */
+// 一个基于网络的REST服务器端点的抽象类。
 public abstract class RestServerEndpoint implements AutoCloseableAsync {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());

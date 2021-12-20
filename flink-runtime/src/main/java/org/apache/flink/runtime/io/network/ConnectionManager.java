@@ -21,6 +21,8 @@ package org.apache.flink.runtime.io.network;
 import java.io.IOException;
 
 /**
+ * 连接管理器在运行时管理(逻辑)远程输入通道的物理连接。
+ *
  * The connection manager manages physical connections for the (logical) remote input channels at
  * runtime.
  */

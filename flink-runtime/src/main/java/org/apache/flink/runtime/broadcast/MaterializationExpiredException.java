@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.broadcast;
 
 /**
+ * 指示{@link BroadcastVariableMaterialization}在某个时刻物化了广播变量，但已经丢弃了它。
+ *
  * Indicates that the {@link BroadcastVariableMaterialization} has materialized the broadcast
  * variable at some point but discarded it already.
  */

@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 /** Formed of a mandatory operator ID and optionally a user defined operator ID. */
+// 由强制操作符ID和用户自定义操作符ID(可选)组成。
 public class OperatorIDPair implements Serializable {
 
     private static final long serialVersionUID = 1L;

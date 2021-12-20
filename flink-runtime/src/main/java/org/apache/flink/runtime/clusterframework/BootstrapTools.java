@@ -61,6 +61,8 @@ import scala.Tuple2;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 用于启动JobManager和TaskManager进程的工具，包括用于运行JobManager和TaskManager参与者的Actor系统。
+ *
  * Tools for starting JobManager and TaskManager processes, including the Actor Systems used to run
  * the JobManager and TaskManager actors.
  */

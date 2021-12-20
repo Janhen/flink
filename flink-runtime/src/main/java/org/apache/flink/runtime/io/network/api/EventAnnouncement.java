@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * {@link EventAnnouncement}宣布存在或接收{@link AbstractEvent}。{@link #announcedEvent}是由它的序列号标识的。
+ *
  * {@link EventAnnouncement} is announcing presence or receiving of an {@link AbstractEvent}. That
  * {@link #announcedEvent} is identified by it's sequence number.
  */

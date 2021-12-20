@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 /** Container class that transports the result of an accumulator as set of strings. */
+// 将累加器的结果作为字符串集传输的容器类。
 public class StringifiedAccumulatorResult implements java.io.Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(StringifiedAccumulatorResult.class);
 

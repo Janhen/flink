@@ -27,6 +27,8 @@ import org.apache.flink.util.Preconditions;
 import org.slf4j.Logger;
 
 /**
+ * HeartbeatServices允许访问心跳所需的所有服务。这包括心跳接收器和心跳发送器的创建。
+ *
  * HeartbeatServices gives access to all services needed for heartbeating. This includes the
  * creation of heartbeat receivers and heartbeat senders.
  */

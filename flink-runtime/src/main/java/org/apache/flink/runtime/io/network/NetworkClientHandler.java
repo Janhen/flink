@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 /** Channel handler to read and write network messages on client side. */
+// 信道处理程序，用于在客户端读写网络消息。
 public interface NetworkClientHandler extends ChannelHandler {
 
     void addInputChannel(RemoteInputChannel inputChannel) throws IOException;

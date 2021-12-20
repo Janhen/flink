@@ -26,6 +26,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 一个{@link ScheduledExecutorService}的适配器类，它应使用作为{@link ScheduledExecutor}。
+ *
  * Adapter class for a {@link ScheduledExecutorService} which shall be used as a {@link
  * ScheduledExecutor}.
  */

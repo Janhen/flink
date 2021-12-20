@@ -25,6 +25,8 @@ import org.apache.flink.util.SerializedThrowable;
 import java.io.Serializable;
 
 /**
+ * 序列化的检查点异常，它包装了检查点失败的原因及其序列化的可抛出性。
+ *
  * Serialized checkpoint exception which wraps the checkpoint failure reason and its serialized
  * throwable.
  */

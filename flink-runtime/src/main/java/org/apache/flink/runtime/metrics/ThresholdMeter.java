@@ -30,6 +30,10 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
+ * 基于时间戳队列的阈值计。
+ *
+ * 注意:这个类是线程安全的，但代价是同步开销。不要在性能敏感的场景中使用它，例如，每个记录更新的指标。
+ *
  * A timestamp queue based threshold meter.
  *
  * <p>Note: This class is thread safe, at the price of synchronization overhead. Do not use this in

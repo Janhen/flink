@@ -63,6 +63,7 @@ public abstract class AbstractHaServices implements HighAvailabilityServices {
     private final BlobStoreService blobStoreService;
 
     /** The distributed storage based running jobs registry. */
+    // 基于运行作业注册表的分布式存储
     private RunningJobsRegistry runningJobsRegistry;
 
     public AbstractHaServices(

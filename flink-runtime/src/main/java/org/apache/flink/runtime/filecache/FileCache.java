@@ -51,6 +51,8 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * FileCache用于在部署任务时访问已注册的缓存文件。
+ *
  * The FileCache is used to access registered cache files when a task is deployed.
  *
  * <p>Files and zipped directories are retrieved from the {@link PermanentBlobService}. The

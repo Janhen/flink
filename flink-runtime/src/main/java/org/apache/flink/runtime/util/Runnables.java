@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.util;
 
 /** Utils related to {@link Runnable}. */
+// 与{@link Runnable}相关的Utils。
 public class Runnables {
 
     /**

@@ -23,6 +23,9 @@ import org.apache.flink.metrics.HistogramStatistics;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
+ * {@link DescriptiveStatisticsHistogram}使用DescriptiveStatistics {@link DescriptiveStatistics}
+ * 作为Flink {@link Histogram}。
+ *
  * The {@link DescriptiveStatisticsHistogram} use a DescriptiveStatistics {@link
  * DescriptiveStatistics} as a Flink {@link Histogram}.
  */
