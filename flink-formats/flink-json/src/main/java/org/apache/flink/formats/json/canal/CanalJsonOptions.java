@@ -24,6 +24,7 @@ import org.apache.flink.configuration.ReadableConfig;
 import org.apache.flink.formats.json.JsonOptions;
 
 /** Option utils for canal-json format. */
+// canal-json格式的选项utils。
 public class CanalJsonOptions {
 
     public static final ConfigOption<Boolean> IGNORE_PARSE_ERRORS = JsonOptions.IGNORE_PARSE_ERRORS;
@@ -35,6 +36,7 @@ public class CanalJsonOptions {
     public static final ConfigOption<String> JSON_MAP_NULL_KEY_LITERAL =
             JsonOptions.MAP_NULL_KEY_LITERAL;
 
+    // 一个可选的正则表达式，通过正则匹配Canal记录中的"database"元字段，只读取特定的数据库更改日志行。模式字符串与Java的模式兼容。
     public static final ConfigOption<String> DATABASE_INCLUDE =
             ConfigOptions.key("database.include")
                     .stringType()

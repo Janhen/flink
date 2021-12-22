@@ -37,6 +37,8 @@ import java.util.Objects;
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /**
+ * 序列化模式，将Flink TableSQL内部数据结构{@link RowData}的对象序列化为一个Canal JSON字节。
+ *
  * Serialization schema that serializes an object of Flink Table/SQL internal data structure {@link
  * RowData} into a Canal JSON bytes.
  *

@@ -21,6 +21,7 @@ package org.apache.flink.formats.common;
 import org.apache.flink.annotation.Internal;
 
 /** Timestamp format Enums. */
+// 时间戳格式枚举。
 @Internal
 public enum TimestampFormat {
     /**

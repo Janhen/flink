@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * 检索永久性二进制大对象(blob)的服务。
+ *
  * A service to retrieve permanent binary large objects (BLOBs).
  *
  * <p>These may include per-job BLOBs that are covered by high-availability (HA) mode, e.g. a job's
@@ -35,6 +37,8 @@ import java.io.IOException;
 public interface PermanentBlobService extends Closeable {
 
     /**
+     * 返回与提供的作业ID和blob键关联的文件的本地副本的路径。
+     *
      * Returns the path to a local copy of the file associated with the provided job ID and blob
      * key.
      *

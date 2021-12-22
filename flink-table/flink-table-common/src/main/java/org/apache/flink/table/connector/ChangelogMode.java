@@ -28,6 +28,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 变更日志中包含的一组变更。
+ *
  * The set of changes contained in a changelog.
  *
  * @see RowKind

@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** {@link DecodingFormat} for Canal using JSON encoding. */
+// {@link DecodingFormat}使用JSON编码的 cannal。
 public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSchema<RowData>> {
 
     // --------------------------------------------------------------------------------------------
@@ -95,6 +96,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
                 DataTypeUtils.appendRowFields(physicalDataType, metadataFields);
         final TypeInformation<RowData> producedTypeInfo =
                 context.createTypeInformation(producedDataType);
+        // Canal Json 反序列化 Schema 构造
         return CanalJsonDeserializationSchema.builder(
                         physicalDataType, readableMetadata, producedTypeInfo)
                 .setDatabase(database)
@@ -119,6 +121,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
 
     @Override
     public ChangelogMode getChangelogMode() {
+        // 支持的变更
         return ChangelogMode.newBuilder()
                 .addContainedKind(RowKind.INSERT)
                 .addContainedKind(RowKind.UPDATE_BEFORE)
@@ -132,6 +135,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
     // --------------------------------------------------------------------------------------------
 
     /** List of metadata that can be read with this format. */
+    // 可以用这种格式读取的元数据列表。
     enum ReadableMetadata {
         DATABASE(
                 "database",
@@ -203,6 +207,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
                     }
                 }),
 
+        // J: Canal 对应的事件时间
         EVENT_TIMESTAMP(
                 "event-timestamp",
                 DataTypes.TIMESTAMP_WITH_LOCAL_TIME_ZONE(3).nullable(),

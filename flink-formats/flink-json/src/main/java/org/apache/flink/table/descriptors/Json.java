@@ -33,9 +33,11 @@ import static org.apache.flink.table.descriptors.JsonValidator.FORMAT_SCHEMA;
 import static org.apache.flink.table.descriptors.JsonValidator.FORMAT_TYPE_VALUE;
 
 /** Format descriptor for JSON. */
+// JSON的格式描述符。
 public class Json extends FormatDescriptor {
 
     private Boolean failOnMissingField;
+    // J: 推导模式
     private Boolean deriveSchema;
     private Boolean ignoreParseErrors;
     private String jsonSchema;

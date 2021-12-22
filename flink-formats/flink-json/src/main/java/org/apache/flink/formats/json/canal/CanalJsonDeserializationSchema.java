@@ -48,6 +48,13 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 /**
+ * 从Canal JSON反序列化模式到Flink TableSQL内部数据结构{@link RowData}。反序列化模式知道Canal的模式定义，可以
+ * 提取数据库数据并使用{@link RowKind}将其转换为{@link RowData}。
+ *
+ * <p>将<code>byte[]<code>消息反序列化为JSON对象，并读取指定的字段。
+ *
+ * <p>反序列化期间的失败被作为打包的IOException转发。
+ *
  * Deserialization schema from Canal JSON to Flink Table/SQL internal data structure {@link
  * RowData}. The deserialization schema knows Canal's schema definition and can extract the database
  * data and convert into {@link RowData} with {@link RowKind}.
@@ -68,6 +75,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     private static final String OP_CREATE = "CREATE";
 
     /** The deserializer to deserialize Canal JSON data. */
+    // 该反序列化器反序列化 Canal JSON数据。
     private final JsonRowDataDeserializationSchema jsonDeserializer;
 
     /** Flag that indicates that an additional projection is required for metadata. */
@@ -95,9 +103,11 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     private final int fieldCount;
 
     /** Pattern of the specific database. */
+    // 特定数据库的模式。
     private final Pattern databasePattern;
 
     /** Pattern of the specific table. */
+    // 特定表的模式。
     private final Pattern tablePattern;
 
     private CanalJsonDeserializationSchema(
@@ -210,7 +220,9 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
             return;
         }
         try {
+            // J: 反序列化成 JsonNode 供后续操作
             final JsonNode root = jsonDeserializer.deserializeToJsonNode(message);
+            // J: db, table 正则匹配获取需要的
             if (database != null) {
                 if (!databasePattern
                         .matcher(root.get(ReadableMetadata.DATABASE.key).asText())
@@ -226,6 +238,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
                 }
             }
             final GenericRowData row = (GenericRowData) jsonDeserializer.convertToRowData(root);
+            // J: 针对 json 中的 canal type 字段处理
             String type = row.getString(2).toString(); // "type" field
             if (OP_INSERT.equals(type)) {
                 // "data" field is an array of row, contains inserted rows
@@ -237,11 +250,14 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
                 }
             } else if (OP_UPDATE.equals(type)) {
                 // "data" field is an array of row, contains new rows
+                // “data”字段是一个行数组，包含新行
                 ArrayData data = row.getArray(0);
                 // "old" field is an array of row, contains old values
+                // “old”字段是一个行数组，包含旧值
                 ArrayData old = row.getArray(1);
                 for (int i = 0; i < data.size(); i++) {
                     // the underlying JSON deserialization schema always produce GenericRowData.
+                    // 底层的JSON反序列化模式总是生成GenericRowData。
                     GenericRowData after = (GenericRowData) data.getRow(i, fieldCount);
                     GenericRowData before = (GenericRowData) old.getRow(i, fieldCount);
                     final JsonNode oldField = root.get(FIELD_OLD);
@@ -250,6 +266,8 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
                             // fields in "old" (before) means the fields are changed
                             // fields not in "old" (before) means the fields are not changed
                             // so we just copy the not changed fields into before
+                            // “旧”(以前)中的字段意味着字段被更改，而“旧”(以前)中的字段意味着字段没有被更改，所以
+                            //   我们只是将未更改的字段复制到以前
                             before.setField(f, after.getField(f));
                         }
                     }
@@ -260,6 +278,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
                 }
             } else if (OP_DELETE.equals(type)) {
                 // "data" field is an array of row, contains deleted rows
+                // “data”字段是一个行数组，包含已删除的行
                 ArrayData data = row.getArray(0);
                 for (int i = 0; i < data.size(); i++) {
                     GenericRowData insert = (GenericRowData) data.getRow(i, fieldCount);
@@ -269,8 +288,10 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
             } else if (OP_CREATE.equals(type)) {
                 // "data" field is null and "type" is "CREATE" which means
                 // this is a DDL change event, and we should skip it.
+                // “data”字段为空，“type”为“CREATE”，这意味着这是一个DDL更改事件，我们应该跳过它。
                 return;
             } else {
+                // J: 未知的 canal type
                 if (!ignoreParseErrors) {
                     throw new IOException(
                             format(
@@ -290,6 +311,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     private void emitRow(
             GenericRowData rootRow, GenericRowData physicalRow, Collector<RowData> out) {
         // shortcut in case no output projection is required
+        // 在不需要输出投影的情况下使用快捷方式
         if (!hasMetadata) {
             out.collect(physicalRow);
             return;
@@ -301,6 +323,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
         for (int physicalPos = 0; physicalPos < physicalArity; physicalPos++) {
             producedRow.setField(physicalPos, physicalRow.getField(physicalPos));
         }
+        // J: 组装 canal-json 对应的元数据字段
         for (int metadataPos = 0; metadataPos < metadataArity; metadataPos++) {
             producedRow.setField(
                     physicalArity + metadataPos, metadataConverters[metadataPos].convert(rootRow));
@@ -326,6 +349,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        // J: canal json 反序列化 schema 的唯一性
         CanalJsonDeserializationSchema that = (CanalJsonDeserializationSchema) o;
         return Objects.equals(jsonDeserializer, that.jsonDeserializer)
                 && hasMetadata == that.hasMetadata
@@ -353,6 +377,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     private static RowType createJsonRowType(
             DataType physicalDataType, List<ReadableMetadata> readableMetadata) {
         // Canal JSON contains other information, e.g. "ts", "sql", but we don't need them
+        // canal JSON包含其他信息，例如:"ts"， "sql"，但我们不需要它们
         DataType root =
                 DataTypes.ROW(
                         DataTypes.FIELD("data", DataTypes.ARRAY(physicalDataType)),
@@ -392,6 +417,8 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 转换器，它从JSON模式的行中提取元数据字段，并将其转换为所需的数据类型。
+     *
      * Converter that extracts a metadata field from the row that comes out of the JSON schema and
      * converts it to the desired data type.
      */

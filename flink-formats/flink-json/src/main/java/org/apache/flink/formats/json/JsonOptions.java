@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /** This class holds configuration constants used by json format. */
+// 这个类保存json格式使用的配置常量。
 public class JsonOptions {
 
     public static final ConfigOption<Boolean> FAIL_ON_MISSING_FIELD =

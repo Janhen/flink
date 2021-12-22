@@ -49,6 +49,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 提供从{@link PermanentBlobService}为作业下载一组库(通常是JAR文件)的工具，并创建一个引用它们的类装入器
+ *
  * Provides facilities to download a set of libraries (typically JAR files) for a job from a {@link
  * PermanentBlobService} and create a class loader with references to them.
  */
@@ -60,6 +62,7 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
     // --------------------------------------------------------------------------------------------
 
     /** The global lock to synchronize operations. */
+    // 同步操作的全局锁。
     private final Object lockObject = new Object();
 
     /** Registered entries per job. */
@@ -67,6 +70,7 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
     private final Map<JobID, LibraryCacheEntry> cacheEntries = new HashMap<>();
 
     /** The blob service to download libraries. */
+    // 用于下载库的blob服务。
     @GuardedBy("lockObject")
     private final PermanentBlobService blobService;
 
@@ -90,6 +94,8 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
     }
 
     /**
+     * 获取持有给定作业的{@link ClassLoader}引用的任务数。
+     *
      * Gets the number of tasks holding {@link ClassLoader} references for the given job.
      *
      * @param jobId ID of a job
@@ -103,6 +109,8 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
     }
 
     /**
+     * 返回此库缓存管理器处理的已注册作业的数目。
+     *
      * Returns the number of registered jobs that this library cache manager handles.
      *
      * @return number of jobs (irrespective of the actual number of tasks per job)
@@ -137,6 +145,8 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
         private final FlinkUserCodeClassLoaders.ResolveOrder classLoaderResolveOrder;
 
         /**
+         * 如果可能，应该始终从父类ClassLoader解析的类的模式列表。
+         *
          * List of patterns for classes that should always be resolved from the parent ClassLoader,
          * if possible.
          */
@@ -146,6 +156,7 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
         private final Consumer<Throwable> classLoadingExceptionHandler;
 
         /** Test if classloader is used outside of job. */
+        // 测试类装入器是否在作业之外使用。
         private final boolean checkClassLoaderLeak;
 
         private DefaultClassLoaderFactory(
@@ -353,6 +364,7 @@ public class BlobLibraryCacheManager implements LibraryCacheManager {
         }
     }
 
+    // 解析类加载器
     private static final class ResolvedClassLoader implements UserCodeClassLoader {
         private final URLClassLoader classLoader;
 

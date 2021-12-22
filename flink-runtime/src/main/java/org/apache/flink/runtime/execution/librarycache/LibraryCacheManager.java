@@ -27,6 +27,8 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
+ * LibraryCacheManager负责创建和管理用户代码类加载器。
+ *
  * The LibraryCacheManager is responsible for creating and managing the user code class loaders.
  *
  * <p>In order to obtain a user code class loader, one first needs to obtain a {@link
