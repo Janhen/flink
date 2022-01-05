@@ -33,6 +33,7 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** LinkedOptionalMapSerializer - A serializer of {@link LinkedOptionalMap}. */
+// 一个{@link LinkedOptionalMap}的序列化器
 @Internal
 public final class LinkedOptionalMapSerializer {
 

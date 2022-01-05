@@ -30,6 +30,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * {@link OutputTag}是一个类型化的命名标记，用于标记操作符的边输出。
+ *
+ * <p>一个{@code OutputTag}必须始终是一个匿名内部类，这样Flink就可以为泛型类型参数派生一个{@link TypeInformation}。
+ *
  * An {@link OutputTag} is a typed and named tag to use for tagging side outputs of an operator.
  *
  * <p>An {@code OutputTag} must always be an anonymous inner class so that Flink can derive a {@link
@@ -63,6 +67,7 @@ public class OutputTag<T> implements Serializable {
         this.id = id;
 
         try {
+            // J: 从匿名内部类中派生出 TypeInformation
             this.typeInfo = TypeExtractor.createTypeInfo(this, OutputTag.class, getClass(), 0);
         } catch (InvalidTypesException e) {
             throw new InvalidTypesException(

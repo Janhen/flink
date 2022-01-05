@@ -24,6 +24,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /**
+ * 迭代器的抽象基类，迭代器可以分割为多个不相交的迭代器。这些迭代器的并集返回原始的迭代器值。
+ *
  * Abstract base class for iterators that can split themselves into multiple disjoint iterators. The
  * union of these iterators returns the original iterator values.
  *
@@ -35,6 +37,8 @@ public abstract class SplittableIterator<T> implements Iterator<T>, Serializable
     private static final long serialVersionUID = 200377674313072307L;
 
     /**
+     * 将该迭代器拆分为多个不相交的迭代器。这些迭代器的并集返回原始的迭代器值。
+     *
      * Splits this iterator into a number disjoint iterators. The union of these iterators returns
      * the original iterator values.
      *

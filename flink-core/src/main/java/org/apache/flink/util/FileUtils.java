@@ -59,12 +59,15 @@ import java.util.zip.ZipOutputStream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这是一个处理文件和目录的实用程序类。包含递归删除和创建临时文件的实用程序。
+ *
  * This is a utility class to deal files and directories. Contains utilities for recursive deletion
  * and creation of temporary files.
  */
 public final class FileUtils {
 
     /** Global lock to prevent concurrent directory deletes under Windows and MacOS. */
+    // 全局锁，防止在Windows和MacOS下并发删除目录。
     private static final Object DELETE_LOCK = new Object();
 
     /** The alphabet to construct the random part of the filename from. */
@@ -82,6 +85,7 @@ public final class FileUtils {
     private static final int MAX_BUFFER_SIZE = Integer.MAX_VALUE - 8;
 
     /** The size of the buffer used for reading. */
+    // 用于读取的缓冲区的大小
     private static final int BUFFER_SIZE = 4096;
 
     private static final String JAR_FILE_EXTENSION = "jar";
@@ -102,6 +106,7 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /** Lists the given directory in a resource-leak-safe way. */
+    // 以资源泄漏安全的方式列出给定的目录。
     public static java.nio.file.Path[] listDirectory(java.nio.file.Path directory)
             throws IOException {
         try (Stream<java.nio.file.Path> stream = Files.list(directory)) {
@@ -112,6 +117,8 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 用给定的前缀和由十六进制字符生成的随机部分构造一个随机文件名。
+     *
      * Constructs a random filename with the given prefix and a random part generated from hex
      * characters.
      *
@@ -152,6 +159,8 @@ public final class FileUtils {
     }
 
     /**
+     * 从文件中读取所有字节。该方法确保在读取所有字节或抛出IO错误或其他运行时异常时关闭文件。
+     *
      * Reads all the bytes from a file. The method ensures that the file is closed when all bytes
      * have been read or an I/O error, or other runtime exception, is thrown.
      *
@@ -187,6 +196,7 @@ public final class FileUtils {
      *
      * @param source the input stream to read from
      * @param initialSize the initial size of the byte array to allocate
+     *   要分配的字节数组的初始大小
      * @return a byte array containing the bytes read from the file
      * @throws IOException if an I/O error occurs reading from the stream
      * @throws OutOfMemoryError if an array of the required size cannot be allocated
@@ -266,6 +276,8 @@ public final class FileUtils {
     }
 
     /**
+     * 递归地删除给定目录，不报告任何发生的IO异常。
+     *
      * Deletes the given directory recursively, not reporting any I/O exceptions that occur.
      *
      * <p>This method is identical to {@link FileUtils#deleteDirectory(File)}, except that it
@@ -369,6 +381,7 @@ public final class FileUtils {
         }
     }
 
+    // J: 线程安全说话
     private static void guardIfNotThreadSafe(ThrowingConsumer<File, IOException> toRun, File file)
             throws IOException {
         if (OperatingSystem.isWindows()) {
@@ -434,6 +447,8 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 如果路径为空，则删除该路径。一个路径只能为空，如果它是一个不包含任何其他目录文件的目录。
+     *
      * Deletes the path if it is empty. A path can only be empty if it is a directory which does not
      * contain any other directories/files.
      *
@@ -469,6 +484,8 @@ public final class FileUtils {
     }
 
     /**
+     * 将所有文件从源复制到目标，并设置可执行标志。路径可能在不同的系统上。
+     *
      * Copies all files from source to target and sets executable flag. Paths might be on different
      * systems.
      *
@@ -585,6 +602,8 @@ public final class FileUtils {
     }
 
     /**
+     * 递归列出{@code directory}并返回满足{@code fileFilter}的文件。
+     *
      * List the {@code directory} recursively and return the files that satisfy the {@code
      * fileFilter}.
      *
@@ -620,6 +639,8 @@ public final class FileUtils {
     }
 
     /**
+     * 如果给定路径是相对的，则将其绝对化。
+     *
      * Absolutize the given path if it is relative.
      *
      * @param pathToAbsolutize path which is being absolutized if it is a relative path
@@ -635,6 +656,8 @@ public final class FileUtils {
     }
 
     /**
+     * 如果给定路径是绝对的，则将给定路径相对于给定基本路径。
+     *
      * Relativize the given path with respect to the given base path if it is absolute.
      *
      * @param basePath to relativize against
@@ -651,6 +674,8 @@ public final class FileUtils {
     }
 
     /**
+     * 返回由{@code user.dir}系统属性。
+     *
      * Returns the current working directory as specified by the {@code user.dir} system property.
      *
      * @return current working directory

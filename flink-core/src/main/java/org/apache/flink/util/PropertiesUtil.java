@@ -118,6 +118,8 @@ public class PropertiesUtil {
     }
 
     /**
+     * 平展递归{@link Properties}到一级属性映射。
+     *
      * Flatten a recursive {@link Properties} to a first level property map.
      *
      * <p>In some cases, {@code KafkaProducer#propsToMap} for example, Properties is used purely as

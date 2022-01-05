@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /** Utility for various network related tasks (such as finding free ports). */
+// 各种网络相关任务的实用工具(如寻找空闲端口)。
 @Internal
 public class NetUtils {
 

@@ -34,6 +34,9 @@ public enum RowKind {
     /**
      * 使用已更新行的以前内容进行更新操作。
      *
+     * <p>这种类型应该与{@link #UPDATE_AFTER}一起发生，用于建模需要首先收回前一行的更新。它在非幂等更新的情况下
+     *   很有用，例如，更新的行不是由键唯一标识的。
+     *
      * Update operation with the previous content of the updated row.
      *
      * <p>This kind SHOULD occur together with {@link #UPDATE_AFTER} for modelling an update that

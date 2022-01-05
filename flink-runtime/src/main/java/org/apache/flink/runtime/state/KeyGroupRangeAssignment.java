@@ -66,6 +66,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键分配给键组索引。
+     *
      * Assigns the given key to a key-group index.
      *
      * @param keyHash the hash of the key to assign

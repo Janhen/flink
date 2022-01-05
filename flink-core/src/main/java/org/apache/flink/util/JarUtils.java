@@ -32,6 +32,7 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
 /** Utility functions for jar files. */
+// jar文件的实用函数。
 @Internal
 public class JarUtils {
 

@@ -40,6 +40,8 @@ import java.util.function.Function;
 import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
 
 /**
+ * 这个类表示由Flink管理的一块内存。
+ *
  * This class represents a piece of memory managed by Flink.
  *
  * <p>The memory can be on-heap, off-heap direct or off-heap unsafe. This is transparently handled

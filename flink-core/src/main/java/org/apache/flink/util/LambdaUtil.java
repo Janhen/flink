@@ -69,6 +69,8 @@ public final class LambdaUtil {
     }
 
     /**
+     * 使用给定的ClassLoader运行给定的可运行对象，作为线程的context类加载器。
+     *
      * Runs the given runnable with the given ClassLoader as the thread's {@link
      * Thread#setContextClassLoader(ClassLoader) context class loader}.
      *

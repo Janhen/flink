@@ -23,10 +23,13 @@ import java.net.URLClassLoader;
 import java.util.function.Consumer;
 
 /**
+ * 如果在{@link #loadClass(String, boolean)}中发生异常，这个类装入器接受一个自定义处理程序。
+ *
  * This class loader accepts a custom handler if an exception occurs in {@link #loadClass(String,
  * boolean)}.
  */
 public abstract class FlinkUserCodeClassLoader extends URLClassLoader {
+    // J: 空异常处理器
     public static final Consumer<Throwable> NOOP_EXCEPTION_HANDLER = classLoadingException -> {};
 
     private final Consumer<Throwable> classLoadingExceptionHandler;
@@ -54,6 +57,8 @@ public abstract class FlinkUserCodeClassLoader extends URLClassLoader {
     }
 
     /**
+     * 与{@link #loadClass(String, boolean)}相同，但没有异常处理。
+     *
      * Same as {@link #loadClass(String, boolean)} but without exception handling.
      *
      * <p>Extending concrete class loaders should implement this instead of {@link

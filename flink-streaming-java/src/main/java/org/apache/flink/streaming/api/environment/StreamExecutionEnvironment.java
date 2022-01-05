@@ -1658,6 +1658,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 向流拓扑添加数据源。
+     *
      * Adds a Data Source to the streaming topology.
      *
      * <p>By default sources have a parallelism of 1. To enable parallel execution, the user defined
@@ -1705,6 +1707,9 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 使用自定义类型信息发布数据源，从而打开{@link DataStream}。只有在非常特殊的情况下，用户才需要支持类型信息。
+     * 否则使用{@link #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
+     *
      * Ads a data source with a custom type information thus opening a {@link DataStream}. Only in
      * very special cases does the user need to support type information. Otherwise use {@link
      * #addSource(org.apache.flink.streaming.api.functions.source.SourceFunction)}
@@ -1742,6 +1747,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 向环境中添加一个数据{@link Source}以获得一个{@link DataStream}。
+     *
      * Adds a data {@link Source} to the environment to get a {@link DataStream}.
      *
      * <p>The result will be either a bounded data stream (that can be processed in a batch way) or

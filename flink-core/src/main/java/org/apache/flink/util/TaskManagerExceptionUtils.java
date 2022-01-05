@@ -25,7 +25,9 @@ import javax.annotation.Nullable;
 import static org.apache.flink.util.ExceptionUtils.tryEnrichOutOfMemoryError;
 
 /** Exception utils to handle and enrich exceptions occurring in TaskManager. */
+// 异常utils用来处理和丰富TaskManager中发生的异常。
 public class TaskManagerExceptionUtils {
+    // J:直接内存 OOM
     private static final String TM_DIRECT_OOM_ERROR_MESSAGE =
             String.format(
                     "Direct buffer memory. The direct out-of-memory error has occurred. This can mean two things: either job(s) require(s) "
@@ -40,6 +42,7 @@ public class TaskManagerExceptionUtils {
                     TaskManagerOptions.TASK_OFF_HEAP_MEMORY.key(),
                     TaskManagerOptions.FRAMEWORK_OFF_HEAP_MEMORY.key());
 
+    // J:元空间 OOM
     private static final String TM_METASPACE_OOM_ERROR_MESSAGE =
             String.format(
                     "Metaspace. The metaspace out-of-memory error has occurred. This can mean two things: either the job requires "

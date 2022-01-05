@@ -26,6 +26,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class ShutdownHookUtil {
 
     /** Adds a shutdown hook to the JVM and returns the Thread, which has been registered. */
+    // 向JVM添加一个关闭钩子，并返回已注册的Thread
     public static Thread addShutdownHook(
             final AutoCloseable service, final String serviceName, final Logger logger) {
 

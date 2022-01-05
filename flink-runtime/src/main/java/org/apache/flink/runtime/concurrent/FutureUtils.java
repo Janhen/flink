@@ -519,6 +519,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在超时后乘以给定的future out。
+     *
      * Times the given future out after the timeout.
      *
      * @param future to time out
@@ -533,6 +535,8 @@ public class FutureUtils {
     }
 
     /**
+     * 在超时后乘以给定的future out。
+     *
      * Times the given future out after the timeout.
      *
      * @param future to time out

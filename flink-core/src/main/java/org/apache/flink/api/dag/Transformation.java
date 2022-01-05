@@ -41,6 +41,9 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个{@code Transformation}表示创建一个DataStream的操作。每个DataStream都有一个底层的{@code Transformation}，
+ * 它是DataStream的起源。
+ *
  * A {@code Transformation} represents the operation that creates a DataStream. Every DataStream has
  * an underlying {@code Transformation} that is the origin of said DataStream.
  *

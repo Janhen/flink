@@ -37,10 +37,12 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 /** Simple utility to work with Java collections. */
+// 使用Java集合的简单实用工具。
 @Internal
 public final class CollectionUtil {
 
     /** A safe maximum size for arrays in the JVM. */
+    // JVM中数组的安全最大大小
     public static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     private CollectionUtil() {
@@ -63,6 +65,7 @@ public final class CollectionUtil {
     }
 
     /** Partition a collection into approximately n buckets. */
+    // 将一个集合划分为大约n个桶。
     public static <T> Collection<List<T>> partition(Collection<T> elements, int numBuckets) {
         Map<Integer, List<T>> buckets = new HashMap<>(numBuckets);
 
@@ -78,11 +81,14 @@ public final class CollectionUtil {
         return buckets.values();
     }
 
+    // 映射
     public static <I, O> Collection<O> project(Collection<I> collection, Function<I, O> projector) {
         return collection.stream().map(projector).collect(toList());
     }
 
     /**
+     * 收集List中Iterable中的元素。如果iterable参数为空，则该方法返回一个空列表。
+     *
      * Collects the elements in the Iterable in a List. If the iterable argument is null, this
      * method returns an empty list.
      */
@@ -92,11 +98,14 @@ public final class CollectionUtil {
         }
 
         final ArrayList<E> list = new ArrayList<>();
+        // J: Java8的
         iterable.iterator().forEachRemaining(list::add);
         return list;
     }
 
     /**
+     * 收集List中迭代器中的元素。如果迭代器参数为空，则该方法返回空列表。
+     *
      * Collects the elements in the Iterator in a List. If the iterator argument is null, this
      * method returns an empty list.
      */

@@ -51,6 +51,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Utility class to create instances from class objects and checking failure reasons. */
+// 实用程序类从类对象创建实例并检查失败原因。
 @Internal
 public final class InstantiationUtil {
 
@@ -129,6 +130,7 @@ public final class InstantiationUtil {
 
         private static final HashMap<String, Class<?>> primitiveClasses = new HashMap<>(9);
 
+        // 静态 Map 初始化
         static {
             primitiveClasses.put("boolean", boolean.class);
             primitiveClasses.put("byte", byte.class);
@@ -143,6 +145,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 这是作为FLINK-6869的临时解决方案进行维护的。
+     *
      * This is maintained as a temporary workaround for FLINK-6869.
      *
      * <p>Before 1.3, the Scala serializers did not specify the serialVersionUID. Although since 1.3
@@ -164,6 +168,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * serialVersionUID可能会在Scala版本之间发生变化，因为这些类是元组序列化器配置快照的一部分，所以我们需要忽略它们。
+     *
      * The serialVersionUID might change between Scala versions and since those classes are part of
      * the tuple serializer config snapshots we need to ignore them.
      *
@@ -210,6 +216,9 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 当反序列化匿名类或Scala序列化器类的对象时，忽略serialVersionUID不匹配的{@link ObjectInputStream}，
+     * 并替换出现的GenericData。数组(来自Avro)，这样KryoSerializer仍然可以反序列化，而不用在类路径上。
+     *
      * An {@link ObjectInputStream} that ignores serialVersionUID mismatches when deserializing
      * objects of anonymous classes or our Scala serializer classes and also replaces occurences of
      * GenericData.Array (from Avro) by a dummy class so that the KryoSerializer can still be
@@ -297,6 +306,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 已弃用的序列化器的完整路径与其等效路径之间的映射。这些映射是硬编码和固定的。
+     *
      * A mapping between the full path of a deprecated serializer and its equivalent. These mappings
      * are hardcoded and fixed.
      *
@@ -349,6 +360,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 使用提供的{@link ClassLoader}创建给定类名和类型的新实例。
+     *
      * Creates a new instance of the given class name and type using the provided {@link
      * ClassLoader}.
      *
@@ -446,6 +459,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 检查给定类是否有公共空构造函数。
+     *
      * Checks, whether the given class has a public nullary constructor.
      *
      * @param clazz The class to check.
@@ -463,6 +478,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 检查给定的类是否是公共的。
+     *
      * Checks, whether the given class is public.
      *
      * @param clazz The class to check.
@@ -473,6 +490,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 检查类是否是正确的类，即不是抽象或接口，也不是基元类型。
+     *
      * Checks, whether the class is a proper class, i.e. not abstract or an interface, and not a
      * primitive type.
      *
@@ -487,6 +506,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 检查类是否是不能静态访问的内部类。对于匿名内部类尤其如此。
+     *
      * Checks, whether the class is an inner class that is not statically accessible. That is
      * especially true for anonymous inner classes.
      *
@@ -515,6 +536,7 @@ public final class InstantiationUtil {
         }
     }
 
+    // 初始化检查
     public static String checkForInstantiationError(Class<?> clazz) {
         if (!isPublic(clazz)) {
             return "The class is not public.";
@@ -646,6 +668,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 使用Java序列化克隆给定的可序列化对象。
+     *
      * Clones the given serializable object using Java serialization.
      *
      * @param obj Object to clone
@@ -665,6 +689,8 @@ public final class InstantiationUtil {
     }
 
     /**
+     * 使用Java序列化克隆给定的可序列化对象，并使用给定的类加载器解析克隆的类。
+     *
      * Clones the given serializable object using Java serialization, using the given classloader to
      * resolve the cloned classes.
      *
