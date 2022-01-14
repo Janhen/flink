@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.jobmanager.scheduler;
 
 /**
+ * 定义位置首选项约束。
+ *
  * Defines the location preference constraint.
  *
  * <p>Currently, we support that all input locations have to be taken into consideration and only

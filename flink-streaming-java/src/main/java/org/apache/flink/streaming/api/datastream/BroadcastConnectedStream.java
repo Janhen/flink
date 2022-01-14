@@ -57,6 +57,7 @@ public class BroadcastConnectedStream<IN1, IN2> {
     private final StreamExecutionEnvironment environment;
     private final DataStream<IN1> nonBroadcastStream;
     private final BroadcastStream<IN2> broadcastStream;
+    // J: 多个广播状态描述
     private final List<MapStateDescriptor<?, ?>> broadcastStateDescriptors;
 
     protected BroadcastConnectedStream(

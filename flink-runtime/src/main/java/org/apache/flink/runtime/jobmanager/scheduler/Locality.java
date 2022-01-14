@@ -21,15 +21,19 @@ package org.apache.flink.runtime.jobmanager.scheduler;
 public enum Locality {
 
     /** No constraint existed on the task placement. */
+    // 任务位置没有限制。
     UNCONSTRAINED,
 
     /** The task was scheduled into the same TaskManager as requested */
+    // 任务被调度到与请求相同的TaskManager中
     LOCAL,
 
     /** The task was scheduled onto the same host as requested */
+    // 任务被调度到与请求相同的主机上
     HOST_LOCAL,
 
     /** The task was scheduled to a destination not included in its locality preferences. */
+    // 任务被调度到其位置首选项中未包含的目的地。
     NON_LOCAL,
 
     /** No locality information was provided, it is unknown if the locality was respected */

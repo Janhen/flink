@@ -29,6 +29,9 @@ import java.util.TreeSet;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 槽共享单元定义了在槽中可以将哪些不同的任务(来自不同的作业顶点)部署在一起。这是一种软权限，与由协同位置提示定义的硬
+ * 权限约束形成对比。
+ *
  * A slot sharing units defines which different task (from different job vertices) can be deployed
  * together within a slot. This is a soft permission, in contrast to the hard constraint defined by
  * a co-location hint.

@@ -723,6 +723,7 @@ public class AdaptiveScheduler
 
         return slotAllocator
                 .determineParallelism(jobInformation, declarativeSlotPool.getFreeSlotsInformation())
+                // 没有足够的资源用于调度。
                 .orElseThrow(
                         () ->
                                 new NoResourceAvailableException(

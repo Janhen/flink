@@ -29,6 +29,8 @@ import org.apache.flink.streaming.api.transformations.PhysicalTransformation;
 import org.apache.flink.streaming.api.transformations.SinkTransformation;
 
 /**
+ * 流水槽。这用于从流拓扑中发射元素。
+ *
  * A Stream Sink. This is used for emitting elements from a streaming topology.
  *
  * @param <T> The type of the elements in the Stream

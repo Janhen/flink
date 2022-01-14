@@ -22,6 +22,7 @@ import org.apache.flink.api.common.JobID;
 import org.apache.flink.runtime.jobgraph.JobGraph;
 
 /** Allows to store and remove job graphs. */
+// 允许存储和删除作业图
 public interface JobGraphWriter {
     /**
      * Adds the {@link JobGraph} instance.

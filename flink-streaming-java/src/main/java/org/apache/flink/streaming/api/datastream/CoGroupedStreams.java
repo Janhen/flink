@@ -55,6 +55,9 @@ import java.util.Objects;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * {@code CoGroupedStreams}表示两个{@link DataStream DataStreams}已经被共同分组。流共组操作将对窗口中的
+ * 元素进行计算。
+ *
  * {@code CoGroupedStreams} represents two {@link DataStream DataStreams} that have been co-grouped.
  * A streaming co-group operation is evaluated over elements in a window.
  *

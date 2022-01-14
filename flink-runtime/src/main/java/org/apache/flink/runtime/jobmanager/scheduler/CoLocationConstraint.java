@@ -27,6 +27,10 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个{@code CoLocationConstraint}存储了{@link CoLocationGroup}的ID和一个引用实际子任务的ID(例如
+ * {@link ExecutionVertex})。在同一个位置组中，不同{@link JobVertex}实例的不同子任务需要在同一个槽位上执行。
+ * 这是通过创建一个包含这些任务的特殊共享槽来实现的。
+ *
  * A {@code CoLocationConstraint} stores the ID of {@link CoLocationGroup} and an ID referring to
  * the actual subtask (i.e. {@link ExecutionVertex}). In co-location groups, the different subtasks
  * of different {@link JobVertex} instances need to be executed on the same slot. This is realized

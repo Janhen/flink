@@ -37,9 +37,12 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /** Task manager gateway interface to communicate with the task manager. */
+// 任务管理器网关接口，用于与 task manager 通信
 public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
 
     /**
+     * 返回与网关相关联的任务管理器的地址
+     *
      * Return the address of the task manager with which the gateway is associated.
      *
      * @return Address of the task manager with which this gateway is associated.
@@ -47,6 +50,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
     String getAddress();
 
     /**
+     * 向任务管理器提交任务
+     *
      * Submit a task to the task manager.
      *
      * @param tdd describing the task to submit
@@ -65,6 +70,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
     CompletableFuture<Acknowledge> cancelTask(ExecutionAttemptID executionAttemptID, Time timeout);
 
     /**
+     * 在可以找到给定分区的地方更新任务
+     *
      * Update the task where the given partitions can be found.
      *
      * @param executionAttemptID identifying the task
@@ -78,6 +85,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             Time timeout);
 
     /**
+     * 批量发布中间结果分区
+     *
      * Batch release intermediate result partitions.
      *
      * @param jobId id of the job that the partitions belong to
@@ -86,6 +95,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
     void releasePartitions(JobID jobId, Set<ResultPartitionID> partitionIds);
 
     /**
+     * 通知给定任务已完成的检查点
+     *
      * Notify the given task about a completed checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -97,6 +108,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             ExecutionAttemptID executionAttemptID, JobID jobId, long checkpointId, long timestamp);
 
     /**
+     * 通知给定任务一个中止的检查点
+     *
      * Notify the given task about a aborted checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -108,6 +121,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             ExecutionAttemptID executionAttemptID, JobID jobId, long checkpointId, long timestamp);
 
     /**
+     * 为给定任务触发一个检查点
+     *
      * Trigger for the given task a checkpoint.
      *
      * @param executionAttemptID identifying the task
@@ -124,6 +139,8 @@ public interface TaskManagerGateway extends TaskExecutorOperatorEventGateway {
             CheckpointOptions checkpointOptions);
 
     /**
+     * 用给定的分配ID释放槽位
+     *
      * Frees the slot with the given allocation ID.
      *
      * @param allocationId identifying the slot to free

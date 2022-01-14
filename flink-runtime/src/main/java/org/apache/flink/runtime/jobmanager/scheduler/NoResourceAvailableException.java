@@ -21,10 +21,12 @@ package org.apache.flink.runtime.jobmanager.scheduler;
 import org.apache.flink.runtime.JobException;
 
 /** Indicates resource allocation failures. */
+// 资源分配失败
 public class NoResourceAvailableException extends JobException {
 
     private static final long serialVersionUID = -2249953165298717803L;
 
+    // 没有足够的空闲槽来运行作业。你可以在配置中减少运算符并行度或增加每个TaskManager的槽数。
     private static final String BASE_MESSAGE =
             "Not enough free slots available to run the job. "
                     + "You can decrease the operator parallelism or increase the number of slots per TaskManager in the configuration.";

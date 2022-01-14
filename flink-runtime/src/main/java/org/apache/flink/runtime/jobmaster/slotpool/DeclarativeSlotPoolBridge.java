@@ -355,6 +355,7 @@ public class DeclarativeSlotPoolBridge extends DeclarativeSlotPoolService implem
         Predicate<PendingRequest> predicate =
                 request -> !isBatchSlotRequestTimeoutCheckDisabled || !request.isBatchRequest();
         if (pendingRequests.values().stream().anyMatch(predicate)) {
+            // 无法获得所需的最低资源，插槽请求失败。需要:{}。当前槽位池状态:
             log.warn(
                     "Could not acquire the minimum required resources, failing slot requests. Acquired: {}. Current slot pool status: {}",
                     acquiredResources,

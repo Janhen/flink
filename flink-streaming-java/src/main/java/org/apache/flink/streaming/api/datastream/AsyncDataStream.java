@@ -28,7 +28,7 @@ import org.apache.flink.streaming.api.operators.async.AsyncWaitOperatorFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 将{@link AsyncFunction}应用于数据流的helper类。
+ * 将 {@link AsyncFunction} 应用于数据流的helper类。
  *
  * A helper class to apply {@link AsyncFunction} to a data stream.
  *
@@ -43,6 +43,7 @@ import java.util.concurrent.TimeUnit;
 public class AsyncDataStream {
 
     /** Output mode for asynchronous operations. */
+    // 异步操作的输出模式。
     public enum OutputMode {
         ORDERED,
         UNORDERED
@@ -51,6 +52,8 @@ public class AsyncDataStream {
     private static final int DEFAULT_QUEUE_CAPACITY = 100;
 
     /**
+     * 添加一个AsyncWaitOperator。
+     *
      * Add an AsyncWaitOperator.
      *
      * @param in The {@link DataStream} where the {@link AsyncWaitOperator} will be added.
@@ -89,7 +92,7 @@ public class AsyncDataStream {
     }
 
     /**
-     * 添加一个AsyncWaitOperator。输出流记录的顺序可以重新排序。
+     * 添加一个 AsyncWaitOperator。输出流记录的顺序可以重新排序。
      *
      * J: 设置 timeout, capacity 在满了的情况下，会反压上游节点
      *
@@ -114,6 +117,8 @@ public class AsyncDataStream {
     }
 
     /**
+     * 添加一个AsyncWaitOperator。输出流记录的顺序可以重新排序。
+     *
      * Add an AsyncWaitOperator. The order of output stream records may be reordered.
      *
      * @param in Input {@link DataStream}
@@ -131,6 +136,8 @@ public class AsyncDataStream {
     }
 
     /**
+     * 添加一个AsyncWaitOperator。处理输入记录的顺序保证与输入记录相同。
+     *
      * Add an AsyncWaitOperator. The order to process input records is guaranteed to be the same as
      * input ones.
      *
@@ -153,6 +160,8 @@ public class AsyncDataStream {
     }
 
     /**
+     * 添加一个AsyncWaitOperator。处理输入记录的顺序保证与输入记录相同。
+     *
      * Add an AsyncWaitOperator. The order to process input records is guaranteed to be the same as
      * input ones.
      *

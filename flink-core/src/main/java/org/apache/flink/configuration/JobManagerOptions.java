@@ -36,6 +36,8 @@ public class JobManagerOptions {
     public static final MemorySize MIN_JVM_HEAP_SIZE = MemorySize.ofMebiBytes(128);
 
     /**
+     * 定义与作业管理器通信所连接的网络地址的配置参数
+     *
      * The config parameter defining the network address to connect to for communication with the
      * job manager.
      *
@@ -71,6 +73,8 @@ public class JobManagerOptions {
                                     + " configured, '0.0.0.0' will be used.");
 
     /**
+     * 定义用于与作业管理器通信的要连接的网口的配置参数
+     *
      * The config parameter defining the network port to connect to for communication with the job
      * manager.
      *
@@ -138,6 +142,7 @@ public class JobManagerOptions {
                     .withDescription("JVM heap size (in megabytes) for the JobManager.");
 
     /** Total Process Memory size for the JobManager. */
+    // JobManager的总进程内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> TOTAL_PROCESS_MEMORY =
             key("jobmanager.memory.process.size")
@@ -150,6 +155,7 @@ public class JobManagerOptions {
                                     + "'jobmanager.memory.flink.size' for Total Flink Memory size configuration.");
 
     /** Total Flink Memory size for the JobManager. */
+    // JobManager的总Flink内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> TOTAL_FLINK_MEMORY =
             key("jobmanager.memory.flink.size")
@@ -332,6 +338,7 @@ public class JobManagerOptions {
                                     + "However, local input split assignment (such as for HDFS files) may be impacted.");
 
     /** The timeout in milliseconds for requesting a slot from Slot Pool. */
+    // J: 从槽位池请求槽位的超时时间(毫秒)。
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<Long> SLOT_REQUEST_TIMEOUT =
             key("slot.request.timeout")
@@ -340,6 +347,7 @@ public class JobManagerOptions {
                             "The timeout in milliseconds for requesting a slot from Slot Pool.");
 
     /** The timeout in milliseconds for a idle slot in Slot Pool. */
+    // slot Pool中空闲槽位的超时时间，单位为毫秒
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<Long> SLOT_IDLE_TIMEOUT =
             key("slot.idle.timeout")

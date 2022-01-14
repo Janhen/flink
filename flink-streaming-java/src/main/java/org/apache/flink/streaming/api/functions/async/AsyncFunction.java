@@ -27,6 +27,13 @@ import java.util.concurrent.TimeoutException;
 /**
  * 用于实现异步 I/O 操作的函数
  *
+ * <p>对于每个#asyncInvoke，一个async io操作可以被触发，并且一旦它被触发，结果可以通过调用
+ *   {@link ResultFuture#complete}来收集。对于每个异步操作，它的上下文在调用#asyncInvoke之后立即存储在操作符中，
+ *   避免在内部缓冲区未满时阻塞每个流输入。
+ *
+ * <p>{@link ResultFuture}可以传递到回调函数或future函数中来收集结果数据。错误也可以通过
+ *   {@link ResultFuture# completeexception (Throwable)}传播到async IO操作符。
+ *
  * A function to trigger Async I/O operation.
  *
  * <p>For each #asyncInvoke, an async io operation can be triggered, and once it has been done, the
@@ -79,6 +86,8 @@ import java.util.concurrent.TimeoutException;
 public interface AsyncFunction<IN, OUT> extends Function, Serializable {
 
     /**
+     * 为每个流输入触发异步操作。
+     *
      * Trigger async operation for each stream input.
      *
      * @param input element coming from an upstream task
@@ -89,6 +98,8 @@ public interface AsyncFunction<IN, OUT> extends Function, Serializable {
     void asyncInvoke(IN input, ResultFuture<OUT> resultFuture) throws Exception;
 
     /**
+     * {@link AsyncFunction#asyncInvoke}发生超时。默认情况下，结果future将异常完成，并带有一个超时异常。
+     *
      * {@link AsyncFunction#asyncInvoke} timeout occurred. By default, the result future is
      * exceptionally completed with a timeout exception.
      *
@@ -96,6 +107,7 @@ public interface AsyncFunction<IN, OUT> extends Function, Serializable {
      * @param resultFuture to be completed with the result data
      */
     default void timeout(IN input, ResultFuture<OUT> resultFuture) throws Exception {
+        // J: 完成并可抛出异常调用，指定抛出受检的超时异常
         resultFuture.completeExceptionally(
                 new TimeoutException("Async function call has timed out."));
     }

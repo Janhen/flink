@@ -23,6 +23,8 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.configuration.HighAvailabilityOptions;
 
 /**
+ * Flink集群执行的高可用性模式。目前支持的模式有:
+ *
  * High availability mode for Flink's cluster execution. Currently supported modes are:
  *
  * <p>- NONE: No high availability. - ZooKeeper: JobManager high availability via ZooKeeper

@@ -67,6 +67,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个{@code AllWindowedStream}表示一个数据流，其中元素流基于
+ * {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}被分割成多个窗口。窗口发射
+ * 是基于{@link org.apache.flink.streaming.api.windowing.triggers.Trigger}触发的。
+ *
  * A {@code AllWindowedStream} represents a data stream where the stream of elements is split into
  * windows based on a {@link org.apache.flink.streaming.api.windowing.assigners.WindowAssigner}.
  * Window emission is triggered based on a {@link

@@ -59,6 +59,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这个类封装了一个程序，封装在jar文件中。它提供了提取嵌套库、搜索程序入口点和提取程序计划的功能。
+ *
  * This class encapsulates represents a program, packaged in a jar file. It supplies functionality
  * to extract nested libraries, search for the program entry point, and extract a program plan.
  */
@@ -67,12 +69,16 @@ public class PackagedProgram implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(PackagedProgram.class);
 
     /**
+     * JAR清单文件中描述Flink特定入口点的条目的属性名。
+     *
      * Property name of the entry in JAR manifest file that describes the Flink specific entry
      * point.
      */
     public static final String MANIFEST_ATTRIBUTE_ASSEMBLER_CLASS = "program-class";
 
     /**
+     * JAR清单文件中描述带有main方法的类的条目的属性名。
+     *
      * Property name of the entry in JAR manifest file that describes the class with the main
      * method.
      */
@@ -304,6 +310,7 @@ public class PackagedProgram implements AutoCloseable {
     private static boolean hasMainMethod(Class<?> entryClass) {
         Method mainMethod;
         try {
+            // J: 主类获取 main(String[]) 方法
             mainMethod = entryClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException e) {
             return false;
@@ -323,17 +330,21 @@ public class PackagedProgram implements AutoCloseable {
     private static void callMainMethod(Class<?> entryClass, String[] args)
             throws ProgramInvocationException {
         Method mainMethod;
+        // 限定公共类
         if (!Modifier.isPublic(entryClass.getModifiers())) {
             throw new ProgramInvocationException(
                     "The class " + entryClass.getName() + " must be public.");
         }
 
         try {
+            // J: 获取主类的 main 方法
             mainMethod = entryClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException e) {
+            // J: 未找到 main 方法
             throw new ProgramInvocationException(
                     "The class " + entryClass.getName() + " has no main(String[]) method.");
         } catch (Throwable t) {
+            // J: 程序调用异常
             throw new ProgramInvocationException(
                     "Could not look up the main(String[]) method from the class "
                             + entryClass.getName()
@@ -342,6 +353,7 @@ public class PackagedProgram implements AutoCloseable {
                     t);
         }
 
+        // J: main 需要为静态的、公共的
         if (!Modifier.isStatic(mainMethod.getModifiers())) {
             throw new ProgramInvocationException(
                     "The class " + entryClass.getName() + " declares a non-static main method.");
@@ -352,6 +364,7 @@ public class PackagedProgram implements AutoCloseable {
         }
 
         try {
+            // J: 主程序调用
             mainMethod.invoke(null, (Object) args);
         } catch (IllegalArgumentException e) {
             throw new ProgramInvocationException(

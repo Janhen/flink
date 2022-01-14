@@ -278,6 +278,7 @@ public class CheckpointCoordinatorTest extends TestLogger {
 
     @Test
     public void testMinCheckpointPause() throws Exception {
+        // 将使用一个不同的线程允许检查点触发之前退出 receiveAcknowledgeMessage
         // will use a different thread to allow checkpoint triggering before exiting from
         // receiveAcknowledgeMessage
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
