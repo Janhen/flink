@@ -83,6 +83,8 @@ public class Schema implements Descriptor {
     }
 
     /**
+     * 添加具有字段名和数据类型的字段。必需的。这个方法可以被多次调用。这个方法的调用顺序也定义了字段在一行中的顺序。
+     *
      * Adds a field with the field name and the data type. Required. This method can be called
      * multiple times. The call order of this method defines also the order of the fields in a row.
      *
@@ -95,6 +97,8 @@ public class Schema implements Descriptor {
     }
 
     /**
+     * 使用字段名和类型信息添加字段。必需的。这个方法可以被多次调用。这个方法的调用顺序也定义了字段在一行中的顺序。
+     *
      * Adds a field with the field name and the type information. Required. This method can be
      * called multiple times. The call order of this method defines also the order of the fields in
      * a row.
@@ -156,6 +160,8 @@ public class Schema implements Descriptor {
     }
 
     /**
+     * 指定前面定义的字段的起点。origin字段由连接器或格式定义。
+     *
      * Specifies the origin of the previously defined field. The origin field is defined by a
      * connector or format.
      *
@@ -190,6 +196,8 @@ public class Schema implements Descriptor {
 
     /**
      * 将前面定义的字段指定为事件时间属性。
+     *
+     * <p>E.g. field("rowtime", Types.SQL_TIMESTAMP).rowtime(...)
      *
      * Specifies the previously defined field as an event-time attribute.
      *

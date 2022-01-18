@@ -34,6 +34,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 直接执行器服务在调用线程中直接执行可运行对象和可调用对象。
+ *
  * The direct executor service directly executes the runnables and the callables in the calling
  * thread.
  */

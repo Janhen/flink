@@ -29,6 +29,20 @@ import java.util.Map;
  * <p>Partitions将存储在外部系统中的数据分割为更小的部分，由一个或多个基于字符串的分区键标识。单个分区表示为
  *    {@code Map < String, String >}，它将每个分区键映射到一个分区值。分区键及其顺序由目录表定义。
  *
+ * <p>例如，可以按区域进行分区，也可以在按月分区的区域内进行分区。分区键的顺序(在本例中:先按区域，然后按月份)由编目
+ *   表定义。分区列表可以是:
+ * <pre>
+ *   List(
+ *     ['region'='europe', 'month'='2020-01'],
+ *     ['region'='europe', 'month'='2020-02'],
+ *     ['region'='asia', 'month'='2020-01'],
+ *     ['region'='asia', 'month'='2020-02']
+ *   )
+ * </pre>
+ *
+ * <p>给出以下分区表:
+ *
+ *
  * Enables to write partitioned data in a {@link DynamicTableSink}.
  *
  * <p>Partitions split the data stored in an external system into smaller portions that are
@@ -94,6 +108,10 @@ public interface SupportsPartitioning {
 
     /**
      * 提供分区的静态部分
+     *
+     * <p>单个分区将每个分区键映射到一个分区值。根据用户定义的语句，分区可能不包括所有分区键。
+     *
+     * <p>参见{@link SupportsPartitioning}的文档获取更多信息。
      *
      * Provides the static part of a partition.
      *

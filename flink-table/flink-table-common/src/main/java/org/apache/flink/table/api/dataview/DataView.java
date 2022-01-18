@@ -22,6 +22,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.table.functions.ImperativeAggregateFunction;
 
 /**
+ * {@link DataView}是一个集合类型，可以在{@link ImperativeAggregateFunction}的累加器中使用。
+ *
+ * <p>根据函数使用的上下文，{@link DataView}可以由Java堆集合或状态后端支持。
+ *
  * A {@link DataView} is a collection type that can be used in the accumulator of an {@link
  * ImperativeAggregateFunction}.
  *

@@ -23,6 +23,7 @@ import org.apache.flink.configuration.MemorySize;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Range and fraction of a memory component, which is a capped fraction of another component. */
+// 内存组件的范围和部分，它是另一个组件的上限部分
 public class RangeFraction {
     private final MemorySize minSize;
     private final MemorySize maxSize;

@@ -55,6 +55,8 @@ import java.io.Serializable;
 public interface LookupTableSource extends DynamicTableSource {
 
     /**
+     * 返回用于读取数据的运行时实现的提供程序。
+     *
      * Returns a provider of runtime implementation for reading the data.
      *
      * <p>There exist different interfaces for runtime implementation which is why {@link
@@ -77,6 +79,8 @@ public interface LookupTableSource extends DynamicTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过{@link LookupRuntimeProvider}创建运行时实现的上下文。
+     *
      * Context for creating runtime implementation via a {@link LookupRuntimeProvider}.
      *
      * <p>It offers utilities by the planner for creating runtime implementation with minimal
@@ -102,6 +106,10 @@ public interface LookupTableSource extends DynamicTableSource {
     }
 
     /**
+     * 为读取数据提供实际的运行时实现。
+     *
+     * <p>运行时实现有不同的接口，这就是为什么{@link LookupRuntimeProvider}作为基接口。
+     *
      * Provides actual runtime implementation for reading the data.
      *
      * <p>There exist different interfaces for runtime implementation which is why {@link

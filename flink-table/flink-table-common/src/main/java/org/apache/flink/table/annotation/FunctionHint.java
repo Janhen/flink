@@ -29,6 +29,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 用于构造{@link UserDefinedFunction}的{@link TypeInference}逻辑的一个提示，它会影响基于反射的输入类型、
+ * 累加器类型和输出类型的提取。
+ *
  * A hint that influences the reflection-based extraction of input types, accumulator types, and
  * output types for constructing the {@link TypeInference} logic of a {@link UserDefinedFunction}.
  *

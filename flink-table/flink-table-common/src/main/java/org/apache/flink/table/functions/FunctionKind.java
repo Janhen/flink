@@ -24,7 +24,7 @@ import org.apache.flink.annotation.PublicEvolving;
 // 对{@link FunctionDefinition}的语义进行分类。
 @PublicEvolving
 public enum FunctionKind {
-    //
+    // 正常/标量
     SCALAR,
 
     // 表

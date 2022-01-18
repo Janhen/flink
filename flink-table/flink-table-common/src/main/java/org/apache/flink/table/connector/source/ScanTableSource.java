@@ -34,9 +34,26 @@ import java.io.Serializable;
 /**
  * 一个 {@link DynamicTableSource}，它在运行时扫描外部存储系统中的所有行。
  *
+ * <p>扫描行不需要只包含插入，也可以包含更新和删除。因此，可以使用表源读取(有限或无限)更改日志。给定的
+ *   {@link ChangelogMode}表示规划器在运行时可以预期的一组更改。
+ *
+ * <p>对于常规批处理场景，源可以发出一个限定的仅插入行的流。
+ *
+ * <p>对于更改数据捕获(CDC)场景，源可以发出带有插入、更新和删除行的有界或无界流。参见{@link RowKind}。
+ *
  * ...
  *
  * <p>A {@link ScanTableSource}可以实现以下能力，这些能力可能会在规划过程中改变实例:
+ *
+ *   <li>{@link SupportsWatermarkPushDown} 支持水印下推
+ *   <li>{@link SupportsSourceWatermark} 支持Source水印
+ *   <li>{@link SupportsFilterPushDown} 支持谓词下推
+ *   <li>{@link SupportsAggregatePushDown} 支持聚合下推
+ *   <li>{@link SupportsProjectionPushDown} 支持投影下推
+ *   <li>{@link SupportsPartitionPushDown} 支持分区下推
+ *   <li>{@link SupportsReadingMetadata} 支持读取元数据
+ *
+ * <p>在最后一步，规划器将调用{@link #getScanRuntimeProvider(ScanContext)}来获得运行时实现的 provider。
  *
  * A {@link DynamicTableSource} that scans all rows from an external storage system during runtime.
  *
@@ -80,6 +97,8 @@ public interface ScanTableSource extends DynamicTableSource {
     ChangelogMode getChangelogMode();
 
     /**
+     * 返回用于读取数据的运行时实现的提供程序。
+     *
      * Returns a provider of runtime implementation for reading the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link
@@ -103,6 +122,8 @@ public interface ScanTableSource extends DynamicTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过{@link ScanRuntimeProvider}创建运行时实现的上下文。
+     *
      * Context for creating runtime implementation via a {@link ScanRuntimeProvider}.
      *
      * <p>It offers utilities by the planner for creating runtime implementation with minimal
@@ -117,6 +138,8 @@ public interface ScanTableSource extends DynamicTableSource {
     }
 
     /**
+     * 为读取数据提供实际的运行时实现。
+     *
      * Provides actual runtime implementation for reading the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link

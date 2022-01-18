@@ -47,6 +47,8 @@ public class StateUtil {
     }
 
     /**
+     * 遍历传递的状态句柄，并在每个非空句柄上调用discardState()。所有发生的异常都被抑制和收集，直到迭代结束并作为单个异常发出。
+     *
      * Iterates through the passed state handles and calls discardState() on each handle that is not
      * null. All occurring exceptions are suppressed and collected until the iteration is over and
      * emitted as a single exception.

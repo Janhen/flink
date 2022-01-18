@@ -26,6 +26,8 @@ import org.apache.flink.table.types.DataType;
 import org.apache.flink.types.Row;
 
 /**
+ * 作为{@link LookupTableSource}的运行时实现的{@link TableFunction}实例的提供者。
+ *
  * Provider of a {@link TableFunction} instance as a runtime implementation for {@link
  * LookupTableSource}.
  *

@@ -47,6 +47,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 /**
+ * 实用程序的web运行时监控。这个类包含一些示例方法，这些方法用于构建带有关于执行图状态的聚合信息的消息，这些信息将被发送到web服务器。
+ *
  * Utilities for the web runtime monitor. This class contains for example methods to build messages
  * with aggregate information about the state of an execution graph, to be send to the web server.
  */

@@ -19,6 +19,7 @@
 package org.apache.flink.table.api;
 
 /** Exception for all errors occurring during expression parsing. */
+// 表达式解析期间发生的所有错误的异常。
 public class ExpressionParserException extends RuntimeException {
 
     public ExpressionParserException(String msg) {

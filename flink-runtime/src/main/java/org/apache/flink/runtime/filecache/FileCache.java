@@ -53,6 +53,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * FileCache用于在部署任务时访问已注册的缓存文件。
  *
+ * <p>文件和压缩目录从{@link PermanentBlobService}中检索。这些文件的生命周期由blob-service管理。
+ *
+ * <p>检索到的目录将被扩展为“{@code <system-tmp-dir>tmp_<jobID>}”，并在任务在5秒延迟后注销时删除，除非同时有
+ *   新的任务请求该文件。
+ *
  * The FileCache is used to access registered cache files when a task is deployed.
  *
  * <p>Files and zipped directories are retrieved from the {@link PermanentBlobService}. The

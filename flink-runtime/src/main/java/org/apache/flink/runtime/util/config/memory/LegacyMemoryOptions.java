@@ -22,6 +22,8 @@ import org.apache.flink.configuration.ConfigOption;
 import org.apache.flink.configuration.MemorySize;
 
 /**
+ * 遗留的JVM堆进程内存选项。
+ *
  * Legacy JVM heap/process memory options.
  *
  * <p>If these memory options are set, they are interpreted as other new memory options for the

@@ -23,6 +23,8 @@ import org.apache.flink.configuration.MemorySize;
 import java.io.Serializable;
 
 /**
+ * 组成总Flink内存的内存组件。
+ *
  * Memory components which constitute the Total Flink Memory.
  *
  * <p>The relationships of Flink JVM and rest memory components are shown below.

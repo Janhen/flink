@@ -54,6 +54,8 @@ import org.apache.flink.table.factories.DynamicTableFactory;
 public interface Format {
 
     /**
+     * 返回连接器(或计划器)在运行时预期的更改集。
+     *
      * Returns the set of changes that a connector (and transitively the planner) can expect during
      * runtime.
      */

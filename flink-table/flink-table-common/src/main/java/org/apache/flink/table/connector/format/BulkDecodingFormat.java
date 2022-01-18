@@ -32,5 +32,6 @@ import java.util.List;
 public interface BulkDecodingFormat<T> extends DecodingFormat<BulkFormat<T, FileSourceSplit>> {
 
     /** Provides a list of filters in conjunctive form for filtering on a best-effort basis. */
+    // 提供连接形式的筛选器列表，用于尽可能地进行筛选。
     default void applyFilters(List<ResolvedExpression> filters) {}
 }

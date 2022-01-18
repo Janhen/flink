@@ -22,6 +22,8 @@ import org.apache.flink.configuration.Configuration;
 import org.apache.flink.configuration.MemorySize;
 
 /**
+ * 派生{@link FlinkMemory}组件的实用程序。
+ *
  * Utility to derive the {@link FlinkMemory} components.
  *
  * <p>The {@link FlinkMemory} represents memory components which constitute the Total Flink Memory.

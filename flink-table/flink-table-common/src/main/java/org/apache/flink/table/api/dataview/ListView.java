@@ -34,6 +34,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 一个{@link DataView}，当需要处理大量数据时，在{@link AggregateFunction}或{@link TableAggregateFunction}
+ * 的累加器中提供类似{@link List}的功能
+ *
  * A {@link DataView} that provides {@link List}-like functionality in the accumulator of an {@link
  * AggregateFunction} or {@link TableAggregateFunction} when large amounts of data are expected.
  *

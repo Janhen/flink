@@ -81,6 +81,8 @@ import java.util.stream.Stream;
 import static org.apache.flink.table.types.extraction.ExtractionUtils.validateStructuredClass;
 
 /**
+ * {@link DataType}可以用来声明操作的输入和或输出类型。该类枚举Table & SQL API的所有预定义数据类型。
+ *
  * A {@link DataType} can be used to declare input and/or output types of operations. This class
  * enumerates all pre-defined data types of the Table & SQL API.
  *

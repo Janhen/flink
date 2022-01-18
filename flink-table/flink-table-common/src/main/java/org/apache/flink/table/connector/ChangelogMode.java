@@ -58,6 +58,7 @@ public final class ChangelogMode {
                     .addContainedKind(RowKind.DELETE)
                     .build();
 
+    // J: 类型
     private final Set<RowKind> kinds;
 
     private ChangelogMode(Set<RowKind> kinds) {
@@ -128,6 +129,7 @@ public final class ChangelogMode {
     /** Builder for configuring and creating instances of {@link ChangelogMode}. */
     public static class Builder {
 
+        // J: 枚举 Set 维护
         private final Set<RowKind> kinds = EnumSet.noneOf(RowKind.class);
 
         private Builder() {

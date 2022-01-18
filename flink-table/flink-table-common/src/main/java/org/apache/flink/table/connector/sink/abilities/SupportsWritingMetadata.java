@@ -36,6 +36,12 @@ import java.util.Map;
  *
  * <p>元数据列向表的模式添加额外的列。表接收器负责在已使用行的末尾接受请求的元数据列，并将它们持久化。这包括可能将
  *    元数据列转发到所包含的格式。
+ * ...
+ *
+ * <p>默认情况下，如果没有实现这个接口，上面的语句将失败，因为表接收器不提供一个名为' timestamp '的元数据键。
+ *
+ * <p>如果实现了这个接口，{@link #listWritableMetadata()}列出所有元数据键和它们对应的数据类型，接收器暴露给规划器。
+ *   规划器将在必要时使用此信息进行验证和插入显式类型转换。
  *
  * Interface for {@link DynamicTableSink}s that support writing metadata columns.
  *

@@ -26,6 +26,8 @@ import org.apache.flink.util.function.SupplierWithException;
 import javax.annotation.Nonnull;
 
 /**
+ * 状态后端中不同快照方法的接口。理想情况下，实现类应该是无状态的，或者至少是线程安全的，它可以被多个检查点并行调用。
+ *
  * Interface for different snapshot approaches in state backends. Implementing classes should
  * ideally be stateless or at least threadsafe, it can be called in parallel by multiple
  * checkpoints.

@@ -29,6 +29,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * {@link ResourceProfile ResourceProfiles}的计数器。这个类是不可变的。
+ *
  * Counter for {@link ResourceProfile ResourceProfiles}. This class is immutable.
  *
  * <p>ResourceCounter contains a set of {@link ResourceProfile ResourceProfiles} and their

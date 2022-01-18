@@ -21,6 +21,8 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 
 /**
+ * {@link DataTypeHint}的Helper类，用于表示一个未知的序列化器，应该用一个更具体的类替换。
+ *
  * Helper class for {@link DataTypeHint} for representing an unknown serializer that should be
  * replaced with a more specific class.
  */

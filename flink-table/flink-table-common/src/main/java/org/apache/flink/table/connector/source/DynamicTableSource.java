@@ -39,11 +39,12 @@ import java.io.Serializable;
  * <p>动态表是Flink的Table & SQL API的核心概念，以统一的方式处理有界和无界数据。根据定义，动态表可以随时间变化。
  *
  * <p>当读取动态表时，内容可以被认为是:
+ *
  *   <li>一个更新日志(有限或无限)，所有的更改将被连续地消耗，直到更新日志耗尽。更多信息见{@link ScanTableSource}。
  *   <li>一个持续变化的或非常大的外部表，其内容通常不会被完全读取，而是在必要时查询单个值。更多信息请参见
  *     {@link LookupTableSource}。
  *
- * <p>注意:两个接口可以同时实现。计划器根据指定的查询决定它们的使用。
+ * <p>注意: 两个接口可以同时实现。计划器根据指定的查询决定它们的使用。
  *
  * <p>上面提到的接口的实例可以被看作工厂，最终产生具体的运行时实现来读取实际数据。
  *
@@ -119,6 +120,8 @@ public interface DynamicTableSource {
     interface Context {
 
         /**
+         * 创建描述给定{@link DataType}的内部数据结构的类型信息。
+         *
          * Creates type information describing the internal data structures of the given {@link
          * DataType}.
          *
@@ -127,6 +130,8 @@ public interface DynamicTableSource {
         <T> TypeInformation<T> createTypeInformation(DataType producedDataType);
 
         /**
+         * 为指定的{@link DataType}和Flink内部数据结构之间的映射创建一个转换器，该转换器可以传递到运行时实现中。
+         *
          * Creates a converter for mapping between objects specified by the given {@link DataType}
          * and Flink's internal data structures that can be passed into a runtime implementation.
          *

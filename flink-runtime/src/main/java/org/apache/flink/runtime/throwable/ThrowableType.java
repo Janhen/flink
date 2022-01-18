@@ -19,23 +19,31 @@
 package org.apache.flink.runtime.throwable;
 
 /** Enum for the classification of {@link Throwable} objects into failure/recovery classes. */
+// 将{@link Throwable}对象分类为故障恢复类的Enum
 public enum ThrowableType {
 
     /**
+     * 表示即使重试也不会成功的错误，例如DivideZeroException。对于这样的错误，不应该发生恢复尝试。相反，
+     * 这个 job 应该立即失败
+     *
      * This indicates error that would not succeed even with retry, such as DivideZeroException. No
      * recovery attempt should happen for such an error. Instead, the job should fail immediately.
      */
     NonRecoverableError,
 
     /** Data consumption error, which indicates that we should revoke the producer. */
+    // 数据消费错误，指示我们应该撤销生产者
     PartitionDataMissingError,
 
     /**
+     * 这表示与运行环境相关的错误，如硬件错误、服务问题，在这种情况下，我们应该考虑将机器列入黑名单
+     *
      * This indicates an error related to the running environment, such as hardware error, service
      * issue, in which case we should consider blacklisting the machine.
      */
     EnvironmentError,
 
     /** This indicates a problem that is recoverable. */
+    // 这表明问题是可恢复的
     RecoverableError
 }

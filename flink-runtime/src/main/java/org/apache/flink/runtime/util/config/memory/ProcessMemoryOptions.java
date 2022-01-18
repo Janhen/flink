@@ -28,6 +28,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Common Flink's options to describe its JVM process memory configuration for JM or TM. */
+// Common Flink用于描述JM或TM的JVM进程内存配置的选项。
 public class ProcessMemoryOptions {
     private final List<ConfigOption<MemorySize>> requiredFineGrainedOptions;
     private final ConfigOption<MemorySize> totalFlinkMemoryOption;

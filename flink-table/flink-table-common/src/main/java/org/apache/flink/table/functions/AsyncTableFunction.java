@@ -34,6 +34,56 @@ import java.util.concurrent.CompletableFuture;
 /**
  * 用户定义的异步表函数的基类。用户定义的异步表函数将0、1或多个标量值映射为0、1或多行(或结构化类型)。
  *
+ * <p>这种函数类似于{@link TableFunction}，但是是异步执行的。
+ *
+ * <p> {@link AsyncTableFunction}的行为可以通过实现自定义的求值方法来定义。求值方法必须是公开的，而不是静态的，
+ *   并且命名为<code> eval<code>。求值方法也可以通过实现多个名为<code>eval<code>的方法来重载。
+ *
+ * <p>默认情况下，使用反射自动提取输入和输出数据类型。这包括类的泛型参数{@code T}，用于确定输出数据类型。输入参数
+ *   派生自一个或多个{@code eval()}方法。如果反射信息不够，可以使用{@link DataTypeHint}和{@link FunctionHint}
+ *   注释来支持和丰富反射信息。更多关于如何注释实现类的例子，请参见{@link TableFunction}。
+ *
+ * <p>注意:目前，异步表函数仅支持{@link LookupTableSource}执行时态连接的运行时实现。默认情况下，
+ *   {@link AsyncTableFunction}的输入和输出{@link DataType}与其他{@link UserDefinedFunction}的逻辑类似。
+ *   但是，为了方便起见，在{@link LookupTableSource}中，输出类型可以简单地是{@link Row}或{@link RowData}，
+ *   在这种情况下，输入和输出类型是由表的模式和默认转换派生出来的。
+ *
+ * <p>求值方法的第一个参数必须是{@link CompletableFuture}。其他参数指定用户定义的输入参数，比如
+ *   {@link TableFunction}的"eval"方法。泛型{@link CompletableFuture}必须是{@link java.util.Collection}
+ *   收集多个可能的结果值。
+ *
+ * <p>对于<code>eval()<code>的每次调用，一个异步IO操作可以被触发，并且一旦操作完成，结果可以通过调用
+ *   {@link CompletableFuture#complete}来收集。对于每个异步操作，它的上下文在调用<code>eval()<code>后立即
+ *   存储在 operator 中，避免在内部缓冲区未满的情况下阻塞每个流输入。
+ *
+ * <p>{@link CompletableFuture}可以被传递到回调函数或future函数中来收集结果数据。错误也可以通过调用
+ *   {@link CompletableFuture#completeExceptionally(Throwable)}传播到async IO操作符。
+ *
+ * <p>为了在编目中存储用户定义函数，类必须有一个默认构造函数，并且在运行时必须是可实例化的。
+ *
+ * <p>向Apache HBase执行异步请求的示例如下:
+ *
+ * <pre>{@code
+ *  public class HBaseAsyncTableFunction extends AsyncTableFunction<Row> {
+ *    // implement an "eval" method that takes a CompletableFuture as the first parameter
+ *    // and ends with as many parameters as you want
+ *    public void eval(CompletableFuture<Collection<Row>> result, String rowkey) {
+ *      Get get = new Get(Bytes.toBytes(rowkey));
+ *      ListenableFuture<Result> future = hbase.asyncGet(get);
+ *      Futures.addCallback(future, new FutureCallback<Result>() {
+ *        public void onSuccess(Result result) {
+ *          List<Row> ret = process(result);
+ *          result.complete(ret);
+ *        }
+ *        public void onFailure(Throwable thrown) {
+ *          result.completeExceptionally(thrown);
+ *        }
+ *      });
+ *    }
+ *    // you can overload the eval method here ...
+ *  }
+ *  }</pre>
+ *
  * Base class for a user-defined asynchronous table function. A user-defined asynchronous table
  * function maps zero, one, or multiple scalar values to zero, one, or multiple rows (or structured
  * types).
@@ -115,6 +165,7 @@ public abstract class AsyncTableFunction<T> extends UserDefinedFunction {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public TypeInference getTypeInference(DataTypeFactory typeFactory) {
+        // J: 抽取异步方法的类型引用
         return TypeInferenceExtractor.forAsyncTableFunction(typeFactory, (Class) getClass());
     }
 }

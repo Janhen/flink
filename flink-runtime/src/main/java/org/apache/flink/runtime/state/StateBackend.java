@@ -32,6 +32,9 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
+ * A <b>State Backend<b>定义了流应用程序的状态如何在集群中本地存储。不同的状态后端以不同的方式存储它们的状态，
+ *   并使用不同的数据结构来保存正在运行的应用程序的状态。
+ *
  * A <b>State Backend</b> defines how the state of a streaming application is stored locally within
  * the cluster. Different State Backends store their state in different fashions, and use different
  * data structures to hold the state of a running application.

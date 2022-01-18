@@ -47,5 +47,6 @@ public interface InputFormatProvider extends ScanTableSource.ScanRuntimeProvider
     }
 
     /** Creates an {@link InputFormat} instance. */
+    // 创建一个{@link InputFormat}实例
     InputFormat<RowData, ?> createInputFormat();
 }

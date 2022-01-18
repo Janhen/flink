@@ -103,6 +103,8 @@ public interface DynamicTableSink {
     ChangelogMode getChangelogMode(ChangelogMode requestedMode);
 
     /**
+     * 返回用于写入数据的运行时实现的提供程序。
+     *
      * Returns a provider of runtime implementation for writing the data.
      *
      * <p>There might exist different interfaces for runtime implementation which is why {@link
