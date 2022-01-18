@@ -281,6 +281,7 @@ object BuiltInMethods {
   val FROM_UNIXTIME_FORMAT = Types.lookupMethod(
     classOf[SqlDateTimeUtils], "fromUnixtime", classOf[Long], classOf[String], classOf[TimeZone])
 
+  // J: 根据 num 转换为指定格式的时间字符串
   val FROM_UNIXTIME = Types.lookupMethod(
     classOf[SqlDateTimeUtils], "fromUnixtime", classOf[Long], classOf[TimeZone])
 

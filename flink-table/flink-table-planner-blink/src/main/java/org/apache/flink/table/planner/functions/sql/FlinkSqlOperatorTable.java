@@ -1078,9 +1078,11 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlOperator SYMMETRIC_NOT_BETWEEN =
             SqlStdOperatorTable.SYMMETRIC_NOT_BETWEEN;
     public static final SqlOperator NOT_LIKE = SqlStdOperatorTable.NOT_LIKE;
+    // J: 模糊
     public static final SqlOperator LIKE = SqlStdOperatorTable.LIKE;
     public static final SqlOperator NOT_SIMILAR_TO = SqlStdOperatorTable.NOT_SIMILAR_TO;
     public static final SqlOperator SIMILAR_TO = SqlStdOperatorTable.SIMILAR_TO;
+    // J: case when
     public static final SqlOperator CASE = SqlStdOperatorTable.CASE;
     public static final SqlOperator REINTERPRET = SqlStdOperatorTable.REINTERPRET;
     public static final SqlOperator EXTRACT = SqlStdOperatorTable.EXTRACT;
@@ -1131,7 +1133,9 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlFunction TRUNCATE = SqlStdOperatorTable.TRUNCATE;
 
     // TIME FUNCTIONS
+    // J: 时间日期相关的函数
     public static final SqlFunction YEAR = SqlStdOperatorTable.YEAR;
+    // J: 显示季度
     public static final SqlFunction QUARTER = SqlStdOperatorTable.QUARTER;
     public static final SqlFunction MONTH = SqlStdOperatorTable.MONTH;
     public static final SqlFunction WEEK = SqlStdOperatorTable.WEEK;
@@ -1141,10 +1145,13 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlFunction DAYOFYEAR = SqlStdOperatorTable.DAYOFYEAR;
     public static final SqlFunction DAYOFMONTH = SqlStdOperatorTable.DAYOFMONTH;
     public static final SqlFunction DAYOFWEEK = SqlStdOperatorTable.DAYOFWEEK;
+    // J: 增加时间戳
     public static final SqlFunction TIMESTAMP_ADD = SqlStdOperatorTable.TIMESTAMP_ADD;
+    // J: 时间戳差值
     public static final SqlFunction TIMESTAMP_DIFF = SqlStdOperatorTable.TIMESTAMP_DIFF;
 
     // MATCH_RECOGNIZE
+    // J: CEP模式匹配相关的函数
     public static final SqlFunction FIRST = SqlStdOperatorTable.FIRST;
     public static final SqlFunction LAST = SqlStdOperatorTable.LAST;
     public static final SqlFunction PREV = SqlStdOperatorTable.PREV;
@@ -1154,6 +1161,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlOperator RUNNING = SqlStdOperatorTable.RUNNING;
 
     // OVER FUNCTIONS
+    // J: 窗口相关函数
     public static final SqlAggFunction RANK = SqlStdOperatorTable.RANK;
     public static final SqlAggFunction DENSE_RANK = SqlStdOperatorTable.DENSE_RANK;
     public static final SqlAggFunction ROW_NUMBER = SqlStdOperatorTable.ROW_NUMBER;
@@ -1161,6 +1169,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlAggFunction LAG = SqlStdOperatorTable.LAG;
 
     // JSON FUNCTIONS
+    // J: 是否是JSON值、JSON对象、JSON数组
     public static final SqlPostfixOperator IS_JSON_VALUE = SqlStdOperatorTable.IS_JSON_VALUE;
     public static final SqlPostfixOperator IS_JSON_OBJECT = SqlStdOperatorTable.IS_JSON_OBJECT;
     public static final SqlPostfixOperator IS_JSON_ARRAY = SqlStdOperatorTable.IS_JSON_ARRAY;
