@@ -37,10 +37,12 @@ import static org.apache.flink.table.types.extraction.ExtractionUtils.collectAnn
 import static org.apache.flink.table.types.extraction.ExtractionUtils.extractionError;
 
 /** Utilities for extracting and dealing with templates. */
+// 用于提取和处理模板的实用程序。
 @Internal
 final class TemplateUtils {
 
     /** Retrieve global templates from function class. */
+    // 从函数类中检索全局模板
     static Set<FunctionTemplate> extractGlobalFunctionTemplates(
             DataTypeFactory typeFactory, Class<? extends UserDefinedFunction> function) {
         return asFunctionTemplates(

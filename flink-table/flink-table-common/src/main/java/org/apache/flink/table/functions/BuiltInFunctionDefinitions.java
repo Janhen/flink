@@ -73,6 +73,7 @@ import static org.apache.flink.table.types.inference.TypeStrategies.nullable;
 import static org.apache.flink.table.types.inference.TypeStrategies.varyingString;
 
 /** Dictionary of function definitions for all built-in functions. */
+// 所有内置函数的函数定义字典。
 @PublicEvolving
 public final class BuiltInFunctionDefinitions {
 

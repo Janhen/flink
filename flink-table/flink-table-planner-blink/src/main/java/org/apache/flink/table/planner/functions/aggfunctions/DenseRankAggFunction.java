@@ -35,6 +35,7 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.not;
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.plus;
 
 /** built-in dense_rank aggregate function. */
+// 内置的dense_rank聚合函数
 public class DenseRankAggFunction extends RankLikeAggFunctionBase {
 
     public DenseRankAggFunction(LogicalType[] orderKeyTypes) {

@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 /** Column statistics. */
+// 列统计。
 @PublicEvolving
 public final class ColumnStats {
 

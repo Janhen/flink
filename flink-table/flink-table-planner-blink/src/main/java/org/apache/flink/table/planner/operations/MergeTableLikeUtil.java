@@ -63,6 +63,7 @@ import static org.apache.flink.table.planner.calcite.FlinkTypeFactory.toLogicalT
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /** A utility class with logic for handling the {@code CREATE TABLE ... LIKE} clause. */
+// 一个有逻辑的工具类处理{@code CREATE TABLE ... like} 从句
 class MergeTableLikeUtil {
     /** Default merging strategy if given option was not provided explicitly by the user. */
     private static final HashMap<FeatureOption, MergingStrategy> defaultMergingStrategies =

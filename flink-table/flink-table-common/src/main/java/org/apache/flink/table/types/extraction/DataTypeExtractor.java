@@ -76,6 +76,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.isCompositeType;
 
 /**
+ * 基于反射的实用程序，分析给定的类型}、方法或类，从中提取一个(可能嵌套的){@link DataType}。
+ *
  * Reflection-based utility that analyzes a given {@link java.lang.reflect.Type}, method, or class
  * to extract a (possibly nested) {@link DataType} from it.
  */

@@ -32,6 +32,8 @@ import org.apache.calcite.sql.type.SqlTypeTransforms;
 import org.apache.calcite.sql.validate.SqlMonotonicity;
 
 /**
+ * 实现处理时间属性的函数。物化后的结果可用于常规的算术计算。
+ *
  * Function that materializes a processing time attribute. After materialization the result can be
  * used in regular arithmetical calculations.
  */

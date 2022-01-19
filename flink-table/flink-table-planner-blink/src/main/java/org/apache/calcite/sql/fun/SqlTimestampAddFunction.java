@@ -28,6 +28,8 @@ import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.type.SqlTypeName;
 
 /**
+ * <code>TIMESTAMPADD<code>函数，它向datetime (TIMESTAMP, TIME或DATE)添加一个间隔。
+ *
  * The <code>TIMESTAMPADD</code> function, which adds an interval to a datetime (TIMESTAMP, TIME or
  * DATE).
  *

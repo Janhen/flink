@@ -32,6 +32,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * {@link CalciteCatalogReader}的一个薄包装，可以提供多个默认路径来查看。
+ *
  * A thin wrapper around {@link CalciteCatalogReader} that enables providing multiple default paths
  * to look in.
  */

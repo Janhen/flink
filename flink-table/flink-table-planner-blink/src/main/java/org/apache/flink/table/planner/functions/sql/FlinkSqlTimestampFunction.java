@@ -26,6 +26,9 @@ import org.apache.calcite.sql.fun.SqlAbstractTimeFunction;
 import org.apache.calcite.sql.type.SqlTypeName;
 
 /**
+ * 用于定义Flink中的LOCALTIMESTAMP, CURRENT_TIMESTAMP, CURRENT_ROW_TIMESTAMP()， NOW()等SQL时间函数的函数，
+ * 该函数支持配置返回类型和返回类型的精度。
+ *
  * Function that used to define SQL time function like LOCALTIMESTAMP, CURRENT_TIMESTAMP,
  * CURRENT_ROW_TIMESTAMP(), NOW() in Flink, the function support configuring the return type and the
  * precision of return type.

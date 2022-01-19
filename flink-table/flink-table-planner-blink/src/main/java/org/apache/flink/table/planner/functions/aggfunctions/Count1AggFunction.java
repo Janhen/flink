@@ -29,6 +29,8 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.minus
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.plus;
 
 /**
+ * 这个count1聚合函数返回值的count1，例如[[CountAggFunction]]。它的不同之处在于空值也被计算在内。
+ *
  * This count1 aggregate function returns the count1 of values which go into it like
  * [[CountAggFunction]]. It differs in that null values are also counted.
  */

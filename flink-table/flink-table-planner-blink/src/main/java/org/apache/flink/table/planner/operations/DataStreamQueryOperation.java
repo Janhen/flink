@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 描述从{@link DataStream}读取数据的关系操作。
+ *
  * Describes a relational operation that reads from a {@link DataStream}.
  *
  * <p>This is only used for testing.

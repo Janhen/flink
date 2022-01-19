@@ -59,14 +59,17 @@ import static org.apache.flink.table.planner.plan.type.FlinkReturnTypes.VARCHAR_
 public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
 
     /** The table of contains Flink-specific operators. */
+    // 表包含特定于flink的操作符
     private static FlinkSqlOperatorTable instance;
 
     /** Returns the Flink operator table, creating it if necessary. */
+    // 返回Flink操作符表，必要时创建它
     public static synchronized FlinkSqlOperatorTable instance() {
         if (instance == null) {
             // Creates and initializes the standard operator table.
             // Uses two-phase construction, because we can't initialize the
             // table until the constructor of the sub-class has completed.
+            // 创建并初始化标准操作符表。使用两阶段构造，因为只有在子类的构造函数完成后才能初始化表
             instance = new FlinkSqlOperatorTable();
             instance.init();
         }
@@ -110,6 +113,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     // FUNCTIONS
 
     /** Function used to access a processing time attribute. */
+    // 用于访问处理时间属性的函数
     public static final SqlFunction PROCTIME =
             new CalciteSqlFunction(
                     "PROCTIME",
@@ -121,6 +125,9 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     false);
 
     /**
+     * 用于访问一个具有TIMESTAMP或TIMESTAMP_LTZ类型的事件时间属性的函数，对于TIMESTAMP_LTZ类型，我们在
+     * [org.apache.flink.table.planner.calcite.RelTimeIndicatorConverter]中重写返回类型。
+     *
      * Function used to access a event time attribute with TIMESTAMP or TIMESTAMP_LTZ type from
      * MATCH_RECOGNIZE, for TIMESTAMP_LTZ type, we rewrite the return type in
      * [org.apache.flink.table.planner.calcite.RelTimeIndicatorConverter].
@@ -136,6 +143,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     true);
 
     /** Function used to access a processing time attribute from MATCH_RECOGNIZE. */
+    // 用于访问来自MATCH_RECOGNIZE的处理时间属性的函数。
     public static final SqlFunction MATCH_PROCTIME =
             new CalciteSqlFunction(
                     "MATCH_PROCTIME",
@@ -147,9 +155,11 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     false);
 
     /** Function used to materialize a processing time attribute. */
+    // 用于物化处理时间属性的函数。
     public static final SqlFunction PROCTIME_MATERIALIZE = new ProctimeMaterializeSqlFunction();
 
     /** Function to access the timestamp of a StreamRecord. */
+    // 函数访问StreamRecord的时间戳。
     public static final SqlFunction STREAMRECORD_TIMESTAMP = new StreamRecordTimestampSqlFunction();
 
     /** Function to access the constant value of E. */
@@ -185,6 +195,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     SqlFunctionCategory.STRING);
 
     /** Function for concat strings with a separator. */
+    // 函数使用分隔符连接字符串。
     public static final SqlFunction CONCAT_WS =
             new SqlFunction(
                     "CONCAT_WS",
@@ -258,6 +269,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                             OperandTypes.family(SqlTypeFamily.STRING)),
                     SqlFunctionCategory.NUMERIC);
 
+    // J: String 字符串转变为 Map
     public static final SqlFunction STR_TO_MAP =
             new SqlFunction(
                     "STR_TO_MAP",
@@ -272,6 +284,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                                     SqlTypeFamily.STRING)),
                     SqlFunctionCategory.STRING);
 
+    // J: 判断是否是小数
     public static final SqlFunction IS_DECIMAL =
             new SqlFunction(
                     "IS_DECIMAL",
@@ -350,6 +363,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                             SqlTypeFamily.STRING, SqlTypeFamily.INTEGER, SqlTypeFamily.STRING),
                     SqlFunctionCategory.STRING);
 
+    // J: 重复
     public static final SqlFunction REPEAT =
             new SqlFunction(
                     "REPEAT",
@@ -517,6 +531,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                             OperandTypes.NUMERIC_INTEGER),
                     SqlFunctionCategory.STRING);
 
+    // J: 日期格式化
     public static final SqlFunction DATE_FORMAT =
             new SqlFunction(
                     "DATE_FORMAT",
@@ -539,6 +554,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     OperandTypes.family(SqlTypeFamily.STRING, SqlTypeFamily.STRING),
                     SqlFunctionCategory.STRING);
 
+    // J: URL 解析
     public static final SqlFunction PARSE_URL =
             new SqlFunction(
                     "PARSE_URL",
@@ -566,6 +582,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     public static final SqlFunction LOCALTIMESTAMP =
             new FlinkSqlTimestampFunction("LOCALTIMESTAMP", SqlTypeName.TIMESTAMP, 3);
 
+    // J: 当前时间戳
     public static final SqlFunction CURRENT_TIMESTAMP =
             new FlinkSqlTimestampFunction(
                     "CURRENT_TIMESTAMP", SqlTypeName.TIMESTAMP_WITH_LOCAL_TIME_ZONE, 3);
@@ -587,6 +604,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                 }
             };
 
+    // J: 将日期时间字符串转换为 unix 时间戳数字
     public static final SqlFunction UNIX_TIMESTAMP =
             new SqlFunction(
                     "UNIX_TIMESTAMP",
@@ -614,6 +632,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                 }
             };
 
+    // J: 数字转换为日期字符串
     public static final SqlFunction FROM_UNIXTIME =
             new SqlFunction(
                     "FROM_UNIXTIME",
@@ -690,6 +709,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
                     OperandTypes.family(SqlTypeFamily.STRING),
                     SqlFunctionCategory.STRING);
 
+    // J: uuid 生成
     public static final SqlFunction UUID =
             new SqlFunction(
                     "UUID",
@@ -912,6 +932,7 @@ public class FlinkSqlOperatorTable extends ReflectiveSqlOperatorTable {
     // -----------------------------------------------------------------------------
 
     /** We need custom group auxiliary functions in order to support nested windows. */
+    // 为了支持嵌套窗口，我们需要自定义组辅助函数。
     public static final SqlGroupedWindowFunction TUMBLE_OLD =
             new SqlGroupedWindowFunction(
                     // The TUMBLE group function was hard code to $TUMBLE in CALCITE-3382.

@@ -63,6 +63,8 @@ import static org.apache.flink.table.types.extraction.ExtractionUtils.extractAss
 import static org.apache.flink.table.types.extraction.ExtractionUtils.getStructuredField;
 
 /**
+ * 从{@link TypeInformation}到{@link DataType}的转换器。
+ *
  * Converter from {@link TypeInformation} to {@link DataType}.
  *
  * <p>{@link DataType} is richer than {@link TypeInformation} as it also includes details about the
@@ -89,6 +91,7 @@ public final class TypeInfoDataTypeConverter {
     private static final Map<TypeInformation<?>, DataType> conversionMap = new HashMap<>();
 
     static {
+        // J: 静态内部类维护 TypeInformation 到 DataType 转换的
         conversionMap.put(Types.STRING, DataTypes.STRING().nullable().bridgedTo(String.class));
         conversionMap.put(Types.BOOLEAN, DataTypes.BOOLEAN().notNull().bridgedTo(Boolean.class));
         conversionMap.put(Types.BYTE, DataTypes.TINYINT().notNull().bridgedTo(Byte.class));

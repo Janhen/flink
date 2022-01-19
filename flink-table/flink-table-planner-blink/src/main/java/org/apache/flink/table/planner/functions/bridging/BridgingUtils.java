@@ -59,6 +59,7 @@ final class BridgingUtils {
         }
     }
 
+    // J: 抽取函数标识的名称
     private static String extractName(FunctionIdentifier identifier) {
         if (identifier.getSimpleName().isPresent()) {
             return identifier.getSimpleName().get();
@@ -83,6 +84,7 @@ final class BridgingUtils {
                                                 functionDefinition)));
     }
 
+    // J: 抽取 UDF
     private static Optional<UserDefinedFunction> extractUserDefinedFunction(
             FunctionDefinition functionDefinition) {
         if (functionDefinition instanceof UserDefinedFunction) {

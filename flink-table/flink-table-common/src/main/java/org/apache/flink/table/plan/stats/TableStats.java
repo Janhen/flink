@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /** Table statistics. */
+// 表统计数据。
 @PublicEvolving
 public final class TableStats {
 

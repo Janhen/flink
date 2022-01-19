@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * 描述表生态系统中值的数据类型。该类的实例可用于声明操作的输入和或输出类型。
+ *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
  * declare input and/or output types of operations.
  *

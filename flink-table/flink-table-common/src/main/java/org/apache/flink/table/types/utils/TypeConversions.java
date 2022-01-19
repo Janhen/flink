@@ -27,6 +27,8 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
+ * 用于互操作性{@link Class}、{@link TypeInformation}、{@link DataType}和{@link LogicalType}的转换中心。
+ *
  * Conversion hub for interoperability of {@link Class}, {@link TypeInformation}, {@link DataType},
  * and {@link LogicalType}.
  *

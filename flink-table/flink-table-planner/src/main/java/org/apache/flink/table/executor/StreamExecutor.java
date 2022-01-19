@@ -33,6 +33,9 @@ import org.apache.flink.table.delegation.Executor;
 import java.util.List;
 
 /**
+ * {@link Executor}的实现，由{@link StreamExecutionEnvironment}支持。这是唯一的执行器，
+ * {@link org.apache.flink.table.planner.StreamPlanner}支持。
+ *
  * An implementation of {@link Executor} that is backed by a {@link StreamExecutionEnvironment}.
  * This is the only executor that {@link org.apache.flink.table.planner.StreamPlanner} supports.
  */

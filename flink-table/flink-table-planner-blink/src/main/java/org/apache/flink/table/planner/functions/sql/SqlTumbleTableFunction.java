@@ -24,6 +24,14 @@ import org.apache.calcite.sql.SqlKind;
 import org.apache.calcite.sql.SqlOperator;
 
 /**
+ * SqlTumbleTableFunction实现一个翻转操作符。
+ *
+ * <p>它允许三个参数:
+ *
+ *   <li>表
+ *   <li>从输入表中提供时间属性列名的描述符
+ *   <li>指定窗口大小长度的间隔参数
+ *
  * SqlTumbleTableFunction implements an operator for tumbling.
  *
  * <p>It allows three parameters:
@@ -65,6 +73,7 @@ public class SqlTumbleTableFunction extends SqlWindowTableFunction {
 
         @Override
         public String getAllowedSignatures(SqlOperator op, String opName) {
+            // J: wvf 方式定义的窗口
             return opName + "(TABLE table_name, DESCRIPTOR(timecol), datetime interval)";
         }
     }

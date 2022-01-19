@@ -64,6 +64,7 @@ import static org.apache.flink.shaded.asm7.org.objectweb.asm.Type.getConstructor
 import static org.apache.flink.shaded.asm7.org.objectweb.asm.Type.getMethodDescriptor;
 
 /** Utilities for performing reflection tasks. */
+// 执行反射任务的实用程序。
 @Internal
 public final class ExtractionUtils {
 

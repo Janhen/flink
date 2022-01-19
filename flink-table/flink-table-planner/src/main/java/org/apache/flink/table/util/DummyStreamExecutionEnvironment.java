@@ -41,6 +41,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 这是一个虚拟的{@link StreamExecutionEnvironment}，它持有一个真实的{@link StreamExecutionEnvironment}，
+ * 共享真实环境的所有配置，并禁用所有配置设置方法。
+ *
  * This is dummy {@link StreamExecutionEnvironment}, which holds a real {@link
  * StreamExecutionEnvironment}, shares all configurations of the real environment, and disables all
  * configuration setting methods.
@@ -73,6 +76,7 @@ import java.util.List;
  */
 public class DummyStreamExecutionEnvironment extends StreamExecutionEnvironment {
 
+    // J: 包装的 StreamExecutionEnvironment
     private final StreamExecutionEnvironment realExecEnv;
 
     public DummyStreamExecutionEnvironment(StreamExecutionEnvironment realExecEnv) {

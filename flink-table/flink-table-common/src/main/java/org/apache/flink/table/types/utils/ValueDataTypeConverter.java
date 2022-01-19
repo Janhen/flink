@@ -32,6 +32,10 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
+ * 基于值的数据类型提取器，支持提取用于输入转换的清晰可识别的数据类型。
+ *
+ * <p>这个转换器比{@link ClassDataTypeConverter}更精确，因为它还考虑了值的可空性、长度、精度和比例。
+ *
  * Value-based data type extractor that supports extraction of clearly identifiable data types for
  * input conversion.
  *

@@ -48,6 +48,8 @@ import static org.apache.flink.table.planner.functions.bridging.BridgingUtils.cr
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 连接到 calcite 的聚合函数(系统或用户定义函数)的表示。
+ *
  * Bridges {@link FunctionDefinition} to Calcite's representation of an aggregating function (either
  * a system or user-defined function).
  */

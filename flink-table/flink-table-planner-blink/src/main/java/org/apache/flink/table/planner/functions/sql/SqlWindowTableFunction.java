@@ -53,6 +53,8 @@ import java.util.Optional;
 import static org.apache.calcite.util.Static.RESOURCE;
 
 /**
+ * 计算窗口的表值函数的基类。示例包括{@code TUMBLE}， {@code HOP}， {@code CUMULATE}和{@code SESSION}。
+ *
  * Base class for a table-valued function that computes windows. Examples include {@code TUMBLE},
  * {@code HOP}, {@code CUMULATE} and {@code SESSION}.
  *
@@ -63,6 +65,7 @@ import static org.apache.calcite.util.Static.RESOURCE;
 public class SqlWindowTableFunction extends SqlFunction implements SqlTableFunction {
 
     /** The data source which the table function computes with. */
+    // 用表函数计算的数据源。
     protected static final String PARAM_DATA = "DATA";
 
     /** The time attribute column. Also known as the event time. */

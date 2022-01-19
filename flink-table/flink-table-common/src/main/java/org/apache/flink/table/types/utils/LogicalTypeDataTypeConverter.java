@@ -59,6 +59,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /** A converter between {@link LogicalType} and {@link DataType}. */
+// 一个在{@link LogicalType}和{@link DataType}之间的转换器。
 public final class LogicalTypeDataTypeConverter {
 
     private static final DefaultDataTypeCreator dataTypeCreator = new DefaultDataTypeCreator();
