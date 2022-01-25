@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Checks the Jar files created by the build process. */
+// 检查构建过程创建的Jar文件。
 public class JarFileChecker {
     private static final Logger LOG = LoggerFactory.getLogger(JarFileChecker.class);
 
@@ -143,6 +144,7 @@ public class JarFileChecker {
              * <p>In such a case, we recommend updating the shading exclusions, and adding the license file to META-INF/licenses.
              */
             final List<String> filesWithIssues =
+                    // J: 多 filter 确定...
                     files.filter(path -> !path.equals(jarRoot))
                             .filter(
                                     path ->

@@ -37,6 +37,8 @@ jobmanager.rpc.address: localhost
 jobmanager.rpc.port: 6123
 
 
+# JobManager进程的总内存大小。
+# 注意，这包括JobManager进程内的所有内存使用，包括JVM元空间和其他开销。
 # The total process memory size for the JobManager.
 #
 # Note this accounts for all memory usage within the JobManager process, including JVM metaspace and other overhead.
@@ -56,6 +58,7 @@ taskmanager.memory.process.size: 1728m
 # taskmanager.memory.flink.size: 1280m
 
 # The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.
+# TaskManager提供的任务槽数。每个槽运行一个平行的管道。
 
 taskmanager.numberOfTaskSlots: 1
 
@@ -117,9 +120,11 @@ parallelism.default: 1
 # Directory for checkpoints filesystem, when using any of the default bundled
 # state backends.
 #
+# #检查点文件系统的目录，当使用任何默认绑定的状态后端。
 # state.checkpoints.dir: hdfs://namenode-host:port/flink-checkpoints
 
 # Default target directory for savepoints, optional.
+# 保存点的默认目标目录，可选。
 #
 # state.savepoints.dir: hdfs://namenode-host:port/flink-savepoints
 
@@ -131,6 +136,8 @@ parallelism.default: 1
 # The failover strategy, i.e., how the job computation recovers from task failures.
 # Only restart tasks that may have been affected by the task failure, which typically includes
 # downstream tasks and potentially upstream tasks if their produced data is no longer available for consumption.
+# 故障转移策略，即任务计算如何从任务失败中恢复。仅重启可能受到任务失败影响的任务，通常包括
+# 下游任务和可能的上游任务(如果它们产生的数据不再可用)。
 
 jobmanager.execution.failover-strategy: region
 
@@ -157,6 +164,7 @@ jobmanager.execution.failover-strategy: region
 
 # Flag to specify whether job submission is enabled from the web-based
 # runtime monitor. Uncomment to disable.
+# 标志指定是否从基于web的#运行时监视器中启用作业提交。取消禁用。
 
 #web.submit.enable: false
 
@@ -188,12 +196,14 @@ jobmanager.execution.failover-strategy: region
 # versions in their application than those in the classpath. Switching back
 # to 'parent-first' may help with debugging dependency issues.
 #
+# 类加载解析顺序。可能的值是'child-first' (Flink的默认值)#和'parent-first' (Java的默认值)。
 # classloader.resolve-order: child-first
 
 # The amount of memory going to the network stack. These numbers usually need 
 # no tuning. Adjusting them may be necessary in case of an "Insufficient number
 # of network buffers" error. The default min is 64MB, the default max is 1GB.
-# 
+#
+# 进入网络栈的内存量。这些数字通常不需要调整。如果出现“网络缓冲区数量不足”的错误，可能需要调整它们。默认的最小值是64MB，默认的最大值是1GB。
 # taskmanager.memory.network.fraction: 0.1
 # taskmanager.memory.network.min: 64mb
 # taskmanager.memory.network.max: 1gb
@@ -237,6 +247,7 @@ jobmanager.execution.failover-strategy: region
 #==============================================================================
 
 # The HistoryServer is started and stopped via bin/historyserver.sh (start|stop)
+# 通过binhistoryserver.sh (start|stop)启动和停止HistoryServer
 
 # Directory to upload completed jobs to. Add this directory to the list of
 # monitored directories of the HistoryServer as well (see below).

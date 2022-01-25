@@ -281,6 +281,7 @@ public class NoticeFileChecker {
         return result;
     }
 
+    // J: 从 resources 加载
     private static List<String> loadFromResources(String fileName) {
         try {
             Path resource = Paths.get(NoticeFileChecker.class.getResource("/" + fileName).toURI());
@@ -296,6 +297,7 @@ public class NoticeFileChecker {
         }
     }
 
+    // J: 已包含的依赖
     private static final class IncludedDependency {
 
         private final String groupId;

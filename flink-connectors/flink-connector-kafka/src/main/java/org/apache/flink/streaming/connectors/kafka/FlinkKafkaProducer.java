@@ -92,6 +92,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * Flink Sink将数据生成到Kafka主题中。默认情况下，生产者将使用{@link FlinkKafkaProducer。语义# AT_LEAST_ONCE}
+ * 语义。使用之前{@link FlinkKafkaProducer。请参考Flink的Kafka连接器文档。
+ *
  * Flink Sink to produce data into a Kafka topic. By default producer will use {@link
  * FlinkKafkaProducer.Semantic#AT_LEAST_ONCE} semantic. Before using {@link
  * FlinkKafkaProducer.Semantic#EXACTLY_ONCE} please refer to Flink's Kafka connector documentation.
@@ -173,6 +176,8 @@ public class FlinkKafkaProducer<IN>
     public static final int SAFE_SCALE_DOWN_FACTOR = 5;
 
     /**
+     * 池中kafkaproducer的默认数量。看到{@link FlinkKafkaProducer.Semantic#EXACTLY_ONCE}。
+     *
      * Default number of KafkaProducers in the pool. See {@link
      * FlinkKafkaProducer.Semantic#EXACTLY_ONCE}.
      */
@@ -216,6 +221,7 @@ public class FlinkKafkaProducer<IN>
     protected final Properties producerConfig;
 
     /** The name of the default topic this producer is writing data to. */
+    // 此生成器写入数据的默认主题的名称。
     protected final String defaultTopicId;
 
     /**
@@ -231,6 +237,7 @@ public class FlinkKafkaProducer<IN>
     @Nullable private final KafkaSerializationSchema<IN> kafkaSchema;
 
     /** User-provided partitioner for assigning an object to a Kafka partition for each topic. */
+    // 用户提供的分区器，用于为每个主题分配一个对象到Kafka分区。
     @Nullable private final FlinkKafkaPartitioner<IN> flinkKafkaPartitioner;
 
     /** Partitions of each topic. */
@@ -249,6 +256,7 @@ public class FlinkKafkaProducer<IN>
     protected boolean writeTimestampToKafka = false;
 
     /** Flag indicating whether to accept failures (and log them), or to fail on failures. */
+    // 标志，指示是接受失败(并记录它们)，还是在失败时失败。
     private boolean logFailuresOnly;
 
     /** Semantic chosen for this instance. */
@@ -257,15 +265,20 @@ public class FlinkKafkaProducer<IN>
     // -------------------------------- Runtime fields ------------------------------------------
 
     /** The callback than handles error propagation or logging callbacks. */
+    // 比回调函数处理错误传播或记录回调函数。
     @Nullable protected transient Callback callback;
 
     /** Errors encountered in the async producer are stored here. */
+    // 在异步生成器中遇到的错误都存储在这里。
     @Nullable protected transient volatile Exception asyncException;
 
     /** Number of unacknowledged records. */
+    // 未确认的记录数。
     protected final AtomicLong pendingRecords = new AtomicLong();
 
     /**
+     * 缓存指标，以替换已经注册的指标，而不是覆盖现有的指标。
+     *
      * Cache of metrics to replace already registered metrics instead of overwriting existing ones.
      */
     private final Map<String, KafkaMetricMutableWrapper> previouslyCreatedMetrics = new HashMap<>();
@@ -283,6 +296,13 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 为给定的主题创建一个FlinkKafkaProducer。接收器向主题生成一个数据流。
+     *
+     * <p>使用这个构造函数，默认的{@link FlinkFixedPartitioner}将被用作分区器。这个默认的分区器将每个sink子任务
+     *   映射到一个Kafka分区(也就是说，sink子任务接收到的所有记录都将在同一个Kafka分区中结束)。
+     *
+     * <p>要使用自定义分区器，请使用{@link #FlinkKafkaProducer(String, SerializationSchema, Properties, Optional)}代替。
+     *
      * Creates a FlinkKafkaProducer for a given topic. The sink produces a DataStream to the topic.
      *
      * <p>Using this constructor, the default {@link FlinkFixedPartitioner} will be used as the
@@ -308,6 +328,12 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 为给定的主题创建一个FlinkKafkaProducer。接收器向主题产生其输入。它接受无键{@link SerializationSchema}，
+     * 可能还接受自定义{@link FlinkKafkaPartitioner}。
+     *
+     * <p>由于使用无键{@link SerializationSchema}，所有发送到Kafka的记录将不会有一个附加的键。因此，如果没有提供
+     *   分区，记录将以循环方式分发到Kafka分区。
+     *
      * Creates a FlinkKafkaProducer for a given topic. The sink produces its input to the topic. It
      * accepts a key-less {@link SerializationSchema} and possibly a custom {@link
      * FlinkKafkaPartitioner}.

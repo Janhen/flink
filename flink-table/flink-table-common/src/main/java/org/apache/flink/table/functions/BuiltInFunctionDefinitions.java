@@ -163,6 +163,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.BOOLEAN())))
                     .build();
 
+    // J: if ..
     public static final BuiltInFunctionDefinition IF =
             BuiltInFunctionDefinition.newBuilder()
                     .name("ifThenElse")
@@ -178,6 +179,8 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
     // Comparison functions
     // --------------------------------------------------------------------------------------------
+
+    // 比较函数
 
     public static final BuiltInFunctionDefinition EQUALS =
             BuiltInFunctionDefinition.newBuilder()
@@ -297,6 +300,8 @@ public final class BuiltInFunctionDefinitions {
     // Aggregate functions
     // --------------------------------------------------------------------------------------------
 
+    // 聚集函数
+
     public static final BuiltInFunctionDefinition AVG =
             BuiltInFunctionDefinition.newBuilder()
                     .name("avg")
@@ -388,6 +393,7 @@ public final class BuiltInFunctionDefinitions {
                             TypeStrategies.aggArg0(LogicalTypeMerging::findAvgAggType, true))
                     .build();
 
+    // 聚合成单个值?
     public static final BuiltInFunctionDefinition COLLECT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("collect")
@@ -395,7 +401,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
-    // 去重的
+    // 去重
     public static final BuiltInFunctionDefinition DISTINCT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("distinct")

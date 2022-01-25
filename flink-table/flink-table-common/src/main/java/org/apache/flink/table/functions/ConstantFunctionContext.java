@@ -35,6 +35,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 一个用于常量表达式简化的{@link FunctionContext}。当使用常量表达式调用函数或可以从给定语句派生出常量表达式时，使用它。
+ *
+ * <p>因为常量表达式缩减发生在计划期间，引用Flink运行时上下文的方法是不可用的。
+ *
  * A {@link FunctionContext} for constant expression reduction. It is used when a function is called
  * with constant expressions or constant expressions can be derived from the given statement.
  *

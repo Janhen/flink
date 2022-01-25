@@ -44,6 +44,17 @@ import static java.time.ZoneId.SHORT_IDS;
  * <p>对于更高级的配置，用户可以通过{@link #getConfiguration()}直接访问底层的键值映射。目前，只有Blink规划器支持
  *   键值选项。用户还可以通过此对象配置底层执行参数。如。
  *
+ * <pre>{@code
+ * tEnv.getConfig().addConfiguration(
+ *          new Configuration()
+ *              .set(CoreOptions.DEFAULT_PARALLELISM, 128)
+ *              .set(PipelineOptions.AUTO_WATERMARK_INTERVAL, Duration.ofMillis(800))
+ *              .set(ExecutionCheckpointingOptions.CHECKPOINTING_INTERVAL, Duration.ofSeconds(30))
+ *      );
+ * }</pre>
+ *
+ * <p>注:由于在执行操作时读取选项的时间不同，所以建议在表环境实例化后尽早设置配置选项。
+ *
  * Configuration for the current {@link TableEnvironment} session to adjust Table & SQL API
  * programs.
  *
@@ -97,6 +108,8 @@ public class TableConfig {
     }
 
     /**
+     * 将给定的键值配置添加到底层配置。它覆盖现有的键。
+     *
      * Adds the given key-value configuration to the underlying configuration. It overwrites
      * existing keys.
      *
@@ -194,6 +207,7 @@ public class TableConfig {
     }
 
     /** Validates user configured time zone. */
+    // 验证用户配置的时区。
     private void validateTimeZone(String zone) {
         final String zoneId = zone.toUpperCase();
         if (zoneId.startsWith("UTC+")
@@ -208,6 +222,7 @@ public class TableConfig {
     }
 
     /** Returns the NULL check. If enabled, all fields need to be checked for NULL first. */
+    // 返回NULL检查。如果启用，首先需要检查所有字段是否为NULL。
     public Boolean getNullCheck() {
         return nullCheck;
     }
@@ -218,6 +233,7 @@ public class TableConfig {
     }
 
     /** Returns the current configuration of Planner for Table API and SQL queries. */
+    // 返回表API和SQL查询的Planner的当前配置。
     public PlannerConfig getPlannerConfig() {
         return plannerConfig;
     }
@@ -231,6 +247,8 @@ public class TableConfig {
     }
 
     /**
+     * 返回小数除法计算的默认上下文。{@link java.math。默认MathContext # DECIMAL128}。
+     *
      * Returns the default context for decimal division calculation. {@link
      * java.math.MathContext#DECIMAL128} by default.
      */
@@ -247,6 +265,9 @@ public class TableConfig {
     }
 
     /**
+     * 返回将生成的代码拆分为子函数调用的当前阈值。Java的最大方法长度为64kb。如果需要，这个设置允许更细的粒度。
+     * 默认是64000。
+     *
      * Returns the current threshold where generated code will be split into sub-function calls.
      * Java has a maximum method length of 64 KB. This setting allows for finer granularity if
      * necessary. Default is 64000.

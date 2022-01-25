@@ -65,6 +65,7 @@ public abstract class ThreadLocalCache<K, V> {
 
     public abstract V getNewInstance(K key);
 
+    // J: 有界的有序的 Map，对应 FIFO?
     private static class BoundedMap<K, V> extends LinkedHashMap<K, V> {
 
         private static final long serialVersionUID = -211630219014422361L;

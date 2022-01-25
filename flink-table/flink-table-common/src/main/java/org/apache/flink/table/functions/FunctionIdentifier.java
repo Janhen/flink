@@ -34,6 +34,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用函数名标识系统函数，或用完全限定标识符标识目录函数。函数目录负责将标识符解析为函数。
+ *
  * Identifies a system function with function name or a catalog function with a fully qualified
  * identifier. Function catalog is responsible for resolving an identifier to a function.
  */

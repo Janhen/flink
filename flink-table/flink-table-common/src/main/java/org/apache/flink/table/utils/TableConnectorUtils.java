@@ -21,6 +21,7 @@ package org.apache.flink.table.utils;
 import org.apache.flink.annotation.Internal;
 
 /** Utilities for table sources and sinks. */
+// 用于表源和接收器的实用程序。
 @Internal
 public final class TableConnectorUtils {
 

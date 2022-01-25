@@ -21,6 +21,10 @@ package org.apache.flink.table.api;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * {@link StatementSet}接受DML语句或{@link Table}，规划器可以将所有添加的语句和Table一起优化，然后作为一个作业提交。
+ *
+ * <p>添加的语句和表将在调用' execute '方法时被清除。
+ *
  * A {@link StatementSet} accepts DML statements or {@link Table}s, the planner can optimize all
  * added statements and Tables together and then submit as one job.
  *
@@ -30,15 +34,20 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface StatementSet {
 
     /** add insert statement to the set. */
+    // 向集合中添加插入语句。
     StatementSet addInsertSql(String statement);
 
     /** add Table with the given sink table name to the set. */
+    // 将指定接收器表名的Table添加到集合中。
     StatementSet addInsert(String targetPath, Table table);
 
     /** add {@link Table} with the given sink table name to the set. */
+    // 将{@link Table}与给定的接收器表名添加到集合中。
     StatementSet addInsert(String targetPath, Table table, boolean overwrite);
 
     /**
+     * 返回AST和执行计划，以计算所有语句和Tables的结果。
+     *
      * returns the AST and the execution plan to compute the result of the all statements and
      * Tables.
      *
@@ -49,6 +58,10 @@ public interface StatementSet {
     String explain(ExplainDetail... extraDetails);
 
     /**
+     * 批量执行所有语句和表。
+     *
+     * <p>执行此方法时，添加的语句和表将被清除。
+     *
      * execute all statements and Tables as a batch.
      *
      * <p>The added statements and Tables will be cleared when executing this method.

@@ -26,6 +26,10 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * 函数的定义。该类的实例提供了验证函数调用和执行计划所需的所有细节。
+ *
+ * <p>纯函数定义不能包含运行时实现。这可以在后面的阶段由计划者提供。
+ *
  * Definition of a function. Instances of this class provide all details necessary to validate a
  * function call and perform planning.
  *

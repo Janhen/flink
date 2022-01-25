@@ -25,6 +25,8 @@ import java.time.LocalTime;
 import java.util.TimeZone;
 
 /**
+ * Utils表示LocalDateTime到String，考虑到精度。
+ *
  * Utils to represent a LocalDateTime to String, considered the precision.
  *
  * <p>TODO://This class keep same SQL formats with {@code
@@ -40,6 +42,7 @@ public class TimestampStringUtils {
     private static final long MILLIS_PER_DAY = 86400000L;
 
     /** The local time zone, used to deal {@link java.sql.Time} value. */
+    // 本地时区，用来处理{@link java.sql。时间}的值。
     private static final TimeZone LOCAL_TZ = TimeZone.getDefault();
 
     public static String timestampToString(LocalDateTime ldt, int precision) {

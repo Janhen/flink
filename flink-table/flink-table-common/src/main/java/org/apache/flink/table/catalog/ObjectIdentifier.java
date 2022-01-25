@@ -31,6 +31,10 @@ import static org.apache.flink.table.utils.EncodingUtils.escapeIdentifier;
  * 标识目录中的对象。它允许标识目录中的表、视图、函数或类型等对象。标识符必须是完全限定的。目录管理器负责将标识符
  * 解析为对象。
  *
+ * <p>当{@link ObjectPath}在同一个目录中使用时，该类的实例可以跨目录使用。
+ *
+ * <p>如果两个对象在稳定的会话上下文中共享相同的对象标识符，则认为它们相等。
+ *
  * Identifies an object in a catalog. It allows to identify objects such as tables, views, function,
  * or types in a catalog. An identifier must be fully qualified. It is the responsibility of the
  * catalog manager to resolve an identifier to an object.
@@ -83,6 +87,8 @@ public final class ObjectIdentifier implements Serializable {
     }
 
     /**
+     * 返回完全序列化此实例的字符串。序列化的字符串可用于传输或持久化对象标识符。
+     *
      * Returns a string that fully serializes this instance. The serialized string can be used for
      * transmitting or persisting an object identifier.
      */
@@ -95,6 +101,7 @@ public final class ObjectIdentifier implements Serializable {
     }
 
     /** Returns a string that summarizes this instance for printing to a console or log. */
+    // 返回总结此实例的字符串，以便打印到控制台或日志。
     public String asSummaryString() {
         return String.join(".", catalogName, databaseName, objectName);
     }
