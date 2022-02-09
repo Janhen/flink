@@ -42,6 +42,10 @@ import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
 /**
  * 这个类表示由Flink管理的一块内存。
  *
+ * <p>内存可以是堆上、堆外直接或堆外不安全的。这是由这个类透明处理的。
+ *
+ * <p>这个类在概念上实现了类似于 Java 的 {@link java.nio.ByteBuffer} 的目的。我们添加这个专业类是出于各种原因:
+ *
  * This class represents a piece of memory managed by Flink.
  *
  * <p>The memory can be on-heap, off-heap direct or off-heap unsafe. This is transparently handled

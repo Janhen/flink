@@ -39,20 +39,26 @@ import org.apache.flink.annotation.PublicEvolving;
 public enum InputStatus {
 
     /**
+     * 指示有更多数据可用，并且可以立即再次调用输入以产生更多数据。
+     *
      * Indicator that more data is available and the input can be called immediately again to
      * produce more data.
      */
     MORE_AVAILABLE,
 
     /**
+     * 指示当前没有可用的数据，但将来会有更多的数据可用。
+     *
      * Indicator that no data is currently available, but more data will be available in the future
      * again.
      */
     NOTHING_AVAILABLE,
 
     /** Indicator that all persisted data of the data exchange has been successfully restored. */
+    // 指示数据交换的所有持久化数据已成功恢复。
     END_OF_RECOVERY,
 
     /** Indicator that the input has reached the end of data. */
+    // 指示输入已到达数据的末尾。
     END_OF_INPUT
 }

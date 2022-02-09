@@ -199,6 +199,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class FileSystem {
 
     /**
+     * 可能的写模式。写模式决定了当一个文件应该被创建，但是已经存在的时候会发生什么。
+     *
      * The possible write modes. The write mode decides what happens if a file should be created,
      * but already exists.
      */
@@ -232,6 +234,7 @@ public abstract class FileSystem {
     private static final ReentrantLock LOCK = new ReentrantLock(true);
 
     /** Cache for file systems, by scheme + authority. */
+    // 文件系统的缓存，按 schema+授权。
     private static final HashMap<FSKey, FileSystem> CACHE = new HashMap<>();
 
     /**

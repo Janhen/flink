@@ -36,6 +36,10 @@ import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
 /**
+ * 以{@link FileSystem}命名文件或目录。路径字符串使用斜杠作为目录分隔符。如果一个路径字符串以斜杠开头，那么它就是绝对的。
+ *
+ * <p>从路径中删除尾斜杠。
+ *
  * Names a file or directory in a {@link FileSystem}. Path strings use slash as the directory
  * separator. A path string is absolute if it begins with a slash.
  *

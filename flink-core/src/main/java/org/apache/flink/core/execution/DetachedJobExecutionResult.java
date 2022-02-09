@@ -26,6 +26,8 @@ import org.apache.flink.api.common.JobID;
 import java.util.Map;
 
 /**
+ * 在分离模式下执行作业时，由上下文环境返回的{@link JobExecutionResult}。
+ *
  * The {@link JobExecutionResult} returned by a context environment when executing a job in detached
  * mode.
  */

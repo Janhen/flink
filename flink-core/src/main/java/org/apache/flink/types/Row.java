@@ -89,9 +89,11 @@ public final class Row implements Serializable {
     private static final long serialVersionUID = 3L;
 
     /** The kind of change a row describes in a changelog. */
+    // 更改日志中一行描述的更改类型。
     private RowKind kind;
 
     /** Fields organized by position. Either this or {@link #fieldByName} is set. */
+    // 按位置组织的属性。或者{@link #fieldByName}被设置。
     private final @Nullable Object[] fieldByPosition;
 
     /** Fields organized by name. Either this or {@link #fieldByPosition} is set. */
@@ -119,6 +121,7 @@ public final class Row implements Serializable {
      *
      * @param kind kind of change a row describes in a changelog
      * @param arity the number of fields in the row
+     *              行中字段的数量
      */
     public Row(RowKind kind, int arity) {
         this.kind = Preconditions.checkNotNull(kind, "Row kind must not be null.");
@@ -128,6 +131,10 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 在基于位置的字段模式下创建固定长度的行。
+     *
+     * <p>语义等价于{@link Row#withPositions(int)}。此构造函数的存在是为了向后兼容。
+     *
      * Creates a fixed-length row in position-based field mode.
      *
      * <p>The semantics are equivalent to {@link Row#withPositions(int)}. This constructor exists

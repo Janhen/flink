@@ -25,6 +25,7 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** Interface to be implemented by basic types that support to be copied efficiently. */
+// 接口，由支持有效复制的基本类型实现。
 @Public
 public interface CopyableValue<T> extends Value {
 

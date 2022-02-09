@@ -94,6 +94,8 @@ public final class RowUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 比较两个具有正确(嵌套的)相等语义的对象。这个方法支持表生态系统的所有外部和大多数内部转换类。
+     *
      * Compares two objects with proper (nested) equality semantics. This method supports all
      * external and most internal conversion classes of the table ecosystem.
      */
