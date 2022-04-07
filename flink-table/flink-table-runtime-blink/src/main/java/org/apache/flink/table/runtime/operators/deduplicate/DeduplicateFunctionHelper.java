@@ -29,6 +29,8 @@ import org.apache.flink.util.Preconditions;
 class DeduplicateFunctionHelper {
 
     /**
+     * 元素以处理时间语义对键进行去重，将当前元素作为最后一行发送，如果需要则收回之前的元素。
+     *
      * Processes element to deduplicate on keys with process time semantic, sends current element as
      * last row, retracts previous element if needed.
      *
@@ -148,6 +150,8 @@ class DeduplicateFunctionHelper {
     }
 
     /**
+     * 处理元素对具有处理时间语义的键进行去重，如果是第一行，则发送当前元素。
+     *
      * Processes element to deduplicate on keys with process time semantic, sends current element if
      * it is first row.
      *

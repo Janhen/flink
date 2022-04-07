@@ -33,6 +33,9 @@ import java.util.Objects;
 /**
  * 描述表生态系统中值的数据类型。该类的实例可用于声明操作的输入和或输出类型。
  *
+ * <p> {@link DataType}类有两个职责:声明逻辑类型和向计划者提供关于数据的物理表示的提示。虽然逻辑类型是强制性的，
+ *     但提示是可选的，但在其他api的边缘是有用的。
+ *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
  * declare input and/or output types of operations.
  *
@@ -118,6 +121,9 @@ public abstract class DataType implements AbstractDataType<DataType>, Serializab
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 这个方法应该可以捕获最常见的错误。但是，由于我们不知道数据类型是用于输入声明还是用于输出声明，因此需要在更深层
+     * 进行另一个验证。
+     *
      * This method should catch the most common errors. However, another validation is required in
      * deeper layers as we don't know whether the data type is used for input or output declaration.
      */

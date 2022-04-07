@@ -25,6 +25,11 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
+ * 包含有关逻辑数据类型的静态信息的逻辑类型根的枚举。
+ *
+ * <p>根是{@link LogicalType}的基本描述，没有附加参数。例如，参数化逻辑类型{@code DECIMAL(12,3)}拥有其根
+ *   {@code DECIMAL}的所有特征。此外，逻辑类型根允许在类型计算期间进行有效的比较。
+ *
  * An enumeration of logical type roots containing static information about logical data types.
  *
  * <p>A root is an essential description of a {@link LogicalType} without additional parameters. For
@@ -125,6 +130,7 @@ public enum LogicalTypeRoot {
 
     MULTISET(LogicalTypeFamily.CONSTRUCTED, LogicalTypeFamily.COLLECTION),
 
+    // J: Map 类型
     MAP(LogicalTypeFamily.CONSTRUCTED, LogicalTypeFamily.EXTENSION),
 
     ROW(LogicalTypeFamily.CONSTRUCTED),

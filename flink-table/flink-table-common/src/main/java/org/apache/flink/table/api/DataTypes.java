@@ -164,6 +164,12 @@ public final class DataTypes {
     }
 
     /**
+     * 创建一个未解析的类型，稍后通过转换给定的{@link TypeInformation}将其解析为{@link DataType}。
+     *
+     * <p>{@link DataType}比{@link TypeInformation}更丰富，因为它还包含了关于{@link LogicalType}的详细信息。
+     *   因此，一些细节将在转换期间隐式添加。到数据类型的映射以最佳方式进行。如果没有合适的数据类型，类型信息被解释为
+     *   {@link DataTypes#RAW(TypeInformation)}。
+     *
      * Creates an unresolved type that will be resolved to a {@link DataType} by converting the
      * given {@link TypeInformation} later.
      *

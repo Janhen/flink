@@ -28,6 +28,8 @@ import org.apache.flink.table.runtime.operators.bundle.MapBundleFunction;
 import static org.apache.flink.table.runtime.util.StateConfigUtil.createTtlConfig;
 
 /**
+ * 小批量去重复函数的基类。
+ *
  * Base class for miniBatch deduplicate function.
  *
  * @param <T> The type of the value in the state.

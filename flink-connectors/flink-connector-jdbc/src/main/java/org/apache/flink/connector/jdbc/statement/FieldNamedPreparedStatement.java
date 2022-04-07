@@ -28,6 +28,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
+ * 这是{@link PreparedStatement}的包装，允许用户根据名称而不是索引设置参数。这允许用户在语句中多次使用相同的变量参数。
+ *
  * This is a wrapper around {@link PreparedStatement} and allows the users to set parameters by name
  * instead of by index. This allows users to use the same variable parameter multiple times in a
  * statement.

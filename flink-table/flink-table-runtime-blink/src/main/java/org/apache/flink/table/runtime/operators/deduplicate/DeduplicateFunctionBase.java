@@ -29,6 +29,8 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import static org.apache.flink.table.runtime.util.StateConfigUtil.createTtlConfig;
 
 /**
+ * 重复数据删除函数的基类。
+ *
  * Base class for deduplicate function.
  *
  * @param <T> Type of the value in the state.
@@ -42,9 +44,11 @@ abstract class DeduplicateFunctionBase<T, K, IN, OUT> extends KeyedProcessFuncti
 
     // the TypeInformation of the values in the state.
     protected final TypeInformation<T> typeInfo;
+    // J: 状态保留时间
     protected final long stateRetentionTime;
     protected final TypeSerializer<OUT> serializer;
     // state stores previous message under the key.
+    // 状态将之前的消息存储在键下
     protected ValueState<T> state;
 
     public DeduplicateFunctionBase(
@@ -61,6 +65,7 @@ abstract class DeduplicateFunctionBase<T, K, IN, OUT> extends KeyedProcessFuncti
                 new ValueStateDescriptor<>("deduplicate-state", typeInfo);
         StateTtlConfig ttlConfig = createTtlConfig(stateRetentionTime);
         if (ttlConfig.isEnabled()) {
+            // J: 控制选择的 key 的去重过期时间
             stateDesc.enableTimeToLive(ttlConfig);
         }
         state = getRuntimeContext().getState(stateDesc);

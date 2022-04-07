@@ -33,6 +33,8 @@ import java.util.Objects;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeUtils.toInternalConversionClass;
 
 /**
+ * 一种包含键和值数据类型的数据类型(例如{@code MAP})。
+ *
  * A data type that contains a key and value data type (e.g. {@code MAP}).
  *
  * @see DataTypes for a list of supported data types

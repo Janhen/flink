@@ -198,6 +198,7 @@ class ValuesOperationFactory {
                         sourceExpression, (CollectionDataType) targetDataType, postResolverFactory);
             } else if (functionDefinition == BuiltInFunctionDefinitions.MAP
                     && hasRoot(targetLogicalType, LogicalTypeRoot.MAP)) {
+                // J: Table 流 Map 支持
                 return convertMapToExpectedType(
                         sourceExpression, (KeyValueDataType) targetDataType, postResolverFactory);
             }

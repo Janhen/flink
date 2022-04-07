@@ -308,6 +308,7 @@ public class JsonToRowDataConverters implements Serializable {
         };
     }
 
+    // J: Json 对于 Map 类型的扩展
     private JsonToRowDataConverter createMapConverter(
             String typeSummary, LogicalType keyType, LogicalType valueType) {
         if (!LogicalTypeChecks.hasFamily(keyType, LogicalTypeFamily.CHARACTER_STRING)) {

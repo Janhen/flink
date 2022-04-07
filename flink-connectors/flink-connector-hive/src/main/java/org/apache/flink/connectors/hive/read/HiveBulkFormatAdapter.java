@@ -245,6 +245,7 @@ public class HiveBulkFormatAdapter implements BulkFormat<RowData, HiveSourceSpli
             case INTERVAL_DAY_TIME:
             case ARRAY:
             case MULTISET:
+                // J: 向量化不支持类型?
             case MAP:
             case ROW:
             case DISTINCT_TYPE:

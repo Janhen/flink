@@ -196,6 +196,7 @@ public class OrcSplitReaderUtil {
             case ARRAY:
                 ArrayType arrayType = (ArrayType) type;
                 return TypeDescription.createList(logicalTypeToOrcType(arrayType.getElementType()));
+                // J: Orc 支持 Map
             case MAP:
                 MapType mapType = (MapType) type;
                 return TypeDescription.createMap(

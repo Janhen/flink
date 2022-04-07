@@ -26,6 +26,15 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 一个内部数据结构，表示{@link MapType}或{@link MultisetType}的数据。
+ *
+ * <p>{@link GenericMapData}是{@link MapData}的一个通用实现，它包装了常规的Java映射。
+ *
+ * <p>注:该数据结构的所有键和值必须是内部数据结构。所有键必须是相同的类型;相同的价值观。有关内部数据结构的更多信息，
+ *   请参见{@link RowData}。
+ *
+ * <p>键和值都可以包含null来表示可空性。
+ *
  * An internal data structure representing data of {@link MapType} or {@link MultisetType}.
  *
  * <p>{@link GenericMapData} is a generic implementation of {@link MapData} which wraps regular Java

@@ -138,6 +138,8 @@ public interface RowData {
     int getArity();
 
     /**
+     * 返回此行在更改日志中描述的更改类型。
+     *
      * Returns the kind of change that this row describes in a changelog.
      *
      * @see RowKind
@@ -183,6 +185,8 @@ public interface RowData {
     StringData getString(int pos);
 
     /**
+     * 返回给定位置的十进制值。
+     *
      * Returns the decimal value at the given position.
      *
      * <p>The precision and scale are required to determine whether the decimal value was stored in
@@ -191,6 +195,8 @@ public interface RowData {
     DecimalData getDecimal(int pos, int precision, int scale);
 
     /**
+     * 返回给定位置的时间戳值。
+     *
      * Returns the timestamp value at the given position.
      *
      * <p>The precision is required to determine whether the timestamp value was stored in a compact
@@ -199,6 +205,7 @@ public interface RowData {
     TimestampData getTimestamp(int pos, int precision);
 
     /** Returns the raw value at the given position. */
+    // 返回给定位置的原始值。
     <T> RawValueData<T> getRawValue(int pos);
 
     /** Returns the binary value at the given position. */
@@ -208,9 +215,14 @@ public interface RowData {
     ArrayData getArray(int pos);
 
     /** Returns the map value at the given position. */
+    // 返回给定位置的映射值。
     MapData getMap(int pos);
 
     /**
+     * 返回给定位置的行值。
+     *
+     * <p>正确提取行所需的字段数。
+     *
      * Returns the row value at the given position.
      *
      * <p>The number of fields is required to correctly extract the row.
@@ -222,6 +234,8 @@ public interface RowData {
     // ------------------------------------------------------------------------------------------
 
     /**
+     * 创建一个访问器，用于获取内部行数据结构中给定位置的元素。
+     *
      * Creates an accessor for getting elements in an internal row data structure at the given
      * position.
      *
@@ -280,6 +294,7 @@ public interface RowData {
             case ARRAY:
                 fieldGetter = row -> row.getArray(fieldPos);
                 break;
+            // MULTISET, MAP使用同一个
             case MULTISET:
             case MAP:
                 fieldGetter = row -> row.getMap(fieldPos);

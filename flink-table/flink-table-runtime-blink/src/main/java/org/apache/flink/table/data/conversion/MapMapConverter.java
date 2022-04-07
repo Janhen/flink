@@ -67,6 +67,7 @@ public class MapMapConverter<K, V> implements DataStructureConverter<MapData, Ma
         return toBinaryMapData(external);
     }
 
+    // J: Flink 内部的 MapData 转换为 Java 的 Map
     @Override
     public Map<K, V> toExternal(MapData internal) {
         final ArrayData keyArray = internal.keyArray();
@@ -107,7 +108,9 @@ public class MapMapConverter<K, V> implements DataStructureConverter<MapData, Ma
     // Factory method
     // --------------------------------------------------------------------------------------------
 
+    // J: 根据内部的 DataType 决定 MapData 的 key, value 类型
     public static MapMapConverter<?, ?> createForMapType(DataType dataType) {
+        // J: 由 dataType 的 children 确定 key, value 类型
         final DataType keyDataType = dataType.getChildren().get(0);
         final DataType valueDataType = dataType.getChildren().get(1);
         return new MapMapConverter<>(

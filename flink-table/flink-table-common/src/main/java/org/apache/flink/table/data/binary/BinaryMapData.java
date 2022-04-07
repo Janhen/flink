@@ -30,6 +30,10 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * [4字节(keyArray在字节中大小)]+ [Key BinaryArray + [Value BinaryArray]。
+ *
+ * <p>{@code BinaryMap}受Apache Spark UnsafeMapData的影响。
+ *
  * [4 byte(keyArray size in bytes)] + [Key BinaryArray] + [Value BinaryArray].
  *
  * <p>{@code BinaryMap} are influenced by Apache Spark UnsafeMapData.

@@ -29,6 +29,7 @@ import static org.apache.flink.table.runtime.operators.deduplicate.DeduplicateFu
 import static org.apache.flink.table.runtime.operators.deduplicate.DeduplicateFunctionHelper.processLastRowOnProcTime;
 
 /** This function is used to deduplicate on keys and keeps only last row. */
+// 此函数用于对键进行重复操作，并且只保留最后一行
 public class ProcTimeDeduplicateKeepLastRowFunction
         extends DeduplicateFunctionBase<RowData, RowData, RowData, RowData> {
 
@@ -38,9 +39,11 @@ public class ProcTimeDeduplicateKeepLastRowFunction
     private final boolean inputIsInsertOnly;
     private final boolean isStateTtlEnabled;
     /** The code generated equaliser used to equal RowData. */
+    // 代码生成的均衡器用于等于RowData。
     private final GeneratedRecordEqualiser genRecordEqualiser;
 
     /** The record equaliser used to equal RowData. */
+    // 用于等于RowData的记录均衡器。
     private transient RecordEqualiser equaliser;
 
     public ProcTimeDeduplicateKeepLastRowFunction(

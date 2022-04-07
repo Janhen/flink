@@ -23,6 +23,13 @@ import org.apache.flink.table.types.logical.MapType;
 import org.apache.flink.table.types.logical.MultisetType;
 
 /**
+ * 表示{@link MapType}或{@link MultisetType}数据的内部数据结构的基接口。
+ *
+ * <p>注:该数据结构的所有键和值必须是内部数据结构。所有键必须是相同的类型;相同的价值观。有关内部数据结构的更多信息，
+ *    请参见{@link RowData}。
+ *
+ * <p>使用{@link GenericMapData}从普通的Java映射构造这个接口的实例。
+ *
  * Base interface of an internal data structure representing data of {@link MapType} or {@link
  * MultisetType}.
  *
