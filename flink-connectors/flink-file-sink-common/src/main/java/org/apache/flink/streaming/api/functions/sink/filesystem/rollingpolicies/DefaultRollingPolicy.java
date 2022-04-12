@@ -26,6 +26,15 @@ import org.apache.flink.util.Preconditions;
 import java.io.IOException;
 
 /**
+ * {@link RollingPolicy}的默认实现。
+ * 
+ * <p>如果:
+ *
+ * <li>没有开放部分文件,
+ * <li>当前文件已达到最大桶大小(默认128 mb), 
+ * <li>当前文件比滚动间隔(默认情况下60秒),或
+ * <li>当前文件没有被写入超过允许inactivityTime(默认情况下60秒)。
+ * 
  * The default implementation of the {@link RollingPolicy}.
  *
  * <p>This policy rolls a part file if:
@@ -43,8 +52,10 @@ public final class DefaultRollingPolicy<IN, BucketID> implements RollingPolicy<I
 
     private static final long serialVersionUID = 1L;
 
+    // 默认未激活的间隔刷写
     private static final long DEFAULT_INACTIVITY_INTERVAL = 60L * 1000L;
 
+    // J: 默认1分钟刷写一次
     private static final long DEFAULT_ROLLOVER_INTERVAL = 60L * 1000L;
 
     private static final long DEFAULT_MAX_PART_SIZE = 1024L * 1024L * 128L;
@@ -68,18 +79,21 @@ public final class DefaultRollingPolicy<IN, BucketID> implements RollingPolicy<I
 
     @Override
     public boolean shouldRollOnCheckpoint(PartFileInfo<BucketID> partFileState) throws IOException {
+        // J: 在检查点的时候对应大小大于配置的大小时会进行刷写
         return partFileState.getSize() > partSize;
     }
 
     @Override
     public boolean shouldRollOnEvent(PartFileInfo<BucketID> partFileState, IN element)
             throws IOException {
+        // J: 根据分区文件大小确定写入
         return partFileState.getSize() > partSize;
     }
 
     @Override
     public boolean shouldRollOnProcessingTime(
             final PartFileInfo<BucketID> partFileState, final long currentTime) {
+        // J: 根据分区的创建时间以及最后修改时间来判断是否应该写入
         return currentTime - partFileState.getCreationTime() >= rolloverInterval
                 || currentTime - partFileState.getLastUpdateTime() >= inactivityInterval;
     }

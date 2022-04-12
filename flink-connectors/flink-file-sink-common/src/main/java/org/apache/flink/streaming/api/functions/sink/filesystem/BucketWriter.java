@@ -24,11 +24,13 @@ import org.apache.flink.core.fs.Path;
 import java.io.IOException;
 
 /** An interface for factories that create the different {@link InProgressFileWriter writers}. */
-// 用于创建不同的{@link InProgressFileWriter writer}的工厂的接口。
+// 用于创建不同的{@link InProgressFileWriter writer}的工厂的接口
 @Internal
 public interface BucketWriter<IN, BucketID> {
 
     /**
+     * 用于创建一个新的{@link InProgressFileWriter}。
+     *
      * Used to create a new {@link InProgressFileWriter}.
      *
      * @param bucketID the id of the bucket this writer is writing to.
@@ -60,6 +62,8 @@ public interface BucketWriter<IN, BucketID> {
     WriterProperties getProperties();
 
     /**
+     * 恢复一个挂起的文件以完成和提交。
+     *
      * Recovers a pending file for finalizing and committing.
      *
      * @param pendingFileRecoverable The handle with the recovery information.
@@ -71,6 +75,8 @@ public interface BucketWriter<IN, BucketID> {
             throws IOException;
 
     /**
+     * 释放以前占用的所有资源，以便能够从(潜在的)故障中恢复。
+     *
      * Frees up any resources that were previously occupied in order to be able to recover from a
      * (potential) failure.
      *

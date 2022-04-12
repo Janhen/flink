@@ -24,6 +24,7 @@ import org.apache.flink.core.io.SimpleVersionedSerializer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** This class describes the property of the {@link BucketWriter}. */
+// 这个类描述了{@link BucketWriter}的属性
 @Internal
 public class WriterProperties {
 

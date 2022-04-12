@@ -27,6 +27,8 @@ import java.util.Collections;
 import static java.util.Collections.unmodifiableCollection;
 
 /** Thread-safe (assuming immutable {@link Xid} implementation). */
+// 线程安全的(假设实现是不可变的{@link Xid})
+// J: 封装保存的状态类
 @ThreadSafe
 class JdbcXaSinkFunctionState {
     private final Collection<CheckpointAndXid> prepared;

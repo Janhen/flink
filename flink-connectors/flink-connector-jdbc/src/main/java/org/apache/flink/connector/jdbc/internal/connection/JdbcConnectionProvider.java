@@ -36,6 +36,8 @@ public interface JdbcConnectionProvider {
     Connection getConnection();
 
     /**
+     * 通过{@link Connection#isValid(int)}检查可能存在的连接是否有效。
+     *
      * Check whether possible existing connection is valid or not through {@link
      * Connection#isValid(int)}.
      *
@@ -45,6 +47,8 @@ public interface JdbcConnectionProvider {
     boolean isConnectionValid() throws SQLException;
 
     /**
+     * 获取现有连接，如果没有，则建立一个新连接。
+     *
      * Get existing connection or establish an new one if there is none.
      *
      * @return existing connection or newly established connection
@@ -57,6 +61,8 @@ public interface JdbcConnectionProvider {
     void closeConnection();
 
     /**
+     * 关闭可能存在的连接并建立一个新的连接。
+     *
      * Close possible existing connection and establish an new one.
      *
      * @return newly established connection

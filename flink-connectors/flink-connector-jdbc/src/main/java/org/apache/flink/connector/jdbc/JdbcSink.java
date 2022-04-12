@@ -33,7 +33,7 @@ import javax.sql.XADataSource;
 import java.util.function.Function;
 
 /** Facade to create JDBC {@link SinkFunction sinks}. */
-// Facade 创建 JDBC {@link SinkFunction sink}
+// 创建 JDBC {@link SinkFunction sink} 门面
 @PublicEvolving
 public class JdbcSink {
 
@@ -84,6 +84,11 @@ public class JdbcSink {
     }
 
     /**
+     * 创建提供一次性保证的JDBC接收器。
+     *
+     * <p>注意:传递给返回接收器的对象可以批量处理并重试。因此，对象不能是
+     *   {@link org.apache.flink.api.common.ExecutionConfig#enableObjectReuse() reuse}。
+     *
      * Create JDBC sink which provides exactly-once guarantee.
      *
      * <p>Note: the objects passed to the return sink can be processed in batch and retried.

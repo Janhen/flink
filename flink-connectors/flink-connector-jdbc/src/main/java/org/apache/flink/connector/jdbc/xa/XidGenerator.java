@@ -30,6 +30,12 @@ import java.security.SecureRandom;
 public interface XidGenerator extends Serializable, AutoCloseable {
 
     /**
+     * 生成新的{@link Xid}。对生成的Xids的要求:<ul>
+     *
+     * <li>全局事务Id必须在Flink作业之间是唯一的，可能在其他作业和应用程序生成的Xids之间也是唯一的——这取决于该类的使用。
+     * <li>应该是不可变的
+     * <li>应该覆盖{@link Object#hashCode hashCode}和{@link Object#equals equals}
+     *
      * Generate new {@link Xid}. Requirements for generated Xids:
      *
      * <ul>

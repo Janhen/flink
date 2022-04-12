@@ -28,6 +28,8 @@ import org.apache.flink.util.Preconditions;
 import java.io.IOException;
 
 /**
+ * 一个创建{@link BulkPartWriter BulkPartWriters}的工厂。
+ *
  * A factory that creates {@link BulkPartWriter BulkPartWriters}.
  *
  * @param <IN> The type of input elements.

@@ -29,6 +29,9 @@ import java.io.Serializable;
 /**
  * BucketAssigner与文件接收器一起使用，以确定每个传入元素应该放入的桶。
  *
+ * <p> {@code StreamingFileSink}可以一次写入多个桶，它负责管理一组活动桶。每当一个新元素到达时，它会询问
+ *   {@code BucketAssigner}该元素应该进入的桶。例如，{@code BucketAssigner}可以根据系统时间确定桶。
+ *
  * A BucketAssigner is used with a file sink to determine the bucket each incoming element should be
  * put into.
  *
@@ -84,6 +87,8 @@ public interface BucketAssigner<IN, BucketID> extends Serializable {
         long currentWatermark();
 
         /**
+         * 返回当前输入记录的时间戳，如果元素没有指定的时间戳，则返回{@code null}
+         *
          * Returns the timestamp of the current input record or {@code null} if the element does not
          * have an assigned timestamp.
          */

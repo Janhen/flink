@@ -28,6 +28,15 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * 一个基于当前系统时间分配桶的{@link BucketAssigner}。
+ *
+ * <p> {@code DateTimeBucketer}将创建以下形式的目录:{@code {basePath}{dateTimePath}}。
+ *   {@code basePath}是在创建新桶时指定的基本路径。{@code dateTimePath}是根据当前系统时间和用户提供的格式
+ *   字符串确定的。
+ *
+ * <p>{@link DateTimeFormatter}用于从当前系统时间和日期格式字符串派生一个日期字符串。默认的格式字符串是
+ *   {@code "yyyy-MM-dd——HH"}，所以滚动文件的粒度将以小时为单位。
+ *
  * A {@link BucketAssigner} that assigns to buckets based on current system time.
  *
  * <p>The {@code DateTimeBucketer} will create directories of the following form: {@code
@@ -52,6 +61,7 @@ public class DateTimeBucketAssigner<IN> implements BucketAssigner<IN, String> {
 
     private static final long serialVersionUID = 1L;
 
+    // J: 默认的时间指派路径
     private static final String DEFAULT_FORMAT_STRING = "yyyy-MM-dd--HH";
 
     private final String formatString;

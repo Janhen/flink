@@ -24,7 +24,12 @@ import java.io.Serializable;
 import java.util.Optional;
 
 /**
- * JDBC 恰好一次接收选项。
+ * JDBC EOS 接收选项。
+ *
+ * <p><b>maxCommitAttempts<b>每个事务的最大提交尝试次数;一定是> 0;状态大小正比于飞行中快照的最大数量与该数量的乘积。
+ *
+ * <p><b>allowOutOfOrderCommits<b> -如果设置为true，则无论该操作过程中出现任何瞬态失败，都将尝试提交所有准备好的
+ *   事务。这可能会导致不一致。默认值:false。
  *
  * JDBC exactly once sink options.
  *
@@ -55,12 +60,15 @@ public class JdbcExactlyOnceOptions implements Serializable {
     private static final boolean DEFAULT_RECOVERED_AND_ROLLBACK = true;
     private static final int DEFAULT_MAX_COMMIT_ATTEMPTS = 3;
     private static final boolean DEFAULT_ALLOW_OUT_OF_ORDER_COMMITS = false;
+    // 默认每个连接一个事务
     public static final boolean DEFAULT_TRANSACTION_PER_CONNECTION = false;
 
     private final boolean discoverAndRollbackOnRecovery;
     private final int maxCommitAttempts;
+    // J: 是否运行乱序提交
     private final boolean allowOutOfOrderCommits;
     private final Integer timeoutSec;
+    // 每个连接一个事务
     private final boolean transactionPerConnection;
 
     private JdbcExactlyOnceOptions(

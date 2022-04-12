@@ -26,6 +26,8 @@ import java.io.Serializable;
 /**
  * 基于此策略，{@code Filesystem Sink}中的{@code Bucket}滚动其当前打开的部分文件并打开一个新文件。
  *
+ * J: 检查点进行滚动、根据事件情况进行滚动
+ *
  * The policy based on which a {@code Bucket} in the {@code Filesystem Sink} rolls its currently
  * open part file and opens a new one.
  */
@@ -45,6 +47,8 @@ public interface RollingPolicy<IN, BucketID> extends Serializable {
     /**
      * 根据当前状态(例如，它的大小)确定正在进行的零件文件是否应该滚动。
      *
+     * J:事件的字节大小、事件的个数?
+     *
      * Determines if the in-progress part file for a bucket should roll based on its current state,
      * e.g. its size.
      *
@@ -57,6 +61,8 @@ public interface RollingPolicy<IN, BucketID> extends Serializable {
 
     /**
      * 根据时间条件确定桶的正在进行的零件文件是否应该滚动。
+     *
+     * J: 对应根据时间间隔来写入
      *
      * Determines if the in-progress part file for a bucket should roll based on a time condition.
      *

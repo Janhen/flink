@@ -53,9 +53,15 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 
 /**
+ * 从数据库读取数据并生成行。InputFormat必须使用提供的InputFormatBuilder配置。有效的RowTypeInfo必须在构建器中
+ * 正确配置，例如:
+ *
  * InputFormat to read data from a database and generate Rows. The InputFormat has to be configured
  * using the supplied InputFormatBuilder. A valid RowTypeInfo must be properly configured in the
  * builder, e.g.:
+ *
+ * 为了并行地查询JDBC源，您需要提供一个参数化的查询模板(即一个有效的{@link PreparedStatement})和一个
+ * {@link JdbcParameterValuesProvider}，后者为查询参数提供绑定值。例如:
  *
  * <pre><code>
  * TypeInformation<?>[] fieldTypes = new TypeInformation<?>[] {
@@ -107,7 +113,9 @@ public class JdbcInputFormat extends RichInputFormat<Row, InputSplit>
     protected static final long serialVersionUID = 2L;
     protected static final Logger LOG = LoggerFactory.getLogger(JdbcInputFormat.class);
 
+    // J: 连接提供器
     protected JdbcConnectionProvider connectionProvider;
+    // J: 查询模板
     protected String queryTemplate;
     protected int resultSetType;
     protected int resultSetConcurrency;

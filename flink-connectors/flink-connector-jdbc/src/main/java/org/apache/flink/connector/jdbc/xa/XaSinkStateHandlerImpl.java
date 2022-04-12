@@ -45,6 +45,9 @@ class XaSinkStateHandlerImpl implements XaSinkStateHandler {
     // state could be stored as two separate lists
     // on one hand this would allow more even distribution on re-scale
     // on the other it would lead to more IO calls and less data locality
+    // 状态可以存储为两个单独的列表，
+    // 一方面，这将允许更均匀的分布重新规模，
+    // 另一方面，它将导致更多的IO调用和更少的数据局部性
     private transient ListState<JdbcXaSinkFunctionState> states;
 
     XaSinkStateHandlerImpl() {

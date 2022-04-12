@@ -41,6 +41,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     public static final String CONNECTOR_VERSION_VALUE_011 = "0.11";
     public static final String CONNECTOR_VERSION_VALUE_UNIVERSAL = "universal";
     public static final String CONNECTOR_TOPIC = "connector.topic";
+    // 启动模式相关
     public static final String CONNECTOR_STARTUP_MODE = "connector.startup-mode";
     public static final String CONNECTOR_STARTUP_MODE_VALUE_EARLIEST = "earliest-offset";
     public static final String CONNECTOR_STARTUP_MODE_VALUE_LATEST = "latest-offset";
@@ -59,6 +60,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     public static final String CONNECTOR_PROPERTIES_KEY = "key";
     public static final String CONNECTOR_PROPERTIES_VALUE = "value";
     public static final String CONNECTOR_SINK_PARTITIONER = "connector.sink-partitioner";
+    // 写入分区器
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_FIXED = "fixed";
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_ROUND_ROBIN = "round-robin";
     public static final String CONNECTOR_SINK_PARTITIONER_VALUE_CUSTOM = "custom";
@@ -76,6 +78,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
 
         properties.validateString(CONNECTOR_TOPIC, false, 1, Integer.MAX_VALUE);
 
+        // 验证启动模式、kafka 参数、写入的分区器
         validateStartupMode(properties);
 
         validateKafkaProperties(properties);

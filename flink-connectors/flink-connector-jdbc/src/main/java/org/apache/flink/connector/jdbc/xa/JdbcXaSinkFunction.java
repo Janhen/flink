@@ -51,6 +51,13 @@ import java.util.function.Function;
 import static org.apache.flink.connector.jdbc.xa.JdbcXaSinkFunctionState.of;
 
 /**
+ * 使用XA事务来提供一次保证的JDBC接收器函数。也就是说，如果检查点成功，那么在此期间发出的所有记录都将提交到数据库中，否则将回滚。
+ *
+ * <p>每个并行子任务都有它自己的事务，独立于其他子任务。因此，一致性只在分区内得到保证。
+ *
+ * <p>XA使用两阶段提交协议，解决了一致性问题，但留下了以下问题:
+ *
+ *
  * JDBC sink function that uses XA transactions to provide exactly once guarantees. That is, if a
  * checkpoint succeeds then all records emitted during it are committed in the database, and rolled
  * back otherwise.

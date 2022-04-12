@@ -36,6 +36,11 @@ import java.io.Serializable;
 public interface KafkaDeserializationSchema<T> extends Serializable, ResultTypeQueryable<T> {
 
     /**
+     * 模式的初始化方法。它在实际的工作方法{@link #deserialize}之前被调用，因此适用于一次性设置工作。
+     *
+     * <p>所提供的{@link DeserializationSchema。InitializationContext}可以用来访问额外的特性，例如注册
+     *   用户指标。
+     *
      * Initialization method for the schema. It is called before the actual working methods {@link
      * #deserialize} and thus suitable for one time setup work.
      *
@@ -64,6 +69,11 @@ public interface KafkaDeserializationSchema<T> extends Serializable, ResultTypeQ
     T deserialize(ConsumerRecord<byte[], byte[]> record) throws Exception;
 
     /**
+     * 反序列化Kafka记录。
+     *
+     * <p>可以通过{@link Collector}输出多条记录。请注意，生成的记录的数量和大小应该相对较小。根据源实现的不同，
+     *   记录可以被缓冲在内存中，或者收集记录可能会延迟发出检查点屏障。
+     *
      * Deserializes the Kafka record.
      *
      * <p>Can output multiple records through the {@link Collector}. Note that number and size of

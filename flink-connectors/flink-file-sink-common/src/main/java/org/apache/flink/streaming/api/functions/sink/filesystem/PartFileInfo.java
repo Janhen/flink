@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.IOException;
 
 /**
+ * 一个接口，它向{@link RollingPolicy}公开有关当前(打开)部件文件的信息，以确定是否应该滚动该部件文件。
+ *
  * An interface exposing the information concerning the current (open) part file that is necessary
  * to the {@link RollingPolicy} in order to determine if it should roll the part file or not.
  */
@@ -36,11 +38,14 @@ public interface PartFileInfo<BucketID> {
     BucketID getBucketId();
 
     /** @return The creation time (in ms) of the currently open part file. */
+    // 当前打开的部件文件的创建时间(以ms为单位)
     long getCreationTime();
 
     /** @return The size of the currently open part file. */
+    // 当前打开的部件文件的大小
     long getSize() throws IOException;
 
     /** @return The last time (in ms) the currently open part file was written to. */
+    // @return当前打开的部件文件最后一次被写入的时间(单位ms)
     long getLastUpdateTime();
 }

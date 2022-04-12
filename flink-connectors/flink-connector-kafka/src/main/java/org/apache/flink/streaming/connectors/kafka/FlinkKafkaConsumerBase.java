@@ -116,7 +116,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
             "flink.partition-discovery.interval-millis";
 
     /** State name of the consumer's partition offset states. */
-    // 使用者的分区偏移状态的状态名。
+    // 使用者的分区偏移状态的状态名
     private static final String OFFSETS_STATE_NAME = "topic-partition-offset-states";
 
     // ------------------------------------------------------------------------
@@ -153,7 +153,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private boolean enableCommitOnCheckpoints = true;
 
     /** User-set flag to disable filtering restored partitions with current topics descriptor. */
-    // 用户设置标志以禁用使用当前主题描述符过滤恢复的分区。
+    // 用户设置标志以禁用使用当前主题描述符过滤恢复的分区
     private boolean filterRestoredPartitionsWithCurrentTopicsDescriptor = true;
 
     /**
@@ -188,6 +188,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /** Data for pending but uncommitted offsets. */
+    // 用于未决但未提交的偏移量的数据
     private final LinkedMap pendingOffsetsToCommit = new LinkedMap();
 
     /** The fetcher implements the connections to the Kafka brokers. */
@@ -197,6 +198,12 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private transient volatile AbstractPartitionDiscoverer partitionDiscoverer;
 
     /**
+     * 如果使用者从检查点恢复状态，则恢复到的偏移量。
+     *
+     * <p>这个映射将由{@link #initializeState(FunctionInitializationContext)}方法填充。
+     *
+     * <p>当使用恢复状态来启动分区发现程序时，使用排序的映射作为排序是很重要的。
+     *
      * The offsets to restore to, if the consumer restores state from a checkpoint.
      *
      * <p>This map will be populated by the {@link #initializeState(FunctionInitializationContext)}
@@ -208,6 +215,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private transient volatile TreeMap<KafkaTopicPartition, Long> restoredState;
 
     /** Accessor for state in the operator state backend. */
+    // 操作符状态后端的状态访问器
     private transient ListState<Tuple2<KafkaTopicPartition, Long>> unionOffsetStates;
 
     /** Discovery loop, executed in a separate thread. */
@@ -233,6 +241,9 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private transient Counter failedCommits;
 
     /**
+     * 在异步Kafka提交完成时调用的回调接口。请注意，基类中的默认回调实现不提供任何线程安全保证。这对于现在来说已经
+     * 足够了，因为当前支持的Kafka连接器保证不超过一个并发的异步挂起的偏移提交。
+     *
      * Callback interface that will be invoked upon async Kafka commit completion. Please be aware
      * that default callback implementation in base class does not provide any guarantees on
      * thread-safety. This is sufficient for now because current supported Kafka connectors

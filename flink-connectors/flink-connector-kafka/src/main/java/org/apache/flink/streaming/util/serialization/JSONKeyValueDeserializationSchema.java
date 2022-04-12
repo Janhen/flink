@@ -66,6 +66,8 @@ public class JSONKeyValueDeserializationSchema implements KafkaDeserializationSc
         if (record.value() != null) {
             node.set("value", mapper.readValue(record.value(), JsonNode.class));
         }
+        // 存放 offset, topic, partition 元数据
+        // J: timestamp 未提取出来
         if (includeMetadata) {
             node.putObject("metadata")
                     .put("offset", record.offset())

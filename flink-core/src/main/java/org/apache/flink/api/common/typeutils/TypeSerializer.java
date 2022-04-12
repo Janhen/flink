@@ -26,6 +26,16 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 此接口描述由Flink运行时处理数据类型所需的方法。具体来说，这个接口包含序列化和复制方法。
+ *
+ * <p>该类中的方法不一定是线程安全的。为了避免不可预知的副作用，建议调用{@code duplicate()}方法，并在每个线程中使用
+ *   一个序列化器实例。
+ *
+ * <p><b>将typeserializer升级到新的TypeSerializerSnapshot模型<b>
+ *
+ * <p>如果你在Flink 1.6以上的版本中实现了TypeSerializer，并且想要将该实现调整到支持适当的状态模式演化的新接口，
+ *   同时保持向后兼容性，那么本节是相关的。请遵循以下步骤:
+ *
  * This interface describes the methods that are required for a data type to be handled by the Flink
  * runtime. Specifically, this interface contains the serialization and copying methods.
  *
@@ -73,6 +83,11 @@ public abstract class TypeSerializer<T> implements Serializable {
     public abstract boolean isImmutableType();
 
     /**
+     * 如果有必要，即如果它是有状态的，则创建此序列化器的深层副本。如果序列化器不是有状态的，它可以返回本身。
+     *
+     * <p>我们需要这个，因为序列化器可能在多个线程中使用。无状态序列化器本质上是线程安全的，而有状态序列化器可能不是
+     *   线程安全的。
+     *
      * Creates a deep copy of this serializer if it is necessary, i.e. if it is stateful. This can
      * return itself if the serializer is not stateful.
      *

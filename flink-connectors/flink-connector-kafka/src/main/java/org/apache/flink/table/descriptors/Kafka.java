@@ -51,9 +51,12 @@ public class Kafka extends ConnectorDescriptor {
     private String version;
     private String topic;
     private StartupMode startupMode;
+    // J: 指定的 kafka 偏移
     private Map<Integer, Long> specificOffsets;
+    // 开始的时间戳
     private long startTimestampMillis;
     private Map<String, String> kafkaProperties;
+    // 写入 kafka 分区器类型
     private String sinkPartitionerType;
     private Class<? extends FlinkKafkaPartitioner> sinkPartitionerClass;
 

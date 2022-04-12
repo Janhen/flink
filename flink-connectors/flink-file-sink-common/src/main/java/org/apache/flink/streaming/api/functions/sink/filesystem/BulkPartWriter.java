@@ -26,6 +26,9 @@ import org.apache.flink.util.Preconditions;
 import java.io.IOException;
 
 /**
+ * 一个{@link InProgressFileWriter}用于使用{@link BulkPartWriter}的大容量编码格式。这也实现了
+ * {@link PartFileInfo}。
+ *
  * A {@link InProgressFileWriter} for bulk-encoding formats that use an {@link BulkPartWriter}. This
  * also implements the {@link PartFileInfo}.
  */

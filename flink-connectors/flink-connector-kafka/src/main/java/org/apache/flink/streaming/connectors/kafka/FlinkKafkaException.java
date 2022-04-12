@@ -26,6 +26,7 @@ public class FlinkKafkaException extends FlinkException {
 
     private static final long serialVersionUID = 920269130311214200L;
 
+    // 错误状态码
     private final FlinkKafkaErrorCode errorCode;
 
     public FlinkKafkaException(FlinkKafkaErrorCode errorCode, String message) {

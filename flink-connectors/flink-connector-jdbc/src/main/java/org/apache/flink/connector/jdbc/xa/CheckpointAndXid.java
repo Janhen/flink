@@ -26,6 +26,8 @@ import javax.transaction.xa.Xid;
 import java.util.Objects;
 
 /**
+ * 一对检查点id和{@link Xid}表示一个检查点和一个关联的挂起(准备好的)XA事务。线程安全的(假设实现是不可变的{@link Xid})。
+ *
  * A pair of checkpoint id and {@link Xid} representing a checkpoint and an associated pending
  * (prepared) XA transaction. Thread-safe (assuming immutable {@link Xid} implementation).
  */
