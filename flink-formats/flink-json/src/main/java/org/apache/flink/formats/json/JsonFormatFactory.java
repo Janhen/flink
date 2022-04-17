@@ -51,6 +51,8 @@ import static org.apache.flink.formats.json.JsonOptions.validateDecodingFormatOp
 import static org.apache.flink.formats.json.JsonOptions.validateEncodingFormatOptions;
 
 /**
+ * 表格式工厂为RowData {@link SerializationSchema}和{@link DeserializationSchema}提供JSON的配置实例。
+ *
  * Table format factory for providing configured instances of JSON to RowData {@link
  * SerializationSchema} and {@link DeserializationSchema}.
  */

@@ -25,12 +25,15 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
 /**
+ * 时间格式和时间戳格式符合RFC3339规范、ISO-8601规范和SQL规范。
+ *
  * Time formats and timestamp formats respecting the RFC3339 specification, ISO-8601 specification
  * and SQL specification.
  */
 @Internal
 public class TimeFormats {
 
+    // 用于符合RFC 3339的时间值字符串表示的格式化程序。
     /** Formatter for RFC 3339-compliant string representation of a time value. */
     public static final DateTimeFormatter RFC3339_TIME_FORMAT =
             new DateTimeFormatterBuilder()
@@ -40,6 +43,8 @@ public class TimeFormats {
                     .toFormatter();
 
     /**
+     * 用于RFC 3339兼容的时间戳值字符串表示的格式化程序(使用UTC时区)。
+     *
      * Formatter for RFC 3339-compliant string representation of a timestamp value (with UTC
      * timezone).
      */

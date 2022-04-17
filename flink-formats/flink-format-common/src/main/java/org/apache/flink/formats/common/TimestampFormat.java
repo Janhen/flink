@@ -25,6 +25,10 @@ import org.apache.flink.annotation.Internal;
 @Internal
 public enum TimestampFormat {
     /**
+     * 指定TIMESTAMPTIMESTAMP_WITH_LOCAL_ZONE格式的选项。它将解析“yyyy-MM-dd HH:mm:ss”格式的TIMESTAMP。
+     * 格式为"yyyy-MM-dd HH:mm:ss. s{precision}"， TIMESTAMP_WITH_LOCAL_TIMEZONE格式为
+     * "yyyy-MM-dd HH:mm:ss. "。s{precision}'Z'"，并以相同的格式输出。
+     *
      * Options to specify TIMESTAMP/TIMESTAMP_WITH_LOCAL_ZONE format. It will parse TIMESTAMP in
      * "yyyy-MM-dd HH:mm:ss.s{precision}" format, TIMESTAMP_WITH_LOCAL_TIMEZONE in "yyyy-MM-dd
      * HH:mm:ss.s{precision}'Z'" and output in the same format.
@@ -32,6 +36,9 @@ public enum TimestampFormat {
     SQL,
 
     /**
+     * 指定TIMESTAMPTIMESTAMP_WITH_LOCAL_ZONE格式的选项。它将解析“yyyy-MM-ddTHH:mm:ss”格式的TIMESTAMP。
+     * 格式为“yyyy-MM-ddTHH:mm:ss. s{precision}”。s{precision}'Z'"，并以相同的格式输出。
+     *
      * Options to specify TIMESTAMP/TIMESTAMP_WITH_LOCAL_ZONE format. It will parse TIMESTAMP in
      * "yyyy-MM-ddTHH:mm:ss.s{precision}" format, TIMESTAMP_WITH_LOCAL_TIMEZONE in
      * "yyyy-MM-ddTHH:mm:ss.s{precision}'Z'" and output in the same format.

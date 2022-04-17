@@ -52,6 +52,8 @@ import static org.apache.flink.formats.json.canal.CanalJsonOptions.validateDecod
 import static org.apache.flink.formats.json.canal.CanalJsonOptions.validateEncodingFormatOptions;
 
 /**
+ * 格式化工厂提供配置的Canal JSON的实例到RowData {@link DeserializationSchema}。
+ *
  * Format factory for providing configured instances of Canal JSON to RowData {@link
  * DeserializationSchema}.
  */
@@ -128,6 +130,7 @@ public class CanalJsonFormatFactory
         Set<ConfigOption<?>> options = new HashSet<>();
         options.add(IGNORE_PARSE_ERRORS);
         options.add(TIMESTAMP_FORMAT);
+        // db, table 包含的配置
         options.add(DATABASE_INCLUDE);
         options.add(TABLE_INCLUDE);
         options.add(JSON_MAP_NULL_KEY_MODE);

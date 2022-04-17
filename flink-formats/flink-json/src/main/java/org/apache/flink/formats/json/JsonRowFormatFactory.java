@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 表格式工厂提供JSON-to-row {@link SerializationSchema}和{@link DeserializationSchema}的配置实例。
+ *
  * Table format factory for providing configured instances of JSON-to-row {@link
  * SerializationSchema} and {@link DeserializationSchema}.
  */

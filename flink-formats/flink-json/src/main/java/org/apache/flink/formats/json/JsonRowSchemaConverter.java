@@ -38,6 +38,13 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * 将JSON模式转换为Flink的类型信息。它使用{@link Row}来表示对象和元组数组。
+ *
+ * <p>注:此转换器仅实现JSON模式规范的一个子集。联合类型(以及"allOf"， "anyOf"， "not")目前还不支持。支持链接到文档
+ *   中公共定义的简单引用。“oneOf”和类型数组只支持指定可空性。
+ *
+ * <p>此转换器是为JSON Schema draft-07开发的，但也包括旧草案的关键字，以尽可能兼容。
+ *
  * Converts a JSON schema into Flink's type information. It uses {@link Row} for representing
  * objects and tuple arrays.
  *
@@ -88,6 +95,10 @@ public final class JsonRowSchemaConverter {
     private static final String CONTENT_ENCODING_BASE64 = "base64";
 
     /**
+     * 将JSON模式转换为Flink的类型信息。如果由于丢失精度或架构过于灵活而无法转换架构，则抛出异常。
+     *
+     * <p>转换器可以解析简单的模式引用，以解决实体在开始时定义，然后在整个文档中使用的情况。
+     *
      * Converts a JSON schema into Flink's type information. Throws an exception if the schema
      * cannot converted because of loss of precision or too flexible schema.
      *

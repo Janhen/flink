@@ -79,6 +79,7 @@ public final class CanalJsonDeserializationSchema implements DeserializationSche
     private final JsonRowDataDeserializationSchema jsonDeserializer;
 
     /** Flag that indicates that an additional projection is required for metadata. */
+    // 标志，指示元数据需要额外的投影
     private final boolean hasMetadata;
 
     /** Metadata to be extracted for every record. */

@@ -178,6 +178,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
                     }
                 }),
 
+        // J: 映射的增量表对应的主键
         PK_NAMES(
                 "pk-names",
                 DataTypes.ARRAY(DataTypes.STRING()).nullable(),
@@ -191,6 +192,7 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
                     }
                 }),
 
+        // 摄取时间戳 - 对应 cannal 服务端注入的
         INGESTION_TIMESTAMP(
                 "ingestion-timestamp",
                 DataTypes.TIMESTAMP_WITH_LOCAL_TIME_ZONE(3).nullable(),
@@ -207,9 +209,10 @@ public class CanalJsonDecodingFormat implements DecodingFormat<DeserializationSc
                     }
                 }),
 
-        // J: Canal 对应的事件时间
+        // J: 事件发生时候的时间
         EVENT_TIMESTAMP(
                 "event-timestamp",
+                // J: 带有时区性质的
                 DataTypes.TIMESTAMP_WITH_LOCAL_TIME_ZONE(3).nullable(),
                 DataTypes.FIELD("es", DataTypes.BIGINT()),
                 new MetadataConverter() {

@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 // 这个类保存json格式使用的配置常量。
 public class JsonOptions {
 
+    // 可选标志，指定字段缺失时是否失败，默认为false。
     public static final ConfigOption<Boolean> FAIL_ON_MISSING_FIELD =
             ConfigOptions.key("fail-on-missing-field")
                     .booleanType()
@@ -50,6 +51,9 @@ public class JsonOptions {
                             "Optional flag to skip fields and rows with parse errors instead of failing;\n"
                                     + "fields are set to null in case of errors, false by default.");
 
+    // 可选标志，用于在序列化映射数据的空键时控制处理模式，默认情况下为FAIL。
+    //  Option DROP将为映射数据删除空键项
+    //  选项LITERAL将使用'map-null-key。Literal '作为关键字面值。
     public static final ConfigOption<String> MAP_NULL_KEY_MODE =
             ConfigOptions.key("map-null-key.mode")
                     .stringType()
@@ -75,6 +79,7 @@ public class JsonOptions {
                                     + " Option ISO-8601 will parse input timestamp in \"yyyy-MM-ddTHH:mm:ss.s{precision}\" format and output timestamp in the same format."
                                     + " Option SQL will parse input timestamp in \"yyyy-MM-dd HH:mm:ss.s{precision}\" format and output timestamp in the same format.");
 
+    // "可选标志，指定是否将所有小数编码为普通数字，而不是可能的科学符号，默认为false ");
     public static final ConfigOption<Boolean> ENCODE_DECIMAL_AS_PLAIN_NUMBER =
             ConfigOptions.key("encode.decimal-as-plain-number")
                     .booleanType()

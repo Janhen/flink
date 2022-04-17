@@ -66,6 +66,7 @@ import static org.apache.flink.formats.common.TimeFormats.SQL_TIMESTAMP_WITH_LOC
 import static org.apache.flink.formats.common.TimeFormats.SQL_TIME_FORMAT;
 
 /** Tool class used to convert from {@link JsonNode} to {@link RowData}. * */
+// 用于将{@link JsonNode}转换为{@link RowData}的工具类
 @Internal
 public class JsonToRowDataConverters implements Serializable {
 
@@ -142,6 +143,7 @@ public class JsonToRowDataConverters implements Serializable {
                 return createDecimalConverter((DecimalType) type);
             case ARRAY:
                 return createArrayConverter((ArrayType) type);
+            // J: Map 类型系统的转化
             case MAP:
                 MapType mapType = (MapType) type;
                 return createMapConverter(
@@ -205,6 +207,7 @@ public class JsonToRowDataConverters implements Serializable {
         }
     }
 
+    // J: jsonNode 进行转化为 Date
     private int convertToDate(JsonNode jsonNode) {
         LocalDate date = ISO_LOCAL_DATE.parse(jsonNode.asText()).query(TemporalQueries.localDate());
         return (int) date.toEpochDay();
@@ -239,6 +242,7 @@ public class JsonToRowDataConverters implements Serializable {
         return TimestampData.fromLocalDateTime(LocalDateTime.of(localDate, localTime));
     }
 
+    // 转换为 TIMESTAMP_LTZ 
     private TimestampData convertToTimestampWithLocalZone(JsonNode jsonNode) {
         TemporalAccessor parsedTimestampWithLocalZone;
         switch (timestampFormat) {
@@ -311,6 +315,7 @@ public class JsonToRowDataConverters implements Serializable {
     // J: Json 对于 Map 类型的扩展
     private JsonToRowDataConverter createMapConverter(
             String typeSummary, LogicalType keyType, LogicalType valueType) {
+        // JSON格式不支持非字符串作为map的键类型
         if (!LogicalTypeChecks.hasFamily(keyType, LogicalTypeFamily.CHARACTER_STRING)) {
             throw new UnsupportedOperationException(
                     "JSON format doesn't support non-string as key type of map. "

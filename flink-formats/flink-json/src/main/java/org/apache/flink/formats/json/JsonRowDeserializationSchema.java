@@ -140,6 +140,7 @@ public class JsonRowDeserializationSchema implements DeserializationSchema<Row> 
     public Row deserialize(byte[] message) throws IOException {
         try {
             final JsonNode root = objectMapper.readTree(message);
+            // 类型系统转化
             return (Row) runtimeConverter.convert(objectMapper, root);
         } catch (Throwable t) {
             if (ignoreParseErrors) {
@@ -256,6 +257,7 @@ public class JsonRowDeserializationSchema implements DeserializationSchema<Row> 
         return wrapIntoNullableConverter(baseConverter);
     }
 
+    // 包装可空的转化器
     private DeserializationRuntimeConverter wrapIntoNullableConverter(
             DeserializationRuntimeConverter converter) {
         return (mapper, jsonNode) -> {
@@ -273,6 +275,7 @@ public class JsonRowDeserializationSchema implements DeserializationSchema<Row> 
         };
     }
 
+    // 容器类转化器  Row 、Array、Map...
     private Optional<DeserializationRuntimeConverter> createContainerConverter(
             TypeInformation<?> typeInfo) {
         if (typeInfo instanceof RowTypeInfo) {
@@ -301,6 +304,7 @@ public class JsonRowDeserializationSchema implements DeserializationSchema<Row> 
         DeserializationRuntimeConverter valueConverter = createConverter(valueType);
         DeserializationRuntimeConverter keyConverter = createConverter(keyType);
         return (mapper, jsonNode) -> {
+            // json node 逐个进行转换成 Map，对应根据 keyType、valueType
             Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
             Map<Object, Object> result = new HashMap<>();
             while (fields.hasNext()) {

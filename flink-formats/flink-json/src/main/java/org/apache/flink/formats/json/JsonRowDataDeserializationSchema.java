@@ -61,6 +61,8 @@ public class JsonRowDataDeserializationSchema implements DeserializationSchema<R
     private final TypeInformation<RowData> resultTypeInfo;
 
     /**
+     * 运行时转换器，将{@link JsonNode}转换为Flink SQL内部数据结构的对象。
+     *
      * Runtime converter that converts {@link JsonNode}s into objects of Flink SQL internal data
      * structures.
      */
@@ -70,6 +72,7 @@ public class JsonRowDataDeserializationSchema implements DeserializationSchema<R
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /** Timestamp format specification which is used to parse timestamp. */
+    // 时间戳格式规范，用于解析时间戳。
     private final TimestampFormat timestampFormat;
 
     public JsonRowDataDeserializationSchema(
