@@ -24,6 +24,9 @@ import org.apache.flink.types.LongValue;
 import java.util.NoSuchElementException;
 
 /**
+ * {@code LongValueSequenceIterator}是一个迭代器，它返回一个数字序列(如{@code LongValue})。迭代器是可拆分的(
+ * 如{@link SplittableIterator}所定义的那样，它可以被划分为多个迭代器，每个迭代器返回数字序列的一个子序列。
+ *
  * The {@code LongValueSequenceIterator} is an iterator that returns a sequence of numbers (as
  * {@code LongValue})s. The iterator is splittable (as defined by {@link SplittableIterator}, i.e.,
  * it can be divided into multiple iterators that each return a subsequence of the number sequence.

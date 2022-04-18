@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 访问者封装了在遍历树或DAG过程中应用于每个节点的功能。
+ *
  * A visitor encapsulates functionality that is applied to each node in the process of a traversal
  * of a tree or DAG.
  */
@@ -28,6 +30,8 @@ import org.apache.flink.annotation.Internal;
 public interface Visitor<T extends Visitable<T>> {
 
     /**
+     * 方法，在访问子节点或子代节点之前在访问时调用
+     *
      * Method that is invoked on the visit before visiting and child nodes or descendant nodes.
      *
      * @return True, if the traversal should continue, false otherwise.
@@ -35,5 +39,6 @@ public interface Visitor<T extends Visitable<T>> {
     boolean preVisit(T visitable);
 
     /** Method that is invoked after all child nodes or descendant nodes were visited. */
+    // 方法，该方法在访问所有子节点或子代节点之后调用
     void postVisit(T visitable);
 }

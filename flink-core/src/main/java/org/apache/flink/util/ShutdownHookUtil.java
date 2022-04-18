@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Utils class for dealing with JVM shutdown hooks. */
+// 用于处理JVM关闭钩子的Utils类
 public class ShutdownHookUtil {
 
     /** Adds a shutdown hook to the JVM and returns the Thread, which has been registered. */
@@ -51,6 +52,8 @@ public class ShutdownHookUtil {
     }
 
     /**
+     * 向JVM添加一个关闭钩子
+     *
      * Adds a shutdown hook to the JVM.
      *
      * @param shutdownHook Shutdown hook to be registered.

@@ -33,16 +33,18 @@ import java.io.UTFDataFormatException;
 import java.nio.ByteOrder;
 
 /**
- * Record表示一个多值数据记录。记录是任意值的元组。它实现了一个稀疏元组模型，这意味着记录可以包含许多实际上是空的、
+ * Record 表示一个多值数据记录。记录是任意值的元组。它实现了一个稀疏元组模型，这意味着记录可以包含许多实际上是空的、
  * 没有在记录中表示的字段。它内部有一个位图标记哪些字段被设置了，哪些没有。
  *
  * <p>为了高效的数据交换，从任何源读取的记录都以序列化的二进制形式保存数据。字段在第一次访问时被延迟反序列化。修改后的
- *   字段会被缓存，这些修改会在下一次序列化或任何显式调用{@link # updatebinaryrepresentation()}方法时被合并到
+ *   字段会被缓存，这些修改会在下一次序列化或任何显式调用 {@link #updateBinaryRepresenation()} 方法时被合并到
  *   二进制表示中。
  *
  * <p>重要注意:为了实现性能，记录必须作为可变对象使用，并在用户函数调用之间重用。该记录是一个重量级对象，旨在减少对各个
  *   字段的序列化和反序列化方法的调用。它持有相当多的状态消耗相当大的内存(&gt;在64位JVM中有200个字节)，因为有几个指针
  *   和数组。
+ *
+ * <p>这个类不是线程安全的!
  *
  * The Record represents a multi-valued data record. The record is a tuple of arbitrary values. It
  * implements a sparse tuple model, meaning that the record can contain many fields which are
@@ -175,6 +177,8 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
+     * 在内部数组中至少为给定数量的字段保留空间
+     *
      * Reserves space for at least the given number of fields in the internal arrays.
      *
      * @param numFields The number of fields to reserve space for.
@@ -299,6 +303,8 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
+     * 获取给定位置的字段。如果该位置的字段为空，则此方法保持目标字段不变并返回false。
+     *
      * Gets the field at the given position. If the field at that position is null, then this method
      * leaves the target field unchanged and returns false.
      *
@@ -365,6 +371,8 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
+     * 从二进制字符串的给定位置开始反序列化给定对象。如果反序列化要求<code>limit - offset<code>字节，则抛出异常。
+     *
      * Deserializes the given object from the binary string, starting at the given position. If the
      * deserialization asks for more that <code>limit - offset</code> bytes, than an exception is
      * thrown.
@@ -828,6 +836,8 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
+     * 将字段从一个源记录复制到这个记录。下列注意事项适用:
+     *
      * Bin-copies fields from a source record to this record. The following caveats apply:
      *
      * <p>If the source field is in a modified state, no binary representation will exist yet. In

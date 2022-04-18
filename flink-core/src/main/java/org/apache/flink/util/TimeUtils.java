@@ -42,6 +42,9 @@ public class TimeUtils {
             Collections.unmodifiableMap(initMap());
 
     /**
+     * 解析给定字符串为java {@link Duration}。该字符串的格式为“{长度值}{时间单位标签}”。女士“123”、“321年代”。
+     * 如果没有指定时间单位标签，则认为是毫秒。
+     *
      * Parse the given string to a java {@link Duration}. The string is in format "{length
      * value}{time unit label}", e.g. "123ms", "321 s". If no time unit label is specified, it will
      * be considered as milliseconds.
@@ -126,6 +129,8 @@ public class TimeUtils {
     }
 
     /**
+     * 将持续时间打印为不会失去精度的最低粒度单位。
+     *
      * Pretty prints the duration as a lowest granularity unit that does not lose precision.
      *
      * <p>Examples:
@@ -176,6 +181,7 @@ public class TimeUtils {
     }
 
     /** Enum which defines time unit, mostly used to parse value from configuration file. */
+    // 枚举，它定义时间单位，主要用于解析配置文件中的值
     private enum TimeUnit {
         DAYS(ChronoUnit.DAYS, singular("d"), plural("day")),
         HOURS(ChronoUnit.HOURS, singular("h"), plural("hour")),

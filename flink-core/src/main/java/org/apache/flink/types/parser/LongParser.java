@@ -21,6 +21,7 @@ package org.apache.flink.types.parser;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Parses a decimal text field into a LongValue. Only characters '1' to '0' and '-' are allowed. */
+// 将十进制文本字段解析为LongValue。只允许字符'1'到'0'和'-'
 @PublicEvolving
 public class LongParser extends FieldParser<Long> {
 

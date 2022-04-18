@@ -24,6 +24,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
+ * 实用程序类，它允许根据可选项是有值还是为空来运行代码。
+ *
  * Utility class which allows to run code depending on whether the optional has a value or is empty.
  *
  * <p>This code has been copied from: https://stackoverflow.com/a/29395324/4815083.

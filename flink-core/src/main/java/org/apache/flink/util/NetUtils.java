@@ -50,6 +50,8 @@ public class NetUtils {
             new InetSocketAddress(0).getAddress().getHostAddress();
 
     /**
+     * 将完全限定域名(fqdn)转换为主机名。如果fqdn有多个子部分(用句点'.'分隔)，它将取第一部分。否则它接受整个fqdn。
+     *
      * Turn a fully qualified domain name (fqdn) into a hostname. If the fqdn has multiple subparts
      * (separated by a period '.'), it will take the first part. Otherwise it takes the entire fqdn.
      *
@@ -122,6 +124,8 @@ public class NetUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 找到一个未被占用的端口。
+     *
      * Find a non-occupied port.
      *
      * @return A non-occupied port.
@@ -199,6 +203,8 @@ public class NetUtils {
     }
 
     /**
+     * 将IP地址正确编码为URL字符串。这种方法可以确保IPv6地址具有正确的格式以包含在url中。
+     *
      * Encodes an IP address properly as a URL string. This method makes sure that IPv6 addresses
      * have the proper formatting to be included in URLs.
      *
@@ -259,6 +265,10 @@ public class NetUtils {
     }
 
     /**
+     * 创建Inet6Address的压缩URL样式表示。
+     *
+     * <p>该方法复制并采用谷歌的Guava库中的代码。我们在这里重新实现它，以减少对 guava 的依赖。Guava库在过去经常引起依赖冲突。
+     *
      * Creates a compressed URL style representation of an Inet6Address.
      *
      * <p>This method copies and adopts code from Google's Guava library. We re-implement this here
@@ -333,6 +343,8 @@ public class NetUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 返回由范围定义定义的可用端口的迭代器。
+     *
      * Returns an iterator over available ports defined by the range definition.
      *
      * @param rangeDefinition String describing a single port, a range of ports or multiple ranges.

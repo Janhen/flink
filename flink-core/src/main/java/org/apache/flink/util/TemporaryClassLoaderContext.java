@@ -45,6 +45,8 @@ import org.apache.flink.annotation.Public;
 public final class TemporaryClassLoaderContext implements AutoCloseable {
 
     /**
+     * 将上下文类加载器设置为给定的ClassLoader，并返回一个资源，该资源在资源关闭时将其设置为当前上下文类加载器。
+     *
      * Sets the context class loader to the given ClassLoader and returns a resource that sets it
      * back to the current context ClassLoader when the resource is closed.
      *
@@ -55,6 +57,7 @@ public final class TemporaryClassLoaderContext implements AutoCloseable {
      * }</pre>
      */
     public static TemporaryClassLoaderContext of(ClassLoader cl) {
+        // J: 构造器中逻辑扩充 ...
         final Thread t = Thread.currentThread();
         final ClassLoader original = t.getContextClassLoader();
 

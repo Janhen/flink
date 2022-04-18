@@ -33,6 +33,10 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 用于处理{@link Row}实例的实用程序。
+ *
+ * <p>这个类的存在是为了使{@link Row}类本身保持 slim
+ *
  * Utilities to deal with {@link Row} instances.
  *
  * <p>This class exists to keep the {@link Row} class itself slim.
@@ -53,6 +57,9 @@ public final class RowUtils {
     }
 
     /**
+     * 比较{@link Row}的两个{@link List}是否深度相等。此方法支持表生态系统的所有转换类。顶级列表可以按顺序比较，
+     * 也可以不按顺序比较。
+     *
      * Compares two {@link List}s of {@link Row} for deep equality. This method supports all
      * conversion classes of the table ecosystem. The top-level lists can be compared with or
      * without order.
@@ -75,6 +82,9 @@ public final class RowUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 内部标志，用于为测试启用遗留的{@link Row#toString()}实现。通常，测试不应依赖于行的字符串表示，而应完全比较
+     * 实例(特别是字段的数据类型)。一旦更新了所有测试，此标志将被删除。
+     *
      * Internal flag to enable the legacy {@link Row#toString()} implementation for tests. In
      * general, tests should not depend on the string representation of rows but should fully
      * compare instances (especially data types of fields). This flag will be dropped once all tests
@@ -83,6 +93,7 @@ public final class RowUtils {
     public static boolean USE_LEGACY_TO_STRING = false;
 
     /** Internal utility for creating a row in static named-position field mode. */
+    // 用于在静态命名位置字段模式下创建行的内部实用程序
     @Internal
     public static Row createRowWithNamedPositions(
             RowKind kind, Object[] fieldByPosition, LinkedHashMap<String, Integer> positionByName) {

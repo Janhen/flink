@@ -25,6 +25,11 @@ import org.apache.flink.util.StringUtils;
 import java.nio.ByteBuffer;
 
 /**
+ * Flink作业的唯一标识符(至少在统计上是唯一的)。Flink中的任务对应于数据流图。
+ *
+ * <p> job同时作为<i>sessions<i>，因为可以在不同的部分增量地创建和提交job。图的较新的片段可以附加到现有的图，从而
+ *   扩展当前数据流图。
+ *
  * Unique (at least statistically unique) identifier for a Flink Job. Jobs in Flink correspond to
  * dataflow graphs.
  *

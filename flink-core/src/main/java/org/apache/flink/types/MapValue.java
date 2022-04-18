@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 实现Value和map接口的PACT程序的通用映射基类型。{@link MapValue}封装了一个Java {@link HashMap}对象。
+ *
  * Generic map base type for PACT programs that implements the Value and Map interfaces. The {@link
  * MapValue} encapsulates a Java {@link HashMap} object.
  *
@@ -59,6 +61,8 @@ public abstract class MapValue<K extends Value, V extends Value> implements Valu
     }
 
     /**
+     * 使用HashMap初始化封装的映射，其中填充了所提供映射的所有条目。
+     *
      * Initializes the encapsulated map with a HashMap filled with all entries of the provided map.
      *
      * @param map Map holding all entries with which the new encapsulated map is filled.

@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
+ * 连接一组迭代器的迭代器。UnionIterator是一个可变的、可重用的类型。
+ *
  * An iterator that concatenates a collection of iterators. The UnionIterator is a mutable, reusable
  * type.
  *

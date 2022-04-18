@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /** A {@link Clock} implementation which allows to advance time manually. */
+// 一个允许手动提前时间的{@link时钟}实现
 @PublicEvolving
 public final class ManualClock extends Clock {
 

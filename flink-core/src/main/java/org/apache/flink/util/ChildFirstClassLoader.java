@@ -27,7 +27,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * URLClassLoader的一个变体，它首先从url加载，然后才从父url加载。
+ * URLClassLoader 的一个变体，首先从 url 加载，然后才从父 url 加载。
+ *
+ * <p>{@link #getResourceAsStream(String)}内部使用{@link #getResource(String)}，所以我们不会覆盖它。
  *
  * A variant of the URLClassLoader that first loads from the URLs and only after that from the
  * parent.
@@ -38,6 +40,9 @@ import java.util.function.Consumer;
 public final class ChildFirstClassLoader extends FlinkUserCodeClassLoader {
 
     /**
+     * 应该始终通过父类加载器的类。这与Flink类相关，例如，避免加载在用户代码ClassLoader中跨越用户代码系统代码
+     * 障碍的Flink类。
+     *
      * The classes that should always go through the parent ClassLoader. This is relevant for Flink
      * classes, for example, to avoid loading Flink classes that cross the user-code/system-code
      * barrier in the user-code ClassLoader.
@@ -127,6 +132,7 @@ public final class ChildFirstClassLoader extends FlinkUserCodeClassLoader {
     }
 
     static {
+        // 可并行寄存器
         ClassLoader.registerAsParallelCapable();
     }
 }

@@ -71,6 +71,7 @@ public final class FileUtils {
     private static final Object DELETE_LOCK = new Object();
 
     /** The alphabet to construct the random part of the filename from. */
+    // 用来构造文件名中随机部分的字母表。
     private static final char[] ALPHABET = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f'
     };
@@ -190,6 +191,9 @@ public final class FileUtils {
     }
 
     /**
+     * 从输入流中读取所有字节。使用{@code initialSize}来提示流有多少字节，并使用{@code directBufferSize}来限制
+     * 用于读取的直接缓冲区的大小。
+     *
      * Reads all the bytes from an input stream. Uses {@code initialSize} as a hint about how many
      * bytes the stream will have and uses {@code directBufferSize} to limit the size of the direct
      * buffer used to read.
@@ -240,6 +244,12 @@ public final class FileUtils {
     // ------------------------------------------------------------------------
 
     /**
+     * 递归地移除给定的文件或目录。
+     *
+     * <p>如果文件或目录不存在，则不会抛出异常，而只是什么都不做。它认为要删除的文件不成功。
+     *
+     * <p>此方法对于其他并发删除尝试是安全的。
+     *
      * Removes the given file or directory recursively.
      *
      * <p>If the file or directory does not exist, this does not throw an exception, but simply does
@@ -298,6 +308,10 @@ public final class FileUtils {
     }
 
     /**
+     * 删除目录中包含的所有文件，而不删除目录本身。
+     *
+     * <p>此方法对于其他并发删除尝试是安全的。
+     *
      * Removes all files contained within a directory, without removing the directory itself.
      *
      * <p>This method is safe against other concurrent deletion attempts.

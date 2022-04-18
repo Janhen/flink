@@ -37,7 +37,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 一个LinkedOptionalMap是一个保持顺序的映射(像{@link LinkedHashMap})，其中键有一个唯一的字符串名称，但是可选的，值是可选的。
+ * 一个 LinkedOptionalMap 是一个保持顺序的映射(像{ @link LinkedHashMap})，其中键有一个唯一的字符串名称，
+ * 但是可选的，值是可选的。
  *
  * A LinkedOptionalMap is an order preserving map (like {@link LinkedHashMap}) where keys have a
  * unique string name, but are optionally present, and the values are optional.
@@ -132,6 +133,7 @@ public final class LinkedOptionalMap<K, V> {
     }
 
     /** Returns the key names of any keys or values that are absent. */
+    // 返回任何不存在的键或值的键名
     public Set<String> absentKeysOrValues() {
         return underlyingMap.entrySet().stream()
                 .filter(LinkedOptionalMap::keyOrValueIsAbsent)
@@ -140,6 +142,7 @@ public final class LinkedOptionalMap<K, V> {
     }
 
     /** Checks whether there are entries with absent keys or values. */
+    // 检查是否有缺少键或值的条目
     public boolean hasAbsentKeysOrValues() {
         for (Entry<String, KeyValue<K, V>> entry : underlyingMap.entrySet()) {
             if (keyOrValueIsAbsent(entry)) {
@@ -170,6 +173,9 @@ public final class LinkedOptionalMap<K, V> {
     }
 
     /**
+     * 假设这个map的所有条目都存在(键和值)，这个方法将返回一个带有这些键和值的map，从它们的可选包装器中剥离。
+     * 注意:请注意，如果任何键或值不存在，这个方法将抛出{@link IllegalStateException}。
+     *
      * Assuming all the entries of this map are present (keys and values) this method would return a
      * map with these key and values, stripped from their Optional wrappers. NOTE: please note that
      * if any of the key or values are absent this method would throw an {@link

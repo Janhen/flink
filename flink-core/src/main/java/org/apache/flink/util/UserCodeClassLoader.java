@@ -21,6 +21,8 @@ package org.apache.flink.util;
 /**
  * UserCodeClassLoader允许为用户代码类加载器注册释放钩子。
  *
+ * <p>这些释放钩子在用户代码类加载器被释放之前被执行
+ *
  * UserCodeClassLoader allows to register release hooks for a user code class loader.
  *
  * <p>These release hooks are being executed just before the user code class loader is being

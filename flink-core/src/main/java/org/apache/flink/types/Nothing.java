@@ -20,6 +20,7 @@ package org.apache.flink.types;
 import org.apache.flink.annotation.Public;
 
 /** A type for (synthetic) operators that do not output data. For example, data sinks. */
+// 不输出数据的(合成)操作符的类型。例如，数据接收器。
 @Public
 public class Nothing {
     private Nothing() {}

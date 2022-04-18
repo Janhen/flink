@@ -40,6 +40,8 @@ public final class MathUtils {
     }
 
     /**
+     * 计算给定值对以2为底的对数。如果给定的参数不是2的幂，此方法将抛出错误。
+     *
      * Computes the logarithm of the given value to the base of 2. This method throws an error, if
      * the given argument is not a power of 2.
      *
@@ -102,6 +104,10 @@ public final class MathUtils {
     }
 
     /**
+     * 这个函数哈希一个整数值。它改编自Bob Jenkins的网站
+     * <a href="http:www.burtleburtle.netbobhashinteger.html">http:www.burtleburtle.netbobhashinteger.html<a>。
+     * 哈希函数具有<i>full avalanche<i>属性，这意味着要哈希的每一位值都会影响哈希值的每一位。
+     *
      * This function hashes an integer value. It is adapted from Bob Jenkins' website <a
      * href="http://www.burtleburtle.net/bob/hash/integer.html">http://www.burtleburtle.net/bob/hash/integer.html</a>.
      * The hash function has the <i>full avalanche</i> property, meaning that every bit of the value
@@ -125,6 +131,10 @@ public final class MathUtils {
     }
 
     /**
+     * 这个函数哈希一个整数值。
+     *
+     * <p>使用不同的哈希函数来跨机器划分数据和数据结构的内部分区是至关重要的。这个哈希函数用于跨机器进行分区。
+     *
      * This function hashes an integer value.
      *
      * <p>It is crucial to use different hash functions to partition data across machines and the

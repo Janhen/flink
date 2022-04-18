@@ -55,6 +55,10 @@ public class TaskManagerExceptionUtils {
     private TaskManagerExceptionUtils() {}
 
     /**
+     * 尝试使用附加信息来丰富传递的异常或其原因。
+     *
+     * <p>该方法改进了直接和元空间{@link OutOfMemoryError}的错误消息。它增加了对可能原因和解决方法的描述。
+     *
      * Tries to enrich the passed exception or its causes with additional information.
      *
      * <p>This method improves error messages for direct and metaspace {@link OutOfMemoryError}. It

@@ -19,6 +19,8 @@
 package org.apache.flink.util;
 
 /**
+ * 可以被销毁的类的接口，例如，有一个专门的生命周期步骤来“销毁”对象。
+ *
  * Interface for classes that can be disposed, i.e. that have a dedicated lifecycle step to
  * "destroy" the object. On reason for this is for example to release native resources. From this
  * point, the interface fulfills a similar purpose as the {@link java.io.Closeable} interface, but

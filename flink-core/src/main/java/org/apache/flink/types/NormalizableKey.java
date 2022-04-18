@@ -22,6 +22,12 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.core.memory.MemorySegment;
 
 /**
+ * 可正常化键的基本接口。可Normalizable键可以创建一个字节级的二进制表示。两个规范化键的按字节进行比较，直到比较所有
+ * 字节或对应位置的两个字节不相等为止。如果两个对应的字节值不相等，则低字节值表示低键。如果两个规范化键按字节顺序相同，
+ * 则必须查看实际的键，以确定哪个键实际上更低。
+ *
+ * <p>后者取决于规范化键是否覆盖整个键，还是仅仅是键的前缀。如果规范化键的长度小于最大规范化键长度，则将其视为前缀。
+ *
  * The base interface for normalizable keys. Normalizable keys can create a binary representation of
  * themselves that is byte-wise comparable. The byte-wise comparison of two normalized keys proceeds
  * until all bytes are compared or two bytes at the corresponding positions are not equal. If two

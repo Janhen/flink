@@ -21,6 +21,8 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 实现这个接口允许程序有一个可以显示给用户的计划描述。有关应该包含在描述中的内容的更详细描述，请参阅getDescription()。
+ *
  * Implementing this interface allows a Program to have a description of the plan which can be shown
  * to the user. For a more detailed description of what should be included in the description see
  * getDescription().

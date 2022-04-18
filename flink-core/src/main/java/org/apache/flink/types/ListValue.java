@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
+ * 用于实现Value和list接口的PACT程序的泛型列表基类型。PactList封装了一个Java ArrayList对象。
+ *
  * Generic list base type for PACT programs that implements the Value and List interfaces. PactList
  * encapsulates a Java ArrayList object.
  *

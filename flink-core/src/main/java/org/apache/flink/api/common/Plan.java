@@ -41,6 +41,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 该类以数据流计划的形式表示Flink程序。
+ *
+ * <p>数据流由数据接收器引用，数据流的所有连接操作符都可以通过向后遍历到达。
+ *
  * This class represents Flink programs, in the form of dataflow plans.
  *
  * <p>The dataflow is referenced by the data sinks, from which all connected operators of the data

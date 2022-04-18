@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 显式用于包装非运行时异常的运行时异常
+ *
  * A runtime exception that is explicitly used to wrap non-runtime exceptions.
  *
  * <p>The exception is recognized (for example by the Task when reporting exceptions as failure

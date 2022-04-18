@@ -24,6 +24,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 封装特定于任务的信息:名称、子任务索引、并行度和尝试次数。
+ *
  * Encapsulates task-specific information: name, index of subtask, parallelism and attempt number.
  */
 @Internal
@@ -98,6 +100,7 @@ public class TaskInfo {
     }
 
     /** Gets the max parallelism aka the max number of subtasks. */
+    // 获取最大并行度，即子任务的最大数量。
     public int getMaxNumberOfParallelSubtasks() {
         return maxNumberOfParallelSubtasks;
     }

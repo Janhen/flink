@@ -21,6 +21,12 @@ package org.apache.flink.util.clock;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 返回系统进程时间的时钟。
+ *
+ * <p>该时钟使用{@link System#currentTimeMillis()}表示<i>绝对时间<i>，使用{@link System#nanoTime()}表示<i>相对时间<i>。
+ *
+ * <p> SystemClock作为一个单例实例存在。
+ *
  * A clock that returns the time of the system / process.
  *
  * <p>This clock uses {@link System#currentTimeMillis()} for <i>absolute time</i> and {@link

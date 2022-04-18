@@ -57,6 +57,7 @@ public final class CollectionUtil {
         return map == null || map.isEmpty();
     }
 
+    // map 增强增加索引标志
     public static <T, R> Stream<R> mapWithIndex(
             Collection<T> input, final BiFunction<T, Integer, R> mapper) {
         final AtomicInteger count = new AtomicInteger(0);

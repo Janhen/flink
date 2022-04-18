@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 /** Simple utilities for getting typed values from Properties. */
+// 从属性中获取类型化值的简单工具
 public class PropertiesUtil {
 
     /**
@@ -84,6 +85,8 @@ public class PropertiesUtil {
     }
 
     /**
+     * 从属性入手。此方法只在long无效时记录日志。
+     *
      * Get long from properties. This method only logs if the long is not valid.
      *
      * @param config Properties
@@ -119,6 +122,9 @@ public class PropertiesUtil {
 
     /**
      * 平展递归{@link Properties}到一级属性映射。
+     *
+     * <p>在某些情况下，{@code KafkaProducer#propsToMap}例如，Properties被纯粹用作一个HashTable而不考虑
+     *   它的默认属性。
      *
      * Flatten a recursive {@link Properties} to a first level property map.
      *

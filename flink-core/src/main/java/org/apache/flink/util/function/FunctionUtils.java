@@ -48,6 +48,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 忽略输入的消费者
+     *
      * Consumer which ignores the input.
      *
      * @param <T> type of the input
@@ -59,6 +61,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将{@link FunctionWithException}转换为{@link Function}。
+     *
      * Convert at {@link FunctionWithException} into a {@link Function}.
      *
      * @param functionWithException function with exception to convert into a function
@@ -80,6 +84,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将一个{@link ThrowingConsumer}转换为一个{@link Consumer}，它将抛出经过检查的异常。
+     *
      * Converts a {@link ThrowingConsumer} into a {@link Consumer} which throws checked exceptions
      * as unchecked.
      *
@@ -118,6 +124,8 @@ public class FunctionUtils {
     }
 
     /**
+     * 将{@link RunnableWithException}转换为一个返回{@code result}的{@link Callable}。
+     *
      * Converts {@link RunnableWithException} into a {@link Callable} that will return the {@code
      * result}.
      */

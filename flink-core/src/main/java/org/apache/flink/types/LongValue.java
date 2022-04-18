@@ -26,6 +26,8 @@ import org.apache.flink.core.memory.MemorySegment;
 import java.io.IOException;
 
 /**
+ * 可序列化的装箱长整型，表示原始类型{@code long}。
+ *
  * Boxed serializable and comparable long integer type, representing the primitive type {@code
  * long}.
  */

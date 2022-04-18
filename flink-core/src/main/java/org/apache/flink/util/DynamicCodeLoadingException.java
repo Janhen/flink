@@ -21,6 +21,10 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 如果代码的动态实例化失败，则抛出的异常。
+ *
+ * <p>这个异常被认为是“总结”了通常在动态代码加载和实例化时抛出的异常:
+ *
  * An exception that is thrown if the dynamic instantiation of code fails.
  *
  * <p>This exception is supposed to "sum up" the zoo of exceptions typically thrown around dynamic

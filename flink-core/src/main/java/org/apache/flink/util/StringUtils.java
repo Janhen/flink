@@ -101,6 +101,10 @@ public final class StringUtils {
     }
 
     /**
+     * 通过调用{@link Object#toString()}并格式化(可能嵌套)数组和{@code null}将给定对象转换为字符串表示形式。
+     *
+     * <p>参见{@link Arrays#deepToString(Object[])}了解使用的格式的更多信息。
+     *
      * Converts the given object into a string representation by calling {@link Object#toString()}
      * and formatting (possibly nested) arrays and {@code null}.
      *
@@ -224,6 +228,8 @@ public final class StringUtils {
     }
 
     /**
+     * 将一个字符串写入给定的输出。被写入的字符串可以通过{@link #readString(DataInputView)}读取。
+     *
      * Writes a String to the given output. The written string can be read with {@link
      * #readString(DataInputView)}.
      *

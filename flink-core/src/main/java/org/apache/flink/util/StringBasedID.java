@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import java.io.Serializable;
 
 /**
+ * 用于在内部由字符串表示的类型化id的基类。这个类不打算直接使用，但是为了类型安全应该被子类化。
+ *
  * Base class for typed IDs that are internally represented by a string. This class is not intended
  * for direct use, but should be subclassed for type-safety.
  */

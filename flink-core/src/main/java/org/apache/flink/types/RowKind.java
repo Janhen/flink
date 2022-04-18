@@ -48,6 +48,8 @@ public enum RowKind {
     /**
      * 使用已更新行的新内容进行更新操作。
      *
+     * <p>这种类型可以与{@link #UPDATE_BEFORE}一起发生，用于建模需要首先收回前一行的更新。或者，它描述了一次幂等
+     *   更新，即对一个键唯一可识别的行进行更新。
      * Update operation with new content of the updated row.
      *
      * <p>This kind CAN occur together with {@link #UPDATE_BEFORE} for modelling an update that
@@ -73,6 +75,8 @@ public enum RowKind {
     }
 
     /**
+     * 返回这个{@link RowKind}的短字符串表示形式。
+     *
      * Returns a short string representation of this {@link RowKind}.
      *
      * <p>

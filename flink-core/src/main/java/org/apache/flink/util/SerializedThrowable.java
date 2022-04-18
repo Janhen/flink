@@ -26,6 +26,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 实用工具类，用于处理用户定义的序列化的Throwable类型(例如在RPCActor通信期间)，但不能用默认的类装入器解决。
+ * 
+ * <p>该异常模拟消息和堆栈跟踪方面的原始异常，并以序列化的形式包含原始异常。原始异常可以通过提供适当的类装入器重新获得。
+ * 
  * Utility class for dealing with user-defined Throwable types that are serialized (for example
  * during RPC/Actor communication), but cannot be resolved with the default class loader.
  *
@@ -41,12 +45,16 @@ public class SerializedThrowable extends Exception implements Serializable {
     private final byte[] serializedException;
 
     /** Name of the original error class. */
+    // 原始错误类的名称
     private final String originalErrorClassName;
 
     /** The original stack trace, to be printed. */
+    // 要打印的原始堆栈跟踪
     private final String fullStringifiedStackTrace;
 
     /**
+     * 原始异常，没有通过序列化传输，因为类可能不是系统类装入器的一部分。此外，我们要确保缓存的引用不妨碍卸载异常类。
+     *
      * The original exception, not transported via serialization, because the class may not be part
      * of the system class loader. In addition, we make sure our cached references to not prevent
      * unloading the exception class.

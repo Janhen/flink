@@ -23,6 +23,7 @@ package org.apache.flink.util;
 public class StateMigrationException extends FlinkException {
     private static final long serialVersionUID = 8268516412747670839L;
 
+    // 目前不支持状态迁移
     public static final String MIGRATION_NOT_SUPPORTED_MSG =
             "State migration is currently not supported.";
 

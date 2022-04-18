@@ -36,6 +36,8 @@ public final class WrappingProxyUtil {
     }
 
     /**
+     * 期望一个代理，并返回未绑定的委托
+     *
      * Expects a proxy, and returns the unproxied delegate.
      *
      * @param wrappingProxy The initial proxy.

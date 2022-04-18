@@ -21,6 +21,8 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 抛出一个异常，以指示组合程序无效。无效程序的例子包括忽略关键参数的操作，或者输入类型和类型签名不匹配的函数。
+ *
  * An exception thrown to indicate that the composed program is invalid. Examples of invalid
  * programs are operations where crucial parameters are omitted, or functions where the input type
  * and the type signature do not match.

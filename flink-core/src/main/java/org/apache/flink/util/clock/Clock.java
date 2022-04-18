@@ -21,6 +21,8 @@ package org.apache.flink.util.clock;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 一种能显示时间的时钟。这个时钟返回两种类型的时间:
+ *
  * A clock that gives access to time. This clock returns two flavors of time:
  *
  * <h3>Absolute Time</h3>

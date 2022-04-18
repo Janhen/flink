@@ -44,6 +44,7 @@ import java.util.function.Predicate;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A collection of utility functions for dealing with exceptions and exception workflows. */
+// 用于处理异常和异常工作流的实用函数集合
 @Internal
 public final class ExceptionUtils {
 
@@ -51,6 +52,10 @@ public final class ExceptionUtils {
     public static final String STRINGIFIED_NULL_EXCEPTION = "(null)";
 
     /**
+     * 生成异常堆栈跟踪的字符串表示，如果异常为空，则为"(null)"。
+     *
+     * <p>这个方法尽了最大的努力，从不失败。
+     *
      * Makes a string representation of the exception's stack trace, or "(null)", if the exception
      * is null.
      *
@@ -112,6 +117,11 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 尝试充实OutOfMemoryErrors作为传递的根Throwable的原因树的一部分。
+     *
+     * <p>此方法改进了direct和metspace {@link OutOfMemoryError}的错误消息。它增加了可能的原因和解决方法的
+     *   描述。
+     *
      * Tries to enrich OutOfMemoryErrors being part of the passed root Throwable's cause tree.
      *
      * <p>This method improves error messages for direct and metaspace {@link OutOfMemoryError}. It
@@ -195,6 +205,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查给定的异常是否表明JVM元空间内存不足错误。
+     *
      * Checks whether the given exception indicates a JVM metaspace out-of-memory error.
      *
      * @param t The exception to check.
@@ -301,6 +313,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 在签名不允许抛出任意Throwable的情况下抛出给定的{@code Throwable}。Errors和runtimeexception被直接抛出，
+     * 其他异常被打包到运行时异常中
+     *
      * Throws the given {@code Throwable} in scenarios where the signatures do not allow you to
      * throw an arbitrary Throwable. Errors and RuntimeExceptions are thrown directly, other
      * exceptions are packed into runtime exceptions
@@ -457,6 +472,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查可抛出链是否包含特定类型的异常并返回该异常。
+     *
      * Checks whether a throwable chain contains a specific type of exception and returns it.
      *
      * @param throwable the throwable chain to check.
@@ -482,6 +499,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查可抛出链是否包含特定类型的异常并返回该异常。这个方法处理链中的{@link SerializedThrowable}，并用给定的
+     * ClassLoader对它们进行反序列化。
+     *
      * Checks whether a throwable chain contains a specific type of exception and returns it. This
      * method handles {@link SerializedThrowable}s in the chain and deserializes them with the given
      * ClassLoader.
@@ -517,6 +537,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查可抛出链是否包含与谓词匹配的异常并返回该异常。
+     *
      * Checks whether a throwable chain contains an exception matching a predicate and returns it.
      *
      * @param throwable the throwable chain to check.
@@ -542,6 +564,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 检查throwable链是否包含特定的错误消息，并返回相应的throwable。
+     *
      * Checks whether a throwable chain contains a specific error message and returns the
      * corresponding throwable.
      *
@@ -568,6 +592,8 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 解包{@link ExecutionException}并返回其原因。否则返回给定的Throwable。
+     *
      * Unpacks an {@link ExecutionException} and returns its cause. Otherwise the given Throwable is
      * returned.
      *

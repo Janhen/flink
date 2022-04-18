@@ -29,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * 作业执行的结果。允许访问作业的执行时间，以及由该作业创建的所有累加器
+ *
  * The result of a job execution. Gives access to the execution time of the job, and to all
  * accumulators created by this job.
  */
@@ -70,6 +72,8 @@ public class JobExecutionResult extends JobSubmissionResult {
     }
 
     /**
+     * 获取作业的净执行时间，即并行系统中的执行时间，而不包括优化器等执行前步骤。
+     *
      * Gets the net execution time of the job, i.e., the execution time in the parallel system,
      * without the pre-flight steps like the optimizer.
      *
@@ -91,6 +95,8 @@ public class JobExecutionResult extends JobSubmissionResult {
     }
 
     /**
+     * 获取具有给定名称的累加器。如果没有生成同名的累加器，则返回{@code null}
+     *
      * Gets the accumulator with the given name. Returns {@code null}, if no accumulator with that
      * name was produced.
      *
@@ -109,6 +115,8 @@ public class JobExecutionResult extends JobSubmissionResult {
     }
 
     /**
+     * 获取作业产生的所有累加器。映射包含从累加器名称到累加器值的映射。
+     *
      * Gets all accumulators produced by the job. The map contains the accumulators as mappings from
      * the accumulator name to the accumulator value.
      *
@@ -138,6 +146,8 @@ public class JobExecutionResult extends JobSubmissionResult {
     }
 
     /**
+     * 以整数形式获取具有给定名称的累加器。
+     *
      * Gets the accumulator with the given name as an integer.
      *
      * @param accumulatorName Name of the counter

@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 这个类是共享资源的保护，具有以下不变量。该资源可以由多个客户端通过{@link #acquireResource()}调用并行获取。
+ *
  * This class is a guard for shared resources with the following invariants. The resource can be
  * acquired by multiple clients in parallel through the {@link #acquireResource()} call. As a result
  * of the call, each client gets a {@link Lease}. The {@link #close()} method of the lease releases
@@ -43,6 +45,7 @@ public class ResourceGuard implements AutoCloseable, Serializable {
     private final SerializableObject lock;
 
     /** Number of clients that have ongoing access to the resource. */
+    // 正在访问资源的客户端数
     private volatile int leaseCount;
 
     /** This flag indicated if it is still possible to acquire access to the resource. */
@@ -55,6 +58,8 @@ public class ResourceGuard implements AutoCloseable, Serializable {
     }
 
     /**
+     * 从一个新客户端获得对受保护资源的访问
+     *
      * Acquired access from one new client for the guarded resource.
      *
      * @throws IOException when the resource guard is already closed.

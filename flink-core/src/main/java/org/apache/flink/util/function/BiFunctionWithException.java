@@ -23,6 +23,8 @@ import org.apache.flink.util.ExceptionUtils;
 import java.util.function.BiFunction;
 
 /**
+ * 可以抛出异常的接口。
+ *
  * {@link BiFunction} interface which can throw exceptions.
  *
  * @param <T> type of the first parameter

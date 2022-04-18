@@ -19,6 +19,8 @@
 package org.apache.flink.util;
 
 /**
+ * 简单的{@link UserCodeClassLoader}实现，它假设所提供的类加载器永远不会被释放，因此也永远不会执行释放钩子。
+ *
  * Simple {@link UserCodeClassLoader} implementation which assumes that the provided class loader
  * will never be released and, hence, will never execute the release hooks.
  */

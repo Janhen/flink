@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 @PublicEvolving
 public class JavaToValueConverter {
 
+    // 将 Java 对象转换成 Flink 处理的 Value
     public static Value convertBoxedJavaType(Object boxed) {
         if (boxed == null) {
             return null;
@@ -49,6 +50,7 @@ public class JavaToValueConverter {
         } else if (clazz == Character.class) {
             return new CharValue((Character) boxed);
         } else {
+            // 仅针对主类型和 String 可进行转换
             throw new IllegalArgumentException("Object is no primitive Java type.");
         }
     }

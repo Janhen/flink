@@ -33,6 +33,10 @@ import java.util.Map;
 /**
  * 这是注册表的抽象基类，它允许注册{@link Closeable}的实例，如果注册表关闭，这些实例将全部关闭。
  *
+ * <p>注册到一个已经关闭的注册表将抛出一个异常并关闭所提供的{@link Closeable}
+ *
+ * <p>这个类中的所有方法都是线程安全的。
+ *
  * This is the abstract base class for registries that allow to register instances of {@link
  * Closeable}, which are all closed if this registry is closed.
  *

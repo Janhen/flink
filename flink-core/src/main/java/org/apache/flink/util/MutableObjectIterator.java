@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Internal;
 import java.io.IOException;
 
 /**
+ * 一个简单的迭代器接口。与{@link java.util。迭代器}是
+ *
  * A simple iterator interface. The key differences to the {@link java.util.Iterator} are
  *
  * <ul>

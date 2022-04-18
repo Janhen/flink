@@ -21,6 +21,7 @@ package org.apache.flink.types;
 import org.apache.flink.annotation.Public;
 
 /** An exception specifying that the deserialization caused an error. */
+// 指定反序列化导致错误的异常
 @Public
 public class DeserializationException extends RuntimeException {
     /** UID for serialization interoperability. */

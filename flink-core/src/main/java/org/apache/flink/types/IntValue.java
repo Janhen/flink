@@ -26,6 +26,7 @@ import org.apache.flink.core.memory.MemorySegment;
 import java.io.IOException;
 
 /** Boxed serializable and comparable integer type, representing the primitive type {@code int}. */
+// 可序列化和可比较的整型，表示原始类型{@code int}。
 @Public
 public class IntValue
         implements NormalizableKey<IntValue>, ResettableValue<IntValue>, CopyableValue<IntValue> {

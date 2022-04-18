@@ -21,6 +21,8 @@ package org.apache.flink.types;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 指定一个必需的关键字字段没有在记录中设置的异常，即<code>null <code>。
+ *
  * An exception specifying that a required key field was not set in a record, i.e. was <code>null
  * </code>.
  */

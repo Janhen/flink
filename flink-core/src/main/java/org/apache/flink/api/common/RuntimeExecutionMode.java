@@ -20,6 +20,9 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * DataStream程序的运行时执行模式。除此之外，它还控制任务调度、网络转移行为和时间语义。一些操作还将根据配置的执行模式
+ * 更改它们的记录发射行为。
+ *
  * Runtime execution mode of DataStream programs. Among other things, this controls task scheduling,
  * network shuffle behavior, and time semantics. Some operations will also change their record
  * emission behaviour based on the configured execution mode.

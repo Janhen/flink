@@ -30,7 +30,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * {@link OutputTag}是一个类型化的命名标记，用于标记操作符的边输出。
+ * {@link OutputTag} 是一个类型化的命名标记，用于标记操作符的边输出。
  *
  * <p>一个{@code OutputTag}必须始终是一个匿名内部类，这样Flink就可以为泛型类型参数派生一个{@link TypeInformation}。
  *
@@ -57,6 +57,8 @@ public class OutputTag<T> implements Serializable {
     private final TypeInformation<T> typeInfo;
 
     /**
+     * 使用给定的id创建一个名为{@code OutputTag}的新对象。
+     *
      * Creates a new named {@code OutputTag} with the given id.
      *
      * @param id The id of the created {@code OutputTag}.
@@ -79,6 +81,8 @@ public class OutputTag<T> implements Serializable {
     }
 
     /**
+     * 使用给定的id和输出{@link TypeInformation}创建一个名为{@code OutputTag}的新对象。
+     *
      * Creates a new named {@code OutputTag} with the given id and output {@link TypeInformation}.
      *
      * @param id The id of the created {@code OutputTag}.

@@ -21,9 +21,12 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Possible states of a job once it has been accepted by the dispatcher. */
+// 作业被调度程序接受后的可能状态
 @PublicEvolving
 public enum JobStatus {
     /**
+     * 作业已被Dispatcher接收，正在等待作业管理器接收领导力并被创建
+     *
      * The job has been received by the Dispatcher, and is waiting for the job manager to receive
      * leadership and to be created.
      */
@@ -36,6 +39,7 @@ public enum JobStatus {
     RUNNING(TerminalState.NON_TERMINAL),
 
     /** The job has failed and is currently waiting for the cleanup to complete. */
+    // 作业已失败，目前正在等待清理工作完成
     FAILING(TerminalState.NON_TERMINAL),
 
     /** The job has failed with a non-recoverable task failure. */
@@ -51,15 +55,19 @@ public enum JobStatus {
     FINISHED(TerminalState.GLOBALLY),
 
     /** The job is currently undergoing a reset and total restart. */
+    // 该作业目前正在进行复位和全面重启
     RESTARTING(TerminalState.NON_TERMINAL),
 
     /**
+     * 作业已挂起，这意味着它已停止，但未从潜在的HA作业存储中删除
+     *
      * The job has been suspended which means that it has been stopped but not been removed from a
      * potential HA job store.
      */
     SUSPENDED(TerminalState.LOCALLY),
 
     /** The job is currently reconciling and waits for task execution report to recover state. */
+    // 作业当前正在协调，等待任务执行报告恢复状态
     RECONCILING(TerminalState.NON_TERMINAL);
 
     // --------------------------------------------------------------------------------------------

@@ -21,6 +21,9 @@ package org.apache.flink.types.parser;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 将字节数组的可变长度字段转换为{@link String}。分隔符之间的字节内容被解释为一个ASCII字符串。字符串可以用双引号
+ * 括起来。对于带引号的字符串，将删除引号前后的空格(空格和制表符)。
+ *
  * Converts a variable length field of a byte array into a {@link String}. The byte contents between
  * delimiters is interpreted as an ASCII string. The string may be quoted in double quotes. For
  * quoted strings, whitespaces (space and tab) leading and trailing before and after the quotes are

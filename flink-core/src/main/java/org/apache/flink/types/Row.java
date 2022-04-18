@@ -34,6 +34,17 @@ import static org.apache.flink.types.RowUtils.deepEqualsRow;
 import static org.apache.flink.types.RowUtils.deepHashCodeRow;
 
 /**
+ * 行是固定长度、感知空值的复合类型，用于以确定的字段顺序存储多个值。无论字段的类型如何，每个字段都可以为空。不能自动
+ * 推断行字段的类型;因此，无论何时生成一行，都需要提供类型信息。
+ *
+ * <p>行的主要用途是在Flink的Table和SQL生态系统以及其他api之间架起桥梁。因此，一行不仅包含模式部分(包含字段)，而且
+ *   还附加一个{@link RowKind}，用于在变更日志中编码变更。因此，可以将一行视为变更日志中的一个条目。例如，在常规的
+ *   批处理场景中，一个变更日志将由{@link RowKind#INSERT}行的有界流组成。行类型与字段是分开的，可以通过使用
+ *   {@link #getKind()}和{@link #setKind(RowKind)}来访问。
+ *
+ * <p>一行的字段可以基于位置访问，也可以基于名称访问。实现者可以决定一行在创建过程中应该以哪种字段模式进行操作。由框架
+ *   生成的行支持两种字段模式的混合(即命名位置):
+ *
  * A row is a fixed-length, null-aware composite type for storing multiple values in a deterministic
  * field order. Every field can be null regardless of the field's type. The type of row fields
  * cannot be automatically inferred; therefore, it is required to provide type information whenever
@@ -89,17 +100,19 @@ public final class Row implements Serializable {
     private static final long serialVersionUID = 3L;
 
     /** The kind of change a row describes in a changelog. */
-    // 更改日志中一行描述的更改类型。
+    // 更改日志中一行描述的更改类型
     private RowKind kind;
 
     /** Fields organized by position. Either this or {@link #fieldByName} is set. */
-    // 按位置组织的属性。或者{@link #fieldByName}被设置。
+    // 按位置组织的属性。或者{@link #fieldByName}被设置
     private final @Nullable Object[] fieldByPosition;
 
     /** Fields organized by name. Either this or {@link #fieldByPosition} is set. */
+    // 按名称组织的字段。要么设置了这个，要么设置了{@link #fieldByPosition}
     private final @Nullable Map<String, Object> fieldByName;
 
     /** Mapping from field names to positions. Requires {@link #fieldByPosition} semantics. */
+    // 从字段名到位置的映射。需要{@link #fieldByPosition}语义
     private final @Nullable LinkedHashMap<String, Integer> positionByName;
 
     Row(
@@ -180,6 +193,12 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 以基于名称的字段模式创建可变长度的行。
+     *
+     * <p>字段可以通过名称({@link #setField(String, Object)}和 {@link #getField(String)}访问。
+     *
+     * <p>有关更多信息，请参阅{@link Row}的类文档。
+     *
      * Creates a variable-length row in name-based field mode.
      *
      * <p>Fields can be accessed by name via {@link #setField(String, Object)} and {@link
@@ -234,6 +253,10 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 返回行中的字段数
+     *
+     * <p>注意:行类型与字段保持分离，不包含在这个数字中
+     *
      * Returns the number of fields in the row.
      *
      * <p>Note: The row kind is kept separate from the fields and is not included in this number.
@@ -430,6 +453,10 @@ public final class Row implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 以基于位置的字段模式创建固定长度的行，并将给定的值分配给该行的字段。
+     *
+     * <p>在很多情况下，这个方法应该比{@link Row#withPositions(int)}更方便。
+     *
      * Creates a fixed-length row in position-based field mode and assigns the given values to the
      * row's fields.
      *
@@ -463,6 +490,8 @@ public final class Row implements Serializable {
     /**
      * 使用给定类型在基于位置的字段模式中创建固定长度的行，并将给定值赋给行字段。
      *
+     * <p>在很多情况下，这个方法应该比{@link Row#withPositions(RowKind, int)}更方便
+     *
      * Creates a fixed-length row in position-based field mode with given kind and assigns the given
      * values to the row's fields.
      *
@@ -493,6 +522,10 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 创建从另一行复制的新行(包括其{@link RowKind})。
+     *
+     * <p>该方法不执行深度复制。如果需要，使用{@link RowSerializer#copy(Row)}。
+     *
      * Creates a new row which is copied from another row (including its {@link RowKind}).
      *
      * <p>This method does not perform a deep copy. Use {@link RowSerializer#copy(Row)} if required.
@@ -518,6 +551,12 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 创建具有投影字段和与另一行相同的{@link RowKind}的新行。
+     *
+     * <p>该方法不执行深度复制。
+     *
+     * <p>备注:行必须以基于位置的字段模式操作。字段名不投影。
+     *
      * Creates a new row with projected fields and identical {@link RowKind} from another row.
      *
      * <p>This method does not perform a deep copy.
@@ -535,6 +574,12 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 创建具有投影字段和与另一行相同的{@link RowKind}的新行。
+     *
+     * <p>该方法不执行深度复制。
+     *
+     * <p>备注:行必须为基于名称的字段模式。
+     *
      * Creates a new row with projected fields and identical {@link RowKind} from another row.
      *
      * <p>This method does not perform a deep copy.
@@ -552,6 +597,12 @@ public final class Row implements Serializable {
     }
 
     /**
+     * 创建带有从其他行复制并按给定顺序附加到结果行的字段的新行。第一行的{@link RowKind}决定了结果的{@link RowKind}。
+     *
+     * <p>该方法不执行深度复制。
+     *
+     * <p>备注:所有行必须在基于位置的字段模式下操作。
+     *
      * Creates a new row with fields that are copied from the other rows and appended to the
      * resulting row in the given order. The {@link RowKind} of the first row determines the {@link
      * RowKind} of the result.

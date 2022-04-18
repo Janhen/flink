@@ -25,11 +25,13 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** Interface to be implemented by basic types that support to be copied efficiently. */
-// 接口，由支持有效复制的基本类型实现。
+// 由支持有效复制的基本类型实现
 @Public
 public interface CopyableValue<T> extends Value {
 
     /**
+     * 获取序列化数据类型时的长度(以字节为单位)
+     *
      * Gets the length of the data type when it is serialized, in bytes.
      *
      * @return The length of the data type, or {@code -1}, if variable length.

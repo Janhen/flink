@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Random;
 
 /** A statistically unique identification number. */
+// 统计上唯一的标识号码。
 @PublicEvolving
 public class AbstractID implements Comparable<AbstractID>, java.io.Serializable {
 
