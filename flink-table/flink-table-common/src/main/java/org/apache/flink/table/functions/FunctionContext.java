@@ -29,6 +29,10 @@ import java.io.File;
 import java.util.Set;
 
 /**
+ * {@link FunctionContext}允许获取关于用户定义函数执行上下文的全局运行时信息。
+ *
+ * <p>包括指标组、分布式缓存文件、全局作业参数。
+ *
  * A {@link FunctionContext} allows to obtain global runtime information about the context in which
  * the user-defined function is executed.
  *

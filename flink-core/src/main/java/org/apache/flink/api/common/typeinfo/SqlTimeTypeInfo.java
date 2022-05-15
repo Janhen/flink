@@ -37,6 +37,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Type information for Java SQL Date/Time/Timestamp. */
+// Java SQL DateTimeTimestamp的类型信息。
 @PublicEvolving
 public class SqlTimeTypeInfo<T> extends TypeInformation<T> implements AtomicType<T> {
 

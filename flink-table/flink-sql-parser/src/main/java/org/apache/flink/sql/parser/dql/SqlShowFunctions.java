@@ -33,6 +33,7 @@ import java.util.List;
 // SHOW [USER] FUNCTIONS Sql Call。
 public class SqlShowFunctions extends SqlCall {
 
+    // J: 用户函数调用展示
     public static final SqlSpecialOperator OPERATOR =
             new SqlSpecialOperator("SHOW FUNCTIONS", SqlKind.OTHER);
 

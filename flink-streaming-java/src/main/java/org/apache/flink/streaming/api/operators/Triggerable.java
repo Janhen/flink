@@ -21,6 +21,8 @@ package org.apache.flink.streaming.api.operators;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 接口可以被{@link InternalTimerService}调用。
+ *
  * Interface for things that can be called by {@link InternalTimerService}.
  *
  * @param <K> Type of the keys to which timers are scoped.

@@ -22,6 +22,7 @@ import org.apache.calcite.sql.SqlLiteral;
 import org.apache.calcite.sql.parser.SqlParserPos;
 
 /** Enumeration of SQL unique specification. */
+// SQL唯一规范的枚举。
 public enum SqlUniqueSpec {
     PRIMARY_KEY("PRIMARY KEY"),
     UNIQUE("UNIQUE");

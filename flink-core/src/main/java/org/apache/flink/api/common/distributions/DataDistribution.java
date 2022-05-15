@@ -28,6 +28,8 @@ import java.io.Serializable;
 public interface DataDistribution extends IOReadableWritable, Serializable {
 
     /**
+     * 返回第i个桶的上限，前提是该分布将被拆分为{@code totalBuckets}桶。
+     *
      * Returns the i'th bucket's upper bound, given that the distribution is to be split into {@code
      * totalBuckets} buckets.
      *

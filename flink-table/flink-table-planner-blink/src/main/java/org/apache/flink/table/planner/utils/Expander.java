@@ -77,6 +77,7 @@ public class Expander {
     }
 
     /** Expands identifiers in a given SQL string, returning a {@link Expanded}. */
+    // 展开给定SQL字符串中的标识符，返回{@link Expanded}。
     public Expanded expanded(String ori) {
         final Map<SqlParserPos, SqlIdentifier> identifiers = new HashMap<>();
         final Map<String, SqlIdentifier> funcNameToId = new HashMap<>();

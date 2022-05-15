@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 唯一的键约束。也可以将其声明为PRIMARY KEY。
+ *
  * A unique key constraint. It can be declared also as a PRIMARY KEY.
  *
  * @see ConstraintType

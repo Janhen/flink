@@ -115,6 +115,8 @@ public class TableSchemaUtils {
     }
 
     /**
+     * 返回此架构的物理列(不包括计算列或元数据列)中主键的字段索引。
+     *
      * Returns the field indices of primary key in the physical columns of this schema (not include
      * computed columns or metadata columns).
      */

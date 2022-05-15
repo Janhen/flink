@@ -32,6 +32,8 @@ import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 import org.apache.flink.util.Collector;
 
 /**
+ * {@link IntervalJoinFunction}是一个{@link RichFlatJoinFunction}包装器的{@link GeneratedJoinCondition}。
+ *
  * {@link IntervalJoinFunction} is a {@link RichFlatJoinFunction} wrappers a {@link
  * GeneratedJoinCondition}.
  */

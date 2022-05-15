@@ -32,6 +32,11 @@ import org.apache.flink.table.types.inference.TypeStrategies;
 import java.sql.Timestamp;
 
 /**
+ * 类，表示历史表上的时态表函数。它接受一个参数:{@code timeAttribute}，它返回与{@code underlyingHistoryTable}
+ * 匹配的版本，这个{@link TemporalTableFunction}就是从这个参数创建的。
+ *
+ * <p>该函数不应该被计算。相反，优化器应该将对它的调用重写为其他操作符(如时态表连接)。
+ *
  * Class representing temporal table function over some history table. It takes one single argument,
  * the {@code timeAttribute}, for which it returns matching version of the {@code
  * underlyingHistoryTable}, from which this {@link TemporalTableFunction} was created.

@@ -21,6 +21,8 @@ package org.apache.flink.table.catalog;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 完整性约束(通常简称为约束)通过约束基本表中的值来定义sql数据的有效状态。
+ *
  * Integrity constraints, generally referred to simply as constraints, define the valid states of
  * SQL-data by constraining the values in the base tables.
  */

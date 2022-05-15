@@ -23,6 +23,8 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 作为{@link ScanTableSource}的运行时实现的{@link SourceFunction}实例的提供者。
+ *
  * Provider of a {@link SourceFunction} instance as a runtime implementation for {@link
  * ScanTableSource}.
  */

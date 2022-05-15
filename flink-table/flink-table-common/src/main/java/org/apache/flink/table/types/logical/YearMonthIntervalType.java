@@ -28,6 +28,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 年-月间隔类型的逻辑类型。必须将类型参数化为以下分辨率之一:年间隔、年到月的间隔或月的间隔。
+ *
  * Logical type for a group of year-month interval types. The type must be parameterized to one of
  * the following resolutions: interval of years, interval of years to months, or interval of months.
  *

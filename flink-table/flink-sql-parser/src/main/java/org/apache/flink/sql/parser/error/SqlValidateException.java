@@ -21,6 +21,8 @@ package org.apache.flink.sql.parser.error;
 import org.apache.calcite.sql.parser.SqlParserPos;
 
 /**
+ * SQL解析例外。这个异常主要是在{@link org.apache.flink.sql.parser.ExtendedSqlNode}验证。
+ *
  * SQL parse Exception. This exception mainly throws during {@link
  * org.apache.flink.sql.parser.ExtendedSqlNode} validation.
  */

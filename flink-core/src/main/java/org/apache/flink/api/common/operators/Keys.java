@@ -56,6 +56,7 @@ public abstract class Keys<T> {
     }
 
     /** Check if two sets of keys are compatible to each other (matching types, key counts) */
+    // 检查两组键是否相互兼容(匹配类型，键数)
     public boolean areCompatible(Keys<?> other) throws IncompatibleKeysException {
 
         TypeInformation<?>[] thisKeyFieldTypes = this.getKeyFieldTypes();

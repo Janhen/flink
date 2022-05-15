@@ -57,6 +57,7 @@ public interface QueryOperation extends Operation {
                 "QueryOperations are not string serializable for now.");
     }
 
+
     List<QueryOperation> getChildren();
 
     default <T> T accept(QueryOperationVisitor<T> visitor) {

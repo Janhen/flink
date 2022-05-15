@@ -19,6 +19,7 @@
 package org.apache.flink.table.runtime.operators.join;
 
 /** Join type for join. */
+// 连接类型
 public enum FlinkJoinType {
     INNER,
     LEFT,

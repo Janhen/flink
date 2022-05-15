@@ -28,6 +28,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * 用于搜索提供类型和属性的{@link ComponentFactory}的统一类。它类似于{@link TableFactoryService}，但它基于
+ * {@link ComponentFactory#optionalContext()}消除了歧义。
+ *
  * Unified class to search for a {@link ComponentFactory} of provided type and properties. It is
  * similar to {@link TableFactoryService} but it disambiguates based on {@link
  * ComponentFactory#optionalContext()}.

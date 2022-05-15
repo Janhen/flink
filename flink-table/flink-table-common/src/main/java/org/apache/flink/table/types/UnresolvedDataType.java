@@ -28,6 +28,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
+ * 部分解析的数据类型，需要在创建相应的{@link LogicalType}之前在目录或配置中进行查找。
+ *
  * Partially resolved data type that requires a lookup in a catalog or configuration before creating
  * the corresponding {@link LogicalType}.
  *

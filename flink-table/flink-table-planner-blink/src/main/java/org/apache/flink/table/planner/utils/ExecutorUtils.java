@@ -34,6 +34,7 @@ import java.util.List;
 public class ExecutorUtils {
 
     /** Generate {@link StreamGraph} by {@link StreamGraphGenerator}. */
+    // 通过{@link StreamGraph}生成{@link StreamGraph}。
     public static StreamGraph generateStreamGraph(
             StreamExecutionEnvironment execEnv, List<Transformation<?>> transformations) {
         if (transformations.size() <= 0) {

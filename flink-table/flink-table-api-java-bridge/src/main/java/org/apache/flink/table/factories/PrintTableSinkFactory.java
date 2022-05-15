@@ -45,6 +45,11 @@ import static org.apache.flink.configuration.ConfigOptions.key;
  *   -易于测试的流工作。
  *   -非常有用的生产调试。
  *
+ * <p>四种可能的格式选项:{@code PRINT_IDENTIFIER}: taskId >输出
+ * < - {@code PRINT_IDENTIFIER},并行性> 1 {@code PRINT_IDENTIFIER} >输出
+ * < - - - - - - {@code PRINT_IDENTIFIER},并行性= = 1 taskId >输出<——没有{@code PRINT_IDENTIFIER},并行性> 1输出
+ * <——没有{@code PRINT_IDENTIFIER},并行性= = 1
+ *
  * Print table sink factory writing every row to the standard output or standard error stream. It is
  * designed for: - easy test for streaming job. - very useful in production debugging.
  *

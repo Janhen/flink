@@ -31,6 +31,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 描述从{@link DataStream}读取数据的关系操作。
+ *
+ * <p>包含执行流到表转换所需的所有信息。
+ *
+ * <p>这个类需要和Scala桥接模块中的{@code ScalaExternalQueryOperation}保持同步。
+ *
  * Describes a relational operation that reads from a {@link DataStream}.
  *
  * <p>It contains all information necessary to perform a stream-to-table conversion.

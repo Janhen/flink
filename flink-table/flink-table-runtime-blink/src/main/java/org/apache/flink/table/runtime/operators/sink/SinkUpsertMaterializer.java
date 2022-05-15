@@ -44,6 +44,8 @@ import static org.apache.flink.types.RowKind.INSERT;
 import static org.apache.flink.types.RowKind.UPDATE_AFTER;
 
 /**
+ * 一种操作员，它将传入记录保持在与upsert键相对应的状态，并为下游操作员生成upsert视图。
+ *
  * An operator that maintains incoming records in state corresponding to the upsert keys and
  * generates an upsert view for the downstream operator.
  *

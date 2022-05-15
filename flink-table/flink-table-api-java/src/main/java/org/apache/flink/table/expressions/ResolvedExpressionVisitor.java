@@ -22,6 +22,10 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.table.api.TableException;
 
 /**
+ * 所有{@link ResolvedExpression}的访问器。
+ *
+ * <p>此访问者的所有表达式都是API的输出，可能被传递给规划器。
+ *
  * A visitor for all {@link ResolvedExpression}s.
  *
  * <p>All expressions of this visitor are the output of the API and might be passed to a planner.

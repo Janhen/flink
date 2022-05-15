@@ -35,6 +35,12 @@ import java.io.Serializable;
  *
  * <p>运行时实现可能在两个不同的阶段被调用:
  *
+ *   <li>在计划期间(即飞行前阶段):如果函数被调用时使用常量表达式，或者常量表达式可以从给定语句中派生出来，那么函数将被
+ *     预计算以减少常量表达式，可能不再在集群上执行。在这种情况下，使用{@link #isDeterministic()}来禁用常量表达式缩减。
+ *     例如，在规划过程中执行了对{@code ABS}的调用:{@code SELECT ABS(-1) FROM t}和
+ *     {@code SELECT ABS(field) FROM t WHERE field = -1}。
+ *   <li>在运行时(即集群执行):如果函数使用非常量表达式或{@link #isDeterministic()}调用，则返回false。
+ *
  * Base class for all user-defined functions.
  *
  * <p>User-defined functions combine the logical definition of a function for validation and

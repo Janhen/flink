@@ -27,6 +27,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 无时区的时间逻辑类型，包含{@code hour:minute:second[.fraction]}，精度为纳秒，取值范围为
+ * {@code 00:00:00.000000000}到{@code 23:59:59.999999999}。与SQL标准相比，不支持闰秒(23:59:60和23:59:61)，
+ * 因为其语义更接近{@link java.time.LocalTime}。不提供time WITH time zone。
+ *
  * Logical type of a time WITHOUT time zone consisting of {@code hour:minute:second[.fractional]}
  * with up to nanosecond precision and values ranging from {@code 00:00:00.000000000} to {@code
  * 23:59:59.999999999}. Compared to the SQL standard, leap seconds (23:59:60 and 23:59:61) are not

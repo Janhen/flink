@@ -21,21 +21,28 @@ package org.apache.flink.table.planner.utils;
 import org.apache.flink.table.api.config.OptimizerConfigOptions;
 
 /**
+ * 可以在{@link OptimizerConfigOptions#TABLE_OPTIMIZER_AGG_PHASE_STRATEGY}中指定的聚合阶段策略。
+ *
  * Aggregate phase strategy which could be specified in {@link
  * OptimizerConfigOptions#TABLE_OPTIMIZER_AGG_PHASE_STRATEGY}.
  */
 public enum AggregatePhaseStrategy {
 
     /**
+     * 合计阶段没有特别的强制执行者。选择两段集束还是一段集束取决于成本。
+     *
      * No special enforcer for aggregate stage. Whether to choose two stage aggregate or one stage
      * aggregate depends on cost.
      */
     AUTO,
 
     /** Enforce to use one stage aggregate which only has CompleteGlobalAggregate. */
+    // 强制使用只有CompleteGlobalAggregate的阶段聚合。
     ONE_PHASE,
 
     /**
+     * 强制使用具有localAggregate和globalAggregate的两阶段聚合。注意:如果聚合调用不支持拆分为两个阶段，仍然使用一个阶段聚合。
+     *
      * Enforce to use two stage aggregate which has localAggregate and globalAggregate. NOTE: If
      * aggregate call does not support split into two phase, still use one stage aggregate.
      */

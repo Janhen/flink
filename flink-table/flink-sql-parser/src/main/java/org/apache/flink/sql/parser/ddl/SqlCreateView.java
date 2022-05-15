@@ -38,6 +38,8 @@ import java.util.Optional;
 import static java.util.Objects.requireNonNull;
 
 /** CREATE VIEW DDL sql call. */
+// 创建视图DDL sql调用。
+// J: 模板，TEMPORARY、IF NOT EXISTS、COMMENT
 public class SqlCreateView extends SqlCreate {
     public static final SqlSpecialOperator OPERATOR =
             new SqlSpecialOperator("CREATE_VIEW", SqlKind.CREATE_VIEW);

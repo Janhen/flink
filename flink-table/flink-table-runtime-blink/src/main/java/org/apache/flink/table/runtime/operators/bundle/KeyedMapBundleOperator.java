@@ -21,6 +21,9 @@ package org.apache.flink.table.runtime.operators.bundle;
 import org.apache.flink.table.runtime.operators.bundle.trigger.BundleTrigger;
 
 /**
+ * {@link KeyedMapBundleOperator}使用框架的key作为bundle map key，因此只能用于
+ * {@link org.apache.flink.streaming.api.datastream.KeyedStream}。
+ *
  * The {@link KeyedMapBundleOperator} uses framework's key as bundle map key, thus can only be used
  * on {@link org.apache.flink.streaming.api.datastream.KeyedStream}.
  */

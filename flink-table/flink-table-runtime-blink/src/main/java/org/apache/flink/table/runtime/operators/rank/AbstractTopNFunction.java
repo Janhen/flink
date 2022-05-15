@@ -44,6 +44,7 @@ import java.util.Comparator;
 import java.util.function.Function;
 
 /** Base class for TopN Function. */
+// TopN函数的基类。
 public abstract class AbstractTopNFunction
         extends KeyedProcessFunctionWithCleanupState<RowData, RowData, RowData> {
 

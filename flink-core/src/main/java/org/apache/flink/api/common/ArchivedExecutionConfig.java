@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * 存档作业时创建的可序列化类。它可以用来在web界面上显示作业信息，而不必在作业完成后保留类加载器。
+ *
  * Serializable class which is created when archiving the job. It can be used to display job
  * information on the web interface without having to keep the classloader around after job
  * completion.

@@ -31,6 +31,7 @@ public class DataGenOptions {
 
     public static final Long ROWS_PER_SECOND_DEFAULT_VALUE = 10000L;
 
+    // J: 针对特定的属性限制
     public static final String FIELDS = "fields";
     public static final String KIND = "kind";
     public static final String START = "start";

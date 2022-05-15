@@ -30,6 +30,7 @@ import static org.apache.flink.table.api.config.ExecutionConfigOptions.TABLE_EXE
 import static org.apache.flink.table.api.config.OptimizerConfigOptions.TABLE_OPTIMIZER_AGG_PHASE_STRATEGY;
 
 /** Utility class for {@link TableConfig} related helper functions. */
+// 用于{@link TableConfig}相关帮助函数的实用工具类。
 public class TableConfigUtils {
 
     /**

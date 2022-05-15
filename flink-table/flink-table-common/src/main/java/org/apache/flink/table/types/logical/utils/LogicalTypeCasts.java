@@ -79,6 +79,10 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.isSingleFieldInterval;
 
 /**
+ * 转换{@link LogicalType}的实用程序。
+ *
+ * <p>这个类的目标是与SQL标准兼容。它的灵感来自Apache calcite 的{@code SqlTypeUtil#canCastFrom}方法。
+ *
  * Utilities for casting {@link LogicalType}.
  *
  * <p>This class aims to be compatible with the SQL standard. It is inspired by Apache Calcite's

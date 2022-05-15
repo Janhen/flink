@@ -59,6 +59,9 @@ import static org.apache.flink.table.expressions.ApiExpressionUtils.typeLiteral;
 import static org.apache.flink.table.expressions.ApiExpressionUtils.valueLiteral;
 
 /**
+ * 尝试解析所有未解析的表达式，如{@link UnresolvedReferenceExpression}或调用，如
+ * {@link BuiltInFunctionDefinitions#OVER}。
+ *
  * Tries to resolve all unresolved expressions such as {@link UnresolvedReferenceExpression} or
  * calls such as {@link BuiltInFunctionDefinitions#OVER}.
  *

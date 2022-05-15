@@ -33,7 +33,7 @@ import static org.apache.flink.table.factories.FactoryUtil.createTableFactoryHel
 
 /**
  * 黑洞表吸收工厂吞下所有的输入记录。它是专为:
- * -高性能测试。
+ * - 高性能测试。
  * - UDF输出，
  * 而不是实质性的下沉。就像类unix操作系统上的devnull设备一样。
  *

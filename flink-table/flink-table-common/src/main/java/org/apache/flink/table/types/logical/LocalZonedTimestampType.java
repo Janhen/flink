@@ -29,6 +29,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * timestamp逻辑类型，LOCAL时区，包含{@code year-month-day hour:minute:second[.fraction] zone}，精度
+ * 为纳秒，取值范围为{@code 0000-01-01 00:00:00.000000000 +14:59}到{@code 9999-12-31 23:59:59.999999999 -14:59}。
+ * 不支持闰秒(23:59:60和23:59:61)，因为其语义更接近{@link java.time.OffsetDateTime}。
+ *
  * Logical type of a timestamp WITH LOCAL time zone consisting of {@code year-month-day
  * hour:minute:second[.fractional] zone} with up to nanosecond precision and values ranging from
  * {@code 0000-01-01 00:00:00.000000000 +14:59} to {@code 9999-12-31 23:59:59.999999999 -14:59}.

@@ -522,6 +522,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(argument(0)))
                     .build();
 
+    // 我们需要UPPERCASE来保持与基于字符串的表达式DSL的兼容性，DSL将UPPER公开为UPPERCASE ()
     // we need UPPERCASE here to maintain compatibility for the string-based expression DSL
     // which exposes UPPER as upperCase()
     public static final BuiltInFunctionDefinition UPPERCASE =
@@ -543,7 +544,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.INT())))
                     .build();
 
-    // 覆盖?
+    // 字符串的覆盖  按照位置
     public static final BuiltInFunctionDefinition OVERLAY =
             BuiltInFunctionDefinition.newBuilder()
                     .name("overlay")
@@ -578,6 +579,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(STRING_CONCAT))
                     .build();
 
+    // J: 多个字符拼接..
     public static final BuiltInFunctionDefinition CONCAT_WS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("concat_ws")
@@ -712,6 +714,8 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 组合了数字相加、“datetime + interval”、“interval + interval”算术运算和字符串连接。
+     *
      * Combines numeric addition, "datetime + interval"/"interval + interval" arithmetic, and string
      * concatenation.
      */
@@ -786,6 +790,7 @@ public final class BuiltInFunctionDefinitions {
                                             COMMON)))
                     .build();
 
+    //
     public static final BuiltInFunctionDefinition TIMES =
             BuiltInFunctionDefinition.newBuilder()
                     .name("times")
@@ -904,6 +909,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.DOUBLE())))
                     .build();
 
+    // J: 取模
     public static final BuiltInFunctionDefinition MOD =
             BuiltInFunctionDefinition.newBuilder()
                     .name("mod")
@@ -1140,7 +1146,7 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
 
     // 时间函数
-
+    // J: 抽取日期   EXTRACT(DAY FROM DATE '2022-05-15')  = 15
     public static final BuiltInFunctionDefinition EXTRACT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("extract")
@@ -1191,6 +1197,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // J: 时间的覆盖?
     public static final BuiltInFunctionDefinition TEMPORAL_OVERLAPS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("temporalOverlaps")
@@ -1233,6 +1240,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // J: 基数?
     public static final BuiltInFunctionDefinition CARDINALITY =
             BuiltInFunctionDefinition.newBuilder()
                     .name("cardinality")
@@ -1285,6 +1293,7 @@ public final class BuiltInFunctionDefinitions {
                     .inputTypeStrategy(sequence(InputTypeStrategies.COMPOSITE))
                     .outputTypeStrategy(
                             callContext -> {
+                                // FLATTEN应该被解析为GET表达式
                                 throw new UnsupportedOperationException(
                                         "FLATTEN should be resolved to GET expressions");
                             })
@@ -1374,6 +1383,7 @@ public final class BuiltInFunctionDefinitions {
     // Window properties
     // --------------------------------------------------------------------------------------------
 
+    // J: 窗口的开始时间
     public static final BuiltInFunctionDefinition WINDOW_START =
             BuiltInFunctionDefinition.newBuilder()
                     .name("start")
@@ -1440,6 +1450,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 无界范围
     public static final BuiltInFunctionDefinition UNBOUNDED_RANGE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("unboundedRange")
@@ -1474,6 +1485,7 @@ public final class BuiltInFunctionDefinitions {
 
     // 列函数
 
+    // J: 主要为 Table API 使用
     public static final BuiltInFunctionDefinition WITH_COLUMNS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("withColumns")

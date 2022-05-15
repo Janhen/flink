@@ -68,7 +68,9 @@ public class SchemaValidator implements DescriptorValidator {
 
     // 是否是 流模式的环境
     private final boolean isStreamEnvironment;
+    // J: 支持来源时间戳?
     private final boolean supportsSourceTimestamps;
+    // J: 支持来源水印
     private final boolean supportsSourceWatermarks;
 
     public SchemaValidator(

@@ -157,6 +157,8 @@ public final class ExtractionUtils {
     }
 
     /**
+     * 为{@link StructuredType}验证类的特征，例如可访问性。
+     *
      * Validates the characteristics of a class for a {@link StructuredType} such as accessibility.
      */
     public static void validateStructuredClass(Class<?> clazz) {

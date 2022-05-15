@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * 一个经过验证的{@link CatalogView}，由来自{@link Catalog}的原始元数据支持，但由框架解析。
+ *
  * A validated {@link CatalogView} that is backed by the original metadata coming from the {@link
  * Catalog} but resolved by the framework.
  */

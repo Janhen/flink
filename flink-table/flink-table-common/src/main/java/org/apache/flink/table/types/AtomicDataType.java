@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 不包含其他数据类型的数据类型(例如:{@code INT}或{@code BOOLEAN})。
+ *
  * A data type that does not contain further data types (e.g. {@code INT} or {@code BOOLEAN}).
  *
  * @see DataTypes for a list of supported data types

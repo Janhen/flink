@@ -53,6 +53,7 @@ public abstract class Column {
     }
 
     /** Creates a regular table column that represents physical data. */
+    // 创建表示物理数据的常规表列。
     public static PhysicalColumn physical(String name, DataType dataType) {
         Preconditions.checkNotNull(name, "Column name can not be null.");
         Preconditions.checkNotNull(dataType, "Column data type can not be null.");
@@ -60,6 +61,7 @@ public abstract class Column {
     }
 
     /** Creates a computed column that is computed from the given {@link ResolvedExpression}. */
+    // 创建从给定{@link ResolvedExpression}计算的计算列。
     public static ComputedColumn computed(String name, ResolvedExpression expression) {
         Preconditions.checkNotNull(name, "Column name can not be null.");
         Preconditions.checkNotNull(expression, "Column expression can not be null.");
@@ -67,6 +69,10 @@ public abstract class Column {
     }
 
     /**
+     * 从给定列名的元数据或给定键的元数据(如果不为空)创建元数据列。
+     *
+     * <p>允许指定列是否为虚列。
+     *
      * Creates a metadata column from metadata of the given column name or from metadata of the
      * given key (if not null).
      *
@@ -86,6 +92,7 @@ public abstract class Column {
     public abstract boolean isPhysical();
 
     /** Returns whether the given column is persisted in a sink operation. */
+    // 返回给定列是否在接收操作中持久化。
     public abstract boolean isPersisted();
 
     /** Returns the data type of this column. */
@@ -114,6 +121,7 @@ public abstract class Column {
     }
 
     /** Returns an explanation of specific column extras next to name and type. */
+    // 返回名称和类型旁边的特定列附加项的说明。
     public abstract Optional<String> explainExtras();
 
     /** Returns a copy of the column with a replaced {@link DataType}. */
@@ -231,8 +239,10 @@ public abstract class Column {
     /** Representation of a metadata column. */
     public static final class MetadataColumn extends Column {
 
+        // J: 元数据键
         private final @Nullable String metadataKey;
 
+        // J: 是否是虚拟列
         private final boolean isVirtual;
 
         private MetadataColumn(

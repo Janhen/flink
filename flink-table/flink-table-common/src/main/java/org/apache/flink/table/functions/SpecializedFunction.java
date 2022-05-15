@@ -27,6 +27,9 @@ import org.apache.flink.table.types.inference.CallContext;
 /**
  * 一个{@link FunctionDefinition}，它可以提供一个运行时实现(即函数体)，专门针对给定的调用和会话。
  *
+ * <p>规划器试图将专门化推迟到代码生成之前不久，此时{@link FunctionDefinition}给出的信息已经不够了，运行时需要
+ *   {@link UserDefinedFunction}的子类。
+ *
  * A {@link FunctionDefinition} that can provide a runtime implementation (i.e. the function's body)
  * that is specialized for the given call and session.
  *

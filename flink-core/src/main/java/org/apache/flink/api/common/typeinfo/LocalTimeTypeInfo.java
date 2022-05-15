@@ -39,6 +39,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Type information for Java LocalDate/LocalTime/LocalDateTime. */
+// Java LocalDate/LocalTime/LocalDateTime 的类型信息。
 @PublicEvolving
 public class LocalTimeTypeInfo<T extends Temporal> extends TypeInformation<T>
         implements AtomicType<T> {

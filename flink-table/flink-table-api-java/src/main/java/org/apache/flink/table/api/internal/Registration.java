@@ -23,6 +23,7 @@ import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.catalog.CatalogBaseTable;
 
 /** A way to register a table in a {@link TableEnvironment} that this descriptor originates from. */
+// 一种在{@link TableEnvironment}中注册表的方法，该表描述符来源于这个表。
 @Internal
 public interface Registration {
 

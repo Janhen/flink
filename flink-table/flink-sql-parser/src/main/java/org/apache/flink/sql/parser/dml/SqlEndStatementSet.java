@@ -32,6 +32,7 @@ import java.util.List;
 /** END. */
 public class SqlEndStatementSet extends SqlCall {
 
+    // J: 多语句执行的 end;
     public static final SqlSpecialOperator OPERATOR = new SqlSpecialOperator("END", SqlKind.OTHER);
 
     public SqlEndStatementSet(SqlParserPos pos) {

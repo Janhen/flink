@@ -24,6 +24,12 @@ import org.apache.flink.configuration.ConfigOption;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 这个类保存了Flink的table模块使用的内部配置常量。
+ *
+ * <p>仅用于Blink计划器。
+ *
+ * <p>注意:该类中的所有选项键必须以“__”开始，以“__”结束，所有选项不应向用户公开，所有选项应在计划完成后删除。
+ *
  * This class holds internal configuration constants used by Flink's table module.
  *
  * <p>This is only used for the Blink planner.
@@ -34,6 +40,8 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 @Internal
 public final class InternalConfigOptions {
 
+    // 该配置用于在查询开始时保存epoch时间，该配置将被一些临时函数(如批处理作业中的CURRENT_TIMESTAMP)使用，以确保
+    // 这些临时函数具有查询开始语义。
     public static final ConfigOption<Long> TABLE_QUERY_START_EPOCH_TIME =
             key("__table.query-start.epoch-time__")
                     .longType()
@@ -43,6 +51,8 @@ public final class InternalConfigOptions {
                                     + " used by some temporal functions like CURRENT_TIMESTAMP in batch job to make sure"
                                     + " these temporal functions has query-start semantics.");
 
+    // 配置用于保存本地时间戳在查询开始,时间戳的值存储作为简化UTC + 0毫秒时代以来,这个配置将使用一些时间函数像
+    // LOCAL_TIMESTAMP在批处理作业,以确保这些颞query-start语义功能
     public static final ConfigOption<Long> TABLE_QUERY_START_LOCAL_TIME =
             key("__table.query-start.local-time__")
                     .longType()

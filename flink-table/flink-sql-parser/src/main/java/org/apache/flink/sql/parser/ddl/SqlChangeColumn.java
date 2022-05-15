@@ -31,6 +31,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** ALTER DDL to CHANGE a column for a table. */
+// 修改表的一个列。
 public class SqlChangeColumn extends SqlAlterTable {
 
     private final SqlIdentifier oldName;

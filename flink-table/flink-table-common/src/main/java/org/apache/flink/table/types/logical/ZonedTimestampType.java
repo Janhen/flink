@@ -28,6 +28,18 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 时间戳逻辑类型，时区为{@code year-month-day hour:minute:second[.分数]zone}，精度为纳秒，取值范围为
+ * {@code 0000-01-01 00:00:00.000000000 +14:59}到{@code 9999-12-31 23:59:59.999999999 -14:59}。
+ * 与SQL标准相比，不支持闰秒(23:59:60和23:59:61)，因为其语义更接近{@link java.time.OffsetDateTime}。
+ *
+ * <p>序列化的字符串表示形式是{@code TIMESTAMP(p) WITH TIME ZONE}，其中{@code p}是小数秒的位数(=精度)。
+ *   {@code p}的值必须在0到9之间(包括两者)。如果没有指定精度，{@code p}等于6。
+ *
+ * <p>与{@link LocalZonedTimestampType}相比，时区偏差信息物理地存储在每个数据中。它单独用于每一个计算、可视化或
+ *   与外部系统的通信。
+ *
+ * <p>从{@link java.time.ZonedDateTime}忽略zone ID。
+ *
  * Logical type of a timestamp WITH time zone consisting of {@code year-month-day
  * hour:minute:second[.fractional] zone} with up to nanosecond precision and values ranging from
  * {@code 0000-01-01 00:00:00.000000000 +14:59} to {@code 9999-12-31 23:59:59.999999999 -14:59}.
@@ -74,6 +86,10 @@ public final class ZonedTimestampType extends LogicalType {
     private final int precision;
 
     /**
+     * 允许附加有关时间属性属性的额外元数据的内部构造函数。额外的元数据不会影响相等性或可序列化性。
+     *
+     * <p>使用{@link #getKind()}来比较该元数据。
+     *
      * Internal constructor that allows attaching additional metadata about time attribute
      * properties. The additional metadata does not affect equality or serializability.
      *

@@ -65,6 +65,8 @@ public final class ApiExpressionUtils {
     }
 
     /**
+     * 将给定对象转换为表达式。
+     *
      * Converts a given object to an expression.
      *
      * <p>It converts:

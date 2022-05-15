@@ -28,6 +28,7 @@ import org.apache.flink.annotation.Internal;
  */
 @Internal
 public enum TimestampKind {
+    // 正常的时间
     REGULAR,
 
     ROWTIME,

@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 使用输入关系操作中的给定{@link Expression}来计算新表的表操作。
+ *
  * Table operation that computes new table using given {@link Expression}s from its input relational
  * operation.
  */

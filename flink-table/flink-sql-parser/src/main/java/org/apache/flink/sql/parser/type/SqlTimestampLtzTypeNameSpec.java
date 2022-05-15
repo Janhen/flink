@@ -30,6 +30,8 @@ import org.apache.calcite.util.Litmus;
 import java.util.Objects;
 
 /**
+ * 表示TIMESTAMP_LTZ(int)类型，它是带有LOCAL TIME ZONE的TIMESTAMP(int)类型的同义词。
+ *
  * Represents type TIMESTAMP_LTZ(int) which is a synonym of type TIMESTAMP(int) WITH LOCAL TIME
  * ZONE.
  */

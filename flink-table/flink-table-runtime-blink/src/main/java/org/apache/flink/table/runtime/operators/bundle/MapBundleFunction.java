@@ -28,6 +28,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
+ * 用于映射包处理的基本接口。
+ *
  * Basic interface for map bundle processing.
  *
  * @param <K> The type of the key in the bundle map

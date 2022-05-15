@@ -30,6 +30,12 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 将键(包括{@code NULL})映射到值(包括{@code NULL})的关联数组的逻辑类型。映射不能包含重复的键;每个键最多只能映射
+ * 到一个值。密钥类型没有限制;确保惟一性是用户的责任。映射类型是SQL标准的扩展。
+ *
+ * <p>序列化的字符串表示形式是{@code MAP<kt, vt>}，其中{@code kt}是关键元素的逻辑类型，{@code vt}是值元素的
+ *   逻辑类型。
+ *
  * Logical type of an associative array that maps keys (including {@code NULL}) to values (including
  * {@code NULL}). A map cannot contain duplicate keys; each key can map to at most one value. There
  * is no restriction of key types; it is the responsibility of the user to ensure uniqueness. The

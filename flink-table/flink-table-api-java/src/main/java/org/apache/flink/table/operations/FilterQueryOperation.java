@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Filters out rows of underlying relational operation that do not match given condition. */
+// 过滤掉与给定条件不匹配的底层关系操作行。
 @Internal
 public class FilterQueryOperation implements QueryOperation {
 

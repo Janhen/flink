@@ -41,6 +41,11 @@ import java.util.Objects;
 import static java.util.Collections.singletonList;
 
 /**
+ * {@code CREATE TABLE}语句中的{@code LIKE}子句。
+ *
+ * <p>它允许使用现有的表描述符来定义一个新的、经过调整的扩展表。用户可以使用{@link MergingStrategy}和
+ *   {@link FeatureOption}来控制这两个声明的特定特性的合并方式。
+ *
  * A {@code LIKE} clause in a {@code CREATE TABLE} statement.
  *
  * <p>It enables to use an existing table descriptor to define a new, adjusted/extended table. Users

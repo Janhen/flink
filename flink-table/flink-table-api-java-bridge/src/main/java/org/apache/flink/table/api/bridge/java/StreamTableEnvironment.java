@@ -51,6 +51,8 @@ import org.apache.flink.types.Row;
 import org.apache.flink.types.RowKind;
 
 /**
+ * 这个表环境是创建与java特定的{@link DataStream} API集成的table和SQL API程序的入口点和中心上下文。
+ *
  * This table environment is the entry point and central context for creating Table and SQL API
  * programs that integrate with the Java-specific {@link DataStream} API.
  *

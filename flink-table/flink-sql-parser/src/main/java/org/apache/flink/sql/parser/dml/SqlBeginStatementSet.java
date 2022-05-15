@@ -33,6 +33,7 @@ import java.util.List;
 // 语句集开始。
 public class SqlBeginStatementSet extends SqlCall {
 
+    // J: 将多个 insert 语句放到一起
     public static final SqlSpecialOperator OPERATOR =
             new SqlSpecialOperator("BEGIN STATEMENT SET", SqlKind.OTHER);
 

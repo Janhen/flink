@@ -28,6 +28,8 @@ import org.apache.flink.util.Visitor;
 import java.util.List;
 
 /**
+ * 对于所有具有两个输入的操作符的抽象操作符超类，如“Join”、“CoGroup”或“Cross”。
+ *
  * Abstract operator superclass for all operators that have two inputs, like "Join", "CoGroup", or
  * "Cross".
  *

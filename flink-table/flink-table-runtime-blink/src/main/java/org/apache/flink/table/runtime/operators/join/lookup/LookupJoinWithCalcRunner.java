@@ -28,6 +28,7 @@ import org.apache.flink.table.runtime.generated.GeneratedFunction;
 import org.apache.flink.util.Collector;
 
 /** The join runner with an additional calculate function on the dimension table. */
+// 在维度表上具有额外计算函数的连接运行器
 public class LookupJoinWithCalcRunner extends LookupJoinRunner {
 
     private static final long serialVersionUID = 5277183384939603386L;

@@ -93,7 +93,7 @@ public class RestartStrategies {
     }
 
     /**
-     * 生成一个ExponentialDelayRestartStrategyConfiguration。
+     * 生成一个 ExponentialDelayRestartStrategyConfiguration。
      *
      * Generates a ExponentialDelayRestartStrategyConfiguration.
      *

@@ -24,6 +24,11 @@ import org.apache.flink.table.factories.ComponentFactory;
 import java.util.Map;
 
 /**
+ * 创建{@link Executor}的工厂。
+ *
+ * <p>该工厂与Java的服务提供者接口(Service Provider Interfaces, SPI)一起使用，用于发现。使用一组描述所需配置的
+ *   规范化属性调用工厂。这些属性可能包括执行配置，如水印间隔、最大并行度等，特定于表的初始化配置，如查询是否应该以批处理模式执行。
+ *
  * Factory that creates {@link Executor}.
  *
  * <p>This factory is used with Java's Service Provider Interfaces (SPI) for discovering. A factory

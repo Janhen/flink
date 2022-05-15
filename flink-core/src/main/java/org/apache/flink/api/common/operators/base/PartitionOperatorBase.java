@@ -36,10 +36,15 @@ import java.util.List;
 @Internal
 public class PartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, NoOpFunction> {
 
+    // 分区方法
     public static enum PartitionMethod {
+        // 负载均衡
         REBALANCE,
+        // hash
         HASH,
+        // 范围
         RANGE,
+        // 自定义
         CUSTOM;
     }
 

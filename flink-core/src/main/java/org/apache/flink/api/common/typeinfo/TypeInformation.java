@@ -32,6 +32,9 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * TypeInformation是Flink类型系统的核心类。Flink需要用于用户函数输入或返回类型的所有类型的类型信息。这个类型信息类
+ * 充当生成序列化器和比较器的工具，并执行语义检查，例如用作联接分组键的字段是否实际存在。
+ *
  * TypeInformation is the core class of Flink's type system. Flink requires a type information for
  * all types that are used as input or return type of a user function. This type information class
  * acts as the tool to generate serializers and comparators, and to perform semantic checks such as

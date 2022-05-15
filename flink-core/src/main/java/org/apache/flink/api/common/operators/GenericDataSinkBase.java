@@ -41,6 +41,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 作为数据接收器的节点的操作符，存储接收到的数据。存储数据的方式由{@link org.apache.flink.api.common.io.OutputFormat}处理。
+ *
  * Operator for nodes that act as data sinks, storing the data they receive. The way the data is
  * stored is handled by the {@link org.apache.flink.api.common.io.OutputFormat}.
  */

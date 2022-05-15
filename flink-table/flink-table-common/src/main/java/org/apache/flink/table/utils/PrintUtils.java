@@ -145,6 +145,7 @@ public class PrintUtils {
      * @param nullColumn The string representation of a null value
      * @param deriveColumnWidthByType A flag to indicate whether the column width is derived from
      *     type (true) or content (false).
+     *     一个标志，用于指示列宽度是派生自类型(true)还是派生自内容(false)。
      * @param printRowKind A flag to indicate whether print row kind info
      * @param sessionTimeZone The time zone of current session.
      */
@@ -388,6 +389,7 @@ public class PrintUtils {
                 } else {
                     return field;
                 }
+                // J: 针对 Map 类型的打印
             case MAP:
                 LogicalType keyType = ((MapType) fieldType).getKeyType();
                 LogicalType valueType = ((MapType) fieldType).getValueType();
@@ -422,6 +424,8 @@ public class PrintUtils {
     }
 
     /**
+     * 格式化TIMESTAMP和TIMESTAMP_LTZ类型数据的打印内容，考虑用户配置的时区。
+     *
      * Formats the print content of TIMESTAMP and TIMESTAMP_LTZ type data, consider the user
      * configured time zone.
      */
@@ -456,8 +460,10 @@ public class PrintUtils {
                 } else if (timestampField instanceof TimestampData) {
                     instant = ((TimestampData) timestampField).toInstant();
                 } else if (timestampField instanceof Integer) {
+                    // J: 从 epoch 秒构造
                     instant = Instant.ofEpochSecond((Integer) timestampField);
                 } else if (timestampField instanceof Long) {
+                    // J: 从 epoch 毫秒构造
                     instant = Instant.ofEpochMilli((Long) timestampField);
                 }
                 if (instant != null) {
@@ -473,6 +479,7 @@ public class PrintUtils {
     }
 
     /** Formats the print content of TIME type data. */
+    // 格式化TIME类型数据的打印内容
     private static Object formatTimeField(Object timeField) {
         if (timeField.getClass().isAssignableFrom(int.class) || timeField instanceof Integer) {
             return unixTimeToString((int) timeField);
@@ -589,6 +596,8 @@ public class PrintUtils {
     }
 
     /**
+     * 这里我们考虑两个流行的时间戳类:LocalDateTime和java.sql.Timestamp。
+     *
      * Here we consider two popular class for timestamp: LocalDateTime and java.sql.Timestamp.
      *
      * <p>According to LocalDateTime's comment, the string output will be one of the following

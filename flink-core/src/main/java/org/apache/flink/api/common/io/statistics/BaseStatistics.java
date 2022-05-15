@@ -22,6 +22,7 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Interface describing the basic statistics that can be obtained from the input. */
+// 描述从输入中可以获得的基本统计信息的接口
 @Public
 public interface BaseStatistics {
 
@@ -53,6 +54,8 @@ public interface BaseStatistics {
     public long getNumberOfRecords();
 
     /**
+     * 获取记录的平均宽度(以字节为单位)。
+     *
      * Gets the average width of a record, in bytes.
      *
      * @return The average width of a record in bytes.

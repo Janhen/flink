@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 @Internal
 class StatementSetImpl implements StatementSet {
     private final TableEnvironmentInternal tableEnvironment;
+    // J: insert ... 操作
     private final List<ModifyOperation> operations = new ArrayList<>();
 
     protected StatementSetImpl(TableEnvironmentInternal tableEnvironment) {
@@ -103,6 +104,18 @@ class StatementSetImpl implements StatementSet {
     }
 
     /**
+     *
+     * 作为批处理获得所有语句和Tables的json计划。
+     *
+     * <p>json计划是为语句和表优化的ExecNode计划的字符串json表示。ExecNode计划可以序列化为json计划，json计划可以
+     *   反序列化为ExecNode计划。
+     *
+     * <p>在执行此方法时，不会清除添加的语句和表。
+     *
+     * <p>注意:只有Blink规划器支持此方法。
+     *
+     * <p><b>NOTES<b>:这是一个实验性的特性。
+     *
      * Get the json plan of the all statements and Tables as a batch.
      *
      * <p>The json plan is the string json representation of an optimized ExecNode plan for the

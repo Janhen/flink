@@ -31,6 +31,10 @@ import static org.apache.flink.configuration.description.TextElement.code;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /**
+ * 这个类保存了Flink的table模块使用的配置常量。
+ *
+ * <p>仅用于Blink计划器。注意:该类中的所有选项键必须以"table.exec"开头。
+ *
  * This class holds configuration constants used by Flink's table module.
  *
  * <p>This is only used for the Blink planner.
@@ -73,6 +77,10 @@ public class ExecutionConfigOptions {
                                     + "watermarks from this source while it is idle. "
                                     + "Default value is 0, which means detecting source idleness is not enabled.");
 
+    // J: CDC 相关的去重
+    // 指示作业中的CDC (Change Data Capture)源“+”是否会产生重复的更改事件，需要框架去重并获得一致的结果。CDC源是
+    // 指产生完整变更事件的源，包括INSERTUPDATE_BEFORE“+”UPDATE_AFTERDELETE，例如Debezium格式的Kafka源。
+    // 该配置默认为false
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Boolean> TABLE_EXEC_SOURCE_CDC_EVENTS_DUPLICATE =
             key("table.exec.source.cdc-events-duplicate")
@@ -109,6 +117,9 @@ public class ExecutionConfigOptions {
     //  Sink Options
     // ------------------------------------------------------------------------
 
+    // 表上的NOT NULL列约束强制“+”空值不能插入到表中。Flink支持、“error”(默认)和“drop”强制行为。默认情况下，
+    // Flink将检查值，并在null值将写入NOT null列时抛出运行时异常。用户可以将行为从“drop”改为，无声地删除这些记录，
+    // 而不会抛出异常。
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<NotNullEnforcer> TABLE_EXEC_SINK_NOT_NULL_ENFORCER =
             key("table.exec.sink.not-null-enforcer")
@@ -160,6 +171,7 @@ public class ExecutionConfigOptions {
                                     + "If it is too small, may cause intermediate merging. But if it is too large, "
                                     + "it will cause too many files opened at the same time, consume memory and lead to random reading.");
 
+    // 是否异步合并已排序的溢出文件。
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Boolean> TABLE_EXEC_SORT_ASYNC_MERGE_ENABLED =
             key("table.exec.sort.async-merge-enabled")
@@ -270,6 +282,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Async Lookup Options
     // ------------------------------------------------------------------------
+    // 异步查找连接可以触发的异步io操作的最大数量
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Integer> TABLE_EXEC_ASYNC_LOOKUP_BUFFER_CAPACITY =
             key("table.exec.async-lookup.buffer-capacity")
@@ -277,6 +290,7 @@ public class ExecutionConfigOptions {
                     .withDescription(
                             "The max number of async i/o operation that the async lookup join can trigger.");
 
+    // 异步操作完成的异步超时。
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Duration> TABLE_EXEC_ASYNC_LOOKUP_TIMEOUT =
             key("table.exec.async-lookup.timeout")
@@ -378,6 +392,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------------------------
 
     /** The enforcer to guarantee NOT NULL column constraint when writing data into sink. */
+    // 当向sink写入数据时，强制保证NOT NULL列约束。
     public enum NotNullEnforcer {
         /** Throws runtime exception when writing null values into NOT NULL column. */
         ERROR,
@@ -386,6 +401,7 @@ public class ExecutionConfigOptions {
     }
 
     /** Upsert materialize strategy before sink. */
+    // 在下沉之前先实现战略。
     public enum UpsertMaterialize {
 
         /** In no case will materialize operator be added. */

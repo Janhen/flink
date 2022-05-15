@@ -82,6 +82,8 @@ public interface RichFunction extends Function {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取包含UDF运行时信息的上下文，例如函数的并行度、函数的子任务索引或执行函数的任务的名称。
+     *
      * Gets the context that contains information about the UDF's runtime, such as the parallelism
      * of the function, the subtask index of the function, or the name of the task that executes the
      * function.

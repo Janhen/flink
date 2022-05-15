@@ -31,6 +31,10 @@ import java.util.Map;
 import static org.apache.flink.table.functions.BuiltInFunctionDefinitions.STREAM_RECORD_TIMESTAMP;
 
 /**
+ * 将StreamRecord的时间戳提取到行时间属性中。
+ *
+ * <p>注:此提取器仅适用于streamtablesource。
+ *
  * Extracts the timestamp of a StreamRecord into a rowtime attribute.
  *
  * <p>Note: This extractor only works for StreamTableSources.

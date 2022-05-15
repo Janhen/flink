@@ -46,6 +46,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * RuntimeContext包含函数在其中执行的上下文信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息
+ * (比如当前的并行度)和其他结构，比如累加器和广播变量。
+ *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
  * contextual information (such as the current parallelism) and other constructs like accumulators
@@ -94,6 +97,9 @@ public interface RuntimeContext {
     int getMaxNumberOfParallelSubtasks();
 
     /**
+     * 获取此并行子任务的编号。编号从0开始，一直到parallelism-1 (parallelism由
+     * {@link #getNumberOfParallelSubtasks()}返回)。
+     *
      * Gets the number of this parallel subtask. The numbering starts from 0 and goes up to
      * parallelism-1 (parallelism as returned by {@link #getNumberOfParallelSubtasks()}).
      *

@@ -19,9 +19,13 @@
 package org.apache.flink.table.runtime.operators.rank;
 
 /** An enumeration of rank type, usable to show how exactly generate rank number. */
+// 等级类型的枚举，可用来显示如何准确地生成等级数。
 public enum RankType {
 
     /**
+     * 根据顺序为分区内的每一行返回一个惟一的序列号，从每个分区中的第一行的1开始，不重复或跳过每个分区的排名结果中的数字。
+     * 如果行集中有重复的值，排名数字将被任意分配。
+     *
      * Returns a unique sequential number for each row within the partition based on the order,
      * starting at 1 for the first row in each partition and without repeating or skipping numbers
      * in the ranking result of each partition. If there are duplicate values within the row set,
@@ -30,6 +34,9 @@ public enum RankType {
     ROW_NUMBER,
 
     /**
+     * 根据顺序为分区内每个不同的行返回唯一的秩号，每个分区中的第一行从1开始，重复值的秩相同，并在秩之间留出间隔;这个
+     * 间隔出现在重复值之后的序列中。
+     *
      * Returns a unique rank number for each distinct row within the partition based on the order,
      * starting at 1 for the first row in each partition, with the same rank for duplicate values
      * and leaving gaps between the ranks; this gap appears in the sequence after the duplicate

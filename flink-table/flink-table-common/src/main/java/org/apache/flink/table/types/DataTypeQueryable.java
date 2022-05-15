@@ -21,6 +21,8 @@ package org.apache.flink.table.types;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 指示可以从实现此接口的类中检索{@link DataType}。
+ *
  * Indicates that a {@link DataType} can be retrieved from a class that implements this interfaces.
  */
 @Internal

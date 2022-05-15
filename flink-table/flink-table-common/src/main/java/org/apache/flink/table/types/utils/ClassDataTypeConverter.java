@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * 基于类的数据类型提取器，支持为输入和输出转换提取可明确识别的数据类型。
+ *
  * Class-based data type extractor that supports extraction of clearly identifiable data types for
  * input and output conversion.
  *

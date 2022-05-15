@@ -58,6 +58,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasFa
 public final class TypeMappingUtils {
 
     /**
+     * 计算一个{@link TableSchema}中所选逻辑字段对应的物理字段的索引。
+     *
      * Computes indices of physical fields corresponding to the selected logical fields of a {@link
      * TableSchema}.
      *

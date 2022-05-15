@@ -174,13 +174,16 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
     // source/sink,
     // and this should always be true. This avoids too many hard code.
     private static final boolean IS_STREAM_TABLE = true;
+    // J: 元数据...
     private final CatalogManager catalogManager;
     private final ModuleManager moduleManager;
     private final OperationTreeBuilder operationTreeBuilder;
+    // J: DML 操作(insert)
     private final List<ModifyOperation> bufferedModifyOperations = new ArrayList<>();
 
     protected final TableConfig tableConfig;
     protected final Executor execEnv;
+    // J: 已有的函数，包含注册未非临时的自定义函数...
     protected final FunctionCatalog functionCatalog;
     protected final Planner planner;
     private final boolean isStreamingMode;

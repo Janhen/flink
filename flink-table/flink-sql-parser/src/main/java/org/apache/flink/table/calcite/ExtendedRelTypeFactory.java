@@ -24,6 +24,10 @@ import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 
 /**
+ * 一个用于创建包含flink特定扩展的{@link RelDataType}实例的工厂。
+ *
+ * <p>该接口的存在是因为解析器模块无法访问规划器的类型工厂。
+ *
  * A factory for creating {@link RelDataType} instances including Flink-specific extensions.
  *
  * <p>This interface exists because the parser module has no access to the planner's type factory.

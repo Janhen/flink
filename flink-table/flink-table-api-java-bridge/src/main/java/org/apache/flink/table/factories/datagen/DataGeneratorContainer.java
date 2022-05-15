@@ -34,6 +34,7 @@ public class DataGeneratorContainer {
     private final DataGenerator generator;
 
     /** Generator config options, for validation. */
+    // 生成器配置选项，用于验证。
     private final Set<ConfigOption<?>> options;
 
     private DataGeneratorContainer(DataGenerator generator, Set<ConfigOption<?>> options) {

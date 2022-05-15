@@ -29,6 +29,17 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 时间戳逻辑类型，不带时区，包含{@code year-month-day hour:minute:second[.fraction]}，精度为纳秒，取值范围
+ * 为{@code 0000-01-01 00:00:00.000000000}到{@code 99999-12-31 23:59:59.999999999}。与SQL标准相比，
+ * 不支持闰秒(23:59:60和23:59:61)，因为其语义更接近{@link java.time.LocalDateTime}。
+ *
+ * <p>序列化的字符串表示形式是{@code TIMESTAMP(p)}，其中{@code p}是小数秒的位数(=精度)。{@code p}的值必须
+ *   在0到9之间(包括两者)。如果没有指定精度，{@code p}等于6。{@code TIMESTAMP(p) WITHOUT TIME ZONE}是这个
+ *   类型的同义词。
+ *
+ * <p>不支持从{@code long}到{@code long}的转换，因为这意味着时区。但是，这种类型不受时区限制。获取更多
+ * {@link java.time。使用{@link LocalZonedTimestampType}。
+ *
  * Logical type of a timestamp WITHOUT time zone consisting of {@code year-month-day
  * hour:minute:second[.fractional]} with up to nanosecond precision and values ranging from {@code
  * 0000-01-01 00:00:00.000000000} to {@code 9999-12-31 23:59:59.999999999}. Compared to the SQL

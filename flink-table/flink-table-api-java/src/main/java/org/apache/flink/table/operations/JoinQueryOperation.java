@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Table operation that joins two relational operations based on given condition. */
+// 基于给定条件连接两个关系操作的表操作。
 @Internal
 public class JoinQueryOperation implements QueryOperation {
 

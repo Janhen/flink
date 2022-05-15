@@ -24,6 +24,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 提供程序，它生成Java {@link DataStream}作为{@link ScanTableSource}的运行时实现。
+ *
  * Provider that produces a Java {@link DataStream} as a runtime implementation for {@link
  * ScanTableSource}.
  *

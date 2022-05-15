@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Set;
 
 /** Base class of Strategy to choose different rank process function. */
+// 基类策略选择不同秩次的过程函数。
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = RankProcessStrategy.UndefinedStrategy.class),

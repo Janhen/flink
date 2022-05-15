@@ -61,6 +61,7 @@ public class DataGenTableSourceFactory implements DynamicTableSourceFactory {
 
     @Override
     public Set<ConfigOption<?>> optionalOptions() {
+        // J: 可选的配置项
         Set<ConfigOption<?>> options = new HashSet<>();
         options.add(DataGenOptions.ROWS_PER_SECOND);
         options.add(DataGenOptions.NUMBER_OF_ROWS);

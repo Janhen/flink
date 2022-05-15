@@ -79,6 +79,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeUtils.toInte
 public final class DataTypeUtils {
 
     /**
+     * 通过返回只包含给定索引路径字段的新数据类型，投射(可能嵌套)行数据类型。
+     *
      * Projects a (possibly nested) row data type by returning a new data type that only includes
      * fields of the given index paths.
      *
@@ -159,6 +161,7 @@ public final class DataTypeUtils {
     }
 
     /** Appends the given list of fields to an existing row data type. */
+    // 将给定的字段列表追加到现有的行数据类型
     public static DataType appendRowFields(DataType dataType, List<DataTypes.Field> fields) {
         Preconditions.checkArgument(
                 hasRoot(dataType.getLogicalType(), LogicalTypeRoot.ROW), "Row data type expected.");

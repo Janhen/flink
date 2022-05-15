@@ -24,6 +24,10 @@ import org.apache.calcite.sql.parser.SqlParserPos;
 /**
  * 定义可以在"INSERT"关键字之后立即出现的关键字。
  *
+ * <p>标准SQL没有这样的关键字，但是扩展项目可以定义它们。
+ *
+ * <p>>这个类几乎是{@link org.apache.calcite.sql.SqlInsertKeyword}的扩展。
+ *
  * Defines the keywords that can occur immediately after the "INSERT" keyword.
  *
  * <p>Standard SQL has no such keywords, but extension projects may define them.

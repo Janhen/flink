@@ -56,6 +56,10 @@ import static org.apache.flink.table.types.extraction.FunctionMappingExtractor.c
 import static org.apache.flink.table.types.extraction.FunctionMappingExtractor.createReturnTypeResultExtraction;
 
 /**
+ * 基于反射的实用程序，用于从支持的{@link UserDefinedFunction}子类中提取{@link TypeInference}。
+ *
+ * <p>此实用程序的行为可能受优先级高于反射信息的{@link DataTypeHint}和{@link FunctionHint}的影响。
+ *
  * Reflection-based utility for extracting a {@link TypeInference} from a supported subclass of
  * {@link UserDefinedFunction}.
  *

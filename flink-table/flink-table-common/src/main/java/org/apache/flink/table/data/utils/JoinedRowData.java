@@ -36,6 +36,7 @@ import java.util.Objects;
 public class JoinedRowData implements RowData {
 
     private RowKind rowKind = RowKind.INSERT;
+    // 连接行
     private RowData row1;
     private RowData row2;
 

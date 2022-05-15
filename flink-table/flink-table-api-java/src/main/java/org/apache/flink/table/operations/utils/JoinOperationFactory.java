@@ -45,6 +45,8 @@ final class JoinOperationFactory {
     private final EquiJoinExistsChecker equiJoinExistsChecker = new EquiJoinExistsChecker();
 
     /**
+     * 创建一个有效的{@link JoinQueryOperation}操作。
+     *
      * Creates a valid {@link JoinQueryOperation} operation.
      *
      * <p>It performs validations such as:
@@ -88,6 +90,7 @@ final class JoinOperationFactory {
 
         Boolean equiJoinExists = condition.accept(equiJoinExistsChecker);
         if (correlated && right instanceof CalculatedQueryOperation && joinType != JoinType.INNER) {
+            // 与表函数的外侧左外连接的谓词只能为空或字面上为真。
             throw new ValidationException(
                     "Predicate for lateral left outer join with table function can only be empty or literal true.");
         } else if (!equiJoinExists) {

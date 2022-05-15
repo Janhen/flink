@@ -39,6 +39,7 @@ public abstract class ThreadLocalCache<K, V> {
 
     // 默认维护一个有界的 Map
     private final ThreadLocal<BoundedMap<K, V>> cache = new ThreadLocal<>();
+    // J: 每个线程最大的 缓存大小
     private final int maxSizePerThread;
 
     protected ThreadLocalCache() {

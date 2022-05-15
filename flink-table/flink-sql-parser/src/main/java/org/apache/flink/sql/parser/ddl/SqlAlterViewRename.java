@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 /** ALTER DDL to rename a view. */
+// 修改DDL来重命名视图。
 public class SqlAlterViewRename extends SqlAlterView {
 
     private final SqlIdentifier newViewIdentifier;

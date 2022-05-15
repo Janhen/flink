@@ -42,6 +42,10 @@ public interface EncodingFormat<I> extends Format {
     I createRuntimeEncoder(DynamicTableSink.Context context, DataType physicalDataType);
 
     /**
+     * 返回元数据键及其对应的数据类型的映射，这些数据类型可被此格式用于写入。默认情况下，此方法返回一个空映射。
+     *
+     * <p>元数据列向表的模式添加额外的列。编码格式负责在消费行的末尾接受所请求的元数据列，并将它们持久化。
+     *
      * Returns the map of metadata keys and their corresponding data types that can be consumed by
      * this format for writing. By default, this method returns an empty map.
      *

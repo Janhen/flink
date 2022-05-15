@@ -34,6 +34,7 @@ import java.util.Map;
 import static org.apache.flink.table.data.util.RowDataUtil.isAccumulateMsg;
 
 /** Aggregate Function used for the local groupby (without window) aggregate in miniBatch mode. */
+// 聚合在miniBatch模式下对本地组(不含窗口)进行聚合时使用的函数
 public class MiniBatchLocalGroupAggFunction
         extends MapBundleFunction<RowData, RowData, RowData, RowData> {
 

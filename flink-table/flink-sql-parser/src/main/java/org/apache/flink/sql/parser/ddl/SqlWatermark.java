@@ -63,6 +63,7 @@ public class SqlWatermark extends SqlCall {
         return ImmutableNullableList.of(eventTimeColumnName, watermarkStrategy);
     }
 
+    // J: 解析特定的 SQL 语法
     @Override
     public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
         writer.keyword("WATERMARK");

@@ -41,6 +41,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TopN函数可以处理仅插入流。
+ *
+ * <p>输入流应该只包含INSERT消息。
+ *
  * A TopN function could handle insert-only stream.
  *
  * <p>The input stream should only contain INSERT messages.

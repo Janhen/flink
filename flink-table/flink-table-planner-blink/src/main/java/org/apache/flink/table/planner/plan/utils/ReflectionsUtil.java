@@ -32,6 +32,7 @@ public class ReflectionsUtil {
         return scanSubClasses(packageName, targetClass, false, false);
     }
 
+    // J:扫描子类    可指定是否包含接口、抽象类
     public static <T> Set<Class<? extends T>> scanSubClasses(
             String packageName,
             Class<T> targetClass,

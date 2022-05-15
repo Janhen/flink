@@ -27,6 +27,10 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 /**
+ * 用于解析字符串内部表达式的临时实用程序。它解析的表达式与Scala Expression DSL所能接受的表达式完全相同。
+ *
+ * <p>{@link PlannerExpressionParser}被{@link ExpressionParser}用来解析表达式。
+ *
  * Temporary utility for parsing expressions inside a String. This parses exactly the same
  * expressions that would be accepted by the Scala Expression DSL.
  *

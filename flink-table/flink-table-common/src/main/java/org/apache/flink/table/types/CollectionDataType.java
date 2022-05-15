@@ -37,6 +37,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 import static org.apache.flink.table.types.logical.utils.LogicalTypeUtils.toInternalConversionClass;
 
 /**
+ * 包含元素类型的数据类型(例如{@code ARRAY}或{@code MULTISET})。
+ *
  * A data type that contains an element type (e.g. {@code ARRAY} or {@code MULTISET}).
  *
  * @see DataTypes for a list of supported data types

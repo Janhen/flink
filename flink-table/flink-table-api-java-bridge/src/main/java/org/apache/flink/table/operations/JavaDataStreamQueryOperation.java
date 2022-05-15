@@ -39,6 +39,11 @@ import java.util.Optional;
  *
  * J: 将 DataStream 转换成一个 Table 的过程中，需要生成表结构，此类用于描述。。。
  *
+ * <p><p>此操作可以只公开部分字段，或者更改底层{@link DataStream}的
+ *   {@link org.apache.flink.api.common.typeutils.CompositeType}中可用字段的顺序。
+ *   {@link JavaDataStreamQueryOperation#getFieldIndices()}描述了{@link TableSchema}字段与
+ *   {@link org.apache.flink.api.common.typeutils.CompositeType}字段之间的映射。
+ *
  * Describes a relational operation that reads from a {@link DataStream}.
  *
  * <p>This operation may expose only part, or change the order of the fields available in a {@link

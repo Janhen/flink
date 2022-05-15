@@ -40,6 +40,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 在按键和组窗口分组的输入行子集上执行计算的关系操作。它与组窗口的{@link AggregateQueryOperation}不同。
+ *
  * Relational operation that performs computations on top of subsets of input rows grouped by key
  * and group window. It differs from {@link AggregateQueryOperation} by the group window.
  */

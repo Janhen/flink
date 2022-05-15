@@ -36,6 +36,8 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /** CREATE FUNCTION DDL sql call. */
+// 创建函数DDL sql调用
+// J: 指定语言中引用
 public class SqlCreateFunction extends SqlCreate {
 
     public static final SqlSpecialOperator OPERATOR =

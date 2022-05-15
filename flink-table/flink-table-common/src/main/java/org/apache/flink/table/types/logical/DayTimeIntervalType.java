@@ -28,6 +28,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 一组时间间隔类型的逻辑类型。必须将该类型参数化为以下分辨率之一，精度最高达纳秒:天的间隔、天到小时的间隔、天到分钟的间隔、
+ * 天到秒的间隔、小时的间隔、小时到分钟的间隔、小时到秒的间隔、分钟的间隔、分钟到秒的间隔、秒的间隔。
+ *
  * Logical type for a group of day-time interval types. The type must be parameterized to one of the
  * following resolutions with up to nanosecond precision: interval of days, interval of days to
  * hours, interval of days to minutes, interval of days to seconds, interval of hours, interval of

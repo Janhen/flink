@@ -32,6 +32,12 @@ import org.apache.flink.table.types.inference.TypeInference;
 /**
  * 用户定义的标量函数的基类。用户定义的标量函数将零、一个或多个标量值映射到一个新的标量值。
  *
+ * <p>一个{@link ScalarFunction}的行为可以通过实现一个自定义的计算方法来定义。求值方法必须公开声明，并命名为
+ *   <code>eval<code>。也可以通过实现多个名为<code>eval<code>的方法重载求值方法。
+ *
+ * <p>默认情况下，使用反射自动提取输入和输出数据类型。如果反射信息不够充分，可以用{@link DataTypeHint}和
+ *   {@link FunctionHint}注释来支持和充实它。
+ *
  * Base class for a user-defined scalar function. A user-defined scalar function maps zero, one, or
  * multiple scalar values to a new scalar value.
  *

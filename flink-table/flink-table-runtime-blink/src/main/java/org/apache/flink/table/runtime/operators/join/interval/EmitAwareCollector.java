@@ -22,6 +22,8 @@ import org.apache.flink.table.data.RowData;
 import org.apache.flink.util.Collector;
 
 /**
+ * 收集器包装[[org.apache.flink.table.dataformat]。并跟踪一行是否已由内部收集器发出。
+ *
  * Collector to wrap a [[org.apache.flink.table.dataformat.RowData]] and to track whether a row has
  * been emitted by the inner collector.
  */

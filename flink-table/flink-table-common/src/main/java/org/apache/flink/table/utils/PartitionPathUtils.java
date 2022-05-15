@@ -104,6 +104,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 转义路径名。
+     *
      * Escapes a path name.
      *
      * @param path The path to escape.
@@ -138,6 +140,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从path创建分区规范。
+     *
      * Make partition spec from path.
      *
      * @param currPath partition file path.

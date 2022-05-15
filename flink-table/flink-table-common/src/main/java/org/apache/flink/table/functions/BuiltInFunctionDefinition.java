@@ -34,6 +34,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
+ * 内建函数的定义。它通过引用相等实现了不同模块之间的惟一标识。
+ *
+ * <p>与普通的{@link FunctionDefinition}相比，内置函数 * 有一个默认名称。此默认名称用于在解析期间查找编目中的函数。
+ *
+ * <p>相等由引用相等定义。
+ *
  * Definition of a built-in function. It enables unique identification across different modules by
  * reference equality.
  *

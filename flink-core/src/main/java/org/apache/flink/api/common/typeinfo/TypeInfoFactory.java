@@ -24,6 +24,9 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
+ * 用于实现类型信息工厂的基类。类型信息工厂允许将用户定义的{@link TypeInformation}插入到Flink类型系统中。如果对应
+ * 的类型已经用{@link TypeInfo}注释，则在类型提取阶段调用该工厂。在类型层次结构中，向上遍历时会选择最近的工厂。
+ *
  * Base class for implementing a type information factory. A type information factory allows for
  * plugging-in user-defined {@link TypeInformation} into the Flink type system. The factory is
  * called during the type extraction phase if the corresponding type has been annotated with {@link

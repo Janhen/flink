@@ -23,6 +23,7 @@ import org.apache.flink.table.data.RowData;
 import java.io.Serializable;
 
 /** The {@link RecordCounter} is used to count the number of input records under the current key. */
+// {@link RecordCounter}用于统计当前键下的输入记录的数量。
 public abstract class RecordCounter implements Serializable {
 
     private static final long serialVersionUID = 1L;

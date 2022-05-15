@@ -25,6 +25,10 @@ import org.apache.flink.configuration.ConfigOption;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 这个类保存了Flink表规划器模块使用的配置常量。
+ *
+ * <p>仅用于Blink计划器。注意:该类中的所有选项键必须以"table.optimizer"开头。
+ *
  * This class holds configuration constants used by Flink's table planner module.
  *
  * <p>This is only used for the Blink planner.

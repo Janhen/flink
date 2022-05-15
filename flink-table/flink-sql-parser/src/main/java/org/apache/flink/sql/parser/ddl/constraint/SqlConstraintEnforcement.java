@@ -22,6 +22,7 @@ import org.apache.calcite.sql.SqlLiteral;
 import org.apache.calcite.sql.parser.SqlParserPos;
 
 /** Enumeration of SQL constraint enforcement. */
+// SQL约束强制的枚举
 public enum SqlConstraintEnforcement {
     ENFORCED("ENFORCED"),
     NOT_ENFORCED("NOT ENFORCED");

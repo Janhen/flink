@@ -30,6 +30,9 @@ import org.apache.calcite.util.Litmus;
 import org.apache.calcite.util.Util;
 
 /**
+ * 集合类型的扩展 sql 类型名称规范，与{@link SqlCollectionTypeNameSpec}不同，支持为元素类型名称
+ * 添加 NULL 或 NOT NULL 后缀(此语法不属于标准sql)。
+ *
  * A extended sql type name specification of collection type, different with {@link
  * SqlCollectionTypeNameSpec}, we support NULL or NOT NULL suffix for the element type name(this
  * syntax does not belong to standard SQL).

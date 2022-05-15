@@ -40,6 +40,12 @@ import static org.apache.flink.table.utils.EncodingUtils.escapeIdentifier;
 import static org.apache.flink.table.utils.EncodingUtils.escapeSingleQuotes;
 
 /**
+ * 字段序列的逻辑类型。字段由字段名、字段类型和可选的描述组成。表中一行最具体的类型是行类型。在这种情况下，行中的每一列
+ * 都对应于与列具有相同序号位置的行类型的字段。与SQL标准相比，可选字段描述简化了复杂结构的处理。
+ *
+ * <p>序列化的字符串表示形式是{@code ROW<n0 t0 'd0'， n1 t1 'd1'，…其中，{@code n}是字段的唯一名称，{@code t}
+ *   是字段的逻辑类型，{@code d}是字段的描述。{@code ROW(…)}是更接近SQL标准的同义词。
+ *
  * Logical type of a sequence of fields. A field consists of a field name, field type, and an
  * optional description. The most specific type of a row of a table is a row type. In this case,
  * each column of the row corresponds to the field of the row type that has the same ordinal

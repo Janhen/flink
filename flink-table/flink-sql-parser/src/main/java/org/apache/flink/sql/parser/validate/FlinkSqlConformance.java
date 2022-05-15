@@ -21,6 +21,7 @@ package org.apache.flink.sql.parser.validate;
 import org.apache.calcite.sql.validate.SqlConformance;
 
 /** Sql conformance used for flink to set specific sql dialect parser. * */
+// 用于flink设置特定Sql方言解析器的Sql一致性。
 public enum FlinkSqlConformance implements SqlConformance {
     /** Calcite's default SQL behavior. */
     DEFAULT,

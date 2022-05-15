@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 表定义的表约束。(E) 11.3 &lt;表定义&gt;:
+ *
  * Table constraint of a table definition.
  *
  * <p>Syntax from SQL-2011 IWD 9075-2:201?(E) 11.3 &lt;table definition&gt;:

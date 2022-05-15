@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Objects;
 
 /** SQL call for "SET" and "SET 'key' = 'value'". */
+// SQL调用“SET”和“SET 'key' = 'value'”。
 @Internal
 public class SqlSet extends SqlCall {
 

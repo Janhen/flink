@@ -32,6 +32,9 @@ import java.util.Objects;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeUtils.toInternalConversionClass;
 
 /**
+ * 此类型是一个临时解决方案，通过新堆栈完全支持旧类型系统堆栈。许多类型可以直接映射到新的类型系统，但是，一些类型(如
+ * {@code DECIMAL}、pojo或case类)需要特殊处理。
+ *
  * This type is a temporary solution to fully support the old type system stack through the new
  * stack. Many types can be mapped directly to the new type system, however, some types such as
  * {@code DECIMAL}, POJOs, or case classes need special handling.

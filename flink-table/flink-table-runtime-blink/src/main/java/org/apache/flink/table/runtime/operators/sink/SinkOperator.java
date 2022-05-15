@@ -32,6 +32,8 @@ import org.apache.flink.table.data.RowData;
 import org.apache.flink.table.data.TimestampData;
 
 /**
+ * 用于执行{@link SinkFunction SinkFunctions}的{@link StreamOperator}。该操作符还检查是否将空值写入NOT null列。
+ *
  * A {@link StreamOperator} for executing {@link SinkFunction SinkFunctions}. This operator also
  * checks writing null values into NOT NULL columns.
  */

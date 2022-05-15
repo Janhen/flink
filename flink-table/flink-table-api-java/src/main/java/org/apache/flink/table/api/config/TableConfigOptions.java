@@ -27,6 +27,10 @@ import org.apache.flink.table.api.SqlDialect;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
+ * 这个类保存着{@link org.apache.flink.configuration。ConfigOption}被表规划器使用。
+ *
+ * <p>注意:该类中的所有选项键必须以"table"开头。
+ *
  * This class holds {@link org.apache.flink.configuration.ConfigOption}s used by table planner.
  *
  * <p>NOTE: All option keys in this class must start with "table".

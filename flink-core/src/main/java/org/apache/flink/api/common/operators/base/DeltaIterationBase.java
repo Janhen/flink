@@ -37,6 +37,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * DeltaIteration类似于{@link BulkIterationBase}，但在各个迭代步骤中维护状态。该状态称为<i>解决方案集<i>，可以
+ * 通过{@link #getSolutionSet()}获得，并通过与它连接(或CoGrouping)来访问。解决方案集通过产生一个增量来更新，这个
+ * 增量在每个迭代步骤结束时合并到解决方案集中。
+ *
  * A DeltaIteration is similar to a {@link BulkIterationBase}, but maintains state across the
  * individual iteration steps. The state is called the <i>solution set</i>, can be obtained via
  * {@link #getSolutionSet()}, and be accessed by joining (or CoGrouping) with it. The solution set

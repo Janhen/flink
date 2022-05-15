@@ -127,6 +127,8 @@ import static org.apache.flink.table.types.utils.TypeConversions.fromDataToLogic
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * 转换从Flink的特定关系表示:{@link QueryOperation}到 calcite 的特定关系表示:{@link RelNode}。
+ *
  * Converter from Flink's specific relational representation: {@link QueryOperation} to Calcite's
  * specific relational representation: {@link RelNode}.
  */
