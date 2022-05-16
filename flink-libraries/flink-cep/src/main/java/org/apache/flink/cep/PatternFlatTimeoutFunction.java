@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 模式超时函数的基本接口，它可以产生多个结果元素。使用部分事件的映射调用模式平面超时函数，这些事件由它们的名称和超时
+ * 发生时的时间戳标识。这些名称由{@link org.apache.flink.cep.pattern.Pattern}定义。指定受追捧的模式。此外，还
+ * 提供了一个收集器参数。收集器用于发出任意数量的结果元素。
+ *
  * Base interface for a pattern timeout function which can produce multiple resulting elements. A
  * pattern flat timeout function is called with a map of partial events which are identified by
  * their names and the timestamp when the timeout occurred. The names are defined by the {@link
@@ -45,11 +49,14 @@ import java.util.Map;
 public interface PatternFlatTimeoutFunction<IN, OUT> extends Function, Serializable {
 
     /**
+     * 给定部分模式事件的映射和超时的时间戳，生成零个或多个结果超时元素。事件由其指定的名称标识。
+     *
      * Generates zero or more resulting timeout elements given a map of partial pattern events and
      * the timestamp of the timeout. The events are identified by their specified names.
      *
      * @param pattern Map containing the partial pattern. Events are identified by their names.
      * @param timeoutTimestamp Timestamp when the timeout occurred
+     *                         超时时间戳
      * @param out Collector used to output the generated elements
      * @throws Exception This method may throw exceptions. Throwing an exception will cause the
      *     operation to fail and may trigger recovery.

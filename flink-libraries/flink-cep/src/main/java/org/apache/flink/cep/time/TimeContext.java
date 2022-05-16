@@ -22,6 +22,9 @@ import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.cep.functions.PatternProcessFunction;
 
 /**
+ * 允许访问与时间相关的特征，例如当前处理时间或当前处理元素的时间戳。用于{@link PatternProcessFunction}和
+ * {@link org.apache.flink.cep.pattern.conditions.IterativeCondition}
+ *
  * Enables access to time related characteristics such as current processing time or timestamp of
  * currently processed element. Used in {@link PatternProcessFunction} and {@link
  * org.apache.flink.cep.pattern.conditions.IterativeCondition}

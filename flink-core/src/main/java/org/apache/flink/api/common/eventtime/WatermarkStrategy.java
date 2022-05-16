@@ -143,6 +143,10 @@ public interface WatermarkStrategy<T>
     // ------------------------------------------------------------------------
 
     /**
+     * 为时间戳单调上升的情况创建水印策略。
+     *
+     * <p>水印定期生成，紧随着数据中最新的时间戳。该策略引入的延迟主要是水印产生的周期间隔。
+     *
      * Creates a watermark strategy for situations with monotonously ascending timestamps.
      *
      * <p>The watermarks are generated periodically and tightly follow the latest timestamp in the
@@ -156,6 +160,11 @@ public interface WatermarkStrategy<T>
     }
 
     /**
+     * 为记录乱序的情况创建水印策略，但您可以设置事件乱序范围的上限。无序边界B意味着一旦遇到时间戳为T的事件，就不会再
+     * 出现比{@code T - B}更早的事件。
+     *
+     * <p>水印周期性生成。该水印策略引入的延迟是周期间隔长度加上无序性边界。
+     *
      * Creates a watermark strategy for situations where records are out of order, but you can place
      * an upper bound on how far the events are out of order. An out-of-order bound B means that
      * once the an event with timestamp T was encountered, no events older than {@code T - B} will

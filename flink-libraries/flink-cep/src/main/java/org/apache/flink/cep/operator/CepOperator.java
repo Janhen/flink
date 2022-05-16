@@ -92,15 +92,20 @@ public class CepOperator<IN, KEY, OUT>
 
     ///////////////			State			//////////////
 
+    // J: 定义 nfa 相关的状态名
     private static final String NFA_STATE_NAME = "nfaStateName";
     private static final String EVENT_QUEUE_STATE_NAME = "eventQueuesStateName";
 
+    // J: NFA 编译
     private final NFACompiler.NFAFactory<IN> nfaFactory;
 
+    // J: NFAState 状态
     private transient ValueState<NFAState> computationStates;
     private transient MapState<Long, List<IN>> elementQueueState;
+    // J: 共享的缓存
     private transient SharedBuffer<IN> partialMatches;
 
+    // J: 内部时间服务
     private transient InternalTimerService<VoidNamespace> timerService;
 
     private transient NFA<IN> nfa;
@@ -109,6 +114,8 @@ public class CepOperator<IN, KEY, OUT>
     private final EventComparator<IN> comparator;
 
     /**
+     * {@link OutputTag}用于迟到事件。时间戳小于当前水印的元素将被触发。
+     *
      * {@link OutputTag} to use for late arriving events. Elements with timestamp smaller than the
      * current watermark will be emitted to this.
      */
@@ -121,6 +128,7 @@ public class CepOperator<IN, KEY, OUT>
     private transient ContextFunctionImpl context;
 
     /** Main output collector, that sets a proper timestamp to the StreamRecord. */
+    // 主输出收集器，它为StreamRecord设置适当的时间戳。
     private transient TimestampedCollector<OUT> collector;
 
     /** Wrapped RuntimeContext that limits the underlying context features. */
@@ -174,6 +182,7 @@ public class CepOperator<IN, KEY, OUT>
         super.initializeState(context);
 
         // initializeState through the provided context
+        // 通过提供的上下文initializeState
         computationStates =
                 context.getKeyedStateStore()
                         .getState(
@@ -232,10 +241,12 @@ public class CepOperator<IN, KEY, OUT>
                 processEvent(nfaState, element.getValue(), timestamp);
                 updateNFA(nfaState);
             } else {
+                // J: 缓存当前事件
                 long currentTime = timerService.currentProcessingTime();
                 bufferEvent(element.getValue(), currentTime);
 
                 // register a timer for the next millisecond to sort and emit buffered data
+                // 为下一毫秒注册一个计时器来排序和发送缓冲数据
                 timerService.registerProcessingTimeTimer(VoidNamespace.INSTANCE, currentTime + 1);
             }
 
@@ -244,6 +255,8 @@ public class CepOperator<IN, KEY, OUT>
             long timestamp = element.getTimestamp();
             IN value = element.getValue();
 
+            // 在事件时间处理中，我们假设水印的正确性。时间戳小于或等于最后一次看到的水印的事件被认为是迟到的。
+            // 如果用户指定了，则将延迟事件放在专用的侧输出中。
             // In event-time processing we assume correctness of the watermark.
             // Events with timestamp smaller than or equal with the last seen watermark are
             // considered late.
@@ -267,6 +280,8 @@ public class CepOperator<IN, KEY, OUT>
     }
 
     /**
+     * 为{@code 当前水印 + 1}注册一个计时器，这意味着每当水印前进时我们就会被触发，这是我们想要从缓冲元素队列中取出的。
+     *
      * Registers a timer for {@code current watermark + 1}, this means that we get triggered
      * whenever the watermark advances, which is what we want for working off the queue of buffered
      * elements.
@@ -280,6 +295,7 @@ public class CepOperator<IN, KEY, OUT>
     }
 
     private void bufferEvent(IN event, long currentTime) throws Exception {
+        // J: MapState 状态中存放当前事件戳的数据
         List<IN> elementsForTimestamp = elementQueueState.get(currentTime);
         if (elementsForTimestamp == null) {
             elementsForTimestamp = new ArrayList<>();
@@ -335,6 +351,10 @@ public class CepOperator<IN, KEY, OUT>
 
     @Override
     public void onProcessingTime(InternalTimer<KEY, VoidNamespace> timer) throws Exception {
+        // 1)获取关键的未决队列的元素和相应的NFA,
+        // 2)处理挂起的元素过程时间顺序和自定义比较器如果存在对食用NFA
+        // 3)更新存储状态的关键,只有存储新NFA, MapState iff状态后使用。
+
         // 1) get the queue of pending elements for the key and the corresponding NFA,
         // 2) process the pending elements in process time order and custom comparator if exists
         //		by feeding them in the NFA

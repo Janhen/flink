@@ -22,6 +22,9 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * 用于过滤给定类型元素的{@link iterativeconcondition条件}。如果一个元素不能赋值给给定的{@code T}子类型，
+ * 则该元素将被过滤掉。
+ *
  * A {@link IterativeCondition condition} which filters elements of the given type. An element is
  * filtered out iff it is not assignable to the given subtype of {@code T}.
  *

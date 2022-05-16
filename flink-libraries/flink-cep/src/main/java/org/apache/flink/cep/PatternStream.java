@@ -61,6 +61,7 @@ public class PatternStream<T> {
         this(PatternStreamBuilder.forStreamAndPattern(inputStream, pattern));
     }
 
+    // J: 时间戳相等时的比较器
     PatternStream<T> withComparator(final EventComparator<T> comparator) {
         return new PatternStream<>(builder.withComparator(comparator));
     }

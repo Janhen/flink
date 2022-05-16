@@ -26,6 +26,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * {@link PatternFlatSelectFunction}的丰富变体。作为{@link RichFunction}，它允许访问
+ * {@link org.apache.flink.api.common.functions.RuntimeContext}，并提供了设置和删除方法:
+ * {@link RichFunction#open(org.apache.flink.configuration.Configuration)}和
+ * {@link RichFunction#close()}。
+ *
  * Rich variant of the {@link PatternFlatSelectFunction}. As a {@link RichFunction}, it gives access
  * to the {@link org.apache.flink.api.common.functions.RuntimeContext} and provides setup and
  * teardown methods: {@link RichFunction#open(org.apache.flink.configuration.Configuration)} and

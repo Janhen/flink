@@ -22,6 +22,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
+ * 用于比较两个事件的自定义比较器。
+ *
  * Custom comparator used to compares two events.
  *
  * @param <T> Type of the event

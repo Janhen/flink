@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 模式超时函数的基本接口。使用包含超时部分事件的映射调用模式超时函数，这些事件可以通过它们的名称和超时发生时的时间戳
+ * 进行访问。名称依赖于{@link org.apache.flink.cep.pattern.Pattern}的定义。timeout方法只返回一个结果。如果
+ * 您想要返回多个结果，那么您必须实现{@link PatternFlatTimeoutFunction}。
+ *
  * Base interface for a pattern timeout function. A pattern timeout function is called with a map
  * containing the timed out partial events which can be accessed by their names and the timestamp
  * when the timeout occurred. The names depend on the definition of the {@link

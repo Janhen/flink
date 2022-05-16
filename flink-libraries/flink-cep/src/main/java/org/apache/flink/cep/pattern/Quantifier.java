@@ -162,6 +162,7 @@ public class Quantifier {
     }
 
     /** Properties that a {@link Quantifier} can have. Not all combinations are valid. */
+    // {@link Quantifier}可以拥有的属性。不是所有的组合都有效。
     public enum QuantifierProperty {
         SINGLE,
         LOOPING,
@@ -171,6 +172,8 @@ public class Quantifier {
     }
 
     /**
+     * 描述在这个{@link Pattern}中匹配事件的策略。更多信息参见文档。
+     *
      * Describes strategy for which events are matched in this {@link Pattern}. See docs for more
      * info.
      */

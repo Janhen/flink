@@ -49,21 +49,28 @@ final class PatternStreamBuilder<IN> {
 
     private final Pattern<IN, ?> pattern;
 
+    // J: 事件戳等值比较器
     private final EventComparator<IN> comparator;
 
     /**
+     * 后期数据的侧输出{@code OutputTag}。如果没有设置标记，则将简单地删除后期数据。
+     *
      * Side output {@code OutputTag} for late data. If no tag is set late data will be simply
      * dropped.
      */
     private final OutputTag<IN> lateDataOutputTag;
 
     /**
+     * 指定处理时间或事件时间的时间行为。默认的时间行为是{@link TimeBehaviour#EventTime}。
+     *
      * The time behaviour to specify processing time or event time. Default time behaviour is {@link
      * TimeBehaviour#EventTime}.
      */
     private final TimeBehaviour timeBehaviour;
 
     /**
+     * time behaviour enum定义系统如何为依赖时间的顺序和依赖时间的操作确定时间。
+     *
      * The time behaviour enum defines how the system determines time for time-dependent order and
      * operations that depend on time.
      */

@@ -25,6 +25,9 @@ import org.apache.flink.cep.time.TimeContext;
 import java.io.Serializable;
 
 /**
+ * 一种用户定义的条件，它决定模式中某个元素是否应该被接受。接受一个元素还会表示相应的
+ * {@link org.apache.flink.cep.nfa.NFA}的状态转换。
+ *
  * A user-defined condition that decides if an element should be accepted in the pattern or not.
  * Accepting an element also signals a state transition for the corresponding {@link
  * org.apache.flink.cep.nfa.NFA}.
@@ -68,6 +71,10 @@ public abstract class IterativeCondition<T> implements Function, Serializable {
     private static final long serialVersionUID = 7067817235759351255L;
 
     /**
+     * 计算谓词的过滤函数。
+     *
+     * <p><strong>IMPORTANT:<strong>系统假设该函数不修改应用谓词的元素。违背这个假设会导致不正确的结果。
+     *
      * The filter function that evaluates the predicate.
      *
      * <p><strong>IMPORTANT:</strong> The system assumes that the function does not modify the

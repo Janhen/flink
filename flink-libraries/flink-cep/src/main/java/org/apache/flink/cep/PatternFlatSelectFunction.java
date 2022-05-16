@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 模式选择函数的基本接口，它可以产生多个结果元素。模式平面选择函数是通过检测到的事件映射调用的，这些事件通过名称进行
+ * 标识。这些名称由{@link org.apache.flink.cep.pattern.Pattern}。指定受追捧的模式。此外，还提供了一个收集器参数。
+ * 收集器用于发出任意数量的结果元素。
+ *
  * Base interface for a pattern select function which can produce multiple resulting elements. A
  * pattern flat select function is called with a map of detected events which are identified by
  * their names. The names are defined by the {@link org.apache.flink.cep.pattern.Pattern} specifying
@@ -44,6 +48,8 @@ import java.util.Map;
 public interface PatternFlatSelectFunction<IN, OUT> extends Function, Serializable {
 
     /**
+     * 根据检测到的模式事件映射生成零个或多个结果元素。事件由其指定的名称标识。
+     *
      * Generates zero or more resulting elements given a map of detected pattern events. The events
      * are identified by their specified names.
      *

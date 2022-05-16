@@ -22,6 +22,8 @@ import org.apache.flink.cep.nfa.aftermatch.AfterMatchSkipStrategy;
 import org.apache.flink.cep.pattern.conditions.IterativeCondition;
 
 /**
+ * 组模式定义的基类。
+ *
  * Base class for a group pattern definition.
  *
  * @param <T> Base type of the elements appearing in the pattern
