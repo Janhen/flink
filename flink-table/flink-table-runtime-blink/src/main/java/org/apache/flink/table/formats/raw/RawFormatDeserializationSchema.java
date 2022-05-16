@@ -39,6 +39,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 将原始(基于字节的)值反序列化到Flink TableSQL内部数据结构{@link RowData}。
+ *
  * Deserialization schema from raw (byte based) value to Flink Table/SQL internal data structure
  * {@link RowData}.
  */

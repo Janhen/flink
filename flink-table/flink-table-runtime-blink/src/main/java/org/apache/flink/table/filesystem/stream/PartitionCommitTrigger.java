@@ -42,6 +42,7 @@ public interface PartitionCommitTrigger {
     void addPartition(String partition);
 
     /** Get committable partitions, and cleanup useless watermarks and partitions. */
+    // 获得可提交的分区，并清除无用的水印和分区。
     List<String> committablePartitions(long checkpointId) throws IOException;
 
     /** End input, return committable partitions and clear. */

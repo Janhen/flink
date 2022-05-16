@@ -38,6 +38,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 运行时实现的基类，表示为{@link TableFunction}，由{@link BuiltInFunctionDefinition# specialized (SpecializedContext)}构造。
+ *
+ * <p>如果子类是从{@link BuiltInFunctionDefinition}构造的，则必须提供一个接受{@link SpecializedContext}
+ *   参数的构造函数。否则，{@link #BuiltInTableFunction()}构造函数可能更合适。
+ *
+ * <p>默认情况下，所有内置函数都工作于内部数据结构。但是，可以通过重写{@link #getArgumentDataTypes()}和
+ *   {@link #getOutputDataType()}来改变这一点。或者直接重写{@link #getTypeInference(DataTypeFactory)}。
+ *
  * Base class for runtime implementation represented as {@link TableFunction} that is constructed
  * from {@link BuiltInFunctionDefinition#specialize(SpecializedContext)}.
  *

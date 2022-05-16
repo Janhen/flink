@@ -23,6 +23,7 @@ import org.apache.flink.table.data.TimestampData;
 import org.apache.flink.table.types.logical.LocalZonedTimestampType;
 
 /** Converter for {@link LocalZonedTimestampType} of {@link java.time.Instant} external type. */
+// {@link java.time.{@link LocalZonedTimestampType}的转换器。即时}外部类型。
 @Internal
 public class LocalZonedTimestampInstantConverter
         implements DataStructureConverter<TimestampData, java.time.Instant> {

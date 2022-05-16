@@ -33,6 +33,7 @@ public class IfNullFunction extends BuiltInScalarFunction {
     }
 
     public @Nullable Object eval(Object input, Object nullReplacement) {
+        // 依赖于通过输入类型策略的类型转换功能来确定公共数据类型
         // we rely on the casting functionality via input type strategy
         // to determine the common data type
         if (input == null) {

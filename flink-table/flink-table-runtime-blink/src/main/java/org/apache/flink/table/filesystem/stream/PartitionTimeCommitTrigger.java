@@ -49,6 +49,10 @@ import static org.apache.flink.table.filesystem.FileSystemOptions.SINK_PARTITION
 import static org.apache.flink.table.utils.PartitionPathUtils.extractPartitionValues;
 
 /**
+ * 根据分区时间和水印触发分区提交，如果“水印”>“分区时间”+“延迟”，将提交分区。
+ *
+ * <p>水印比较，水印与记录和检查点相关，所以检查点需要存储水印信息。
+ *
  * Partition commit trigger by partition time and watermark, if 'watermark' > 'partition-time' +
  * 'delay', will commit the partition.
  *

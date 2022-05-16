@@ -50,6 +50,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 原始格式的格式工厂，允许将原始(基于字节的)值作为一个列读写。
+ *
  * Format factory for raw format which allows to read and write raw (byte based) values as a single
  * column.
  */

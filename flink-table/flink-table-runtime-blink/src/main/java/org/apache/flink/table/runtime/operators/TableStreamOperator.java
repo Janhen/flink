@@ -32,6 +32,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 表操作符总是调用close。这是不带键的批处理操作符和流操作符的基类。
+ *
  * Table operator to invoke close always. This is a base class for both batch and stream operators
  * without key.
  */

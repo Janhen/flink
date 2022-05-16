@@ -29,11 +29,14 @@ import java.util.Map;
 public final class MapDataUtil {
 
     /**
+     * 将{@link MapData}转换为Java {@link Map}， Java Map的键和值仍然保存内部数据结构的对象。
+     *
      * Converts a {@link MapData} into Java {@link Map}, the keys and values of the Java map still
      * holds objects of internal data structures.
      */
     public static Map<Object, Object> convertToJavaMap(
             MapData map, LogicalType keyType, LogicalType valueType) {
+        // J: 内部的 MapData 使用两个 array 来实现?
         ArrayData keyArray = map.keyArray();
         ArrayData valueArray = map.valueArray();
         Map<Object, Object> javaMap = new HashMap<>();

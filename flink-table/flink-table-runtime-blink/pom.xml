@@ -67,6 +67,7 @@ under the License.
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- 针对 CEP 解析  MATCH_RECONGNIZE -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-cep_${scala.binary.version}</artifactId>
@@ -84,6 +85,7 @@ under the License.
 			<groupId>org.apache.calcite.avatica</groupId>
 			<artifactId>avatica-core</artifactId>
 			<!-- When updating the Calcite version, make sure to update the version and dependency exclusions -->
+			<!-- 当更新方解石版本时，确保更新了版本和依赖排除 -->
 			<version>1.17.0</version>
 			<exclusions>
 				<!--

@@ -41,11 +41,15 @@ public abstract class KeyedProcessFunctionWithCleanupState<K, IN, OUT>
 
     private static final long serialVersionUID = 2084560869233898457L;
 
+    // J: 最小保留时间
     private final long minRetentionTime;
+    // J: 最大保留时间
     private final long maxRetentionTime;
+    // J: 是否开启状态清理
     protected final boolean stateCleaningEnabled;
 
     // holds the latest registered cleanup timer
+    // 保存最近注册的清理计时器
     private ValueState<Long> cleanupTimeState;
 
     public KeyedProcessFunctionWithCleanupState(long minRetentionTime, long maxRetentionTime) {

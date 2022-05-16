@@ -36,6 +36,8 @@ public final class RowDataUtil {
     }
 
     /**
+     * 如果消息是{@link RowKind#DELETE}或{@link RowKind#UPDATE_BEFORE}，则返回true，该消息指向聚合的收回操作。
+     *
      * Returns true if the message is either {@link RowKind#DELETE} or {@link
      * RowKind#UPDATE_BEFORE}, which refers to a retract operation of aggregation.
      */

@@ -28,6 +28,10 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * VectorizedColumnBatch是一组行，将每一列组织成一个向量。它是查询执行的单元，组织起来是为了使每行的成本最小化。
+ *
+ * <p>{@code VectorizedColumnBatch}受Apache Hive VectorizedRowBatch影响。
+ *
  * A VectorizedColumnBatch is a set of rows, organized with each column as a vector. It is the unit
  * of query execution, organized to minimize the cost per row.
  *

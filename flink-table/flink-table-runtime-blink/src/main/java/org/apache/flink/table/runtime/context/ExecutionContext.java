@@ -22,6 +22,8 @@ import org.apache.flink.api.common.functions.RuntimeContext;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * ExecutionContext包含函数执行的上下文和创建状态的api的信息。
+ *
  * A ExecutionContext contains information about the context in which functions are executed and the
  * APIs to create state.
  */
