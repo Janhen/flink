@@ -25,6 +25,10 @@ import org.apache.flink.runtime.executiongraph.JobStatusProvider;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 返回作业运行了多长时间(以毫秒为单位)的度量。
+ *
+ * <p>对于不再运行的作业，返回{@value NO_LONGER_RUNNING}。
+ *
  * A gauge that returns (in milliseconds) how long a job has been running.
  *
  * <p>For jobs that are not running any more, it returns {@value NO_LONGER_RUNNING}.

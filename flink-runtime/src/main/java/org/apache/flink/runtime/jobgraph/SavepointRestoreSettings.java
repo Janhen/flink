@@ -34,12 +34,15 @@ public class SavepointRestoreSettings implements Serializable {
     private static final SavepointRestoreSettings NONE = new SavepointRestoreSettings(null, false);
 
     /** By default, be strict when restoring from a savepoint. */
+    // 默认情况下，从保存点恢复时要严格
     private static final boolean DEFAULT_ALLOW_NON_RESTORED_STATE = false;
 
     /** Savepoint restore path. */
     private final String restorePath;
 
     /**
+     * 标志，指示如果保存点包含不属于作业的操作符的状态，是否允许非恢复状态。
+     *
      * Flag indicating whether non restored state is allowed if the savepoint contains state for an
      * operator that is not part of the job.
      */

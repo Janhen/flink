@@ -35,6 +35,7 @@ public class IntermediateResultPartition {
     private final EdgeManager edgeManager;
 
     /** Whether this partition has produced some data. */
+    // 这个分区是否产生了一些数据
     private boolean hasDataProduced = false;
 
     public IntermediateResultPartition(
@@ -103,6 +104,7 @@ public class IntermediateResultPartition {
 
     boolean markFinished() {
         // Sanity check that this is only called on blocking partitions.
+        // 检查是否只在阻塞分区时调用
         if (!getResultType().isBlocking()) {
             throw new IllegalStateException(
                     "Tried to mark a non-blocking result partition as finished");

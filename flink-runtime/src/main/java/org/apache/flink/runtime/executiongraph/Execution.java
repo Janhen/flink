@@ -93,6 +93,21 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 顶点的一次执行。虽然 {@link ExecutionVertex} 可以多次执行(用于恢复、重新计算、重新配置)，但这个类会跟踪该顶点
+ * 和资源的一次执行状态。
+ *
+ * <h2>锁定自由状态转换
+ *
+ * <p>在代码的几个地方，我们需要处理可能的并发状态更改和操作。例如，当调用部署任务(将其发送到TaskManager)时，
+ *   任务被取消。
+ *
+ * <p>我们可以锁定代码的整个部分(决定部署、部署、将状态设置为运行)，这样就可以保证任何“取消命令”只在部署完成后才会出现，
+ *   而且“取消命令”调用永远不会取代部署调用。
+ *
+ * <p>这会阻塞线程很长时间，因为远程调用可能需要很长时间。根据它们的锁定行为，它甚至可能导致分布式死锁(除非小心避免)。
+ *   因此，我们使用原子状态更新和偶尔的双重检查，以确保完成调用后的状态符合预期，如果不是，则触发纠正操作。许多动作
+ *   也是幂等的(比如取消)。
+ *
  * A single execution of a vertex. While an {@link ExecutionVertex} can be executed multiple times
  * (for recovery, re-computation, re-configuration), this class tracks the state of a single
  * execution of that vertex and the resources.
@@ -123,15 +138,19 @@ public class Execution
     // --------------------------------------------------------------------------------------------
 
     /** The executor which is used to execute futures. */
+    // 用于执行 futures 的执行者。
     private final Executor executor;
 
     /** The execution vertex whose task this execution executes. */
+    // 此执行执行其任务的执行顶点
     private final ExecutionVertex vertex;
 
     /** The unique ID marking the specific execution instant of the task. */
     private final ExecutionAttemptID attemptId;
 
     /**
+     * 状态转换发生时的时间戳，由{@link ExecutionState#ordinal()}索引
+     *
      * The timestamps when state transitions occurred, indexed by {@link ExecutionState#ordinal()}.
      */
     private final long[] stateTimestamps;
@@ -143,6 +162,7 @@ public class Execution
     private final Collection<PartitionInfo> partitionInfos;
 
     /** A future that completes once the Execution reaches a terminal ExecutionState. */
+    // 当执行到达终端 ExecutionState 时完成的 future
     private final CompletableFuture<ExecutionState> terminalStateFuture;
 
     private final CompletableFuture<?> releaseFuture;
@@ -150,6 +170,9 @@ public class Execution
     private final CompletableFuture<TaskManagerLocation> taskManagerLocationFuture;
 
     /**
+     * 当任务切换到{@link ExecutionState#INITIALIZING}或{@link ExecutionState#RUNNING}时成功完成。如果任务
+     * 从未切换到这些状态，但立即失败，那么这个future永远不会完成。
+     *
      * Gets completed successfully when the task switched to {@link ExecutionState#INITIALIZING} or
      * {@link ExecutionState#RUNNING}. If the task never switches to those state, but fails
      * immediately, then this future never completes.
@@ -160,26 +183,33 @@ public class Execution
 
     private LogicalSlot assignedResource;
 
+    // 一旦设置了 ErrorInfo，就不会更改
     private Optional<ErrorInfo> failureCause =
             Optional.empty(); // once an ErrorInfo is set, never changes
 
     /**
+     * 恢复任务时恢复的信息，如检查点 id、任务状态快照等
+     *
      * Information to restore the task on recovery, such as checkpoint id and task state snapshot.
      */
     @Nullable private JobManagerTaskRestore taskRestore;
 
     /** This field holds the allocation id once it was assigned successfully. */
+    // 一旦分配成功，该字段保存分配 id
     @Nullable private AllocationID assignedAllocationID;
 
     // ------------------------ Accumulators & Metrics ------------------------
 
     /**
+     * 以原子方式更新累加器的锁。防止最后的蓄能器在延迟心跳时被部分蓄能器覆盖
+     *
      * Lock for updating the accumulators atomically. Prevents final accumulators to be overwritten
      * by partial accumulators on a late heartbeat.
      */
     private final Object accumulatorLock = new Object();
 
     /* Continuously updated map of user-defined accumulators */
+    // 不断更新用户定义累加器的映射
     private Map<String, Accumulator<?, ?>> userAccumulators;
 
     private IOMetrics ioMetrics;
@@ -268,6 +298,8 @@ public class Execution
     }
 
     /**
+     * 尝试将给定的槽分配给执行。只有当“执行”处于“预定”状态时，分配才有效。如果资源可以分配，则返回 true。
+     *
      * Tries to assign the given slot to the execution. The assignment works only if the Execution
      * is in state SCHEDULED. Returns true, if the resource could be assigned.
      *
@@ -282,6 +314,8 @@ public class Execution
 
         // only allow to set the assigned resource in state SCHEDULED or CREATED
         // note: we also accept resource assignment when being in state CREATED for testing purposes
+        // 只允许将分配的资源设置为“SCHEDULED”或“CREATED”状态
+        // 注意: 为了测试目的，当处于创建状态时，我们也接受资源分配
         if (state == SCHEDULED || state == CREATED) {
             if (assignedResource == null) {
                 assignedResource = logicalSlot;
@@ -320,6 +354,7 @@ public class Execution
     @Override
     public TaskManagerLocation getAssignedResourceLocation() {
         // returns non-null only when a location is already assigned
+        // 只有在已经分配位置时才返回非空
         final LogicalSlot currentAssignedResource = assignedResource;
         return currentAssignedResource != null
                 ? currentAssignedResource.getTaskManagerLocation()
@@ -351,6 +386,8 @@ public class Execution
     }
 
     /**
+     * 设置执行的初始状态。然后，序列化状态通过{@link TaskDeploymentDescriptor}发送到任务管理器。
+     *
      * Sets the initial state for the execution. The serialized state is then shipped via the {@link
      * TaskDeploymentDescriptor} to the TaskManagers.
      *
@@ -390,6 +427,8 @@ public class Execution
     }
 
     /**
+     * 获取在执行到达终端状态且分配的资源已被释放时完成的发布未来。这个 future 总是从作业主的主线程中完成。
+     *
      * Gets the release future which is completed once the execution reaches a terminal state and
      * the assigned resource has been released. This future is always completed from the job
      * master's main thread.
@@ -511,6 +550,8 @@ public class Execution
     }
 
     /**
+     * 将执行部署到先前分配的资源
+     *
      * Deploys the execution to the previously assigned resource.
      *
      * @throws JobException if the execution cannot be deployed to the assigned resource
@@ -527,12 +568,17 @@ public class Execution
         // Check if the TaskManager died in the meantime
         // This only speeds up the response to TaskManagers failing concurrently to deployments.
         // The more general check is the rpcTimeout of the deployment call
+        // 检查 TaskManager 是否在此期间死亡。
+        // 这只会加速对部署时并发失败的 TaskManager 的响应。
+        // 更通用的检查是部署调用的 rpcTimeout
         if (!slot.isAlive()) {
             throw new JobException("Target slot (TaskManager) for deployment is no longer alive.");
         }
 
         // make sure exactly one deployment call happens from the correct state
         // note: the transition from CREATED to DEPLOYING is for testing purposes only
+        // 请确保在正确的状态下发生一个部署调用
+        // 从CREATED到deploy的转换仅用于测试目的
         ExecutionState previous = this.state;
         if (previous == SCHEDULED || previous == CREATED) {
             if (!transitionState(previous, DEPLOYING)) {
@@ -557,6 +603,7 @@ public class Execution
         try {
 
             // race double check, did we fail/cancel and do we need to release the slot?
+            // 比赛复查，我们是否取消了，我们是否需要释放 slot?
             if (this.state != DEPLOYING) {
                 slot.releaseSlot(
                         new FlinkException(
@@ -584,6 +631,7 @@ public class Execution
                                     producedPartitions.values());
 
             // null taskRestore to let it be GC'ed
+            // taskRestore 置为 null，让它被 GC
             taskRestore = null;
 
             final TaskManagerGateway taskManagerGateway = slot.getTaskManagerGateway();
@@ -772,6 +820,9 @@ public class Execution
     }
 
     /**
+     * 由于外部条件，此方法会使顶点失效。任务将转移到状态 FAILED。如果任务之前处于运行或部署状态，它将向
+     * TaskManager 发送一个取消调用。
+     *
      * This method fails the vertex due to an external condition. The task will move to state
      * FAILED. If the task was in state RUNNING or DEPLOYING before, it will send a cancel call to
      * the TaskManager.
@@ -901,6 +952,9 @@ public class Execution
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 此方法将任务标记为失败，但不会尝试从任务管理器中删除任务执行。它适用于已知任务没有运行，或者 TaskManager
+     * 报告失败的情况(在这种情况下，它已经删除了任务)。
+     *
      * This method marks the task as failed, but will make no attempt to remove task execution from
      * the task manager. It is intended for cases where the task is known not to be running, or then
      * the TaskManager reports failure (in which case it has already removed the task).
@@ -1375,6 +1429,8 @@ public class Execution
     }
 
     /**
+     * 释放分配的资源，一旦分配的资源被成功释放，就完成未来的发布
+     *
      * Releases the assigned resource and completes the release future once the assigned resource
      * has been successfully released.
      *
@@ -1500,6 +1556,8 @@ public class Execution
     // ------------------------------------------------------------------------
 
     /**
+     * 更新累加器(当执行已经终止时丢弃)
+     *
      * Update accumulators (discarded when the Execution has already been terminated).
      *
      * @param userAccumulators the user accumulators

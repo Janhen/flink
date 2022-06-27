@@ -52,13 +52,26 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 执行图是协调数据流的分布式执行的中心数据结构。它保存每个并行任务、每个中间流的表示，以及它们之间的通信。
+ * 执行图是协调数据流的分布式执行的中心数据结构。保存每个并行任务、每个中间流的表示，以及它们之间的通信。
+ *
+ * 执行图由以下结构组成:
  *
  * The execution graph is the central data structure that coordinates the distributed execution of a
  * data flow. It keeps representations of each parallel task, each intermediate stream, and the
  * communication between them.
  *
  * <p>The execution graph consists of the following constructs:
+ *
+ *   <li>{@link ExecutionJobVertex}表示执行期间JobGraph中的一个顶点(通常是“map”或“join”这样的操作)。它保存所有
+ *     并行子任务的聚合状态。ExecutionJobVertex在图中由{@link JobVertexID}标识，它从JobGraph对应的JobVertex中获取。
+ *
+ *   <li>{@link ExecutionVertex}表示一个并行子任务。对于每个ExecutionJobVertex, execution顶点的数量与并行度
+ *     一样多。ExecutionVertex由ExecutionJobVertex和并行子任务的索引标识>
+ *
+ *   <li>{@link Execution} 是执行 ExecutionVertex 的一次尝试。ExecutionVertex
+ *     可能会有多次执行，以防出现故障，或者在后续操作请求某些数据时不再可用，因此需要重新计算这些数据。执行总是由
+ *     {@link ExecutionAttemptID} 标识。JobManager 和 TaskManager
+ *     之间关于任务部署和任务状态更新的所有消息总是使用 ExecutionAttemptID 来寻址消息接收者。
  *
  * <ul>
  *   <li>The {@link ExecutionJobVertex} represents one vertex from the JobGraph (usually one
@@ -83,18 +96,25 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     SchedulingTopology getSchedulingTopology();
 
     void enableCheckpointing(
+            // J: 检查点协调器配置
             CheckpointCoordinatorConfiguration chkConfig,
+            // J: Master 触发存储钩子
             List<MasterTriggerRestoreHook<?>> masterHooks,
             CheckpointIDCounter checkpointIDCounter,
             CompletedCheckpointStore checkpointStore,
+            // J: 检查点状态后端
             StateBackend checkpointStateBackend,
+            // J: 检查点存储
             CheckpointStorage checkpointStorage,
+            // J: 检查点追踪器
             CheckpointStatsTracker statsTracker,
+            // J: 检查点清理器
             CheckpointsCleaner checkpointsCleaner);
 
     @Nullable
     CheckpointCoordinator getCheckpointCoordinator();
 
+    // J: Kv 状态位置注册
     KvStateLocationRegistry getKvStateLocationRegistry();
 
     void setJsonPlan(String jsonPlan);
@@ -116,6 +136,8 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     Map<JobVertexID, ExecutionJobVertex> getAllVertices();
 
     /**
+     * 获取重新启动的次数，包括完全重新启动和细粒度重新启动。如果恢复当前处于挂起状态，则该恢复包括在计数中。
+     *
      * Gets the number of restarts, including full restarts and fine grained restarts. If a recovery
      * is currently pending, this recovery is included in the count.
      *
@@ -128,6 +150,8 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     Map<IntermediateDataSetID, IntermediateResult> getAllIntermediateResults();
 
     /**
+     * 合并以前在 execution 中执行的任务的所有累加器结果。
+     *
      * Merges all accumulator results from the tasks previously executed in the Executions.
      *
      * @return The accumulator map
@@ -135,6 +159,8 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     Map<String, OptionalFailure<Accumulator<?, ?>>> aggregateUserAccumulators();
 
     /**
+     * 在作业运行时更新累加器。最终的累加器结果通过 UpdateTaskExecutionState 消息传输。
+     *
      * Updates the accumulators during the runtime of a job. Final accumulator results are
      * transferred through the UpdateTaskExecutionState message.
      *
@@ -151,6 +177,8 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     void cancel();
 
     /**
+     * 挂起当前ExecutionGraph。
+     *
      * Suspends the current ExecutionGraph.
      *
      * <p>The JobStatus will be directly set to {@link JobStatus#SUSPENDED} iff the current state is
@@ -186,6 +214,8 @@ public interface ExecutionGraph extends AccessExecutionGraph {
     void initFailureCause(Throwable t, long timestamp);
 
     /**
+     * 更新一个 ExecutionVertex 行尝试的状态。如果新的状态为 "FINISHED"，这也更新了累加器。
+     *
      * Updates the state of one of the ExecutionVertex's Execution attempts. If the new status if
      * "FINISHED", this also updates the accumulators.
      *

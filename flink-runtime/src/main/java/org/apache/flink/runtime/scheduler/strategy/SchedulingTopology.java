@@ -31,6 +31,8 @@ public interface SchedulingTopology
                 SchedulingPipelinedRegion> {
 
     /**
+     * 在{@link ExecutionVertexID}中查找{@link SchedulingExecutionVertex}
+     *
      * Looks up the {@link SchedulingExecutionVertex} for the given {@link ExecutionVertexID}.
      *
      * @param executionVertexId identifying the respective scheduling vertex
@@ -40,6 +42,8 @@ public interface SchedulingTopology
     SchedulingExecutionVertex getVertex(ExecutionVertexID executionVertexId);
 
     /**
+     * 在 {@link SchedulingResultPartition} 中查找给定的 {@link IntermediateResultPartitionID}。
+     *
      * Looks up the {@link SchedulingResultPartition} for the given {@link
      * IntermediateResultPartitionID}.
      *

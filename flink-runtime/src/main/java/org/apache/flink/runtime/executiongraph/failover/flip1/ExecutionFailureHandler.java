@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这个处理器处理任务失败，返回一个 {@link FailureHandlingResult}，其中包含需要重新启动以从失败中恢复的任务。
+ *
  * This handler deals with task failures to return a {@link FailureHandlingResult} which contains
  * tasks to restart to recover from failures.
  */

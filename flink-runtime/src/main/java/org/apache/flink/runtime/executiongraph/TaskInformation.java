@@ -25,6 +25,8 @@ import org.apache.flink.util.Preconditions;
 import java.io.Serializable;
 
 /**
+ * 用于存储在 {@link ExecutionJobVertex} 中的操作任务特定信息的容器类。此信息由该操作符的所有子任务共享。
+ *
  * Container class for operator/task specific information which are stored at the {@link
  * ExecutionJobVertex}. This information is shared by all sub tasks of this operator.
  */

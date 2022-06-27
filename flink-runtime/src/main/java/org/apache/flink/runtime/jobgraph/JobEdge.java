@@ -54,18 +54,23 @@ public class JobEdge implements java.io.Serializable {
     private IntermediateDataSetID sourceId;
 
     /**
+     * 数据传输策略的可选名称(forward, partition hash, rebalance，…)，将显示在 JSON 计划中
+     *
      * Optional name for the data shipping strategy (forward, partition hash, rebalance, ...), to be
      * displayed in the JSON plan
      */
     private String shipStrategyName;
 
     /**
+     * 预处理操作(sort，组合 sort，…)的可选名称，将显示在 JSON 计划中
+     *
      * Optional name for the pre-processing operation (sort, combining sort, ...), to be displayed
      * in the JSON plan
      */
     private String preProcessingOperationName;
 
     /** Optional description of the caching inside an operator, to be displayed in the JSON plan */
+    // 操作符内部缓存的可选描述，将在 JSON 计划中显示
     private String operatorLevelCachingDescription;
 
     /**

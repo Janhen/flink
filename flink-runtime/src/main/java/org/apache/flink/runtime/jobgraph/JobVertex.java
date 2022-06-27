@@ -41,6 +41,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The base class for job vertexes. */
+// 作业顶点的基类
 public class JobVertex implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +58,8 @@ public class JobVertex implements java.io.Serializable {
     private final JobVertexID id;
 
     /**
+     * 这个顶点中包含的所有操作符的id。
+     *
      * The IDs of all operators contained in this vertex.
      *
      * <p>The ID pairs are stored depth-first post-order; for the forking chain below the ID's would
@@ -70,25 +73,30 @@ public class JobVertex implements java.io.Serializable {
     private final ArrayList<IntermediateDataSet> results = new ArrayList<>();
 
     /** List of edges with incoming data. One per Reader. */
+    // 有传入数据的边的列表。每一位 Reader
     private final ArrayList<JobEdge> inputs = new ArrayList<>();
 
     /** The list of factories for operator coordinators. */
+    // operator coordinator 的工厂列表。
     private final ArrayList<SerializedValue<OperatorCoordinator.Provider>> operatorCoordinators =
             new ArrayList<>();
 
     /** Number of subtasks to split this task into at runtime. */
+    // 在运行时将此任务拆分为多个子任务
     private int parallelism = ExecutionConfig.PARALLELISM_DEFAULT;
 
     /** Maximum number of subtasks to split this task into a runtime. */
     private int maxParallelism = MAX_PARALLELISM_DEFAULT;
 
     /** The minimum resource of the vertex. */
+    // 顶点的最小资源
     private ResourceSpec minResources = ResourceSpec.DEFAULT;
 
     /** The preferred resource of the vertex. */
     private ResourceSpec preferredResources = ResourceSpec.DEFAULT;
 
     /** Custom configuration passed to the assigned task at runtime. */
+    // 在运行时传递给分配任务的自定义配置
     private Configuration configuration;
 
     /** The class of the invokable. */
@@ -98,6 +106,7 @@ public class JobVertex implements java.io.Serializable {
     private boolean isStoppable = false;
 
     /** Optionally, a source of input splits. */
+    // 可选地，输入源可以拆分
     private InputSplitSource<?> inputSplitSource;
 
     /**
@@ -107,12 +116,15 @@ public class JobVertex implements java.io.Serializable {
     private String name;
 
     /**
+     * 一个共享组，它允许来自不同作业顶点的子任务并发地运行在一个槽位上。
+     *
      * Optionally, a sharing group that allows subtasks from different job vertices to run
      * concurrently in one slot.
      */
     @Nullable private SlotSharingGroup slotSharingGroup;
 
     /** The group inside which the vertex subtasks share slots. */
+    // 顶点子任务共享槽的组
     @Nullable private CoLocationGroupImpl coLocationGroup;
 
     /**
@@ -128,6 +140,7 @@ public class JobVertex implements java.io.Serializable {
     private String operatorDescription;
 
     /** Optional, pretty name of the operator, to be displayed in the JSON plan. */
+    // 可选的，operator 的 pretty 名称，将显示在JSON计划中
     private String operatorPrettyName;
 
     /**
@@ -206,6 +219,8 @@ public class JobVertex implements java.io.Serializable {
     }
 
     /**
+     * 返回生成的中间数据集的数量
+     *
      * Returns the number of produced intermediate data sets.
      *
      * @return The number of produced intermediate data sets.
@@ -374,6 +389,8 @@ public class JobVertex implements java.io.Serializable {
     }
 
     /**
+     * 将此顶点与槽共享组关联以进行调度。同一槽位共享组中的不同顶点可以在同一槽位上运行一个子任务。
+     *
      * Associates this vertex with a slot sharing group for scheduling. Different vertices in the
      * same slot sharing group can run one subtask each in the same slot.
      *
@@ -528,6 +545,8 @@ public class JobVertex implements java.io.Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 一种钩子，可以被子类覆盖，以实现作业开始时由主程序调用的逻辑。
+     *
      * A hook that can be overwritten by sub classes to implement logic that is called by the master
      * when the job starts.
      *
@@ -537,6 +556,8 @@ public class JobVertex implements java.io.Serializable {
     public void initializeOnMaster(ClassLoader loader) throws Exception {}
 
     /**
+     * 一种钩子，可以被子类覆盖以实现任务完成后由主程序调用的逻辑。
+     *
      * A hook that can be overwritten by sub classes to implement logic that is called by the master
      * after the job completed.
      *

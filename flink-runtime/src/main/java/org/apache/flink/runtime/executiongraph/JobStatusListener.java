@@ -22,9 +22,12 @@ import org.apache.flink.api.common.JobID;
 import org.apache.flink.api.common.JobStatus;
 
 /** Interface for observers that monitor the status of a job. */
+// 监视作业状态的观察者接口
 public interface JobStatusListener {
 
     /**
+     * 每当作业的状态发生变化时，就会调用此方法
+     *
      * This method is called whenever the status of the job changes.
      *
      * @param jobId The ID of the job.

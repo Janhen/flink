@@ -23,6 +23,8 @@ import org.apache.flink.runtime.executiongraph.ExecutionVertex;
 import org.apache.flink.runtime.executiongraph.IntermediateResultPartition;
 
 /**
+ * 分布模式决定了生产任务的子任务与消费子任务的连接。
+ *
  * A distribution pattern determines, which sub tasks of a producing task are connected to which
  * consuming sub tasks.
  *

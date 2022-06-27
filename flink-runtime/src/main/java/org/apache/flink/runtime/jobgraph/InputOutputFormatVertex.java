@@ -33,6 +33,8 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 在主节点上运行初始化和结束的任务顶点。如果有必要，它会尝试反序列化输入和输出格式，并在master上初始化和结束它们。
+ *
  * A task vertex that runs an initialization and a finalization on the master. If necessary, it
  * tries to deserialize input and output formats, and initialize and finalize them on master.
  */

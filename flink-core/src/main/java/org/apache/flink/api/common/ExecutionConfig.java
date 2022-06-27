@@ -89,6 +89,8 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
     /**
      * 指示使用默认并行度的标志值。此值可用于将并行度重置回默认状态。
      *
+     * J: 可配合自动调优使用
+     *
      * The flag value indicating use of the default parallelism. This value can be used to reset the
      * parallelism back to the default state.
      */

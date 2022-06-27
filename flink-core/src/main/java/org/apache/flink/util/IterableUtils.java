@@ -33,6 +33,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class IterableUtils {
 
     /**
+     * 将给定的{@link Iterable}转换为{@link Stream}。
+     *
      * Convert the given {@link Iterable} to a {@link Stream}.
      *
      * @param iterable to convert to a stream

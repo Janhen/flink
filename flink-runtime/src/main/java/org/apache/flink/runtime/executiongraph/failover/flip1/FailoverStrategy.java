@@ -23,6 +23,7 @@ import org.apache.flink.runtime.scheduler.strategy.SchedulingTopology;
 import java.util.Set;
 
 /** New interface for failover strategies. */
+// 用于故障转移策略的新接口
 public interface FailoverStrategy {
 
     /**

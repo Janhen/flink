@@ -23,13 +23,16 @@ import org.apache.flink.metrics.Meter;
 import java.io.Serializable;
 
 /** An instance of this class represents a snapshot of the io-related metrics of a single task. */
+// 该类的实例表示单个任务的 io 相关指标的快照
 public class IOMetrics implements Serializable {
 
     private static final long serialVersionUID = -7208093607556457183L;
 
+    // J: 记录出入的个数
     protected long numRecordsIn;
     protected long numRecordsOut;
 
+    // J: 记录出入的字节大小
     protected long numBytesIn;
     protected long numBytesOut;
 

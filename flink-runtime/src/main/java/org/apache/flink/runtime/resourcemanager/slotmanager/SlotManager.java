@@ -37,6 +37,12 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
+ * 槽管理器负责维护关于所有已注册任务管理器槽、它们的分配和所有挂起的槽请求的视图。每当注册一个新插槽或释放一个已分配的
+ * 插槽时，它就会尝试执行另一个挂起的插槽请求。每当没有足够的插槽可用时，插槽管理器就会通过
+ * {@link ResourceActions#allocateResource(WorkerResourceSpec)}通知资源管理器。
+ *
+ * <p>为了释放资源和避免资源泄漏，空闲的任务管理器(当前未使用槽位的任务管理器)和挂起的槽位请求超时分别触发释放和失败。
+ *
  * The slot manager is responsible for maintaining a view on all registered task manager slots,
  * their allocation and all pending slot requests. Whenever a new slot is registered or an allocated
  * slot is freed, then it tries to fulfill another pending slot request. Whenever there are not

@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import java.io.StringWriter;
 import java.util.List;
 
+// J: Json 执行计划生成器
 public class JsonPlanGenerator {
 
     private static final String NOT_SET = "";
@@ -80,6 +81,7 @@ public class JsonPlanGenerator {
                 gen.writeStartObject();
 
                 // write the core properties
+                // 写出核心属性
                 gen.writeStringField("id", vertex.getID().toString());
                 gen.writeNumberField("parallelism", vertex.getParallelism());
                 gen.writeStringField("operator", operator);
@@ -88,6 +90,7 @@ public class JsonPlanGenerator {
 
                 if (!vertex.isInputVertex()) {
                     // write the input edge properties
+                    // 写出输入边的属性
                     gen.writeArrayFieldStart("inputs");
 
                     List<JobEdge> inputs = vertex.getInputs();
@@ -108,6 +111,7 @@ public class JsonPlanGenerator {
                         gen.writeStringField("id", predecessor.getID().toString());
 
                         if (shipStrategy != null) {
+                            // J:
                             gen.writeStringField("ship_strategy", shipStrategy);
                         }
                         if (preProcessingOperation != null) {
@@ -127,6 +131,7 @@ public class JsonPlanGenerator {
                 }
 
                 // write the optimizer properties
+                // 编写优化器属性
                 gen.writeFieldName("optimizer_properties");
                 gen.writeRawValue(optimizerProps);
 

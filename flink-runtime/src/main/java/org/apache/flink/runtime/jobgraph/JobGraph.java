@@ -58,7 +58,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * <p>JobGraph是一个顶点和中间结果的图，它们连接在一起形成一个DAG。请注意，迭代(反馈边)目前不是在JobGraph内部编码的，
  *   而是在它们之间建立反馈通道的特定顶点内部编码的。
  *
- * <p>JobGraph定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
+ * <p>JobGraph 定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
  *
  * The JobGraph represents a Flink dataflow program, at the low level that the JobManager accepts.
  * All programs from higher level APIs are transformed into JobGraphs.
@@ -77,6 +77,7 @@ public class JobGraph implements Serializable {
     // --- job and configuration ---
 
     /** List of task vertices included in this job graph. */
+    // 此作业图中包含的任务顶点列表
     private final Map<JobVertexID, JobVertex> taskVertices =
             new LinkedHashMap<JobVertexID, JobVertex>();
 
@@ -85,6 +86,7 @@ public class JobGraph implements Serializable {
     private final Configuration jobConfiguration = new Configuration();
 
     /** ID of this job. May be set if specific job id is desired (e.g. session management) */
+    // 该工作的ID。如果需要特定的作业id，可以设置(例如会话管理)
     private JobID jobID;
 
     /** Name of this job. */
@@ -93,6 +95,8 @@ public class JobGraph implements Serializable {
     private JobType jobType = JobType.BATCH;
 
     /**
+     * 是否启用近似本地恢复。该标志将与遗留的调度策略一起被删除。
+     *
      * Whether approximate local recovery is enabled. This flag will be removed together with legacy
      * scheduling strategies.
      */
@@ -134,6 +138,9 @@ public class JobGraph implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 使用给定的名称、给定的{@link ExecutionConfig}和一个随机的作业ID构造一个新的作业图。
+     * ExecutionConfig将被序列化，之后不能修改。
+     *
      * Constructs a new job graph with the given name, the given {@link ExecutionConfig}, and a
      * random job ID. The ExecutionConfig will be serialized and can't be modified afterwards.
      *
@@ -171,6 +178,7 @@ public class JobGraph implements Serializable {
      * @param jobId The id of the job. A random ID is generated, if {@code null} is passed.
      * @param jobName The name of the job.
      * @param vertices The vertices to add to the graph.
+     *                 要添加到图中的顶点
      */
     public JobGraph(@Nullable JobID jobId, String jobName, JobVertex... vertices) {
         this(jobId, jobName);
@@ -206,6 +214,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 返回此作业的配置对象。作业范围的参数应该设置到该配置对象中。
+     *
      * Returns the configuration object for this job. Job-wide parameters should be set into that
      * configuration object.
      *
@@ -241,6 +251,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 设置保存点恢复设置。
+     *
      * Sets the savepoint restore settings.
      *
      * @param settings The savepoint restore settings.
@@ -259,6 +271,9 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 设置执行配置。这个方法为将来的RPC传输急切地序列化ExecutionConfig。对引用的ExecutionConfig对象的进一步
+     * 修改将不会影响这个序列化副本。
+     *
      * Sets the execution config. This method eagerly serialized the ExecutionConfig for future RPC
      * transport. Further modification of the referenced ExecutionConfig object will not affect this
      * serialized copy.
@@ -279,6 +294,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 如果新任务顶点尚未包含，则将其添加到作业图中。
+     *
      * Adds a new task vertex to the job graph if it is not already included.
      *
      * @param vertex the new task vertex to be added
@@ -296,6 +313,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 返回一个Iterable来迭代在作业图中注册的所有顶点。
+     *
      * Returns an Iterable to iterate all vertices registered with the job graph.
      *
      * @return an Iterable to iterate all vertices registered with the job graph
@@ -346,6 +365,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 设置异步快照的相关设置。{@code null}的值意味着快照不启用。
+     *
      * Sets the settings for asynchronous snapshots. A value of {@code null} means that snapshotting
      * is not enabled.
      *
@@ -393,6 +414,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 设置在任务管理器上运行作业所需的类路径
+     *
      * Sets the classpaths required to run the job on a task manager.
      *
      * @param paths paths of the directories/JAR files required to run the job on a task manager
@@ -507,6 +530,8 @@ public class JobGraph implements Serializable {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 添加在任务管理器上运行作业所需的JAR文件的路径。
+     *
      * Adds the path of a JAR file required to run the job on a task manager.
      *
      * @param jar path of the JAR file required to run the job on a task manager
@@ -522,6 +547,8 @@ public class JobGraph implements Serializable {
     }
 
     /**
+     * 通过{@link JobGraph#addJar}将给定的jar文件添加到{@link JobGraph}。
+     *
      * Adds the given jar files to the {@link JobGraph} via {@link JobGraph#addJar}.
      *
      * @param jarFilesToAttach a list of the {@link URL URLs} of the jar files to attach to the

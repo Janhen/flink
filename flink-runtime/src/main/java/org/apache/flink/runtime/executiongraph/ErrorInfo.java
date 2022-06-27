@@ -28,11 +28,14 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /** Simple container to hold an exception and the corresponding timestamp. */
+// 用于保存异常和相应时间戳的简单容器
 public class ErrorInfo implements Serializable {
 
     private static final long serialVersionUID = -6138942031953594202L;
 
     /**
+     * 一直坚持的例外。没有对任何用户定义代码的强引用。
+     *
      * The exception that we keep holding forever. Has no strong reference to any user-defined code.
      */
     private final SerializedThrowable exception;

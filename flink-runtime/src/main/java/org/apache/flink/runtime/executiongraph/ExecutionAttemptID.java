@@ -24,6 +24,8 @@ import org.apache.flink.util.AbstractID;
 import org.apache.flink.shaded.netty4.io.netty.buffer.ByteBuf;
 
 /**
+ * 尝试执行任务的惟一标识符。在失败和恢复的情况下会进行多次尝试。
+ *
  * Unique identifier for the attempt to execute a tasks. Multiple attempts happen in cases of
  * failures and recovery.
  */

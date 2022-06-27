@@ -28,6 +28,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 public class SavepointConfigOptions {
 
     /** The path to a savepoint that will be used to bootstrap the pipeline's state. */
+    // 用于引导管道状态的保存点的路径
     public static final ConfigOption<String> SAVEPOINT_PATH =
             key("execution.savepoint.path")
                     .stringType()
@@ -36,6 +37,8 @@ public class SavepointConfigOptions {
                             "Path to a savepoint to restore the job from (for example hdfs:///flink/savepoint-1537).");
 
     /**
+     * 一个标志，指示我们是否允许Flink跳过无法恢复的保存点状态，例如，因为相应的操作符已被删除。
+     *
      * A flag indicating if we allow Flink to skip savepoint state that cannot be restored, e.g.
      * because the corresponding operator has been removed.
      */

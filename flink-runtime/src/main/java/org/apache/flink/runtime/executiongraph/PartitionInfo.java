@@ -24,6 +24,8 @@ import org.apache.flink.runtime.shuffle.ShuffleDescriptor;
 import java.io.Serializable;
 
 /**
+ * 包含在何处找到分区的信息。分区由 {@link IntermediateDataSetID} 定义，分区由 {@link ShuffleDescriptor} 指定。
+ *
  * Contains information where to find a partition. The partition is defined by the {@link
  * IntermediateDataSetID} and the partition is specified by {@link ShuffleDescriptor}.
  */

@@ -43,6 +43,7 @@ public class JobCheckpointingSettings implements Serializable {
     private final CheckpointCoordinatorConfiguration checkpointCoordinatorConfiguration;
 
     /** The default state backend, if configured by the user in the job */
+    // 默认状态后端，如果由作业中的用户配置
     @Nullable private final SerializedValue<StateBackend> defaultStateBackend;
 
     /** The default checkpoint storage, if configured by the user in the job */

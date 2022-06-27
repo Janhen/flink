@@ -71,6 +71,11 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@code ExecutionJobVertex} 是 {@link ExecutionGraph} 的一部分，并且是 {@link JobVertex} 的对等体。
+ *
+ * <p> {@code ExecutionJobVertex}对应一个并行化操作。它包含一个{@link ExecutionVertex}，用于该操作的
+ *   每个并行实例。
+ *
  * An {@code ExecutionJobVertex} is part of the {@link ExecutionGraph}, and the peer to the {@link
  * JobVertex}.
  *
@@ -106,6 +111,9 @@ public class ExecutionJobVertex
     private final ResourceProfile resourceProfile;
 
     /**
+     * 存储一个序列化的任务信息(对于所有子任务都是相同的)，或者存储已卸载的任务信息blob的永久blob键，其中包含序列化
+     * 的任务信息。
+     *
      * Either store a serialized task information, which is for all sub tasks the same, or the
      * permanent blob key of the offloaded task information BLOB containing the serialized task
      * information.
@@ -190,6 +198,7 @@ public class ExecutionJobVertex
 
         // sanity check for the double referencing between intermediate result partitions and
         // execution vertices
+        // 检查中间结果分区和执行顶点之间的重复引用
         for (IntermediateResult ir : this.producedDataSets) {
             if (ir.getNumberOfAssignedPartitions() != this.parallelismInfo.getParallelism()) {
                 throw new RuntimeException(
@@ -249,6 +258,8 @@ public class ExecutionJobVertex
     }
 
     /**
+     * 返回一个列表，其中包含该执行作业顶点中包含的所有操作符的 ID 对。
+     *
      * Returns a list containing the ID pairs of all operators contained in this execution job
      * vertex.
      *

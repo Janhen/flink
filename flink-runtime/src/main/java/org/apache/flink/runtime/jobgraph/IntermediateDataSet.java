@@ -26,7 +26,11 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * JobVertex 产生的数据抽象
+ * J: JobVertex 产生的数据抽象
+ *
+ * 中间数据集是由运算符产生的数据集，可以是源操作，也可以是任何中间操作。
+ *
+ * <p>中间数据集可能被其他操作符读取、具体化或丢弃。
  *
  * An intermediate data set is the data set produced by an operator - either a source or any
  * intermediate operation.
@@ -45,6 +49,7 @@ public class IntermediateDataSet implements java.io.Serializable {
     private final List<JobEdge> consumers = new ArrayList<JobEdge>();
 
     // The type of partition to use at runtime
+    // 要在运行时使用的分区类型
     private final ResultPartitionType resultType;
 
     // --------------------------------------------------------------------------------------------

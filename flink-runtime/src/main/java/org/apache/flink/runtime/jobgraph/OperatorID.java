@@ -21,6 +21,7 @@ package org.apache.flink.runtime.jobgraph;
 import org.apache.flink.util.AbstractID;
 
 /** A class for statistically unique operator IDs. */
+// 用于统计上惟一操作符id的类。
 public class OperatorID extends AbstractID {
 
     private static final long serialVersionUID = 1L;

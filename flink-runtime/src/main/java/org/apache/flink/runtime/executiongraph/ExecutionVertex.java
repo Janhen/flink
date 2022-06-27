@@ -55,6 +55,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * ExecutionVertex 是执行的并行子任务。它可以被执行一次，也可以多次执行，每次都会生成一个 {@link Execution}。
+ *
  * The ExecutionVertex is a parallel subtask of the execution. It may be executed once, or several
  * times, each of which time it spawns an {@link Execution}.
  */
@@ -63,6 +65,7 @@ public class ExecutionVertex
 
     private static final Logger LOG = DefaultExecutionGraph.LOG;
 
+    // J: 考虑最多的不同位置
     public static final int MAX_DISTINCT_LOCATIONS_TO_CONSIDER = 8;
 
     // --------------------------------------------------------------------------------------------
@@ -80,9 +83,11 @@ public class ExecutionVertex
     private final Time timeout;
 
     /** The name in the format "myTask (2/7)", cached to avoid frequent string concatenations. */
+    // 格式为“myTask(27)”的名称，缓存以避免频繁的字符串连接
     private final String taskNameWithSubtask;
 
     /** The current or latest execution attempt of this vertex's task. */
+    // 这个顶点任务的当前或最近一次执行尝试
     private Execution currentExecution; // this field must never be null
 
     private final ArrayList<InputSplit> inputSplits;
@@ -295,6 +300,8 @@ public class ExecutionVertex
     }
 
     /**
+     * 获取顶点任务最近一次执行完成、取消、失败的位置
+     *
      * Gets the location where the latest completed/canceled/failed execution of the vertex's task
      * happened.
      *
@@ -338,6 +345,8 @@ public class ExecutionVertex
     }
 
     /**
+     * 根据执行尝试将继续的状态获取执行当前任务执行尝试的首选位置
+     *
      * Gets the preferred location to execute the current task execution attempt, based on the state
      * that the execution attempt will resume.
      */
@@ -463,6 +472,8 @@ public class ExecutionVertex
     }
 
     /**
+     * 此方法将任务标记为失败，但不会尝试从任务管理器中删除任务执行。它适用于已知任务尚未部署的情况
+     *
      * This method marks the task as failed, but will make no attempt to remove task execution from
      * the task manager. It is intended for cases where the task is known not to be deployed yet.
      *
