@@ -38,6 +38,7 @@ import java.util.Arrays;
 import static java.util.Objects.requireNonNull;
 
 /** Utility class that contains helper methods to manipulating {@link KeySelector} for streaming. */
+// 包含用于操作流的 {@link KeySelector} 的帮助器方法的实用程序类
 @Internal
 public final class KeySelectorUtil {
 
@@ -127,6 +128,8 @@ public final class KeySelectorUtil {
     // ------------------------------------------------------------------------
 
     /**
+     * 通过通用比较器提取单个字段的键提取器
+     *
      * Key extractor that extracts a single field via a generic comparator.
      *
      * @param <IN> The type of the elements where the key is extracted from.
@@ -161,6 +164,8 @@ public final class KeySelectorUtil {
     // ------------------------------------------------------------------------
 
     /**
+     * 键选择器，用于通过TypeComparator选择键字段
+     *
      * A key selector for selecting key fields via a TypeComparator.
      *
      * @param <IN> The type from which the key is extracted.
@@ -212,6 +217,8 @@ public final class KeySelectorUtil {
     // ------------------------------------------------------------------------
 
     /**
+     * 键选择器，用于将单个数组字段选择为键，并将它们作为元组返回
+     *
      * A key selector for selecting individual array fields as keys and returns them as a Tuple.
      *
      * @param <IN> The type from which the key is extracted, i.e., the array type.

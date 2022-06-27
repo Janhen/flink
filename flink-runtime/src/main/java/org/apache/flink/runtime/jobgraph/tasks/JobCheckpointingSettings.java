@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * JobCheckpointingSettings 附加到 JobGraph，并描述 JobGraph 的异步检查点的设置，如间隔
+ *
  * The JobCheckpointingSettings are attached to a JobGraph and describe the settings for the
  * asynchronous checkpoints of the JobGraph, such as interval.
  */
@@ -37,6 +39,7 @@ public class JobCheckpointingSettings implements Serializable {
     private static final long serialVersionUID = -2593319571078198180L;
 
     /** Contains configuration settings for the CheckpointCoordinator */
+    // 包含CheckpointCoordinator的配置设置
     private final CheckpointCoordinatorConfiguration checkpointCoordinatorConfiguration;
 
     /** The default state backend, if configured by the user in the job */

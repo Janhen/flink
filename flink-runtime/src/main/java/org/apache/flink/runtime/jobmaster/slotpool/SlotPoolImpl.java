@@ -76,6 +76,9 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * slot pool服务于由{@link ExecutionGraph}发出的slot request。当它不能提供一个槽位请求时，它会尝试从
+ * ResourceManager获取新的槽位。
+ *
  * The slot pool serves slot request issued by {@link ExecutionGraph}. It will attempt to acquire
  * new slots from the ResourceManager when it cannot serve a slot request. If no ResourceManager is
  * currently available, or it gets a decline from the ResourceManager, or a request times out, it
@@ -112,18 +115,22 @@ public class SlotPoolImpl implements SlotPool, SlotPoolService {
     private final AllocatedSlots allocatedSlots;
 
     /** The book-keeping of all available slots. */
+    // 所有可用位置的簿记
     private final AvailableSlots availableSlots;
 
     /** All pending requests waiting for slots. */
+    // 所有等待槽位的挂起请求
     private final DualKeyLinkedMap<SlotRequestId, AllocationID, PendingRequest> pendingRequests;
 
     /** The requests that are waiting for the resource manager to be connected. */
+    // 等待资源管理器连接的请求
     private final LinkedHashMap<SlotRequestId, PendingRequest> waitingForResourceManager;
 
     /** Timeout for external request calls (e.g. to the ResourceManager or the TaskExecutor). */
     private final Time rpcTimeout;
 
     /** Timeout for releasing idle slots. */
+    // 释放空闲槽位的超时时间
     private final Time idleSlotTimeout;
 
     /** Timeout for batch slot requests. */
@@ -135,6 +142,7 @@ public class SlotPoolImpl implements SlotPool, SlotPoolService {
     private JobMasterId jobMasterId;
 
     /** The gateway to communicate with resource manager. */
+    // 网关与资源管理器通信
     @Nullable private ResourceManagerGateway resourceManagerGateway;
 
     private String jobManagerAddress;
@@ -542,6 +550,8 @@ public class SlotPoolImpl implements SlotPool, SlotPoolService {
     }
 
     /**
+     * 检查是否存在具有给定槽请求id的挂起请求，并将其从内部数据结构中移除。
+     *
      * Checks whether there exists a pending request with the given slot request id and removes it
      * from the internal data structures.
      *

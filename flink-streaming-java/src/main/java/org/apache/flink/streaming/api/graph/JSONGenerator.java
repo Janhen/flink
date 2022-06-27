@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 /** Helper class for generating a JSON representation from a {@link StreamGraph}. */
+// 从{@link StreamGraph}生成JSON表示的Helper类
+// J: 扩展生成的 JSON 文件来增加自定义的功能...
 @Internal
 public class JSONGenerator {
 
@@ -38,6 +40,7 @@ public class JSONGenerator {
     public static final String ID = "id";
     public static final String SIDE = "side";
     public static final String SHIP_STRATEGY = "ship_strategy";
+    // J: 前驱
     public static final String PREDECESSORS = "predecessors";
     public static final String TYPE = "type";
     public static final String PACT = "pact";
@@ -159,6 +162,7 @@ public class JSONGenerator {
         }
     }
 
+    // J: ...
     private void decorateEdge(ArrayNode inputArray, StreamEdge inEdge, int mappedInputID) {
         ObjectNode input = mapper.createObjectNode();
         inputArray.add(input);

@@ -56,9 +56,15 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * {@link AsyncWaitOperator}允许异步处理传入的流记录。为此，操作符创建了一个{@link ResultFuture}，并将其
- * 传递给{@link AsyncFunction}。在异步函数中，用户可以任意完成异步收集器。一旦异步收集器完成，操作符的发射器就会
+ * {@link AsyncWaitOperator} 允许异步处理传入的流记录。为此，操作符创建了一个 {@link ResultFuture}，并将其
+ * 传递给 {@link AsyncFunction}。在异步函数中，用户可以任意完成异步收集器。一旦异步收集器完成，操作符的发射器就会
  * 将结果发送给下游操作符。
+ *
+ * <p>该操作符根据所选择的{@link OutputMode}提供不同的输出模式。为了精确地给出一次处理保证，操作符将当前所有正在
+ *   运行的{@link StreamElement}存储在操作符状态中。恢复后，重新播放所记录的流元素集。
+ *
+ * <p>如果要链接这个操作符，必须确保链中的操作符从头到尾都是打开的。原因是一个打开的{@link AsyncWaitOperator}已经
+ * 开始向下游操作符发送恢复的{@link StreamElement}。
  *
  * The {@link AsyncWaitOperator} allows to asynchronously process incoming stream records. For that
  * the operator creates an {@link ResultFuture} which is passed to an {@link AsyncFunction}. Within

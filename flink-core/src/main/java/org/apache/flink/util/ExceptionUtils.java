@@ -268,6 +268,9 @@ public final class ExceptionUtils {
     }
 
     /**
+     * 将一个新的异常作为{@link Throwable#addSuppressed(Throwable) suppressed exception}添加到先前的异常，或者如果先前
+     * 不存在异常，则返回新的异常。
+     *
      * Adds a new exception as a {@link Throwable#addSuppressed(Throwable) suppressed exception} to
      * a prior exception, or returns the new exception, if no prior exception exists.
      *

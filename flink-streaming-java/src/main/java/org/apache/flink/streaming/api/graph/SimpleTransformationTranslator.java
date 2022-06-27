@@ -28,6 +28,9 @@ import static org.apache.flink.runtime.util.config.memory.ManagedMemoryUtils.val
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个基类，用于翻译在运行时实现中只有一个操作符的{@link TransformationTranslator TransformationTranslator}
+ * 的所有{@link TransformationTranslator}。其中包括大多数当前支持的操作。
+ *
  * A base class for all {@link TransformationTranslator TransformationTranslators} who translate
  * {@link Transformation Transformations} that have a single operator in their runtime
  * implementation. These include most of the currently supported operations.

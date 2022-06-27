@@ -29,6 +29,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * The configuration of a checkpoint. This describes whether
  *
  * 检查点的配置。这个描述是否
+ *
  *   <li>检查点是常规检查点或保存点。
  *   <li>当检查点应该被垃圾收集时。
  *
@@ -45,6 +46,8 @@ public class CheckpointProperties implements Serializable {
     private final CheckpointType checkpointType;
 
     /**
+     * 这有一个误导性的名称，实际上意味着快照是否必须被触发，或者如果当前有太多检查点，它是否会被检查点协调器拒绝。
+     *
      * This has a misleading name and actually means whether the snapshot must be triggered, or
      * whether it may be rejected by the checkpoint coordinator if too many checkpoints are
      * currently in progress.

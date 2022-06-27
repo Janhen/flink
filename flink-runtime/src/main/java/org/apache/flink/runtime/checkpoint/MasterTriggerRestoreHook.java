@@ -53,6 +53,8 @@ import java.util.concurrent.Executor;
 public interface MasterTriggerRestoreHook<T> {
 
     /**
+     * 获取此钩子的标识符。该标识符用于在存在多个钩子的情况下标识特定的钩子，并在检查点恢复时为其提供正确的检查点数据。
+     *
      * Gets the identifier of this hook. The identifier is used to identify a specific hook in the
      * presence of multiple hooks and to give it the correct checkpointed data upon checkpoint
      * restoration.

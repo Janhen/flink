@@ -35,6 +35,8 @@ import org.apache.flink.annotation.PublicEvolving;
 public enum RuntimeExecutionMode {
 
     /**
+     * 流水线将使用流语义执行。所有任务将在执行开始之前部署，检查点将被启用，处理时间和事件时间都将得到完全支持。
+     *
      * The Pipeline will be executed with Streaming Semantics. All tasks will be deployed before
      * execution starts, checkpoints will be enabled, and both processing and event time will be
      * fully supported.
@@ -42,6 +44,9 @@ public enum RuntimeExecutionMode {
     STREAMING,
 
     /**
+     * 流水线将使用批处理语义执行。任务会根据所属的调度区域逐步调度，区域之间的切换会阻塞，水印假设是“完美的”，即没有
+     * 延迟的数据，执行过程中假设处理时间不提前。
+     *
      * The Pipeline will be executed with Batch Semantics. Tasks will be scheduled gradually based
      * on the scheduling region they belong, shuffles between regions will be blocking, watermarks
      * are assumed to be "perfect" i.e. no late data, and processing time is assumed to not advance
@@ -50,6 +55,9 @@ public enum RuntimeExecutionMode {
     BATCH,
 
     /**
+     * 如果所有的源都有边界，Flink将设置执行模式为{@link RuntimeExecutionMode#BATCH};如果至少有一个源没有边界，
+     * Flink将设置为{@link RuntimeExecutionMode#STREAMING}。
+     *
      * Flink will set the execution mode to {@link RuntimeExecutionMode#BATCH} if all sources are
      * bounded, or {@link RuntimeExecutionMode#STREAMING} if there is at least one source which is
      * unbounded.

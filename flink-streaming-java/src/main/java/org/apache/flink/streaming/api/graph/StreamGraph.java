@@ -106,12 +106,15 @@ public class StreamGraph implements Pipeline {
     private GlobalDataExchangeMode globalDataExchangeMode;
 
     /** Flag to indicate whether to put all vertices into the same slot sharing group by default. */
+    // 标记，用于指示默认情况下是否将所有顶点放入同一个槽共享组。
     private boolean allVerticesInSameSlotSharingGroupByDefault = true;
 
     private Map<Integer, StreamNode> streamNodes;
     private Set<Integer> sources;
     private Set<Integer> sinks;
+    // J: 旁路输出
     private Map<Integer, Tuple2<Integer, OutputTag>> virtualSideOutputNodes;
+    // J: 分区节点
     private Map<Integer, Tuple3<Integer, StreamPartitioner<?>, ShuffleMode>> virtualPartitionNodes;
 
     protected Map<Integer, String> vertexIDtoBrokerID;
@@ -120,6 +123,7 @@ public class StreamGraph implements Pipeline {
     private CheckpointStorage checkpointStorage;
     private Path savepointDir;
     private Set<Tuple2<StreamNode, StreamNode>> iterationSourceSinkPairs;
+    // J: 事件服务
     private InternalTimeServiceManager.Provider timerServiceProvider;
     private JobType jobType = JobType.STREAMING;
     private Map<String, ResourceProfile> slotSharingGroupResources;
@@ -558,6 +562,7 @@ public class StreamGraph implements Pipeline {
     }
 
     /** Determines the slot sharing group of an operation across virtual nodes. */
+    // 确定跨虚拟节点的操作的槽位共享组
     public String getSlotSharingGroup(Integer id) {
         if (virtualSideOutputNodes.containsKey(id)) {
             Integer mappedId = virtualSideOutputNodes.get(id).f0;
@@ -676,6 +681,7 @@ public class StreamGraph implements Pipeline {
 
     public void setParallelism(Integer vertexID, int parallelism) {
         if (getStreamNode(vertexID) != null) {
+            // J: StreamNode 设置并行度
             getStreamNode(vertexID).setParallelism(parallelism);
         }
     }

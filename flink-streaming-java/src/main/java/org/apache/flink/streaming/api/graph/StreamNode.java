@@ -47,30 +47,39 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Class representing the operators in the streaming programs, with all their properties. */
+// 类，表示流程序中的操作符及其所有属性
 @Internal
 public class StreamNode {
 
     private final int id;
     private int parallelism;
     /**
+     * 此流节点的最大并行度。最大并行度是用于分区状态的动态扩展和关键组数量的上限
+     *
      * Maximum parallelism for this stream node. The maximum parallelism is the upper limit for
      * dynamic scaling and the number of key groups used for partitioned state.
      */
     private int maxParallelism;
 
     private ResourceSpec minResources = ResourceSpec.DEFAULT;
+    // J: 首选资源
     private ResourceSpec preferredResources = ResourceSpec.DEFAULT;
     private final Map<ManagedMemoryUseCase, Integer> managedMemoryOperatorScopeUseCaseWeights =
             new HashMap<>();
     private final Set<ManagedMemoryUseCase> managedMemorySlotScopeUseCases = new HashSet<>();
     private long bufferTimeout;
+    // J: 算子名
     private final String operatorName;
+    // J: Slot 共享组
     private @Nullable String slotSharingGroup;
     private @Nullable String coLocationGroup;
+    // J: 状态分区器
     private KeySelector<?, ?>[] statePartitioners = new KeySelector[0];
+    // J: 状态键序列化器
     private TypeSerializer<?> stateKeySerializer;
 
     private StreamOperatorFactory<?> operatorFactory;
+    // J: 流入流出序列化
     private TypeSerializer<?>[] typeSerializersIn = new TypeSerializer[0];
     private TypeSerializer<?> typeSerializerOut;
 
@@ -85,6 +94,7 @@ public class StreamNode {
     private OutputFormat<?> outputFormat;
 
     private String transformationUID;
+    // J: 用户指定的 hash?
     private String userHash;
 
     private final Map<Integer, StreamConfig.InputRequirement> inputRequirements = new HashMap<>();
@@ -302,6 +312,7 @@ public class StreamNode {
         return coLocationGroup;
     }
 
+    // J: 判断 StreamNode 是否处在同一个 Slot 共享组
     public boolean isSameSlotSharingGroup(StreamNode downstreamVertex) {
         return (slotSharingGroup == null && downstreamVertex.slotSharingGroup == null)
                 || (slotSharingGroup != null

@@ -40,6 +40,9 @@ import scala.Product;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这些类封装了访问用户指定为索引或字段表达式字符串的字段的逻辑。也可以为该字段请求TypeInformation。位置索引可以指定
+ * 元组、数组或简单类型的一个字段(只有“第0字段”)。
+ *
  * These classes encapsulate the logic of accessing a field specified by the user as either an index
  * or a field expression string. TypeInformation can also be requested for the field. The position
  * index might specify a field of a Tuple, an array, or a simple type(only "0th field").

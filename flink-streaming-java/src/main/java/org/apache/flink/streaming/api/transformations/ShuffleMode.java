@@ -21,6 +21,7 @@ package org.apache.flink.streaming.api.transformations;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** The shuffle mode defines the data exchange mode between operators. */
+// shuffle模式定义了 operator 之间的数据交换模式。
 @PublicEvolving
 public enum ShuffleMode {
     /**

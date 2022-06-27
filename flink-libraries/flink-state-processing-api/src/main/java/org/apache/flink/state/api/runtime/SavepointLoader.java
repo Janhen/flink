@@ -33,6 +33,10 @@ public final class SavepointLoader {
     private SavepointLoader() {}
 
     /**
+     * 接受给定的字符串(表示指向检查点的指针)，并将其解析为检查点元数据文件的文件状态。
+     *
+     * <p>仅当用户代码类加载器是线程的当前类加载器时使用。
+     *
      * Takes the given string (representing a pointer to a checkpoint) and resolves it to a file
      * status for the checkpoint's metadata file.
      *

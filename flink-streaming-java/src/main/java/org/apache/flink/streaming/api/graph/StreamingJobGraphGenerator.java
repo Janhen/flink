@@ -99,6 +99,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** The StreamingJobGraphGenerator converts a {@link StreamGraph} into a {@link JobGraph}. */
+// StreamingJobGraphGenerator将{@link StreamGraph}转换为{@link JobGraph}
 @Internal
 public class StreamingJobGraphGenerator {
 
@@ -228,10 +229,12 @@ public class StreamingJobGraphGenerator {
 
     @SuppressWarnings("deprecation")
     private void preValidate() {
+        // J: 校验 streamGraph 中的内容
         CheckpointConfig checkpointConfig = streamGraph.getCheckpointConfig();
 
         if (checkpointConfig.isCheckpointingEnabled()) {
             // temporarily forbid checkpointing for iterative jobs
+            // 暂时禁止迭代作业的检查点
             if (streamGraph.isIterative() && !checkpointConfig.isForceCheckpointing()) {
                 throw new UnsupportedOperationException(
                         "Checkpointing is currently not supported by default for iterative jobs, as we cannot guarantee exactly once semantics. "
@@ -249,6 +252,8 @@ public class StreamingJobGraphGenerator {
             if (checkpointConfig.isUnalignedCheckpointsEnabled()
                     && !checkpointConfig.isForceUnalignedCheckpoints()
                     && streamGraph.getStreamNodes().stream().anyMatch(this::hasCustomPartitioner)) {
+                // 自定义分区目前不支持未对齐的检查点，表示缩放不保证正确工作。用户可以使用
+                //' execute.checkpointing.Unaligned.forced'强制非对齐检查点
                 throw new UnsupportedOperationException(
                         "Unaligned checkpoints are currently not supported for custom partitioners, "
                                 + "as rescaling is not guaranteed to work correctly."
@@ -368,6 +373,10 @@ public class StreamingJobGraphGenerator {
     }
 
     /**
+     * 从源{@link StreamNode}实例建立任务链
+     *
+     * <p>这将递归地创建所有{@link JobVertex}实例
+     *
      * Sets up task chains from the source {@link StreamNode} instances.
      *
      * <p>This will recursively create all {@link JobVertex} instances.

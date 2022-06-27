@@ -60,6 +60,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <p>存储的检查点元数据文件的格式如下:
  *
+ * [MagicNumber (int) | Format Version (int) | Checkpoint Metadata (variable)]
+ *
+ * <p>实际的保存点序列化是通过{@link MetadataSerializer}特定于版本的。
+ *
  * A utility class with the methods to write/load/dispose the checkpoint and savepoint metadata.
  *
  * <p>Stored checkpoint metadata files have the following format:
@@ -73,12 +77,14 @@ public class Checkpoints {
     private static final Logger LOG = LoggerFactory.getLogger(Checkpoints.class);
 
     /** Magic number at the beginning of every checkpoint metadata file, for sanity checks. */
+    // 在每个检查点元数据文件的开始处设置一个神奇的数字，用于进行完整性检查
     public static final int HEADER_MAGIC_NUMBER = 0x4960672d;
 
     // ------------------------------------------------------------------------
     //  Writing out checkpoint metadata
     // ------------------------------------------------------------------------
 
+    // J: 写入检查点元数据
     public static void storeCheckpointMetadata(
             CheckpointMetadata checkpointMetadata, OutputStream out) throws IOException {
 
@@ -86,6 +92,7 @@ public class Checkpoints {
         storeCheckpointMetadata(checkpointMetadata, dos);
     }
 
+    // J: 存储检查点元数据
     public static void storeCheckpointMetadata(
             CheckpointMetadata checkpointMetadata, DataOutputStream out) throws IOException {
 
@@ -99,6 +106,7 @@ public class Checkpoints {
     // ------------------------------------------------------------------------
     //  Reading and validating checkpoint metadata
     // ------------------------------------------------------------------------
+    // 读取和验证检查点元数据
 
     public static CheckpointMetadata loadCheckpointMetadata(
             DataInputStream in, ClassLoader classLoader, String externalPointer)
@@ -106,6 +114,8 @@ public class Checkpoints {
         checkNotNull(in, "input stream");
         checkNotNull(classLoader, "classLoader");
 
+        // J: 读取到检查点的号?
+        // /<path>/<job-id>/chk-254770
         final int magicNumber = in.readInt();
 
         if (magicNumber == HEADER_MAGIC_NUMBER) {
@@ -237,6 +247,7 @@ public class Checkpoints {
     // ------------------------------------------------------------------------
     //  Savepoint Disposal Hooks
     // ------------------------------------------------------------------------
+    // 保存点处理钩子
 
     public static void disposeSavepoint(
             String pointer, CheckpointStorage checkpointStorage, ClassLoader classLoader)
@@ -246,11 +257,13 @@ public class Checkpoints {
         checkNotNull(checkpointStorage, "stateBackend");
         checkNotNull(classLoader, "classLoader");
 
+        // J:
         final CompletedCheckpointStorageLocation checkpointLocation =
                 checkpointStorage.resolveCheckpoint(pointer);
 
         final StreamStateHandle metadataHandle = checkpointLocation.getMetadataHandle();
 
+        // 加载savepoint对象(元数据)以拥有需要释放所有状态的所有状态句柄
         // load the savepoint object (the metadata) to have all the state handles that we need
         // to dispose of all state
         final CheckpointMetadata metadata;
@@ -262,6 +275,7 @@ public class Checkpoints {
 
         Exception exception = null;
 
+        // 首先，销毁保存点元数据，这样，即使下面的销毁失败，保存点也不再可寻址
         // first dispose the savepoint metadata, so that the savepoint is not
         // addressable any more even if the following disposal fails
         try {
@@ -270,6 +284,7 @@ public class Checkpoints {
             exception = e;
         }
 
+        // 现在处理保存点数据
         // now dispose the savepoint data
         try {
             metadata.dispose();
@@ -278,6 +293,7 @@ public class Checkpoints {
         }
 
         // now dispose the location (directory, table, whatever)
+        // 现在处理位置(目录、表等)
         try {
             checkpointLocation.disposeStorageLocation();
         } catch (Exception e) {

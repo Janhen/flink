@@ -53,6 +53,13 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * JobGraph表示一个Flink数据流程序，处于JobManager接受的较低级别。来自高级api的所有程序都被转换为JobGraphs。
+ *
+ * <p>JobGraph是一个顶点和中间结果的图，它们连接在一起形成一个DAG。请注意，迭代(反馈边)目前不是在JobGraph内部编码的，
+ *   而是在它们之间建立反馈通道的特定顶点内部编码的。
+ *
+ * <p>JobGraph定义作业范围的配置设置，而每个顶点和中间结果定义具体操作和中间数据的特征。
+ *
  * The JobGraph represents a Flink dataflow program, at the low level that the JobManager accepts.
  * All programs from higher level APIs are transformed into JobGraphs.
  *
@@ -74,6 +81,7 @@ public class JobGraph implements Serializable {
             new LinkedHashMap<JobVertexID, JobVertex>();
 
     /** The job configuration attached to this job. */
+    // 附加到此作业的作业配置
     private final Configuration jobConfiguration = new Configuration();
 
     /** ID of this job. May be set if specific job id is desired (e.g. session management) */
@@ -93,27 +101,34 @@ public class JobGraph implements Serializable {
     // --- checkpointing ---
 
     /** Job specific execution config. */
+    // 作业特定的执行配置
     private SerializedValue<ExecutionConfig> serializedExecutionConfig;
 
     /** The settings for the job checkpoints. */
+    // 作业检查点的设置
     private JobCheckpointingSettings snapshotSettings;
 
     /** Savepoint restore settings. */
+    // 保存点恢复设置
     private SavepointRestoreSettings savepointRestoreSettings = SavepointRestoreSettings.none();
 
     // --- attached resources ---
 
     /** Set of JAR files required to run this job. */
+    // 运行此作业所需的 JAR 文件集
     private final List<Path> userJars = new ArrayList<Path>();
 
     /** Set of custom files required to run this job. */
+    // 运行此作业所需的自定义文件集
     private final Map<String, DistributedCache.DistributedCacheEntry> userArtifacts =
             new HashMap<>();
 
     /** Set of blob keys identifying the JAR files required to run this job. */
+    // 一组 blob 键，标识运行此作业所需的 JAR 文件
     private final List<PermanentBlobKey> userJarBlobKeys = new ArrayList<>();
 
     /** List of classpaths required to run this job. */
+    // 运行此作业所需的类路径列表
     private List<URL> classpaths = Collections.emptyList();
 
     // --------------------------------------------------------------------------------------------

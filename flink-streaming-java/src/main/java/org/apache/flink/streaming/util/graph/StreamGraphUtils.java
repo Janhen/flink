@@ -29,6 +29,9 @@ import org.apache.flink.streaming.api.transformations.PhysicalTransformation;
 public final class StreamGraphUtils {
 
     /**
+     * 当禁用自动生成uid时，如果没有设置{@link PhysicalTransformation}的uid或散列，则抛出
+     * {@link IllegalStateException}。
+     *
      * Throw {@link IllegalStateException} if the {@link PhysicalTransformation}'s uid or hash is
      * not set when auto generate uid is disabled.
      *
@@ -50,6 +53,8 @@ public final class StreamGraphUtils {
     }
 
     /**
+     * 根据给定的转换配置流节点的缓冲区超时
+     *
      * Configure a stream node's buffer timeout according to the given transformation.
      *
      * @param streamGraph The StreamGraph the node belongs to

@@ -92,6 +92,12 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 从{@link Transformation}的图形生成{@link StreamGraph}的生成器。
+ *
+ * <p>从接收器开始遍历{@code transforms}树。在每次转换中，我们递归地转换输入，然后在{@code StreamGraph}中创建
+ *   一个节点，并从输入节点向新创建的节点添加边。转换方法返回StreamGraph中表示输入转换的节点的id。可以返回几个id，
+ *   以便能够处理反馈转换和联合。
+ *
  * A generator that generates a {@link StreamGraph} from a graph of {@link Transformation}s.
  *
  * <p>This traverses the tree of {@code Transformations} starting from the sinks. At each
@@ -142,6 +148,7 @@ public class StreamGraphGenerator {
     private final ReadableConfig configuration;
 
     // Records the slot sharing groups and their corresponding ResourceProfile
+    // 记录槽位共享组及其对应的ResourceProfile信息
     private final Map<String, ResourceProfile> slotSharingGroupResources = new HashMap<>();
 
     private Path savepointDir;
@@ -165,6 +172,7 @@ public class StreamGraphGenerator {
 
     private RuntimeExecutionMode runtimeExecutionMode = RuntimeExecutionMode.STREAMING;
 
+    // J: 是否以批处理方式执行
     private boolean shouldExecuteInBatchMode;
 
     // 维护算子翻译映射

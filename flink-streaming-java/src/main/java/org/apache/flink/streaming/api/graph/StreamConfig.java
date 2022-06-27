@@ -60,7 +60,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * {@link StreamOperator}的内部配置。这是由{@link StreamingJobGraphGenerator}创建和填充的。
+ * {@link StreamOperator} 的内部配置。这是由 {@link StreamingJobGraphGenerator} 创建和填充
  *
  * Internal configuration for a {@link StreamOperator}. This is created and populated by the {@link
  * StreamingJobGraphGenerator}.
@@ -101,6 +101,7 @@ public class StreamConfig implements Serializable {
     // 检查点模式
     private static final String CHECKPOINT_MODE = "checkpointMode";
 
+    // J: 保存点目录，检查点存储，状态后端
     private static final String SAVEPOINT_DIR = "savepointdir";
     private static final String CHECKPOINT_STORAGE = "checkpointstorage";
     private static final String STATE_BACKEND = "statebackend";
@@ -160,6 +161,7 @@ public class StreamConfig implements Serializable {
     }
 
     /** Fraction of managed memory reserved for the given use case that this operator should use. */
+    // 为该 operator 应该使用的给定用例保留的托管内存的部分。
     public void setManagedMemoryFractionOperatorOfUseCase(
             ManagedMemoryUseCase managedMemoryUseCase, double fraction) {
         final ConfigOption<Double> configOption =

@@ -29,6 +29,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 流拓扑中的边缘。像这样的一条边不一定会转换成两个作业顶点之间的连接(由于链优化)。
+ *
  * An edge in the streaming topology. One edge like this does not necessarily gets converted to a
  * connection between two job vertices (due to chaining/optimization).
  */
@@ -45,6 +47,7 @@ public class StreamEdge implements Serializable {
     private final int targetId;
 
     /** The type number of the input for co-tasks. */
+    // 协同任务输入的类型号
     private final int typeNumber;
     /** The side-output tag (if any) of this {@link StreamEdge}. */
     private final OutputTag outputTag;
@@ -62,6 +65,7 @@ public class StreamEdge implements Serializable {
 
     private long bufferTimeout;
 
+    // J: 支持未对其检查点
     private boolean supportsUnalignedCheckpoints = true;
 
     public StreamEdge(

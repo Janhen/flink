@@ -23,6 +23,9 @@ import org.apache.flink.runtime.io.network.api.writer.SubtaskStateMapper;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这个类表示工作图中的边(通信通道)。这些边总是从中间结果分区到作业顶点。一条边用它的
+ * {@link DistributionPattern}参数化。
+ *
  * This class represent edges (communication channels) in a job graph. The edges always go from an
  * intermediate result partition to a job vertex. An edge is parametrized with its {@link
  * DistributionPattern}.

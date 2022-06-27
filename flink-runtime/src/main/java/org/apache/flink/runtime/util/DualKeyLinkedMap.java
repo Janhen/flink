@@ -32,7 +32,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * 在两个不同的索引下存储值的映射。主键到值的映射由{@link LinkedHashMap}支持，因此值和主键集的迭代顺序就是插入顺序。
+ * 在两个不同的索引下存储值的映射。主键到值的映射由 {@link LinkedHashMap} 支持，因此值和主键集的迭代顺序就是插入顺序。
  * 请注意，如果将主键重新插入到映射中，插入顺序不会受到影响。还要注意，二级键集上没有迭代顺序的约定。
  *
  * Map which stores values under two different indices. The mapping of the primary key to the value

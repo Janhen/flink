@@ -40,6 +40,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /** The Interface of a slot pool that manages slots. */
+// 槽位池管理槽位的接口
 public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
 
     // ------------------------------------------------------------------------
@@ -59,6 +60,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     // ------------------------------------------------------------------------
 
     /**
+     * 连接SlotPool到给定的ResourceManager。调用此方法后，SlotPool将能够从给定的ResourceManager请求资源。
+     *
      * Connects the SlotPool to the given ResourceManager. After this method is called, the SlotPool
      * will be able to request resources from the given ResourceManager.
      *
@@ -80,6 +83,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     // ------------------------------------------------------------------------
 
     /**
+     * 在{@link SlotPool}向给定的{@link ResourceID}注册一个TaskExecutor。
+     *
      * Registers a TaskExecutor with the given {@link ResourceID} at {@link SlotPool}.
      *
      * @param resourceID identifying the TaskExecutor to register
@@ -88,6 +93,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     boolean registerTaskManager(ResourceID resourceID);
 
     /**
+     * 从{@link SlotPool}释放一个带有给定{@link ResourceID}的TaskExecutor。
+     *
      * Releases a TaskExecutor with the given {@link ResourceID} from the {@link SlotPool}.
      *
      * @param resourceId identifying the TaskExecutor which shall be released from the SlotPool
@@ -97,10 +104,13 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     boolean releaseTaskManager(final ResourceID resourceId, final Exception cause);
 
     /**
+     * 为{@link SlotPool}提供多个插槽。插槽提供可以单独接受或拒绝返回集合接受插槽提供。
+     *
      * Offers multiple slots to the {@link SlotPool}. The slot offerings can be individually
      * accepted or rejected by returning the collection of accepted slot offers.
      *
      * @param taskManagerLocation from which the slot offers originate
+     *                              插槽提供的来源
      * @param taskManagerGateway to talk to the slot offerer
      * @param offers slot offers which are offered to the {@link SlotPool}
      * @return A collection of accepted slot offers. The remaining slot offers are implicitly
@@ -112,6 +122,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
             Collection<SlotOffer> offers);
 
     /**
+     * 指定分配id的插槽失败。
+     *
      * Fails the slot with the given allocation id.
      *
      * @param allocationID identifying the slot which is being failed
@@ -125,6 +137,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     // ------------------------------------------------------------------------
 
     /**
+     * 返回一个关于槽位池中当前可用的所有槽位的{@link SlotInfoWithUtilization}对象列表。
+     *
      * Returns a list of {@link SlotInfoWithUtilization} objects about all slots that are currently
      * available in the slot pool.
      *
@@ -135,6 +149,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     Collection<SlotInfoWithUtilization> getAvailableSlotsInformation();
 
     /**
+     * 返回一个关于槽位池中当前分配的所有槽位的{@link SlotInfo}对象列表。
+     *
      * Returns a list of {@link SlotInfo} objects about all slots that are currently allocated in
      * the slot pool.
      *
@@ -144,6 +160,9 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
     Collection<SlotInfo> getAllocatedSlotsInformation();
 
     /**
+     * 在给定的请求id下，为给定的需求概要文件使用给定的分配id分配可用的槽位。该槽必须能够满足需求概要文件，否则将
+     * 抛出{@link IllegalStateException}。
+     *
      * Allocates the available slot with the given allocation id under the given request id for the
      * given requirement profile. The slot must be able to fulfill the requirement profile,
      * otherwise an {@link IllegalStateException} will be thrown.
@@ -160,6 +179,8 @@ public interface SlotPool extends AllocatedSlotActions, AutoCloseable {
             @Nonnull ResourceProfile requirementProfile);
 
     /**
+     * 从资源管理器请求分配新插槽。此方法不会从池中已经可用的槽中返回一个槽，而是将立即分配并返回的新槽添加到池中。
+     *
      * Request the allocation of a new slot from the resource manager. This method will not return a
      * slot from the already available slots from the pool, but instead will add a new slot to that
      * pool that is immediately allocated and returned.
