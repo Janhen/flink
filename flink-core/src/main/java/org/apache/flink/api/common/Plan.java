@@ -54,6 +54,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class Plan implements Visitable<Operator<?>>, Pipeline {
 
     /**
+     * plan 中所有接收器的集合。由于计划是从接收遍历到源，因此此集合必须包含所有接收。
+     *
      * A collection of all sinks in the plan. Since the plan is traversed from the sinks to the
      * sources, this collection must contain all the sinks.
      */
@@ -66,6 +68,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
     protected int defaultParallelism = ExecutionConfig.PARALLELISM_DEFAULT;
 
     /** Hash map for files in the distributed cache: registered name to cache entry. */
+    // 分布式缓存中文件的哈希映射:注册名称到缓存条目
     protected HashMap<String, DistributedCacheEntry> cacheFile = new HashMap<>();
 
     /** Config object for runtime execution parameters. */

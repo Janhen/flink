@@ -175,6 +175,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 任务执行器负责执行多个{@link Task}。
+ *
  * TaskExecutor implementation. The task executor is responsible for the execution of multiple
  * {@link Task}.
  */
@@ -198,6 +200,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     private final LibraryCacheManager libraryCacheManager;
 
     /** The address to metric query service on this Task Manager. */
+    // 此任务管理器上的度量查询服务的地址
     @Nullable private final String metricQueryServiceAddress;
 
     // --------- TaskManager services --------
@@ -208,6 +211,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     private final TaskManagerMetricGroup taskManagerMetricGroup;
 
     /** The state manager for this task, providing state managers per slot. */
+    // 此任务的状态管理器，为每个槽提供状态管理器
     private final TaskExecutorLocalStateStoresManager localStateStoresManager;
 
     /** Information provider for external resources. */
@@ -217,6 +221,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     private final ShuffleEnvironment<?, ?> shuffleEnvironment;
 
     /** The kvState registration service in the task manager. */
+    // 任务管理器中的kvState注册服务
     private final KvStateService kvStateService;
 
     private final Executor ioExecutor;
@@ -1012,6 +1017,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     // Slot allocation RPCs
     // ----------------------------------------------------------------------
 
+    // 槽配置rpc
     @Override
     public CompletableFuture<Acknowledge> requestSlot(
             final SlotID slotId,
@@ -1448,6 +1454,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
     //  Internal job manager connection methods
     // ------------------------------------------------------------------------
 
+    // J: 向 JobManager 提供 slots 供分配使用
     private void offerSlotsToJobManager(final JobID jobId) {
         jobTable.getConnection(jobId).ifPresent(this::internalOfferSlotsToJobManager);
     }

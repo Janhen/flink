@@ -22,9 +22,12 @@ package org.apache.flink.runtime.scheduler.strategy;
 public enum ResultPartitionState {
 
     /** Partition is just created or is just reset. */
+    // 分区刚刚创建或刚刚重置
     CREATED,
 
     /**
+     * 分区可以使用了。对于流水线分区，这表示它产生了数据。对于阻塞分区，这表示父结果中的所有结果分区已经完成。
+     *
      * Partition is ready for consuming. For pipelined partition, this indicates it has data
      * produced. For blocking partition, this indicates all result partitions in its parent result
      * have finished.

@@ -34,12 +34,14 @@ import javax.annotation.Nullable;
 import java.util.concurrent.Executor;
 
 /** {@link Dispatcher} services container. */
+// {@link Dispatcher}服务容器
 public class DispatcherServices {
 
     @Nonnull private final Configuration configuration;
 
     @Nonnull private final HighAvailabilityServices highAvailabilityServices;
 
+    // J: 网关寻找...
     @Nonnull private final GatewayRetriever<ResourceManagerGateway> resourceManagerGatewayRetriever;
 
     @Nonnull private final BlobServer blobServer;

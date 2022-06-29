@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
+ * {@code RootExceptionHistoryEntry}扩展了{@link ExceptionHistoryEntry}，通过提供一个
+ * {@code ExceptionHistoryEntry}实例列表来存储并发捕获的故障。
+ *
  * {@code RootExceptionHistoryEntry} extending {@link ExceptionHistoryEntry} by providing a list of
  * {@code ExceptionHistoryEntry} instances to store concurrently caught failures.
  */

@@ -41,6 +41,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link SchedulingStrategy}实例，它按照流水线区域的粒度调度任务。
+ *
  * {@link SchedulingStrategy} instance which schedules tasks in granularity of pipelined regions.
  */
 public class PipelinedRegionSchedulingStrategy implements SchedulingStrategy {
@@ -56,6 +58,7 @@ public class PipelinedRegionSchedulingStrategy implements SchedulingStrategy {
             correlatedResultPartitionGroups = new HashMap<>();
 
     /** External consumer regions of each ConsumedPartitionGroup. */
+    // 每个 ConsumedPartitionGroup 的外部消费区域
     private final Map<ConsumedPartitionGroup, Set<SchedulingPipelinedRegion>>
             partitionGroupConsumerRegions = new IdentityHashMap<>();
 
@@ -63,6 +66,7 @@ public class PipelinedRegionSchedulingStrategy implements SchedulingStrategy {
             new IdentityHashMap<>();
 
     /** The ConsumedPartitionGroups which are produced by multiple regions. */
+    // 由多个区域生成的 ConsumedPartitionGroups
     private final Set<ConsumedPartitionGroup> crossRegionConsumedPartitionGroups =
             Collections.newSetFromMap(new IdentityHashMap<>());
 
@@ -192,6 +196,7 @@ public class PipelinedRegionSchedulingStrategy implements SchedulingStrategy {
     @Override
     public void onExecutionStateChange(
             final ExecutionVertexID executionVertexId, final ExecutionState executionState) {
+        // J: 执行状态控制
         if (executionState == ExecutionState.FINISHED) {
             final Set<ConsumedPartitionGroup> finishedConsumedPartitionGroups =
                     IterableUtils.toStream(

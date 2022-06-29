@@ -25,7 +25,7 @@ import org.apache.flink.annotation.PublicEvolving;
 @PublicEvolving
 public enum JobStatus {
     /**
-     * 作业已被Dispatcher接收，正在等待作业管理器接收领导力并被创建
+     * 作业已被 Dispatcher 接收，正在等待作业管理器接收领导力并被创建
      *
      * The job has been received by the Dispatcher, and is waiting for the job manager to receive
      * leadership and to be created.
@@ -33,6 +33,7 @@ public enum JobStatus {
     INITIALIZING(TerminalState.NON_TERMINAL),
 
     /** Job is newly created, no task has started to run. */
+    // Job 是新创建的，没有任务开始运行
     CREATED(TerminalState.NON_TERMINAL),
 
     /** Some tasks are scheduled or running, some may be pending, some may be finished. */
@@ -85,6 +86,10 @@ public enum JobStatus {
     }
 
     /**
+     * 检查此状态是否为<i>global terminal<i>。全局终端作业已完成，不能再失败，也不能由另一个备用主节点重新启动或恢复。
+     *
+     * <p>当达到全局终端状态时，作业的所有恢复数据将从高可用性服务中删除。
+     *
      * Checks whether this state is <i>globally terminal</i>. A globally terminal job is complete
      * and cannot fail any more and will not be restarted or recovered by another standby master
      * node.
@@ -99,6 +104,12 @@ public enum JobStatus {
     }
 
     /**
+     * 检查此状态是否为<i>本地 terminal<i>。本地 terminal 是指正在执行的JobManager中的作业执行图的状态。如果
+     * 执行图是本地 terminal 的， JobManager 将不会继续执行或恢复作业。
+     *
+     * <p>{@link #SUSPENDED}是本地 terminal 而不是全局 terminal 的唯一状态，通常在正在执行的 JobManager
+     *   失去其leader状态时输入该状态。
+     *
      * Checks whether this state is <i>locally terminal</i>. Locally terminal refers to the state of
      * a job's execution graph within an executing JobManager. If the execution graph is locally
      * terminal, the JobManager will not continue executing or recovering the job.

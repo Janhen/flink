@@ -31,6 +31,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 包含任务失败后重新启动任务的结果。还包含失败的原因和重新启动的顶点，如果失败是可恢复的(相对于不可恢复的失败类型或
+ * 重启被重启策略抑制)。
+ *
  * Result containing the tasks to restart upon a task failure. Also contains the reason of the
  * failure and the vertices to restart if the failure is recoverable (in contrast to non-recoverable
  * failure type or restarting suppressed by restart strategy).
@@ -47,6 +50,8 @@ public class FailureHandlingResult {
     private final long restartDelayMS;
 
     /**
+     * {@link ExecutionVertexID}指向导致失败的{@link ExecutionVertex}，如果是全局失败，则为{@code null}。
+     *
      * The {@link ExecutionVertexID} refering to the {@link ExecutionVertex} the failure is
      * originating from or {@code null} if it's a global failure.
      */

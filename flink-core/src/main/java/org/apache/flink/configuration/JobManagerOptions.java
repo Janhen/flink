@@ -30,6 +30,7 @@ import static org.apache.flink.configuration.description.TextElement.code;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** Configuration options for the JobManager. */
+// JobManager的配置选项
 @PublicEvolving
 public class JobManagerOptions {
 
@@ -115,6 +116,8 @@ public class JobManagerOptions {
                                     + "') will be used.");
 
     /**
+     * JobManager的JVM堆大小与内存大小。
+     *
      * JVM heap size for the JobManager with memory size.
      *
      * @deprecated use {@link #TOTAL_FLINK_MEMORY} for standalone setups and {@link
@@ -169,6 +172,7 @@ public class JobManagerOptions {
                                     TOTAL_PROCESS_MEMORY.key()));
 
     /** JVM Heap Memory size for the JobManager. */
+    // JVM JobManager的堆内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> JVM_HEAP_MEMORY =
             key("jobmanager.memory.heap.size")
@@ -180,6 +184,7 @@ public class JobManagerOptions {
                                     + '.');
 
     /** Off-heap Memory size for the JobManager. */
+    // Off-heap JobManager的内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<MemorySize> OFF_HEAP_MEMORY =
             key("jobmanager.memory.off-heap.size")
@@ -195,6 +200,7 @@ public class JobManagerOptions {
                                     .build());
 
     /** Off-heap Memory size for the JobManager. */
+    // Off-heap JobManager 的内存大小
     @Documentation.Section(Documentation.Sections.COMMON_MEMORY)
     public static final ConfigOption<Boolean> JVM_DIRECT_MEMORY_LIMIT_ENABLED =
             key("jobmanager.memory.enable-jvm-direct-memory-limit")
@@ -357,6 +363,7 @@ public class JobManagerOptions {
                     .withDescription("The timeout in milliseconds for a idle slot in Slot Pool.");
 
     /** Config parameter determining the scheduler implementation. */
+    // 确定调度器实现的配置参数。
     @Documentation.ExcludeFromDocumentation("SchedulerNG is still in development.")
     public static final ConfigOption<SchedulerType> SCHEDULER =
             key("jobmanager.scheduler")

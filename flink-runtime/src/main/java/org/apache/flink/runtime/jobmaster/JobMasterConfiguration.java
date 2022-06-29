@@ -29,12 +29,14 @@ import org.apache.flink.util.Preconditions;
 /** Configuration for the {@link JobMaster}. */
 public class JobMasterConfiguration {
 
+    // J: 与 TM 进行 rpc 通信时的超时?
     private final Time rpcTimeout;
 
     private final Time slotRequestTimeout;
 
     private final String tmpDirectory;
 
+    // J: 重试注册配置
     private final RetryingRegistrationConfiguration retryingRegistrationConfiguration;
 
     private final Configuration configuration;

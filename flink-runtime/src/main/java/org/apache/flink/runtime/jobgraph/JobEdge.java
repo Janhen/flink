@@ -45,9 +45,11 @@ public class JobEdge implements java.io.Serializable {
     private SubtaskStateMapper downstreamSubtaskStateMapper = SubtaskStateMapper.ROUND_ROBIN;
 
     /** The channel rescaler that should be used for this job edge on upstream side. */
+    // 应用于上游作业边缘的通道缩放器
     private SubtaskStateMapper upstreamSubtaskStateMapper = SubtaskStateMapper.ROUND_ROBIN;
 
     /** The data set at the source of the edge, may be null if the edge is not yet connected */
+    // 如果边缘还没有连接，位于边缘源的数据集可能为空
     private IntermediateDataSet source;
 
     /** The id of the source intermediate data set */

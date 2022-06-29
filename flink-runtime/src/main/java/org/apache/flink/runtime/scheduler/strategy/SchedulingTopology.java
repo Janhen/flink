@@ -31,7 +31,7 @@ public interface SchedulingTopology
                 SchedulingPipelinedRegion> {
 
     /**
-     * 在{@link ExecutionVertexID}中查找{@link SchedulingExecutionVertex}
+     * 在 {@link ExecutionVertexID} 中查找 {@link SchedulingExecutionVertex}
      *
      * Looks up the {@link SchedulingExecutionVertex} for the given {@link ExecutionVertexID}.
      *

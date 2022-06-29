@@ -74,6 +74,8 @@ public interface AllocatedSlotPool {
     boolean containsSlot(AllocationID allocationId);
 
     /**
+     * 检查槽池是否包含一个给定{@link AllocationID}的槽，以及它是否空闲。
+     *
      * Checks whether the slot pool contains a slot with the given {@link AllocationID} and if it is
      * free.
      *
@@ -84,6 +86,8 @@ public interface AllocatedSlotPool {
     boolean containsFreeSlot(AllocationID allocationId);
 
     /**
+     * 保留给定的allocationId指定的空闲槽位。
+     *
      * Reserves the free slot specified by the given allocationId.
      *
      * @param allocationId allocationId identifying the free slot to reserve

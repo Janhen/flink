@@ -49,6 +49,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 
+    // J: 针对用户代码包装，供代码生成使用
     protected final UserCodeWrapper<? extends OutputFormat<IN>> formatWrapper;
 
     protected Operator<IN> input = null;

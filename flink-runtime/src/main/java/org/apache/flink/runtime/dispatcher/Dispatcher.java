@@ -93,6 +93,9 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * Dispatcher组件的基类。Dispatcher组件负责接收作业提交、持久化它们、生成JobManagers来执行作业，并在主服务器发生
+ * 故障时恢复它们。此外，它还知道Flink会话集群的状态。
+ *
  * Base class for the Dispatcher component. The Dispatcher component is responsible for receiving
  * job submissions, persisting them, spawning JobManagers to execute the jobs and to recover them in
  * case of a master failure. Furthermore, it knows about the state of the Flink session cluster.
@@ -111,6 +114,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
     private final GatewayRetriever<ResourceManagerGateway> resourceManagerGatewayRetriever;
     private final JobManagerSharedServices jobManagerSharedServices;
     private final HeartbeatServices heartbeatServices;
+    // J: 块服务，持久化文件
     private final BlobServer blobServer;
 
     private final FatalErrorHandler fatalErrorHandler;
@@ -127,6 +131,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
 
     private final JobManagerMetricGroup jobManagerMetricGroup;
 
+    // J: Dispatcher 中的服务归档列表
     private final HistoryServerArchivist historyServerArchivist;
 
     private final Executor ioExecutor;
@@ -137,9 +142,11 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
 
     protected final CompletableFuture<ApplicationStatus> shutDownFuture;
 
+    // J: 启动器
     private DispatcherBootstrap dispatcherBootstrap;
 
     /** Enum to distinguish between initial job submission and re-submission for recovery. */
+    // 枚举来区分初始作业提交和重新提交以恢复
     protected enum ExecutionType {
         SUBMISSION,
         RECOVERY
@@ -214,6 +221,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
             throw exception;
         }
 
+        // J: 启动恢复的任务
         startRecoveredJobs();
         this.dispatcherBootstrap =
                 this.dispatcherBootstrapFactory.create(
@@ -295,6 +303,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
     // RPCs
     // ------------------------------------------------------
 
+    // J: Dispatch 对 JobGraph 任务提交，返回异步，控制提交的超时
     @Override
     public CompletableFuture<Acknowledge> submitJob(JobGraph jobGraph, Time timeout) {
         log.info("Received JobGraph submission {} ({}).", jobGraph.getJobID(), jobGraph.getName());
@@ -318,6 +327,8 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
     }
 
     /**
+     * 检查给定的作业是否已经提交或执行
+     *
      * Checks whether the given job has already been submitted or executed.
      *
      * @param jobId identifying the submitted job
@@ -663,6 +674,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
         return CompletableFuture.completedFuture(blobServer.getPort());
     }
 
+    // J: 由 Dispatcher 触发检查点...
     @Override
     public CompletableFuture<String> triggerSavepoint(
             final JobID jobId,
@@ -890,6 +902,7 @@ public abstract class Dispatcher extends PermanentlyFencedRpcEndpoint<Dispatcher
     }
 
     /** Ensures that the JobMasterGateway is available. */
+    // 确保 JobMasterGateway 可用
     private CompletableFuture<JobMasterGateway> getJobMasterGateway(JobID jobId) {
         JobManagerRunner job = runningJobs.get(jobId);
         if (job == null) {

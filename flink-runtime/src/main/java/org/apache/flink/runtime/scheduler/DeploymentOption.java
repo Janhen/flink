@@ -24,6 +24,7 @@ package org.apache.flink.runtime.scheduler;
  */
 public class DeploymentOption {
 
+    // 是否通知分区数据可用
     private final boolean notifyPartitionDataAvailable;
 
     public DeploymentOption(boolean notifyPartitionDataAvailable) {

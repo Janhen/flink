@@ -39,6 +39,8 @@ import java.util.Optional;
 public interface SlotPoolService extends AutoCloseable {
 
     /**
+     * 尝试将这个插槽池服务转换为给定的类别。
+     *
      * Tries to cast this slot pool service into the given clazz.
      *
      * @param clazz to cast the slot pool service into
@@ -55,6 +57,8 @@ public interface SlotPoolService extends AutoCloseable {
     }
 
     /**
+     * 启动封装的槽池实现。
+     *
      * Start the encapsulated slot pool implementation.
      *
      * @param jobMasterId jobMasterId to start the service with
@@ -70,6 +74,8 @@ public interface SlotPoolService extends AutoCloseable {
     void close();
 
     /**
+     * 为{@link SlotPoolService}提供多个插槽。插槽提供可以单独接受或拒绝返回集合接受插槽提供。
+     *
      * Offers multiple slots to the {@link SlotPoolService}. The slot offerings can be individually
      * accepted or rejected by returning the collection of accepted slot offers.
      *
@@ -131,6 +137,8 @@ public interface SlotPoolService extends AutoCloseable {
     void disconnectResourceManager();
 
     /**
+     * 创建关于属于指定任务管理器的分配插槽的报告。
+     *
      * Create report about the allocated slots belonging to the specified task manager.
      *
      * @param taskManagerId identifies the task manager

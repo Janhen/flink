@@ -41,6 +41,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * RPC端点的基类。提供远程过程调用的分布式组件必须扩展RPC端点基类。RPC端点由{@link RpcService}支持。
+ *
  * Base class for RPC endpoints. Distributed components which offer remote procedure calls have to
  * extend the RPC endpoint base class. An RPC endpoint is backed by an {@link RpcService}.
  *
@@ -86,6 +88,7 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
     // ------------------------------------------------------------------------
 
     /** RPC service to be used to start the RPC server and to obtain rpc gateways. */
+    // RPC服务，用于启动RPC服务器，获取RPC网关
     private final RpcService rpcService;
 
     /** Unique identifier for this rpc endpoint. */
@@ -101,6 +104,8 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
     final AtomicReference<Thread> currentMainThread = new AtomicReference<>(null);
 
     /**
+     * 用于在正在执行的rpc服务器的主线程中执行未来回调的主线程执行程序。
+     *
      * The main thread executor to be used to execute future callbacks in the main thread of the
      * executing rpc server.
      */

@@ -34,6 +34,10 @@ import java.util.stream.IntStream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * input gate 消耗单个产生的中间结果的一个或多个分区。
+ *
+ * <p>每个中间结果在其产生的并行子任务上进行分区;每个分区进一步划分为一个或多个子分区。
+ *
  * An input gate consumes one or more partitions of a single produced intermediate result.
  *
  * <p>Each intermediate result is partitioned over its producing parallel subtasks; each of these

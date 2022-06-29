@@ -47,6 +47,9 @@ public class FailureHandlingResultSnapshot {
     private final Set<Execution> concurrentlyFailedExecutions;
 
     /**
+     * 根据传递的{@link FailureHandlingResult}和{@link ExecutionVertex ExecutionVertices}创建一个
+     * {@code FailureHandlingResultSnapshot}。
+     *
      * Creates a {@code FailureHandlingResultSnapshot} based on the passed {@link
      * FailureHandlingResult} and {@link ExecutionVertex ExecutionVertices}.
      *

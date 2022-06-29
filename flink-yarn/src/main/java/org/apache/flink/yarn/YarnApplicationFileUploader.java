@@ -62,6 +62,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A class with utilities for uploading files related to the deployment of a single application. */
+// 一个类，其实用工具用于上传与单个应用程序部署相关的文件
 class YarnApplicationFileUploader implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(YarnApplicationFileUploader.class);
@@ -75,6 +76,8 @@ class YarnApplicationFileUploader implements AutoCloseable {
     private final Path applicationDir;
 
     /**
+     * 提供的lib目录中的所有文件。键是相对于提供的dir的文件的远程路径，值是远程FileStatus。
+     *
      * All files in the provided lib directories. The key is the remote path to the file relative to
      * the provided dir and value is remote FileStatus.
      */
@@ -219,6 +222,9 @@ class YarnApplicationFileUploader implements AutoCloseable {
     }
 
     /**
+     * 递归地上传(并注册)<tt>shipFiles<tt>中的任何(用户和系统)文件，除非匹配“<tt>flink-dist.jar<tt>”的文件
+     * 应该单独上传。如果它已经是一个远程文件，则跳过上传。
+     *
      * Recursively uploads (and registers) any (user and system) files in <tt>shipFiles</tt> except
      * for files matching "<tt>flink-dist*.jar</tt>" which should be uploaded separately. If it is
      * already a remote file, the uploading will be skipped.
@@ -312,6 +318,7 @@ class YarnApplicationFileUploader implements AutoCloseable {
         return classPaths;
     }
 
+    // J: 针对 flink-dist-* 进行单独的上传
     public YarnLocalResourceDescriptor uploadFlinkDist(final Path localJarPath)
             throws IOException, ClusterDeploymentException {
         if (flinkDist != null) {
@@ -434,6 +441,7 @@ class YarnApplicationFileUploader implements AutoCloseable {
         return fileName.startsWith("flink-dist") && fileName.endsWith("jar");
     }
 
+    // J: 确定 plugin 的上传?
     private static boolean isPlugin(Path path) {
         Path parent = path.getParent();
         while (parent != null) {

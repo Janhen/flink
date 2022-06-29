@@ -73,6 +73,7 @@ public interface SchedulerNG extends AutoCloseableAsync {
 
     CompletableFuture<JobStatus> getJobTerminationFuture();
 
+    // J: 类似 Thread#setDefaultUncaughtExceptionHandler??
     void handleGlobalFailure(Throwable cause);
 
     default boolean updateTaskExecutionState(TaskExecutionState taskExecutionState) {

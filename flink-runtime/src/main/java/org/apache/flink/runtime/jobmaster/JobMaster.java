@@ -113,6 +113,12 @@ import java.util.concurrent.TimeoutException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 作业主负责执行单个{@link JobGraph}。
+ *
+ * 它提供以下方法作为其rpc接口的一部分来与JobMaster远程交互:
+ *
+ * <li>{@link #updateTaskExecutionState}更新给定任务的任务执行状态
+ *
  * JobMaster implementation. The job master is responsible for the execution of a single {@link
  * JobGraph}.
  *
@@ -139,12 +145,15 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
 
     private final Time rpcTimeout;
 
+    // J: JobMaster 高可用
     private final HighAvailabilityServices highAvailabilityServices;
 
+    // J: 文件块写入器
     private final BlobWriter blobWriter;
 
     private final HeartbeatServices heartbeatServices;
 
+    // J: 调度器服务?
     private final ScheduledExecutorService scheduledExecutorService;
 
     private final OnCompletionActions jobCompletionActions;
@@ -168,22 +177,27 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
     private final Map<ResourceID, Tuple2<TaskManagerLocation, TaskExecutorGateway>>
             registeredTaskManagers;
 
+    // J: TM 的 shuffle
     private final ShuffleMaster<?> shuffleMaster;
 
     // --------- Scheduler --------
 
     private final SchedulerNG schedulerNG;
 
+    // J: JobManager 任务状态监听器
     private final JobManagerJobStatusListener jobStatusListener;
 
     private final JobManagerJobMetricGroup jobManagerJobMetricGroup;
 
     // -------- Misc ---------
 
+    // J: 累加器
     private final Map<String, Object> accumulators;
 
+    // J: 分区追踪器
     private final JobMasterPartitionTracker partitionTracker;
 
+    // J: 执行部署追踪器、执行部署协调器
     private final ExecutionDeploymentTracker executionDeploymentTracker;
     private final ExecutionDeploymentReconciler executionDeploymentReconciler;
 

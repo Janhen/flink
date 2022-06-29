@@ -90,6 +90,8 @@ public interface RpcService {
     <C extends RpcEndpoint & RpcGateway> RpcServer startServer(C rpcEndpoint);
 
     /**
+     * 用给定的防护令牌防护给定的RpcServer
+     *
      * Fence the given RpcServer with the given fencing token.
      *
      * <p>Fencing the RpcServer means that we fix the fencing token to the provided value. All RPCs

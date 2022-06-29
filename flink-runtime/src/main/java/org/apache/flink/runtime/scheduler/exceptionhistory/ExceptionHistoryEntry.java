@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
+ * {@code ExceptionHistoryEntry} 收集关于触发调度器故障处理的单个故障的信息。
+ *
  * {@code ExceptionHistoryEntry} collects information about a single failure that triggered the
  * scheduler's failure handling.
  */
@@ -43,6 +45,8 @@ public class ExceptionHistoryEntry extends ErrorInfo {
     @Nullable private final ArchivedTaskManagerLocation taskManagerLocation;
 
     /**
+     * 根据提供的{@code执行}创建一个{@code ExceptionHistoryEntry}。
+     *
      * Creates an {@code ExceptionHistoryEntry} based on the provided {@code Execution}.
      *
      * @param failedExecution the failed {@code Execution}.

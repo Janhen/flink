@@ -41,8 +41,14 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 一个{@code Transformation}表示创建一个DataStream的操作。每个DataStream都有一个底层的{@code Transformation}，
- * 它是DataStream的起源。
+ * 一个 {@code Transformation}表示创建一个DataStream的操作。每个DataStream都有一个底层的{@code Transformation}，
+ * 它是 DataStream 的起源。
+ *
+ * <p>API操作，例如DataStream#map，会在下面创建一个{@code Transformation}s的树。当执行流程序时，使用
+ *   StreamGraphGenerator将该图转换为StreamGraph。
+ *
+ * <p>A {@code Transformation}在运行时不一定对应物理操作。有些操作只是逻辑概念。例如union, split/select
+ * 数据流，partitioning。
  *
  * A {@code Transformation} represents the operation that creates a DataStream. Every DataStream has
  * an underlying {@code Transformation} that is the origin of said DataStream.
@@ -142,6 +148,8 @@ public abstract class Transformation<T> {
     private ResourceSpec minResources = ResourceSpec.DEFAULT;
 
     /**
+     * 此流转换的首选资源。定义了未来规划中资源动态调整大小的上限
+     *
      * The preferred resources for this stream transformation. It defines the upper limit for
      * dynamic resource resize in future plan.
      */
@@ -170,6 +178,7 @@ public abstract class Transformation<T> {
 
     protected long bufferTimeout = -1;
 
+    // J: 该 Transformation 所对应的共享 slot 组
     private String slotSharingGroup;
 
     @Nullable private String coLocationGroupKey;
@@ -327,6 +336,8 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 为该操作符设置用户提供的散列。这将在创建 JobVertexID 时使用。
+     *
      * Sets an user provided hash for this operator. This will be used AS IS the create the
      * JobVertexID.
      *
@@ -442,6 +453,9 @@ public abstract class Transformation<T> {
     }
 
     /**
+     * 尝试填写类型信息。当程序使用类型提示时，可以稍后填充类型信息。此方法检查类型信息以前是否被访问过，如果类型
+     * 已经被访问过，则不允许修改。这通过确保操作的不同部分不会假定不同的类型信息来确保一致性。
+     *
      * Tries to fill in the type information. Type information can be filled in later when the
      * program uses a type hint. This method checks whether the type information has ever been
      * accessed before and does not allow modifications if the type was accessed already. This
