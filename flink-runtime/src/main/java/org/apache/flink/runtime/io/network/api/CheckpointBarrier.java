@@ -28,8 +28,15 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 检查点屏障用于在整个流拓扑中对齐检查点。当JobManager指示源发出这些障碍时，这些障碍就会被发出。当操作符在其中一个
- * 输入上接收到CheckpointBarrier时，它知道这是检查点前和检查点后数据之间的点。
+ * 检查点 Barrier 用于在整个流拓扑中对齐检查点。当 JobManager 指示源发出这些障碍时，这些 Barrier 就会被发出。
+ * 当  operator 在其中一个输入上接收到 CheckpointBarrier 时，它知道这是检查点前和检查点后数据之间的点。
+ *
+ * <p>一旦操作符从它的所有输入通道接收到检查点屏障，它就知道某个检查点完成了。它可以触发操作员特定的检查点行为，并将
+ *   barrier 广播给下游操作员。
+ *
+ * <p>根据语义保证，可以延迟检查点后的数据，直到检查点完成(恰好一次)。
+ *
+ * <p> checkpoint barrier id是严格单调递增的。
  *
  * Checkpoint barriers are used to align checkpoints throughout the streaming topology. The barriers
  * are emitted by the sources when instructed to do so by the JobManager. When operators receive a
@@ -85,6 +92,9 @@ public class CheckpointBarrier extends RuntimeEvent {
     //  for events goes through the EventSerializer class, which has special serialization
     //  for the CheckpointBarrier, we don't need these methods
     //
+
+    // 这些方法继承自AbstractEvent的一般序列化，但是要求CheckpointBarrier是可变的。因为所有事件的序列化都要通过
+    // EventSerializer类，该类对CheckpointBarrier有特殊的序列化，所以我们不需要这些方法
 
     @Override
     public void write(DataOutputView out) throws IOException {

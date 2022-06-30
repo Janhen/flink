@@ -29,6 +29,10 @@ import java.nio.ByteOrder;
 import static org.apache.flink.runtime.io.compression.Lz4BlockCompressionFactory.HEADER_LENGTH;
 
 /**
+ * 将数据编码为LZ4格式(不兼容LZ4帧格式)。它读取和写入外部提供的字节数组，从而减少了复制时间。
+ *
+ * <p>这个类是从{@link net.jpountz.lz4.LZ4BlockOutputStream}复制和修改的。
+ *
  * Encode data into LZ4 format (not compatible with the LZ4 Frame format). It reads from and writes
  * to byte arrays provided from the outside, thus reducing copy time.
  *

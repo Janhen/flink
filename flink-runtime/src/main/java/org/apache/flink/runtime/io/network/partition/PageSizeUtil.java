@@ -31,6 +31,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 /** Utility for accessing the system page size. */
+// 用于访问系统 page size
 public final class PageSizeUtil {
 
     /** Value indicating an unknown page size. */
@@ -40,6 +41,8 @@ public final class PageSizeUtil {
     public static final int DEFAULT_PAGE_SIZE = 4 * 1024;
 
     /**
+     * 保守的回退值(64 KiBytes)应该是页面大小的倍数，即使在一些不常见的情况下，服务器安装的页面大小比通常的大。
+     *
      * A conservative fallback value (64 KiBytes) that should be a multiple of the page size even in
      * some uncommon cases of servers installations with larger-than-usual page sizes.
      */
@@ -86,6 +89,8 @@ public final class PageSizeUtil {
     // ------------------------------------------------------------------------
 
     /**
+     * 所有不安全的相关代码必须在一个单独的类中，以便装入外部类不会隐式地试图解析不安全类。
+     *
      * All unsafe related code must be in a separate class, so that loading the outer class does not
      * implicitly try to resolve the unsafe class.
      */

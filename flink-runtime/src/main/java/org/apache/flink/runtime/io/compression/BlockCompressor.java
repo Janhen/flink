@@ -32,6 +32,8 @@ public interface BlockCompressor {
     int getMaxCompressedSize(int srcSize);
 
     /**
+     * 压缩从({@link ByteBuffer#position()} + {@code srcOff})读取的源数据，并将压缩后的数据写入dst。
+     *
      * Compress source data read from ({@link ByteBuffer#position()} + {@code srcOff}), and write
      * the compressed data to dst.
      *
@@ -47,6 +49,8 @@ public interface BlockCompressor {
             throws InsufficientBufferException;
 
     /**
+     * 从src读取的数据进行压缩，压缩后的数据写入dst。
+     *
      * Compress data read from src, and write the compressed data to dst.
      *
      * @param src Uncompressed data to read from

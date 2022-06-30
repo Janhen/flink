@@ -25,12 +25,15 @@ import org.apache.flink.shaded.guava18.com.google.common.collect.HashMultimap;
 import org.apache.flink.shaded.guava18.com.google.common.collect.Multimap;
 
 /**
+ * 事件处理程序管理{@link EventListener}实例，并允许向它们发布事件。
+ *
  * The event handler manages {@link EventListener} instances and allows to to publish events to
  * them.
  */
 public class TaskEventHandler {
 
     /** Listeners for each event type. */
+    // 每个事件类型的监听器
     private final Multimap<Class<? extends TaskEvent>, EventListener<TaskEvent>> listeners =
             HashMultimap.create();
 
@@ -41,6 +44,8 @@ public class TaskEventHandler {
     }
 
     /**
+     * 将任务事件发布到所有订阅的事件监听器
+     *
      * Publishes the task event to all subscribed event listeners.
      *
      * @param event The event to publish.
