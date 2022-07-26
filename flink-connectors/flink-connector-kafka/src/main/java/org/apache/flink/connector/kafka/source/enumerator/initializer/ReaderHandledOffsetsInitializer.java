@@ -32,6 +32,9 @@ import java.util.Properties;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 初始化器，将分区初始化为最近提交的最小偏移量。偏移量初始化由{@code KafkaPartitionSplitReader}负责，而不是由
+ * {@code KafkaSourceEnumerator}负责。
+ *
  * A initializer that initialize the partitions to the earliest / latest / last-committed offsets.
  * The offsets initialization are taken care of by the {@code KafkaPartitionSplitReader} instead of
  * by the {@code KafkaSourceEnumerator}.

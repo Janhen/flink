@@ -59,6 +59,10 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
+ * 一个从Kafka分区读取记录的{@link SplitReader}实现。
+ *
+ * <p>返回类型的格式为{@code tuple3(record, offset and timestamp}。
+ *
  * A {@link SplitReader} implementation that reads records from Kafka partitions.
  *
  * <p>The returned type are in the format of {@code tuple3(record, offset and timestamp}.

@@ -30,6 +30,8 @@ import java.util.Properties;
 public interface OffsetsInitializerValidator {
 
     /**
+     * 使用Kafka source的属性验证偏移量初始化器。
+     *
      * Validate offsets initializer with properties of Kafka source.
      *
      * @param kafkaSourceProperties Properties of Kafka source

@@ -191,6 +191,8 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     }
 
     /**
+     * 将String偏移到Map。
+     *
      * Parse SpecificOffsets String to Map.
      *
      * <p>SpecificOffsets String format was given as following:

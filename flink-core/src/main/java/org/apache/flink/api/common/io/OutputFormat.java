@@ -25,6 +25,15 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 用于使用记录的输出的基本接口。输出格式描述如何存储最终记录，例如在文件中。
+ *
+ * <p>输出格式的生命周期如下:
+ *
+ *   <li>configure()只调用一次。该方法可用于从实例化时附加的参数(配置)实现初始化。
+ *   <li>每个并行输出任务创建一个实例，配置并打开它。
+ *   <li>其并行实例的所有记录都被传递给输出格式。
+ *   <li>输出格式关闭
+ *
  * The base interface for outputs that consumes records. The output format describes how to store
  * the final records, for example in a file.
  *
@@ -66,6 +75,10 @@ public interface OutputFormat<IT> extends Serializable {
     void open(int taskNumber, int numTasks) throws IOException;
 
     /**
+     * 向输出添加一条记录。
+     *
+     * <p>当调用此方法时，它保证打开的输出格式。
+     *
      * Adds a record to the output.
      *
      * <p>When this method is called, the output format it guaranteed to be opened.

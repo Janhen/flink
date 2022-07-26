@@ -55,6 +55,7 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
             ResourceSpec.DEFAULT; // the preferred resource of the contract instance.
 
     /** The return type of the user function. */
+    // user 函数的返回类型
     protected final OperatorInformation<OUT> operatorInfo;
 
     // --------------------------------------------------------------------------------------------
@@ -98,6 +99,9 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
     }
 
     /**
+     * 获取此 contract 实例的编译器提示。在编译器提示中，可以设置不同的字段(例如选择性)，当生成计划选项时，contract
+     * 编译器将 对这些字段进行评估。
+     *
      * Gets the compiler hints for this contract instance. In the compiler hints, different fields
      * may be set (for example the selectivity) that will be evaluated by the pact compiler when
      * generating plan alternatives.

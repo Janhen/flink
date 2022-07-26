@@ -34,6 +34,8 @@ import static org.apache.flink.connector.kafka.source.enumerator.subscriber.Kafk
 import static org.apache.flink.connector.kafka.source.enumerator.subscriber.KafkaSubscriberUtils.updatePartitionChanges;
 
 /**
+ * 固定主题列表的订阅者。订阅的主题必须在Kafka集群中存在，否则将抛出异常。
+ *
  * A subscriber to a fixed list of topics. The subscribed topics must hav existed in the Kafka
  * cluster, otherwise an exception will be thrown.
  */

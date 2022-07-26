@@ -98,6 +98,7 @@ class SpecifiedOffsetsInitializer implements OffsetsInitializer, OffsetsInitiali
                 (tp, offset) -> {
                     if (offset == KafkaPartitionSplit.COMMITTED_OFFSET) {
                         checkState(
+                                // J: group.id check
                                 kafkaSourceProperties.containsKey(ConsumerConfig.GROUP_ID_CONFIG),
                                 String.format(
                                         "Property %s is required because partition %s is initialized with committed offset",

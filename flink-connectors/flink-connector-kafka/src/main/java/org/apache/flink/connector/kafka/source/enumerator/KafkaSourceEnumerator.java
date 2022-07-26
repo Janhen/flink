@@ -55,6 +55,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /** The enumerator class for Kafka source. */
+// Kafka 源的枚举器类
 @Internal
 public class KafkaSourceEnumerator
         implements SplitEnumerator<KafkaPartitionSplit, KafkaSourceEnumState> {
@@ -63,12 +64,15 @@ public class KafkaSourceEnumerator
     private final OffsetsInitializer startingOffsetInitializer;
     private final OffsetsInitializer stoppingOffsetInitializer;
     private final Properties properties;
+    // J: 分区发现间隔
     private final long partitionDiscoveryIntervalMs;
     private final SplitEnumeratorContext<KafkaPartitionSplit> context;
     private final Boundedness boundedness;
 
     // The internal states of the enumerator.
     /**
+     * 这个集合只能通过callAsync()方法中可调用的分区发现访问，也就是工作线程。
+     *
      * This set is only accessed by the partition discovery callable in the callAsync() method, i.e
      * worker thread.
      */
@@ -130,11 +134,13 @@ public class KafkaSourceEnumerator
         this.assignedPartitions = new HashSet<>(assignedPartitions);
         discoveredPartitions.addAll(this.assignedPartitions);
         this.pendingPartitionSplitAssignment = new HashMap<>();
+        // J: 配置抽取
         this.partitionDiscoveryIntervalMs =
                 KafkaSourceOptions.getOption(
                         properties,
                         KafkaSourceOptions.PARTITION_DISCOVERY_INTERVAL_MS,
                         Long::parseLong);
+        // J: 必要参数抽取
         this.consumerGroupId = properties.getProperty(ConsumerConfig.GROUP_ID_CONFIG);
     }
 
@@ -148,6 +154,7 @@ public class KafkaSourceEnumerator
                             + "with partition discovery interval of {} ms.",
                     consumerGroupId,
                     partitionDiscoveryIntervalMs);
+            // J: 异步进行分区发现
             context.callAsync(
                     this::discoverAndInitializePartitionSplit,
                     this::handlePartitionSplitChanges,
@@ -174,6 +181,7 @@ public class KafkaSourceEnumerator
     @Override
     public void handleSplitRequest(int subtaskId, @Nullable String requesterHostname) {
         // the kafka source pushes splits eagerly, rather than act upon split requests
+        // kafka 源推送 split 是急切的，而不是对 split 请求采取行动
     }
 
     @Override
@@ -404,6 +412,7 @@ public class KafkaSourceEnumerator
     }
 
     /** The implementation for offsets retriever with a consumer and an admin client. */
+    // 带有消费者和管理客户端的偏移量检索器的实现
     @VisibleForTesting
     public static class PartitionOffsetsRetrieverImpl
             implements OffsetsInitializer.PartitionOffsetsRetriever, AutoCloseable {

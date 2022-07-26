@@ -81,6 +81,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 所有Flink Kafka Consumer数据源的基类。这实现了所有Kafka版本的通用行为。
+ *
+ * <p>Kafka 版本特定的行为主要定义在{@link AbstractFetcher}的特定子类中。
+ *
  * Base class of all Flink Kafka Consumer data sources. This implements the common behavior across
  * all Kafka versions.
  *
@@ -138,6 +142,8 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private Map<KafkaTopicPartition, Long> subscribedPartitionsToStartOffsets;
 
     /**
+     * 可选的水印策略，将运行在每个Kafka分区，利用每个分区的时间戳特征。水印策略保持序列化的形式，以反序列化为多个副本。
+     *
      * Optional watermark strategy that will be run per Kafka partition, to exploit per-partition
      * timestamp characteristics. The watermark strategy is kept in serialized form, to deserialize
      * it into multiple copies.
@@ -192,9 +198,11 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private final LinkedMap pendingOffsetsToCommit = new LinkedMap();
 
     /** The fetcher implements the connections to the Kafka brokers. */
+    // 获取器实现了到 Kafka 代理的连接
     private transient volatile AbstractFetcher<T, ?> kafkaFetcher;
 
     /** The partition discoverer, used to find new partitions. */
+    // 分区发现器，用于查找新的分区
     private transient volatile AbstractPartitionDiscoverer partitionDiscoverer;
 
     /**
@@ -241,7 +249,7 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     private transient Counter failedCommits;
 
     /**
-     * 在异步Kafka提交完成时调用的回调接口。请注意，基类中的默认回调实现不提供任何线程安全保证。这对于现在来说已经
+     * 在异步 Kafka 提交完成时调用的回调接口。请注意，基类中的默认回调实现不提供任何线程安全保证。这对于现在来说已经
      * 足够了，因为当前支持的Kafka连接器保证不超过一个并发的异步挂起的偏移提交。
      *
      * Callback interface that will be invoked upon async Kafka commit completion. Please be aware
@@ -299,6 +307,10 @@ public abstract class FlinkKafkaConsumerBase<T> extends RichParallelSourceFuncti
     // ------------------------------------------------------------------------
 
     /**
+     * 在此使用者上设置给定的{@link WatermarkStrategy}。这些将被用来为记录分配时间戳，并生成标志事件时间进度的水印。
+     *
+     * <p>在Kafka源中直接运行时间戳提取器水印生成器(你可以使用这种方法)，每个Kafka分区，允许用户利用每个分区的特征。
+     *
      * Sets the given {@link WatermarkStrategy} on this consumer. These will be used to assign
      * timestamps to records and generates watermarks to signal event time progress.
      *

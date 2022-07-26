@@ -34,6 +34,7 @@ import static org.apache.flink.connector.kafka.source.enumerator.subscriber.Kafk
 import static org.apache.flink.connector.kafka.source.enumerator.subscriber.KafkaSubscriberUtils.updatePartitionChanges;
 
 /** A subscriber to a topic pattern. */
+// 主题模式的订阅者
 class TopicPatternSubscriber implements KafkaSubscriber {
     private static final long serialVersionUID = -7471048577725467797L;
     private static final Logger LOG = LoggerFactory.getLogger(TopicPatternSubscriber.class);

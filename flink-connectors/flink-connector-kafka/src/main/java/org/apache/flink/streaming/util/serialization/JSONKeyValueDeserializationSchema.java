@@ -68,6 +68,7 @@ public class JSONKeyValueDeserializationSchema implements KafkaDeserializationSc
         }
         // 存放 offset, topic, partition 元数据
         // J: timestamp 未提取出来
+        // !: 无 timestamp 的提取
         if (includeMetadata) {
             node.putObject("metadata")
                     .put("offset", record.offset())

@@ -28,6 +28,10 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
+ * 一个不初始化任何东西的{@link OffsetsInitializer}的实现。
+ *
+ * <p>这个类被用作无界Kafka源的默认停止偏移量初始化器。
+ *
  * An implementation of {@link OffsetsInitializer} which does not initialize anything.
  *
  * <p>This class is used as the default stopping offsets initializer for unbounded Kafka sources.

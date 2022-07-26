@@ -43,6 +43,9 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 特殊的{@link StreamExecutionEnvironment}将在CLI客户端或测试实用程序创建{@link StreamExecutionEnvironment}
+ * 的情况下使用，当{@link StreamExecutionEnvironment#getExecutionEnvironment()}被调用时应该使用。
+ *
  * Special {@link StreamExecutionEnvironment} that will be used in cases where the CLI client or
  * testing utilities create a {@link StreamExecutionEnvironment} that should be used when {@link
  * StreamExecutionEnvironment#getExecutionEnvironment()} is called.
@@ -145,6 +148,7 @@ public class StreamContextEnvironment extends StreamExecutionEnvironment {
 
     private void validateAllowedExecution() {
         if (enforceSingleJobExecution && jobCounter > 0) {
+            // 在一个环境中不能有多个execute()或executeAsync()调用
             throw new FlinkRuntimeException(
                     "Cannot have more than one execute() or executeAsync() call in a single environment.");
         }

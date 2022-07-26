@@ -27,7 +27,7 @@ import java.util.function.Function;
 /** Configurations for KafkaSource. */
 public class KafkaSourceOptions {
 
-    // 为Kafka消费者使用的前缀。
+    // 为 Kafka 消费者使用的前缀
     public static final ConfigOption<String> CLIENT_ID_PREFIX =
             ConfigOptions.key("client.id.prefix")
                     .stringType()
@@ -43,7 +43,7 @@ public class KafkaSourceOptions {
                             "The interval in milliseconds for the Kafka source to discover "
                                     + "the new partitions. A non-positive value disables the partition discovery.");
 
-    // 是否将KafkaConsumer的度量注册到Flink度量组
+    // 是否将 KafkaConsumer 的度量注册到 Flink 度量组
     public static final ConfigOption<Boolean> REGISTER_KAFKA_CONSUMER_METRICS =
             ConfigOptions.key("register.consumer.metrics")
                     .booleanType()
@@ -51,7 +51,8 @@ public class KafkaSourceOptions {
                     .withDescription(
                             "Whether to register metrics of KafkaConsumer into Flink metric group");
 
-    // 是否在检查点上提交消耗偏移量。
+    // 是否在检查点上提交消耗偏移量
+    // J: EOS 保证
     public static final ConfigOption<Boolean> COMMIT_OFFSETS_ON_CHECKPOINT =
             ConfigOptions.key("commit.offsets.on.checkpoint")
                     .booleanType()

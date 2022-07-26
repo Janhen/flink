@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Execution Environment for remote execution with the Client. */
+// 用于客户端远程执行的执行环境
 public class ContextEnvironment extends ExecutionEnvironment {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExecutionEnvironment.class);
@@ -139,6 +140,7 @@ public class ContextEnvironment extends ExecutionEnvironment {
 
     private void validateAllowedExecution() {
         if (enforceSingleJobExecution && jobCounter > 0) {
+            // 在一个环境中不能有多个execute()或executeAsync()调用
             throw new FlinkRuntimeException(
                     "Cannot have more than one execute() or executeAsync() call in a single environment.");
         }

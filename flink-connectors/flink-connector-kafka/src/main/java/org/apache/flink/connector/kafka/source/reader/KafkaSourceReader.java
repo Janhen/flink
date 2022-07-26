@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /** The source reader for Kafka partitions. */
-// Kafka分区的源阅读器。
+// Kafka 分区的源阅读器
 public class KafkaSourceReader<T>
         extends SingleThreadMultiplexSourceReaderBase<
                 Tuple3<T, Long, Long>, T, KafkaPartitionSplit, KafkaPartitionSplitState> {
@@ -94,6 +94,7 @@ public class KafkaSourceReader<T>
     @Override
     public List<KafkaPartitionSplit> snapshotState(long checkpointId) {
         List<KafkaPartitionSplit> splits = super.snapshotState(checkpointId);
+        // J: 确定是否在检查点时提交 offset
         if (!commitOffsetsOnCheckpoint) {
             return splits;
         }

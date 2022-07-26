@@ -26,6 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 一个基于时间戳初始化偏移量的{@link OffsetsInitializer}的实现。
+ *
+ * <p>包私有，应该通过{@link OffsetsInitializer}实例化。
+ *
  * An implementation of {@link OffsetsInitializer} to initialize the offsets based on a timestamp.
  *
  * <p>Package private and should be instantiated via {@link OffsetsInitializer}.

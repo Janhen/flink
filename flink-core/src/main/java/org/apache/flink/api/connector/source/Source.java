@@ -24,6 +24,9 @@ import org.apache.flink.core.io.SimpleVersionedSerializer;
 import java.io.Serializable;
 
 /**
+ * Source 的接口。它的作用类似于一个工厂类，帮助构造 {@link SplitEnumerator} 和 {@link SourceReader}以及相应的
+ * 序列化器。
+ *
  * The interface for Source. It acts like a factory class that helps construct the {@link
  * SplitEnumerator} and {@link SourceReader} and corresponding serializers.
  *

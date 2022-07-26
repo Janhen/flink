@@ -27,6 +27,16 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
+ * Kafka消费者允许一些不同的方式来消费主题，包括:
+ *
+ * <ol>
+ *     <li>从一个主题集合订阅。
+ *     <li>使用Java {@code Regex}订阅主题模式
+ *     <li>分配特定的分区。
+ * </ol>
+ *
+ * <p> KafkaSubscriber 为 Kafka source提供了一个统一的接口来支持这三种订阅模式。
+ *
  * Kafka consumer allows a few different ways to consume from the topics, including:
  *
  * <ol>
@@ -41,6 +51,10 @@ import java.util.regex.Pattern;
 public interface KafkaSubscriber extends Serializable {
 
     /**
+     * 获取与当前分区分配相比的分区更改。
+     *
+     * <p>虽然Kafka分区只能扩展，不会缩小，但是当删除主题时，分区仍然可能消失。
+     *
      * Get the partitions changes compared to the current partition assignment.
      *
      * <p>Although Kafka partitions can only expand and will not shrink, the partitions may still
@@ -54,6 +68,7 @@ public interface KafkaSubscriber extends Serializable {
             AdminClient adminClient, Set<TopicPartition> currentAssignment);
 
     /** A container class to hold the newly added partitions and removed partitions. */
+    // 一个容器类，用于存放新添加的分区和删除的分区
     class PartitionChange {
         private final Set<TopicPartition> newPartitions;
         private final Set<TopicPartition> removedPartitions;

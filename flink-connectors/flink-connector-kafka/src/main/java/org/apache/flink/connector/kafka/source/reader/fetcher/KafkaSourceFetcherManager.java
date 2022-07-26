@@ -42,7 +42,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * Kafka的SplitFetcherManager源文件。需要这个类来帮助使用KafkaConsumer在
+ * Kafka 的 SplitFetcherManager源文件。需要这个类来帮助使用KafkaConsumer在
  * {@link org.apache.flink.connector.kafka.source.reader.KafkaPartitionSplitReader}内提交偏移量到Kafka。
  *
  * The SplitFetcherManager for Kafka source. This class is needed to help commit the offsets to

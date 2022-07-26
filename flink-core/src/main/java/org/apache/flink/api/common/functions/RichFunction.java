@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.configuration.Configuration;
 
 /**
+ * 所有富用户定义函数的基本接口。这个类定义了函数生命周期的方法，以及访问函数执行上下文的方法。
+ *
  * An base interface for all rich user-defined functions. This class defines methods for the life
  * cycle of the functions, as well as methods to access the context in which the functions are
  * executed.

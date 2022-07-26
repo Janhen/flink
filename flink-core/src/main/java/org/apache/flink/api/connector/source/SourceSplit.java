@@ -21,6 +21,7 @@ package org.apache.flink.api.connector.source;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** An interface for all the Split types to extend. */
+// 用于扩展所有Split类型的接口
 @PublicEvolving
 public interface SourceSplit {
 

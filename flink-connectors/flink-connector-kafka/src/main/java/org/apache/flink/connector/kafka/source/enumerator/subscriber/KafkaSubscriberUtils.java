@@ -46,6 +46,7 @@ class KafkaSubscriberUtils {
         }
     }
 
+    // J: Topic 元数据
     static Map<String, TopicDescription> getTopicMetadata(AdminClient adminClient) {
         try {
             Set<String> topicNames = adminClient.listTopics().names().get();

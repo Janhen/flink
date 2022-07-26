@@ -113,6 +113,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class Transformation<T> {
 
     // Has to be equal to StreamGraphGenerator.UPPER_BOUND_MAX_PARALLELISM
+    // 必须等于 StreamGraphGenerator。UPPER_BOUND_MAX_PARALLELISM
     public static final int UPPER_BOUND_MAX_PARALLELISM = 1 << 15;
 
     // This is used to assign a unique ID to every Transformation

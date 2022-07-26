@@ -45,6 +45,19 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link KafkaSource}的@builder类使用户更容易构造一个{@link KafkaSource}。
+ *
+ * <p>下面的例子展示了创建一个KafkaSource的最小设置，它从Kafka主题读取String值。
+ *
+ * <pre>{@code
+ * KafkaSource<String> source = KafkaSource
+ *     .<String>builder()
+ *     .setBootstrapServers(MY_BOOTSTRAP_SERVERS)
+ *     .setTopics(Arrays.asList(TOPIC1, TOPIC2))
+ *     .setDeserializer(KafkaRecordDeserializationSchema.valueOnly(StringDeserializer.class))
+ *     .build();
+ * }</pre>
+ *
  * The @builder class for {@link KafkaSource} to make it easier for the users to construct a {@link
  * KafkaSource}.
  *
@@ -89,9 +102,10 @@ public class KafkaSourceBuilder<OUT> {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaSourceBuilder.class);
     private static final String[] REQUIRED_CONFIGS = {ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG};
     // The subscriber specifies the partitions to subscribe to.
+    // 订阅者指定要订阅的分区
     private KafkaSubscriber subscriber;
     // Users can specify the starting / stopping offset initializer.
-    // 用户可以指定开始、停止偏移初始化式。
+    // 用户可以指定开始、停止偏移初始化式
     private OffsetsInitializer startingOffsetsInitializer;
     private OffsetsInitializer stoppingOffsetsInitializer;
     // Boundedness
@@ -149,6 +163,9 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 设置一个KafkaSource应该消费的主题列表。列表中的所有主题都应该存在于Kafka集群中。否则将引发异常。要允许
+     * 惰性创建一些主题，请使用{@link #setTopicPattern(Pattern)}代替。
+     *
      * Set a list of topics the KafkaSource should consume from. All the topics in the list should
      * have existed in the Kafka cluster. Otherwise an exception will be thrown. To allow some of
      * the topics to be created lazily, please use {@link #setTopicPattern(Pattern)} instead.
@@ -175,6 +192,8 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 设置一组要使用的分区。
+     *
      * Set a set of partitions to consume from.
      *
      * @param partitions the set of partitions to consume from.
@@ -188,6 +207,8 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 通过提供一个{@link OffsetsInitializer}来指定KafkaSource应该从哪个偏移量开始消费。
+     *
      * Specify from which offsets the KafkaSource should start consume from by providing an {@link
      * OffsetsInitializer}.
      *
@@ -267,6 +288,13 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 默认情况下，KafkaSource被设置为以{@link Boundedness#CONTINUOUS_UNBOUNDED}方式运行，因此在Flink作业
+     * 失败或取消之前不会停止。为了让KafkaSource以{@link Boundedness# bound}的方式运行并在某一点停止，可以
+     * 设置一个{@link OffsetsInitializer}来指定每个分区的停止偏移量。当所有分区都达到停止偏移量时，
+     * KafkaSource就会退出。
+     *
+     * <p>J: 批的实现
+     *
      * By default the KafkaSource is set to run in {@link Boundedness#CONTINUOUS_UNBOUNDED} manner
      * and thus never stops until the Flink job fails or is canceled. To let the KafkaSource run in
      * {@link Boundedness#BOUNDED} manner and stops at some point, one can set an {@link
@@ -376,6 +404,9 @@ public class KafkaSourceBuilder<OUT> {
     }
 
     /**
+     * 为KafkaSource和KafkaConsumer设置任意属性。有效的键可以在{@link ConsumerConfig}和
+     * {@link KafkaSourceOptions}中找到。
+     *
      * Set arbitrary properties for the KafkaSource and KafkaConsumer. The valid keys can be found
      * in {@link ConsumerConfig} and {@link KafkaSourceOptions}.
      *
@@ -430,6 +461,7 @@ public class KafkaSourceBuilder<OUT> {
         }
     }
 
+    // J: 解析配置，设置一些默认值，可覆盖默认值
     private void parseAndSetRequiredProperties() {
         maybeOverride(
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
@@ -485,6 +517,7 @@ public class KafkaSourceBuilder<OUT> {
         return overridden;
     }
 
+    // J: 完整性检查
     private void sanityCheck() {
         // Check required configs.
         for (String requiredConfig : REQUIRED_CONFIGS) {
@@ -493,6 +526,7 @@ public class KafkaSourceBuilder<OUT> {
                     String.format("Property %s is required but not provided", requiredConfig));
         }
         // Check required settings.
+        // 没有指定订阅模式应该是主题、主题模式和分区集之一。
         checkNotNull(
                 subscriber,
                 "No subscribe mode is specified, "

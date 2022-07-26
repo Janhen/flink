@@ -21,6 +21,7 @@ package org.apache.flink.client.program;
 import org.apache.flink.api.common.JobID;
 
 /** Exception used to indicate that there is an error during the invocation of a Flink program. */
+// 异常，用于指示在调用Flink程序期间发生错误
 public class ProgramInvocationException extends Exception {
     /** Serial version UID for serialization interoperability. */
     private static final long serialVersionUID = -2417524218857151612L;

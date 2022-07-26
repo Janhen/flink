@@ -24,7 +24,7 @@ import org.apache.flink.connector.base.source.reader.RecordEmitter;
 import org.apache.flink.connector.kafka.source.split.KafkaPartitionSplitState;
 
 /** The {@link RecordEmitter} implementation for {@link KafkaSourceReader}. */
-// {@link KafkaSourceReader}的{@link RecordEmitter}实现。
+// {@link KafkaSourceReader} 的 {@link RecordEmitter}实现。
 public class KafkaRecordEmitter<T>
         implements RecordEmitter<Tuple3<T, Long, Long>, T, KafkaPartitionSplitState> {
 

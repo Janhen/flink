@@ -25,6 +25,9 @@ import org.apache.flink.util.Preconditions;
 public final class KeyGroupRangeAssignment {
 
     /**
+     * 如果用户没有配置任何值，则默认的最大并行度下界。如果用户忘记显式地配置最大并行度，我们可以使用它来实现一定
+     * 程度的扩展。
+     *
      * The default lower bound for max parallelism if nothing was configured by the user. We have
      * this so allow users some degree of scale-up in case they forgot to configure maximum
      * parallelism explicitly.
@@ -40,6 +43,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键赋值给并行运算符索引。
+     *
      * Assigns the given key to a parallel operator index.
      *
      * @param key the key to assign
@@ -54,6 +59,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 将给定的键赋值给键组索引。
+     *
      * Assigns the given key to a key-group index.
      *
      * @param key the key to assign
@@ -79,6 +86,11 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 计算给定并行度和最大并行度下分配给给定操作符的键组范围。
+     *
+     * <p>IMPORTANT: maxParallelism必须为<= Short。MAX_VALUE以避免此方法中的舍入问题。如果想要超越
+     *   这个边界，这个方法必须对长值执行算术运算。
+     *
      * Computes the range of key-groups that are assigned to a given operator under the given
      * parallelism and maximum parallelism.
      *
@@ -129,6 +141,8 @@ public final class KeyGroupRangeAssignment {
     }
 
     /**
+     * 从运算符并行度计算默认的最大并行度。如果用户没有显式地配置最大并行度，仍然允许一定程度的扩展，就可以使用这种方法。
+     *
      * Computes a default maximum parallelism from the operator parallelism. This is used in case
      * the user has not explicitly configured a maximum parallelism to still allow a certain degree
      * of scale-up.
@@ -148,6 +162,7 @@ public final class KeyGroupRangeAssignment {
                 UPPER_BOUND_MAX_PARALLELISM);
     }
 
+    // J: 判断算子并行度先决条件
     public static void checkParallelismPreconditions(int parallelism) {
         Preconditions.checkArgument(
                 parallelism > 0 && parallelism <= UPPER_BOUND_MAX_PARALLELISM,

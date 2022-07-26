@@ -34,6 +34,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * 一个用户指定起始停止偏移量{@link KafkaPartitionSplit}的接口。
+ *
  * A interface for users to specify the starting / stopping offset of a {@link KafkaPartitionSplit}.
  *
  * @see ReaderHandledOffsetsInitializer
@@ -44,6 +46,8 @@ import java.util.Map;
 public interface OffsetsInitializer extends Serializable {
 
     /**
+     * 获取Kafka分区的初始偏移量。这些偏移量将被用作Kafka分区的开始偏移量或停止偏移量。
+     *
      * Get the initial offsets for the given Kafka partitions. These offsets will be used as either
      * starting offsets or stopping offsets of the Kafka partitions.
      *
@@ -60,6 +64,8 @@ public interface OffsetsInitializer extends Serializable {
             PartitionOffsetsRetriever partitionOffsetsRetriever);
 
     /**
+     * 获取自动偏移量重置策略，以防初始偏移量超出范围。
+     *
      * Get the auto offset reset strategy in case the initialized offsets falls out of the range.
      *
      * <p>The OffsetStrategy is only used when the offset initializer is used to initialize the
@@ -71,6 +77,8 @@ public interface OffsetsInitializer extends Serializable {
     OffsetResetStrategy getAutoOffsetResetStrategy();
 
     /**
+     * 该接口为{@link OffsetsInitializer}提供必要的信息，以获取Kafka分区的初始偏移量。
+     *
      * An interface that provides necessary information to the {@link OffsetsInitializer} to get the
      * initial offsets of the Kafka partitions.
      */
@@ -99,6 +107,8 @@ public interface OffsetsInitializer extends Serializable {
     // --------------- factory methods ---------------
 
     /**
+     * 获取一个{@link OffsetsInitializer}，它将偏移量初始化为已提交的偏移量。如果没有提交偏移量，将在运行时抛出异常。
+     *
      * Get an {@link OffsetsInitializer} which initializes the offsets to the committed offsets. An
      * exception will be thrown at runtime if there is no committed offsets.
      *
@@ -123,6 +133,9 @@ public interface OffsetsInitializer extends Serializable {
     }
 
     /**
+     * 获取一个{@link OffsetsInitializer}，它初始化每个分区中的偏移量，这样初始化的偏移量就是第一个记录时间戳
+     * 大于或等于给定时间戳的记录的偏移量。
+     *
      * Get an {@link OffsetsInitializer} which initializes the offsets in each partition so that the
      * initialized offset is the offset of the first record whose record timestamp is greater than
      * or equals the give timestamp.
@@ -137,6 +150,8 @@ public interface OffsetsInitializer extends Serializable {
     }
 
     /**
+     * 获取一个{@link OffsetsInitializer}，它将偏移量初始化为每个分区中最早可用的偏移量。
+     *
      * Get an {@link OffsetsInitializer} which initializes the offsets to the earliest available
      * offsets of each partition.
      *
@@ -160,6 +175,8 @@ public interface OffsetsInitializer extends Serializable {
     }
 
     /**
+     * 获取一个{@link OffsetsInitializer}，它将偏移量初始化为指定的偏移量。
+     *
      * Get an {@link OffsetsInitializer} which initializes the offsets to the specified offsets.
      *
      * @param offsets the specified offsets for each partition.
