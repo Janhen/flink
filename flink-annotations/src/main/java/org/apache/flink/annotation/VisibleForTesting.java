@@ -24,6 +24,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 这个注释声明一个函数、字段、构造函数或整个类型只在测试时可见。
+ *
+ * <p>该注释通常是在如下情况下附加的:例如，一个方法应该是{@code private}(因为它不打算在外部调用)，但不能声明为
+ *   private，因为一些测试需要访问它。
+ *
  * This annotations declares that a function, field, constructor, or entire type, is only visible
  * for testing purposes.
  *

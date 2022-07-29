@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * 丰富的用户定义函数的抽象存根实现。富函数有额外的方法用于初始化({@link #open(Configuration)})和拆卸
- * ({@link #close()})，以及通过{@link #getRuntimeContext()}访问它们的运行时执行上下文。
+ * ({@link #close()})，以及通过 {@link #getRuntimeContext()} 访问它们的运行时执行上下文。
  *
  * An abstract stub implementation for rich user-defined functions. Rich functions have additional
  * methods for initialization ({@link #open(Configuration)}) and teardown ({@link #close()}), as

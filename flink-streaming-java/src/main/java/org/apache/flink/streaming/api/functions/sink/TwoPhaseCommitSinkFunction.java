@@ -63,9 +63,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 这是一个推荐的基类，用于所有打算只实现一次语义的{@link SinkFunction}。它通过在{@link CheckpointedFunction}和
- * {@link CheckpointListener}上实现两阶段提交算法来实现。用户应该提供自定义的{@code TXN}(事务句柄)，并实现抽象
- * 方法处理该事务句柄。
+ * 这是一个推荐的基类，用于所有打算只实现一次语义的 {@link SinkFunction}。它通过在 {@link CheckpointedFunction}
+ * 和 {@link CheckpointListener} 上实现两阶段提交算法来实现。用户应该提供自定义的 {@code TXN}(事务句柄)，
+ * 并实现抽象方法处理该事务句柄。
  *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
  * exactly-once semantic. It does that by implementing two phase commit algorithm on top of the
@@ -83,11 +83,14 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
     private static final Logger LOG = LoggerFactory.getLogger(TwoPhaseCommitSinkFunction.class);
 
+    // J: 等待提交的事务
     protected final LinkedHashMap<Long, TransactionHolder<TXN>> pendingCommitTransactions =
             new LinkedHashMap<>();
 
+    /** J: 可选的用户 Context，对于 FlinkKafkaProducer 为 {@code FlinkKafkaProducer.KafkaTransactionContext} */
     protected transient Optional<CONTEXT> userContext;
 
+    // J: 存放事务相关的状态
     protected transient ListState<State<TXN, CONTEXT>> state;
 
     private final Clock clock;
@@ -97,9 +100,12 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     private TransactionHolder<TXN> currentTransactionHolder;
 
     /** Specifies the maximum time a transaction should remain open. */
+    // 指定事务保持打开的最大时间
     private long transactionTimeout = Long.MAX_VALUE;
 
     /**
+     * 如果为真，在{@link #recoverAndCommit(Object)}中抛出的任何异常将被捕获而不是传播
+     *
      * If true, any exception thrown in {@link #recoverAndCommit(Object)} will be caught instead of
      * propagated.
      */
@@ -112,6 +118,14 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     private double transactionTimeoutWarningRatio = -1;
 
     /**
+     * 使用默认的{@link ListStateDescriptor}进行内部状态序列化。使用这个构造函数的有用工具有
+     * {@link TypeInformation#of(Class)}、{@link org.apache.flink.api.common.typeinfo.TypeHint}和
+     * {@link TypeInformation#of(TypeHint)}。例子:
+     *
+     * <pre>{@code
+     * TwoPhaseCommitSinkFunction(TypeInformation.of(new TypeHint<State<TXN, CONTEXT>>() {}));
+     * }</pre>
+     *
      * Use default {@link ListStateDescriptor} for internal state serialization. Helpful utilities
      * for using this constructor are {@link TypeInformation#of(Class)}, {@link
      * org.apache.flink.api.common.typeinfo.TypeHint} and {@link TypeInformation#of(TypeHint)}.
@@ -126,6 +140,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
      */
     public TwoPhaseCommitSinkFunction(
             TypeSerializer<TXN> transactionSerializer, TypeSerializer<CONTEXT> contextSerializer) {
+        // J: 取 UTC 的系统时钟
         this(transactionSerializer, contextSerializer, Clock.systemUTC());
     }
 
@@ -150,11 +165,13 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
 
     @Nullable
     protected TXN currentTransaction() {
+        // J: take from holder
         return currentTransactionHolder == null ? null : currentTransactionHolder.handle;
     }
 
     @Nonnull
     protected Stream<Map.Entry<Long, TXN>> pendingTransactions() {
+        // J: 当前待提交的事务
         return pendingCommitTransactions.entrySet().stream()
                 .map(e -> new AbstractMap.SimpleEntry<>(e.getKey(), e.getValue().handle));
     }
@@ -588,6 +605,8 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /**
+     * 向事务对象添加元数据(当前仅为事务的开始时间)。
+     *
      * Adds metadata (currently only the start time of the transaction) to the transaction object.
      */
     @VisibleForTesting
@@ -597,6 +616,8 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
         private final TXN handle;
 
         /**
+         * 创建{@link #handle}的系统时间。用于确定当前事务是否超过了由 {@link #transactionTimeout} 指定的超时时间。
+         *
          * The system time when {@link #handle} was created. Used to determine if the current
          * transaction has exceeded its timeout specified by {@link #transactionTimeout}.
          */

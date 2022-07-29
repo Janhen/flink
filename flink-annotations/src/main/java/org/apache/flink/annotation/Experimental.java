@@ -24,6 +24,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
+ * 标记类以供实验使用的注释。
+ *
+ * <p>带有此注释的类既不经过战斗测试，也不稳定，可能在未来的版本中更改或删除。
+ *
+ * <p>该注释还排除了使用{@link Public}和{@link PublicEvolving}注释的进化接口签名的类。
+ *
  * Annotation to mark classes for experimental use.
  *
  * <p>Classes with this annotation are neither battle-tested nor stable, and may be changed or

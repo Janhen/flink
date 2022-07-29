@@ -292,7 +292,9 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
         final Map<KafkaTopicPartition, Long> result = new HashMap<>(partitions.size());
         // use a short-lived consumer to fetch the offsets;
         // this is ok because this is a one-time operation that happens only on startup
+        // 使用一个短暂的消费者来获取补偿;这是可以的，因为这是一个只在启动时发生的一次性操作
         try (KafkaConsumer<?, ?> consumer = new KafkaConsumer(properties)) {
+            // J: offsetForTimes 获取分区偏移的情况
             for (Map.Entry<TopicPartition, OffsetAndTimestamp> partitionToOffset :
                     consumer.offsetsForTimes(partitionOffsetsRequest).entrySet()) {
 

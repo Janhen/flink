@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * Kafka 主题描述符描述消费者如何订阅 Kafka 主题-一个固定的主题列表，或者一个主题模式。
+ *
  * A Kafka Topics Descriptor describes how the consumer subscribes to Kafka topics - either a fixed
  * list of topics, or a topic pattern.
  */

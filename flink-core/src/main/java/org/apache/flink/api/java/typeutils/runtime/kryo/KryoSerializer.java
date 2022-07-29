@@ -61,6 +61,10 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个类型序列化器，使用Kryo序列化框架(https:github.comEsotericSoftwarekryo)来序列化它的类型。
+ *
+ * <p>这个序列化器是用于基本类型、元组和pojo没有涵盖的情况的回退序列化器。
+ *
  * A type serializer that serializes its type using the Kryo serialization framework
  * (https://github.com/EsotericSoftware/kryo).
  *

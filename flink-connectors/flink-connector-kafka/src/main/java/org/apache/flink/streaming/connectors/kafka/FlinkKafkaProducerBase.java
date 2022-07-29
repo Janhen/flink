@@ -60,6 +60,11 @@ import java.util.Properties;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * Flink Sink生成数据到Kafka主题。
+ *
+ * <p>请注意，当检查点启用并设置 setFlushOnCheckpoint(true) 时，此生成器提供了至少一次的可靠性保证。
+ * 否则，producer 不提供任何可靠性保证。
+ *
  * Flink Sink to produce data into a Kafka topic.
  *
  * <p>Please note that this producer provides at-least-once reliability guarantees when checkpoints
@@ -92,12 +97,14 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     protected final KeyedSerializationSchema<IN> schema;
 
     /** User-provided partitioner for assigning an object to a Kafka partition for each topic. */
+    // 用户提供的分区程序为每个主题分配一个对象到 Kafka 分区
     protected final FlinkKafkaPartitioner<IN> flinkKafkaPartitioner;
 
     /** Partitions of each topic. */
     protected final Map<String, int[]> topicPartitionsMap;
 
     /** Flag indicating whether to accept failures (and log them), or to fail on failures. */
+    // 标志，指示是接受失败(并记录它们)，还是在失败时失败
     protected boolean logFailuresOnly;
 
     /**
@@ -114,12 +121,15 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     protected transient Callback callback;
 
     /** Errors encountered in the async producer are stored here. */
+    // 在异步生成程序中遇到的错误存储在这里
     protected transient volatile Exception asyncException;
 
     /** Lock for accessing the pending records. */
+    // 锁定，用于访问挂起的记录
     protected final SerializableObject pendingRecordsLock = new SerializableObject();
 
     /** Number of unacknowledged records. */
+    // 未确认记录数
     protected long pendingRecords;
 
     /**
@@ -240,6 +250,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
                 defaultTopicId);
 
         // register Kafka metrics to Flink accumulators
+        // 注册 Kafka 度量到 Flink 累加器
         if (!Boolean.parseBoolean(producerConfig.getProperty(KEY_DISABLE_METRICS, "false"))) {
             Map<MetricName, ? extends Metric> metrics = this.producer.metrics();
 
@@ -291,6 +302,8 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     }
 
     /**
+     * 当新的数据到达接收器时调用，并将其转发给 Kafka
+     *
      * Called when new data arrives to the sink, and forwards it to Kafka.
      *
      * @param next The incoming data
@@ -357,6 +370,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     }
 
     /** Flush pending records. */
+    // 刷写 flush 记录
     protected abstract void flush();
 
     @Override
@@ -367,6 +381,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
     @Override
     public void snapshotState(FunctionSnapshotContext ctx) throws Exception {
         // check for asynchronous errors and fail the checkpoint if necessary
+        // 检查异步错误并在必要时使检查点失效
         checkErroneous();
 
         if (flushOnCheckpoint) {
@@ -416,6 +431,7 @@ public abstract class FlinkKafkaProducerBase<IN> extends RichSinkFunction<IN>
 
         // sort the partitions by partition id to make sure the fetched partition list is the same
         // across subtasks
+        // 按分区id对分区进行排序，以确保获取的分区列表在子任务之间是相同的
         Collections.sort(
                 partitionsList,
                 new Comparator<PartitionInfo>() {
