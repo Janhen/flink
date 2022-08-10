@@ -63,6 +63,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /** A version-agnostic Kafka {@link ScanTableSource}. */
+// 一个版本不可知的 Kafka {@link ScanTableSource}
 @Internal
 public class KafkaDynamicSource
         implements ScanTableSource, SupportsReadingMetadata, SupportsWatermarkPushDown {
@@ -75,9 +76,11 @@ public class KafkaDynamicSource
     protected DataType producedDataType;
 
     /** Metadata that is appended at the end of a physical source row. */
+    // 附加在物理源行的末尾的元数据
     protected List<String> metadataKeys;
 
     /** Watermark strategy that is used to generate per-partition watermark. */
+    // 水印策略，用于生成每个分区的水印
     protected @Nullable WatermarkStrategy<RowData> watermarkStrategy;
 
     // --------------------------------------------------------------------------------------------
@@ -90,18 +93,21 @@ public class KafkaDynamicSource
     protected final DataType physicalDataType;
 
     /** Optional format for decoding keys from Kafka. */
+    // 可选格式解码密钥从 Kafka
     protected final @Nullable DecodingFormat<DeserializationSchema<RowData>> keyDecodingFormat;
 
     /** Format for decoding values from Kafka. */
     protected final DecodingFormat<DeserializationSchema<RowData>> valueDecodingFormat;
 
     /** Indices that determine the key fields and the target position in the produced row. */
+    // 确定关键字段和生成行的目标位置的索引
     protected final int[] keyProjection;
 
     /** Indices that determine the value fields and the target position in the produced row. */
     protected final int[] valueProjection;
 
     /** Prefix that needs to be removed from fields when constructing the physical data type. */
+    // 在构造物理数据类型时需要从字段中删除的前缀
     protected final @Nullable String keyPrefix;
 
     // --------------------------------------------------------------------------------------------
@@ -135,6 +141,7 @@ public class KafkaDynamicSource
     protected final long startupTimestampMillis;
 
     /** Flag to determine source mode. In upsert mode, it will keep the tombstone message. * */
+    // 标志来确定源模式。在upsert模式下，它将保留 tombstone 消息
     protected final boolean upsertMode;
 
     public KafkaDynamicSource(
@@ -431,6 +438,7 @@ public class KafkaDynamicSource
     // Metadata handling
     // --------------------------------------------------------------------------------------------
 
+    // J: 只读的元数据
     enum ReadableMetadata {
         TOPIC(
                 "topic",
@@ -459,6 +467,7 @@ public class KafkaDynamicSource
         HEADERS(
                 "headers",
                 // key and value of the map are nullable to make handling easier in queries
+                // 映射的键和值是空的，以使查询中的处理更容易
                 DataTypes.MAP(DataTypes.STRING().nullable(), DataTypes.BYTES().nullable())
                         .notNull(),
                 new MetadataConverter() {
@@ -498,6 +507,7 @@ public class KafkaDynamicSource
                     }
                 }),
 
+        // 格式为 LTZ
         TIMESTAMP(
                 "timestamp",
                 DataTypes.TIMESTAMP_WITH_LOCAL_TIME_ZONE(3).notNull(),
@@ -510,6 +520,7 @@ public class KafkaDynamicSource
                     }
                 }),
 
+        // 时间戳类型，CreateTime, LogAppendTime, NoTimestampType
         TIMESTAMP_TYPE(
                 "timestamp-type",
                 DataTypes.STRING().notNull(),

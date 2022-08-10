@@ -61,6 +61,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
     // --------------------------------------------------------------------------------------------
 
     /** Metadata that is appended at the end of a physical sink row. */
+    // 附加在物理接收器行的末尾的元数据
     protected List<String> metadataKeys;
 
     // --------------------------------------------------------------------------------------------
@@ -71,6 +72,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
     protected DataType consumedDataType;
 
     /** Data type to configure the formats. */
+    // 配置格式的数据类型
     protected final DataType physicalDataType;
 
     /** Optional format for encoding keys to Kafka. */
@@ -80,12 +82,14 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
     protected final EncodingFormat<SerializationSchema<RowData>> valueEncodingFormat;
 
     /** Indices that determine the key fields and the source position in the consumed row. */
+    // 确定关键字段和所消费行的源位置的索引
     protected final int[] keyProjection;
 
     /** Indices that determine the value fields and the source position in the consumed row. */
     protected final int[] valueProjection;
 
     /** Prefix that needs to be removed from fields when constructing the physical data type. */
+    // 在构造物理数据类型时需要从字段中删除的前缀
     protected final @Nullable String keyPrefix;
 
     // --------------------------------------------------------------------------------------------
@@ -105,6 +109,8 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
     protected final KafkaSinkSemantic semantic;
 
     /**
+     * 标志来确定接收模式。在upsert模式下，接收器将删除更新前消息转换为 tombstone 消息。
+     *
      * Flag to determine sink mode. In upsert mode sink transforms the delete/update-before message
      * to tombstone message.
      */
@@ -174,6 +180,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
         final FlinkKafkaProducer<RowData> kafkaProducer =
                 createKafkaProducer(keySerialization, valueSerialization);
 
+        // J: 刷写模式开启且为 upsert 模式的处理
         if (flushMode.isEnabled() && upsertMode) {
             BufferedUpsertSinkFunction buffedSinkFunction =
                     new BufferedUpsertSinkFunction(
@@ -182,6 +189,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
                             keyProjection,
                             context.createTypeInformation(consumedDataType),
                             flushMode);
+            // J: 提供运行时的 provider
             return SinkFunctionProvider.of(buffedSinkFunction, parallelism);
         } else {
             return SinkFunctionProvider.of(kafkaProducer, parallelism);

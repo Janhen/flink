@@ -21,6 +21,8 @@ package org.apache.flink.streaming.connectors.kafka.table;
 import java.util.Objects;
 
 /** Sink buffer flush configuration. */
+// 接收缓冲区刷新配置
+// J: 按照记录数与时间间隔控制写入缓冲的刷写模式
 public class SinkBufferFlushMode {
 
     private static final int DISABLED_BATCH_SIZE = 0;

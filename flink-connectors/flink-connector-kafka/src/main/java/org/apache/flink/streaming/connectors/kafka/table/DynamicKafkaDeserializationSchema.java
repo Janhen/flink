@@ -48,12 +48,14 @@ class DynamicKafkaDeserializationSchema implements KafkaDeserializationSchema<Ro
 
     private final boolean hasMetadata;
 
+    // J: key 收集器
     private final BufferingCollector keyCollector;
 
     private final OutputProjectionCollector outputCollector;
 
     private final TypeInformation<RowData> producedTypeInfo;
 
+    // J:
     private final boolean upsertMode;
 
     DynamicKafkaDeserializationSchema(
@@ -67,6 +69,7 @@ class DynamicKafkaDeserializationSchema implements KafkaDeserializationSchema<Ro
             TypeInformation<RowData> producedTypeInfo,
             boolean upsertMode) {
         if (upsertMode) {
+            // Key必须在upsert模式下设置，用于反序列化模式
             Preconditions.checkArgument(
                     keyDeserialization != null && keyProjection.length > 0,
                     "Key must be set in upsert mode for deserialization schema.");
@@ -125,6 +128,7 @@ class DynamicKafkaDeserializationSchema implements KafkaDeserializationSchema<Ro
         outputCollector.outputCollector = collector;
         if (record.value() == null && upsertMode) {
             // collect tombstone messages in upsert mode by hand
+            // 手动收集upsert模式下的 tombstone 消息
             outputCollector.collect(null);
         } else {
             valueDeserialization.deserialize(record.value(), outputCollector);

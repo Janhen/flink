@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * 其他连接器提供程序的并行提供程序。它允许表达连接器运行时实现的自定义并行性。否则并行度由规划器决定。
  *
- * <p>注:目前，该接口仅与{@link SinkRuntimeProvider}一起工作。
+ * <p>注:目前，该接口仅与 {@link SinkRuntimeProvider} 一起工作。
  *
  * Parallelism provider for other connector providers. It allows to express a custom parallelism for
  * the connector runtime implementation. Otherwise the parallelism is determined by the planner.
@@ -40,6 +40,9 @@ public interface ParallelismProvider {
      * 返回此实例的并行度。
      *
      * <p>并行度表示在执行期间将生成多少个源或接收器的并行实例。
+     *
+     * <p>如果输入不是 {@link ChangelogMode#insertOnly()}，对接收器强制不同的并行度可能会打乱变更日志。
+     *   因此，需要一个主键，在记录进入 {@link SinkRuntimeProvider} 实现之前，输入将被 shuffle。
      *
      * Returns the parallelism for this instance.
      *

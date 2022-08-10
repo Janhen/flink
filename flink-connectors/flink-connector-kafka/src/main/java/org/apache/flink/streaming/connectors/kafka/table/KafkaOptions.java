@@ -94,6 +94,7 @@ public class KafkaOptions {
                                     + "that configure the data type for the key format. By default, this list is "
                                     + "empty and thus a key is undefined.");
 
+    // 定义如何处理值格式的数据类型中的键列的策略。默认情况下，表模式的'%s'物理列将被包含在值格式中，这意味着键列出现在键和值格式的数据类型中。
     public static final ConfigOption<ValueFieldsStrategy> VALUE_FIELDS_INCLUDE =
             ConfigOptions.key("value.fields-include")
                     .enumType(ValueFieldsStrategy.class)
@@ -106,6 +107,7 @@ public class KafkaOptions {
                                             + "appear in the data type for both the key and value format.",
                                     ValueFieldsStrategy.ALL));
 
+    // 为键格式的所有字段定义一个自定义前缀，以避免名称与值格式的字段冲突。缺省情况下，前缀为空
     public static final ConfigOption<String> KEY_FIELDS_PREFIX =
             ConfigOptions.key("key.fields-prefix")
                     .stringType()
@@ -211,6 +213,7 @@ public class KafkaOptions {
     // Sink specific options
     // --------------------------------------------------------------------------------------------
 
+    // 可选的输出分区从Flink的分区到Kafka的分区。有效的枚举
     public static final ConfigOption<String> SINK_PARTITIONER =
             ConfigOptions.key("sink.partitioner")
                     .stringType()
@@ -230,6 +233,7 @@ public class KafkaOptions {
                                                     "custom class name (use custom FlinkKafkaPartitioner subclass)"))
                                     .build());
 
+    // 提交时的可选语义。有效的枚举
     public static final ConfigOption<String> SINK_SEMANTIC =
             ConfigOptions.key("sink.semantic")
                     .stringType()
@@ -242,6 +246,9 @@ public class KafkaOptions {
                                     .build());
 
     // Disable this feature by default
+    // 默认情况下禁用此功能
+    // 刷新前缓冲记录的最大大小。当接收器接收到相同键的多次更新时，缓冲区将保留相同键的最后记录。
+    // 这可以帮助减少数据 shuffle 和避免可能的 tombstone 消息到 Kafka 主题。
     public static final ConfigOption<Integer> SINK_BUFFER_FLUSH_MAX_ROWS =
             ConfigOptions.key("sink.buffer-flush.max-rows")
                     .intType()
@@ -567,6 +574,8 @@ public class KafkaOptions {
     }
 
     /**
+     * 分区程序可以是“固定的”、“循环的”或自定义的分区程序完整类名。
+     *
      * The partitioner can be either "fixed", "round-robin" or a customized partitioner full class
      * name.
      */

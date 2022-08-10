@@ -66,6 +66,7 @@ import static org.apache.flink.streaming.connectors.kafka.table.KafkaOptions.cre
 import static org.apache.flink.streaming.connectors.kafka.table.KafkaOptions.getKafkaProperties;
 
 /** Upsert-Kafka factory. */
+// Upsert-Kafka 工厂
 public class UpsertKafkaDynamicTableFactory
         implements DynamicTableSourceFactory, DynamicTableSinkFactory {
 

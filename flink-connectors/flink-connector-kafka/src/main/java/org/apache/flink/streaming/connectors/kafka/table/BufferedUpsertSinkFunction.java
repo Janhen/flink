@@ -54,6 +54,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link RichSinkFunction} 的包装器。它将缓冲数据，并在缓冲区满或计时器被触发或检查点时发出。
+ *
  * The wrapper of the {@link RichSinkFunction}. It will buffer the data and emit when the buffer is
  * full or timer is triggered or checkpointing.
  */
@@ -68,6 +70,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     // Config
     // --------------------------------------------------------------------------------------------
 
+    // J: 用于 RowData 的包装
     private final RichSinkFunction<RowData> producer;
     private final int batchMaxRowNums;
     private final long batchIntervalMs;
@@ -80,10 +83,13 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     // Writer and buffer
     // --------------------------------------------------------------------------------------------
 
+    // J: 批的总数
     private int batchCount = 0;
+    // J: 缓冲
     private transient Map<RowData, Tuple2<RowData, Long>> reduceBuffer;
     private transient WrappedContext wrappedContext;
     private transient Function<RowData, RowData> keyExtractor;
+    // J: 复制器?
     private transient Function<RowData, RowData> valueCopier;
 
     // --------------------------------------------------------------------------------------------
@@ -91,6 +97,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     // --------------------------------------------------------------------------------------------
 
     private transient ScheduledExecutorService scheduler;
+    // J: Future to cache...
     private transient ScheduledFuture<?> scheduledFuture;
     private transient volatile Exception flushException;
 
@@ -113,6 +120,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     @Override
     public void open(Configuration parameters) throws Exception {
         // init variable
+        // J: 对应 upsert 模式下的 reduce 使用
         reduceBuffer = new HashMap<>();
         wrappedContext = new WrappedContext();
         closed = false;
@@ -136,9 +144,11 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
                         : Function.identity();
 
         // register timer
+        // J: 注册 upsert kafka sinker 的定时器
         this.scheduler =
                 Executors.newScheduledThreadPool(
                         1, new ExecutorThreadFactory("upsert-kafka-sink-function"));
+        // J: schedule ...
         this.scheduledFuture =
                 this.scheduler.scheduleWithFixedDelay(
                         () -> {
@@ -156,6 +166,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
                         batchIntervalMs,
                         TimeUnit.MILLISECONDS);
 
+        // J: 原始的 RichSinkFunction 初始化
         producer.open(parameters);
     }
 
@@ -171,12 +182,15 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
 
     @Override
     public void invoke(RowData value, Context context) throws Exception {
+        // J: 缓冲最新的 context
         wrappedContext.setContext(context);
+        // J: 放入缓冲池中，并记录当前的 timestamp
         addToBuffer(value, context.timestamp());
     }
 
     @Override
     public void notifyCheckpointComplete(long checkpointId) throws Exception {
+        // J: 使用包装的方法
         if (producer instanceof CheckpointListener) {
             ((CheckpointListener) producer).notifyCheckpointComplete(checkpointId);
         }
@@ -231,11 +245,14 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
 
     // --------------------------------------------------------------------------------------------
 
+    // J: 放入缓冲中
     private synchronized void addToBuffer(RowData row, Long timestamp) throws Exception {
         checkFlushException();
 
+        // J: 抽取出相应的 key, value
         RowData key = keyExtractor.apply(row);
         RowData value = valueCopier.apply(row);
+        // J: 保存 timestamp 在 Tuple2 的值中
         reduceBuffer.put(key, new Tuple2<>(changeFlag(value), timestamp));
         batchCount++;
 
@@ -247,6 +264,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     private synchronized void flush() throws Exception {
         checkFlushException();
         for (Tuple2<RowData, Long> value : reduceBuffer.values()) {
+            // J: 逐个调用原始的 RichSinkFunction 的 invoke
             wrappedContext.setTimestamp(value.f1);
             producer.invoke(value.f0, wrappedContext);
         }
@@ -255,6 +273,7 @@ public class BufferedUpsertSinkFunction extends RichSinkFunction<RowData>
     }
 
     private RowData changeFlag(RowData value) {
+        // J: 确定向下游传递的模式 RowKind
         switch (value.getRowKind()) {
             case INSERT:
             case UPDATE_AFTER:

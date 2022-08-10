@@ -86,6 +86,8 @@ import static org.apache.flink.streaming.connectors.kafka.table.KafkaOptions.val
 import static org.apache.flink.table.factories.FactoryUtil.SINK_PARALLELISM;
 
 /**
+ * 创建 {@link KafkaDynamicSource} 和 {@link KafkaDynamicSink} 配置实例的工厂。
+ *
  * Factory for creating configured instances of {@link KafkaDynamicSource} and {@link
  * KafkaDynamicSink}.
  */

@@ -50,6 +50,9 @@ public interface SinkFunction<IN> extends Function, Serializable {
     }
 
     /**
+     * {@link SinkFunction SinkFunctions}可以用于获取关于输入记录的额外数据的上下文。上下文只在
+     * {@link SinkFunction#invoke(Object, Context)}调用期间有效。不要存储上下文并在以后使用!
+     *
      * Context that {@link SinkFunction SinkFunctions } can use for getting additional data about an
      * input record.
      *
@@ -66,6 +69,8 @@ public interface SinkFunction<IN> extends Function, Serializable {
         long currentWatermark();
 
         /**
+         * 返回当前输入记录的时间戳，如果元素没有指定时间戳，则返回{@code null}。
+         *
          * Returns the timestamp of the current input record or {@code null} if the element does not
          * have an assigned timestamp.
          */
