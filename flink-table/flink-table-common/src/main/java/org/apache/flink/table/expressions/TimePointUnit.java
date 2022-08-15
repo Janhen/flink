@@ -30,7 +30,7 @@ public enum TimePointUnit implements TableSymbol {
     MINUTE,
     SECOND,
     QUARTER,
-    WEEK,
+    WEEK, // 周
     MILLISECOND,
-    MICROSECOND
+    MICROSECOND  // 微秒
 }

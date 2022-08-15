@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 从基于字符串的属性创建不同的与表相关的实例的工厂。此工厂与Java的服务提供者接口(SPI)一起用于发现。使用一组描述所需
+ * 从基于字符串的属性创建不同的与表相关的实例的工厂。此工厂与 Java 的服务提供者接口(SPI)一起用于发现。使用一组描述所需
  * 配置的规范化属性来调用工厂。工厂允许与给定的属性集匹配。
  *
  * A factory to create different table-related instances from string-based properties. This factory

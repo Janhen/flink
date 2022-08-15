@@ -55,6 +55,7 @@ public class Rowtime implements Descriptor {
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_CUSTOM = "custom";
     public static final String ROWTIME_WATERMARKS_CLASS = "rowtime.watermarks.class";
     public static final String ROWTIME_WATERMARKS_SERIALIZED = "rowtime.watermarks.serialized";
+    // J: Table watermark delay
     public static final String ROWTIME_WATERMARKS_DELAY = "rowtime.watermarks.delay";
 
     /**

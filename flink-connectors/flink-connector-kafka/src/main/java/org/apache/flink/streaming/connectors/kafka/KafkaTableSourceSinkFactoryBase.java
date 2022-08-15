@@ -102,6 +102,7 @@ public abstract class KafkaTableSourceSinkFactoryBase
 
     @Override
     public Map<String, String> requiredContext() {
+        // J: kafka connector ...
         Map<String, String> context = new HashMap<>();
         context.put(CONNECTOR_TYPE, CONNECTOR_TYPE_VALUE_KAFKA); // kafka
         context.put(CONNECTOR_VERSION, kafkaVersion()); // version
@@ -118,11 +119,13 @@ public abstract class KafkaTableSourceSinkFactoryBase
         // kafka
         properties.add(CONNECTOR_TOPIC);
         properties.add(CONNECTOR_PROPERTIES);
+        // J: # 用于占位
         properties.add(CONNECTOR_PROPERTIES + ".#." + CONNECTOR_PROPERTIES_KEY);
         properties.add(CONNECTOR_PROPERTIES + ".#." + CONNECTOR_PROPERTIES_VALUE);
         properties.add(CONNECTOR_PROPERTIES + ".*");
         properties.add(CONNECTOR_STARTUP_MODE);
         properties.add(CONNECTOR_SPECIFIC_OFFSETS);
+        // J: 分区、offset
         properties.add(CONNECTOR_SPECIFIC_OFFSETS + ".#." + CONNECTOR_SPECIFIC_OFFSETS_PARTITION);
         properties.add(CONNECTOR_SPECIFIC_OFFSETS + ".#." + CONNECTOR_SPECIFIC_OFFSETS_OFFSET);
         properties.add(CONNECTOR_STARTUP_TIMESTAMP_MILLIS);
@@ -135,14 +138,17 @@ public abstract class KafkaTableSourceSinkFactoryBase
         properties.add(SCHEMA + ".#." + SCHEMA_NAME);
         properties.add(SCHEMA + ".#." + SCHEMA_FROM);
         // computed column
+        // J: 计算列
         properties.add(SCHEMA + ".#." + EXPR);
 
         // time attributes
         properties.add(SCHEMA + ".#." + SCHEMA_PROCTIME);
+        // J: rowtime 类型 {}
         properties.add(SCHEMA + ".#." + ROWTIME_TIMESTAMPS_TYPE);
         properties.add(SCHEMA + ".#." + ROWTIME_TIMESTAMPS_FROM);
         properties.add(SCHEMA + ".#." + ROWTIME_TIMESTAMPS_CLASS);
         properties.add(SCHEMA + ".#." + ROWTIME_TIMESTAMPS_SERIALIZED);
+        // J: watermark
         properties.add(SCHEMA + ".#." + ROWTIME_WATERMARKS_TYPE);
         properties.add(SCHEMA + ".#." + ROWTIME_WATERMARKS_CLASS);
         properties.add(SCHEMA + ".#." + ROWTIME_WATERMARKS_SERIALIZED);
@@ -150,10 +156,12 @@ public abstract class KafkaTableSourceSinkFactoryBase
 
         // watermark
         properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_ROWTIME);
+        // J: 水印计算
         properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_STRATEGY_EXPR);
         properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_STRATEGY_DATA_TYPE);
 
         // table constraint
+        // J: table 约束，唯一性
         properties.add(SCHEMA + "." + DescriptorProperties.PRIMARY_KEY_NAME);
         properties.add(SCHEMA + "." + DescriptorProperties.PRIMARY_KEY_COLUMNS);
 

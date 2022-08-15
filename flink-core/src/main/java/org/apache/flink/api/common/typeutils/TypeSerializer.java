@@ -26,12 +26,12 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * 此接口描述由Flink运行时处理数据类型所需的方法。具体来说，这个接口包含序列化和复制方法。
+ * 此接口描述由 Flink 运行时处理数据类型所需的方法。具体来说，这个接口包含序列化和复制方法。
  *
- * <p>该类中的方法不一定是线程安全的。为了避免不可预知的副作用，建议调用{@code duplicate()}方法，并在每个线程中使用
+ * <p>该类中的方法不一定是线程安全的。为了避免不可预知的副作用，建议调用 {@code duplicate()} 方法，并在每个线程中使用
  *   一个序列化器实例。
  *
- * <p><b>将typeserializer升级到新的TypeSerializerSnapshot模型<b>
+ * <p><b>将 typeserializer 升级到新的 TypeSerializerSnapshot 模型<b>
  *
  * <p>如果你在Flink 1.6以上的版本中实现了TypeSerializer，并且想要将该实现调整到支持适当的状态模式演化的新接口，
  *   同时保持向后兼容性，那么本节是相关的。请遵循以下步骤:

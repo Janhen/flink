@@ -295,7 +295,7 @@ public final class FactoryUtil {
     }
 
     /**
-     * 使用给定的工厂基类和标识符发现工厂。
+     * 使用给定的工厂基类和标识符发现工厂
      *
      * Discovers a factory using the given factory base class and identifier.
      *
@@ -310,6 +310,7 @@ public final class FactoryUtil {
             ClassLoader classLoader, Class<T> factoryClass, String factoryIdentifier) {
         final List<Factory> factories = discoverFactories(classLoader);
 
+        // J: classloader 加载过滤
         final List<Factory> foundFactories =
                 factories.stream()
                         .filter(f -> factoryClass.isAssignableFrom(f.getClass()))
@@ -328,6 +329,7 @@ public final class FactoryUtil {
                         .collect(Collectors.toList());
 
         if (matchingFactories.isEmpty()) {
+            // J: 未匹配到，返回可供选择的 factory identifier
             throw new ValidationException(
                     String.format(
                             "Could not find any factory for identifier '%s' that implements '%s' in the classpath.\n\n"
@@ -359,7 +361,7 @@ public final class FactoryUtil {
     }
 
     /**
-     * 验证工厂的必需和可选的{@link ConfigOption}。
+     * 验证工厂的必需和可选的 {@link ConfigOption}。
      *
      * <p>注意:它不检查剩余选项。
      *
@@ -372,6 +374,10 @@ public final class FactoryUtil {
     }
 
     /**
+     * 验证所需选项和可选选项。
+     *
+     * <p>注意:它不检查剩余选项。
+     *
      * Validates the required options and optional options.
      *
      * <p>Note: It does not check for left-over options.
@@ -566,6 +572,7 @@ public final class FactoryUtil {
 
             consumedOptionKeys = new HashSet<>();
             consumedOptionKeys.add(PROPERTY_VERSION.key());
+            // J: init + required + optional
             Stream.concat(
                             catalogFactory.requiredOptions().stream(),
                             catalogFactory.optionalOptions().stream())

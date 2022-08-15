@@ -39,6 +39,7 @@ class DynamicKafkaSerializationSchema
 
     private static final long serialVersionUID = 1L;
 
+    // J: partitioner 初始化
     private final @Nullable FlinkKafkaPartitioner<RowData> partitioner;
 
     private final String topic;
@@ -53,6 +54,7 @@ class DynamicKafkaSerializationSchema
 
     private final boolean hasMetadata;
 
+    // J: upsert 模式下限制配置 key
     private final boolean upsertMode;
 
     /**

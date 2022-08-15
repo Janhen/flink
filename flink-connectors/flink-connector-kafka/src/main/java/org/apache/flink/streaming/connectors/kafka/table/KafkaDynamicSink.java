@@ -363,6 +363,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
     // --------------------------------------------------------------------------------------------
 
     enum WritableMetadata {
+        // J: message 的 header
         HEADERS(
                 "headers",
                 // key and value of the map are nullable to make handling easier in queries
@@ -376,6 +377,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
                         if (row.isNullAt(pos)) {
                             return null;
                         }
+                        // J: Map as two array handle
                         final MapData map = row.getMap(pos);
                         final ArrayData keyArray = map.keyArray();
                         final ArrayData valueArray = map.valueArray();
@@ -391,6 +393,7 @@ public class KafkaDynamicSink implements DynamicTableSink, SupportsWritingMetada
                     }
                 }),
 
+        // J: timestamp 多种..
         TIMESTAMP(
                 "timestamp",
                 DataTypes.TIMESTAMP_WITH_LOCAL_TIME_ZONE(3).nullable(),

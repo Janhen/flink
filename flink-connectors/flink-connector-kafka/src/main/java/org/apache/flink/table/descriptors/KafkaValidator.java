@@ -39,6 +39,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     public static final String CONNECTOR_TYPE_VALUE_KAFKA = "kafka";
     public static final String CONNECTOR_VERSION_VALUE_010 = "0.10";
     public static final String CONNECTOR_VERSION_VALUE_011 = "0.11";
+    // J: 通用模式，迭代 0.10,0.11...
     public static final String CONNECTOR_VERSION_VALUE_UNIVERSAL = "universal";
     public static final String CONNECTOR_TOPIC = "connector.topic";
     // 启动模式相关
@@ -174,6 +175,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
 
     // utilities
 
+    // J: 标准格式显示启动模式
     public static String normalizeStartupMode(StartupMode startupMode) {
         switch (startupMode) {
             case EARLIEST:
@@ -191,7 +193,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
     }
 
     /**
-     * 将String偏移到Map。
+     * 将 String 偏移到 Map。
      *
      * Parse SpecificOffsets String to Map.
      *
@@ -230,6 +232,7 @@ public class KafkaValidator extends ConnectorDescriptorValidator {
             }
 
             final String[] kv = pair.split(",");
+            // topic1:partition1,topic1:partition2,topic1:partition3;topic2:partition21,topic2:partition22
             if (kv.length != 2
                     || !kv[0].startsWith(CONNECTOR_SPECIFIC_OFFSETS_PARTITION + ':')
                     || !kv[1].startsWith(CONNECTOR_SPECIFIC_OFFSETS_OFFSET + ':')) {

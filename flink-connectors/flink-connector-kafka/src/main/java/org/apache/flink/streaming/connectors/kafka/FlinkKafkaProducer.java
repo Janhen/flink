@@ -92,8 +92,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * Flink Sink将数据生成到Kafka主题中。默认情况下，生产者将使用{@link FlinkKafkaProducer。语义# AT_LEAST_ONCE}
- * 语义。使用之前{@link FlinkKafkaProducer。请参考Flink的Kafka连接器文档。
+ * Flink Sink 将数据生成到 Kafka 主题中。默认情况下，生产者将使用 {@link FlinkKafkaProducer.Semantic#AT_LEAST_ONCE}
+ * 语义。使用之前 {@link FlinkKafkaProducer.Semantic#EXACTLY_ONCE} 请参考 Flink 的 Kafka 连接器文档。
  *
  * Flink Sink to produce data into a Kafka topic. By default producer will use {@link
  * FlinkKafkaProducer.Semantic#AT_LEAST_ONCE} semantic. Before using {@link
@@ -176,7 +176,7 @@ public class FlinkKafkaProducer<IN>
     public static final int SAFE_SCALE_DOWN_FACTOR = 5;
 
     /**
-     * 池中kafkaproducer的默认数量。看到{@link FlinkKafkaProducer.Semantic#EXACTLY_ONCE}。
+     * 池中 KafkaProducers 的默认数量。see {@link FlinkKafkaProducer.Semantic#EXACTLY_ONCE}
      *
      * Default number of KafkaProducers in the pool. See {@link
      * FlinkKafkaProducer.Semantic#EXACTLY_ONCE}.
@@ -184,6 +184,7 @@ public class FlinkKafkaProducer<IN>
     public static final int DEFAULT_KAFKA_PRODUCERS_POOL_SIZE = 5;
 
     /** Default value for kafka transaction timeout. */
+    // kafka 事务超时的默认值
     public static final Time DEFAULT_KAFKA_TRANSACTION_TIMEOUT = Time.hours(1);
 
     /** Configuration key for disabling the metrics reporting. */
@@ -221,7 +222,7 @@ public class FlinkKafkaProducer<IN>
     protected final Properties producerConfig;
 
     /** The name of the default topic this producer is writing data to. */
-    // 此生成器写入数据的默认主题的名称。
+    // 此生成器写入数据的默认主题的名称
     protected final String defaultTopicId;
 
     /**
@@ -237,13 +238,15 @@ public class FlinkKafkaProducer<IN>
     @Nullable private final KafkaSerializationSchema<IN> kafkaSchema;
 
     /** User-provided partitioner for assigning an object to a Kafka partition for each topic. */
-    // 用户提供的分区器，用于为每个主题分配一个对象到Kafka分区。
+    // 用户提供的分区器，用于为每个主题分配一个对象到 Kafka 分区
     @Nullable private final FlinkKafkaPartitioner<IN> flinkKafkaPartitioner;
 
     /** Partitions of each topic. */
     protected final Map<String, int[]> topicPartitionsMap;
 
     /**
+     * 池中生产者的最大数量。如果所有生产者都在使用，快照状态将抛出异常
+     *
      * Max number of producers in the pool. If all producers are in use, snapshoting state will
      * throw an exception.
      */
@@ -253,6 +256,7 @@ public class FlinkKafkaProducer<IN>
     private final BlockingDeque<String> availableTransactionalIds = new LinkedBlockingDeque<>();
 
     /** Flag controlling whether we are writing the Flink record's timestamp into Kafka. */
+    // 标志控制是否将 Flink 记录的时间戳写入 Kafka
     protected boolean writeTimestampToKafka = false;
 
     /** Flag indicating whether to accept failures (and log them), or to fail on failures. */
@@ -265,19 +269,19 @@ public class FlinkKafkaProducer<IN>
     // -------------------------------- Runtime fields ------------------------------------------
 
     /** The callback than handles error propagation or logging callbacks. */
-    // 比回调函数处理错误传播或记录回调函数。
+    // 比回调函数处理错误传播或记录回调函数
     @Nullable protected transient Callback callback;
 
     /** Errors encountered in the async producer are stored here. */
-    // 在异步生成器中遇到的错误都存储在这里。
+    // 在异步生成器中遇到的错误都存储在这里
     @Nullable protected transient volatile Exception asyncException;
 
     /** Number of unacknowledged records. */
-    // 未确认的记录数。
+    // 未确认的记录数
     protected final AtomicLong pendingRecords = new AtomicLong();
 
     /**
-     * 缓存指标，以替换已经注册的指标，而不是覆盖现有的指标。
+     * 缓存指标，以替换已经注册的指标，而不是覆盖现有的指标
      *
      * Cache of metrics to replace already registered metrics instead of overwriting existing ones.
      */
@@ -296,7 +300,7 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
-     * 为给定的主题创建一个FlinkKafkaProducer。接收器向主题生成一个数据流。
+     * 为给定的主题创建一个 FlinkKafkaProducer。接收器向主题生成一个数据流。
      *
      * <p>使用这个构造函数，默认的{@link FlinkFixedPartitioner}将被用作分区器。这个默认的分区器将每个sink子任务
      *   映射到一个Kafka分区(也就是说，sink子任务接收到的所有记录都将在同一个Kafka分区中结束)。
@@ -997,6 +1001,7 @@ public class FlinkKafkaProducer<IN>
     @Override
     protected FlinkKafkaProducer.KafkaTransactionState beginTransaction()
             throws FlinkKafkaException {
+        // J: 根据语义控制
         switch (semantic) {
             case EXACTLY_ONCE:
                 FlinkKafkaInternalProducer<byte[], byte[]> producer = createTransactionalProducer();
@@ -1006,6 +1011,7 @@ public class FlinkKafkaProducer<IN>
             case AT_LEAST_ONCE:
             case NONE:
                 // Do not create new producer on each beginTransaction() if it is not necessary
+                // 如果没有必要，不要在每个beginTransaction()上创建新的生产者
                 final FlinkKafkaProducer.KafkaTransactionState currentTransaction =
                         currentTransaction();
                 if (currentTransaction != null && currentTransaction.producer != null) {
@@ -1025,6 +1031,7 @@ public class FlinkKafkaProducer<IN>
         switch (semantic) {
             case EXACTLY_ONCE:
             case AT_LEAST_ONCE:
+                // J: flush ...
                 flush(transaction);
                 break;
             case NONE:
@@ -1037,6 +1044,7 @@ public class FlinkKafkaProducer<IN>
 
     @Override
     protected void commit(FlinkKafkaProducer.KafkaTransactionState transaction) {
+        // J: 当开启事务时，进行提交
         if (transaction.isTransactional()) {
             try {
                 transaction.producer.commitTransaction();
@@ -1072,6 +1080,7 @@ public class FlinkKafkaProducer<IN>
     @Override
     protected void abort(FlinkKafkaProducer.KafkaTransactionState transaction) {
         if (transaction.isTransactional()) {
+            // J: 事务取消
             transaction.producer.abortTransaction();
             recycleTransactionalProducer(transaction.producer);
         }
@@ -1109,6 +1118,7 @@ public class FlinkKafkaProducer<IN>
     private void flush(FlinkKafkaProducer.KafkaTransactionState transaction)
             throws FlinkKafkaException {
         if (transaction.producer != null) {
+            // J: transaction producer flush
             transaction.producer.flush();
         }
         long pendingRecordsCount = pendingRecords.get();
@@ -1156,6 +1166,7 @@ public class FlinkKafkaProducer<IN>
 
     @Override
     public void initializeState(FunctionInitializationContext context) throws Exception {
+        // J: 在开启检查点时，从状态中初始化
         if (semantic != FlinkKafkaProducer.Semantic.NONE
                 && !((StreamingRuntimeContext) this.getRuntimeContext()).isCheckpointingEnabled()) {
             LOG.warn(
@@ -1165,6 +1176,7 @@ public class FlinkKafkaProducer<IN>
             semantic = FlinkKafkaProducer.Semantic.NONE;
         }
 
+        // J: UnionListState
         nextTransactionalIdHintState =
                 context.getOperatorStateStore()
                         .getUnionListState(NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR_V2);
@@ -1172,6 +1184,7 @@ public class FlinkKafkaProducer<IN>
         if (context.getOperatorStateStore()
                 .getRegisteredStateNames()
                 .contains(NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR)) {
+            // J: 迁移??
             migrateNextTransactionalIdHindState(context);
         }
 
@@ -1228,7 +1241,9 @@ public class FlinkKafkaProducer<IN>
         }
 
         Set<String> transactionalIds = generateNewTransactionalIds();
+        // J: EOS 模式下重置阻塞队列
         resetAvailableTransactionalIdsPool(transactionalIds);
+        // J: 初始化用户的 Context
         return Optional.of(new FlinkKafkaProducer.KafkaTransactionContext(transactionalIds));
     }
 
@@ -1284,6 +1299,8 @@ public class FlinkKafkaProducer<IN>
 
     private void abortTransactions(final Set<String> transactionalIds) {
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        // J: 并行流处理
+        // J: set 正确的 classloader
         transactionalIds
                 .parallelStream()
                 .forEach(
@@ -1327,24 +1344,30 @@ public class FlinkKafkaProducer<IN>
     }
 
     /**
+     * 对于每个检查点，创建新的 {@link FlinkKafkaInternalProducer}，这样新的事务就不会与之前检查点创建的事务冲突
+     * ({@code producer.initTransactions()} 确保我们获得新的 producerId 和 epoch 计数器)。
+     *
      * For each checkpoint we create new {@link FlinkKafkaInternalProducer} so that new transactions
      * will not clash with transactions created during previous checkpoints ({@code
      * producer.initTransactions()} assures that we obtain new producerId and epoch counters).
      */
     private FlinkKafkaInternalProducer<byte[], byte[]> createTransactionalProducer()
             throws FlinkKafkaException {
+        // J: 从阻塞双端队列中获取 Kafka 事务执行
         String transactionalId = availableTransactionalIds.poll();
         if (transactionalId == null) {
             throw new FlinkKafkaException(
                     FlinkKafkaErrorCode.PRODUCERS_POOL_EMPTY,
                     "Too many ongoing snapshots. Increase kafka producers pool size or decrease number of concurrent checkpoints.");
         }
+        // J: 内部的生产者
         FlinkKafkaInternalProducer<byte[], byte[]> producer =
                 initTransactionalProducer(transactionalId, true);
         producer.initTransactions();
         return producer;
     }
 
+    // J: 回收内部 Kafka 事务生产者
     private void recycleTransactionalProducer(FlinkKafkaInternalProducer<byte[], byte[]> producer) {
         availableTransactionalIds.add(producer.getTransactionalId());
         producer.flush();
@@ -1359,6 +1382,7 @@ public class FlinkKafkaProducer<IN>
 
     private static void initTransactionalProducerConfig(
             Properties producerConfig, String transactionalId) {
+        // J: 注入事务 ID
         producerConfig.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, transactionalId);
     }
 
@@ -1378,9 +1402,11 @@ public class FlinkKafkaProducer<IN>
                 defaultTopicId);
 
         // register Kafka metrics to Flink accumulators
+        // J: 注册指标到累加器
         if (registerMetrics
                 && !Boolean.parseBoolean(
                         producerConfig.getProperty(KEY_DISABLE_METRICS, "false"))) {
+            // J: KafkaProducer 的指标
             Map<MetricName, ? extends Metric> metrics = producer.metrics();
 
             if (metrics == null) {
@@ -1490,6 +1516,7 @@ public class FlinkKafkaProducer<IN>
 
         final long producerId;
 
+        // J: ?
         final short epoch;
 
         @VisibleForTesting
@@ -1916,6 +1943,7 @@ public class FlinkKafkaProducer<IN>
         }
 
         /** Serializer configuration snapshot for compatibility and format evolution. */
+        // 用于兼容性和格式演变的序列化器配置快照
         @SuppressWarnings("WeakerAccess")
         public static final class NextTransactionalIdHintSerializerSnapshot
                 extends SimpleTypeSerializerSnapshot<NextTransactionalIdHint> {
