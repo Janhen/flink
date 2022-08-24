@@ -78,6 +78,7 @@ public final class TypeStrategies {
     }
 
     /** Type strategy that returns the n-th input argument. */
+    // 返回第n个输入参数的类型策略
     public static TypeStrategy argument(int pos) {
         return new UseArgumentTypeStrategy(pos);
     }

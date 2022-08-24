@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /** Type strategy that returns a common, least restrictive type of all arguments. */
+// 返回所有参数中最常见、限制最少的类型的类型策略。
 @Internal
 public final class CommonTypeStrategy implements TypeStrategy {
 

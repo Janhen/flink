@@ -586,6 +586,7 @@ public class KafkaTableITCase extends KafkaTableTestBase {
         createTestTopic(productTopic, 1, 1);
 
         // ---------- Produce an event time stream into Kafka -------------------
+        // J: Kafka 标准参数
         String groupId = getStandardProps().getProperty("group.id");
         String bootstraps = getBootstrapServers();
 
@@ -643,6 +644,7 @@ public class KafkaTableITCase extends KafkaTableTestBase {
         tEnv.executeSql(productTableDDL);
 
         // use raw format to initial the changelog data
+        // J:
         initialProductChangelog(productTopic, bootstraps);
 
         // ---------- query temporal join result from Kafka -------------------
@@ -668,6 +670,7 @@ public class KafkaTableITCase extends KafkaTableTestBase {
                         .sorted()
                         .collect(Collectors.toList());
 
+        // J: 列表比较
         final List<String> expected =
                 Arrays.asList(
                         "+I[o_001, 2020-10-01T00:01, p_001, 1970-01-01T00:00, 11.1100, Alice, scooter, 1, 11.1100]",
@@ -711,6 +714,7 @@ public class KafkaTableITCase extends KafkaTableTestBase {
         tEnv.executeSql(insertSql).await();
     }
 
+    // J: 每个分区水印
     @Test
     public void testPerPartitionWatermarkKafka() throws Exception {
         if (isLegacyConnector) {

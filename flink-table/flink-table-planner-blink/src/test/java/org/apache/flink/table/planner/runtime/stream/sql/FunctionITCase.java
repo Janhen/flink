@@ -566,6 +566,7 @@ public class FunctionITCase extends StreamingTestBase {
 
     @Test
     public void testComplexScalarFunction() throws Exception {
+        // 复杂
         final List<Row> sourceData =
                 Arrays.asList(
                         Row.of(1, new byte[] {1, 2, 3}),
@@ -1156,10 +1157,12 @@ public class FunctionITCase extends StreamingTestBase {
             return StringUtils.arrayAwareToString(o) + "+" + t.toString();
         }
 
+        // J: Decimal 精度
         public @DataTypeHint("DECIMAL(5, 2)") BigDecimal eval() {
             return new BigDecimal("123.4"); // 1 digit is missing
         }
 
+        // J: 原始数据
         public @DataTypeHint("RAW") ByteBuffer eval(byte[] bytes) {
             if (bytes == null) {
                 return null;
@@ -1202,6 +1205,7 @@ public class FunctionITCase extends StreamingTestBase {
     }
 
     /** Function that has a custom type inference that is broader than the actual implementation. */
+    // 具有比实际实现更广泛的自定义类型推断
     public static class CustomScalarFunction extends ScalarFunction {
         public Integer eval(Integer... args) {
             for (Integer o : args) {
