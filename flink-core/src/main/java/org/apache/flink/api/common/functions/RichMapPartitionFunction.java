@@ -22,6 +22,11 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.util.Collector;
 
 /**
+ * {@link MapPartitionFunction} 的丰富变体。作为一个 {@link RichFunction}，它可以访问
+ * {@link org.apache.flink.api.common.functions.RuntimeContext} 并提供设置和拆卸方法：
+ * {@link RichFunction#open(org.apache.flink.configuration.Configuration)} 和
+ * {@link RichFunction#close()}。
+ *
  * Rich variant of the {@link MapPartitionFunction}. As a {@link RichFunction}, it gives access to
  * the {@link org.apache.flink.api.common.functions.RuntimeContext} and provides setup and teardown
  * methods: {@link RichFunction#open(org.apache.flink.configuration.Configuration)} and {@link

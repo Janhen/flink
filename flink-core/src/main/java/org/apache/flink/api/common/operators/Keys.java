@@ -42,12 +42,14 @@ public abstract class Keys<T> {
 
     public abstract int getNumberOfKeyFields();
 
+    // J: 逻辑键位置索引
     public abstract int[] computeLogicalKeyPositions();
 
     public abstract TypeInformation<?>[] getKeyFieldTypes();
 
     public abstract TypeInformation<?>[] getOriginalKeyFieldTypes();
 
+    // J: 自定义分区器验证
     public abstract <E> void validateCustomPartitioner(
             Partitioner<E> partitioner, TypeInformation<E> typeInfo);
 
@@ -78,6 +80,8 @@ public abstract class Keys<T> {
     // --------------------------------------------------------------------------------------------
     //  Specializations for expression-based / extractor-based grouping
     // --------------------------------------------------------------------------------------------
+
+    // 专业用于 基于表达式的 / 基于提取器的分组的
 
     public static class SelectorFunctionKeys<T, K> extends Keys<T> {
 
@@ -200,10 +204,12 @@ public abstract class Keys<T> {
     }
 
     /** Represents (nested) field access through string and integer-based keys */
+    // 表示通过基于字符串和整数的键的（嵌套）字段访问
     public static class ExpressionKeys<T> extends Keys<T> {
 
         public static final String SELECT_ALL_CHAR = "*";
         public static final String SELECT_ALL_CHAR_SCALA = "_";
+        // 通配符正则表达式
         private static final Pattern WILD_CARD_REGEX =
                 Pattern.compile(
                         "[\\.]?("
@@ -215,6 +221,7 @@ public abstract class Keys<T> {
                                 + ")$");
 
         // Flattened fields representing keys fields
+        // 表示键字段的展平字段
         private List<FlatFieldDescriptor> keyFields;
         private TypeInformation<?>[] originalKeyTypes;
 
@@ -234,6 +241,7 @@ public abstract class Keys<T> {
         }
 
         /** Create int-based (non-nested) field position keys on a tuple type. */
+        // 在元组类型上创建基于 int（非嵌套）的字段位置键
         public ExpressionKeys(int[] keyPositions, TypeInformation<T> type, boolean allowEmpty) {
 
             if (!type.isTupleType() || !(type instanceof CompositeType)) {
@@ -439,6 +447,7 @@ public abstract class Keys<T> {
 
         public static boolean isSortKey(int fieldPos, TypeInformation<?> type) {
 
+            // 通过字段位置指定键仅对元组数据类型有效
             if (!type.isTupleType() || !(type instanceof CompositeType)) {
                 throw new InvalidProgramException(
                         "Specifying keys via field positions is only valid "

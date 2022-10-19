@@ -21,6 +21,8 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 执行模式指定批处理程序在数据交换方面的执行方式：流水线或批处理。
+ *
  * The execution mode specifies how a batch program is executed in terms of data exchange:
  * pipelining or batched.
  */
@@ -28,6 +30,8 @@ import org.apache.flink.annotation.Public;
 public enum ExecutionMode {
 
     /**
+     * 以流水线方式执行程序（包括 shuffle 和广播），但在流水线时容易出现死锁的数据交换除外。这些数据交换以批处理方式执行。
+     *
      * Executes the program in a pipelined fashion (including shuffles and broadcasts), except for
      * data exchanges that are susceptible to deadlocks when pipelining. These data exchanges are
      * performed in a batch manner.

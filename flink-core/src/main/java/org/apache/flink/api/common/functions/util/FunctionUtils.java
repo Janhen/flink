@@ -42,6 +42,7 @@ public final class FunctionUtils {
         }
     }
 
+    // J: 为 RichFunction 注入 RuntimeContext
     public static void setFunctionRuntimeContext(Function function, RuntimeContext context) {
         if (function instanceof RichFunction) {
             RichFunction richFunction = (RichFunction) function;

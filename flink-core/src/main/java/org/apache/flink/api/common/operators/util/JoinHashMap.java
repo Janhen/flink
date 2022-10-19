@@ -69,6 +69,7 @@ public class JoinHashMap<BT> extends AbstractHashedMap {
         addMapping(index, hashCode, null, record);
     }
 
+    // J: 探测器
     public class Prober<PT> {
 
         public Prober(

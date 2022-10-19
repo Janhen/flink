@@ -28,6 +28,7 @@ import java.net.URI;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A wrapping factory that adds a {@link LimitedConnectionsFileSystem} to a file system. */
+// 将 {@link LimitedConnectionsFileSystem} 添加到文件系统的包装工厂。
 @Internal
 public class ConnectionLimitingFactory implements FileSystemFactory {
 

@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.Collection;
 
 /** Creates a new instance of a certain subclass of {@link java.util.zip.InflaterInputStream}. */
+// 创建 {@link java.util.zip.InflaterInputStream} 的某个子类的新实例。
 @Internal
 public interface InflaterInputStreamFactory<T extends InputStream> {
 

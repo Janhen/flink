@@ -65,6 +65,7 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 
     private int numberOfIterations = -1;
 
+    // J: 终止标准算子?
     protected Operator<?> terminationCriterion;
 
     // --------------------------------------------------------------------------------------------
@@ -164,6 +165,8 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
     }
 
     /**
+     * BulkIteration 元运算符不能有广播输入。
+     *
      * The BulkIteration meta operator cannot have broadcast inputs.
      *
      * @return An empty map.

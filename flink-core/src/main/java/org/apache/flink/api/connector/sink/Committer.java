@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * {@code Committer} 负责提交由 sink 暂存的数据。
+ *
  * The {@code Committer} is responsible for committing the data staged by the sink.
  *
  * @param <CommT> The type of information needed to commit the staged data

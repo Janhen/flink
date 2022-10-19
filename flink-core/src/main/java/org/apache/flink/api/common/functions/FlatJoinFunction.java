@@ -24,6 +24,8 @@ import org.apache.flink.util.Collector;
 import java.io.Serializable;
 
 /**
+ * 连接函数的接口。连接通过在指定键上连接它们的元素来组合两个数据集。使用每对连接元素调用此函数。
+ *
  * Interface for Join functions. Joins combine two data sets by joining their elements on specified
  * keys. This function is called with each pair of joining elements.
  *

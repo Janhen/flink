@@ -63,6 +63,7 @@ public class Configuration extends ExecutionConfig.GlobalJobParameters
     private static final Logger LOG = LoggerFactory.getLogger(Configuration.class);
 
     /** Stores the concrete key/value pairs of this configuration object. */
+    // 存储此配置对象的具体键值对
     protected final HashMap<String, Object> confData;
 
     // --------------------------------------------------------------------------------------------

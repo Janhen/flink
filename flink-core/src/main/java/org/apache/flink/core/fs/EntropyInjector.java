@@ -31,6 +31,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
+ * 此类为实现 {@link EntropyInjectingFileSystem} 的文件系统提供熵注入实用程序。
+ *
  * This class offers utilities for entropy injection for FileSystems that implement {@link
  * EntropyInjectingFileSystem}.
  */

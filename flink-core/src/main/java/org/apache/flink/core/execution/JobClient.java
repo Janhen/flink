@@ -42,6 +42,8 @@ public interface JobClient {
     CompletableFuture<Void> cancel();
 
     /**
+     * 停止 Flink 集群上的关联作业
+     *
      * Stops the associated job on Flink cluster.
      *
      * <p>Stopping works only for streaming programs. Be aware, that the job might continue to run
@@ -50,6 +52,7 @@ public interface JobClient {
      *
      * @param advanceToEndOfEventTime flag indicating if the source should inject a {@code
      *     MAX_WATERMARK} in the pipeline
+     *     指示源是否应在管道中注入 {@code MAX_WATERMARK} 的标志
      * @param savepointDirectory directory the savepoint should be written to
      * @return a {@link CompletableFuture} containing the path where the savepoint is located
      */
@@ -67,6 +70,8 @@ public interface JobClient {
     CompletableFuture<String> triggerSavepoint(@Nullable String savepointDirectory);
 
     /**
+     * 请求关联作业的累加器。累加器可以在运行时或完成后请求。类加载器用于反序列化传入的累加器结果。
+     *
      * Requests the accumulators of the associated job. Accumulators can be requested while it is
      * running or after it has finished. The class loader is used to deserialize the incoming
      * accumulator results.
@@ -74,5 +79,6 @@ public interface JobClient {
     CompletableFuture<Map<String, Object>> getAccumulators();
 
     /** Returns the {@link JobExecutionResult result of the job execution} of the submitted job. */
+    /** 返回已提交作业的 {@link JobExecutionResult 作业执行结果} */
     CompletableFuture<JobExecutionResult> getJobExecutionResult();
 }

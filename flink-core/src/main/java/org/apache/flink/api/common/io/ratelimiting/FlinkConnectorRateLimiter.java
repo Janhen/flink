@@ -24,6 +24,11 @@ import org.apache.flink.api.common.functions.RuntimeContext;
 import java.io.Serializable;
 
 /**
+ * 创建速率限制器的接口
+ *
+ * <p>速率限制器通过 {@link #setRate(long)} 配置并通过 {@link #open(RuntimeContext)} 创建。一个示例实现
+ * 可以在 {@link GuavaFlinkConnectorRateLimiter} 中找到。
+ *
  * An interface to create a ratelimiter
  *
  * <p>The ratelimiter is configured via {@link #setRate(long)} and created via {@link
@@ -41,6 +46,8 @@ public interface FlinkConnectorRateLimiter extends Serializable {
     void open(RuntimeContext runtimeContext);
 
     /**
+     * 为速率限制器设置所需的速率。
+     *
      * Sets the desired rate for the rate limiter.
      *
      * @param rate
@@ -48,6 +55,7 @@ public interface FlinkConnectorRateLimiter extends Serializable {
     void setRate(long rate);
 
     /** Acquires permits for the rate limiter. */
+    // 获得速率限制器的许可。
     void acquire(int permits);
 
     long getRate();

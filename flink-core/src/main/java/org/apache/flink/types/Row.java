@@ -37,13 +37,23 @@ import static org.apache.flink.types.RowUtils.deepHashCodeRow;
  * 行是固定长度、感知空值的复合类型，用于以确定的字段顺序存储多个值。无论字段的类型如何，每个字段都可以为空。不能自动
  * 推断行字段的类型;因此，无论何时生成一行，都需要提供类型信息。
  *
- * <p>行的主要用途是在Flink的Table和SQL生态系统以及其他api之间架起桥梁。因此，一行不仅包含模式部分(包含字段)，而且
- *   还附加一个{@link RowKind}，用于在变更日志中编码变更。因此，可以将一行视为变更日志中的一个条目。例如，在常规的
- *   批处理场景中，一个变更日志将由{@link RowKind#INSERT}行的有界流组成。行类型与字段是分开的，可以通过使用
- *   {@link #getKind()}和{@link #setKind(RowKind)}来访问。
+ * <p>行的主要用途是在 Flink 的 Table 和 SQL 生态系统以及其他 api 之间架起桥梁。因此，一行不仅包含模式部分(包含字段)，而且
+ *   还附加一个 {@link RowKind}，用于在变更日志中编码变更。因此，可以将一行视为变更日志中的一个条目。例如，在常规的
+ *   批处理场景中，一个变更日志将由 {@link RowKind#INSERT} 行的有界流组成。行类型与字段是分开的，可以通过使用
+ *   {@link #getKind()} 和 {@link #setKind(RowKind)} 来访问。
  *
  * <p>一行的字段可以基于位置访问，也可以基于名称访问。实现者可以决定一行在创建过程中应该以哪种字段模式进行操作。由框架
  *   生成的行支持两种字段模式的混合(即命名位置):
+ *
+ * <h1>基于位置的字段模式<h1>
+ *
+ * <p>{@link Row#withNames()} 创建一个可变长度行。可以使用 {@link #getField(String)} 和
+ * {@link #setField(String, Object)} 按名称访问字段。在第一次调用给定名称的 {@link #setField(String, Object)}
+ * 期间，每个字段都被初始化。但是，框架将使用 {@code null} 初始化缺失的字段，并在序列化或输入转换期间有更多类型信息
+ * 可用时重新排序所有字段。因此，即使是基于名称的行最终也会成为具有确定性字段顺序的固定长度复合类型。基于名称的行的性能
+ * 比基于位置的行差，但简化了行的创建和代码的可读性。
+ *
+ * <h1>混合命名位置字段模式<h1>
  *
  * A row is a fixed-length, null-aware composite type for storing multiple values in a deterministic
  * field order. Every field can be null regardless of the field's type. The type of row fields
@@ -104,15 +114,15 @@ public final class Row implements Serializable {
     private RowKind kind;
 
     /** Fields organized by position. Either this or {@link #fieldByName} is set. */
-    // 按位置组织的属性。或者{@link #fieldByName}被设置
+    // 按位置组织的属性。或者 {@link #fieldByName} 被设置
     private final @Nullable Object[] fieldByPosition;
 
     /** Fields organized by name. Either this or {@link #fieldByPosition} is set. */
-    // 按名称组织的字段。要么设置了这个，要么设置了{@link #fieldByPosition}
+    // 按名称组织的字段。要么设置了这个，要么设置了 {@link #fieldByPosition}
     private final @Nullable Map<String, Object> fieldByName;
 
     /** Mapping from field names to positions. Requires {@link #fieldByPosition} semantics. */
-    // 从字段名到位置的映射。需要{@link #fieldByPosition}语义
+    // 从字段名到位置的映射。需要 {@link #fieldByPosition} 语义
     private final @Nullable LinkedHashMap<String, Integer> positionByName;
 
     Row(

@@ -29,6 +29,24 @@ import org.apache.flink.core.io.InputSplitAssigner;
 import java.io.IOException;
 
 /**
+ * ReplicatingInputFormat 将任何 {@link InputFormat} 复制到 DataSource 的所有并行实例，即，复制的
+ * InputFormat 的完整输入由 DataSource 的每个并行实例完全处理。这是通过将复制的 InputFormat 生成的所有
+ * {@link org.apache.flink.core.io.InputSplit} 分配给每个并行实例来完成的。
+ *
+ * <p>复制的数据只能用作与数据源具有相同并行度的 {@link InnerJoinOperatorBase} 或
+ * {@link org.apache.flink.api.common.operators.base.CrossOperatorBase} 的输入。在用作 Join 或 Cross
+ * 运算符的输入之前，复制的数据可能会由基于 Map 的运算符在本地管道中处理，并具有与源相同的并行度。基于地图的运算符有
+ * {@link org.apache.flink.api.common.operators.base.MapOperatorBase}、
+ * {@link org.apache.flink.api.common.operators.base.FlatMapOperatorBase}、
+ * {@link org apache.flink.api.common.operators.base.FilterOperatorBase} 和
+ * {@link org.apache.flink.api.common.operators.base.MapPartitionOperatorBase}。
+ *
+ * <p>如果一个输入可在连接的所有并行实例上访问，而另一个输入（随机）在所有并行实例之间分区，则复制数据源可用于本地连接
+ * 处理（无数据传送）。
+ *
+ * <p>但是，复制的 DataSource 是一个计划提示，如果使用不当，可能会使 Flink 程序失效（请参阅上面的使用说明）。在这种
+ * 情况下，优化器无法生成有效的执行计划，程序执行将失败。
+ *
  * A ReplicatingInputFormat replicates any {@link InputFormat} to all parallel instances of a
  * DataSource, i.e., the full input of the replicated InputFormat is completely processed by each
  * parallel instance of the DataSource. This is done by assigning all {@link

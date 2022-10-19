@@ -21,6 +21,8 @@ package org.apache.flink.core.io;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 该接口由提供版本号的类实现。版本号可用于区分不断发展的类。
+ *
  * This interface is implemented by classes that provide a version number. Versions numbers can be
  * used to differentiate between evolving classes.
  */

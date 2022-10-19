@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** This operator represents a Union between two inputs. */
+// 该运算符表示两个输入之间的联合。
 @Internal
 public class Union<T> extends DualInputOperator<T, T, T, AbstractRichFunction> {
 

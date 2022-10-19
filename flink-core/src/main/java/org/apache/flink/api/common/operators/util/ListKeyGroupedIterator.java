@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
+ * KeyValueIterator 返回一个键和属于该键的所有值（共享同一个键）。
+ *
  * The KeyValueIterator returns a key and all values that belong to the key (share the same key).
  */
 @Internal

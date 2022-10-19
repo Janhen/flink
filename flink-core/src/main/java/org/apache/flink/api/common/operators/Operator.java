@@ -48,9 +48,11 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
     private int parallelism =
             ExecutionConfig.PARALLELISM_DEFAULT; // the number of parallel instances to use
 
+    // contract 实例的最小资源
     private ResourceSpec minResources =
             ResourceSpec.DEFAULT; // the minimum resource of the contract instance.
 
+    // contract 实例的首选资源
     private ResourceSpec preferredResources =
             ResourceSpec.DEFAULT; // the preferred resource of the contract instance.
 
@@ -259,6 +261,8 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
     }
 
     /**
+     * 采用单个运算符和运算符列表，并在需要时创建此输入的级联联合。如果不需要只有一个运算符作为输入，则返回此运算符。
+     *
      * Takes a single Operator and a list of operators and creates a cascade of unions of this
      * inputs, if needed. If not needed there was only one operator as input, then this operator is
      * returned.

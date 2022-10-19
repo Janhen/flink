@@ -166,6 +166,7 @@ public abstract class Transformation<T> {
             new HashMap<>();
 
     /** Slot scope use cases that this transformation needs managed memory for. */
+    // 此转换需要托管内存的插槽范围用例。
     private final Set<ManagedMemoryUseCase> managedMemorySlotScopeUseCases = new HashSet<>();
 
     /**

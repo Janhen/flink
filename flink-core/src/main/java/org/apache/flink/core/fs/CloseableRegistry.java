@@ -31,6 +31,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 此类允许注册 {@link Closeable} 的实例，如果此注册表关闭，则这些实例都将关闭。
+ *
+ * <p>注册到已经关闭的注册表会抛出异常并关闭提供的 {@link Closeable}
+ *
+ * <p>这个类中的所有方法都是线程安全的。
+ *
+ * <p>该类以反向注册顺序关闭所有已注册的 {@link Closeable}。
+ *
  * This class allows to register instances of {@link Closeable}, which are all closed if this
  * registry is closed.
  *

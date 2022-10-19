@@ -47,6 +47,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 状态描述符的基类。 {@code StateDescriptor} 用于在有状态操作中创建分区 {@link State}。
+ *
+ * <p>子类必须正确实现 {@link #equals(Object)} 和 {@link #hashCode()}。
+ *
  * Base class for state descriptors. A {@code StateDescriptor} is used for creating partitioned
  * {@link State} in stateful operations.
  *
@@ -85,6 +89,9 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
     protected final String name;
 
     /**
+     * 类型的序列化程序。可以在构造函数中急切地初始化，或者在调用
+     * {@link #initializeSerializerUnlessSet(ExecutionConfig)} 方法后延迟初始化。
+     *
      * The serializer for the type. May be eagerly initialized in the constructor, or lazily once
      * the {@link #initializeSerializerUnlessSet(ExecutionConfig)} method is called.
      */
@@ -104,6 +111,7 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
     @Nonnull private StateTtlConfig ttlConfig = StateTtlConfig.DISABLED;
 
     /** The default value returned by the state when no other value is bound to a key. */
+    // 当没有其他值绑定到某个键时，状态返回的默认值。
     @Nullable protected transient T defaultValue;
 
     // ------------------------------------------------------------------------
@@ -190,6 +198,9 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
     }
 
     /**
+     * 返回可用于序列化状态值的 {@link TypeSerializer}。请注意，序列化程序可能会延迟初始化，并且仅在调用
+     * {@link #initializeSerializerUnlessSet(ExecutionConfig)} 后才保证存在。
+     *
      * Returns the {@link TypeSerializer} that can be used to serialize the value in the state. Note
      * that the serializer may initialized lazily and is only guaranteed to exist after calling
      * {@link #initializeSerializerUnlessSet(ExecutionConfig)}.
@@ -214,6 +225,11 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
     }
 
     /**
+     * 设置从此描述符创建的状态查询的名称。
+     *
+     * <p>如果设置了名称，则创建状态将在运行时发布以供查询。每个作业的名称必须是唯一的。如果有另一个以相同名称发布的
+     * 状态实例，则作业将在运行时失败。
+     *
      * Sets the name for queries of state created from this descriptor.
      *
      * <p>If a name is set, the created state will be published for queries during runtime. The name
@@ -255,6 +271,10 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
     }
 
     /**
+     * 配置状态生存时间 (TTL) 的可选激活。
+     *
+     * <p>状态用户值将过期、变为不可用并在存储中清理，具体取决于配置的 {@link StateTtlConfig}。
+     *
      * Configures optional activation of state time-to-live (TTL).
      *
      * <p>State user value will expire, become unavailable and be cleaned up in storage depending on

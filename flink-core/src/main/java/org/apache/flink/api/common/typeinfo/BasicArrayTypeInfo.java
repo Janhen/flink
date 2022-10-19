@@ -33,6 +33,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 数组包装原始类型的类型信息。
+ *
  * Type information for arrays boxed primitive types.
  *
  * @param <T> The type (class) of the array itself.
@@ -177,9 +179,11 @@ public final class BasicArrayTypeInfo<T, C> extends TypeInformation<T> {
         return (BasicArrayTypeInfo<X, C>) TYPES.get(type);
     }
 
+    // J: 初始化原始数据类型
     private static final Map<Class<?>, BasicArrayTypeInfo<?, ?>> TYPES = new HashMap<>();
 
     static {
+        // J: String 特殊
         TYPES.put(String[].class, STRING_ARRAY_TYPE_INFO);
         TYPES.put(Boolean[].class, BOOLEAN_ARRAY_TYPE_INFO);
         TYPES.put(Byte[].class, BYTE_ARRAY_TYPE_INFO);

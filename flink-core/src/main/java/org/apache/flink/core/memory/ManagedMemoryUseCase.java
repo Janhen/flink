@@ -22,12 +22,14 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.util.Preconditions;
 
 /** Use cases of managed memory. */
-// 托管内存的用例。
+// 托管内存的用例
 @Internal
 public enum ManagedMemoryUseCase {
+    // 算子级别
     OPERATOR(Scope.OPERATOR),
     // J: 状态后端管理的内存级别
     STATE_BACKEND(Scope.SLOT),
+    // Slot 级别
     PYTHON(Scope.SLOT);
 
     public final Scope scope;

@@ -37,6 +37,7 @@ import java.util.TreeMap;
 import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
+// J: Csv 集成自 可分割输入格式
 @Internal
 public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT> {
 
@@ -50,17 +51,20 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
     private static final byte[] DEFAULT_FIELD_DELIMITER = new byte[] {','};
 
+    // J: 反斜杠
     private static final byte BACKSLASH = 92;
 
     // --------------------------------------------------------------------------------------------
     //  Variables for internal operation.
     //  They are all transient, because we do not want them so be serialized
     // --------------------------------------------------------------------------------------------
+    // 内部操作的变量。它们都是瞬态的，因为我们不希望它们被序列化
 
     private transient FieldParser<?>[] fieldParsers;
 
     // To speed up readRecord processing. Used to find windows line endings.
     // It is set when open so that readRecord does not have to evaluate it
+    // 加快 readRecord 处理。用于查找 windows 行尾。它在打开时设置，以便 readRecord 不必评估它
     protected boolean lineDelimiterIsLinebreak = false;
 
     protected transient int commentCount;
@@ -81,8 +85,10 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
     private boolean lenient;
 
+    // J: 跳过首行作为 Header
     private boolean skipFirstLineAsHeader;
 
+    // J: 引用字符串解析
     private boolean quotedStringParsing = false;
 
     private byte quoteCharacter;

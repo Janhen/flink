@@ -72,6 +72,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
     protected HashMap<String, DistributedCacheEntry> cacheFile = new HashMap<>();
 
     /** Config object for runtime execution parameters. */
+    // 运行时执行参数的配置对象
     protected ExecutionConfig executionConfig;
 
     /** The ID of the Job that this dataflow plan belongs to. */
@@ -333,6 +334,8 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
     }
 
     /**
+     * 在程序级别注册缓存文件。
+     *
      * Register cache files at program level.
      *
      * @param entry contains all relevant information

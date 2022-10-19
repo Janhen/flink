@@ -26,6 +26,11 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 一个 24 字节的块，写入二进制文件中块的 <i>end<i>，包含
+ * i) 块中的记录数，
+ * ii) 累积记录数，以及
+ * iii) 块中的第一条记录。
+ *
  * A block of 24 bytes written at the <i>end</i> of a block in a binary file, and containing i) the
  * number of records in the block, ii) the accumulated number of records, and iii) the offset of the
  * first record in the block.

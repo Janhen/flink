@@ -40,6 +40,8 @@ public class OptimizerOptions {
                                     + " input format’s parameters.");
 
     /**
+     * 编译器为定界输入采集的最小行样本数。样本用于估计记录数。可以使用输入格式的参数为特定输入覆盖此值。
+     *
      * The minimum number of line samples taken by the compiler for delimited inputs. The samples
      * are used to estimate the number of records. This value can be overridden for a specific input
      * with the input format’s parameters.

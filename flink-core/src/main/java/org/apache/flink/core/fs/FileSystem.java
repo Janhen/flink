@@ -65,6 +65,9 @@ import java.util.function.Supplier;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * Flink 使用的所有文件系统的抽象基类。此类可以扩展以实现分布式文件系统或本地文件系统。该文件系统的抽象非常简单，可用
+ * 的操作集非常有限，以支持广泛的文件系统的共同点。例如，不支持追加或改变现有文件
+ *
  * Abstract base class of all file systems used by Flink. This class may be extended to implement
  * distributed file systems, or local file systems. The abstraction by this file system is very
  * simple, and the set of available operations quite limited, to support the common denominator of a
@@ -225,19 +228,25 @@ public abstract class FileSystem {
     private static final Logger LOG = LoggerFactory.getLogger(FileSystem.class);
 
     /**
+     * 此锁保护方法 {@link #initOutPathLocalFS(Path, WriteMode, boolean)} 和
+     * {@link #initOutPathDistFS(Path, WriteMode, boolean)} 否则容易受到竞争。
+     *
      * This lock guards the methods {@link #initOutPathLocalFS(Path, WriteMode, boolean)} and {@link
      * #initOutPathDistFS(Path, WriteMode, boolean)} which are otherwise susceptible to races.
      */
     private static final ReentrantLock OUTPUT_DIRECTORY_INIT_LOCK = new ReentrantLock(true);
 
     /** Object used to protect calls to specific methods. */
+    // 用于保护对特定方法的调用的对象
     private static final ReentrantLock LOCK = new ReentrantLock(true);
 
     /** Cache for file systems, by scheme + authority. */
-    // 文件系统的缓存，按 schema+授权。
+    // 文件系统的缓存，按 schema+ 授权
     private static final HashMap<FSKey, FileSystem> CACHE = new HashMap<>();
 
     /**
+     * 文件系统方案到相应工厂的映射，填充在 {@link FileSystem#initialize(Configuration, PluginManager)} 中
+     *
      * Mapping of file system schemes to the corresponding factories, populated in {@link
      * FileSystem#initialize(Configuration, PluginManager)}.
      */
@@ -247,6 +256,7 @@ public abstract class FileSystem {
     private static final FileSystemFactory FALLBACK_FACTORY = loadHadoopFsFactory();
 
     /** All known plugins for a given scheme, do not fallback for those. */
+    // 给定方案的所有已知插件，不要回退那些
     private static final Multimap<String, String> DIRECTLY_SUPPORTED_FILESYSTEM =
             ImmutableMultimap.<String, String>builder()
                     .put("wasb", "flink-fs-azure-hadoop")
@@ -263,6 +273,8 @@ public abstract class FileSystem {
     private static final Set<String> ALLOWED_FALLBACK_FILESYSTEMS = new HashSet<>();
 
     /**
+     * 要使用的默认文件系统方案，在进程范围初始化期间配置。此值默认为本地文件系统方案 {@code 'file:'} 或 {@code 'file:'}。
+     *
      * The default filesystem scheme to be used, configured during process-wide initialization. This
      * value defaults to the local file systems scheme {@code 'file:///'} or {@code 'file:/'}.
      */
@@ -273,6 +285,8 @@ public abstract class FileSystem {
     // ------------------------------------------------------------------------
 
     /**
+     * 初始化共享文件系统设置
+     *
      * Initializes the shared file system settings.
      *
      * <p>The given configuration is passed to each file system factory to initialize the respective
@@ -300,6 +314,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 初始化共享文件系统设置
+     *
      * Initializes the shared file system settings.
      *
      * <p>The given configuration is passed to each file system factory to initialize the respective
@@ -323,6 +339,7 @@ public abstract class FileSystem {
         LOCK.lock();
         try {
             // make sure file systems are re-instantiated after re-configuration
+            // 确保文件系统在重新配置后重新实例化
             CACHE.clear();
             FS_FACTORIES.clear();
 
@@ -341,6 +358,7 @@ public abstract class FileSystem {
                     loadFileSystemFactories(factorySuppliers);
 
             // configure all file system factories
+            // 配置所有文件系统工厂
             for (FileSystemFactory factory : fileSystemFactories) {
                 factory.configure(config);
                 String scheme = factory.getScheme();
@@ -351,6 +369,7 @@ public abstract class FileSystem {
             }
 
             // configure the default (fallback) factory
+            // 配置默认（回退）工厂
             FALLBACK_FACTORY.configure(config);
 
             // also read the default file system scheme
@@ -386,6 +405,7 @@ public abstract class FileSystem {
     // ------------------------------------------------------------------------
     //  Obtaining File System Instances
     // ------------------------------------------------------------------------
+    // 获取文件系统实例
 
     /**
      * Returns a reference to the {@link FileSystem} instance for accessing the local file system.
@@ -398,6 +418,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 返回对 {@link FileSystem} 实例的引用，以访问由给定 {@link URI} 标识的文件系统。
+     *
      * Returns a reference to the {@link FileSystem} instance for accessing the file system
      * identified by the given {@link URI}.
      *
@@ -546,6 +568,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 获取用于未指定和显式方案的路径和文件系统的默认文件系统 URI
+     *
      * Gets the default file system URI that is used for paths and file systems that do not specify
      * and explicit scheme.
      *
@@ -585,6 +609,8 @@ public abstract class FileSystem {
     public abstract URI getUri();
 
     /**
+     * 返回表示路径的文件状态对象
+     *
      * Return a file status object that represents the path.
      *
      * @param f The path we want information from
@@ -595,6 +621,9 @@ public abstract class FileSystem {
     public abstract FileStatus getFileStatus(Path f) throws IOException;
 
     /**
+     * 返回一个包含给定文件部分的主机名、偏移量和大小的数组。对于不存在的文件或区域，将返回 null。此调用对 DFS
+     * 最有帮助，它返回包含给定文件的机器的主机名。 FileSystem 将简单地返回一个包含 'localhost' 的 elt。
+     *
      * Return an array containing hostnames, offset and size of portions of the given file. For a
      * nonexistent file or regions, null will be returned. This call is most helpful with DFS, where
      * it returns hostnames of machines that contain the given file. The FileSystem will simply
@@ -604,6 +633,8 @@ public abstract class FileSystem {
             throws IOException;
 
     /**
+     * 在指示的 Path 处打开 FSDataInputStream
+     *
      * Opens an FSDataInputStream at the indicated Path.
      *
      * @param f the file name to open
@@ -650,6 +681,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 如果路径是目录，则列出给定路径中文件目录的状态
+     *
      * List the statuses of the files/directories in the given path if the path is a directory.
      *
      * @param f given path
@@ -695,6 +728,8 @@ public abstract class FileSystem {
     public abstract boolean mkdirs(Path f) throws IOException;
 
     /**
+     * 在指示的 Path 处打开 FSDataOutputStream
+     *
      * Opens an FSDataOutputStream at the indicated Path.
      *
      * <p>This method is deprecated, because most of its parameters are ignored by most file
@@ -762,6 +797,9 @@ public abstract class FileSystem {
     public abstract boolean rename(Path src, Path dst) throws IOException;
 
     /**
+     * 如果这是一个分布式文件系统，则返回 true。这里的分布式文件系统意味着文件系统在所有参与集群或作业的 Flink
+     * 进程之间共享，并且所有这些进程都可以看到相同的文件
+     *
      * Returns true if this is a distributed file system. A distributed file system here means that
      * the file system is shared among all Flink processes that participate in a cluster or job and
      * that all these processes can see the same files.
@@ -936,6 +974,8 @@ public abstract class FileSystem {
     }
 
     /**
+     * 根据给定的写入模式初始化分布式文件系统上的输出目录
+     *
      * Initializes output directories on distributed file systems according to the given write mode.
      *
      * <p>WriteMode.NO_OVERWRITE &amp; parallel output: - A directory is created if the output path
@@ -1093,6 +1133,11 @@ public abstract class FileSystem {
     }
 
     /**
+     * Hadoop 文件系统工厂的实用程序加载器。我们以一种特殊的方式对待 Hadoop FS 工厂，因为我们将其用作 Flink
+     * 不直接支持的文件系统方案的包罗万象
+     *
+     * <p>此方法对某些类的可用性进行一组急切检查，以便能够提供更好的错误消息
+     *
      * Utility loader for the Hadoop file system factory. We treat the Hadoop FS factory in a
      * special way, because we use it as a catch all for file systems schemes not supported directly
      * in Flink.
@@ -1145,6 +1190,7 @@ public abstract class FileSystem {
     // ------------------------------------------------------------------------
 
     /** An identifier of a file system, via its scheme and its authority. */
+    // 文件系统的标识符，通过其方案和权限
     private static final class FSKey {
 
         /** The scheme of the file system. */

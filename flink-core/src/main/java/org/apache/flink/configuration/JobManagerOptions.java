@@ -30,7 +30,7 @@ import static org.apache.flink.configuration.description.TextElement.code;
 import static org.apache.flink.configuration.description.TextElement.text;
 
 /** Configuration options for the JobManager. */
-// JobManager的配置选项
+// JobManager 的配置选项
 @PublicEvolving
 public class JobManagerOptions {
 

@@ -35,18 +35,23 @@ public class MemoryUtils {
     public static final sun.misc.Unsafe UNSAFE = getUnsafe();
 
     /** The native byte order of the platform on which the system currently runs. */
+    // 系统当前运行的平台的本机字节顺序
     public static final ByteOrder NATIVE_BYTE_ORDER = ByteOrder.nativeOrder();
 
+    // J: 缓存 address 的属性偏移
     private static final long BUFFER_ADDRESS_FIELD_OFFSET =
             getClassFieldOffset(Buffer.class, "address");
+    // J: 缓存 capacity 的属性偏移
     private static final long BUFFER_CAPACITY_FIELD_OFFSET =
             getClassFieldOffset(Buffer.class, "capacity");
+    // J: 直接内存类
     private static final Class<?> DIRECT_BYTE_BUFFER_CLASS =
             getClassByName("java.nio.DirectByteBuffer");
 
     @SuppressWarnings("restriction")
     private static sun.misc.Unsafe getUnsafe() {
         try {
+            // J: 获取属性
             Field unsafeField = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
             unsafeField.setAccessible(true);
             return (sun.misc.Unsafe) unsafeField.get(null);
@@ -61,6 +66,7 @@ public class MemoryUtils {
         } catch (IllegalAccessException e) {
             throw new Error("Access to sun.misc.Unsafe is forbidden by the runtime.", e);
         } catch (Throwable t) {
+            // Throwable ...
             throw new Error(
                     "Unclassified error while trying to access the sun.misc.Unsafe handle.", t);
         }
@@ -101,6 +107,8 @@ public class MemoryUtils {
     }
 
     /**
+     * 分配不安全的本机内存
+     *
      * Allocates unsafe native memory.
      *
      * @param size size of the unsafe memory to allocate.
@@ -111,6 +119,8 @@ public class MemoryUtils {
     }
 
     /**
+     * 创建一个清理器来释放不安全的内存
+     *
      * Creates a cleaner to release the unsafe memory.
      *
      * @param address address of the unsafe memory to release

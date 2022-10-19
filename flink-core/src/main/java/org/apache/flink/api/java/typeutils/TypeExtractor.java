@@ -82,6 +82,8 @@ import static org.apache.flink.api.java.typeutils.TypeExtractionUtils.typeToClas
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用于对类进行反射分析的实用程序，以确定转换函数实现的返回类型。
+ *
  * A utility for reflection analysis on classes, to determine the return type of implementations of
  * transformation functions.
  *

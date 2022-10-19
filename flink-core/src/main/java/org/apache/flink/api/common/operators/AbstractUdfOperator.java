@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 代表实际 operator 的所有合约的抽象超类。
+ *
  * Abstract superclass for all contracts that represent actual operators.
  *
  * @param <FT> Type of the user function
@@ -34,9 +36,11 @@ import java.util.Map;
 public abstract class AbstractUdfOperator<OUT, FT extends Function> extends Operator<OUT> {
 
     /** The object or class containing the user function. */
+    // 包含用户函数的对象或类。
     protected final UserCodeWrapper<FT> userFunction;
 
     /** The extra inputs which parameterize the user function. */
+    // 参数化用户功能的额外输入。
     protected final Map<String, Operator<?>> broadcastInputs = new HashMap<>();
 
     // --------------------------------------------------------------------------------------------
@@ -82,6 +86,8 @@ public abstract class AbstractUdfOperator<OUT, FT extends Function> extends Oper
     }
 
     /**
+     * 将由以 {@code root} 为根的计划生成的结果绑定到包装在此运算符中的 UDF 使用的变量。
+     *
      * Binds the result produced by a plan rooted at {@code root} to a variable used by the UDF
      * wrapped in this operator.
      *

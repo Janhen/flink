@@ -32,8 +32,17 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * TypeInformation是Flink类型系统的核心类。Flink需要用于用户函数输入或返回类型的所有类型的类型信息。这个类型信息类
+ * TypeInformation 是 Flink 类型系统的核心类。Flink 需要用于用户函数输入或返回类型的所有类型的类型信息。这个类型信息类
  * 充当生成序列化器和比较器的工具，并执行语义检查，例如用作联接分组键的字段是否实际存在。
+ *
+ * <p>类型信息还在编程语言对象模型和逻辑平面模式之间架起一座桥梁。它将字段从类型映射到平面模式中的列（字段）。并非一个
+ * 类型的所有字段都映射到平面模式中的单独字段，并且通常整个类型都映射到一个字段。重要的是要注意模式必须适用于一个类型
+ * 的所有实例。因此，列表和数组中的元素不会分配给单独的字段，而是将列表和数组视为一个字段，以说明数组中的不同长度。
+ *
+ * ...
+ *
+ * <p>类型“id”、“text”和“timestamp”是占用一个字段的基本类型。 “InnerType”有两个，也有两个字段。 “OuterType”
+ *   有两个字段，总共三个字段（通过递归展平包含“id”、“text”和“timestamp”）。
  *
  * TypeInformation is the core class of Flink's type system. Flink requires a type information for
  * all types that are used as input or return type of a user function. This type information class
@@ -103,6 +112,8 @@ public abstract class TypeInformation<T> implements Serializable {
     public abstract boolean isTupleType();
 
     /**
+     * 获取此类型的 arity - 没有嵌套的字段数。
+     *
      * Gets the arity of this type - the number of fields without nesting.
      *
      * @return Gets the number of fields in this type without nesting.
@@ -221,6 +232,8 @@ public abstract class TypeInformation<T> implements Serializable {
     }
 
     /**
+     * 通过实用程序“类型提示”为泛型类型创建 TypeInformation。此方法可按如下方式使用：
+     *
      * Creates a TypeInformation for a generic type via a utility "type hint". This method can be
      * used as follows:
      *

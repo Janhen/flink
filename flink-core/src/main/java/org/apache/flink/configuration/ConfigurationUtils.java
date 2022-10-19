@@ -62,6 +62,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 为 {@link org.apache.flink.configuration.CoreOptions#TMP_DIRS} 定义的临时文件提取任务管理器目录。
+     *
      * Extracts the task manager directories for temporary files as defined by {@link
      * org.apache.flink.configuration.CoreOptions#TMP_DIRS}.
      *
@@ -89,6 +91,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 将字符串解析为字符串映射。Map 的预期格式为：  key1:value1,key2:value2
+     *
      * Parses a string as a map of strings. The expected format of the map is:
      *
      * <pre>
@@ -146,6 +150,11 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 根据 {@link GlobalConfiguration#isSensitive(String)} 将其键敏感的值替换为
+     * {@link GlobalConfiguration#HIDDEN_CONTENT}。
+     *
+     * <p>这在显示配置值时很有用。
+     *
      * Replaces values whose keys are sensitive according to {@link
      * GlobalConfiguration#isSensitive(String)} with {@link GlobalConfiguration#HIDDEN_CONTENT}.
      *
@@ -177,6 +186,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 创建传递的配置映射的动态参数列表 {@code String}。
+     *
      * Creates a dynamic parameter list {@code String} of the passed configuration map.
      *
      * @param config A {@code Map} containing parameter/value entries that shall be used in the
@@ -210,6 +221,7 @@ public class ConfigurationUtils {
             }
         }
 
+        // 动态参数检查
         checkConfigContains(configs, TaskManagerOptions.CPU_CORES.key());
         checkConfigContains(configs, TaskManagerOptions.FRAMEWORK_HEAP_MEMORY.key());
         checkConfigContains(configs, TaskManagerOptions.FRAMEWORK_OFF_HEAP_MEMORY.key());
@@ -259,6 +271,8 @@ public class ConfigurationUtils {
     }
 
     /**
+     * 提取并解析具有给定名称前缀的 Flink 配置属性，并将结果作为 Map 返回。
+     *
      * Extract and parse Flink configuration properties with a given name prefix and return the
      * result as a Map.
      */
@@ -279,6 +293,8 @@ public class ConfigurationUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 尝试将原始值转换为提供的类型。
+     *
      * Tries to convert the raw value into the provided type.
      *
      * @param rawValue rawValue to convert into the provided type clazz
@@ -305,6 +321,7 @@ public class ConfigurationUtils {
         } else if (clazz.isEnum()) {
             return (T) convertToEnum(rawValue, (Class<? extends Enum<?>>) clazz);
         } else if (clazz == Duration.class) {
+            // Duration, MemorySize, Map, Enum ...
             return (T) convertToDuration(rawValue);
         } else if (clazz == MemorySize.class) {
             return (T) convertToMemorySize(rawValue);

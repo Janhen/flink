@@ -28,6 +28,8 @@ public class PluginDescriptor {
     private final String pluginId;
 
     /**
+     * 插件资源代码的 URL。通常这包含将为插件加载的 jar 的 URL
+     *
      * URLs to the plugin resources code. Usually this contains URLs of the jars that will be loaded
      * for the plugin.
      */

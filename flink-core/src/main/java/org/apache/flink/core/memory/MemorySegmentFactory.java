@@ -37,6 +37,10 @@ public final class MemorySegmentFactory {
     private static final Runnable NO_OP = () -> {};
 
     /**
+     * 创建一个以给定堆内存区域为目标的新内存段
+     *
+     * <p>应该使用此方法将短寿命字节数组转换为内存段
+     *
      * Creates a new memory segment that targets the given heap memory region.
      *
      * <p>This method should be used to turn short lived byte arrays into memory segments.
@@ -49,6 +53,8 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 复制给定的堆内存区域并创建一个包装它的新内存段
+     *
      * Copies the given heap memory region and creates a new memory segment wrapping it.
      *
      * @param bytes The heap memory region.
@@ -76,6 +82,10 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 分配一些未池化的内存并创建一个表示该内存的新内存段
+     *
+     * <p>此方法类似于 {@link #allocateUnpooledSegment(int, Object)}，但内存段将以 null 作为所有者
+     *
      * Allocates some unpooled memory and creates a new memory segment that represents that memory.
      *
      * <p>This method is similar to {@link #allocateUnpooledSegment(int, Object)}, but the memory
@@ -103,6 +113,8 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 分配一些未池化的堆外内存并创建一个表示该内存的新内存段
+     *
      * Allocates some unpooled off-heap memory and creates a new memory segment that represents that
      * memory.
      *
@@ -134,6 +146,7 @@ public final class MemorySegmentFactory {
     private static ByteBuffer allocateDirectMemory(int size) {
         //noinspection ErrorNotRethrown
         try {
+            // J: nio 直接内存分配
             return ByteBuffer.allocateDirect(size);
         } catch (OutOfMemoryError outOfMemoryError) {
             // TODO: this error handling can be removed in future,
@@ -151,6 +164,8 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 分配一个堆外不安全内存并创建一个新的内存段来表示该内存
+     *
      * Allocates an off-heap unsafe memory and creates a new memory segment to represent that
      * memory.
      *
@@ -173,6 +188,10 @@ public final class MemorySegmentFactory {
     }
 
     /**
+     * 创建一个内存段，它包装支持给定 ByteBuffer 的堆外内存。请注意，ByteBuffer 必须是 <i>direct ByteBuffer<i>
+     *
+     * <p>此方法旨在用于池内存并在长寿命内存区域周围创建内存段的组件
+     *
      * Creates a memory segment that wraps the off-heap memory backing the given ByteBuffer. Note
      * that the ByteBuffer needs to be a <i>direct ByteBuffer</i>.
      *

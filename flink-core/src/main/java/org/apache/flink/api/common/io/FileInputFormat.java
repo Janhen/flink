@@ -52,6 +52,12 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 从文件读取的 {@link RichInputFormat} 的基类。对于特定的输入类型，需要实现 {@link #nextRecord(Object)}
+ * 和 {@link #reachedEnd()} 方法。此外，可以覆盖 {@link #open(FileInputSplit)} 和 {@link #close()}
+ * 以更改生命周期行为。
+ *
+ * <p>在 {@link #open(FileInputSplit)} 方法完成后，文件输入数据可从 {@link #stream} 字段获得。
+ *
  * The base class for {@link RichInputFormat}s that read from files. For specific input types the
  * {@link #nextRecord(Object)} and {@link #reachedEnd()} methods need to be implemented.
  * Additionally, one may override {@link #open(FileInputSplit)} and {@link #close()} to change the
@@ -70,12 +76,16 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     private static final long serialVersionUID = 1L;
 
     /** The fraction that the last split may be larger than the others. */
+    // 最后一次拆分的部分可能比其他部分大。
     private static final float MAX_SPLIT_SIZE_DISCREPANCY = 1.1f;
 
     /** The timeout (in milliseconds) to wait for a filesystem stream to respond. */
+    // 等待文件系统流响应的超时时间（以毫秒为单位）。
     private static long DEFAULT_OPENING_TIMEOUT;
 
     /**
+     * 基于 DEFLATE 的文件扩展名到解压缩算法的映射。这种压缩会导致文件不可分割。
+     *
      * A mapping of file extensions to decompression algorithms based on DEFLATE. Such compressions
      * lead to unsplittable files.
      */
@@ -83,6 +93,7 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
             INFLATER_INPUT_STREAM_FACTORIES = new HashMap<String, InflaterInputStreamFactory<?>>();
 
     /** The splitLength is set to -1L for reading the whole split. */
+    // splitLength 设置为 -1L 以读取整个拆分。
     protected static final long READ_WHOLE_SPLIT_FLAG = -1L;
 
     static {
@@ -91,6 +102,8 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 初始化输入格式的默认值。需要是静态方法，因为它是为本地集群执行而配置的。
+     *
      * Initialize defaults for input format. Needs to be a static method because it is configured
      * for local cluster execution.
      *
@@ -131,6 +144,9 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 通过带有文件扩展名的 {@link org.apache.flink.api.common.io.compression.InflaterInputStreamFactory}
+     * 注册解压算法，用于透明解压。
+     *
      * Registers a decompression algorithm through a {@link
      * org.apache.flink.api.common.io.compression.InflaterInputStreamFactory} with a file extension
      * for transparent decompression.
@@ -142,6 +158,7 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     public static void registerInflaterInputStreamFactory(
             String fileExtension, InflaterInputStreamFactory<?> factory) {
         synchronized (INFLATER_INPUT_STREAM_FACTORIES) {
+            // J: 为静态 Map 加锁，对覆盖已存在的解压缩算法进行警告
             if (INFLATER_INPUT_STREAM_FACTORIES.put(fileExtension, factory) != null) {
                 LOG.warn(
                         "Overwriting an existing decompression algorithm for \"{}\" files.",
@@ -158,6 +175,8 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 返回文件名的扩展名（！= 路径）。
+     *
      * Returns the extension of a file name (!= a path).
      *
      * @return the extension of the file name or {@code null} if there is no extension.
@@ -177,21 +196,29 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     //  They are all transient, because we do not want them so be serialized
     // --------------------------------------------------------------------------------------------
 
+    // 内部操作的变量。它们都是瞬态的，因为我们不希望它们被序列化
+
     /** The input stream reading from the input file. */
+    // 从输入文件中读取的输入流。
     protected transient FSDataInputStream stream;
 
     /** The start of the split that this parallel instance must consume. */
+    // 此并行实例必须使用的拆分的开始。
     protected transient long splitStart;
 
     /** The length of the split that this parallel instance must consume. */
+    // 此并行实例必须使用的拆分长度。
     protected transient long splitLength;
 
     /** The current split that this parallel instance must consume. */
+    // 此并行实例必须使用的当前拆分。
     protected transient FileInputSplit currentSplit;
 
     // --------------------------------------------------------------------------------------------
     //  The configuration parameters. Configured on the instance and serialized to be shipped.
     // --------------------------------------------------------------------------------------------
+
+    // 配置参数。在实例上配置并序列化以 shipped
 
     /**
      * The path to the file that contains the input.
@@ -202,6 +229,7 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     @Deprecated protected Path filePath;
 
     /** The list of paths to files and directories that contain the input. */
+    // 包含输入的文件和目录的路径列表。
     private Path[] filePaths;
 
     /** The minimal split size, set by the configure() method. */
@@ -211,20 +239,26 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     protected int numSplits = -1;
 
     /** Stream opening timeout. */
+    // 流打开超时。
     protected long openTimeout = DEFAULT_OPENING_TIMEOUT;
 
     /**
+     * 某些文件输入格式不能在块级别上拆分（deflate）因此，FileInputFormat 只能读取整个文件。
+     *
      * Some file input formats are not splittable on a block level (deflate) Therefore, the
      * FileInputFormat can only read whole files.
      */
     protected boolean unsplittable = false;
 
     /**
+     * 指定是否启用输入目录结构的递归遍历的标志。
+     *
      * The flag to specify whether recursive traversal of the input directory structure is enabled.
      */
     protected boolean enumerateNestedFiles = false;
 
     /** Files filter for determining what files/directories should be included. */
+    // 用于确定应包含哪些文件目录的文件过滤器。
     private FilePathFilter filesFilter = new GlobFilePathFilter();
 
     // --------------------------------------------------------------------------------------------
@@ -436,6 +470,8 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过从配置中读取文件路径来配置文件输入格式。
+     *
      * Configures the file input format by reading the file path from the configuration.
      *
      * @see
@@ -461,6 +497,8 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 获取仅包含文件大小的基本文件统计信息。如果输入是目录，则大小是所有包含文件的总和。
+     *
      * Obtains basic file statistics containing only file size. If the input is a directory, then
      * the size is the sum of all contained files.
      *
@@ -499,6 +537,7 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
         return null;
     }
 
+    // J: 文件大小的统计信息
     protected FileBaseStatistics getFileStats(
             FileBaseStatistics cachedStats, Path[] filePaths, ArrayList<FileStatus> files)
             throws IOException {
@@ -572,6 +611,9 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 计算文件的输入拆分。默认情况下，一个文件块是一个拆分。如果请求的拆分多于可用的块，则拆分可能是块的一部分，并且
+     * 拆分可能跨越块边界。
+     *
      * Computes the input splits for the file. By default, one file block is one split. If more
      * splits are requested than blocks are available, then a split may be a fraction of a block and
      * splits may cross block boundaries.
@@ -727,6 +769,8 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     }
 
     /**
+     * 如果 enumerateNestedFiles 为真，则枚举目录中的所有文件并递归。
+     *
      * Enumerate all files in the directory and recursive if enumerateNestedFiles is true.
      *
      * @return the total length of accepted files.
@@ -1023,6 +1067,9 @@ public abstract class FileInputFormat<OT> extends RichInputFormat<OT, FileInputS
     // ============================================================================================
 
     /**
+     * 在未中断的线程中获取 DataInputStream。这是解决 HDFS 客户端对 InterruptedExceptions 非常敏感的问题的
+     * 必要技巧。
+     *
      * Obtains a DataInputStream in an thread that is not interrupted. This is a necessary hack
      * around the problem that the HDFS client is very sensitive to InterruptedExceptions.
      */

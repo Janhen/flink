@@ -28,6 +28,8 @@ public enum FileSystemKind {
     FILE_SYSTEM,
 
     /**
+     * 对象存储。文件对应于对象。没有真正的目录，但可以通过文件的分层命名来模仿类似目录的结构。
+     *
      * An Object store. Files correspond to objects. There are not really directories, but a
      * directory-like structure may be mimicked by hierarchical naming of files.
      */

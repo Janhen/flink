@@ -355,6 +355,7 @@ public class CoreOptions {
                             "The default filesystem scheme, used for paths that do not declare a scheme explicitly."
                                     + " May contain an authority, e.g. host:port in case of an HDFS NameNode.");
 
+    // 文件方案的（分号分隔）列表，可以使用 Hadoop 代替适当的 Flink 插件的。 （例如：s3;wasb）
     @Documentation.Section(Documentation.Sections.COMMON_MISCELLANEOUS)
     public static final ConfigOption<String> ALLOWED_FALLBACK_FILESYSTEMS =
             ConfigOptions.key("fs.allowed-fallback-filesystems")

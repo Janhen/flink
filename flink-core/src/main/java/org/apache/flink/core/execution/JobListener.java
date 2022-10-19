@@ -38,6 +38,10 @@ import javax.annotation.Nullable;
 public interface JobListener {
 
     /**
+     * 作业提交的回调。这在调用 {@code execute()} 或 {@code executeAsync()} 时被调用。
+     *
+     * <p>传入的参数中恰好有一个为null，分别代表失败或成功。
+     *
      * Callback on job submission. This is called when {@code execute()} or {@code executeAsync()}
      * is called.
      *

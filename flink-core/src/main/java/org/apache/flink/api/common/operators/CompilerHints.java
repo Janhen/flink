@@ -25,6 +25,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 封装编译器提示的类，描述了用户函数的行为。如果设置，优化器将使用它们来估计中间结果的大小。请注意，这些值是可选提示，
+ * 优化器也将始终生成一个有效的计划，而无需它们。然而，这些提示可能有助于改进计划选择。
+ *
  * A class encapsulating compiler hints describing the behavior of the user function. If set, the
  * optimizer will use them to estimate the sizes of the intermediate results. Note that these values
  * are optional hints, the optimizer will always generate a valid plan without them as well. The
@@ -35,12 +38,14 @@ public class CompilerHints {
 
     private long outputSize = -1;
 
+    // J: 输出基数
     private long outputCardinality = -1;
 
     private float avgOutputRecordSize = -1.0f;
 
     private float filterFactor = -1.0f;
 
+    // J: 唯一的属性
     private Set<FieldSet> uniqueFields;
 
     // --------------------------------------------------------------------------------------------

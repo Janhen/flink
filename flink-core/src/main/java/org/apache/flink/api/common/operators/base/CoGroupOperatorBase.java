@@ -55,6 +55,7 @@ public class CoGroupOperatorBase<IN1, IN2, OUT, FT extends CoGroupFunction<IN1, 
         extends DualInputOperator<IN1, IN2, OUT, FT> {
 
     /** The ordering for the order inside a group from input one. */
+    // 从输入一开始的组内订单的排序。
     private Ordering groupOrder1;
 
     /** The ordering for the order inside a group from input two. */

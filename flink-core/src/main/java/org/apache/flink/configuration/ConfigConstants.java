@@ -1789,7 +1789,7 @@ public final class ConfigConstants {
     public static final String ENV_FLINK_CONF_DIR = "FLINK_CONF_DIR";
 
     /** The environment variable name which contains the location of the lib folder. */
-    // 环境变量名，其中包含lib文件夹的位置。
+    // 环境变量名，其中包含 lib 文件夹的位置。
     public static final String ENV_FLINK_LIB_DIR = "FLINK_LIB_DIR";
 
     /** The environment variable name which contains the location of the opt directory. */
@@ -1808,14 +1808,15 @@ public final class ConfigConstants {
     public static final String DEFAULT_FLINK_PLUGINS_DIRS = "plugins";
 
     /** The environment variable name which contains the location of the bin directory. */
-    // 包含bin目录位置的环境变量名。
+    // 包含 bin 目录位置的环境变量名。
     public static final String ENV_FLINK_BIN_DIR = "FLINK_BIN_DIR";
 
     /** The environment variable name which contains the Flink installation root directory. */
-    // 包含Flink安装根目录的环境变量名
+    // 包含 Flink 安装根目录的环境变量名
     public static final String ENV_FLINK_HOME_DIR = "FLINK_HOME";
 
     /** The user lib directory name. */
+    // 用户 lib 目录名称。
     public static final String DEFAULT_FLINK_USR_LIB_DIR = "usrlib";
 
     // ---------------------------- Encoding ------------------------------

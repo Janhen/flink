@@ -24,6 +24,16 @@ import org.apache.flink.util.Collector;
 import java.io.Serializable;
 
 /**
+ * 组归约函数的接口。 GroupReduceFunctions 处理元素组。他们可以将它们聚合为单个值，或为每个组生成多个结果值。该组
+ * 可以通过共享一个公共分组键来定义，或者该组可以简单地是一个数据集的所有元素。
+ *
+ * <p>有关通过始终组合两个元素以递增方式工作的 reduce 函数，请参阅 {@link ReduceFunction}。
+ *
+ * ...
+ *
+ * <p>部分计算可以显着提高 {@link GroupReduceFunction} 的性能。这种技术也称为应用组合器。实现
+ * {@link GroupCombineFunction} 接口以启用部分计算，即此 {@link GroupReduceFunction} 的组合器。
+ *
  * The interface for group reduce functions. GroupReduceFunctions process groups of elements. They
  * may aggregate them to a single value, or produce multiple result values for each group. The group
  * may be defined by sharing a common grouping key, or the group may simply be all elements of a

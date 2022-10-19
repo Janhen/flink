@@ -21,6 +21,15 @@ package org.apache.flink.api.common.functions;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 广播变量初始化器可用于在初始化期间将广播变量转换为另一种格式。转换后的变量在一个 TaskManager 内的函数的并行实例
+ * 之间共享，与普通广播变量（列表）的共享方式相同。
+ *
+ * <p>在许多情况下，当在特定 TaskManager 中第一次获取广播变量时​​，广播变量初始化器只会由每个 TaskManager 的一个
+ *   并行函数实例执行。如果使用变量的任务在执行时间上没有重叠，则可能会多次读取和初始化广播变量；在这种情况下，可能会
+ *   发生一个函数实例释放广播变量，而另一个函数实例再次实现它。
+ *
+ * <p>这是一个如何使用广播变量初始化器的示例，将共享的值列表转换为共享映射。
+ *
  * A broadcast variable initializer can be used to transform a broadcast variable into another
  * format during initialization. The transformed variable is shared among the parallel instances of
  * a function inside one TaskManager, the same way as the plain broadcast variables (lists) are
@@ -73,6 +82,8 @@ import org.apache.flink.annotation.Public;
 public interface BroadcastVariableInitializer<T, O> {
 
     /**
+     * 从广播变量中读取数据元素并创建转换后的数据结构的方法。
+     *
      * The method that reads the data elements from the broadcast variable and creates the
      * transformed data structure.
      *

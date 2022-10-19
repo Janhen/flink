@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Set;
 
 /**
+ * 负责管理和提供外部资源信息的驱动程序。
+ *
  * Driver which takes the responsibility to manage and provide the information of external resource.
  *
  * <p>Drivers that should be instantiated via a {@link ExternalResourceDriverFactory}.

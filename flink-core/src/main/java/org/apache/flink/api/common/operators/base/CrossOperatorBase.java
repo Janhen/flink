@@ -40,6 +40,7 @@ public class CrossOperatorBase<IN1, IN2, OUT, FT extends CrossFunction<IN1, IN2,
         extends DualInputOperator<IN1, IN2, OUT, FT> {
 
     /** The cross hint tells the system which sizes to expect from the data sets */
+    // 交叉提示告诉系统期望数据集的大小
     @Public
     public static enum CrossHint {
         OPTIMIZER_CHOOSES,

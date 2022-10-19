@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Public;
 import java.io.IOException;
 
 /**
+ * 这个接口可以由 {@link OutputFormat} 实现，让主控全局完成它们。
+ *
  * This interface may be implemented by {@link OutputFormat}s to have the master finalize them
  * globally.
  */
@@ -30,6 +32,8 @@ import java.io.IOException;
 public interface FinalizeOnMaster {
 
     /**
+     * 在 OutputFormat 的所有（并行）实例完成后，在主 (JobManager) 上调用该方法。
+     *
      * The method is invoked on the master (JobManager) after all (parallel) instances of an
      * OutputFormat finished.
      *

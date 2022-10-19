@@ -25,6 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * 水印是数据流中的进度指示器。水印表示在水印之后不会发生时间戳小于或等于水印时间的事件。带有时间戳<i>T<i> 的水印表明
+ * 流的事件时间已经进展到时间<i>T<i>。
+ *
+ * <p>水印在源头创建并通过流和操作符传播。
+ *
+ * <p>在某些情况下，水印只是一种启发式方法，这意味着某些时间戳较低的事件可能仍会跟随。在这种情况下，由 operator 的逻辑决定
+ * 如何处理“迟到的事件”。例如，操作员可以忽略这些迟到的事件，将它们路由到不同的流，或者将更新发送到它们之前发出的结果。
+ *
  * Watermarks are the progress indicators in the data streams. A watermark signifies that no events
  * with a timestamp smaller or equal to the watermark's time will occur after the water. A watermark
  * with timestamp <i>T</i> indicates that the stream's event time has progressed to time <i>T</i>.
@@ -48,6 +56,7 @@ public final class Watermark implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** Thread local formatter for stringifying the timestamps. */
+    // 用于字符串化时间戳的线程本地格式化程序。
     private static final ThreadLocal<SimpleDateFormat> TS_FORMATTER =
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
 
@@ -72,6 +81,8 @@ public final class Watermark implements Serializable {
     }
 
     /**
+     * 格式化此水印的时间戳，假设它是毫秒时间戳。返回的格式为 “yyyy-MM-dd HH:mm:ss.SSS”。
+     *
      * Formats the timestamp of this watermark, assuming it is a millisecond timestamp. The returned
      * format is "yyyy-MM-dd HH:mm:ss.SSS".
      */

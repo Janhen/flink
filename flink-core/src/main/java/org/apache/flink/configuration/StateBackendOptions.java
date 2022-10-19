@@ -62,6 +62,7 @@ public class StateBackendOptions {
                                     .text("Recognized shortcut names are 'hashmap' and 'rocksdb'.")
                                     .build());
 
+    // 是否跟踪键控状态操作的延迟，例如值状态 putgetclear。
     @Documentation.Section(Documentation.Sections.STATE_BACKEND_LATENCY_TRACKING)
     public static final ConfigOption<Boolean> LATENCY_TRACK_ENABLED =
             ConfigOptions.key("state.backend.latency-track.keyed-state-enabled")
@@ -70,6 +71,8 @@ public class StateBackendOptions {
                     .withDescription(
                             "Whether to track latency of keyed state operations, e.g value state put/get/clear.");
 
+    // 启用 ? 后延迟跟踪的采样间隔。
+    // 默认值为 100，这意味着将跟踪每 100 个访问请求的延迟。
     @Documentation.Section(Documentation.Sections.STATE_BACKEND_LATENCY_TRACKING)
     public static final ConfigOption<Integer> LATENCY_TRACK_SAMPLE_INTERVAL =
             ConfigOptions.key("state.backend.latency-track.sample-interval")
@@ -81,6 +84,7 @@ public class StateBackendOptions {
                                             + "The default value is 100, which means we would track the latency every 100 access requests.",
                                     LATENCY_TRACK_ENABLED.key()));
 
+    // 定义在每个状态访问操作中要维护的测量延迟数
     @Documentation.Section(Documentation.Sections.STATE_BACKEND_LATENCY_TRACKING)
     public static final ConfigOption<Integer> LATENCY_TRACK_HISTORY_SIZE =
             ConfigOptions.key("state.backend.latency-track.history-size")
@@ -89,6 +93,7 @@ public class StateBackendOptions {
                     .withDescription(
                             "Defines the number of measured latencies to maintain at each state access operation.");
 
+    // 如果跟踪延迟，是否将状态名称公开为变量
     @Documentation.Section(Documentation.Sections.STATE_BACKEND_LATENCY_TRACKING)
     public static final ConfigOption<Boolean> LATENCY_TRACK_STATE_NAME_AS_VARIABLE =
             ConfigOptions.key("state.backend.latency-track.state-name-as-variable")

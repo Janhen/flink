@@ -21,6 +21,9 @@ package org.apache.flink.core.fs;
 import org.apache.flink.annotation.Public;
 
 /**
+ * {@code locatedFileStatus} 是一个 {@link FileStatus}，它还直接包含文件的位置信息。该信息可通过
+ * {@link #getBlockLocations()} ()} 方法访问。
+ *
  * A {@code LocatedFileStatus} is a {@link FileStatus} that contains additionally the location
  * information of the file directly. The information is accessible through the {@link
  * #getBlockLocations()} ()} method.

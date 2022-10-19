@@ -174,7 +174,7 @@ public class ConfigOptions {
          * @param <T> The type of the default value.
          * @return The config option with the default value.
          * @deprecated define the type explicitly first with one of the intType(), stringType(),
-         *     etc.
+         *     etc.  首先用intType()、stringType()等方法中的一个显式地定义类型。
          */
         @Deprecated
         public <T> ConfigOption<T> defaultValue(T value) {

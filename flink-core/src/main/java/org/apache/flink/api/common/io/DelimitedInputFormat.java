@@ -41,6 +41,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * 将分隔符处的输入拆分为记录的输入格式的基本实现。将记录字节解析为记录必须在
+ * {@link #readRecord(Object, byte[], int, int)} 方法中实现。
+ *
+ * <p>默认分隔符是换行符 {@code '\n'}。
+ *
  * Base implementation for input formats that split the input at a delimiter into records. The
  * parsing of the record bytes into the record has to be implemented in the {@link
  * #readRecord(Object, byte[], int, int)} method.

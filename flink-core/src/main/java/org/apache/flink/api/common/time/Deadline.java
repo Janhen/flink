@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeoutException;
 
 /** This class stores a deadline, as obtained via {@link #now()} or from {@link #plus(Duration)}. */
+// 此类存储截止日期，通过 {@link #now()} 或 {@link #plus(Duration)} 获得。
 @Internal
 public class Deadline {
 
@@ -46,6 +47,8 @@ public class Deadline {
     }
 
     /**
+     * 返回截止日期和现在之间的剩余时间。如果截止日期已过，则结果是负的。
+     *
      * Returns the time left between the deadline and now. The result is negative if the deadline
      * has passed.
      */
@@ -73,6 +76,7 @@ public class Deadline {
     }
 
     /** Determines whether the deadline is in the past, i.e. whether the time left is negative. */
+    // 确定最后期限是否在过去，即剩余时间是否为负数。
     public boolean isOverdue() {
         return timeNanos < clock.relativeTimeNanos();
     }

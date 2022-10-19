@@ -27,6 +27,8 @@ package org.apache.flink.core.fs;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 表示独立于文件系统的文件的客户端信息的接口
+ *
  * Interface that represents the client side information for a file independent of the file system.
  */
 @Public

@@ -33,6 +33,7 @@ public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
     private static final long serialVersionUID = 1L;
 
     /** The config parameter which defines the fixed length of a record. */
+    //定义记录的固定长度的配置参数。
     public static final String BLOCK_SIZE_PARAMETER_KEY = "output.block_size";
 
     public static final long NATIVE_BLOCK_SIZE = Long.MIN_VALUE;
@@ -100,6 +101,9 @@ public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
     }
 
     /**
+     * 在块的末尾写入块信息。
+     * <br> 当前实现仅使用 int 而不是 long。
+     *
      * Writes a block info at the end of the blocks.<br>
      * Current implementation uses only int and not long.
      */

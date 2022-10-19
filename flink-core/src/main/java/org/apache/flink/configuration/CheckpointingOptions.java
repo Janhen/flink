@@ -23,6 +23,7 @@ import org.apache.flink.configuration.description.Description;
 import org.apache.flink.configuration.description.TextElement;
 
 /** A collection of all configuration options that relate to checkpoints and savepoints. */
+// 与检查点和保存点相关的所有配置选项的集合
 public class CheckpointingOptions {
 
     // ------------------------------------------------------------------------
@@ -30,6 +31,14 @@ public class CheckpointingOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 执行期间用于在集群内本地存储操作员状态的检查点存储。
+     *
+     * <p>可以通过快捷方式名称或 {@code StateBackendFactory} 的类名指定实现。如果指定了 StateBackendFactory
+     *   类名，则实例化工厂（通过其零参数构造函数）并调用其
+     *   {@code StateBackendFactory#createFromConfig(ReadableConfig, ClassLoader)} 方法。
+     *
+     * <p>可识别的快捷方式名称为 “hashmap” 和 “rocksdb”。
+     *
      * The checkpoint storage used to store operator state locally within the cluster during
      * execution.
      *
@@ -67,6 +76,12 @@ public class CheckpointingOptions {
                                     .build());
 
     /**
+     * 检查点存储用于检查点状态以进行恢复。
+     *
+     * ...
+     *
+     * <p>公认的快捷方式名称是 “jobmanager” 和 “filesystem”。
+     *
      * The checkpoint storage used to checkpoint state for recovery.
      *
      * <p>The implementation can be specified either via their shortcut name, or via the class name
@@ -101,6 +116,7 @@ public class CheckpointingOptions {
                                     .build());
 
     /** Whether to enable state change log. */
+    // 是否启用状态更改日志。
     @Documentation.Section(value = Documentation.Sections.COMMON_STATE_BACKENDS)
     @Documentation.ExcludeFromDocumentation("Hidden for now")
     public static final ConfigOption<Boolean> ENABLE_STATE_CHANGE_LOG =
@@ -111,6 +127,7 @@ public class CheckpointingOptions {
                             "Whether to enable state backend to write state changes to StateChangelog.");
 
     /** The maximum number of completed checkpoints to retain. */
+    // 要保留的已完成检查点的最大数量。
     @Documentation.Section(Documentation.Sections.COMMON_STATE_BACKENDS)
     public static final ConfigOption<Integer> MAX_RETAINED_CHECKPOINTS =
             ConfigOptions.key("state.checkpoints.num-retained")
@@ -126,6 +143,12 @@ public class CheckpointingOptions {
                     .withDescription("Deprecated option. All state snapshots are asynchronous.");
 
     /**
+     * 如果可能，选择状态后端是否应创建增量检查点。对于增量检查点，仅存储与前一个检查点的差异，而不是完整的检查点状态。
+     *
+     * <p>启用后，Web UI 中显示的状态大小或从 REST API 获取的状态大小仅表示增量检查点大小，而不是完整检查点大小。
+     *
+     * <p>某些状态后端可能不支持增量检查点并忽略此选项。
+     *
      * Option whether the state backend should create incremental checkpoints, if possible. For an
      * incremental checkpoint, only a diff from the previous checkpoint is stored, rather than the
      * complete checkpoint state.
@@ -147,6 +170,11 @@ public class CheckpointingOptions {
                                     + " Some state backends may not support incremental checkpoints and ignore this option.");
 
     /**
+     * 此选项为此状态后端配置本地恢复。默认情况下，本地恢复处于禁用状态。
+     *
+     * <p>本地恢复目前仅涵盖键控状态后端。目前 MemoryStateBackend 和 HashMapStateBackend 不支持本地恢复，
+     *   忽略该选项。
+     *
      * This option configures local recovery for this state backend. By default, local recovery is
      * deactivated.
      *
@@ -183,6 +211,8 @@ public class CheckpointingOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 保存点的默认目录。由将保存点写入文件系统的状态后端（HashMapStateBackend、EmbeddedRocksDBStateBackend）使用。
+     *
      * The default directory for savepoints. Used by the state backends that write savepoints to
      * file systems (HashMapStateBackend, EmbeddedRocksDBStateBackend).
      */
@@ -196,6 +226,9 @@ public class CheckpointingOptions {
                                     + " file systems (HashMapStateBackend, EmbeddedRocksDBStateBackend).");
 
     /**
+     * Flink 支持的文件系统中用于存储检查点的数据文件和元数据的默认目录。存储路径必须可以从所有参与的进程节点（即所有
+     * TaskManager 和 JobManager）访问。
+     *
      * The default directory used for storing the data files and meta data of checkpoints in a Flink
      * supported filesystem. The storage path must be accessible from all participating
      * processes/nodes(i.e. all TaskManagers and JobManagers).
@@ -212,6 +245,8 @@ public class CheckpointingOptions {
                                     + "(i.e. all TaskManagers and JobManagers).");
 
     /**
+     * 状态数据文件的最小大小。所有小于该值的状态块都内联存储在根检查点元数据文件中。
+     *
      * The minimum size of state data files. All state chunks smaller than that are stored inline in
      * the root checkpoint metadata file.
      */
@@ -226,6 +261,8 @@ public class CheckpointingOptions {
                     .withDeprecatedKeys("state.backend.fs.memory-threshold");
 
     /**
+     * 写入文件系统的检查点流的写入缓冲区的默认大小。
+     *
      * The default size of the write buffer for the checkpoint streams that write to file systems.
      */
     @Documentation.Section(Documentation.Sections.EXPERT_STATE_BACKENDS)

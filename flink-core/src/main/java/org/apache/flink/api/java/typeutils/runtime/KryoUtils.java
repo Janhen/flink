@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /** Convenience methods for Kryo */
+// Kryo 的便捷方法
 @Internal
 public class KryoUtils {
 

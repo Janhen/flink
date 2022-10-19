@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Container for the semantic properties associated to a dual input operator. */
+// 与双输入运算符关联的语义属性的容器。
 @Internal
 public class DualInputSemanticProperties implements SemanticProperties {
     private static final long serialVersionUID = 1L;

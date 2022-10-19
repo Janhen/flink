@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * 存档作业时创建的可序列化类。它可以用来在web界面上显示作业信息，而不必在作业完成后保留类加载器。
+ * 存档作业时创建的可序列化类。它可以用来在 web 界面上显示作业信息，而不必在作业完成后保留类加载器。
  *
  * Serializable class which is created when archiving the job. It can be used to display job
  * information on the web interface without having to keep the classloader around after job
@@ -40,9 +40,12 @@ public class ArchivedExecutionConfig implements Serializable {
     private final String restartStrategyDescription;
     private final int parallelism;
     private final int maxParallelism;
+    // J: 是否开启对象复用
     private final boolean objectReuseEnabled;
+    // J: 全局参数配置
     private final Map<String, String> globalJobParameters;
 
+    // J: 由执行配置提取归档的配置
     public ArchivedExecutionConfig(ExecutionConfig ec) {
         executionMode = ec.getExecutionMode().name();
         if (ec.getRestartStrategy() != null) {

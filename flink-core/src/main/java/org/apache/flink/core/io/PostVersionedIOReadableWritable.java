@@ -30,6 +30,9 @@ import java.io.PushbackInputStream;
 import java.util.Arrays;
 
 /**
+ * {@link VersionedIOReadableWritable} 允许区分以前的数据是否使用 {@link VersionedIOReadableWritable}
+ * 进行版本控制。如果先前写入的数据没有版本化，并且要迁移到版本化格式，则可以使用此功能。
+ *
  * A {@link VersionedIOReadableWritable} which allows to differentiate whether the previous data was
  * versioned with a {@link VersionedIOReadableWritable}. This can be used if previously written data
  * was not versioned, and is to be migrated to a versioned format.

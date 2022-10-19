@@ -59,6 +59,7 @@ public abstract class AbstractCloseableRegistry<C extends Closeable, T> implemen
     protected final Map<Closeable, T> closeableToRef;
 
     /** Indicates if this registry is closed. */
+    // 指示此注册表是否已关闭
     @GuardedBy("lock")
     private boolean closed;
 

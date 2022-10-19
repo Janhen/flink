@@ -19,4 +19,5 @@
 package org.apache.flink.configuration.description;
 
 /** Part of description that represents a block e.g. some text, linebreak or a list. */
+// 表示块的描述的一部分，例如一些文本、换行符或列表。
 public interface BlockElement extends DescriptionElement {}

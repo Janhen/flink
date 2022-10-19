@@ -23,6 +23,7 @@ import java.io.PrintStream;
 import java.io.Serializable;
 
 /** Print sink output writer for DataStream and DataSet print API. */
+// 用于 DataStream 和 DataSet 打印 API 的打印接收器输出编写器。
 @Internal
 public class PrintSinkOutputWriter<IN> implements Serializable {
 
@@ -50,6 +51,7 @@ public class PrintSinkOutputWriter<IN> implements Serializable {
     }
 
     public void open(int subtaskIndex, int numParallelSubtasks) {
+        // J: 初始化必要的前缀
         // get the target stream
         stream = target == STD_OUT ? System.out : System.err;
 

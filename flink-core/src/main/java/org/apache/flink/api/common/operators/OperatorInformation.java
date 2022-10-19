@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /**
+ * 用于保存有关运算符的信息的类，例如 inputoutput TypeInformation。
+ *
  * A class for holding information about an operator, such as input/output TypeInformation.
  *
  * @param <OUT> Output type of the records output by the operator described by this information

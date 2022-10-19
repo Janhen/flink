@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 /**
- * UDf操作符可以有一个包含用户代码的类或对象，这是访问它们的通用接口。
+ * UDf 操作符可以有一个包含用户代码的类或对象，这是访问它们的通用接口。
  *
  * UDf operators can have either a class or an object containing the user code, this is the common
  * interface to access them.

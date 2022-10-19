@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 用于处理{@link Row}实例的实用程序。
+ * 用于处理 {@link Row} 实例的实用程序。
  *
  * <p>这个类的存在是为了使{@link Row}类本身保持 slim
  *
@@ -57,7 +57,7 @@ public final class RowUtils {
     }
 
     /**
-     * 比较{@link Row}的两个{@link List}是否深度相等。此方法支持表生态系统的所有转换类。顶级列表可以按顺序比较，
+     * 比较 {@link Row} 的两个 {@link List} 是否深度相等。此方法支持表生态系统的所有转换类。顶级列表可以按顺序比较，
      * 也可以不按顺序比较。
      *
      * Compares two {@link List}s of {@link Row} for deep equality. This method supports all

@@ -40,11 +40,22 @@ import java.util.function.Function;
 import static org.apache.flink.core.memory.MemoryUtils.getByteBufferAddress;
 
 /**
- * 这个类表示由Flink管理的一块内存。
+ * 表示由 Flink 管理的一块内存
  *
  * <p>内存可以是堆上、堆外直接或堆外不安全的。这是由这个类透明处理的。
  *
- * <p>这个类在概念上实现了类似于 Java 的 {@link java.nio.ByteBuffer} 的目的。我们添加这个专业类是出于各种原因:
+ * <p>在概念上实现了类似于 Java 的 {@link java.nio.ByteBuffer} 的目的。添加这个专业类是出于各种原因:
+ *
+ *   <li>它提供了额外的二进制比较、交换和复制方法。
+ *   <li>它使用折叠检查进行范围检查和内存段处理
+ *   <li>为批量 put/get 方法提供绝对定位方法，以保证线程安全使用
+ *   <li>提供显式的大端小端访问方法，而不是在内部跟踪字节顺序
+ *   <li>透明且有效地在堆上和堆外变体之间移动数据
+ *
+ * <p><i>对实现的评论<i>：我们大量使用本地指令支持的操作，以实现高效率。多字节类型（int、long、float、double、...）
+ *   使用“不安全”的本机命令进行读写。
+ *
+ * <p><i>效率注意事项<i>：为了获得最佳效率，我们不会将不同内存类型的实现与继承分开，以避免在调用抽象方法时寻找具体实现的开销。
  *
  * This class represents a piece of memory managed by Flink.
  *
@@ -79,6 +90,7 @@ public final class MemorySegment {
     public static final String CHECK_MULTIPLE_FREE_PROPERTY =
             "flink.tests.check-segment-multiple-free";
 
+    // J: 系统变量作为静态参数
     private static final boolean checkMultipleFree =
             System.getProperties().containsKey(CHECK_MULTIPLE_FREE_PROPERTY);
 
@@ -87,10 +99,13 @@ public final class MemorySegment {
     private static final sun.misc.Unsafe UNSAFE = MemoryUtils.UNSAFE;
 
     /** The beginning of the byte array contents, relative to the byte array object. */
+    // 字节数组内容的开始，相对于字节数组对象
     @SuppressWarnings("restriction")
     private static final long BYTE_ARRAY_BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
 
     /**
+     * 标志字节顺序的常量。因为这是一个布尔常量，JIT 编译器可以很好地利用它来积极地消除不适用的代码路径
+     *
      * Constant that flags the byte order. Because this is a boolean constant, the JIT compiler can
      * use this well to aggressively eliminate the non-applicable code paths.
      */
@@ -100,6 +115,11 @@ public final class MemorySegment {
     // ------------------------------------------------------------------------
 
     /**
+     * 相对于我们访问内存的堆字节数组对象
+     *
+     * <p>如果内存在堆上，则为非<tt>null<tt>，如果内存不在堆上，则为<tt>null<tt>。如果我们有这个缓冲区，我们
+     *   绝不能取消这个引用，否则内存段将指向堆外未定义的地址，并且可能在乱序执行的情况下导致分段错误。
+     *
      * The heap byte array object relative to which we access the memory.
      *
      * <p>Is non-<tt>null</tt> if the memory is on the heap, and is <tt>null</tt>, if the memory is
@@ -110,18 +130,24 @@ public final class MemorySegment {
     @Nullable private final byte[] heapMemory;
 
     /**
+     * 包装堆外内存的直接字节缓冲区。该内存段持有对该缓冲区的引用，因此只要该内存段存在，内存就不会被释放。
+     *
      * The direct byte buffer that wraps the off-heap memory. This memory segment holds a reference
      * to that buffer, so as long as this memory segment lives, the memory will not be released.
      */
     @Nullable private ByteBuffer offHeapBuffer;
 
     /**
+     * 数据的地址，相对于堆内存字节数组。如果堆内存字节数组为<tt>null<tt>，则这成为堆外的绝对内存地址。
+     *
      * The address to the data, relative to the heap memory byte array. If the heap memory byte
      * array is <tt>null</tt>, this becomes an absolute memory address outside the heap.
      */
     private long address;
 
     /**
+     * 最后一个可寻址字节之后的一个字节的地址，即 <tt>address + size<tt> 而该段未被处理。
+     *
      * The address one byte after the last addressable byte, i.e. <tt>address + size</tt> while the
      * segment is not disposed.
      */
@@ -131,11 +157,15 @@ public final class MemorySegment {
     private final int size;
 
     /** Optional owner of the memory segment. */
+    // 内存段的可选所有者
     @Nullable private final Object owner;
 
     @Nullable private Runnable cleaner;
 
     /**
+     * 当底层内存不安全时，不允许包装。不安全的内存可以主动释放，无需引用计数。因此，从可能不知道内存释放的包装缓冲区
+     * 访问可能是有风险的。
+     *
      * Wrapping is not allowed when the underlying memory is unsafe. Unsafe memory can be actively
      * released, without reference counting. Therefore, access from wrapped buffers, which may not
      * be aware of the releasing of memory, could be risky.
@@ -145,6 +175,12 @@ public final class MemorySegment {
     private final AtomicBoolean isFreedAtomic;
 
     /**
+     * 创建一个表示字节数组内存的新内存段
+     *
+     * <p>由于字节数组由堆上内存支持，因此该内存段将其数据保存在堆上。缓冲区的大小必须至少为 8 个字节
+     *
+     * <p>内存段引用给定的所有者
+     *
      * Creates a new memory segment that represents the memory of the byte array.
      *
      * <p>Since the byte array is backed by on-heap memory, this memory segment holds its data on
@@ -237,6 +273,11 @@ public final class MemorySegment {
     }
 
     /**
+     * 释放此内存段
+     *
+     * <p>调用此操作后，无法对内存段进行进一步的操作，并且将失败。实际内存（堆或堆外）只有在此内存段对象已被垃圾回收后
+     *   才会被释放。
+     *
      * Frees this memory segment.
      *
      * <p>After this operation has been called, no further operations are possible on the memory
@@ -262,6 +303,8 @@ public final class MemorySegment {
     }
 
     /**
+     * 检查此内存段是否由堆外内存支持
+     *
      * Checks whether this memory segment is backed by off-heap memory.
      *
      * @return <tt>true</tt>, if the memory segment is backed by off-heap memory, <tt>false</tt> if
@@ -272,6 +315,8 @@ public final class MemorySegment {
     }
 
     /**
+     * 返回堆上内存段的字节数组
+     *
      * Returns the byte array of on-heap memory segments.
      *
      * @return underlying byte array
@@ -463,6 +508,8 @@ public final class MemorySegment {
     }
 
     /**
+     * 批量放置方法。将从源内存偏移位置开始的长度内存复制到从指定索引开始的内存段中。
+     *
      * Bulk put method. Copies length memory starting at position offset from the source memory into
      * the memory segment starting at the specified index.
      *
@@ -700,6 +747,7 @@ public final class MemorySegment {
      */
     public short getShortBigEndian(int index) {
         if (LITTLE_ENDIAN) {
+            // Short 根据字节...
             return Short.reverseBytes(getShort(index));
         } else {
             return getShort(index);
@@ -1550,6 +1598,8 @@ public final class MemorySegment {
     }
 
     /**
+     * 使用给定的辅助缓冲区在两个内存段之间交换字节
+     *
      * Swaps bytes between two memory segments, using the given auxiliary buffer.
      *
      * @param tempBuffer The auxiliary buffer in which to put data during triangle swap.
@@ -1633,6 +1683,11 @@ public final class MemorySegment {
     }
 
     /**
+     * 在代表整个段的 {@link ByteBuffer} 上应用给定的处理函数
+     *
+     * <p>注意：传入进程函数的{@link ByteBuffer}是临时的，处理后可能会失效。因此，进程函数不应尝试保留对
+     *   {@link ByteBuffer} 的任何引用。
+     *
      * Applies the given process function on a {@link ByteBuffer} that represents this entire
      * segment.
      *
@@ -1648,6 +1703,8 @@ public final class MemorySegment {
     }
 
     /**
+     * 提供一个 {@link ByteBuffer} 代表给定进程消费者的整个段
+     *
      * Supplies a {@link ByteBuffer} that represents this entire segment to the given process
      * consumer.
      *

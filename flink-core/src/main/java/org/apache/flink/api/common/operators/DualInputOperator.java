@@ -28,7 +28,7 @@ import org.apache.flink.util.Visitor;
 import java.util.List;
 
 /**
- * 对于所有具有两个输入的操作符的抽象操作符超类，如“Join”、“CoGroup”或“Cross”。
+ * 对于所有具有两个输入的操作符的抽象操作符超类，如 “Join”、“CoGroup” 或 “Cross”。
  *
  * Abstract operator superclass for all operators that have two inputs, like "Join", "CoGroup", or
  * "Cross".
@@ -49,12 +49,14 @@ public abstract class DualInputOperator<IN1, IN2, OUT, FT extends Function>
     protected Operator<IN2> input2;
 
     /** The positions of the keys in the tuples of the first input. */
+    // 第一个输入的元组中键的位置。
     private final int[] keyFields1;
 
     /** The positions of the keys in the tuples of the second input. */
     private final int[] keyFields2;
 
     /** Semantic properties of the associated function. */
+    // 相关函数的语义属性。
     private DualInputSemanticProperties semanticProperties = new DualInputSemanticProperties();
 
     // --------------------------------------------------------------------------------------------

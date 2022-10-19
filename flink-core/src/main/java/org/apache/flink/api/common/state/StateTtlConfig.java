@@ -39,6 +39,13 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 状态 TTL 逻辑的配置。
+ *
+ * <p>注意：只有当用户值序列化程序可以处理 {@code null} 值时，具有 TTL 的映射状态当前才支持 {@code null} 用户值。
+ *   如果序列化程序不支持 {@code null} 值，则可以用
+ *   {@link org.apache.flink.api.java.typeutils.runtime.NullableSerializer} 包装它，但需要在序列化形式
+ *   中增加一个字节。
+ *
  * Configuration of state TTL logic.
  *
  * <p>Note: The map state with TTL currently supports {@code null} user values only if the user
@@ -58,23 +65,30 @@ public class StateTtlConfig implements Serializable {
                     .build();
 
     /**
+     * 此选项值配置何时更新延长状态 TTL 的上次访问时间戳。
+     *
      * This option value configures when to update last access timestamp which prolongs state TTL.
      */
     public enum UpdateType {
         /** TTL is disabled. State does not expire. */
         Disabled,
         /**
+         * 上次访问时间戳在每次写入操作创建和更新状态时初始化。
+         *
          * Last access timestamp is initialised when state is created and updated on every write
          * operation.
          */
         OnCreateAndWrite,
         /** The same as <code>OnCreateAndWrite</code> but also updated on read. */
+        // 与 <code>OnCreateAndWrite<code> 相同，但在读取时也会更新。
         OnReadAndWrite
     }
 
     /** This option configures whether expired user value can be returned or not. */
+    // 该选项配置是否可以返回过期的用户值。
     public enum StateVisibility {
         /** Return expired user value if it is not cleaned up yet. */
+        //如果尚未清理，则返回过期的用户值。
         ReturnExpiredIfNotCleanedUp,
         /** Never return expired user value. */
         NeverReturnExpired
@@ -334,6 +348,11 @@ public class StateTtlConfig implements Serializable {
     }
 
     /**
+     * TTL 清理策略。
+     *
+     * <p>此类配置何时使用 TTL 清除过期状态。默认情况下，如果发现已过期，则始终在显式读取访问时清除状态。目前可以
+     *   另外激活状态完整快照的清理。
+     *
      * TTL cleanup strategies.
      *
      * <p>This class configures when to cleanup expired state with TTL. By default, state is always
@@ -399,6 +418,7 @@ public class StateTtlConfig implements Serializable {
     }
 
     /** Configuration of cleanup strategy while taking the full snapshot. */
+    // 拍摄完整快照时配置清理策略。
     public static class IncrementalCleanupStrategy implements CleanupStrategies.CleanupStrategy {
         private static final long serialVersionUID = 3109278696501988780L;
 
@@ -429,6 +449,7 @@ public class StateTtlConfig implements Serializable {
     }
 
     /** Configuration of cleanup strategy using custom compaction filter in RocksDB. */
+    // 在 RocksDB 中使用自定义压缩过滤器配置清理策略。
     public static class RocksdbCompactFilterCleanupStrategy
             implements CleanupStrategies.CleanupStrategy {
         private static final long serialVersionUID = 3109278796506988980L;

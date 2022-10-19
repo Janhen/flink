@@ -39,6 +39,18 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用 UDF 描述算子的不同资源因素。
+ *
+ * <p>Resource 在生成作业图时为链式运算符提供了{@link #merge(ResourceSpec)} 方法。
+ *
+ * <p>Resource 提供了 {@link #lessThanOrEqual(ResourceSpec)} 方法来依次比较这些字段：
+ *
+ *   <li>CPU 内核
+ *   <li>任务堆内存
+ *   <li>任务堆外内存
+ *   <li>托管内存
+ *   <li>扩展资源
+ *
  * Describe the different resource factors of the operator with UDF.
  *
  * <p>Resource provides {@link #merge(ResourceSpec)} method for chained operators when generating
@@ -87,6 +99,7 @@ public final class ResourceSpec implements Serializable {
     @Nullable // can be null only for UNKNOWN
     private final MemorySize managedMemory;
 
+    // J: 扩展的资源  外部资源
     private final Map<String, ExternalResource> extendedResources;
 
     private ResourceSpec(
@@ -119,6 +132,8 @@ public final class ResourceSpec implements Serializable {
     }
 
     /**
+     * 系统内部用于在生成作业图时合并链式运算符的其他资源。
+     *
      * Used by system internally to merge the other resources of chained operators when generating
      * the job graph.
      *
@@ -151,6 +166,8 @@ public final class ResourceSpec implements Serializable {
     }
 
     /**
+     * 从此资源规格中减去另一个资源规格。
+     *
      * Subtracts another resource spec from this one.
      *
      * @param other The other resource spec to subtract.
@@ -218,6 +235,8 @@ public final class ResourceSpec implements Serializable {
     }
 
     /**
+     * 通过比较资源中的所有字段来检查当前资源是否小于或等于其他资源。
+     *
      * Checks the current resource less than or equal with the other resource by comparing all the
      * fields in the resource.
      *
@@ -321,6 +340,7 @@ public final class ResourceSpec implements Serializable {
     //  builder
     // ------------------------------------------------------------------------
 
+    // 静态方法初始化基础参数
     public static Builder newBuilder(double cpuCores, int taskHeapMemoryMB) {
         return new Builder(new CPUResource(cpuCores), MemorySize.ofMebiBytes(taskHeapMemoryMB));
     }
@@ -375,6 +395,8 @@ public final class ResourceSpec implements Serializable {
         }
 
         /**
+         * 添加给定的扩展资源。如果存在，将替换具有相同资源名称的旧值。
+         *
          * Add the given extended resource. The old value with the same resource name will be
          * replaced if present.
          */
@@ -384,10 +406,13 @@ public final class ResourceSpec implements Serializable {
         }
 
         /**
+         * 添加给定的扩展资源。这将丢弃所有先前添加的扩展资源。
+         *
          * Add the given extended resources. This will discard all the previous added extended
          * resources.
          */
         public Builder setExtendedResources(Collection<ExternalResource> extendedResources) {
+            // Collect -> Map        ExternalResource 的 Name 作为 Map 标识
             this.extendedResources =
                     extendedResources.stream()
                             .collect(

@@ -46,6 +46,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * combineGroup 转换的基本运算符。它接收 UDF GroupCombineFunction 作为输入。该类稍后由编译器处理以生成计划。
+ *
  * Base operator for the combineGroup transformation. It receives the UDF GroupCombineFunction as an
  * input. This class is later processed by the compiler to generate the plan.
  *

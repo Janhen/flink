@@ -38,6 +38,7 @@ public class Ordering implements Cloneable {
     protected final ArrayList<Class<? extends Comparable<?>>> types =
             new ArrayList<Class<? extends Comparable<?>>>();
 
+    // J: 一组字段排序记录
     protected final ArrayList<Order> orders = new ArrayList<Order>();
 
     // --------------------------------------------------------------------------------------------
@@ -55,7 +56,7 @@ public class Ordering implements Cloneable {
     }
 
     /**
-     * 通过附加一个额外的订单要求来扩展此订单。如果索引之前已经添加，则返回未修改的order。
+     * 通过附加一个额外的订单要求来扩展此订单。如果索引之前已经添加，则返回未修改的 order。
      *
      * Extends this ordering by appending an additional order requirement. If the index has been
      * previously appended then the unmodified Ordering is returned.

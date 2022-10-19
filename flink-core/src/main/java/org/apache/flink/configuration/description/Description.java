@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * {@link org.apache.flink.configuration.ConfigOption} 的描述。允许提供多种丰富的格式。
+ *
  * Description for {@link org.apache.flink.configuration.ConfigOption}. Allows providing multiple
  * rich formats.
  */

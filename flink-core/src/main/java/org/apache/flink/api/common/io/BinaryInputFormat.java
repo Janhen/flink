@@ -43,6 +43,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 使用固定大小块的所有输入格式的基类。输入拆分与这些块对齐，这意味着每个拆分将由一个块组成。如果没有配置，这些块大小
+ * 等于 HDFS 的本机块大小。
+ *
+ * <p>一个块将在块的末尾包含一个 {@link BlockInfo}。在那里，可以找到有关当前正在读取的拆分的一些统计信息，
+ *   这将有助于正确解析块的内容。
+ *
  * Base class for all input formats that use blocks of fixed size. The input splits are aligned to
  * these blocks, meaning that each split will consist of one block. Without configuration, these
  * block sizes equal the native block sizes of the HDFS.
@@ -71,6 +77,7 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
     private transient DataInputViewStreamWrapper dataInputStream;
 
     /** The BlockInfo for the Block corresponding to the split currently being read. */
+    // 与当前正在读取的拆分相对应的 Block 的 BlockInfo。
     private transient BlockInfo blockInfo;
 
     /** A wrapper around the block currently being read. */

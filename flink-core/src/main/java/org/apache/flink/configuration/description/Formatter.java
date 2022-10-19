@@ -21,6 +21,8 @@ package org.apache.flink.configuration.description;
 import java.util.EnumSet;
 
 /**
+ * 允许为描述提供多个格式化程序。例如。 Html 格式化程序，Markdown 格式化程序等。
+ *
  * Allows providing multiple formatters for the description. E.g. Html formatter, Markdown formatter
  * etc.
  */

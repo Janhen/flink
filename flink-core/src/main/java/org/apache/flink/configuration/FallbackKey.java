@@ -19,6 +19,7 @@
 package org.apache.flink.configuration;
 
 /** A key with FallbackKeys will fall back to the FallbackKeys if it itself is not configured. */
+// 如果其本身未配置，则具有 FallbackKeys 的密钥将回退到 FallbackKeys
 public class FallbackKey {
 
     // -------------------------

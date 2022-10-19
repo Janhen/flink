@@ -37,9 +37,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * DeltaIteration类似于{@link BulkIterationBase}，但在各个迭代步骤中维护状态。该状态称为<i>解决方案集<i>，可以
- * 通过{@link #getSolutionSet()}获得，并通过与它连接(或CoGrouping)来访问。解决方案集通过产生一个增量来更新，这个
+ * DeltaIteration 类似于 {@link BulkIterationBase}，但在各个迭代步骤中维护状态。该状态称为<i>解决方案集<i>，可以
+ * 通过 {@link #getSolutionSet()} 获得，并通过与它连接(或 CoGrouping)来访问。解决方案集通过产生一个增量来更新，这个
  * 增量在每个迭代步骤结束时合并到解决方案集中。
+ *
+ * <p>必须通过为解决方案集 ({@link #setSolutionSetDelta(org.apache.flink.api.common.operators.Operator)})
+ *   和新工作集（将反馈，{@link #setNextWorkset(org.apache.flink.api.common.operators.Operator)})。
+ *   DeltaIteration 本身代表迭代终止后的结果。当反馈数据集（工作集）为空时，增量迭代终止。此外，最大步数作为后备
+ *   终止保护给出。
+ *
+ * <p>解决方案集中的元素由一个键唯一标识。合并解决方案集 delta 时，将替换具有相同键的包含元素。
+ *
+ * <p>这个类是 {@code DualInputOperator} 的子类。解决方案集被视为第一个输入，工作集被视为第二个输入。
  *
  * A DeltaIteration is similar to a {@link BulkIterationBase}, but maintains state across the
  * individual iteration steps. The state is called the <i>solution set</i>, can be obtained via

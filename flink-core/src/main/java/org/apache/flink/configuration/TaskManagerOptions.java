@@ -324,6 +324,8 @@ public class TaskManagerOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 此配置选项描述任务执行器的 cpu 核心数。对于 Yarn Mesos Kubernetes，它用于为任务执行器启动容器。
+     *
      * This config option describes number of cpu cores of task executors. In case of Yarn / Mesos /
      * Kubernetes, it is used to launch a container for the task executor.
      *

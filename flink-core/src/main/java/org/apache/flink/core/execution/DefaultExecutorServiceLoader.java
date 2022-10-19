@@ -35,6 +35,9 @@ import java.util.stream.StreamSupport;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link PipelineExecutorServiceLoader} 的默认实现。此实现使用 Java 服务发现来查找可用的
+ * {@link PipelineExecutorFactory 执行器工厂}
+ *
  * The default implementation of the {@link PipelineExecutorServiceLoader}. This implementation uses
  * Java service discovery to find the available {@link PipelineExecutorFactory executor factories}.
  */
@@ -54,6 +57,7 @@ public class DefaultExecutorServiceLoader implements PipelineExecutorServiceLoad
     public PipelineExecutorFactory getExecutorFactory(final Configuration configuration) {
         checkNotNull(configuration);
 
+        // java service discovery load
         final ServiceLoader<PipelineExecutorFactory> loader =
                 ServiceLoader.load(PipelineExecutorFactory.class);
 

@@ -29,7 +29,9 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * {@code ConfigOption}描述一个配置参数。它封装了配置键、该键的旧版本和配置参数的可选默认值。
+ * {@code ConfigOption} 描述一个配置参数。封装了配置键、该键的旧版本和配置参数的可选默认值。
+ *
+ * <p>{@code ConfigOptions} 是通过 {@link ConfigOptions} 类构建的。创建后，配置选项是不可变的
  *
  * A {@code ConfigOption} describes a configuration parameter. It encapsulates the configuration
  * key, deprecated older versions of the key, and an optional default value for the configuration
@@ -53,6 +55,7 @@ public class ConfigOption<T> {
     private final String key;
 
     /** The list of deprecated keys, in the order to be checked. */
+    // 不推荐使用的键列表，按要检查的顺序排列
     private final FallbackKey[] fallbackKeys;
 
     /** The default value for this option. */
@@ -62,6 +65,8 @@ public class ConfigOption<T> {
     private final Description description;
 
     /**
+     * 此 ConfigOption 描述的值的类型
+     *
      * Type of the value that this ConfigOption describes.
      *
      * <ul>
@@ -113,6 +118,8 @@ public class ConfigOption<T> {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建一个新的配置选项，使用此选项的键和默认值，并添加给定的备用键。
+     *
      * Creates a new config option, using this option's key and default value, and adding the given
      * fallback keys.
      *
@@ -162,6 +169,8 @@ public class ConfigOption<T> {
     }
 
     /**
+     * 创建一个新的配置选项，使用此选项的键和默认值，并添加给定的描述。生成配置文档时使用给定的描述。
+     *
      * Creates a new config option, using this option's key and default value, and adding the given
      * description. The given description is used when generation the configuration documention.
      *

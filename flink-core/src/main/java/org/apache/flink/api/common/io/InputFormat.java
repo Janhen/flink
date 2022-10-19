@@ -29,6 +29,27 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 生成记录的数据源的基本接口。
+ *
+ * <p>输入格式处理以下内容：
+ *
+ *   <li>描述了如何将输入拆分为可以并行处理的拆分。
+ *   <li>描述了如何从输入拆分中读取记录。
+ *   <li>描述了如何从输入中收集基本统计信息。
+ *
+ * <p>输入格式的生命周期如下：
+ *
+ *   <li>实例化后（无参数），配置一个{@link Configuration}对象。如果格式将文件描述为输入，则从配置中读取基本字段，
+ *     例如文件路径。
+ *   <li>可选：编译器调用它以生成有关输入的基本统计信息。
+ *   <li>调用它来创建输入拆分。
+ *   <li>每个并行输入任务都会创建一个实例，对其进行配置并为特定拆分打开它。
+ *   <li>从输入中读取所有记录
+ *   <li>输入格式关闭
+ *
+ * <p>重要提示：必须编写输入格式，以便实例在关闭后可以再次打开。这是因为输入格式可能用于多个拆分。拆分完成后，将调用
+ * 格式的关闭函数，如果另一个拆分可用，则随后为下一次拆分调用打开函数。
+ *
  * The base interface for data sources that produces records.
  *
  * <p>The input format handles the following:
@@ -67,6 +88,10 @@ import java.io.Serializable;
 public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<T>, Serializable {
 
     /**
+     * 配置此输入格式。由于输入格式是通用实例化的，因此是无参数的，因此此方法是输入格式根据配置值设置其基本字段的地方。
+     *
+     * <p>总是首先在新实例化的输入格式上调用此方法。
+     *
      * Configures this input format. Since input formats are instantiated generically and hence
      * parameterless, this method is the place where the input formats set their basic fields based
      * on configuration values.
@@ -107,6 +132,10 @@ public interface InputFormat<OT, T extends InputSplit> extends InputSplitSource<
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 打开输入格式的并行实例以处理拆分。
+     *
+     * <p>当这个方法被调用时，它保证被配置的输入格式。
+     *
      * Opens a parallel instance of the input format to work on a split.
      *
      * <p>When this method is called, the input format it guaranteed to be configured.

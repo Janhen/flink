@@ -53,6 +53,7 @@ public enum JobStatus {
     CANCELED(TerminalState.GLOBALLY),
 
     /** All of the job's tasks have successfully finished. */
+    // 该作业的所有任务均已成功完成。
     FINISHED(TerminalState.GLOBALLY),
 
     /** The job is currently undergoing a reset and total restart. */
@@ -60,7 +61,7 @@ public enum JobStatus {
     RESTARTING(TerminalState.NON_TERMINAL),
 
     /**
-     * 作业已挂起，这意味着它已停止，但未从潜在的HA作业存储中删除
+     * 作业已挂起，这意味着它已停止，但未从潜在的 HA 作业存储中删除
      *
      * The job has been suspended which means that it has been stopped but not been removed from a
      * potential HA job store.

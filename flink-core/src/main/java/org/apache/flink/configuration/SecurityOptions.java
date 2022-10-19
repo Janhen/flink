@@ -129,6 +129,8 @@ public class SecurityOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 为内部（rpc、数据传输、blob 服务器）和外部 (HTTPREST) 通信启用 SSL。
+     *
      * Enable SSL for internal (rpc, data transport, blob server) and external (HTTP/REST)
      * communication.
      *
@@ -146,6 +148,7 @@ public class SecurityOptions {
                                     + "this through their own settings.");
 
     /** Enable SSL for internal communication (akka rpc, netty data transport, blob server). */
+    // 为内部通信启用 SSL（akka rpc、netty 数据传输、blob 服务器）。
     @Documentation.Section(Documentation.Sections.SECURITY_SSL)
     public static final ConfigOption<Boolean> SSL_INTERNAL_ENABLED =
             key("security.ssl.internal.enabled")
@@ -166,6 +169,7 @@ public class SecurityOptions {
                             "Turns on SSL for external communication via the REST endpoints.");
 
     /** Enable mututal SSL authentication for external REST endpoints. */
+    // 为外部 REST 端点启用相互 SSL 身份验证。
     @Documentation.Section(Documentation.Sections.SECURITY_SSL)
     public static final ConfigOption<Boolean> SSL_REST_AUTHENTICATION_ENABLED =
             key("security.ssl.rest.authentication-enabled")
@@ -176,6 +180,7 @@ public class SecurityOptions {
 
     // ----------------- certificates (internal + external) -------------------
 
+    // 包含 flink 端点密钥和证书的 Java 密钥库文件。
     /** The Java keystore file containing the flink endpoint key and certificate. */
     @Documentation.ExcludeFromDocumentation(
             "The SSL Setup encourages separate configs for internal and REST security.")
@@ -476,6 +481,7 @@ public class SecurityOptions {
                     .withDeprecatedKeys("security.ssl.session-timeout");
 
     /** SSL session timeout during handshakes. */
+    // 握手期间的 SSL 会话超时。
     @Documentation.Section(Documentation.Sections.EXPERT_SECURITY_SSL)
     public static final ConfigOption<Integer> SSL_INTERNAL_HANDSHAKE_TIMEOUT =
             key("security.ssl.internal.handshake-timeout")

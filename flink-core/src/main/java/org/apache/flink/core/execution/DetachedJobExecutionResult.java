@@ -34,6 +34,7 @@ import java.util.Map;
 @Internal
 public final class DetachedJobExecutionResult extends JobExecutionResult {
 
+    // J: 日志消息        以分离模式提交
     public static final String DETACHED_MESSAGE = "Job was submitted in detached mode. ";
 
     public static final String EAGER_FUNCTION_MESSAGE =

@@ -24,6 +24,9 @@ import org.apache.flink.api.common.functions.Function;
 import java.io.Serializable;
 
 /**
+ * {@link KeySelector} 允许使用确定性对象进行诸如 reduce、reduceGroup、join、coGroup 等操作。如果在同一个对象
+ * 上多次调用，则返回的键必须相同。
+ *
  * The {@link KeySelector} allows to use deterministic objects for operations such as reduce,
  * reduceGroup, join, coGroup, etc. If invoked multiple times on the same object, the returned key
  * must be the same.

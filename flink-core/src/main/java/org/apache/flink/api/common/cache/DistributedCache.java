@@ -41,6 +41,8 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
+ * DistributedCache 提供静态方法将注册的缓存文件写入作业配置或从作业配置中解码它们。它还提供用户对本地文件的访问权限。
+ *
  * DistributedCache provides static methods to write the registered cache files into job
  * configuration or decode them from job configuration. It also provides user access to the file
  * locally.

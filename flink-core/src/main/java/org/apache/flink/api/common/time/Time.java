@@ -27,8 +27,9 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 时间间隔的定义。类似于{@link java.time.Duration}的简单版本。注意:这个类将完全替代Flink 2.0中的
- * org.apache.flink.streaming.api.windowing.time.Time
+ * 时间间隔的定义。类似于 {@link java.time.Duration} 的简单版本。
+ *
+ * <p>注意:这个类将完全替代 Flink 2.0 中的 org.apache.flink.streaming.api.windowing.time.Time
  *
  * The definition of a time interval. Similar to a simpler version of {@link java.time.Duration}.
  *
@@ -47,6 +48,7 @@ public final class Time implements Serializable {
     private final long size;
 
     /** Instantiation only via factory method. */
+    // 仅通过工厂方法进行实例化。
     private Time(long size, TimeUnit unit) {
         this.unit = checkNotNull(unit, "time unit may not be null");
         this.size = size;
@@ -110,6 +112,8 @@ public final class Time implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 创建给定持续时间的新 {@link Time} 和 {@link TimeUnit}。
+     *
      * Creates a new {@link Time} of the given duration and {@link TimeUnit}.
      *
      * @param size The duration of time.

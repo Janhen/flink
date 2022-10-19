@@ -31,6 +31,8 @@ public class QueryableStateOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 定义可查询状态代理的服务器端口范围的配置参数。
+     *
      * The config parameter defining the server port range of the queryable state proxy.
      *
      * <p>A proxy runs on each Task Manager, so many proxies may run on the same machine.
@@ -66,6 +68,7 @@ public class QueryableStateOptions {
                     .withDeprecatedKeys("query.proxy.network-threads");
 
     /** Number of async query threads for the client proxy (0 => #slots). */
+    // 客户端代理的异步查询线程数（0 => #slots）。
     public static final ConfigOption<Integer> PROXY_ASYNC_QUERY_THREADS =
             key("queryable-state.proxy.query-threads")
                     .defaultValue(0)
@@ -117,6 +120,10 @@ public class QueryableStateOptions {
                     .withDeprecatedKeys("query.server.query-threads");
 
     /**
+     * 选项是否应在可能和可配置的情况下启用可查询状态代理和服务器。
+     *
+     * <p>可查询状态代理和服务器仍然是更多实验性功能，因此除非在用户配置中启用，否则它们将被禁用。
+     *
      * Option whether the queryable state proxy and server should be enabled where possible and
      * configurable.
      *
@@ -135,6 +142,8 @@ public class QueryableStateOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * KvState 客户端的网络（事件循环）线程数（0 => 使用可用内核数）。
+     *
      * Number of network (event loop) threads for the KvState client (0 => Use number of available
      * cores).
      */

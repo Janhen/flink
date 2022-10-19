@@ -25,6 +25,8 @@ import org.apache.flink.core.memory.DataInputView;
 import java.io.IOException;
 
 /**
+ * 通过使用常规的序列化/反序列化功能对元素进行反序列化来读取元素。
+ *
  * Reads elements by deserializing them with their regular serialization/deserialization
  * functionality.
  *

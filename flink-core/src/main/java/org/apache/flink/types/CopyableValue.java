@@ -39,6 +39,8 @@ public interface CopyableValue<T> extends Value {
     int getBinaryLength();
 
     /**
+     * 将此对象的深层复制到 {@code target} 实例中。
+     *
      * Performs a deep copy of this object into the {@code target} instance.
      *
      * @param target Object to copy into.
@@ -46,6 +48,11 @@ public interface CopyableValue<T> extends Value {
     void copyTo(T target);
 
     /**
+     * 将此对象的深拷贝执行到新实例中。
+     *
+     * <p>此方法对于通用用户定义函数在存储多个对象时克隆 {@link CopyableValue} 很有用。使用对象重用必须创建
+     * 深层副本，并且类型擦除防止调用 new。
+     *
      * Performs a deep copy of this object into a new instance.
      *
      * <p>This method is useful for generic user-defined functions to clone a {@link CopyableValue}
@@ -57,6 +64,11 @@ public interface CopyableValue<T> extends Value {
     T copy();
 
     /**
+     * 将下一个序列化实例从 {@code source} 复制到 {@code target}。
+     *
+     * <p>此方法等效于调用 {@code IOReadableWritable.read(DataInputView)} 后跟
+     * {@code IOReadableWritable.write(DataOutputView)} 但不需要中间反序列化。
+     *
      * Copies the next serialized instance from {@code source} to {@code target}.
      *
      * <p>This method is equivalent to calling {@code IOReadableWritable.read(DataInputView)}

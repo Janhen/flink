@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /** Factory for Bzip2 decompressors. */
+// Bzip2 解压缩器的工厂。
 @Internal
 public class Bzip2InputStreamFactory
         implements InflaterInputStreamFactory<BZip2CompressorInputStream> {

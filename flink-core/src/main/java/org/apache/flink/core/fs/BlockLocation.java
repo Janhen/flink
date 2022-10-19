@@ -23,6 +23,7 @@ import org.apache.flink.annotation.Public;
 import java.io.IOException;
 
 /** A BlockLocation lists hosts, offset and length of block. */
+// BlockLocation 列出了主机、偏移量和块的长度
 @Public
 public interface BlockLocation extends Comparable<BlockLocation> {
 

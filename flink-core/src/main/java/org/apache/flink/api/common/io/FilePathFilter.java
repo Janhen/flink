@@ -22,6 +22,8 @@ import org.apache.flink.core.fs.Path;
 import java.io.Serializable;
 
 /**
+ * {@link #filterPath(Path)} 方法负责决定路径是否适合进一步处理。这可以用于排除仍在写入的临时或部分文件。
+ *
  * The {@link #filterPath(Path)} method is responsible for deciding if a path is eligible for
  * further processing or not. This can serve to exclude temporary or partial files that are still
  * being written.
@@ -32,9 +34,12 @@ public abstract class FilePathFilter implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** Name of an unfinished Hadoop file */
+    // 未完成的 Hadoop 文件的名称
     public static final String HADOOP_COPYING = "_COPYING_";
 
     /**
+     * 如果在处理目录时忽略给定的 {@code filePath}，则返回 {@code true}，例如
+     *
      * Returns {@code true} if the {@code filePath} given is to be ignored when processing a
      * directory, e.g.
      *
@@ -47,6 +52,12 @@ public abstract class FilePathFilter implements Serializable {
     public abstract boolean filterPath(Path filePath);
 
     /**
+     * 返回默认过滤器，它排除以下文件：
+     *
+     *   <li>过滤以 `_` 开头的文件
+     *   <li>过滤以 `.` 开头的文件
+     *   <li>过滤包含 `_COPYING_` 的文件
+     *
      * Returns the default filter, which excludes the following files:
      *
      * <ul>
@@ -66,6 +77,8 @@ public abstract class FilePathFilter implements Serializable {
     // ------------------------------------------------------------------------
 
     /**
+     * 默认文件路径过滤方法，如果没有提供其他此类功能则使用。此过滤器会排除以“.”、“_”和“_COPYING_”开头的文件。
+     *
      * The default file path filtering method and is used if no other such function is provided.
      * This filter leaves out files starting with ".", "_", and "_COPYING_".
      */

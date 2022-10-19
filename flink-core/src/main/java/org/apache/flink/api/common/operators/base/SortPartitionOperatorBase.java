@@ -40,10 +40,11 @@ import java.util.List;
 @Internal
 public class SortPartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, NoOpFunction> {
 
+    // J: 分区排序
     private final Ordering partitionOrdering;
 
     public SortPartitionOperatorBase(
-            UnaryOperatorInformation<IN, IN> operatorInfo,
+            UnaryOperatorInformation<IN, IN> operatorInfo,  // 一元算子信息
             Ordering partitionOrdering,
             String name) {
         super(new UserCodeObjectWrapper<NoOpFunction>(new NoOpFunction()), operatorInfo, name);
@@ -56,6 +57,7 @@ public class SortPartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, N
 
     @Override
     public SingleInputSemanticProperties getSemanticProperties() {
+        // J: 语义配置
         return new SingleInputSemanticProperties.AllFieldsForwardedProperties();
     }
 

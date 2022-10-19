@@ -53,6 +53,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 此类提供对 Flink 内置序列化器和比较器的最常见类型的类型信息的访问。
+ *
  * This class gives access to the type information of the most common types for which Flink has
  * built-in serializers and comparators.
  *

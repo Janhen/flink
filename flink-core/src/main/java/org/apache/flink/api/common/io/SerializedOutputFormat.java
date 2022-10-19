@@ -25,6 +25,8 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 通过使用常规的序列化/反序列化功能对元素进行序列化来存储元素。
+ *
  * Stores elements by serializing them with their regular serialization/deserialization
  * functionality.
  *

@@ -38,6 +38,8 @@ import java.io.Serializable;
 public interface Source<T, SplitT extends SourceSplit, EnumChkT> extends Serializable {
 
     /**
+     * 获取此源的有界性。
+     *
      * Get the boundedness of this source.
      *
      * @return the boundedness of this source.
@@ -45,6 +47,8 @@ public interface Source<T, SplitT extends SourceSplit, EnumChkT> extends Seriali
     Boundedness getBoundedness();
 
     /**
+     * 创建一个新的读取器以从分配的拆分中读取数据。reader 重新开始，没有任何状态可以恢复。
+     *
      * Creates a new reader to read data from the splits it gets assigned. The reader starts fresh
      * and does not have any state to resume.
      *

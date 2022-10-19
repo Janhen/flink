@@ -24,6 +24,8 @@ import org.apache.flink.util.Collector;
 import java.util.List;
 
 /**
+ * 将收集到的元素放入给定列表的 {@link Collector}。
+ *
  * A {@link Collector} that puts the collected elements into a given list.
  *
  * @param <T> The type of the collected elements.

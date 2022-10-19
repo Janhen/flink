@@ -20,6 +20,16 @@ package org.apache.flink.core.io;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * {@code InputStatus} 指示来自异步输入的数据的可用性。当要求异步输入生成数据时，它会返回此状态以指示如何继续。
+ *
+ * <p>当输入返回 {@link InputStatus#NOTHING_AVAILABLE} 时，这意味着此时没有可用的数据，但将来（很可能）会有
+ *   更多可用的数据。异步输入通常会提供注册一个 <i>Notifier<i> 或获取一个 <i>Future<i> 来表示新数据的可用性。
+ *
+ * <p>当输入返回 {@link InputStatus#MORE_AVAILABLE} 时，可以立即再次要求它产生更多数据。来自异步输入的读者可以
+ *   绕过订阅通知程序或未来以提高效率。
+ *
+ * <p>当输入返回 {@link InputStatus#END_OF_INPUT} 时，此输入将不再提供任何数据。它已到达有界数据的末尾。
+ *
  * An {@code InputStatus} indicates the availability of data from an asynchronous input. When asking
  * an asynchronous input to produce data, it returns this status to indicate how to proceed.
  *
@@ -55,10 +65,10 @@ public enum InputStatus {
     NOTHING_AVAILABLE,
 
     /** Indicator that all persisted data of the data exchange has been successfully restored. */
-    // 指示数据交换的所有持久化数据已成功恢复。
+    // 指示数据交换的所有持久化数据已成功恢复
     END_OF_RECOVERY,
 
     /** Indicator that the input has reached the end of data. */
-    // 指示输入已到达数据的末尾。
+    // 指示输入已到达数据的末尾
     END_OF_INPUT
 }

@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * Flink 的全局配置对象。与 Java 属性配置对象类似，它包括表示框架配置的键值对。
+ *
  * Global configuration object for Flink. Similar to Java properties configuration objects it
  * includes key-value pairs which represent the framework's configuration.
  */
@@ -44,6 +46,7 @@ public final class GlobalConfiguration {
     public static final String FLINK_CONF_FILENAME = "flink-conf.yaml";
 
     // the keys whose values should be hidden
+    // 应该隐藏其值的键
     private static final String[] SENSITIVE_KEYS =
             new String[] {"password", "secret", "fs.azure.account.key", "apikey"};
 
@@ -75,6 +78,7 @@ public final class GlobalConfiguration {
      * @return Returns the loaded global configuration with dynamic properties
      */
     public static Configuration loadConfiguration(Configuration dynamicProperties) {
+        // J: FLINK_CONF_DIR 确认配置目录
         final String configDir = System.getenv(ConfigConstants.ENV_FLINK_CONF_DIR);
         if (configDir == null) {
             return new Configuration(dynamicProperties);
@@ -142,6 +146,13 @@ public final class GlobalConfiguration {
     }
 
     /**
+     * 加载键值对的 YAML 文件。
+     *
+     * <p>冒号和空格“:”分开键和值（每行一个）。井号“#”开始一个单行注释。
+     *
+     * <p>这并不涵盖整个 YAML 规范，而只是简单 YAML 键值对的语法（参见 GitHub 上的 issue #113）。如果在任何时候，
+     *   除了简单的键值对语法兼容性之外，还需要引入 YAML 解析器库。
+     *
      * Loads a YAML-file of key-value pairs.
      *
      * <p>Colon and whitespace ": " separate key and value (one per line). The hash tag "#" starts a

@@ -24,6 +24,8 @@ import org.apache.flink.api.common.aggregators.Aggregator;
 import org.apache.flink.types.Value;
 
 /**
+ * 在 DataSet API 的迭代计算中可用的 {@link RuntimeContext} 的特化。
+ *
  * A specialization of the {@link RuntimeContext} available in iterative computations of the DataSet
  * API.
  */

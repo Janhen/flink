@@ -44,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Reduce 用户定义函数的基本数据流运算符。接受减少功能和关键位置。关键位置预计在展平的公共数据模型中。
+ *
  * Base data flow operator for Reduce user-defined functions. Accepts reduce functions and key
  * positions. The key positions are expected in the flattened common data model.
  *
@@ -56,6 +58,9 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>>
         extends SingleInputOperator<T, T, FT> {
 
     /**
+     * 提示的枚举，可选择用于告诉系统如何准确执行 reduce 的组合器阶段。 （注意：最终的 reduce 阶段（合并后）目前总是由
+     * 基于排序的策略执行。）
+     *
      * An enumeration of hints, optionally usable to tell the system exactly how to execute the
      * combiner phase of a reduce. (Note: The final reduce phase (after combining) is currently
      * always executed by a sort-based strategy.)
@@ -63,6 +68,8 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>>
     public enum CombineHint {
 
         /**
+         * 将如何进行组合的选择留给优化器。 （目前默认为 SORT。）
+         *
          * Leave the choice how to do the combine to the optimizer. (This currently defaults to
          * SORT.)
          */
@@ -72,6 +79,8 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>>
         SORT,
 
         /**
+         * 使用基于哈希的策略。在大多数情况下，这应该更快，尤其是当不同键的数量与输入元素的数量（例如 1/10）相比较小时。
+         *
          * Use a hash-based strategy. This should be faster in most cases, especially if the number
          * of different keys is small compared to the number of input elements (eg. 1/10).
          */
@@ -86,6 +95,8 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>>
     private Partitioner<?> customPartitioner;
 
     /**
+     * 创建分组归约数据流 operator。
+     *
      * Creates a grouped reduce data flow operator.
      *
      * @param udf The user-defined function, contained in the UserCodeWrapper.

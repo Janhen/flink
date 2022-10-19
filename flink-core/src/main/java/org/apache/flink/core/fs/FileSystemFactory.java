@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
+ * 创建文件系统的工厂。
+ *
+ * <p>通常在通过 {@link #create(URI)} 创建文件系统之前通过 {@link #configure(Configuration)} 配置工厂。
+ *
  * A factory to create file systems.
  *
  * <p>The factory is typically configured via {@link #configure(Configuration)} before creating file

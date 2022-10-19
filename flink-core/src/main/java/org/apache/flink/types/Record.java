@@ -33,7 +33,7 @@ import java.io.UTFDataFormatException;
 import java.nio.ByteOrder;
 
 /**
- * Record 表示一个多值数据记录。记录是任意值的元组。它实现了一个稀疏元组模型，这意味着记录可以包含许多实际上是空的、
+ * Record 表示一个多值数据记录。记录是任意值的元组。实现了一个稀疏元组模型，这意味着记录可以包含许多实际上是空的、
  * 没有在记录中表示的字段。它内部有一个位图标记哪些字段被设置了，哪些没有。
  *
  * <p>为了高效的数据交换，从任何源读取的记录都以序列化的二进制形式保存数据。字段在第一次访问时被延迟反序列化。修改后的
@@ -41,7 +41,7 @@ import java.nio.ByteOrder;
  *   二进制表示中。
  *
  * <p>重要注意:为了实现性能，记录必须作为可变对象使用，并在用户函数调用之间重用。该记录是一个重量级对象，旨在减少对各个
- *   字段的序列化和反序列化方法的调用。它持有相当多的状态消耗相当大的内存(&gt;在64位JVM中有200个字节)，因为有几个指针
+ *   字段的序列化和反序列化方法的调用。它持有相当多的状态消耗相当大的内存(&gt;在 64 位 JVM 中有 200 个字节)，因为有几个指针
  *   和数组。
  *
  * <p>这个类不是线程安全的!
@@ -220,6 +220,9 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
+     * 从记录中获取给定位置的字段。此方法在内部检查此记录实例是否先前已为此字段返回值。如果是，它会重用该对象，如果
+     * 不是，它会从提供的类中创建一个。
+     *
      * Gets the field at the given position from the record. This method checks internally, if this
      * instance of the record has previously returned a value for this field. If so, it reuses the
      * object, if not, it creates one from the supplied class.
@@ -303,7 +306,7 @@ public final class Record implements Value, CopyableValue<Record> {
     }
 
     /**
-     * 获取给定位置的字段。如果该位置的字段为空，则此方法保持目标字段不变并返回false。
+     * 获取给定位置的字段。如果该位置的字段为空，则此方法保持目标字段不变并返回 false。
      *
      * Gets the field at the given position. If the field at that position is null, then this method
      * leaves the target field unchanged and returns false.

@@ -23,6 +23,10 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * 该接口必须由可以分配给输入格式的所有类型的输入拆分来实现。
+ *
+ * <p>输入拆分通过消息以序列化形式传输，因此它们需要按照 {@link java.io.Serializable} 的定义进行序列化。
+ *
  * This interface must be implemented by all kind of input splits that can be assigned to input
  * formats.
  *
@@ -33,6 +37,8 @@ import java.io.Serializable;
 public interface InputSplit extends Serializable {
 
     /**
+     * 返回此输入拆分的数量。
+     *
      * Returns the number of this input split.
      *
      * @return the number of this input split

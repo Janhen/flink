@@ -27,6 +27,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Immutable ordered list of fields IDs. */
+// 字段 ID 的不可变有序列表。
 @Internal
 public class FieldList extends FieldSet {
 
@@ -156,6 +157,7 @@ public class FieldList extends FieldSet {
         return true;
     }
 
+    // J: 是否与另一个 FieldList 精确匹配
     public boolean isExactMatch(FieldList list) {
         if (this.size() != list.size()) {
             return false;

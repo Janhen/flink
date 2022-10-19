@@ -24,5 +24,6 @@ import org.apache.flink.api.common.aggregators.AggregatorRegistry;
 @Internal
 public interface IterationOperator {
 
+    // 聚合策略
     AggregatorRegistry getAggregators();
 }

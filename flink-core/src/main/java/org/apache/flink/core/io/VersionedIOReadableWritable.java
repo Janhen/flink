@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
+ * 这是 {@link IOReadableWritable} 的抽象基类，它允许区分序列化版本。具体的子类通常应该覆盖
+ * {@link #write(DataOutputView)} 和 {@link #read(DataInputView)}，从而调用 super 以确保版本检查。
+ *
  * This is the abstract base class for {@link IOReadableWritable} which allows to differentiate
  * between serialization versions. Concrete subclasses should typically override the {@link
  * #write(DataOutputView)} and {@link #read(DataInputView)}, thereby calling super to ensure version

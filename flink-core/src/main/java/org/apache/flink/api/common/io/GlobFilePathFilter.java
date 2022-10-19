@@ -31,6 +31,16 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 用于根据一组包含和排除 glob 过滤器确定是否应包含或排除特定文件的类。
+ *
+ * <p>glob 过滤器支持以下表达式：
+ *
+ *   ...
+ *
+ * <p>如果与包含模式不匹配，则将其排除。如果它匹配并包含模式但也匹配排除模式，则将其排除。
+ *
+ * <p>如果未提供任何模式，则包含所有文件
+ *
  * Class for determining if a particular file should be included or excluded based on a set of
  * include and exclude glob filters.
  *
@@ -96,6 +106,7 @@ public class GlobFilePathFilter extends FilePathFilter {
         }
 
         // compensate for the fact that Flink paths are slashed
+        // 弥补 Flink 路径被削减的事实
         final String path =
                 filePath.hasWindowsDrive() ? filePath.getPath().substring(1) : filePath.getPath();
 

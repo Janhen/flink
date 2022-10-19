@@ -25,10 +25,13 @@ import org.apache.flink.api.common.operators.util.FieldSet;
 import java.io.Serializable;
 
 /** Container for the semantic properties associated to an operator. */
+// 与运算符关联的语义属性的容器
 @Internal
 public interface SemanticProperties extends Serializable {
 
     /**
+     * 返回源字段未被函数复制到的所有目标字段的索引。
+     *
      * Returns the indexes of all target fields to which a source field has been unmodified copied
      * by a function.
      *
@@ -53,6 +56,8 @@ public interface SemanticProperties extends Serializable {
     public int getForwardingSourceField(int input, int targetField);
 
     /**
+     * 返回函数访问的输入的所有字段的位置索引。
+     *
      * Returns the position indexes of all fields of an input that are accessed by a function.
      *
      * @param input The input id for which accessed fields are requested.
@@ -63,6 +68,7 @@ public interface SemanticProperties extends Serializable {
 
     // ----------------------------------------------------------------------
 
+    // J: 属性接口的内部异常
     public static class InvalidSemanticAnnotationException extends InvalidProgramException {
 
         private static final long serialVersionUID = 1L;

@@ -21,7 +21,7 @@ package org.apache.flink.core.memory;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
- * 将{@link DataInputView}标记为可搜索的接口。可搜索视图可以设置读取的位置。
+ * 将 {@link DataInputView} 标记为 seekable 的接口。可 seekable 视图可以设置读取的位置。
  *
  * Interface marking a {@link DataInputView} as seekable. Seekable views can set the position where
  * they read from.

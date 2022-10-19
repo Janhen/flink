@@ -23,6 +23,10 @@ import org.apache.flink.annotation.Public;
 import java.io.IOException;
 
 /**
+ * 这个接口可以由 {@link OutputFormat} 实现，让 Master 全局初始化它们。
+ *
+ * <p>例如，{@link FileOutputFormat} 为分布式文件系统实现此行为，并在必要时创建删除目标目录。
+ *
  * This interface may be implemented by {@link OutputFormat}s to have the master initialize them
  * globally.
  *
@@ -33,6 +37,8 @@ import java.io.IOException;
 public interface InitializeOnMaster {
 
     /**
+     * 该方法在分布式程序执行开始之前在 master (JobManager) 上调用。
+     *
      * The method is invoked on the master (JobManager) before the distributed program execution
      * starts.
      *

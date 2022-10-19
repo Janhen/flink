@@ -147,6 +147,8 @@ public class TaskInfo {
     }
 
     /**
+     * 返回此任务执行位置的分配 ID。
+     * 
      * Returns the allocation id for where this task is executed.
      *
      * @return the allocation id for where this task is executed.

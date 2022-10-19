@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
+ * 围绕 {@link FileSystemFactory} 的包装器，确保插件类加载器用于所有 {@link FileSystem} 操作。
+ *
  * A wrapper around {@link FileSystemFactory} that ensures the plugin classloader is used for all
  * {@link FileSystem} operations.
  */

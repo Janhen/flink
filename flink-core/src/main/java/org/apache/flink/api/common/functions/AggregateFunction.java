@@ -23,6 +23,20 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /**
+ * {@code AggregateFunction} 是一个灵活的聚合函数，具有以下特性：
+ *
+ *   <li>聚合可以为输入值、中间聚合和结果类型使用不同的类型，以支持广泛的聚合类型。
+ *   <li>支持分布式聚合：可以将不同的中间聚合合并在一起，以实现预聚合最终聚合优化。
+ *
+ * <p>{@code AggregateFunction} 的中间聚合（进行中的聚合状态）称为 <i>accumulator<i>。将值添加到累加器中，并
+ *   通过最终确定累加器状态来获得最终聚合。这支持聚合函数，其中中间状态需要不同于聚合值和最终结果类型，例如 <i>average<i>
+ *   （通常保留计数和总和）。合并中间聚合（部分聚合）意味着合并累加器。
+ *
+ * <p>AggregationFunction 本身是无状态的。为了允许单个 AggregationFunction 实例维护多个聚合（例如每个键一个聚合），
+ *   每当启动新聚合时，AggregationFunction 都会创建一个新累加器。
+ *
+ * <p>聚合函数必须是{@link Serializable}，因为它们在分布式执行期间在分布式进程之间发送。
+ *
  * The {@code AggregateFunction} is a flexible aggregation function, characterized by the following
  * features:
  *
@@ -114,6 +128,13 @@ import java.io.Serializable;
 public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable {
 
     /**
+     * 创建一个新的累加器，开始一个新的聚合。
+     *
+     * <p>除非通过 {@link #add(Object, Object)} 添加一个值，否则新的累加器通常是没有意义的。
+     *
+     * <p>累加器是正在运行的聚合的状态。当一个程序有多个正在进行的聚合（例如每个键和窗口）时，状态（每个键和窗口）是
+     *   累加器的大小。
+     *
      * Creates a new accumulator, starting a new aggregate.
      *
      * <p>The new accumulator is typically meaningless unless a value is added via {@link
@@ -128,6 +149,10 @@ public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable 
     ACC createAccumulator();
 
     /**
+     * 将给定的输入值添加到给定的累加器，返回新的累加器值。
+     *
+     * <p>为了提高效率，输入累加器可能会被修改和返回。
+     *
      * Adds the given input value to the given accumulator, returning the new accumulator value.
      *
      * <p>For efficiency, the input accumulator may be modified and returned.
@@ -147,6 +172,10 @@ public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable 
     OUT getResult(ACC accumulator);
 
     /**
+     * 合并两个累加器，返回具有合并状态的累加器。
+     *
+     * <p>这个函数可以重用任何给定的累加器作为合并的目标并返回它。假设是给定的累加器在传递给此函数后将不再使用。
+     *
      * Merges two accumulators, returning an accumulator with the merged state.
      *
      * <p>This function may reuse any of the given accumulators as the target for the merge and

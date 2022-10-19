@@ -29,6 +29,9 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link WatermarkOutputMultiplexer} 将多个分区分片的水印（和空闲）更新组合成一个组合水印更新，并将其转发
+ * 到底层 {@link WatermarkOutput}。
+ *
  * A {@link WatermarkOutputMultiplexer} combines the watermark (and idleness) updates of multiple
  * partitions/shards/splits into one combined watermark update and forwards it to an underlying
  * {@link WatermarkOutput}.

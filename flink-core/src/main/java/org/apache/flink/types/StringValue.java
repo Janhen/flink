@@ -31,7 +31,7 @@ import java.nio.CharBuffer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 实现Key接口的可变字符串数据类型。StringValue以一种可序列化和可变的方式封装了{@link String}的基本功能。
+ * 实现 Key 接口的可变字符串数据类型。StringValue 以一种可序列化和可变的方式封装了 {@link String} 的基本功能。
  *
  * <p>该可变性允许在用户代码中重用对象，也允许跨调用重用对象。重用StringValue对象有助于提高性能，因为字符串对象是
  *   相当重量级的对象，如果同时创建和销毁，会导致大量的垃圾收集开销。

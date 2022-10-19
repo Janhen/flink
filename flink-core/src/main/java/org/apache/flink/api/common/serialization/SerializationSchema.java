@@ -25,6 +25,9 @@ import org.apache.flink.util.UserCodeClassLoader;
 import java.io.Serializable;
 
 /**
+ * 序列化模式描述了如何将数据对象转换为不同的序列化表示。大多数数据接收器（例如 Apache Kafka）需要以特定格式
+ * （例如作为字节字符串）将数据传递给它们。
+ *
  * The serialization schema describes how to turn a data object into a different serialized
  * representation. Most data sinks (for example Apache Kafka) require the data to be handed to them
  * in a specific format (for example as byte strings).

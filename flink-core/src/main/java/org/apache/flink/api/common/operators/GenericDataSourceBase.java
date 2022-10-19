@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Pact 计划中数据源的抽象超类
+ *
  * Abstract superclass for data sources in a Pact plan.
  *
  * @param <OUT> The output type of the data source
@@ -52,6 +54,8 @@ public class GenericDataSourceBase<OUT, T extends InputFormat<OUT, ?>> extends O
     private SplitDataProperties splitProperties;
 
     /**
+     * 使用给定的输入格式为给定文件创建一个新实例。
+     *
      * Creates a new instance for the given file using the given input format.
      *
      * @param format The {@link org.apache.flink.api.common.io.InputFormat} implementation used to
@@ -151,6 +155,8 @@ public class GenericDataSourceBase<OUT, T extends InputFormat<OUT, ?>> extends O
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 获取可以从统计缓存中获取有关此数据源的统计信息的键。
+     *
      * Gets the key under which statistics about this data source may be obtained from the
      * statistics cache.
      *
@@ -171,6 +177,10 @@ public class GenericDataSourceBase<OUT, T extends InputFormat<OUT, ?>> extends O
     }
 
     /**
+     * 为此数据源设置输入拆分的属性。拆分属性可以帮助生成更有效的执行计划。 <br>
+     *
+     * <b> 重要提示：提供错误的拆分数据属性可能会导致错误的结果！ <b>
+     *
      * Sets properties of input splits for this data source. Split properties can help to generate
      * more efficient execution plans. <br>
      * <b> IMPORTANT: Providing wrong split data properties can cause wrong results! </b>

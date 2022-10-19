@@ -25,11 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Container for the semantic properties associated to a single input operator. */
+// 与单个输入运算符关联的语义属性的容器。
 @Internal
 public class SingleInputSemanticProperties implements SemanticProperties {
     private static final long serialVersionUID = 1L;
 
     /** Mapping from fields in the source record(s) to fields in the destination record(s). */
+    // 从源记录中的字段映射到目标记录中的字段。
     private Map<Integer, FieldSet> fieldMapping;
 
     /** Set of fields that are read in the source record(s). */

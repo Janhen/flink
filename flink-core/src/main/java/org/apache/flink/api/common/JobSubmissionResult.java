@@ -21,6 +21,7 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.Public;
 
 /** The result of submitting a job to a JobManager. */
+// 将作业提交到 JobManager 的结果。
 @Public
 public class JobSubmissionResult {
 
@@ -41,6 +42,9 @@ public class JobSubmissionResult {
     }
 
     /**
+     * 检查此 JobSubmissionResult 是否也是 JobExecutionResult。请参阅 {@code getJobExecutionResult}
+     * 以检索 JobExecutionResult。
+     *
      * Checks if this JobSubmissionResult is also a JobExecutionResult. See {@code
      * getJobExecutionResult} to retrieve the JobExecutionResult.
      *
@@ -51,6 +55,8 @@ public class JobSubmissionResult {
     }
 
     /**
+     * 如果可用，则返回 JobExecutionResult。
+     *
      * Returns the JobExecutionResult if available.
      *
      * @return The JobExecutionResult

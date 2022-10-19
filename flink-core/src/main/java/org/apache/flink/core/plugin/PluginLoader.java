@@ -33,6 +33,10 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**
+ * {@link PluginManager} 使用 {@link PluginLoader} 来加载单个插件。它本质上是 {@link PluginClassLoader}
+ * 和 {@link ServiceLoader} 的组合。此类可以从给定 SPI 的插件中定位和加载服务实现。 {@link PluginDescriptor}，
+ * 其中包括资源 URL，在构建时提供
+ *
  * A {@link PluginLoader} is used by the {@link PluginManager} to load a single plugin. It is
  * essentially a combination of a {@link PluginClassLoader} and {@link ServiceLoader}. This class
  * can locate and load service implementations from the plugin for a given SPI. The {@link

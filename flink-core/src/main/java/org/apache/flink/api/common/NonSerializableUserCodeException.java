@@ -21,6 +21,8 @@ package org.apache.flink.api.common;
 import org.apache.flink.annotation.Public;
 
 /**
+ * {@link InvalidProgramException} 的一种特殊情况，表示程序中需要可序列化（用于运输）的部分是不可序列化的。
+ *
  * An special case of the {@link InvalidProgramException}, indicating that a part of the program
  * that needs to be serializable (for shipping) is not serializable.
  */

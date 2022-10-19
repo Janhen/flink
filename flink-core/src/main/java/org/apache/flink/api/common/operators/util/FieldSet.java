@@ -27,11 +27,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /** Immutable unordered collection of fields IDs. */
+// 字段 ID 的不可变无序集合。
 @Internal
 public class FieldSet implements Iterable<Integer> {
 
     public static final FieldSet EMPTY_SET = new FieldSet();
 
+    // J: 构造时可变
     protected final Collection<Integer> collection;
 
     // --------------------------------------------------------------------------------------------
@@ -264,6 +266,8 @@ public class FieldSet implements Iterable<Integer> {
     }
 
     /**
+     * 由于 FieldSet 的实例是严格不可变的，所以这个方法实际上并没有克隆，它只返回原始实例。
+     *
      * Since instances of FieldSet are strictly immutable, this method does not actually clone, but
      * it only returns the original instance.
      *

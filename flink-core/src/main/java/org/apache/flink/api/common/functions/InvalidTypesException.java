@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.api.common.InvalidProgramException;
 
 /**
+ * {@link InvalidProgramException} 的一种特殊情况，表示操作中使用的类型无效或不一致。
+ *
  * A special case of the {@link InvalidProgramException}, indicating that the types used in an
  * operation are invalid or inconsistent.
  */

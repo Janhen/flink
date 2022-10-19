@@ -46,8 +46,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * RuntimeContext包含函数在其中执行的上下文信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息
+ * RuntimeContext 包含函数在其中执行的上下文信息。函数的每个并行实例都有一个上下文，通过它可以访问静态上下文信息
  * (比如当前的并行度)和其他结构，比如累加器和广播变量。
+ *
+ * <p>函数可以在运行时通过调用 {@link AbstractRichFunction#getRuntimeContext()} 获取 RuntimeContext。
  *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
@@ -61,12 +63,16 @@ import java.util.Set;
 public interface RuntimeContext {
 
     /**
+     * 当前作业的 ID。请注意，特别是在手动重新启动时，作业 ID 可能会发生变化。返回的 ID 不应用于任何作业管理任务。
+     *
      * The ID of the current job. Note that Job ID can change in particular upon manual restart. The
      * returned ID should NOT be used for any job management tasks.
      */
     JobID getJobId();
 
     /**
+     * 返回运行 UDF 的任务的名称，在计划构建期间分配。
+     *
      * Returns the name of the task in which the UDF runs, as assigned during plan construction.
      *
      * @return The name of the task in which the UDF runs.
@@ -74,6 +80,8 @@ public interface RuntimeContext {
     String getTaskName();
 
     /**
+     * 返回此并行子任务的指标组。
+     *
      * Returns the metric group for this parallel subtask.
      *
      * @return The metric group for this parallel subtask.
@@ -82,6 +90,8 @@ public interface RuntimeContext {
     MetricGroup getMetricGroup();
 
     /**
+     * 获取并行任务运行的并行度。
+     *
      * Gets the parallelism with which the parallel task runs.
      *
      * @return The parallelism with which the parallel task runs.
@@ -97,8 +107,8 @@ public interface RuntimeContext {
     int getMaxNumberOfParallelSubtasks();
 
     /**
-     * 获取此并行子任务的编号。编号从0开始，一直到parallelism-1 (parallelism由
-     * {@link #getNumberOfParallelSubtasks()}返回)。
+     * 获取此并行子任务的编号。编号从 0 开始，一直到 parallelism-1 (parallelism 由
+     * {@link #getNumberOfParallelSubtasks()} 返回)。
      *
      * Gets the number of this parallel subtask. The numbering starts from 0 and goes up to
      * parallelism-1 (parallelism as returned by {@link #getNumberOfParallelSubtasks()}).
@@ -108,6 +118,8 @@ public interface RuntimeContext {
     int getIndexOfThisSubtask();
 
     /**
+     * 获取此并行子任务的尝试次数。第一次尝试编号为 0。
+     *
      * Gets the attempt number of this parallel subtask. First attempt is numbered 0.
      *
      * @return Attempt number of the subtask.
@@ -115,6 +127,9 @@ public interface RuntimeContext {
     int getAttemptNumber();
 
     /**
+     * 返回任务的名称，附加子任务指示符，例如“MyTask (36)#1”，其中 3 为 ({@link #getIndexOfThisSubtask()} + 1)，
+     * 6 为 {@link #getNumberOfParallelSubtasks ()}，1 将是 {@link #getAttemptNumber()}。
+     *
      * Returns the name of the task, appended with the subtask indicator, such as "MyTask (3/6)#1",
      * where 3 would be ({@link #getIndexOfThisSubtask()} + 1), and 6 would be {@link
      * #getNumberOfParallelSubtasks()}, and 1 would be {@link #getAttemptNumber()}.
@@ -130,6 +145,8 @@ public interface RuntimeContext {
     ExecutionConfig getExecutionConfig();
 
     /**
+     * 获取 ClassLoader 以加载不在系统类路径中但属于用户作业的 jar 文件的类。
+     *
      * Gets the ClassLoader to load classes that are not in system's classpath, but are part of the
      * jar file of a user job.
      *
@@ -139,6 +156,8 @@ public interface RuntimeContext {
 
     /**
      * 为用户代码类装入器版本注册一个自定义钩子。
+     *
+     * <p>释放钩子在用户代码类加载器被释放之前执行。仅当尚未在此名称下注册任何钩子时才会进行注册。
      *
      * Registers a custom hook for the user code class loader release.
      *
@@ -156,8 +175,8 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 添加这个蓄电池。如果同一个Task中已经存在累加器，则抛出异常。注意，在Flink作业中，Accumulator名称必须有一个
-     * 唯一的名称。否则，当作业完成后，将来自不同任务的不兼容的累加器组合在JobManager上时，将得到一个错误。
+     * 添加这个蓄电池。如果同一个 Task 中已经存在累加器，则抛出异常。注意，在 Flink 作业中，Accumulator 名称必须有一个
+     * 唯一的名称。否则，当作业完成后，将来自不同任务的不兼容的累加器组合在 JobManager 上时，将得到一个错误。
      *
      * Add this accumulator. Throws an exception if the accumulator already exists in the same Task.
      * Note that the Accumulator name must have an unique name across the Flink job. Otherwise you
@@ -192,7 +211,7 @@ public interface RuntimeContext {
     Histogram getHistogram(String name);
 
     /**
-     * 通过resourceName获取特定的外部资源信息。
+     * 通过 resourceName 获取特定的外部资源信息。
      *
      * Get the specific external resource information by the resourceName.
      *
@@ -205,6 +224,8 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 测试由给定 {@code name} 标识的广播变量是否存在。
+     *
      * Tests for the existence of the broadcast variable identified by the given {@code name}.
      *
      * @param name The name under which the broadcast variable is registered;
@@ -243,7 +264,7 @@ public interface RuntimeContext {
             String name, BroadcastVariableInitializer<T, C> initializer);
 
     /**
-     * 返回{@link DistributedCache}以获取文件的本地临时文件副本，否则无法在本地访问。
+     * 返回 {@link DistributedCache} 以获取文件的本地临时文件副本，否则无法在本地访问。
      *
      * Returns the {@link DistributedCache} to get the local temporary file copies of files
      * otherwise not locally accessible.
@@ -257,6 +278,9 @@ public interface RuntimeContext {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取系统键值状态的句柄。只有在 KeyedStream 上执行函数时，才能访问键值状态。在每次访问时，状态都会公开该函数
+     * 当前处理的元素的键值。每个功能可能有多个分区状态，用不同的名称寻址。
+     *
      * Gets a handle to the system's key/value state. The key/value state is only accessible if the
      * function is executed on a KeyedStream. On each access, the state exposes the value for the
      * key of the element currently processed by the function. Each function may have multiple
@@ -420,6 +444,11 @@ public interface RuntimeContext {
             AggregatingStateDescriptor<IN, ACC, OUT> stateProperties);
 
     /**
+     * 获取系统键值映射状态的句柄。此状态类似于通过 {@link #getState(ValueStateDescriptor)} 访问的状态，但针对
+     * 由用户定义的键值对组成的状态进行了优化
+     *
+     * <p>只有在 KeyedStream 上执行函数时才能访问此状态。
+     *
      * Gets a handle to the system's key/value map state. This state is similar to the state
      * accessed via {@link #getState(ValueStateDescriptor)}, but is optimized for state that is
      * composed of user-defined key-value pairs

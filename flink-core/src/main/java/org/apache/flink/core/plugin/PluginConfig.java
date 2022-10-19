@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 /** Stores the configuration for plugins mechanism. */
+// 存储插件机制的配置
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class PluginConfig {
     private static final Logger LOG = LoggerFactory.getLogger(PluginConfig.class);

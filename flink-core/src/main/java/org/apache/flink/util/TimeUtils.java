@@ -42,7 +42,7 @@ public class TimeUtils {
             Collections.unmodifiableMap(initMap());
 
     /**
-     * 解析给定字符串为java {@link Duration}。该字符串的格式为“{长度值}{时间单位标签}”。女士“123”、“321年代”。
+     * 解析给定字符串为 java {@link Duration}。该字符串的格式为“{长度值}{时间单位标签}”。女士“123”、“321年代”。
      * 如果没有指定时间单位标签，则认为是毫秒。
      *
      * Parse the given string to a java {@link Duration}. The string is in format "{length

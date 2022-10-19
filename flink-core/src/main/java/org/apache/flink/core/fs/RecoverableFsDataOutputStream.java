@@ -25,6 +25,8 @@ import org.apache.flink.core.fs.RecoverableWriter.ResumeRecoverable;
 import java.io.IOException;
 
 /**
+ * 到文件系统的输出流，可以在明确定义的点恢复。流最初写入隐藏文件或临时文件，并且仅在关闭并“提交”后才创建目标文件。
+ *
  * An output stream to a file system that can be recovered at well defined points. The stream
  * initially writes to hidden files or temp files and only creates the target file once it is closed
  * and "committed".
@@ -62,6 +64,8 @@ public abstract class RecoverableFsDataOutputStream extends FSDataOutputStream {
     // ------------------------------------------------------------------------
 
     /**
+     * 提交者可以发布已关闭的流的文件。提交者可以通过 {@link CommitRecoverable} 恢复。
+     *
      * A committer can publish the file of a stream that was closed. The Committer can be recovered
      * via a {@link CommitRecoverable}.
      */

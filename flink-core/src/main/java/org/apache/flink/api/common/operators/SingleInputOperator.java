@@ -28,6 +28,8 @@ import org.apache.flink.util.Visitor;
 import java.util.List;
 
 /**
+ * 具有一个输入（如“map”或“reduce”）的所有运算符的抽象超类。
+ *
  * Abstract superclass for for all operators that have one input like "map" or "reduce".
  *
  * @param <IN> Input type of the user function
@@ -50,6 +52,8 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function>
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 使用给定名称包装给定用户函数创建一个新的抽象单输入运算符。
+     *
      * Creates a new abstract single-input operator with the given name wrapping the given user
      * function.
      *
@@ -83,6 +87,7 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function>
     // --------------------------------------------------------------------------------------------
 
     /** Gets the information about the operators input/output types. */
+    // 获取有关运算符输入/输出类型的信息。
     @Override
     @SuppressWarnings("unchecked")
     public UnaryOperatorInformation<IN, OUT> getOperatorInfo() {
@@ -104,6 +109,8 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function>
     }
 
     /**
+     * 将给定的运算符设置为此运算符的输入。
+     *
      * Sets the given operator as the input to this operator.
      *
      * @param input The operator to use as the input.
@@ -193,6 +200,9 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function>
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 接受访问者并将其应用于此实例。调用访问者预访问方法，如果返回 <tt>true<tt>，则访问者将递归地应用于单个输入。
+     * 递归返回后，调用 post-visit 方法。
+     *
      * Accepts the visitor and applies it this instance. The visitors pre-visit method is called
      * and, if returning <tt>true</tt>, the visitor is recursively applied on the single input.
      * After the recursion returned, the post-visit method is called.
@@ -213,6 +223,7 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function>
 
     // --------------------------------------------------------------------------------------------
 
+    // J: 处理一批数据
     protected abstract List<OUT> executeOnCollections(
             List<IN> inputData, RuntimeContext runtimeContext, ExecutionConfig executionConfig)
             throws Exception;
