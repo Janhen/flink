@@ -21,6 +21,7 @@ package org.apache.flink.table.runtime.io;
 import org.apache.flink.runtime.io.disk.iomanager.FileIOChannel;
 
 /** Channel with block count and numBytesInLastBlock of file. */
+// 具有块计数和文件的 numBytesInLastBlock 的通道。
 public class ChannelWithMeta {
 
     private final FileIOChannel.ID channel;

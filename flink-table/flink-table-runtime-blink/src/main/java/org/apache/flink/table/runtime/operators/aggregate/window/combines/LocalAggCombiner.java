@@ -34,6 +34,10 @@ import java.util.Iterator;
 import static org.apache.flink.table.data.util.RowDataUtil.isAccumulateMsg;
 
 /**
+ * {@link RecordsCombiner} 的一个实现，它将输入记录累积到本地累加器中。
+ *
+ * <p>注意：这仅支持事件时间窗口。
+ *
  * An implementation of {@link RecordsCombiner} that accumulates input records into local
  * accumulators.
  *

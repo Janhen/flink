@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.table.expressions.ApiExpressionUtils.unresolvedRef;
 
 /**
- * 用于以表达式表示的聚合函数的API。
+ * 用于以表达式表示的聚合函数的 API。
  *
  * <p>当实现一个新的基于表达式的聚合函数时，你应该首先通过实现{@link #operandCount}方法来决定你的函数有多少个操作数。
  *   然后你可以使用{@link #operand}字段来表示你的操作数，像' operand(0) '， ' operand(2) '。

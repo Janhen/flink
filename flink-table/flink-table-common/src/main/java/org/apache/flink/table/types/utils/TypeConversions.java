@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * 用于互操作性{@link Class}、{@link TypeInformation}、{@link DataType}和{@link LogicalType}的转换中心。
+ * 用于互操作性 {@link Class}、{@link TypeInformation}、{@link DataType} 和 {@link LogicalType} 的转换中心。
  *
  * <p>有关转换如何执行的更多信息，请参阅相应的转换器类。
  *

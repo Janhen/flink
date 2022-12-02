@@ -24,6 +24,7 @@ import org.apache.flink.table.types.inference.TypeStrategies;
 import static org.apache.flink.table.functions.FunctionKind.SCALAR;
 
 /** Dictionary of function definitions for all internal used functions. */
+// 所有内部使用的函数的函数定义字典。
 public class InternalFunctionDefinitions {
 
     public static final BuiltInFunctionDefinition THROW_EXCEPTION =

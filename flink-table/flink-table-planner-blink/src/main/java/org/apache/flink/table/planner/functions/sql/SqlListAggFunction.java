@@ -33,6 +33,8 @@ import org.apache.calcite.sql.type.SqlTypeName;
 import java.util.List;
 
 /**
+ * <code>LISTAGG<code> 聚合函数返回输入到函数的值列表的串联。
+ *
  * <code>LISTAGG</code> aggregate function returns the concatenation of a list of values that are
  * input to the function.
  *

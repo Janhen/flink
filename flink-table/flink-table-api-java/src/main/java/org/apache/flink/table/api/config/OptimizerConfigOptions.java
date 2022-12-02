@@ -25,9 +25,11 @@ import org.apache.flink.configuration.ConfigOption;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
- * 这个类保存了Flink表规划器模块使用的配置常量。
+ * 这个类保存了 Flink 表规划器模块使用的配置常量
  *
- * <p>仅用于Blink计划器。注意:该类中的所有选项键必须以"table.optimizer"开头。
+ * <p>仅用于 Blink 计划器。
+ *
+ * <p>注意:该类中的所有选项键必须以"table.optimizer"开头。
  *
  * This class holds configuration constants used by Flink's table planner module.
  *
@@ -41,6 +43,10 @@ public class OptimizerConfigOptions {
     // ------------------------------------------------------------------------
     //  Optimizer Options
     // ------------------------------------------------------------------------
+    // J: 聚合阶段策略
+    // AUTO: 根据开销自动选择两阶段和一阶段聚合
+    // TWO_PHASE: 强制使用两阶段聚合，包含本地聚合和全局聚合，对于不支持两阶段的聚合，将使用一阶段聚合
+    // ONE_PHASE: 仅使用 CompleteGlobalAggregate
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<String> TABLE_OPTIMIZER_AGG_PHASE_STRATEGY =
             key("table.optimizer.agg-phase-strategy")
@@ -53,6 +59,7 @@ public class OptimizerConfigOptions {
                                     + "Note that if aggregate call does not support optimize into two phase, we will still use one stage aggregate.\n"
                                     + "ONE_PHASE: Enforce to use one stage aggregate which only has CompleteGlobalAggregate.");
 
+    // J: 在执行 JOIN 时广播所有 worker 节点的最大大小
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Long> TABLE_OPTIMIZER_BROADCAST_JOIN_THRESHOLD =
             key("table.optimizer.join.broadcast-threshold")
@@ -61,6 +68,9 @@ public class OptimizerConfigOptions {
                             "Configures the maximum size in bytes for a table that will be broadcast to all worker "
                                     + "nodes when performing a join. By setting this value to -1 to disable broadcasting.");
 
+    // J: 唯一聚合 split 开启
+    // First 根据一个额外的键打乱
+    // 对于在不同的聚合中存在数据倾斜中较为适用，提供 scale-up 的能力
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Boolean> TABLE_OPTIMIZER_DISTINCT_AGG_SPLIT_ENABLED =
             key("table.optimizer.distinct-agg.split.enabled")
@@ -73,6 +83,8 @@ public class OptimizerConfigOptions {
                                     + "when there is data skew in distinct aggregation and gives the ability to scale-up the job. "
                                     + "Default is false.");
 
+    // J: 开启 distinct-agg split 时的桶数量
+    // `hash_code(distinct_key) % BUCKET_NUM`
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Integer> TABLE_OPTIMIZER_DISTINCT_AGG_SPLIT_BUCKET_NUM =
             key("table.optimizer.distinct-agg.split.bucket-num")
@@ -82,6 +94,7 @@ public class OptimizerConfigOptions {
                                     + "The number is used in the first level aggregation to calculate a bucket key "
                                     + "'hash_code(distinct_key) % BUCKET_NUM' which is used as an additional group key after splitting.");
 
+    // J: 开启后，优化器将尝试找出重复的子计划并重用它们
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Boolean> TABLE_OPTIMIZER_REUSE_SUB_PLAN_ENABLED =
             key("table.optimizer.reuse-sub-plan-enabled")
@@ -99,6 +112,7 @@ public class OptimizerConfigOptions {
                                     + TABLE_OPTIMIZER_REUSE_SUB_PLAN_ENABLED.key()
                                     + " is true.");
 
+    // J: 下推谓词到 FilterableTableSource
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Boolean> TABLE_OPTIMIZER_SOURCE_PREDICATE_PUSHDOWN_ENABLED =
             key("table.optimizer.source.predicate-pushdown-enabled")
@@ -113,6 +127,8 @@ public class OptimizerConfigOptions {
                     .defaultValue(false)
                     .withDescription("Enables join reorder in optimizer. Default is disabled.");
 
+    // J: 开启多个输入
+    //
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Boolean> TABLE_OPTIMIZER_MULTIPLE_INPUT_ENABLED =
             key("table.optimizer.multiple-input-enabled")

@@ -19,6 +19,7 @@
 package org.apache.flink.table.planner.runtime.stream.sql;
 
 /** Streaming sink File Compaction ITCase base for File system connector. */
+// 流接收文件压缩 ITCase 基础文件系统连接器
 public abstract class FileCompactionITCaseBase extends CompactionITCaseBase {
 
     protected abstract String format();

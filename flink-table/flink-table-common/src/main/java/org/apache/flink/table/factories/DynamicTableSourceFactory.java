@@ -34,6 +34,10 @@ import org.apache.flink.table.connector.source.DynamicTableSource;
 public interface DynamicTableSourceFactory extends DynamicTableFactory {
 
     /**
+     * 从 {@link CatalogTable} 和其他上下文信息创建一个 {@link DynamicTableSource} 实例。
+     *
+     * <p>实现应该在此方法中执行验证和进一步（嵌套）工厂的发现。
+     *
      * Creates a {@link DynamicTableSource} instance from a {@link CatalogTable} and additional
      * context information.
      *

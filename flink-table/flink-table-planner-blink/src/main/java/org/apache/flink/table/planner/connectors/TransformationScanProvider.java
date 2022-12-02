@@ -27,6 +27,8 @@ import org.apache.flink.table.connector.source.SourceProvider;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 生成 {@link Transformation} 作为 {@link ScanTableSource} 的运行时实现的提供程序。
+ *
  * Provider that produces a {@link Transformation} as a runtime implementation for {@link
  * ScanTableSource}.
  *

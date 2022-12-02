@@ -30,7 +30,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * 在{@link ResolvedSchema}中表示列。
+ * 在 {@link ResolvedSchema} 中表示列。
+ *
+ * <p>表列描述了 {@link PhysicalColumn}、{@link ComputedColumn} 或 {@link MetadataColumn}。
+ *
+ * <p>每一列都已完全解析。封闭的 {@link DataType} 指示列是否为时间属性，因此可能与原始数据类型不同。
  *
  * Representation of a column in a {@link ResolvedSchema}.
  *
@@ -154,6 +158,7 @@ public abstract class Column {
     // --------------------------------------------------------------------------------------------
 
     /** Representation of a physical column. */
+    // 物理列的表示。
     public static final class PhysicalColumn extends Column {
 
         private PhysicalColumn(String name, DataType dataType) {
@@ -182,8 +187,10 @@ public abstract class Column {
     }
 
     /** Representation of a computed column. */
+    // 计算列的表示。
     public static final class ComputedColumn extends Column {
 
+        // J: 计算列关联的已解析的表达式
         private final ResolvedExpression expression;
 
         private ComputedColumn(String name, DataType dataType, ResolvedExpression expression) {
@@ -237,6 +244,7 @@ public abstract class Column {
     }
 
     /** Representation of a metadata column. */
+    // 元数据列的表示。
     public static final class MetadataColumn extends Column {
 
         // J: 元数据键

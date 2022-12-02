@@ -32,7 +32,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 表操作符总是调用close。这是不带键的批处理操作符和流操作符的基类。
+ * 表操作符总是调用 close。这是不带键的批处理操作符和流操作符的基类。
  *
  * Table operator to invoke close always. This is a base class for both batch and stream operators
  * without key.
@@ -40,6 +40,7 @@ import static org.apache.flink.util.Preconditions.checkState;
 public abstract class TableStreamOperator<OUT> extends AbstractStreamOperator<OUT> {
 
     /** We listen to this ourselves because we don't have an {@link InternalTimerService}. */
+    // 自身监听，因为没有 {@link InternalTimerService}。
     protected long currentWatermark = Long.MIN_VALUE;
 
     private volatile boolean closed = false;
@@ -90,6 +91,7 @@ public abstract class TableStreamOperator<OUT> extends AbstractStreamOperator<OU
     }
 
     /** Information available in an invocation of processElement. */
+    // processElement 调用中可用的信息。
     protected class ContextImpl implements TimerService {
 
         protected final ProcessingTimeService timerService;

@@ -81,6 +81,7 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeCasts.suppor
 public final class DynamicSinkUtils {
 
     /** Converts an {@link TableResult#collect()} sink to a {@link RelNode}. */
+    // 将 {@link TableResult#collect()} 接收器转换为 {@link RelNode}。
     public static RelNode convertCollectToRel(
             FlinkRelBuilder relBuilder,
             RelNode input,
@@ -221,6 +222,11 @@ public final class DynamicSinkUtils {
     }
 
     /**
+     * 检查给定查询是否可以写入给定接收器的表模式。
+     *
+     * <p>它检查字段类型是否兼容（类型应该相等，包括精度）。如果类型不兼容，但可以隐式转换，则将应用转换投影。否则，
+     * 将抛出异常。
+     *
      * Checks if the given query can be written into the given sink's table schema.
      *
      * <p>It checks whether field types are compatible (types should be equal including precisions).
@@ -275,6 +281,8 @@ public final class DynamicSinkUtils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建一个投影，根据接收器使用的数据类型对物理列和元数据列进行重新排序。它将元数据列转换为预期的数据类型。
+     *
      * Creates a projection that reorders physical and metadata columns according to the consumed
      * data type of the sink. It casts metadata columns into the expected data type.
      *
@@ -361,6 +369,8 @@ public final class DynamicSinkUtils {
     }
 
     /**
+     * 准备给定的 {@link DynamicTableSink}。它检查接收器是否与 INSERT INTO 子句兼容并应用初始参数。
+     *
      * Prepares the given {@link DynamicTableSink}. It check whether the sink is compatible with the
      * INSERT INTO clause and applies initial parameters.
      */
@@ -379,6 +389,10 @@ public final class DynamicSinkUtils {
     }
 
     /**
+     * 返回所需元数据键的列表。按 {@link SupportsWritingMetadata#listWritableMetadata()} 的迭代顺序排序。
+     *
+     * <p>此方法假定接收器和模式已通过 {@link #prepareDynamicSink} 验证。
+     *
      * Returns a list of required metadata keys. Ordered by the iteration order of {@link
      * SupportsWritingMetadata#listWritableMetadata()}.
      *
@@ -404,6 +418,7 @@ public final class DynamicSinkUtils {
                 .collect(Collectors.toList());
     }
 
+    // J: Insert into 关联的写入匹配
     private static ValidationException createSchemaMismatchException(
             String cause,
             @Nullable ObjectIdentifier sinkIdentifier,
@@ -439,6 +454,7 @@ public final class DynamicSinkUtils {
 
     private static DataType fixSinkDataType(
             DataTypeFactory dataTypeFactory, DataType sinkDataType) {
+        // 忽略 NULL 约束，NULL 约束将在运行时检查
         // we ignore NULL constraint, the NULL constraint will be checked during runtime
         // see StreamExecSink and BatchExecSink
         return DataTypeUtils.transform(
@@ -481,6 +497,7 @@ public final class DynamicSinkUtils {
                         });
     }
 
+    // J: 针对 INSERT OVERWRITE 覆盖写入的能力判定 {SupportsOverwrite}
     private static void validateAndApplyOverwrite(
             ObjectIdentifier sinkIdentifier,
             boolean isOverwrite,
@@ -509,6 +526,7 @@ public final class DynamicSinkUtils {
                 .collect(Collectors.toList());
     }
 
+    // J: 提取元数据列中可持久化的
     private static List<Integer> extractPersistedMetadataColumns(ResolvedSchema schema) {
         final List<Column> columns = schema.getColumns();
         return IntStream.range(0, schema.getColumnCount())
@@ -545,6 +563,7 @@ public final class DynamicSinkUtils {
             return;
         }
 
+        // J: 针对 sink 表写入元数据校验 ability
         if (!(sink instanceof SupportsWritingMetadata)) {
             throw new ValidationException(
                     String.format(
@@ -613,6 +632,10 @@ public final class DynamicSinkUtils {
     }
 
     /**
+     * 返回接收器应作为运行时输出使用的 {@link DataType}。
+     *
+     * <p>格式如下：{@code PHYSICAL COLUMNS + PERSISTED METADATA COLUMNS}
+     *
      * Returns the {@link DataType} that a sink should consume as the output from the runtime.
      *
      * <p>The format looks as follows: {@code PHYSICAL COLUMNS + PERSISTED METADATA COLUMNS}

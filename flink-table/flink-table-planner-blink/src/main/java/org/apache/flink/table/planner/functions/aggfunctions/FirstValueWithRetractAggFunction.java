@@ -36,6 +36,7 @@ import java.util.Objects;
 import static org.apache.flink.table.types.utils.DataTypeUtils.toInternalDataType;
 
 /** Built-in FIRST_VALUE with retraction aggregate function. */
+// 内置具有回收聚合函数的 FIRST_VALUE。
 @Internal
 public final class FirstValueWithRetractAggFunction<T>
         extends BuiltInAggregateFunction<

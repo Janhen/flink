@@ -23,7 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Map;
 
 /**
- * 接口，该接口添加一组用于描述DDL信息的基于字符串的规范化属性。
+ * 接口，该接口添加一组用于描述 DDL 信息的基于字符串的规范化属性。
  *
  * <p>描述符的典型特征是:—描述符有一个默认构造函数—描述符本身包含很少的逻辑—相应的验证器验证正确性(目标:有一个单点验证)
  *

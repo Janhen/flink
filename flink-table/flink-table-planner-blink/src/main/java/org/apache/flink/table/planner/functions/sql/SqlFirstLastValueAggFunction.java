@@ -35,6 +35,8 @@ import org.apache.calcite.util.Optionality;
 import java.util.List;
 
 /**
+ * <code>FIRST_VALUE<code> 和 <code>LAST_VALUE<code> 聚合函数返回输入到函数的值列表中的第一个或最后一个值。
+ *
  * <code>FIRST_VALUE</code> and <code>LAST_VALUE</code> aggregate functions return the first or the
  * last value in a list of values that are input to the function.
  *

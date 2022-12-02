@@ -30,7 +30,7 @@ import java.util.TreeMap;
 import java.util.function.Supplier;
 
 /**
- * TopNBuffer存储从排序键到记录列表的映射，sortKey是RowData类型，每条记录都是RowData类型。TopNBuffer还可以跟踪
+ * TopNBuffer 存储从排序键到记录列表的映射，sortKey 是 RowData 类型，每条记录都是 RowData 类型。TopNBuffer 还可以跟踪
  * 每条记录的秩数。
  *
  * TopNBuffer stores mapping from sort key to records list, sortKey is RowData type, each record is
@@ -249,6 +249,8 @@ public class TopNBuffer implements Serializable {
     }
 
     /**
+     * 检查记录是否应该放入缓冲区。
+     *
      * Checks whether the record should be put into the buffer.
      *
      * @param sortKey sortKey to test

@@ -34,6 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 支持读取元数据列的 {@link ScanTableSource} 接口。
+ *
+ * <p>元数据列将额外的列添加到表的架构中。表源负责在生成的行末尾添加请求的元数据列。这包括可能从包含的格式转发元数据列。
+ *
  * Interface for {@link ScanTableSource}s that support reading metadata columns.
  *
  * <p>Metadata columns add additional columns to the table's schema. A table source is responsible

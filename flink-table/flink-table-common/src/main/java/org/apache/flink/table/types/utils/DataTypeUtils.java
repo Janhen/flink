@@ -129,6 +129,10 @@ public final class DataTypeUtils {
     }
 
     /**
+     * 通过返回仅包含给定索引字段的新数据类型来投影（可能嵌套的）行数据类型。
+     *
+     * <p>注意：此方法仅投影（可能嵌套）顶级行中的字段。
+     *
      * Projects a (possibly nested) row data type by returning a new data type that only includes
      * fields of the given indices.
      *
@@ -141,6 +145,7 @@ public final class DataTypeUtils {
     }
 
     /** Removes a string prefix from the fields of the given row data type. */
+    // 从给定行数据类型的字段中删除字符串前缀。
     public static DataType stripRowPrefix(DataType dataType, String prefix) {
         Preconditions.checkArgument(
                 hasRoot(dataType.getLogicalType(), LogicalTypeRoot.ROW), "Row data type expected.");
@@ -325,6 +330,8 @@ public final class DataTypeUtils {
     }
 
     /**
+     * 返回给定数据类型的第一级平面表示的数据类型。
+     *
      * Returns the data types of the flat representation in the first level of the given data type.
      */
     public static List<DataType> flattenToDataTypes(DataType dataType) {
@@ -338,6 +345,7 @@ public final class DataTypeUtils {
     }
 
     /** Returns the names of the flat representation in the first level of the given data type. */
+    // 返回给定数据类型的第一级平面表示的名称。
     public static List<String> flattenToNames(DataType dataType) {
         return flattenToNames(dataType, Collections.emptyList());
     }
@@ -371,6 +379,7 @@ public final class DataTypeUtils {
     }
 
     /** Returns a PROCTIME data type. */
+    // 返回 PROCTIME 数据类型。
     public static DataType createProctimeDataType() {
         return new AtomicDataType(new LocalZonedTimestampType(true, TimestampKind.PROCTIME, 3));
     }

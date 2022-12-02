@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /** A {@link KeyedCoProcessOperator} that supports holding back watermarks with a static delay. */
+// {@link KeyedCoProcessOperator} 支持使用静态延迟阻止水印。
 public class KeyedCoProcessOperatorWithWatermarkDelay<K, IN1, IN2, OUT>
         extends KeyedCoProcessOperator<K, IN1, IN2, OUT> {
 

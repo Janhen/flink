@@ -37,7 +37,7 @@ import org.apache.calcite.sql.validate.SqlValidatorScope;
 import static org.apache.calcite.util.Static.RESOURCE;
 
 /**
- * 描述符在函数中作为参数出现。DESCRIPTOR接受一个表示名称列表的标识符列表。名称的解释留给函数。
+ * 描述符在函数中作为参数出现。DESCRIPTOR 接受一个表示名称列表的标识符列表。名称的解释留给函数。
  *
  * DESCRIPTOR appears as an argument in a function. DESCRIPTOR accepts a list of identifiers that
  * represent a list of names. The interpretation of names is left to the function.

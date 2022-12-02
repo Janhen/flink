@@ -27,6 +27,11 @@ import static org.apache.flink.table.runtime.util.SegmentsUtil.allocateReuseByte
 import static org.apache.flink.table.runtime.util.SegmentsUtil.allocateReuseChars;
 
 /**
+ * 字符串 utf-8 实用程序。
+ *
+ * <p>{@code StringUtf8Utils} 参考阿里 fastjson 的 SerializeWriter和IOUtils的实现。不同的是StringUtf8Utils
+ * 需要处理错码，就像StringCoding.decode一样。
+ *
  * String utf-8 utils.
  *
  * <p>{@code StringUtf8Utils} refers to the implementation from SerializeWriter and IOUtils of

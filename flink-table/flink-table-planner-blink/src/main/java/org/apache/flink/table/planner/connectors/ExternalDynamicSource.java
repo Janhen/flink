@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Table source for connecting to the external {@link DataStream} API. */
+// 用于连接到外部 {@link DataStream} API 的表源。
 @Internal
 final class ExternalDynamicSource<E>
         implements ScanTableSource, SupportsReadingMetadata, SupportsSourceWatermark {
@@ -59,8 +60,10 @@ final class ExternalDynamicSource<E>
 
     // mutable attributes
 
+    // J: 生成 rowtime 的元数据
     private boolean produceRowtimeMetadata;
 
+    // J:
     private boolean propagateWatermark;
 
     ExternalDynamicSource(
@@ -130,6 +133,7 @@ final class ExternalDynamicSource<E>
 
     @Override
     public Map<String, DataType> listReadableMetadata() {
+        // J: DataStream => Table 时，提供 rowtime 的元数据列
         return Collections.singletonMap(ROWTIME_METADATA_KEY, ROWTIME_METADATA_DATA_TYPE);
     }
 

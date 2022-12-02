@@ -25,6 +25,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * RankRange为Rank，包括以下3种类型：ConstantRankRange、ConstantRankRangeWithoutEnd、VariableRankRange。
+ *
  * RankRange for Rank, including following 3 types : ConstantRankRange, ConstantRankRangeWithoutEnd,
  * VariableRankRange.
  */

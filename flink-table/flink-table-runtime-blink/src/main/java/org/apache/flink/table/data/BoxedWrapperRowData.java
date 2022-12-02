@@ -32,6 +32,9 @@ import org.apache.flink.util.StringUtils;
 import java.util.Arrays;
 
 /**
+ * {@link RowData} 的实现，它也由一组 Java {@link Object} 支持，类似于 {@link GenericRowData}。但是
+ * {@link BoxedWrapperRowData} 将基本类型包装到装箱对象中以避免装箱和拆箱。
+ *
  * An implementation of {@link RowData} which also is also backed by an array of Java {@link
  * Object}, just similar to {@link GenericRowData}. But {@link BoxedWrapperRowData} wraps primitive
  * types into boxed object to avoid boxing and unboxing.

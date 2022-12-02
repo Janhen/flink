@@ -34,6 +34,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * 用于调用聚合函数的解析和验证表达式。
+ *
+ * <p>聚合调用包含：
+ *
  * Resolved and validated expression for calling an aggregate function.
  *
  * <p>A aggregate call contains:

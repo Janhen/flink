@@ -67,16 +67,20 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 一个基于{@link WindowAssigner}和{@link Trigger}实现窗口逻辑的操作符。
+ * 一个基于 {@link WindowAssigner} 和 {@link Trigger} 实现窗口逻辑的操作符。
  *
- * <p>这是{@link AggregateWindowOperator}和{@link TableAggregateWindowOperator}的基类。
- *   {@link AggregateWindowOperator}和{@link TableAggregateWindowOperator}之间的最大区别是
- *   {@link AggregateWindowOperator}对每个聚合组只发出一个结果，而{@link TableAggregateWindowOperator}
+ * <p>这是 {@link AggregateWindowOperator} 和 {@link TableAggregateWindowOperator} 的基类。
+ *   {@link AggregateWindowOperator} 和 {@link TableAggregateWindowOperator} 之间的最大区别是
+ *   {@link AggregateWindowOperator} 对每个聚合组只发出一个结果，而 {@link TableAggregateWindowOperator}
  *   可以为每个聚合组发出多个结果。
  *
- * <p>当一个元素到达时，它被分配一个键使用{@link KeySelector}，它被分配到零或多个窗口使用{@link WindowAssigner}。
- *   在此基础上，将元素放入窗格中。窗格是具有相同键和相同{@code Window}的元素桶。如果一个元素被
- *   {@code WindowAssigner}分配给多个窗口，那么它可以在多个窗格中。
+ * <p>当一个元素到达时，它被分配一个键使用 {@link KeySelector}，它被分配到零或多个窗口使用 {@link WindowAssigner}。
+ *   在此基础上，将元素放入窗格中。窗格是具有相同键和相同 {@code Window} 的元素桶。如果一个元素被
+ *   {@code WindowAssigner}分 配给多个窗口，那么它可以在多个窗格中。
+ *
+ * <p>每个窗格都有自己提供的 {@code Trigger} 实例。此触发器确定何时应处理窗格的内容以发出结果。当触发器触发时，调用
+ *  给定的 {@link org.apache.flink.table.runtime.generated.NamespaceAggsHandleFunctionBase} 以生成为
+ *  {@code Trigger} 所属的窗格发出的结果。
  *
  * <p>参数类型:{@code <IN>}: RowData {@code <OUT>}: JoinedRowData(KEY, AGG_RESULT) {@code <KEY>}:
  *   GenericRowData {@code <AGG_RESULT>}: GenericRowData {@code <ACC>}: GenericRowData
@@ -146,7 +150,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     protected final boolean produceUpdates;
 
     /**
-     * 窗口的移位时区，如果proctime或rowtime类型为TIMESTAMP_LTZ，则移位时区为tablecconfig中配置的时区用户，
+     * 窗口的移位时区，如果 proctime 或 rowtime 类型为 TIMESTAMP_LTZ，则移位时区为tablecconfig中配置的时区用户，
      * 其他情况下，时区为UTC，这意味着在分配窗口时永远不会移位。
      *
      * The shift timezone of the window, if the proctime or rowtime type is TIMESTAMP_LTZ, the shift
@@ -162,7 +166,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
      * 元素允许的延迟。这用于:
      *
      *   <li>决定一个元素是否应该由于延迟而从窗口中删除。
-     *   <li>当系统时间超过{@code 窗口时，清除窗口状态。maxTimestamp + allowedlate} landmark。
+     *   <li>当系统时间超过 {@code 窗口时，清除窗口状态。maxTimestamp + allowedlate} landmark。
      *
      * The allowed lateness for elements. This is used for:
      *
@@ -189,7 +193,7 @@ public abstract class WindowOperator<K, W extends Window> extends AbstractStream
     protected transient TimestampedCollector<RowData> collector;
 
     /** Flag to prevent duplicate function.close() calls in close() and dispose(). */
-    // 标志以防止在close()和dispose()中重复调用function.close()。
+    // 标志以防止在 close() 和 dispose() 中重复调用 function.close()。
     private transient boolean functionsClosed = false;
 
     private transient InternalTimerService<W> internalTimerService;

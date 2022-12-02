@@ -24,6 +24,10 @@ import org.apache.flink.table.runtime.generated.WatermarkGenerator;
 import javax.annotation.Nullable;
 
 /**
+ * 行时间属性的水印生成器，这些属性在有限的时间间隔内乱序。
+ *
+ * <p>发出水印，它是观察到的时间戳减去指定的延迟。
+ *
  * A watermark generator for rowtime attributes which are out-of-order by a bounded time interval.
  *
  * <p>Emits watermarks which are the observed timestamp minus the specified delay.

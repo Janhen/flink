@@ -32,9 +32,9 @@ import static org.apache.flink.table.data.binary.BinaryRowData.calculateBitSetWi
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
- * 它的内存存储结构与{@link BinaryRowData}完全相同。唯一不同的是,{@link NestedRowData}用于存储行值的变长部分
- * {@link BinaryRowData},每个领域(包括固定长度的部分和可变长度部分){@link NestedRowData}有可能跨越边界的一段,
- * 而{@link BinaryRowData}的固定长度的部分必须适合它的第一个内存段。
+ * 它的内存存储结构与 {@link BinaryRowData} 完全相同。唯一不同的是,{@link NestedRowData} 用于存储行值的变长部分
+ * {@link BinaryRowData},每个领域(包括固定长度的部分和可变长度部分) {@link NestedRowData} 有可能跨越边界的一段,
+ * 而 {@link BinaryRowData} 的固定长度的部分必须适合它的第一个内存段。
  *
  * Its memory storage structure is exactly the same with {@link BinaryRowData}. The only different
  * is that, as {@link NestedRowData} is used to store row value in the variable-length part of

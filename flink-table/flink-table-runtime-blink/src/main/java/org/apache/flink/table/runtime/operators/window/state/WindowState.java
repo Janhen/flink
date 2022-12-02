@@ -19,6 +19,7 @@
 package org.apache.flink.table.runtime.operators.window.state;
 
 /** A base interface for manipulate state with window namespace. */
+// 使用窗口命名空间操作状态的基本接口。
 public interface WindowState<W> {
 
     /** Removes the value mapped under current key and the given window. */

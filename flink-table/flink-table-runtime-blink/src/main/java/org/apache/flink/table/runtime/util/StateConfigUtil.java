@@ -24,6 +24,7 @@ import org.apache.flink.runtime.checkpoint.CheckpointType;
 import org.apache.flink.runtime.state.KeyedStateBackend;
 
 /** Utility to create a {@link StateTtlConfig} object. */
+// 创建 {@link StateTtlConfig} 对象的实用程序。
 public class StateConfigUtil {
     /**
      * Creates a {@link StateTtlConfig} depends on retentionTime parameter.

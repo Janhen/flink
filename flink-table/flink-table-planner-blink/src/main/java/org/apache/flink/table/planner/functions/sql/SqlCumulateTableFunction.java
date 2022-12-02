@@ -23,6 +23,15 @@ import org.apache.calcite.sql.SqlCallBinding;
 import org.apache.calcite.sql.SqlOperator;
 
 /**
+ * SqlCumulateTableFunction 实现了一个累积运算符。
+ *
+ * <p>它允许四个参数：
+ *
+ *   <li>一个表
+ *   <li>一个描述符，用于提供来自输入表的时间属性列名
+ *   <li>一个间隔参数，用于指定要增加的窗口大小。
+ *   <li>一个间隔参数来指定窗口大小的最大长度
+ *
  * SqlCumulateTableFunction implements an operator for cumulative.
  *
  * <p>It allows four parameters:
@@ -41,6 +50,7 @@ public class SqlCumulateTableFunction extends SqlWindowTableFunction {
     }
 
     /** Operand type checker for CUMULATE. */
+    // CUMULATE 的操作数类型检查器。
     private static class OperandMetadataImpl extends AbstractOperandMetadata {
         OperandMetadataImpl() {
             super(
@@ -67,6 +77,7 @@ public class SqlCumulateTableFunction extends SqlWindowTableFunction {
 
         @Override
         public String getAllowedSignatures(SqlOperator op, String opName) {
+            // J: 允许的 SQL 声明情况
             return opName
                     + "(TABLE table_name, DESCRIPTOR(timecol), "
                     + "datetime interval, datetime interval)";

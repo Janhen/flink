@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Internal;
 import java.time.ZoneId;
 
 /**
+ * 用于处理窗口时间和计时器的界面，考虑了窗口拆分的时区。
+ *
  * Interface for working with window time and timers which considers timezone for window splitting.
  *
  * @param <W> Type of the window namespace to which timers are scoped.

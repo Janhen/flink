@@ -52,6 +52,12 @@ import java.util.TreeMap;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * TopN 函数可以处理更新流。它是 {@link RetractableTopNFunction} 的快速版本，它只保存状态中的前 n 个数据，
+ * 并在堆中保留排序的映射。但该功能仅在某些特殊场景下有效：
+ * 1.排序字段排序规则为升序单声道递减，或排序字段排序规则为降序单声道递增
+ * 2.输入数据具有唯一键且唯一键必须包含分区键
+ * 3.输入流不能包含 DELETE 记录或 UPDATE_BEFORE 记录
+ *
  * A TopN function could handle updating stream. It is a fast version of {@link
  * RetractableTopNFunction} which only hold top n data in state, and keep sorted map in heap.
  * However, the function only works in some special scenarios: 1. sort field collation is ascending
@@ -525,6 +531,7 @@ public class UpdatableTopNFunction extends AbstractTopNFunction implements Check
     private class RankRow {
         private final RowData row;
         private int innerRank;
+        // J: 排名行  是否是脏数据
         private boolean dirty;
 
         private RankRow(RowData row, int innerRank, boolean dirty) {

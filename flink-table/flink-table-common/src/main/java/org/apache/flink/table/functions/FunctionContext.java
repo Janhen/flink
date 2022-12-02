@@ -29,7 +29,7 @@ import java.io.File;
 import java.util.Set;
 
 /**
- * {@link FunctionContext}允许获取关于用户定义函数执行上下文的全局运行时信息。
+ * {@link FunctionContext} 允许获取关于用户定义函数执行上下文的全局运行时信息。
  *
  * <p>包括指标组、分布式缓存文件、全局作业参数。
  *
@@ -44,6 +44,8 @@ public class FunctionContext {
     private RuntimeContext context;
 
     /**
+     * 包装底层 {@link RuntimeContext}。
+     *
      * Wraps the underlying {@link RuntimeContext}.
      *
      * @param context the runtime context in which Flink's {@link Function} is executed.
@@ -53,6 +55,8 @@ public class FunctionContext {
     }
 
     /**
+     * 返回此并行子任务的指标组。
+     *
      * Returns the metric group for this parallel subtask.
      *
      * @return metric group for this parallel subtask.
@@ -62,6 +66,8 @@ public class FunctionContext {
     }
 
     /**
+     * 获取分布式缓存文件的本地临时文件副本。
+     *
      * Gets the local temporary file copy of a distributed cache files.
      *
      * @param name distributed cache file name
@@ -72,6 +78,8 @@ public class FunctionContext {
     }
 
     /**
+     * 获取与给定键关联的全局作业参数值作为字符串。
+     *
      * Gets the global job parameter value associated with the given key as a string.
      *
      * @param key key pointing to the associated value

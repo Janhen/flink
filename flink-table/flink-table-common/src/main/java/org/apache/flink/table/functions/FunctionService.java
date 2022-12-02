@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 使用 {@link FunctionDescriptor} 创建 {@link UserDefinedFunction} 的配置实例的服务。
+ *
  * Service for creating configured instances of {@link UserDefinedFunction} using a {@link
  * FunctionDescriptor}.
  */
@@ -47,6 +49,8 @@ public class FunctionService {
     private static final Logger LOG = LoggerFactory.getLogger(FunctionService.class);
 
     /**
+     * 使用给定的属性和当前线程的上下文类加载器创建用户定义的函数。
+     *
      * Creates a user-defined function with the given properties and the current thread's context
      * class loader.
      *
@@ -58,6 +62,8 @@ public class FunctionService {
     }
 
     /**
+     * 创建具有给定属性的用户定义函数。
+     *
      * Creates a user-defined function with the given properties.
      *
      * @param descriptor the descriptor that describes a function
@@ -70,6 +76,8 @@ public class FunctionService {
     }
 
     /**
+     * 创建具有给定属性的用户定义函数。
+     *
      * Creates a user-defined function with the given properties.
      *
      * @param descriptor the descriptor that describes a function
@@ -137,6 +145,8 @@ public class FunctionService {
     }
 
     /**
+     * 根据给定的属性递归生成类的实例。
+     *
      * Recursively generate an instance of a class according the given properties.
      *
      * @param keyPrefix the prefix to fetch properties

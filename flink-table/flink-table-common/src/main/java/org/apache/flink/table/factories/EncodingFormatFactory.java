@@ -25,6 +25,12 @@ import org.apache.flink.table.connector.format.Format;
 import org.apache.flink.table.connector.sink.DynamicTableSink;
 
 /**
+ * 为 {@link DynamicTableSink} 配置 {@link EncodingFormat} 的基本接口。
+ *
+ * <p>根据外部系统的类型，连接器可能支持不同的行读取和写入编码。该接口有助于使此类格式可插入。
+ *
+ * <p>创建的 {@link Format} 实例是一种中间表示，可用于在后续步骤中构造运行时实现。
+ *
  * Base interface for configuring an {@link EncodingFormat} for a {@link DynamicTableSink}.
  *
  * <p>Depending on the kind of external system, a connector might support different encodings for

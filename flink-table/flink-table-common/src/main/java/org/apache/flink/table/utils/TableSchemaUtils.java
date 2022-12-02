@@ -98,6 +98,7 @@ public class TableSchemaUtils {
     }
 
     /** Returns true if there are only physical columns in the given {@link TableSchema}. */
+    // 如果给定的 {@link TableSchema} 中只有物理列，则返回 true
     public static boolean containsPhysicalColumnsOnly(TableSchema schema) {
         Preconditions.checkNotNull(schema);
         return schema.getTableColumns().stream().allMatch(TableColumn::isPhysical);

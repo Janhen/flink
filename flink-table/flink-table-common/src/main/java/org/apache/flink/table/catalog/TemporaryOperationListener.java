@@ -32,6 +32,9 @@ import org.apache.flink.table.catalog.exceptions.CatalogException;
 public interface TemporaryOperationListener {
 
     /**
+     * 当要在此目录中创建临时表或视图时调用此方法。目录可以根据需要修改表或视图，并返回修改后的 CatalogBaseTable
+     * 实例，该实例将为用户会话存储。
+     *
      * This method is called when a temporary table or view is to be created in this catalog. The
      * catalog can modify the table or view according to its needs and return the modified
      * CatalogBaseTable instance, which will be stored for the user session.
@@ -53,6 +56,9 @@ public interface TemporaryOperationListener {
     void onDropTemporaryTable(ObjectPath tablePath) throws CatalogException;
 
     /**
+     * 当要在此目录中创建临时函数时调用此方法。目录可以根据需要修改函数并返回修改后的 CatalogFunction 实例，该实例
+     * 将为用户会话存储。
+     *
      * This method is called when a temporary function is to be created in this catalog. The catalog
      * can modify the function according to its needs and return the modified CatalogFunction
      * instance, which will be stored for the user session.
@@ -66,6 +72,8 @@ public interface TemporaryOperationListener {
             throws CatalogException;
 
     /**
+     * 当要删除此目录中的临时函数时调用此方法。
+     *
      * This method is called when a temporary function in this catalog is to be dropped.
      *
      * @param functionPath path of the function to be dropped

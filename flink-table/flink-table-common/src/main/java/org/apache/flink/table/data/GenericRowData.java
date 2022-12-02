@@ -30,7 +30,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 一个内部数据结构，表示{@link RowType}和其他(可能嵌套的)结构化类型的数据，如{@link StructuredType}。
+ * 一个内部数据结构，表示 {@link RowType} 和其他(可能嵌套的)结构化类型的数据，如 {@link StructuredType}。
  *
  * An internal data structure representing data of {@link RowType} and other (possibly nested)
  * structured types such as {@link StructuredType}.

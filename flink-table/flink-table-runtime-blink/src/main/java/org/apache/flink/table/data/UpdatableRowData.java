@@ -21,6 +21,8 @@ import org.apache.flink.table.data.binary.TypedSetters;
 import org.apache.flink.types.RowKind;
 
 /**
+ * {@link RowData} 的实现，由 {@link RowData} 和更新的 Java 对象数组支持。
+ *
  * An implementation of {@link RowData} which is backed by a {@link RowData} and an updated Java
  * object array.
  */

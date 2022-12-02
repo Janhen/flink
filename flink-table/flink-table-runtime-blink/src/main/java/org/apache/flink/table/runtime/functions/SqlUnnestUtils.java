@@ -38,7 +38,7 @@ import org.apache.flink.table.types.utils.DataTypeUtils;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRoot;
 
 /** Utility for handling SQL's {@code UNNEST}. */
-// 用于处理SQL的{@code UNNEST}的实用程序。
+// 用于处理 SQL 的 {@code UNNEST} 的实用程序。
 @Internal
 public final class SqlUnnestUtils {
 

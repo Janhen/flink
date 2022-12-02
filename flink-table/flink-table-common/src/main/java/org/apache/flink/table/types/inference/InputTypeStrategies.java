@@ -88,6 +88,9 @@ public final class InputTypeStrategies {
     }
 
     /**
+     * 使用一系列 {@link ArgumentTypeStrategy} 的不同函数签名的策略，如 {@code f(INT, STRING, NUMERIC...)}。
+     * 前 n - 1 个参数必须是常量。第 n 个参数可以出现 0 次、1 次或更多次。
+     *
      * Strategy for a varying function signature like {@code f(INT, STRING, NUMERIC...)} using a
      * sequence of {@link ArgumentTypeStrategy}s. The first n - 1 arguments must be constant. The
      * n-th argument can occur 0, 1, or more times.
@@ -199,6 +202,7 @@ public final class InputTypeStrategies {
             new LiteralArgumentTypeStrategy(true);
 
     /** Strategy that checks that the argument has a composite type. */
+    // 检查参数是否具有复合类型的策略
     public static final ArgumentTypeStrategy COMPOSITE = new CompositeArgumentTypeStrategy();
 
     /**

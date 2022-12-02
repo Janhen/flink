@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /** Operator for batch sort limit. */
+// 批量排序限制的运算符。
 public class SortLimitOperator extends TableStreamOperator<RowData>
         implements OneInputStreamOperator<RowData, RowData>, BoundedOneInput {
 
@@ -42,6 +43,7 @@ public class SortLimitOperator extends TableStreamOperator<RowData>
     private final long limitEnd;
     private GeneratedRecordComparator genComparator;
 
+    // J: sort
     private transient PriorityQueue<RowData> heap;
     private transient Collector<RowData> collector;
     private transient RecordComparator comparator;

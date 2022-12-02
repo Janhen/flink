@@ -38,6 +38,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 运行时实现的基类表示为 {@link ScalarFunction}，它是从
+ * {@link BuiltInFunctionDefinition#specialize(SpecializedContext)} 构建的。
+ *
  * Base class for runtime implementation represented as {@link ScalarFunction} that is constructed
  * from {@link BuiltInFunctionDefinition#specialize(SpecializedContext)}.
  *

@@ -163,9 +163,11 @@ public class RowtimeValidator implements DescriptorValidator {
         }
 
         // create watermark strategy
+        // 创建水印策略
         WatermarkStrategy strategy;
         String s = properties.getString(prefix + ROWTIME_WATERMARKS_TYPE);
         switch (s) {
+            // J: z周期性上升
             case ROWTIME_WATERMARKS_TYPE_VALUE_PERIODIC_ASCENDING:
                 strategy = new AscendingTimestamps();
                 break;

@@ -35,6 +35,10 @@ import java.util.Optional;
 import static org.apache.flink.table.types.inference.strategies.StrategyUtils.findDataType;
 
 /**
+ * 对应于给定 {@link LogicalTypeRoot} 和可空性的参数的策略。
+ *
+ * <p>如果可能，将插入隐式转换。
+ *
  * Strategy for an argument that corresponds to a given {@link LogicalTypeRoot} and nullability.
  *
  * <p>Implicit casts will be inserted if possible.

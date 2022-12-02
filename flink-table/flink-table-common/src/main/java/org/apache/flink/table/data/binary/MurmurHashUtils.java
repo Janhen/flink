@@ -24,7 +24,7 @@ import org.apache.flink.core.memory.MemorySegment;
 import static org.apache.flink.core.memory.MemoryUtils.UNSAFE;
 
 /** Murmur Hash. This is inspired by Guava's Murmur3_32HashFunction. */
-// murmur 散列。这是受到Guava的Murmur3_32HashFunction的启发。
+// murmur 散列。这是受到 Guava 的 Murmur3_32HashFunction 的启发。
 @Internal
 final class MurmurHashUtils {
 

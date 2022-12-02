@@ -23,7 +23,7 @@ import org.apache.flink.table.data.DecimalData;
 import org.apache.flink.table.data.TimestampData;
 
 /**
- * 提供类型专用setter以减少ifelse并消除box和unbox。这主要用于二进制格式，如{@link BinaryRowData}。
+ * 提供类型专用 setter 以减少 ifelse 并消除 box 和 unbox。这主要用于二进制格式，如 {@link BinaryRowData}。
  *
  * Provide type specialized setters to reduce if/else and eliminate box and unbox. This is mainly
  * used on the binary format such as {@link BinaryRowData}.

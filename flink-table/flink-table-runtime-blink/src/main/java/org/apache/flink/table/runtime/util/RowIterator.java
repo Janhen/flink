@@ -23,6 +23,8 @@ import org.apache.flink.table.data.RowData;
 import java.util.Iterator;
 
 /**
+ * 一个内部迭代器接口，它提供比 {@link Iterator} 更严格的 API。
+ *
  * An internal iterator interface which presents a more restrictive API than {@link Iterator}.
  *
  * <p>One major departure from the Java iterator API is the fusing of the `hasNext()` and `next()`

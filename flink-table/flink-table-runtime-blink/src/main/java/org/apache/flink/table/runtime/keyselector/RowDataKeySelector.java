@@ -24,7 +24,7 @@ import org.apache.flink.table.data.RowData;
 import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 
 /** RowDataKeySelector takes an RowData and extracts the deterministic key for the RowData. */
-// RowDataKeySelector接受RowData并提取RowData的确定性键。
+// RowDataKeySelector 接受 RowData 并提取 RowData 的确定性键。
 public interface RowDataKeySelector
         extends KeySelector<RowData, RowData>, ResultTypeQueryable<RowData> {
 

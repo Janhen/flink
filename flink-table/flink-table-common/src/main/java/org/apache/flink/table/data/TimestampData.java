@@ -202,6 +202,8 @@ public final class TimestampData implements Comparable<TimestampData> {
     }
 
     /**
+     * 返回时间戳数据是否小到可以以毫秒为单位存储。
+     *
      * Returns whether the timestamp data is small enough to be stored in a long of milliseconds.
      */
     public static boolean isCompact(int precision) {

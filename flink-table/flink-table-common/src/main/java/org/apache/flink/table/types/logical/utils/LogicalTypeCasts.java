@@ -269,6 +269,12 @@ public final class LogicalTypeCasts {
     }
 
     /**
+     * 返回源类型是否可以转换为目标类型。
+     *
+     * <p>显式转换对应于 SQL 转换规范并表示 {@code CAST(sourceType AS targetType)} 操作背后的逻辑。例如，它
+     * 允许将 {@link LogicalTypeFamily#PREDEFINED} 系列的大多数类型转换为
+     * {@link LogicalTypeFamily#CHARACTER_STRING} 系列的类型。
+     *
      * Returns whether the source type can be casted to the target type.
      *
      * <p>Explicit casts correspond to the SQL cast specification and represent the logic behind a
@@ -420,6 +426,7 @@ public final class LogicalTypeCasts {
     private static class CastingRuleBuilder {
 
         private final LogicalTypeRoot targetType;
+        // J: 隐式、显式转换类型
         private final Set<LogicalTypeRoot> implicitSourceTypes = new HashSet<>();
         private final Set<LogicalTypeRoot> explicitSourceTypes = new HashSet<>();
 
@@ -483,6 +490,7 @@ public final class LogicalTypeCasts {
     // --------------------------------------------------------------------------------------------
 
     /** Checks if a source type can safely be interpreted as the target type. */
+    // 检查源类型是否可以安全地解释为目标类型。
     private static class CastAvoidanceChecker extends LogicalTypeDefaultVisitor<Boolean> {
 
         private final LogicalType sourceType;

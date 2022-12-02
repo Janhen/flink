@@ -62,6 +62,12 @@ public class BinaryStringDataUtil {
     }
 
     /**
+     * 将提供的文本拆分为数组，指定分隔符字符串。
+     *
+     * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为空标记的分隔符。
+     *
+     * <p>{@code null} 分隔符在空格处拆分。
+     *
      * Splits the provided text into an array, separator string specified.
      *
      * <p>The separator is not included in the returned String array. Adjacent separators are

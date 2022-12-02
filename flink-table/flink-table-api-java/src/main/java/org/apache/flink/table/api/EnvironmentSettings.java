@@ -37,6 +37,8 @@ import static org.apache.flink.configuration.ExecutionOptions.RUNTIME_MODE;
 import static org.apache.flink.table.api.config.TableConfigOptions.TABLE_PLANNER;
 
 /**
+ * 定义初始化表环境的所有参数。这些参数只在实例化{@link TableEnvironment}时使用，之后不能更改。
+ *
  * Defines all parameters that initialize a table environment. Those parameters are used only during
  * instantiation of a {@link TableEnvironment} and cannot be changed afterwards.
  *

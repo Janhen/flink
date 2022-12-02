@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /** Base class for flink {@link Schema}, which provides some default implementations. */
+// flink {@link Schema} 的基类，它提供了一些默认实现。
 public abstract class FlinkSchema implements Schema {
 
     @Override

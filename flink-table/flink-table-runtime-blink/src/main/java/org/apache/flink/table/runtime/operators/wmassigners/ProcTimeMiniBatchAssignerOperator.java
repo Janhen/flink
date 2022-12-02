@@ -29,6 +29,14 @@ import org.apache.flink.streaming.runtime.tasks.ProcessingTimeCallback;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 在给定时间段内发出小批量标记的流运算符。这个小批量分配器在处理时间内工作，这意味着小批量标记是在给定的时间段内使用
+ * 处理时间生成的。一旦收到的 mini-batch id 前进，下游运营商将触发 mini-batch。
+ *
+ * <p>注意：目前，我们使用{@link Watermark} 来表示小批量标记。
+ *
+ * <p>该算子与{@link RowTimeMiniBatchAssginerOperator}的区别在于，该算子利用处理时间自行生成水印，而另一个算子
+ *   从上游转发水印。
+ *
  * A stream operator that emits mini-batch marker in a given period. This mini-batch assigner works
  * in processing time, which means the mini-batch marker is generated in the given period using the
  * processing time. The downstream operators will trigger mini-batch once the received mini-batch id

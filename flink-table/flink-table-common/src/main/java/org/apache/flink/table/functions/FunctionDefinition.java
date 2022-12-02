@@ -45,6 +45,15 @@ public interface FunctionDefinition {
     FunctionKind getKind();
 
     /**
+     * 返回执行对此函数定义的调用的类型推断的逻辑。
+     *
+     * <p>类型推断过程负责推断未知类型的输入参数、验证输入参数并生成结果类型。类型推断过程独立于函数体发生。类型推断
+     * 的输出用于搜索相应的运行时实现。
+     *
+     * <p>可以使用 {@link TypeInference#newBuilder()} 创建类型推断的实例。
+     *
+     * <p>有关具体使用示例，请参阅 {@link BuiltInFunctionDefinitions}。
+     *
      * Returns the logic for performing type inference of a call to this function definition.
      *
      * <p>The type inference process is responsible for inferring unknown types of input arguments,
@@ -59,11 +68,21 @@ public interface FunctionDefinition {
     TypeInference getTypeInference(DataTypeFactory typeFactory);
 
     /** Returns the set of requirements this definition demands. */
+    // 返回此定义要求的要求集。
     default Set<FunctionRequirement> getRequirements() {
         return Collections.emptySet();
     }
 
     /**
+     * 返回有关函数结果的确定性的信息。
+     *
+     * <p>它返回 <code>true<code> 当且仅当保证调用此函数总是返回相同的结果给定相同的参数。 <code>true<code>
+     *   默认采用。如果函数不像 <code>random(), date(), now(), ... <code> 那样是纯粹的函数，则此方法必须返回
+     *   <code>false<code>。
+     *
+     * <p>此外，如果规划器应始终在集群端执行此功能，则返回 <code>false<code>。换句话说：计划者在计划对该函数的常量
+     * 调用期间不应执行常量表达式缩减。
+     *
      * Returns information about the determinism of the function's results.
      *
      * <p>It returns <code>true</code> if and only if a call to this function is guaranteed to

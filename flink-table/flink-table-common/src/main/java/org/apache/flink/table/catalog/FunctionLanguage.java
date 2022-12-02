@@ -21,7 +21,7 @@ package org.apache.flink.table.catalog;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Categorizes the language semantics of a {@link CatalogFunction}. */
-// 对{@link CatalogFunction}的语言语义进行分类。
+// 对 {@link CatalogFunction} 的语言语义进行分类
 @PublicEvolving
 public enum FunctionLanguage {
     JAVA,

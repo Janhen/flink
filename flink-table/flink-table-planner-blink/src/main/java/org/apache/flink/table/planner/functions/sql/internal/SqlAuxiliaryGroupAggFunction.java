@@ -27,7 +27,7 @@ import org.apache.calcite.sql.type.OperandTypes;
 import org.apache.calcite.sql.type.ReturnTypes;
 
 /**
- * 一个内部的[[SqlAggFunction]]表示辅助组键，这些键不会被计算为键，也不会影响最终结果的正确性。
+ * 一个内部的 [[SqlAggFunction]] 表示辅助组键，这些键不会被计算为键，也不会影响最终结果的正确性。
  *
  * An internal [[SqlAggFunction]] to represents auxiliary group keys which will not be computed as
  * key and does not also affect the correctness of the final result.

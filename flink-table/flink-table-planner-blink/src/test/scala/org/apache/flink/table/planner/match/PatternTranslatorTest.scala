@@ -25,6 +25,7 @@ import org.apache.flink.table.api.TableException
 
 import org.junit.Test
 
+// J: 模式匹配
 class PatternTranslatorTest extends PatternTranslatorTestBase {
 
   @Test
@@ -311,6 +312,7 @@ class PatternTranslatorTest extends PatternTranslatorTestBase {
       null /* don't care */)
   }
 
+  // J: 排列模式
   @Test
   def testPermutationsAreNotSupported(): Unit = {
     thrown.expectMessage("Currently, CEP doesn't support PERMUTE patterns.")
@@ -347,6 +349,7 @@ class PatternTranslatorTest extends PatternTranslatorTestBase {
 
   @Test
   def testAlternationsAreNotSupported(): Unit = {
+    // J: 分支模式?
     thrown.expectMessage("Currently, CEP doesn't support branching patterns.")
     thrown.expect(classOf[TableException])
 

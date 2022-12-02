@@ -28,6 +28,28 @@ import org.apache.flink.table.types.DataType;
 import java.util.List;
 
 /**
+ * 允许下推本地聚合到 {@link ScanTableSource}。
+ *
+ * ...
+ *
+ * <p>为了提高效率，源可以将本地聚合进一步推入底层数据库或存储系统，以减少网络和计算开销。
+ *  ...
+ *
+ * <p>原来的{@code LocalHashAggregate}已经被移除，并下推到{@code TableSourceScan}中。同时，
+ *  {@code TableSourceScan}的输出数据类型发生了变化，为
+ *  {@code grouping sets}+ {@code the output of aggregate functions}的模式。
+ *
+ * <p>由于聚合的复杂性，目前聚合下推不支持一些更复杂的语句:
+ *
+ *   <li>复杂的聚合操作，如 ROLLUP, CUBE, GROUPING SETS
+ *   <li>聚合函数中调用表达式
+ *   <li>带有排序的聚合
+ *   <li>带有过滤的聚合
+ *
+ * <p>注:本地聚合下推策略为all或none，只有支持所有聚合函数时才可以下推。
+ *
+ * <p>注意:目前规划师不支持{@link SupportsAggregatePushDown}。
+ *
  * Enables to push down the local aggregates into a {@link ScanTableSource}.
  *
  * <p>Given the following example inventory table:

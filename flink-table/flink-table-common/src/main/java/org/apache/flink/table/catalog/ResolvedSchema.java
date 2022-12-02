@@ -45,7 +45,7 @@ import static org.apache.flink.table.types.utils.DataTypeUtils.removeTimeAttribu
 /**
  * 由列、约束和水印规范组成的表或视图的模式。
  *
- * <p>这个类是将{@link Schema}解析为最终经过验证的表示的结果。
+ * <p>这个类是将 {@link Schema} 解析为最终经过验证的表示的结果。
  *
  * Schema of a table or view consisting of columns, constraints, and watermark specifications.
  *

@@ -39,6 +39,8 @@ import java.nio.ByteOrder;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * {@link RowData} 的实现，由 {@link MemorySegment} 而不是 Object 支持。可以显着减少Java对象的序列化反序列化。
+ *
  * An implementation of {@link RowData} which is backed by {@link MemorySegment} instead of Object.
  * It can significantly reduce the serialization/deserialization of Java objects.
  *

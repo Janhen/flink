@@ -44,6 +44,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 一个 CoProcessFunction 来执行时间间隔（有时间限制的）流内部连接。两种时间标准
+ * ：“L.time between R.time + X and R.time + Y”或“R.time between L.time - Y and L.time - X”
+ * X 和 Y 可能是负数或正数，并且X <= Y。
+ *
  * A CoProcessFunction to execute time interval (time-bounded) stream inner-join. Two kinds of time
  * criteria: "L.time between R.time + X and R.time + Y" or "R.time between L.time - Y and L.time -
  * X" X and Y might be negative or positive and X <= Y.
@@ -55,6 +59,7 @@ abstract class TimeIntervalJoin extends KeyedCoProcessFunction<RowData, RowData,
     protected final long rightRelativeSize;
 
     // Minimum interval by which state is cleaned up
+    // 清除状态的最小间隔
     private final long minCleanUpInterval;
     protected final long allowedLateness;
     private final InternalTypeInfo<RowData> leftType;
@@ -65,20 +70,24 @@ abstract class TimeIntervalJoin extends KeyedCoProcessFunction<RowData, RowData,
     private transient EmitAwareCollector joinCollector;
 
     // cache to store rows form the left stream
+    // 缓存以存储左流中的行
     private transient MapState<Long, List<Tuple2<RowData, Boolean>>> leftCache;
     // cache to store rows from the right stream
     private transient MapState<Long, List<Tuple2<RowData, Boolean>>> rightCache;
 
     // state to record the timer on the left stream. 0 means no timer set
+    // state 记录左侧流上的定时器。 0 表示没有定时器设置
     private transient ValueState<Long> leftTimerState;
     // state to record the timer on the right stream. 0 means no timer set
     private transient ValueState<Long> rightTimerState;
 
     // Points in time until which the respective cache has been cleaned.
+    // 清除相应缓存的时间点。
     private long leftExpirationTime = 0L;
     private long rightExpirationTime = 0L;
 
     // Current time on the respective input stream.
+    // 相应输入流的当前时间。
     protected long leftOperatorTime = 0L;
     protected long rightOperatorTime = 0L;
 

@@ -32,6 +32,8 @@ import java.io.Serializable;
 import java.time.ZoneId;
 
 /**
+ * 一种缓冲区，它在内存中缓冲数据并一次将多个值一起刷新到状态以避免频繁访问状态，或者刷新到输出以减少混洗数据。
+ *
  * A buffer that buffers data in memory and flushes many values to state together at a time to avoid
  * frequently accessing state, or flushes to output to reduce shuffling data.
  */

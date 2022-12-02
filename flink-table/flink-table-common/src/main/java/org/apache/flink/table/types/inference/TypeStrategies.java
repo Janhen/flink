@@ -59,6 +59,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeMerging.find
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /**
+ * 推断函数调用的输出或累加器数据类型的策略
+ *
  * Strategies for inferring an output or accumulator data type of a function call.
  *
  * @see TypeStrategy
@@ -70,30 +72,36 @@ public final class TypeStrategies {
     public static final TypeStrategy MISSING = new MissingTypeStrategy();
 
     /** Type strategy that returns a common, least restrictive type of all arguments. */
+    // 返回所有参数中最常见、限制最少的类型的类型策略
     public static final TypeStrategy COMMON = new CommonTypeStrategy();
 
     /** Type strategy that returns a fixed {@link DataType}. */
+    // 返回固定的 {@link DataType} 的类型策略
     public static TypeStrategy explicit(DataType dataType) {
         return new ExplicitTypeStrategy(dataType);
     }
 
     /** Type strategy that returns the n-th input argument. */
-    // 返回第n个输入参数的类型策略
+    // 返回第 n 个输入参数的类型策略
     public static TypeStrategy argument(int pos) {
         return new UseArgumentTypeStrategy(pos);
     }
 
     /** Type strategy that returns the first type that could be inferred. */
+    // 返回可以推断的第一个类型的类型策略
     public static TypeStrategy first(TypeStrategy... strategies) {
         return new FirstTypeStrategy(Arrays.asList(strategies));
     }
 
     /** Type strategy that returns the given argument if it is of the same logical type family. */
+    // 如果参数属于相同的逻辑类型族，则返回给定参数的类型策略
     public static TypeStrategy matchFamily(int argumentPos, LogicalTypeFamily family) {
         return new MatchFamilyTypeStrategy(argumentPos, family);
     }
 
     /**
+     * 如果输入策略推断出相同的类型，将{@link InputTypeStrategy}映射到{@link TypeStrategy}的类型策略
+     *
      * Type strategy that maps an {@link InputTypeStrategy} to a {@link TypeStrategy} if the input
      * strategy infers identical types.
      */
@@ -102,6 +110,8 @@ public final class TypeStrategies {
     }
 
     /**
+     * 一种类型策略，如果所选的任何输入参数为空，则可使用该类型使结果类型为空。否则该类型将不为空
+     *
      * A type strategy that can be used to make a result type nullable if any of the selected input
      * arguments is nullable. Otherwise the type will be not null.
      */
@@ -119,6 +129,9 @@ public final class TypeStrategies {
     }
 
     /**
+     * 一种类型策略，确保结果类型是 {@link LogicalTypeRoot#VARCHAR} 或 {@link LogicalTypeRoot#VARBINARY}
+     * 来自它们对应的不变根
+     *
      * A type strategy that ensures that the result type is either {@link LogicalTypeRoot#VARCHAR}
      * or {@link LogicalTypeRoot#VARBINARY} from their corresponding non-varying roots.
      */
@@ -131,6 +144,8 @@ public final class TypeStrategies {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 返回一个字段类型等于输入类型的{@link DataTypes#ROW()}类型策略
+     *
      * Type strategy that returns a {@link DataTypes#ROW()} with fields types equal to input types.
      */
     public static final TypeStrategy ROW =
@@ -176,6 +191,8 @@ public final class TypeStrategies {
             };
 
     /**
+     * 返回包含至少一个小数的精确数字相加的和的类型策略
+     *
      * Type strategy that returns the sum of an exact numeric addition that includes at least one
      * decimal.
      */
@@ -421,6 +438,7 @@ public final class TypeStrategies {
             };
 
     /** Type strategy specific for source watermarks that depend on the output type. */
+    // 特定于依赖于输出类型的源水印的类型策略
     public static final TypeStrategy SOURCE_WATERMARK =
             callContext -> {
                 final DataType timestampDataType =
@@ -436,6 +454,8 @@ public final class TypeStrategies {
             };
 
     /**
+     * 特定于聚合的类型策略，根据结果是否分组，部分产生不同的可空性。
+     *
      * Type strategy specific for aggregations that partially produce different nullability
      * depending whether the result is grouped or not.
      */

@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * 提供为行时属性生成水印的策略。
  *
- * <p>水印策略是{@code PeriodicWatermarkAssigner}或{@code PunctuatedWatermarkAssigner}。
+ * <p>水印策略是 {@code PeriodicWatermarkAssigner} 或 {@code PunctuatedWatermarkAssigner}。
  *
  * Provides a strategy to generate watermarks for a rowtime attribute.
  *
@@ -41,7 +41,7 @@ import java.util.Map;
 public abstract class WatermarkStrategy implements Serializable, Descriptor {
 
     /**
-     * 此方法是使用java序列化的默认实现，不鼓励使用。所有的实现都应该提供一组更具体的属性。
+     * 此方法是使用 java 序列化的默认实现，不鼓励使用。所有的实现都应该提供一组更具体的属性。
      *
      * This method is a default implementation that uses java serialization and it is discouraged.
      * All implementation should provide a more specific set of properties.

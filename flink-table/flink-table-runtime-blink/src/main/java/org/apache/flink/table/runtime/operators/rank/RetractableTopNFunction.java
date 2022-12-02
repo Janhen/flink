@@ -46,6 +46,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
+ * TopN 函数可以处理更新流。
+ *
+ * <p>输入流可以包含任何更改类型：INSERT、DELETE、UPDATE_BEFORE 和 UPDATE_AFTER。
+ *
  * A TopN function could handle updating stream.
  *
  * <p>Input stream can contain any change kind: INSERT, DELETE, UPDATE_BEFORE and UPDATE_AFTER.
@@ -58,6 +62,7 @@ public class RetractableTopNFunction extends AbstractTopNFunction {
 
     // Message to indicate the state is cleared because of ttl restriction. The message could be
     // used to output to log.
+    // 由于 ttl 限制，指示状态已清除的消息。该消息可用于输出到日志。
     private static final String STATE_CLEARED_WARN_MSG =
             "The state is cleared because of state ttl. "
                     + "This will result in incorrect result. You can increase the state ttl to avoid this.";
@@ -65,15 +70,19 @@ public class RetractableTopNFunction extends AbstractTopNFunction {
     private final InternalTypeInfo<RowData> sortKeyType;
 
     // flag to skip records with non-exist error instead to fail, true by default.
+    // 标志跳过不存在错误的记录而不是失败，默认为真。
     private final boolean lenient = true;
 
     // a map state stores mapping from sort key to records list
+    // 映射状态存储从排序键到记录列表的映射
     private transient MapState<RowData, List<RowData>> dataState;
 
     // a sorted map stores mapping from sort key to records count
+    // 排序映射存储从排序键到记录计数的映射
     private transient ValueState<SortedMap<RowData, Long>> treeMap;
 
     // The util to compare two RowData equals to each other.
+    // 比较两个 RowData 是否相等的实用程序。
     private GeneratedRecordEqualiser generatedEqualiser;
     private RecordEqualiser equaliser;
 

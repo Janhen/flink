@@ -50,6 +50,10 @@ import static org.apache.flink.table.data.util.RowDataUtil.isRetractMsg;
 import static org.apache.flink.table.runtime.util.StateConfigUtil.createTtlConfig;
 
 /**
+ * Aggregate Function 用于 miniBatch 模式下的 groupby（无窗口）聚合。
+ *
+ * <p>该函数在堆 HashMap 中缓冲输入行，并在调用 minibatch 时聚合它们。
+ *
  * Aggregate Function used for the groupby (without window) aggregate in miniBatch mode.
  *
  * <p>This function buffers input row in heap HashMap, and aggregates them when minibatch invoked.

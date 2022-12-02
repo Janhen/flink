@@ -53,6 +53,11 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasNe
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRoot;
 
 /**
+ * 处理 {@link DataView} 的实用程序。
+ *
+ * <p>{@link DataView} 要么表示为常规 {@link StructuredType}，要么表示为在状态后端支持时序列化为
+ * {@code null} 的 {@link RawType}。在后一种情况下，{@link DataViewSpec} 包含存储和检索状态数据所需的所有信息。
+ *
  * Utilities to deal with {@link DataView}s.
  *
  * <p>A {@link DataView} is either represented as a regular {@link StructuredType} or as a {@link
@@ -63,6 +68,7 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 public final class DataViewUtils {
 
     /** Searches for data views in the data type of an accumulator and extracts them. */
+    // 在累加器的数据类型中搜索数据视图并提取它们。
     public static List<DataViewSpec> extractDataViews(int aggIndex, DataType accumulatorDataType) {
         final LogicalType accumulatorType = accumulatorDataType.getLogicalType();
         if (!hasRoot(accumulatorType, LogicalTypeRoot.ROW)
@@ -100,6 +106,8 @@ public final class DataViewUtils {
     }
 
     /**
+     * 修改关于数据视图的累加器的数据类型。
+     *
      * Modifies the data type of an accumulator regarding data views.
      *
      * <p>For performance reasons, each data view is wrapped into a RAW type which gives it {@link
@@ -324,6 +332,7 @@ public final class DataViewUtils {
     }
 
     /** Specification for a special {@link MapView} for deduplication. */
+    // 用于重复数据删除的特殊 {@link MapView} 规范。
     public static class DistinctViewSpec extends MapViewSpec {
 
         public DistinctViewSpec(String stateId, DataType distinctViewDataType) {

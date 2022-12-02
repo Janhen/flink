@@ -27,12 +27,16 @@ import org.apache.flink.table.data.binary.BinaryRowData;
 import java.io.IOException;
 
 /** A type serializer which provides paged serialize and deserialize methods. */
+// 提供分页序列化和反序列化方法的类型序列化程序。
 @Internal
 public abstract class PagedTypeSerializer<T> extends TypeSerializer<T> {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 将给定的记录序列化为给定的目标分页输出视图。如果当前页面没有足够的剩余空间，一些实现可能会跳过一些字节，
+     * 例如 {@link BinaryRowData}。
+     *
      * Serializes the given record to the given target paged output view. Some implementations may
      * skip some bytes if current page does not have enough space left, .e.g {@link BinaryRowData}.
      *

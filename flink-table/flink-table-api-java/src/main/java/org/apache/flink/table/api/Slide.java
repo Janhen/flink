@@ -23,6 +23,9 @@ import org.apache.flink.table.expressions.Expression;
 import org.apache.flink.table.expressions.ExpressionParser;
 
 /**
+ * 用于创建滑动窗口的Helper类。滑动窗口有固定的大小，并按指定的滑动间隔滑动。如果滑动间隔小于窗口大小，则滑动窗口重叠。
+ * 因此，一个元素可以分配给多个窗口。
+ *
  * Helper class for creating a sliding window. Sliding windows have a fixed size and slide by a
  * specified slide interval. If the slide interval is smaller than the window size, sliding windows
  * are overlapping. Thus, an element can be assigned to multiple windows.

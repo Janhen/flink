@@ -48,6 +48,8 @@ public abstract class MapBundleFunction<K, V, IN, OUT> implements Function {
     }
 
     /**
+     * 将给定的输入添加到给定的值，返回新的包值。
+     *
      * Adds the given input to the given value, returning the new bundle value.
      *
      * @param value the existing bundle value, maybe null

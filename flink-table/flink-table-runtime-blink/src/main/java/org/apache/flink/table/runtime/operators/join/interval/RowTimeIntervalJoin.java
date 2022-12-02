@@ -23,6 +23,7 @@ import org.apache.flink.table.runtime.operators.join.FlinkJoinType;
 import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 
 /** The function to execute row(event) time interval stream inner-join. */
+// 执行行（事件）时间间隔流内连接的函数。
 public final class RowTimeIntervalJoin extends TimeIntervalJoin {
 
     private static final long serialVersionUID = -2923709329817468698L;
@@ -34,7 +35,7 @@ public final class RowTimeIntervalJoin extends TimeIntervalJoin {
             FlinkJoinType joinType,
             long leftLowerBound,
             long leftUpperBound,
-            long allowedLateness,
+            long allowedLateness,             // J: 运行延迟
             InternalTypeInfo<RowData> leftType,
             InternalTypeInfo<RowData> rightType,
             IntervalJoinFunction joinFunc,
@@ -53,6 +54,8 @@ public final class RowTimeIntervalJoin extends TimeIntervalJoin {
     }
 
     /**
+     * 获取接收行和发出行之间的最大间隔（作为连接结果的一部分）。这是水印需要被阻止的时间间隔。
+     *
      * Get the maximum interval between receiving a row and emitting it (as part of a joined
      * result). This is the time interval by which watermarks need to be held back.
      *

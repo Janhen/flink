@@ -29,7 +29,7 @@ import org.apache.flink.table.types.inference.TypeInference;
 import org.apache.flink.util.Collector;
 
 /**
- * 用户定义的表聚合函数的基类。用户定义的表聚合函数将多行标量值映射为0、1或多行(或结构化类型)。如果输出记录只包含一个
+ * 用户定义的表聚合函数的基类。用户定义的表聚合函数将多行标量值映射为 0、1 或多行(或结构化类型)。如果输出记录只包含一个
  * 字段，则可以省略结构化记录，并且可以发出一个标量值，该标量值将由运行时隐式包装到一行中。
  *
  * Base class for a user-defined table aggregate function. A user-defined table aggregate function

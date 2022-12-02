@@ -28,6 +28,10 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link ResolvedSchema} 中水印规范的表示。
+ *
+ * <p>它定义了 rowtime 属性和用于水印生成的 {@link ResolvedExpression}。
+ *
  * Representation of a watermark specification in a {@link ResolvedSchema}.
  *
  * <p>It defines the rowtime attribute and a {@link ResolvedExpression} for watermark generation.

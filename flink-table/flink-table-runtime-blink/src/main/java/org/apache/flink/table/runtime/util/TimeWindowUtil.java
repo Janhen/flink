@@ -31,6 +31,7 @@ import java.util.TimeZone;
 import static org.apache.flink.table.runtime.operators.window.TimeWindow.getWindowStartWithOffset;
 
 /** Time util to deals window start and end in different timezone. */
+// 在不同时区处理窗口开始和结束的时间实用程序。
 @Internal
 public class TimeWindowUtil {
 
@@ -168,6 +169,8 @@ public class TimeWindowUtil {
     }
 
     /**
+     * 返回窗口应该在当前进度上触发还是不触发。
+     *
      * Returns the window should fired or not on current progress.
      *
      * @param windowEnd the end of the time window.

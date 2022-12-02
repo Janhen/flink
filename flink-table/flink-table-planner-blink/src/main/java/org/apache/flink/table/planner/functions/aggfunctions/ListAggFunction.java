@@ -32,6 +32,7 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.liter
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.nullOf;
 
 /** built-in listagg aggregate function. */
+// 内置 listagg 聚合函数。
 public class ListAggFunction extends DeclarativeAggregateFunction {
     private int operandCount;
     private UnresolvedReferenceExpression acc = unresolvedRef("concatAcc");

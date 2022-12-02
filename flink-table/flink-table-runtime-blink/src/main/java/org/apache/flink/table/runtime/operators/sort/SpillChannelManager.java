@@ -29,6 +29,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Channel manager to manage the life cycle of spill channels. */
+// 渠道经理管理溢出渠道的生命周期。
 public class SpillChannelManager implements Closeable {
 
     private final HashSet<FileIOChannel.ID> channels;

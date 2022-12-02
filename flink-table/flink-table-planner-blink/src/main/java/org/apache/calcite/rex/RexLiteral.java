@@ -58,6 +58,10 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 /**
+ * 行表达式中的常量值。
+ *
+ * <p>在 {@link RexBuilder} 中有几种创建文字的方法：{@link RexBuilder#makeLiteral(boolean)} 等等。
+ *
  * Constant value in a row-expression.
  *
  * <p>There are several methods for creating literals in {@link RexBuilder}: {@link

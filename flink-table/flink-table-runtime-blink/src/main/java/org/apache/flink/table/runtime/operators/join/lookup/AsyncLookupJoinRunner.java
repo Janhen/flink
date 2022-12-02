@@ -48,7 +48,9 @@ public class AsyncLookupJoinRunner extends RichAsyncFunction<RowData, RowData> {
     private final GeneratedFunction<AsyncFunction<RowData, Object>> generatedFetcher;
     private final DataStructureConverter<RowData, Object> fetcherConverter;
     private final GeneratedResultFuture<TableFunctionResultFuture<RowData>> generatedResultFuture;
+    // J: full, right join 支持？
     private final boolean isLeftOuterJoin;
+    // J: 异步缓冲的容量
     private final int asyncBufferCapacity;
 
     private transient AsyncFunction<RowData, Object> fetcher;
@@ -56,11 +58,17 @@ public class AsyncLookupJoinRunner extends RichAsyncFunction<RowData, RowData> {
     protected final RowDataSerializer rightRowSerializer;
 
     /**
+     * 每次处理元素时缓冲 {@link ResultFuture} 以避免 newInstance 成本。我们使用 {@link BlockingQueue}
+     * 来确保头部 {@link ResultFuture} 可用。
+     *
      * Buffers {@link ResultFuture} to avoid newInstance cost when processing elements every time.
      * We use {@link BlockingQueue} to make sure the head {@link ResultFuture}s are available.
      */
     private transient BlockingQueue<JoinedRowResultFuture> resultFutureBuffer;
     /**
+     * 集合包含运行器中的所有 ResultFuture，用于在每个 ResultFuture 上调用 {@code close()}。
+     * {@link #resultFutureBuffer} 可能不包含所有 ResultFutures，因为 ResultFutures 将在处理时从缓冲区中轮询。
+     *
      * A Collection contains all ResultFutures in the runner which is used to invoke {@code close()}
      * on every ResultFuture. {@link #resultFutureBuffer} may not contain all the ResultFutures
      * because ResultFutures will be polled from the buffer when processing.

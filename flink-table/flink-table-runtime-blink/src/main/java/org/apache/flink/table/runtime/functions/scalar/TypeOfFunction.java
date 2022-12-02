@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** Implementation of {@link BuiltInFunctionDefinitions#TYPE_OF}. */
+// {@link BuiltInFunctionDefinitions#TYPE_OF} 的实现。
 @Internal
 public class TypeOfFunction extends BuiltInScalarFunction {
 

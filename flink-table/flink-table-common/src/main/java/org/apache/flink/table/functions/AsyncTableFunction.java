@@ -32,7 +32,7 @@ import org.apache.flink.types.Row;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 用户定义的异步表函数的基类。用户定义的异步表函数将0、1或多个标量值映射为0、1或多行(或结构化类型)。
+ * 用户定义的异步表函数的基类。用户定义的异步表函数将 0、1 或多个标量值映射为 0、1 或多行(或结构化类型)。
  *
  * <p>这种函数类似于{@link TableFunction}，但是是异步执行的。
  *

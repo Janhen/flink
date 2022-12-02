@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 /** {@link MemorySegmentPool} that lazy allocate memory pages from {@link MemoryManager}. */
+// {@link MemorySegmentPool} 从 {@link MemoryManager} 延迟分配内存页。
 public class LazyMemorySegmentPool implements MemorySegmentPool, Closeable {
 
     private static final long PER_REQUEST_MEMORY_SIZE = 16 * 1024 * 1024;

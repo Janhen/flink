@@ -23,6 +23,7 @@ import org.apache.flink.table.runtime.functions.SqlDateTimeUtils;
 import org.apache.flink.table.types.logical.TimeType;
 
 /** Converter for {@link TimeType} of {@link java.time.LocalTime} external type. */
+// {@link java.time.LocalTime} 外部类型的 {@link TimeType} 转换器。
 @Internal
 public class TimeLocalTimeConverter
         implements DataStructureConverter<Integer, java.time.LocalTime> {

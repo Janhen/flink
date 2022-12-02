@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 1 字节有符号整数的逻辑类型，值从 -128 到 127。
+ *
+ * <p>序列化字符串表示形式是 {@code TINYINT}。
+ *
  * Logical type of a 1-byte signed integer with values from -128 to 127.
  *
  * <p>The serialized string representation is {@code TINYINT}.

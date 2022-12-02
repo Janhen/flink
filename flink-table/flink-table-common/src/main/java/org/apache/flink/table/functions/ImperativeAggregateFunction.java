@@ -25,7 +25,7 @@ import org.apache.flink.table.annotation.FunctionHint;
 import org.apache.flink.table.catalog.DataTypeFactory;
 
 /**
- * 用户定义的{@link AggregateFunction}和{@link TableAggregateFunction}的基类。
+ * 用户定义的 {@link AggregateFunction} 和 {@link TableAggregateFunction} 的基类。
  *
  * <p>用于统一处理命令式聚合函数。具体的实现应该扩展到{@link AggregateFunction}或{@link TableAggregateFunction}。
  *

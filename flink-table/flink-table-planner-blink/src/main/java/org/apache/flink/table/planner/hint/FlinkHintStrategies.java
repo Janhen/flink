@@ -27,6 +27,8 @@ import org.apache.calcite.util.Litmus;
 public abstract class FlinkHintStrategies {
 
     /**
+     * 自定义 {@link HintStrategyTable}，包含 Flink 支持的提示策略。
+     *
      * Customize the {@link HintStrategyTable} which contains hint strategies supported by Flink.
      */
     public static HintStrategyTable createHintStrategyTable() {

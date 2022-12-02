@@ -25,6 +25,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 表示目录中的分区规范对象。分区列和值不是严格顺序的，需要通过与严格排序的分区键列表进行比较，将它们重新排列为正确的顺序。
+ *
  * Represents a partition spec object in catalog. Partition columns and values are NOT of strict
  * order, and they need to be re-arranged to the correct order by comparing with a list of strictly
  * ordered partition keys.
@@ -41,6 +43,8 @@ public class CatalogPartitionSpec {
     }
 
     /**
+     * 获取分区规范作为键值映射。
+     *
      * Get the partition spec as key-value map.
      *
      * @return a map of partition spec keys and values

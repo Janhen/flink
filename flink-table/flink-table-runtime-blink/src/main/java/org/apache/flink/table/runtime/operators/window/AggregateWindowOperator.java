@@ -36,9 +36,9 @@ import java.time.ZoneId;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 用于分组窗口聚合的{@link WindowOperator}。
+ * 用于分组窗口聚合的 {@link WindowOperator}。
  *
- * <p>当一个元素到达时，它被分配一个键使用{@link KeySelector}，它被
+ * <p>当一个元素到达时，它被分配一个键使用 {@link KeySelector}，它被
  * 分配到零或多个窗口使用{@link WindowAssigner}。在此基础上，将元素放入窗格中。窗格是具有相同键和相同
  * {@code Window}的元素桶。如果一个元素被{@code WindowAssigner}分配给多个窗口，那么它可以在多个窗格中。
  *

@@ -62,6 +62,7 @@ public class StreamSortOperator extends TableStreamOperator<RowData>
     private transient ListState<Tuple2<RowData, Long>> bufferState;
 
     // inputBuffer buffers all input elements, key is RowData, value is appear times.
+    // inputBuffer缓冲所有输入元素，key为RowData，value为出现次数。
     private transient HashMap<RowData, Long> inputBuffer;
 
     public StreamSortOperator(

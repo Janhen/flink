@@ -23,6 +23,7 @@ import org.apache.flink.streaming.api.graph.GlobalDataExchangeMode;
 import org.apache.flink.table.api.config.ExecutionConfigOptions;
 
 /** Utility class to load job-wide shuffle mode. */
+// 用于加载作业范围随机播放模式的实用程序类。
 public class ShuffleModeUtils {
 
     static final String ALL_EDGES_BLOCKING_LEGACY = "batch";

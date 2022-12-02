@@ -63,7 +63,7 @@ import static org.apache.flink.table.types.extraction.ExtractionUtils.extractAss
 import static org.apache.flink.table.types.extraction.ExtractionUtils.getStructuredField;
 
 /**
- * 从{@link TypeInformation}到{@link DataType}的转换器。
+ * 从 {@link TypeInformation} 到 {@link DataType} 的转换器。
  *
  * <p>{@link DataType}比{@link TypeInformation}更丰富，因为它还包括关于{@link LogicalType}的详细信息。
  *   因此，一些细节将在转换过程中隐式添加。从{@link DataType}到{@link TypeInformation}的转换是由规划器提供的。

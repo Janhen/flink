@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 升序行时间属性的水印策略。
  *
- * <p>发出到目前为止观察到的最大时间戳的水印- 1。具有与max时间戳相等的时间戳的行不属于延迟。
+ * <p>发出到目前为止观察到的最大时间戳的水印 -1。具有与 max 时间戳相等的时间戳的行不属于延迟。
  *
  * A watermark strategy for ascending rowtime attributes.
  *

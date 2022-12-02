@@ -40,11 +40,13 @@ import java.util.List;
 import java.util.Map;
 
 /** Table sink for connecting to the external {@link DataStream} API. */
+// 用于连接到外部 {@link DataStream} API 的表接收器。
 @Internal
 final class ExternalDynamicSink implements DynamicTableSink, SupportsWritingMetadata {
 
     private static final String ROWTIME_METADATA_KEY = "rowtime";
 
+    // J: 默认的 rowtime 类型
     private static final DataType ROWTIME_METADATA_DATA_TYPE = DataTypes.TIMESTAMP_LTZ(3).notNull();
 
     private final @Nullable ChangelogMode changelogMode;
@@ -100,6 +102,7 @@ final class ExternalDynamicSink implements DynamicTableSink, SupportsWritingMeta
     }
 
     private String generateOperatorName() {
+        // J: Table => DataStream 操作名
         return String.format(
                 "TableToDataSteam(type=%s, rowtime=%s)",
                 physicalDataType.toString(), consumeRowtimeMetadata);

@@ -32,6 +32,8 @@ import org.apache.flink.table.runtime.util.WindowKey;
 import java.io.IOException;
 
 /**
+ * {@link WindowKey} 的序列化程序，它由 {@link BinaryRowData} 和一个 long 值组合而成。
+ *
  * Serializer for {@link WindowKey} which is composite with a {@link BinaryRowData} and a long
  * value.
  */

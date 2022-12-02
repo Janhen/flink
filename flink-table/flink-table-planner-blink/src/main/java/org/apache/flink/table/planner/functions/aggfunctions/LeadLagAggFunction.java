@@ -33,6 +33,8 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.liter
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.typeLiteral;
 
 /**
+ * LEAD 和 LAG 聚合函数返回在给定偏移处计算的给定表达式的值。这些函数仅供 over window 使用。
+ *
  * LEAD and LAG aggregate functions return the value of given expression evaluated at given offset.
  * The functions only are used by over window.
  *

@@ -37,6 +37,11 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link AbstractMapBundleOperator} 只是使用 java Map 以键值形式存储输入元素。映射键通常与状态键相同，因此
+ * 我们可以在访问状态之前进行一些优化，例如每个键的预聚合值。我们只需要访问状态我们拥有的每个键，而不是我们处理的每个元素。
+ *
+ * <p>注意：如果我们处理的所有元素都有不同的键，这样的运算符只会增加内存占用，不会有任何性能提升。
+ *
  * The {@link AbstractMapBundleOperator} simply used a java Map to store the input elements in
  * key-value form. The map key is typically the same with the state key, so we can do some
  * optimizations before accessing states, like pre aggregate values for each key. And we will only
@@ -59,6 +64,7 @@ public abstract class AbstractMapBundleOperator<K, V, IN, OUT> extends AbstractS
     private transient Map<K, V> bundle;
 
     /** The trigger that determines how many elements should be put into a bundle. */
+    // 确定应将多少元素放入包中的触发器。
     private final BundleTrigger<IN> bundleTrigger;
 
     /** The function used to process when receiving element. */

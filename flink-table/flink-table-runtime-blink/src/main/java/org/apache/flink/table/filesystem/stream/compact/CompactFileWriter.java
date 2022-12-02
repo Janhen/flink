@@ -26,6 +26,7 @@ import org.apache.flink.table.filesystem.stream.compact.CompactMessages.EndCheck
 import org.apache.flink.table.filesystem.stream.compact.CompactMessages.InputFile;
 
 /** Writer for emitting {@link InputFile} and {@link EndCheckpoint} to downstream. */
+// 用于向下游发出 {@link InputFile} 和 {@link EndCheckpoint} 的编写器。
 public class CompactFileWriter<T>
         extends AbstractStreamingWriter<T, CompactMessages.CoordinatorInput> {
 

@@ -18,7 +18,7 @@
 package org.apache.flink.table.runtime.functions;
 
 /**
- * 用于将SQL {@code LIKE}和{@code SIMILAR}操作符转换为正则表达式的实用程序。
+ * 用于将 SQL {@code LIKE} 和 {@code SIMILAR} 操作符转换为正则表达式的实用程序。
  *
  * <p>注意:这是从 calcite 复制来暴露一些私有方法
  *

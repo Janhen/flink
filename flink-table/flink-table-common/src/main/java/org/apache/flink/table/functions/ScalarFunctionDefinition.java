@@ -28,6 +28,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * 使用旧类型系统堆栈的用户定义标量函数的“标记”函数定义。
+ *
+ * <p>一旦我们引入新的类型推断，就可以删除这个类。
+ *
  * A "marker" function definition of a user-defined scalar function that uses the old type system
  * stack.
  *

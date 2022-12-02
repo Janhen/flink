@@ -40,7 +40,7 @@ import org.apache.calcite.tools.RelBuilder;
 import javax.annotation.Nullable;
 
 /**
- * 用于快速访问常用实例(如{@link FlinkTypeFactory})的实用程序，不需要长getter链或类型转换(如
+ * 用于快速访问常用实例(如 {@link FlinkTypeFactory})的实用程序，不需要长 getter 链或类型转换(如
  * {@code (FlinkTypeFactory) agg.getCluster.getTypeFactory()})。
  *
  * Utilities for quick access of commonly used instances (like {@link FlinkTypeFactory}) without

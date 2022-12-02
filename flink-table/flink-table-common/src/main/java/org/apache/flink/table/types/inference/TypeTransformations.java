@@ -42,6 +42,7 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeUtils.toInte
 public final class TypeTransformations {
 
     /** Transformation that uses internal data structures for all conversion classes. */
+    // 对所有转换类使用内部数据结构的转换。
     public static final TypeTransformation TO_INTERNAL_CLASS =
             (dataType) -> dataType.bridgedTo(toInternalConversionClass(dataType.getLogicalType()));
 

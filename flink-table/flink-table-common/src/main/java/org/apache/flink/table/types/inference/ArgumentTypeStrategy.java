@@ -26,6 +26,7 @@ import org.apache.flink.table.types.DataType;
 import java.util.Optional;
 
 /** Strategy for inferring and validating a single input argument type of a function call. */
+// 推断和验证函数调用的单个输入参数类型的策略。
 @PublicEvolving
 public interface ArgumentTypeStrategy {
 

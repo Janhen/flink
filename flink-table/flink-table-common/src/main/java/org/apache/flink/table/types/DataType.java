@@ -33,8 +33,15 @@ import java.util.Objects;
 /**
  * 描述表生态系统中值的数据类型。该类的实例可用于声明操作的输入和或输出类型。
  *
- * <p> {@link DataType}类有两个职责:声明逻辑类型和向计划者提供关于数据的物理表示的提示。虽然逻辑类型是强制性的，
- *     但提示是可选的，但在其他api的边缘是有用的。
+ * <p> {@link DataType} 类有两个职责:声明逻辑类型和向计划者提供关于数据的物理表示的提示。虽然逻辑类型是强制性的，
+ *     但提示是可选的，但在其他 api 的边缘是有用的。
+ *
+ * <p>逻辑类型独立于任何物理表示，接近SQL标准的“数据类型”术语。有关可用逻辑类型及其属性的更多信息，请参阅
+ *   {@link org.apache.flink.table.types.logical.LogicalType} 及其子类。
+ *
+ * <p>表格生态系统的边缘需要物理提示。提示指示实现所期望的数据格式。例如，数据源可以表示它使用
+ *   {@link java.sql.Timestamp} 类而不是使用 {@link java.time.LocalDateTime} 为逻辑时间戳生成值。有了这些
+ *   信息，运行时就能够将生成的类转换为其内部数据格式。作为回报，数据接收器可以声明它从运行时使用的数据格式。
  *
  * Describes the data type of a value in the table ecosystem. Instances of this class can be used to
  * declare input and/or output types of operations.

@@ -34,6 +34,7 @@ import java.util.stream.IntStream;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getFieldNames;
 
 /** Converter for {@link RowType} of {@link Row} external type. */
+// {@link Row} 外部类型的 {@link RowType} 转换器。
 @Internal
 public class RowRowConverter implements DataStructureConverter<RowData, Row> {
 

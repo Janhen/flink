@@ -30,6 +30,10 @@ import static org.apache.flink.table.data.DecimalData.POW10;
 import static org.apache.flink.table.data.DecimalData.fromBigDecimal;
 
 /**
+ * {@link DecimalData} 的实用程序。
+ *
+ * <p>注意：我们必须将此类与 {@link DecimalData} 放在同一个包下，才能访问包访问成员变量。
+ *
  * Utilities for {@link DecimalData}.
  *
  * <p>Note: we have to put this class under the same package with {@link DecimalData} to make it

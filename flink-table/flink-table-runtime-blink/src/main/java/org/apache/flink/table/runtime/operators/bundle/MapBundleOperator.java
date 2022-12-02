@@ -22,6 +22,8 @@ import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.table.runtime.operators.bundle.trigger.BundleTrigger;
 
 /**
+ * {@link MapBundleOperator} 使用 {@link KeySelector} 提取包密钥，因此可以与非键控流一起使用。
+ *
  * The {@link MapBundleOperator} uses a {@link KeySelector} to extract bundle key, thus can be used
  * with non-keyed-stream.
  */

@@ -194,6 +194,8 @@ public class FunctionCatalogOperatorTable implements SqlOperatorTable {
     }
 
     /**
+     * 在给定上下文信息的情况下，验证允许从目录返回哪些类型的函数。
+     *
      * Verifies which kinds of functions are allowed to be returned from the catalog given the
      * context information.
      */

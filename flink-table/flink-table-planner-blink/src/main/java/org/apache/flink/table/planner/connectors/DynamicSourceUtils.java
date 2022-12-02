@@ -72,6 +72,8 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeCasts.suppor
 public final class DynamicSourceUtils {
 
     /**
+     * 将给定的 {@link DataStream} 转换为 {@link RelNode}。如有必要，它会添加辅助投影。
+     *
      * Converts a given {@link DataStream} to a {@link RelNode}. It adds helper projections if
      * necessary.
      */
@@ -149,6 +151,8 @@ public final class DynamicSourceUtils {
     }
 
     /**
+     * 准备给定的 {@link DynamicTableSource}。它检查源是否与给定模式兼容并应用初始参数。
+     *
      * Prepares the given {@link DynamicTableSource}. It check whether the source is compatible with
      * the given schema and applies initial parameters.
      */
@@ -173,6 +177,12 @@ public final class DynamicSourceUtils {
     // TODO: isUpsertSource(), isSourceChangeEventsDuplicate()
 
     /**
+     * 返回所需元数据键的列表。按 {@link SupportsReadingMetadata#listReadableMetadata()} 的迭代顺序排序。
+     *
+     * <p>此方法假定源和架构已通过 {@link
+     * #prepareDynamicSource(ObjectIdentifier, ResolvedCatalogTable, DynamicTableSource,
+     * boolean, ReadableConfig)} 进行了验证。
+     *
      * Returns a list of required metadata keys. Ordered by the iteration order of {@link
      * SupportsReadingMetadata#listReadableMetadata()}.
      *
@@ -197,6 +207,12 @@ public final class DynamicSourceUtils {
     }
 
     /**
+     * 返回源应生成的作为运行时输入的 {@link DataType}。
+     *
+     * <p>格式如下：{@code PHYSICAL COLUMNS + METADATA COLUMNS}
+     *
+     * <p>物理列使用表架构的名称。元数据列使用元数据键作为名称。
+     *
      * Returns the {@link DataType} that a source should produce as the input into the runtime.
      *
      * <p>The format looks as follows: {@code PHYSICAL COLUMNS + METADATA COLUMNS}
@@ -234,6 +250,7 @@ public final class DynamicSourceUtils {
     }
 
     /** Returns true if the table source produces duplicate change events. */
+    // 如果表源产生重复的更改事件，则返回 true。
     public static boolean isSourceChangeEventsDuplicate(
             ResolvedCatalogTable catalogTable, DynamicTableSource tableSource, TableConfig config) {
         if (!(tableSource instanceof ScanTableSource)) {
@@ -252,6 +269,7 @@ public final class DynamicSourceUtils {
     // --------------------------------------------------------------------------------------------
 
     /** Creates a specialized node for assigning watermarks. */
+    // 创建用于分配水印的专用节点。
     private static void pushWatermarkAssigner(FlinkRelBuilder relBuilder, ResolvedSchema schema) {
         final ExpressionConverter converter = new ExpressionConverter(relBuilder);
         final RelDataType inputRelDataType = relBuilder.peek().getRowType();
@@ -268,6 +286,7 @@ public final class DynamicSourceUtils {
     }
 
     /** Creates a projection that adds computed columns and finalizes the the table schema. */
+    // 创建一个添加计算列并完成表架构的投影。
     private static void pushGeneratedProjection(FlinkRelBuilder relBuilder, ResolvedSchema schema) {
         final ExpressionConverter converter = new ExpressionConverter(relBuilder);
         final List<RexNode> projection =
@@ -290,6 +309,9 @@ public final class DynamicSourceUtils {
     }
 
     /**
+     * 创建一个根据给定模式对物理列和元数据列重新排序的投影。它将元数据列转换为预期的数据类型，以便在下一步中由计算列
+     * 访问。此处忽略计算列。
+     *
      * Creates a projection that reorders physical and metadata columns according to the given
      * schema. It casts metadata columns into the expected data type to be accessed by computed
      * columns in the next step. Computed columns are ignored here.
@@ -416,6 +438,8 @@ public final class DynamicSourceUtils {
                                         String.join("\n", metadataMap.keySet())));
                     }
                     // check that types are compatible
+                    // 检查类型是否兼容
+                    // J: 关联从元数据类中抽取的字段类型，  Long -> TIMESTAMP, LOCAL_WITHOUT_TIMExxxx
                     if (!supportsExplicitCast(
                             expectedMetadataDataType.getLogicalType(), metadataType)) {
                         if (metadataKey.equals(c.getName())) {

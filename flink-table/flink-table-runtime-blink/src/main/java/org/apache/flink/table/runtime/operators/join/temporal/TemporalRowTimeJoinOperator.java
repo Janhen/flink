@@ -51,6 +51,9 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 /**
+ * 行时间临时连接（FOR SYSTEM_TIME AS OF o.rowtime）的算子，它对左输入和右输入的消息类型没有限制，这意味着算子可以
+ * 很好地处理changelog。
+ *
  * The operator for temporal join (FOR SYSTEM_TIME AS OF o.rowtime) on row time, it has no
  * limitation about message types of the left input and right input, this means the operator deals
  * changelog well.

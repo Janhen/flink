@@ -52,6 +52,7 @@ public class TableConfigOptions {
                                     + "Note: The old planner will be removed in Flink 1.14, "
                                     + "so this option will become obsolete.");
 
+    // J: DML 任务同步执行，默认为异步执行，可同时提交多个 DML 任务
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Boolean> TABLE_DML_SYNC =
             key("table.dml-sync")
@@ -62,6 +63,7 @@ public class TableConfigOptions {
                                     + "By default, the execution is async, so you can submit multiple DML jobs at the same time. "
                                     + "If set this option to true, the insert operation will wait for the job to finish.");
 
+    // J: 开启动态表参数
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Boolean> TABLE_DYNAMIC_TABLE_OPTIONS_ENABLED =
             key("table.dynamic-table-options.enabled")
@@ -72,6 +74,7 @@ public class TableConfigOptions {
                                     + "dynamically, if disabled, an exception would be thrown "
                                     + "if any OPTIONS hint is specified");
 
+    // J: SQL 方言
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<String> TABLE_SQL_DIALECT =
             key("table.sql-dialect")
@@ -82,6 +85,7 @@ public class TableConfigOptions {
                                     + "A different SQL dialect may support different SQL grammar. "
                                     + "Currently supported dialects are: default and hive");
 
+    // J: 本地时区，在转换 to/from `TIMESTAMP WITH LOCAL TIME ZONE` 时使用
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<String> LOCAL_TIME_ZONE =
             key("table.local-time-zone")
@@ -96,6 +100,8 @@ public class TableConfigOptions {
                                     + "the session time zone is used during conversion. The input of option is either a full name "
                                     + "such as \"America/Los_Angeles\", or a custom timezone id such as \"GMT-08:00\".");
 
+    // J: 控制阈值，超过此值生成的代码将被拆分为子函数调用
+    // Java 的最大方法长度为64 KB。如果需要，这个设置允许更细的粒度。
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Integer> MAX_LENGTH_GENERATED_CODE =
             key("table.generated-code.max-length")

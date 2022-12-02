@@ -38,6 +38,10 @@ import java.util.Iterator;
 import static org.apache.flink.table.runtime.util.TimeWindowUtil.isWindowFired;
 
 /**
+ * {@link RecordsCombiner} 的一个实现，它将本地累加器记录累积到窗口累加器状态中。
+ *
+ * <p>注意：这仅支持事件时间窗口。
+ *
  * An implementation of {@link RecordsCombiner} that accumulates local accumulators records into the
  * window accumulator state.
  *

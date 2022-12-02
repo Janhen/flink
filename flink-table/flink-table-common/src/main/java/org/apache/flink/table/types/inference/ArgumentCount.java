@@ -23,6 +23,10 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.util.Optional;
 
 /**
+ * 定义函数可以采用的可接受参数（包括开放区间）的计数。
+ *
+ * <p>注意：实现应该实现 {@link Object#hashCode()} 和 {@link Object#equals(Object)}。
+ *
  * Defines the count of accepted arguments (including open intervals) that a function can take.
  *
  * <p>Note: Implementations should implement {@link Object#hashCode()} and {@link

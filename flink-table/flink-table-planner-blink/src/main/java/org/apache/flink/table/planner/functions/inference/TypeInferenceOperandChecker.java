@@ -52,6 +52,10 @@ import static org.apache.flink.table.types.inference.TypeInferenceUtil.createUne
 import static org.apache.flink.table.types.logical.utils.LogicalTypeCasts.supportsAvoidingCast;
 
 /**
+ * 由 {@link TypeInference} 支持的 {@link SqlOperandTypeChecker}。
+ *
+ * <p>注意：此类必须与 {@link TypeInferenceUtil} 保持同步。
+ *
  * A {@link SqlOperandTypeChecker} backed by {@link TypeInference}.
  *
  * <p>Note: This class must be kept in sync with {@link TypeInferenceUtil}.

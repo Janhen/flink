@@ -30,10 +30,14 @@ import static org.apache.flink.table.api.config.ExecutionConfigOptions.TABLE_EXE
 import static org.apache.flink.table.api.config.OptimizerConfigOptions.TABLE_OPTIMIZER_AGG_PHASE_STRATEGY;
 
 /** Utility class for {@link TableConfig} related helper functions. */
-// 用于{@link TableConfig}相关帮助函数的实用工具类。
+// 用于 {@link TableConfig} 相关帮助函数的实用工具类。
 public class TableConfigUtils {
 
     /**
+     * 返回给定的运算符类型是否被禁用。
+     *
+     * J: table.exec.disabled-operators 配置的禁用算子
+     *
      * Returns whether the given operator type is disabled.
      *
      * @param tableConfig TableConfig object
@@ -63,6 +67,10 @@ public class TableConfigUtils {
     }
 
     /**
+     * 返回聚合阶段策略配置。
+     *
+     * J: table.optimizer.agg-phase-strategy
+     *
      * Returns the aggregate phase strategy configuration.
      *
      * @param tableConfig TableConfig object

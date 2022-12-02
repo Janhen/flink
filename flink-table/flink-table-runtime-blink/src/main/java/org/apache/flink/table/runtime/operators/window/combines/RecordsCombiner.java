@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /** The {@link RecordsCombiner} is used to combine buffered records into state. */
+// {@link RecordsCombiner} 用于将缓冲记录组合成状态。
 @Internal
 public interface RecordsCombiner {
     /**

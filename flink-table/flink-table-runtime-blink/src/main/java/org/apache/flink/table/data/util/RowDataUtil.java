@@ -25,7 +25,7 @@ import org.apache.flink.types.RowKind;
 public final class RowDataUtil {
 
     /**
-     * 如果消息是{@link RowKind#INSERT}或{@link RowKind#UPDATE_AFTER}，则返回true，这是一个聚合的累积操作。
+     * 如果消息是 {@link RowKind#INSERT} 或 {@link RowKind#UPDATE_AFTER}，则返回 true，这是一个聚合的累积操作。
      *
      * Returns true if the message is either {@link RowKind#INSERT} or {@link RowKind#UPDATE_AFTER},
      * which refers to an accumulate operation of aggregation.

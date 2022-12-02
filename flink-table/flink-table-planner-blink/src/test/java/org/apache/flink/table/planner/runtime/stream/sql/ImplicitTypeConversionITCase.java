@@ -63,6 +63,7 @@ import static org.apache.flink.table.expressions.ApiExpressionUtils.unresolvedRe
 import static org.junit.Assert.assertEquals;
 
 /** test implicit type conversion between different types. */
+// 测试不同类型之间的隐式类型转换
 public class ImplicitTypeConversionITCase extends StreamingTestBase {
 
     @Rule public LegacyRowResource usesLegacyRows = LegacyRowResource.INSTANCE;

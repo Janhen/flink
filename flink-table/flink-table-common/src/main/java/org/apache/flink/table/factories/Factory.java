@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * 用于所有类型的工厂的基本接口，这些工厂从 Flink 的 Table & SQL API 中的键值对列表中创建对象实例。
  *
- * <p>工厂由{@link Class} 和 {@link #factoryIdentifier()}唯一标识。
+ * <p>工厂由 {@link Class} 和 {@link #factoryIdentifier()}唯一标识。
  *
  * Base interface for all kind of factories that create object instances from a list of key-value
  * pairs in Flink's Table & SQL API.
@@ -64,6 +64,11 @@ import java.util.Set;
 public interface Factory {
 
     /**
+     * 返回相同工厂接口之间的唯一标识符。
+     *
+     * <p>为了保持一致性，标识符应声明为一个小写单词（例如 {@code kafka}）。如果不同版本存在多个工厂，则应使用 “-”
+     * 附加一个版本（例如 {@code elasticsearch-7}）。
+     *
      * Returns a unique identifier among same factory interfaces.
      *
      * <p>For consistency, an identifier should be declared as one lower case word (e.g. {@code
@@ -73,6 +78,10 @@ public interface Factory {
     String factoryIdentifier();
 
     /**
+     * 除了 {@link #optionalOptions()} 之外，返回此工厂的实现所需的一组 {@link ConfigOption}。
+     *
+     * <p>有关更多信息，请参阅 {@link Factory} 的文档。
+     *
      * Returns a set of {@link ConfigOption} that an implementation of this factory requires in
      * addition to {@link #optionalOptions()}.
      *
@@ -81,6 +90,8 @@ public interface Factory {
     Set<ConfigOption<?>> requiredOptions();
 
     /**
+     * 返回一组 {@link ConfigOption}，除了 {@link #requiredOptions()} 之外，该工厂的实现还使用它。
+     *
      * Returns a set of {@link ConfigOption} that an implementation of this factory consumes in
      * addition to {@link #requiredOptions()}.
      *

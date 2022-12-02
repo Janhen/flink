@@ -50,6 +50,7 @@ final class TemplateUtils {
     }
 
     /** Retrieve local templates from function method. */
+    // 从函数方法中检索本地模板。
     static Set<FunctionTemplate> extractLocalFunctionTemplates(
             DataTypeFactory typeFactory, Method method) {
         return asFunctionTemplates(
@@ -72,6 +73,7 @@ final class TemplateUtils {
     }
 
     /** Find a template that only specifies a result. */
+    // 查找仅指定结果的模板。
     static Set<FunctionResultTemplate> findResultOnlyTemplates(
             Set<FunctionTemplate> functionTemplates,
             Function<FunctionTemplate, FunctionResultTemplate> accessor) {

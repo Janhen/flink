@@ -26,13 +26,13 @@ import org.apache.flink.table.types.DataType;
 import org.apache.flink.types.Row;
 
 /**
- * 作为{@link LookupTableSource}的运行时实现的{@link AsyncTableFunction}实例的提供者。
+ * 作为 {@link LookupTableSource} 的运行时实现的 {@link AsyncTableFunction} 实例的提供者。
  *
- * <p>运行时将使用描述表查找键的值调用函数(按照{@link LookupTableSource.LookupContext#getKeys()}中的声明顺序)。
+ * <p>运行时将使用描述表查找键的值调用函数(按照 {@link LookupTableSource.LookupContext#getKeys()} 中的声明顺序)。
  *
- * <p>默认情况下，{@link AsyncTableFunction}的输入和输出{@link DataType}的派生类似于其他
- *   {@link UserDefinedFunction}。但是，为了方便起见，在{@link LookupTableSource}中，输出类型可以简单地是
- *   {@link Row}或{@link RowData}，在这种情况下，输入和输出类型是由表的模式和默认转换派生出来的。
+ * <p>默认情况下，{@link AsyncTableFunction} 的输入和输出 {@link DataType} 的派生类似于其他
+ *   {@link UserDefinedFunction}。但是，为了方便起见，在{@link LookupTableSource} 中，输出类型可以简单地是
+ *   {@link Row} 或 {@link RowData}，在这种情况下，输入和输出类型是由表的模式和默认转换派生出来的。
  *
  * Provider of an {@link AsyncTableFunction} instance as a runtime implementation for {@link
  * LookupTableSource}.

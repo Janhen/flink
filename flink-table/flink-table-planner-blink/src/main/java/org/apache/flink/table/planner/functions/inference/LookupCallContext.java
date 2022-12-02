@@ -39,7 +39,7 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getFi
 import static org.apache.flink.table.types.utils.TypeConversions.fromLogicalToDataType;
 
 /** The {@link CallContext} of a {@link LookupTableSource} runtime function. */
-// 运行函数{@link LookupTableSource}的{@link CallContext}。
+// 运行函数 {@link LookupTableSource} 的 {@link CallContext}。
 @Internal
 public class LookupCallContext extends AbstractSqlCallContext {
 

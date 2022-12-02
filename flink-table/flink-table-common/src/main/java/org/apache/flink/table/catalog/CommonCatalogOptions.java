@@ -24,11 +24,15 @@ import org.apache.flink.configuration.ConfigOptions;
 import org.apache.flink.table.factories.Factory;
 
 /** A collection of {@link ConfigOption} which are consistently used in multiple catalogs. */
-// 在多个目录中一致使用的{@link ConfigOption}集合。
+// 在多个目录中一致使用的 {@link ConfigOption} 集合。
 @Internal
 public class CommonCatalogOptions {
 
     /**
+     * 用于指定默认数据库 {@link ConfigOption} 的密钥。
+     *
+     * <p>请注意，我们无法在此处公开 {@link ConfigOption} 的实际实例，因为目录之间的默认值不同。
+     *
      * Key used for specifying a default database {@link ConfigOption}.
      *
      * <p>Note that we cannot expose an actual instance of {@link ConfigOption} here as the default

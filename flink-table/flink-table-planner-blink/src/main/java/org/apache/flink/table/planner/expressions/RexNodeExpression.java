@@ -36,6 +36,11 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 源自 {@link RexNode} 的 {@link ResolvedExpression} 的包装器。
+ *
+ * <p>如果 {@link RexNode} 是从 SQL 表达式生成的，则可以使该表达式成为可序列化的字符串，并打印原始 SQL 字符串
+ * 作为摘要。
+ *
  * Wrapper for a {@link ResolvedExpression} that originated from a {@link RexNode}.
  *
  * <p>If the {@link RexNode} was generated from a SQL expression, the expression can be made string

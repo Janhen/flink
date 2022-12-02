@@ -36,6 +36,7 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.or;
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.plus;
 
 /** built-in IncrSum aggregate function, negative number is discarded to ensure the monotonicity. */
+//内置 IncrSum 聚合函数，负数被丢弃保证单调性。
 public abstract class IncrSumAggFunction extends DeclarativeAggregateFunction {
     private UnresolvedReferenceExpression sum = unresolvedRef("sum");
 

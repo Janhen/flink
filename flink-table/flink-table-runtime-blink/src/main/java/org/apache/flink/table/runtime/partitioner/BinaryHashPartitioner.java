@@ -31,6 +31,7 @@ import org.apache.flink.util.MathUtils;
 import java.util.Arrays;
 
 /** Hash partitioner for {@link BinaryRowData}. */
+// {@link BinaryRowData} 的哈希分区。
 public class BinaryHashPartitioner extends StreamPartitioner<RowData> {
 
     private GeneratedHashFunction genHashFunc;

@@ -83,7 +83,7 @@ import static java.time.ZoneId.SHORT_IDS;
 @PublicEvolving
 public class TableConfig {
     /** Defines if all fields need to be checked for NULL first. */
-    // 定义是否需要首先检查所有字段是否为NULL
+    // 定义是否需要首先检查所有字段是否为 NULL
     private Boolean nullCheck = true;
 
     /** Defines the configuration of Planner for Table API and SQL queries. */
@@ -99,7 +99,7 @@ public class TableConfig {
     private MathContext decimalContext = MathContext.DECIMAL128;
 
     /** A configuration object to hold all key/value configuration. */
-    // 一个配置对象，用来保存所有的键值配置。
+    // 一个配置对象，用来保存所有的键值配置
     private final Configuration configuration = new Configuration();
 
     /** Gives direct access to the underlying key-value map for advanced configuration. */

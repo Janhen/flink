@@ -37,6 +37,10 @@ import java.util.TimeZone;
 import static org.apache.flink.table.runtime.util.TimeWindowUtil.getNextTriggerWatermark;
 
 /**
+ * 用于本地窗口聚合的运算符。
+ *
+ * <p>注意：这仅支持事件时间窗口。
+ *
  * The operator used for local window aggregation.
  *
  * <p>Note: this only supports event-time window.
@@ -59,11 +63,13 @@ public class LocalSlicingWindowAggOperator extends AbstractStreamOperator<RowDat
     private final ZoneId shiftTimezone;
 
     /** The shift timezone is using DayLightSaving time or not. */
+    // 班次时区是否使用夏令时。
     private final boolean useDayLightSaving;
 
     // ------------------------------------------------------------------------
 
     /** This is used for emitting elements with a given timestamp. */
+    // 这用于发出具有给定时间戳的元素。
     protected transient TimestampedCollector<RowData> collector;
 
     /** Flag to prevent duplicate function.close() calls in close() and dispose(). */
@@ -76,6 +82,7 @@ public class LocalSlicingWindowAggOperator extends AbstractStreamOperator<RowDat
     private transient long nextTriggerWatermark;
 
     /** A buffer to buffers window data in memory and may flush to output. */
+    // 一个缓冲区，用于在内存中缓冲窗口数据，并可能刷新到输出。
     private transient WindowBuffer windowBuffer;
 
     public LocalSlicingWindowAggOperator(

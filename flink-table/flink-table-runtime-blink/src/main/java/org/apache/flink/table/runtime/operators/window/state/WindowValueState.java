@@ -25,6 +25,7 @@ import org.apache.flink.table.data.RowData;
 import java.io.IOException;
 
 /** A wrapper of {@link ValueState} which is easier to update based on window namespace. */
+// {@link ValueState} 的包装器，更容易根据窗口命名空间进行更新。
 public final class WindowValueState<W> implements WindowState<W> {
 
     private final InternalValueState<RowData, W, RowData> windowState;

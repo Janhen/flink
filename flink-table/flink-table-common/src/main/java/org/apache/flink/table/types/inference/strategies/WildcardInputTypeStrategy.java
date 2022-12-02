@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 /** Strategy that does not perform any modification or validation of the input. */
+// 不对输入执行任何修改或验证的策略。
 @Internal
 public final class WildcardInputTypeStrategy implements InputTypeStrategy {
 

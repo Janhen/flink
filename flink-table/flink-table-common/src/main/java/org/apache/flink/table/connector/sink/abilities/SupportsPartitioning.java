@@ -26,11 +26,12 @@ import java.util.Map;
 /**
  * 允许在 {@link DynamicTableSink} 中写入分区数据。
  *
- * <p>Partitions将存储在外部系统中的数据分割为更小的部分，由一个或多个基于字符串的分区键标识。单个分区表示为
- *    {@code Map < String, String >}，它将每个分区键映射到一个分区值。分区键及其顺序由目录表定义。
+ * <p>Partitions 将存储在外部系统中的数据分割为更小的部分，由一个或多个基于字符串的分区键标识。单个分区表示为
+ *    {@code Map <String, String>}，它将每个分区键映射到一个分区值。分区键及其顺序由目录表定义。
  *
  * <p>例如，可以按区域进行分区，也可以在按月分区的区域内进行分区。分区键的顺序(在本例中:先按区域，然后按月份)由编目
  *   表定义。分区列表可以是:
+ *
  * <pre>
  *   List(
  *     ['region'='europe', 'month'='2020-01'],
@@ -42,6 +43,20 @@ import java.util.Map;
  *
  * <p>给出以下分区表:
  *
+ * ...
+ *
+ * <p>如果所有分区键都在 {@code PARTITION} 子句中分配了一个值，则该操作被视为“插入静态分区”。在上面的示例中，
+ * 查询结果应写入静态分区 {@code region='europe', month='2020-01'}，规划器将其传递给
+ * {@link #applyStaticPartition(Map)}。规划器还能够从查询的文字中派生出静态分区：
+ *
+ * ...
+ *
+ * <p>如果只有所有分区键的子集在 {@code PARTITION} 子句中获得静态值或在 {@code SELECT} 子句中具有常量部分，则
+ * 该操作被视为“插入动态分区” .在上面的例子中，静态分区部分是{@code region='europe'}，它将被规划器传递给
+ * {@link #applyStaticPartition(Map)}。分区键的其余值应在运行时由接收器从每个单独的记录中获取。在上面的两个示例中，
+ * {@code month} 字段是动态分区键。
+ *
+ * <p>如果 {@code PARTITION} 子句不包含静态赋值或完全省略，则分区键的所有值要么从查询的静态部分派生，要么动态获取。
  *
  * Enables to write partitioned data in a {@link DynamicTableSink}.
  *
@@ -111,7 +126,7 @@ public interface SupportsPartitioning {
      *
      * <p>单个分区将每个分区键映射到一个分区值。根据用户定义的语句，分区可能不包括所有分区键。
      *
-     * <p>参见{@link SupportsPartitioning}的文档获取更多信息。
+     * <p>参见 {@link SupportsPartitioning} 的文档获取更多信息。
      *
      * Provides the static part of a partition.
      *

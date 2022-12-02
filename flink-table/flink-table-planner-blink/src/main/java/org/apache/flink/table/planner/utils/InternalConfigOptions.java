@@ -24,11 +24,11 @@ import org.apache.flink.configuration.ConfigOption;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /**
- * 这个类保存了Flink的table模块使用的内部配置常量。
+ * 这个类保存了 Flink 的 table 模块使用的内部配置常量。
  *
- * <p>仅用于Blink计划器。
+ * <p>仅用于 Blink 计划器。
  *
- * <p>注意:该类中的所有选项键必须以“__”开始，以“__”结束，所有选项不应向用户公开，所有选项应在计划完成后删除。
+ * <p>注意:该类中的所有选项键必须以 “__”开 始，以 “__” 结束，所有选项不应向用户公开，所有选项应在计划完成后删除。
  *
  * This class holds internal configuration constants used by Flink's table module.
  *

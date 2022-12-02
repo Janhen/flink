@@ -47,6 +47,8 @@ public final class SliceAssigners {
     // ------—------—------—------—------—------—------—------—------—------—------—------—------—
 
     /**
+     * 创建一个滚动窗口 {@link SliceAssigner}，它将元素分配给滚动窗口的切片。
+     *
      * Creates a tumbling window {@link SliceAssigner} that assigns elements to slices of tumbling
      * windows.
      *
@@ -63,6 +65,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 创建一个跳跃窗口 {@link SliceAssigner} 将元素分配给跳跃窗口的切片。
+     *
      * Creates a hopping window {@link SliceAssigner} that assigns elements to slices of hopping
      * windows.
      *
@@ -80,6 +84,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 创建一个累积窗口 {@link SliceAssigner}，它将元素分配给累积窗口的切片。
+     *
      * Creates a cumulative window {@link SliceAssigner} that assigns elements to slices of
      * cumulative windows.
      *
@@ -97,6 +103,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 创建一个 {@link SliceAssigner}，它将已附加窗口开始和窗口结束时间戳的元素分配给切片。分配的切片等于给定的窗口。
+     *
      * Creates a {@link SliceAssigner} that assigns elements which has been attached window start
      * and window end timestamp to slices. The assigned slice is equal to the given window.
      *
@@ -109,6 +117,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 创建一个 {@link SliceAssigner} 分配已附加切片结束时间戳的元素。
+     *
      * Creates a {@link SliceAssigner} that assigns elements which has been attached slice end
      * timestamp.
      *
@@ -382,6 +392,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 元素的 {@link SliceAssigner} 已附加窗口开始和结束时间戳。
+     *
      * The {@link SliceAssigner} for elements have been attached window start and end timestamps.
      */
     public static final class WindowedSliceAssigner implements SliceUnsharedAssigner {
@@ -436,6 +448,8 @@ public final class SliceAssigners {
     }
 
     /**
+     * 元素的 {@link SliceAssigner} 已附加切片结束时间戳，并且切片是共享的。
+     *
      * The {@link SliceAssigner} for elements have been attached slice end timestamp, and the slices
      * are shared.
      */

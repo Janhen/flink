@@ -59,7 +59,7 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 
 /**
- * 用于datetime类型的实用函数:date, time, timestamp。目前，把日期时间函数放在不同的类中有点麻烦，因为运行时模块
+ * 用于 datetime 类型的实用函数:date, time, timestamp。目前，把日期时间函数放在不同的类中有点麻烦，因为运行时模块
  * 不依赖 calcite。
  *
  * Utility functions for datetime types: date, time, timestamp. Currently, it is a bit messy putting

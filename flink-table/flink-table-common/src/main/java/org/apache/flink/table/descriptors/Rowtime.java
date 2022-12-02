@@ -48,9 +48,11 @@ public class Rowtime implements Descriptor {
 
     // 事件时间水印类型
     public static final String ROWTIME_WATERMARKS_TYPE = "rowtime.watermarks.type";
+    // 周期性上升
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_PERIODIC_ASCENDING =
             "periodic-ascending";
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_PERIODIC_BOUNDED = "periodic-bounded";
+    // J: 从 source 中生成水印
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_FROM_SOURCE = "from-source";
     public static final String ROWTIME_WATERMARKS_TYPE_VALUE_CUSTOM = "custom";
     public static final String ROWTIME_WATERMARKS_CLASS = "rowtime.watermarks.class";

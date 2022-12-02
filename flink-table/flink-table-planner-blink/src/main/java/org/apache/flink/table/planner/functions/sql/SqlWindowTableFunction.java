@@ -53,7 +53,7 @@ import java.util.Optional;
 import static org.apache.calcite.util.Static.RESOURCE;
 
 /**
- * 计算窗口的表值函数的基类。示例包括{@code TUMBLE}， {@code HOP}， {@code CUMULATE}和{@code SESSION}。
+ * 计算窗口的表值函数的基类。示例包括 {@code TUMBLE}， {@code HOP}， {@code CUMULATE} 和 {@code SESSION}。
  *
  * Base class for a table-valued function that computes windows. Examples include {@code TUMBLE},
  * {@code HOP}, {@code CUMULATE} and {@code SESSION}.
@@ -69,24 +69,36 @@ public class SqlWindowTableFunction extends SqlFunction implements SqlTableFunct
     protected static final String PARAM_DATA = "DATA";
 
     /** The time attribute column. Also known as the event time. */
+    // 时间属性列。也称为事件时间。
     protected static final String PARAM_TIMECOL = "TIMECOL";
 
     /** The window duration INTERVAL. */
+    // 窗口持续时间 INTERVAL。
     protected static final String PARAM_SIZE = "SIZE";
 
     /** The optional align offset for each window. */
+    // 每个窗口的可选对齐偏移量。
     protected static final String PARAM_OFFSET = "OFFSET";
 
     /** The session key(s), only used for SESSION window. */
     protected static final String PARAM_KEY = "KEY";
 
     /** The slide interval, only used for HOP window. */
+    // 滑动间隔，仅用于 HOP 窗口。
     protected static final String PARAM_SLIDE = "SLIDE";
 
     /** The slide interval, only used for HOP window. */
+    // 滑动间隔，仅用于 HOP 窗口。
     protected static final String PARAM_STEP = "STEP";
 
     /**
+     * 类型推断策略，其中表函数调用的行类型是 ROW，它由操作数 #0 的行类型（它是一个 TABLE）和两个附加字段组合而成。
+     * 字段如下：
+     *
+     *   <li>{@code window_start}：TIMESTAMP 类型，表示窗口的开始窗口的时间属性
+     *   <li>{@code window_end}: TIMESTAMP 类型，表示一个窗口的结束
+     *   <li>{@code window_time}: TIMESTAMP 类型，带有时间属性元数据，表示一个窗口的时间属性
+     *
      * Type-inference strategy whereby the row type of a table function call is a ROW, which is
      * combined from the row type of operand #0 (which is a TABLE) and two additional fields. The
      * fields are as follows:
@@ -261,6 +273,8 @@ public class SqlWindowTableFunction extends SqlFunction implements SqlTableFunct
         }
 
         /**
+         * 检查时间列描述符的操作数所指的类型是否有效。
+         *
          * Checks whether the type that the operand of time col descriptor refers to is valid.
          *
          * @param callBinding The call binding
@@ -300,6 +314,8 @@ public class SqlWindowTableFunction extends SqlFunction implements SqlTableFunct
         }
 
         /**
+         * 检查从位置 {@code startPos} 开始的操作数是否都是 {@code INTERVAL} 类型，返回是否成功。
+         *
          * Checks whether the operands starting from position {@code startPos} are all of type
          * {@code INTERVAL}, returning whether successful.
          *

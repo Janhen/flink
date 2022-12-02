@@ -44,6 +44,9 @@ import org.apache.flink.table.runtime.operators.aggregate.window.processors.Slic
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link SlicingWindowOperator} 实现了对齐窗口的优化处理，可以应用切片优化。切片优化的核心思想是将数据流中的所有
+ * 元素划分为有限数量的非重叠块（也称为切片）。
+ *
  * The {@link SlicingWindowOperator} implements an optimized processing for aligned windows which
  * can apply the slicing optimization. The core idea of slicing optimization is to divide all
  * elements from a data stream into a finite number of non-overlapping chunks (a.k.a. slices).
@@ -98,8 +101,10 @@ public final class SlicingWindowOperator<K, W> extends TableStreamOperator<RowDa
 
     private static final long serialVersionUID = 1L;
 
+    // J: 延迟丢弃的记录数
     private static final String LATE_ELEMENTS_DROPPED_METRIC_NAME = "numLateRecordsDropped";
     private static final String LATE_ELEMENTS_DROPPED_RATE_METRIC_NAME = "lateRecordsDroppedRate";
+    // J: 水印延迟
     private static final String WATERMARK_LATENCY_METRIC_NAME = "watermarkLatency";
 
     /** The concrete window operator implementation. */

@@ -29,6 +29,7 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.liter
 import static org.apache.flink.table.planner.expressions.ExpressionBuilder.plus;
 
 /** built-in row_number aggregate function. */
+// 内置 row_number 聚合函数。
 public class RowNumberAggFunction extends DeclarativeAggregateFunction {
     private UnresolvedReferenceExpression sequence = unresolvedRef("seq");
 

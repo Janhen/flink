@@ -19,6 +19,7 @@
 package org.apache.flink.table.runtime.operators.join;
 
 /** Join type for hash table. */
+// 哈希表的连接类型。
 public enum HashJoinType {
     INNER,
     BUILD_OUTER,

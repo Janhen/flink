@@ -42,6 +42,7 @@ import static org.apache.flink.table.planner.expressions.ExpressionBuilder.liter
 import static org.apache.flink.table.runtime.types.LogicalTypeDataTypeConverter.fromLogicalTypeToDataType;
 
 /** built-in rank like aggregate function, e.g. rank, dense_rank */
+// 内置排名，如聚合函数，例如等级，dense_rank
 public abstract class RankLikeAggFunctionBase extends DeclarativeAggregateFunction {
     protected UnresolvedReferenceExpression sequence = unresolvedRef("sequence");
     protected UnresolvedReferenceExpression[] lastValues;

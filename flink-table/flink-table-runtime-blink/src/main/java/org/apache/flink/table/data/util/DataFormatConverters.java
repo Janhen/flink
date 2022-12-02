@@ -93,6 +93,11 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getFi
 import static org.apache.flink.table.types.utils.TypeConversions.fromLegacyInfoToDataType;
 
 /**
+ * 内部数据格式和java格式之间的转换器。
+ *
+ * <p>以下场景将使用 java 格式到内部数据格式的转换器： 在源中，数据从用户定义的源到内部 sql 引擎。 udx返回值中，
+ * User向SQL引擎输出java格式的数据。
+ *
  * Converters between internal data format and java format.
  *
  * <p>The following scenarios will use converter for java format to internal data format: In source,

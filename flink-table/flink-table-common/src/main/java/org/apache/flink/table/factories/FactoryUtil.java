@@ -104,6 +104,10 @@ public final class FactoryUtil {
                                     + "for each statement individually by also considering the global configuration.");
 
     /**
+     * {@link ConfigOption} 键的后缀，以防连接器需要多种格式（例如键和值）。
+     *
+     * <p>有关详细信息，请参阅{@link #createTableFactoryHelper(DynamicTableFactory, DynamicTableFactory.Context)}。
+     *
      * Suffix for keys of {@link ConfigOption} in case a connector requires multiple formats (e.g.
      * for both key and value).
      *
@@ -121,7 +125,7 @@ public final class FactoryUtil {
     public static final String PLACEHOLDER_SYMBOL = "#";
 
     /**
-     * 从{@link CatalogTable}中创建一个{@link DynamicTableSource}。
+     * 从 {@link CatalogTable} 中创建一个 {@link DynamicTableSource}。
      *
      * <p>如果提供了{@link Catalog#getFactory()}，则会考虑{@link Catalog#getFactory()}。
      *

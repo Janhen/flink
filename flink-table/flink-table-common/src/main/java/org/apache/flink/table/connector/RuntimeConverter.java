@@ -25,9 +25,9 @@ import java.io.Serializable;
 /**
  * 用于在运行时转换数据的基本接口。
  *
- * <p>该接口的实例由规划器提供。它们用于数据结构之间的转换或执行其他映射转换
+ * <p>该接口的实例由规划器提供。用于数据结构之间的转换或执行其他映射转换
  *
- * <p>因为运行时转换器是{@link Serializable}，实例可以直接传递到运行时实现中，存储在成员变量中，并在执行时使用
+ * <p>因为运行时转换器是 {@link Serializable}，实例可以直接传递到运行时实现中，存储在成员变量中，并在执行时使用
  *
  * Base interface for converting data during runtime.
  *
@@ -43,7 +43,7 @@ public interface RuntimeConverter extends Serializable {
     /**
      * 在运行时初始化转换器。
      *
-     * <p>应该在运行时类的{@code open()}方法中调用。
+     * <p>应该在运行时类的 {@code open()} 方法中调用
      *
      * Initializes the converter during runtime.
      *

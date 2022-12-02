@@ -40,6 +40,7 @@ public final class TableStats {
     public static final TableStats UNKNOWN = new TableStats(-1, new HashMap<>());
 
     /** cardinality of table. */
+    // 表的基数。
     private final long rowCount;
 
     /** colStats statistics of table columns. */
@@ -77,6 +78,9 @@ public final class TableStats {
     }
 
     /**
+     * 合并两个表统计信息。当统计数据未知时，无论其他统计数据是什么，我们都需要返回未知统计数据。请参阅
+     * {@link #UNKNOWN}。
+     *
      * Merges two table stats. When the stats are unknown, whatever the other are, we need return
      * unknown stats. See {@link #UNKNOWN}.
      *

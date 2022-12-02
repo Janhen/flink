@@ -49,7 +49,7 @@ import static org.apache.flink.api.java.typeutils.TypeExtractionUtils.getAllDecl
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 用于处理{@link UserDefinedFunction}的子类的实用程序。这个类的目的是保持面向用户的api整洁，并从这里提供方法常量。
+ * 用于处理 {@link UserDefinedFunction} 的子类的实用程序。这个类的目的是保持面向用户的整洁 api ，并从这里提供方法常量。
  *
  * <p>它包含用于在目录中注册函数期间实例化、验证和提取类型的方法。
  *
@@ -87,6 +87,8 @@ public final class UserDefinedFunctionHelper {
     public static final String ASYNC_TABLE_EVAL = "eval";
 
     /**
+     * 尝试推断 AggregateFunction 的累加器类型的 TypeInformation。
+     *
      * Tries to infer the TypeInformation of an AggregateFunction's accumulator type.
      *
      * @param aggregateFunction The AggregateFunction for which the accumulator type is inferred.
@@ -98,6 +100,8 @@ public final class UserDefinedFunctionHelper {
     }
 
     /**
+     * 尝试推断 AggregateFunction 的累加器类型的 TypeInformation。
+     *
      * Tries to infer the TypeInformation of an AggregateFunction's accumulator type.
      *
      * @param aggregateFunction The AggregateFunction for which the accumulator type is inferred.
@@ -248,6 +252,8 @@ public final class UserDefinedFunctionHelper {
     }
 
     /**
+     * 验证 {@link UserDefinedFunction} 类在 API 中的使用。
+     *
      * Validates a {@link UserDefinedFunction} class for usage in the API.
      *
      * <p>Note: This is an initial validation to indicate common errors early. The concrete
@@ -354,6 +360,8 @@ public final class UserDefinedFunctionHelper {
     }
 
     /**
+     * 检查这是否是 Scala 对象。使用 Scala 对象可能会导致并发问题，例如，由于共享收集器。
+     *
      * Check whether this is a Scala object. Using Scala objects can lead to concurrency issues,
      * e.g., due to a shared collector.
      */
@@ -460,6 +468,8 @@ public final class UserDefinedFunctionHelper {
     }
 
     /**
+     * 通过删除对外部类的任何引用来修改函数实例。这启用了非静态内部函数类。
+     *
      * Modifies a function instance by removing any reference to outer classes. This enables
      * non-static inner function classes.
      */

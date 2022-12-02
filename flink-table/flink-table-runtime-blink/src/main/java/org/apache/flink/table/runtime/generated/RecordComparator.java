@@ -25,6 +25,9 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
+ * {@link BinaryInMemorySortBuffer} 的记录比较器。为了性能，子类通常通过 CodeGenerator 实现。一个帮助 JVM
+ * 内联的新接口。
+ *
  * Record comparator for {@link BinaryInMemorySortBuffer}. For performance, subclasses are usually
  * implemented through CodeGenerator. A new interface for helping JVM inline.
  */

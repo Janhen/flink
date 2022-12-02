@@ -26,6 +26,9 @@ import org.apache.flink.table.data.RowData;
 import org.apache.flink.util.Collector;
 
 /**
+ * ProcessFunction 将时间戳从 {@link RowData} 字段复制到
+ * {@link org.apache.flink.streaming.runtime.streamrecord.StreamRecord}。
+ *
  * ProcessFunction to copy a timestamp from a {@link RowData} field into the {@link
  * org.apache.flink.streaming.runtime.streamrecord.StreamRecord}.
  */

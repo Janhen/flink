@@ -30,6 +30,8 @@ import java.util.HashSet;
 import java.util.NavigableSet;
 
 /**
+ * {@link WindowAssigner}，它根据时间戳将元素窗口化到会话中。窗口不能重叠。
+ *
  * A {@link WindowAssigner} that windows elements into sessions based on the timestamp. Windows
  * cannot overlap.
  */

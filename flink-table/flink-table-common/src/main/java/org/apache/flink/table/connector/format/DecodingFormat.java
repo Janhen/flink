@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link DynamicTableSource}的{@link Format}用于读取行。
+ * {@link DynamicTableSource} 的 {@link Format} 用于读取行。
  *
  * A {@link Format} for a {@link DynamicTableSource} for reading rows.
  *

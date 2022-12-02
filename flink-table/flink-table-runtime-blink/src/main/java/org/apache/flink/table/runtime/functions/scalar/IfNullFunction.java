@@ -25,6 +25,7 @@ import org.apache.flink.table.functions.SpecializedFunction.SpecializedContext;
 import javax.annotation.Nullable;
 
 /** Implementation of {@link BuiltInFunctionDefinitions#IF_NULL}. */
+// {@link BuiltInFunctionDefinitions#IF_NULL} 的实现。
 @Internal
 public class IfNullFunction extends BuiltInScalarFunction {
 

@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.streaming.api.operators.InternalTimerService;
 
 /**
+ * 可以获取当前处理时间的时钟服务。这有助于模拟测试中的处理时间。
+ *
  * A clock service which can get current processing time. This can help to mock processing time in
  * tests.
  */

@@ -23,6 +23,9 @@ import org.apache.flink.annotation.Internal;
 import java.io.Serializable;
 
 /**
+ * {@link CoBundleTrigger} 与 {@link BundleTrigger} 类似，唯一的区别是 {@link CoBundleTrigger} 可以
+ * 处理两个输入。
+ *
  * A {@link CoBundleTrigger} is similar with {@link BundleTrigger}, and the only differences is
  * {@link CoBundleTrigger} can handle two inputs.
  *
@@ -33,6 +36,7 @@ import java.io.Serializable;
 public interface CoBundleTrigger<IN1, IN2> extends Serializable {
 
     /** Register a callback which will be called once this trigger decides to finish this bundle. */
+    // 注册一个回调，一旦此触发器决定完成此捆绑包，该回调将被调用。
     void registerCallback(BundleTriggerCallback callback);
 
     /**

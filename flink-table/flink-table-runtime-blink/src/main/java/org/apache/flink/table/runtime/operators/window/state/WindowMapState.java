@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /** A wrapper of {@link MapState} which is easier to update based on window namespace. */
+// {@link MapState} 的包装器，更容易根据窗口命名空间进行更新。
 public final class WindowMapState<W, UV> implements WindowState<W> {
 
     private final InternalMapState<RowData, W, RowData, UV> windowState;

@@ -49,6 +49,8 @@ import static org.apache.flink.table.planner.functions.bridging.BridgingUtils.cr
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 桥接 {@link FunctionDefinition} 到 Calcite 的标量或表函数（系统或用户定义函数）的表示。
+ *
  * Bridges {@link FunctionDefinition} to Calcite's representation of a scalar or table function
  * (either a system or user-defined function).
  */

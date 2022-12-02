@@ -21,6 +21,8 @@ package org.apache.flink.table.runtime.operators.bundle.trigger;
 import org.apache.flink.util.Preconditions;
 
 /**
+ * {@link BundleTrigger}，一旦捆绑包中的元素数量达到给定数量就会触发。
+ *
  * A {@link BundleTrigger} that fires once the count of elements in a bundle reaches the given
  * count.
  */

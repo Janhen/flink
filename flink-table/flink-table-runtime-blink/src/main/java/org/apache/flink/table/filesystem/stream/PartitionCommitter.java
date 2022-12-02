@@ -46,6 +46,12 @@ import static org.apache.flink.table.utils.PartitionPathUtils.extractPartitionSp
 import static org.apache.flink.table.utils.PartitionPathUtils.generatePartitionPath;
 
 /**
+ * 分区的提交者操作员。这是单个（非并行）任务。它收集上游发来的所有分区信息，当它判断收集来自一个检查点的所有任务的分区
+ * 时，触发分区提交决策。
+ *
+ * <p>注意：它会在检查点成功完成后处理记录。从上游 {@link CheckpointListener#notifyCheckpointComplete}
+ *   接收记录。
+ *
  * Committer operator for partitions. This is the single (non-parallel) task. It collects all the
  * partition information sent from upstream, and triggers the partition submission decision when it
  * judges to collect the partitions from all tasks of a checkpoint.

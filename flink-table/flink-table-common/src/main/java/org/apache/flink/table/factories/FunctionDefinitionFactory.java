@@ -22,10 +22,12 @@ import org.apache.flink.table.catalog.CatalogFunction;
 import org.apache.flink.table.functions.FunctionDefinition;
 
 /** A factory to create {@link FunctionDefinition}. */
-// 一个工厂创建{@link函数定义}。
+// 一个工厂创建 {@link FunctionDefinition}。
 public interface FunctionDefinitionFactory {
 
     /**
+     * 从给定的 {@link CatalogFunction} 创建一个 {@link FunctionDefinition}。
+     *
      * Creates a {@link FunctionDefinition} from given {@link CatalogFunction}.
      *
      * @param name name of the {@link CatalogFunction}

@@ -117,6 +117,7 @@ public final class BuiltInFunctionDefinitions {
                     .build();
 
     // 来源水印，指明运行时调用的，是 ScanTableSource 的能力，自动将 rowtime 加上原来的 DataStream 水印
+    // 取自 SourceWatermarkFunction
     public static final BuiltInFunctionDefinition SOURCE_WATERMARK =
             BuiltInFunctionDefinition.newBuilder()
                     .name("SOURCE_WATERMARK")
@@ -522,7 +523,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(argument(0)))
                     .build();
 
-    // 我们需要UPPERCASE来保持与基于字符串的表达式DSL的兼容性，DSL将UPPER公开为UPPERCASE ()
+    // 我们需要 UPPERCASE 来保持与基于字符串的表达式 DSL 的兼容性，DSL 将 UPPER 公开为 UPPERCASE()
     // we need UPPERCASE here to maintain compatibility for the string-based expression DSL
     // which exposes UPPER as upperCase()
     public static final BuiltInFunctionDefinition UPPERCASE =
@@ -617,6 +618,7 @@ public final class BuiltInFunctionDefinitions {
                     .build();
 
     // 正则表达式抽取
+    // 输入可抽取指定的组
     public static final BuiltInFunctionDefinition REGEXP_EXTRACT =
             BuiltInFunctionDefinition.newBuilder()
                     .name("regexpExtract")
@@ -714,7 +716,7 @@ public final class BuiltInFunctionDefinitions {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 组合了数字相加、“datetime + interval”、“interval + interval”算术运算和字符串连接。
+     * 组合了数字相加、“datetime + interval”、“interval + interval” 算术运算和字符串连接。
      *
      * Combines numeric addition, "datetime + interval"/"interval + interval" arithmetic, and string
      * concatenation.
@@ -725,15 +727,19 @@ public final class BuiltInFunctionDefinitions {
                     .kind(SCALAR)
                     .inputTypeStrategy(
                             or(
+                                    // J: 数字相加
                                     sequence(
                                             logical(LogicalTypeFamily.NUMERIC),
                                             logical(LogicalTypeFamily.NUMERIC)),
+                                    // J: 天 相加
                                     sequence(
                                             logical(LogicalTypeRoot.INTERVAL_DAY_TIME),
                                             logical(LogicalTypeRoot.INTERVAL_DAY_TIME)),
+                                    // J: 年月相加
                                     sequence(
                                             logical(LogicalTypeRoot.INTERVAL_YEAR_MONTH),
                                             logical(LogicalTypeRoot.INTERVAL_YEAR_MONTH)),
+                                    // J: 特定的 Interval 相加
                                     sequence(
                                             logical(LogicalTypeFamily.DATETIME),
                                             logical(LogicalTypeFamily.INTERVAL)),
@@ -748,7 +754,7 @@ public final class BuiltInFunctionDefinitions {
                     .build();
 
     /** Combines numeric subtraction and "datetime - interval" arithmetic. */
-    // 结合数字减法和“日期时间-间隔”算法。
+    // 结合数字减法和 “日期时间-间隔” 算法。
     public static final BuiltInFunctionDefinition MINUS =
             BuiltInFunctionDefinition.newBuilder()
                     .name("minus")
@@ -929,6 +935,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(nullable(explicit(DataTypes.DOUBLE())))
                     .build();
 
+    // J: 减去前缀
     public static final BuiltInFunctionDefinition MINUS_PREFIX =
             BuiltInFunctionDefinition.newBuilder()
                     .name("minusPrefix")
@@ -1293,7 +1300,7 @@ public final class BuiltInFunctionDefinitions {
                     .inputTypeStrategy(sequence(InputTypeStrategies.COMPOSITE))
                     .outputTypeStrategy(
                             callContext -> {
-                                // FLATTEN应该被解析为GET表达式
+                                // FLATTEN 应该被解析为 GET 表达式
                                 throw new UnsupportedOperationException(
                                         "FLATTEN should be resolved to GET expressions");
                             })
@@ -1465,6 +1472,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // J: 窗口当前范围
     public static final BuiltInFunctionDefinition CURRENT_RANGE =
             BuiltInFunctionDefinition.newBuilder()
                     .name("currentRange")
@@ -1472,6 +1480,7 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // J: 窗口当前的行
     public static final BuiltInFunctionDefinition CURRENT_ROW =
             BuiltInFunctionDefinition.newBuilder()
                     .name("currentRow")
@@ -1559,9 +1568,11 @@ public final class BuiltInFunctionDefinitions {
                     .outputTypeStrategy(TypeStrategies.MISSING)
                     .build();
 
+    // 窗口特性
     public static final Set<FunctionDefinition> WINDOW_PROPERTIES =
             new HashSet<>(Arrays.asList(WINDOW_START, WINDOW_END, PROCTIME, ROWTIME));
 
+    // J: 时间属性
     public static final Set<FunctionDefinition> TIME_ATTRIBUTES =
             new HashSet<>(Arrays.asList(PROCTIME, ROWTIME));
 

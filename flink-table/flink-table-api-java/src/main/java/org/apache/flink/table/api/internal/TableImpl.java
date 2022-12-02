@@ -293,6 +293,7 @@ public class TableImpl implements Table {
         }
     }
 
+    // J: 横向连接
     @Override
     public Table joinLateral(String tableFunctionCall) {
         return joinLateral(ExpressionParser.parseExpression(tableFunctionCall));

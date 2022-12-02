@@ -29,7 +29,7 @@ import java.util.Map;
 public final class MapDataUtil {
 
     /**
-     * 将{@link MapData}转换为Java {@link Map}， Java Map的键和值仍然保存内部数据结构的对象。
+     * 将 {@link MapData} 转换为 Java {@link Map}， Java Map 的键和值仍然保存内部数据结构的对象。
      *
      * Converts a {@link MapData} into Java {@link Map}, the keys and values of the Java map still
      * holds objects of internal data structures.

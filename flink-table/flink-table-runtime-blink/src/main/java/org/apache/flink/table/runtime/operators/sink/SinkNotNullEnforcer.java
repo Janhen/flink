@@ -27,7 +27,7 @@ import org.apache.flink.table.data.RowData;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /** Checks writing null values into NOT NULL columns. */
-// 检查是否将空值写入NOT null列。
+// 检查是否将空值写入 NOT null 列。
 public class SinkNotNullEnforcer implements FilterFunction<RowData> {
 
     private static final long serialVersionUID = 1L;

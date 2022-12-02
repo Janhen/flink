@@ -33,6 +33,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * 帮助程序 {@link CatalogTable} 用于表示由某些内联连接器（即 {@link DataStream} 或
+ * {@link TableResult#collect()}）支持的表。
+ *
  * Helper {@link CatalogTable} for representing a table that is backed by some inline connector
  * (i.e. {@link DataStream} or {@link TableResult#collect()}).
  */
@@ -52,6 +55,7 @@ final class InlineCatalogTable implements CatalogTable {
 
     @Override
     public Map<String, String> getOptions() {
+        // 由 DataStream 支持或用于 TableResult.collect() 的目录表不能用选项表示，因此也不能持久化。
         throw new TableException(
                 "A catalog table that is backed by a DataStream or used for TableResult.collect() "
                         + "cannot be expressed with options and can thus also not be persisted.");

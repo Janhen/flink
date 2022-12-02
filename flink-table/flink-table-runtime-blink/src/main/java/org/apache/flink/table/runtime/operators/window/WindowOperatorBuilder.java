@@ -48,6 +48,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link WindowOperatorBuilder} 用于流畅地构建 {@link WindowOperator}。
+ *
+ * <p>注意：必须在最后一个构建方法之前调用聚合方法。
+ *
  * The {@link WindowOperatorBuilder} is used to build {@link WindowOperator} fluently.
  *
  * <p>Note: You have to call the aggregate method before the last build method.
@@ -85,6 +89,9 @@ public class WindowOperatorBuilder {
     }
 
     /**
+     * 窗口的移位时区，如果proctime或rowtime类型为TIMESTAMP_LTZ，则移位时区为用户在TableConfig中配置的时区，
+     * 其他情况时区为UTC，即在分配窗口时从不移位。
+     *
      * The shift timezone of the window, if the proctime or rowtime type is TIMESTAMP_LTZ, the shift
      * timezone is the timezone user configured in TableConfig, other cases the timezone is UTC
      * which means never shift when assigning windows.
@@ -313,6 +320,7 @@ public class WindowOperatorBuilder {
     }
 
     /** The builder which is used to build {@link AggregateWindowOperator} fluently. */
+    // 用于流畅构建 {@link AggregateWindow Operator} 的构建器。
     public static class AggregateWindowOperatorBuilder {
         private NamespaceAggsHandleFunction<?> aggregateFunction;
         private GeneratedNamespaceAggsHandleFunction<?> generatedAggregateFunction;

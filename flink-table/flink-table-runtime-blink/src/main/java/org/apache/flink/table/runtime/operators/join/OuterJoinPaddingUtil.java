@@ -27,6 +27,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /** An utility to generate reusable padding results for outer joins. */
+// 为外部连接生成可重用填充结果的实用程序。
 public class OuterJoinPaddingUtil implements Serializable {
 
     private static final long serialVersionUID = -2295909099427806938L;

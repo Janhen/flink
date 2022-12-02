@@ -19,6 +19,10 @@
 package org.apache.flink.table.runtime.operators.window;
 
 /**
+ * {@code Window} 是将元素分组到有限的桶中。窗口有一个最大时间戳，这意味着在某个时候，进入一个窗口的所有元素都将到达。
+ *
+ * <p>子类应该实现 {@code equals()} 和 {@code hashCode()} 以便逻辑上相同的窗口被视为相同。
+ *
  * A {@code Window} is a grouping of elements into finite buckets. Windows have a maximum timestamp
  * which means that, at some point, all elements that go into one window will have arrived.
  *

@@ -51,6 +51,13 @@ import java.util.BitSet;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 通过sort-merge join策略实现joining的实现。
+ * 1.在大多数情况下，其性能弱于HashJoin。
+ * 2.比HashJoin更稳定，大部分数据都可以稳定排序。
+ * 3.SortMergeJoin应该是在同key的多级join级联的情况下sort可以省略的最佳选择。
+ *
+ * <p>注意：SEMI 和 ANTI 加入输出 input1 而不是 input2。 （与 {@link HashJoinOperator} 相反）。
+ *
  * An implementation that realizes the joining through a sort-merge join strategy. 1.In most cases,
  * its performance is weaker than HashJoin. 2.It is more stable than HashJoin, and most of the data
  * can be sorted stably. 3.SortMergeJoin should be the best choice if sort can be omitted in the

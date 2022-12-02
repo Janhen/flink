@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Utilities to compile a generated code to a Class. */
+// 将生成的代码编译为类的实用程序。
 public final class CompileUtils {
 
     // used for logging the generated codes to a same place

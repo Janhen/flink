@@ -48,11 +48,15 @@ import java.util.stream.Stream;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Utilities for de/serializing {@link Catalog} objects into a map of string properties. */
-// 用于将{@link Catalog}对象反序列化为字符串属性映射的实用程序。
+// 用于将 {@link Catalog} 对象反序列化为字符串属性映射的实用程序。
 @Internal
 public final class CatalogPropertiesUtil {
 
     /**
+     * 用于区分元对象是否为通用 Flink 对象的标志。
+     *
+     * <p>它用于区分 Flink 的通用连接器发现逻辑或专用目录连接器。
+     *
      * Flag to distinguish if a meta-object is a generic Flink object or not.
      *
      * <p>It is used to distinguish between Flink's generic connector discovery logic or specialized

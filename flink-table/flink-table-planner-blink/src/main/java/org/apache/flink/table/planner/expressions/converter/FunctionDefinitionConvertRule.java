@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /** A call expression converter rule that converts calls to user defined functions. */
+// 将调用转换为用户定义函数的调用表达式转换器规则。
 public class FunctionDefinitionConvertRule implements CallExpressionConvertRule {
     @Override
     public Optional<RexNode> convert(CallExpression call, ConvertContext context) {

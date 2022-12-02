@@ -33,6 +33,12 @@ import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.util.Litmus;
 
 /**
+ * {@link org.apache.calcite.rel.core.Snapshot} 的子类不针对任何特定引擎或调用约定。由于 CALCITE-4554，该
+ * 类被复制过来。
+ *
+ * <p>第80~91行：Calcite只支持timestamp类型为period类型，Flink同时支持Timestamp和TimestampLtz。一旦 calcite
+ * 支持 TimestampLtz 作为周期类型，就应该被删除。
+ *
  * Sub-class of {@link org.apache.calcite.rel.core.Snapshot} not targeted at any particular engine
  * or calling convention. The class was copied over because of * CALCITE-4554. *
  *

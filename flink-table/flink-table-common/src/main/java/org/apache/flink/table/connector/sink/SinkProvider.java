@@ -26,7 +26,7 @@ import org.apache.flink.table.data.RowData;
 import java.util.Optional;
 
 /** Provider of a {@link Sink} instance as a runtime implementation for {@link DynamicTableSink}. */
-// {@link Sink}实例的提供者，作为{@link DynamicTableSink}的运行时实现。
+// {@link Sink} 实例的提供者，作为 {@link DynamicTableSink} 的运行时实现。
 @PublicEvolving
 public interface SinkProvider extends DynamicTableSink.SinkRuntimeProvider, ParallelismProvider {
 

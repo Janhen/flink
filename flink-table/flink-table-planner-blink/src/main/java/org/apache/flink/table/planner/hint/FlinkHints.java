@@ -34,6 +34,8 @@ public abstract class FlinkHints {
     // ~ Tools ------------------------------------------------------------------
 
     /**
+     * 从给定的表提示列表 {@code tableHints} 中返回 OPTIONS 提示选项，从不为空。
+     *
      * Returns the OPTIONS hint options from the given list of table hints {@code tableHints}, never
      * null.
      */
@@ -46,6 +48,10 @@ public abstract class FlinkHints {
     }
 
     /**
+     * 合并来自 {@code hints} 的动态表选项和来自表定义 {@code props} 的静态表选项。
+     *
+     * <p>如果 {@code hints} 中的选项具有相同的选项键，它们将覆盖 {@code props} 中的选项。
+     *
      * Merges the dynamic table options from {@code hints} and static table options from table
      * definition {@code props}.
      *

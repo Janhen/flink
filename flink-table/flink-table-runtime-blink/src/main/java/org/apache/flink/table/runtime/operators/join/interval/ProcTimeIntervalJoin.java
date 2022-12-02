@@ -23,6 +23,7 @@ import org.apache.flink.table.runtime.operators.join.FlinkJoinType;
 import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 
 /** The function to execute processing time interval stream inner-join. */
+// 执行处理时间间隔流内部连接的函数。
 public final class ProcTimeIntervalJoin extends TimeIntervalJoin {
 
     private static final long serialVersionUID = 9204647938032023101L;

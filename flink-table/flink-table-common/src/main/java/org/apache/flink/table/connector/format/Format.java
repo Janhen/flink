@@ -30,6 +30,13 @@ import org.apache.flink.table.factories.DynamicTableFactory;
  *
  * <p>根据外部系统的类型，连接器可能支持不同的行读取和写入编码。该接口是构建实际运行时实现之前的中间表示。
  *
+ * <p>可以从两个维度区分格式：
+ *
+ *   <li>应用格式的上下文（{@link DynamicTableSource} 或 {@link DynamicTableSink}）。
+ *   <li>所需的运行时实现接口（例如 {@link DeserializationSchema} 或一些批量接口）。
+ *
+ * <p>{@link DynamicTableFactory} 可以搜索连接器接受的格式。
+ *
  * Base interface for connector formats.
  *
  * <p>Depending on the kind of external system, a connector might support different encodings for

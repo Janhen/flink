@@ -23,6 +23,10 @@ import org.apache.flink.table.catalog.CatalogTable;
 import org.apache.flink.table.connector.sink.DynamicTableSink;
 
 /**
+ * 从 {@link CatalogTable} 和其他上下文信息创建一个 {@link DynamicTableSink} 实例。
+ *
+ * <p>有关工厂总体设计的更多信息，请参阅{@link Factory}。
+ *
  * Creates a {@link DynamicTableSink} instance from a {@link CatalogTable} and additional context
  * information.
  *

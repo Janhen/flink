@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 一个 {@link PatternProcessFunction} 包装器，用于将调用委托给生成的代码 {@link PatternProcessFunction}。
+ *
  * A {@link PatternProcessFunction} wrapper to delegate invocation to the code generated {@link
  * PatternProcessFunction}.
  */
@@ -53,6 +55,7 @@ public class PatternProcessFunctionRunner extends PatternProcessFunction<RowData
     @Override
     public void processMatch(Map<String, List<RowData>> match, Context ctx, Collector<RowData> out)
             throws Exception {
+        // J: 模式处理
         function.processMatch(match, ctx, out);
     }
 

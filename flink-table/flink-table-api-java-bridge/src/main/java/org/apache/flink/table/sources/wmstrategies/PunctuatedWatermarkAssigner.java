@@ -28,7 +28,7 @@ import org.apache.flink.types.Row;
 public abstract class PunctuatedWatermarkAssigner extends WatermarkStrategy {
 
     /**
-     * 返回当前行的水印;如果不应该生成水印，则返回null。
+     * 返回当前行的水印;如果不应该生成水印，则返回 null。
      *
      * Returns the watermark for the current row or null if no watermark should be generated.
      *

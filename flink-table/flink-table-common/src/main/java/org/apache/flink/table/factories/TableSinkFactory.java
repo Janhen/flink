@@ -55,7 +55,7 @@ public interface TableSinkFactory<T> extends TableFactory {
     }
 
     /**
-     * 基于给定的{@link CatalogTable}实例创建和配置一个{@link TableSink}。
+     * 基于给定的 {@link CatalogTable} 实例创建和配置一个{@link TableSink}。
      *
      * Creates and configures a {@link TableSink} based on the given {@link CatalogTable} instance.
      *

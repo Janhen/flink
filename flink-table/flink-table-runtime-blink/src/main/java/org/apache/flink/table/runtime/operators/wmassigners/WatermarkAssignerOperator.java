@@ -35,6 +35,8 @@ import org.apache.flink.table.runtime.generated.WatermarkGenerator;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 从流元素中提取时间戳并生成周期性水印的流运算符。
+ *
  * A stream operator that extracts timestamps from stream elements and generates periodic
  * watermarks.
  */
@@ -60,6 +62,7 @@ public class WatermarkAssignerOperator extends AbstractStreamOperator<RowData>
     private transient StreamStatusMaintainer streamStatusMaintainer;
 
     /** Flag to prevent duplicate function.close() calls in close() and dispose(). */
+    // 标记以防止在 close() 和 dispose() 中重复 function.close() 调用
     private transient boolean functionsClosed = false;
 
     /**
@@ -131,6 +134,7 @@ public class WatermarkAssignerOperator extends AbstractStreamOperator<RowData>
         }
     }
 
+    // J: 提前水印
     private void advanceWatermark() {
         if (currentWatermark > lastWatermark) {
             lastWatermark = currentWatermark;
@@ -143,6 +147,7 @@ public class WatermarkAssignerOperator extends AbstractStreamOperator<RowData>
     public void onProcessingTime(long timestamp) throws Exception {
         advanceWatermark();
 
+        // J: 判断空闲超时的情况
         if (idleTimeout > 0) {
             final long currentTime = getProcessingTimeService().getCurrentProcessingTime();
             if (currentTime - lastRecordTime > idleTimeout) {
@@ -152,6 +157,7 @@ public class WatermarkAssignerOperator extends AbstractStreamOperator<RowData>
         }
 
         // register next timer
+        // 注册下一个执行时间点
         long now = getProcessingTimeService().getCurrentProcessingTime();
         getProcessingTimeService().registerTimer(now + watermarkInterval, this);
     }

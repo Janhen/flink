@@ -34,6 +34,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> {
     private static final long serialVersionUID = 6148230381293590639L;
 
     private final int cacheSize;
+    // J: 移除原始监听
     private final RemovalListener<K, V> removalListener;
 
     public LRUMap(int cacheSize) {

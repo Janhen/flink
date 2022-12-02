@@ -21,7 +21,7 @@ package org.apache.flink.table.annotation;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Three-valued flag for representing {@code TRUE}, {@code FALSE}, and {@code UNKNOWN}. */
-// 三值标志，表示{@code TRUE}， {@code FALSE}和{@code UNKNOWN}。
+// 三值标志，表示 {@code TRUE}， {@code FALSE} 和 {@code UNKNOWN}。
 @PublicEvolving
 public enum HintFlag {
     TRUE,

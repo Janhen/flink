@@ -25,6 +25,10 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import org.apache.flink.table.data.RowData;
 
 /**
+ * 在给定的事件时间间隔内发出水印的流运算符。这个小批量分配器在事件时间工作，这意味着水印是从上游转发的，但按事件时间
+ * 间隔过滤。一旦收到的水印被推进，下游运营商（例如 windows）将触发小批量。因此只有跨越事件时间间隔边界（即窗口结束）
+ * 的水印才会被转发。这是为了让 Windows 拥有最高效的小批量。
+ *
  * A stream operator that emits watermark in a given event-time interval. This mini-batch assigner
  * works in event time, which means the watermark is forwarded from upstream but filtered by the
  * event-time interval. The downstream operators (e.g. windows) will trigger mini-batch once the

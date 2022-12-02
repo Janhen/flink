@@ -43,7 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Utils for file system. */
-// 文件系统的Utils。
+// 文件系统的 Utils。
 @Internal
 public class PartitionPathUtils {
 
@@ -130,6 +130,8 @@ public class PartitionPathUtils {
     }
 
     /**
+     * 从路径创建分区值。
+     *
      * Make partition values from path.
      *
      * @param currPath partition file path.
@@ -140,7 +142,7 @@ public class PartitionPathUtils {
     }
 
     /**
-     * 从path创建分区规范。
+     * 从 path 创建分区规范。
      *
      * Make partition spec from path.
      *
@@ -194,6 +196,7 @@ public class PartitionPathUtils {
     }
 
     /** List file status without hidden files. */
+    // 列出没有隐藏文件的文件状态
     public static FileStatus[] listStatusWithoutHidden(FileSystem fs, Path dir) throws IOException {
         FileStatus[] statuses = fs.listStatus(dir);
         if (statuses == null) {

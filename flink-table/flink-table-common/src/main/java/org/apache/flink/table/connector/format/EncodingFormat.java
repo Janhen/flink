@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用于写入行的 {@link DynamicTableSink} 的 {@link Format}。
+ *
  * A {@link Format} for a {@link DynamicTableSink} for writing rows.
  *
  * @param <I> runtime interface needed by the table sink

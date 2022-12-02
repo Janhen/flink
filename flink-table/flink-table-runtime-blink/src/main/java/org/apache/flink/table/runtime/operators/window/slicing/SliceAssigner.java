@@ -24,6 +24,11 @@ import org.apache.flink.table.data.RowData;
 import java.io.Serializable;
 
 /**
+ * {@link SliceAssigner} 将元素分配到单个切片中。请注意，我们使用切片结束时间戳来标识切片。
+ *
+ * <p>注意：{@link SliceAssigner} 服务器作为基础接口。具体分配器应实现接口 {@link SliceSharedAssigner}
+ * 或 {@link SliceUnsharedAssigner}。
+ *
  * A {@link SliceAssigner} assigns element into a single slice. Note that we use the slice end
  * timestamp to identify a slice.
  *

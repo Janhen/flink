@@ -1218,6 +1218,7 @@ public class FunctionITCase extends StreamingTestBase {
 
         @Override
         public TypeInference getTypeInference(DataTypeFactory typeFactory) {
+            // J: 根据输入参数确定输出类型
             return TypeInference.newBuilder()
                     .outputTypeStrategy(TypeStrategies.argument(0))
                     .build();
@@ -1359,6 +1360,7 @@ public class FunctionITCase extends StreamingTestBase {
     }
 
     /** Function that aggregates strings and finds the longest string. */
+    // 聚合字符串并找出最长字符串的函数
     @FunctionHint(accumulator = @DataTypeHint("ROW<longestString STRING>"))
     public static class LongestStringAggregateFunction extends AggregateFunction<String, Row> {
 
@@ -1384,6 +1386,7 @@ public class FunctionITCase extends StreamingTestBase {
     }
 
     /** Aggregate function that tests raw types in map views. */
+    // 聚合函数，用于测试 map 视图中的原始类型
     public static class RawMapViewAggregateFunction
             extends AggregateFunction<String, RawMapViewAggregateFunction.AccWithRawView> {
 

@@ -53,6 +53,7 @@ public final class Session {
      */
     @Deprecated
     public static SessionWithGap withGap(String gap) {
+        // J: Str 解析
         return withGap(ExpressionParser.parseExpression(gap));
     }
 

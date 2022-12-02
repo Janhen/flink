@@ -22,7 +22,8 @@ import org.apache.flink.table.data.RowData;
 
 import java.io.Serializable;
 
-/**
+/**RowData 的记录均衡器，可以比较两个 RowData 并返回它们是否相等。
+ *
  * Record equaliser for RowData which can compare two RowData and returns whether they are equal.
  */
 public interface RecordEqualiser extends Serializable {

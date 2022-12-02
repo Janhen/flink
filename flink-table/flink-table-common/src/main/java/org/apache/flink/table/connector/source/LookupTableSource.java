@@ -26,13 +26,13 @@ import java.io.Serializable;
 /**
  * {@link DynamicTableSource} 在运行时通过一个或多个键查找外部存储系统的行。
  *
- * <p>与{@link ScanTableSource}相比，source不需要读取整个表，并且可以在必要时从外部表(可能是不断变化的)惰性地获取单个值。
+ * <p>与 {@link ScanTableSource} 相比，source 不需要读取整个表，并且可以在必要时从外部表(可能是不断变化的)惰性地获取单个值。
  *
- * <p>注意:与{@link ScanTableSource}相比，{@link LookupTableSource}目前只支持发出只插入的更改(参见
+ * <p>注意:与 {@link ScanTableSource} 相比，{@link LookupTableSource} 目前只支持发出只插入的更改(参见
  *   {@link RowKind})。不支持进一步的能力。
  *
- * <p>在最后一步中，规划器将调用{@link #getLookupRuntimeProvider(LookupContext)}来获取运行时实现的提供者。
- *   执行查找所需的关键字段是从规划器的查询派生出来的，将在给定的{@link LookupContext#getKeys()}中提供。这些
+ * <p>在最后一步中，规划器将调用 {@link #getLookupRuntimeProvider(LookupContext)} 来获取运行时实现的提供者。
+ *   执行查找所需的关键字段是从规划器的查询派生出来的，将在给定的 {@link LookupContext#getKeys()} 中提供。这些
  *   关键字段的值在运行时传递。
  *
  * A {@link DynamicTableSource} that looks up rows of an external storage system by one or more keys
@@ -79,7 +79,7 @@ public interface LookupTableSource extends DynamicTableSource {
     // --------------------------------------------------------------------------------------------
 
     /**
-     * 通过{@link LookupRuntimeProvider}创建运行时实现的上下文。
+     * 通过 {@link LookupRuntimeProvider} 创建运行时实现的上下文。
      *
      * Context for creating runtime implementation via a {@link LookupRuntimeProvider}.
      *
@@ -93,6 +93,8 @@ public interface LookupTableSource extends DynamicTableSource {
     interface LookupContext extends DynamicTableSource.Context {
 
         /**
+         * 返回应在查找期间使用的键索引路径数组。索引是基于0的，并支持(可能嵌套)结构中的复合键。
+         *
          * Returns an array of key index paths that should be used during the lookup. The indices
          * are 0-based and support composite keys within (possibly nested) structures.
          *

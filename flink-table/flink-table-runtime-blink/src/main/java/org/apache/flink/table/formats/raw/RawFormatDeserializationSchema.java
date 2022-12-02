@@ -39,7 +39,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 将原始(基于字节的)值反序列化到Flink TableSQL内部数据结构{@link RowData}。
+ * 将原始(基于字节的)值反序列化到 Flink TableSQL 内部数据结构 {@link RowData}。
  *
  * Deserialization schema from raw (byte based) value to Flink Table/SQL internal data structure
  * {@link RowData}.
@@ -84,6 +84,7 @@ public class RawFormatDeserializationSchema implements DeserializationSchema<Row
 
     @Override
     public RowData deserialize(byte[] message) throws IOException {
+        // J: 字节数据的反序列化
         final Object field;
         if (message == null) {
             field = null;
@@ -91,6 +92,7 @@ public class RawFormatDeserializationSchema implements DeserializationSchema<Row
             validator.validate(message);
             field = converter.convert(message);
         }
+        // J: 列 0 作为原始值，可基于 列 0 扩展计算列
         reuse.setField(0, field);
         return reuse;
     }

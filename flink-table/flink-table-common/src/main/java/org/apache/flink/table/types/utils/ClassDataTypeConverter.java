@@ -36,6 +36,9 @@ import java.util.Optional;
 /**
  * 基于类的数据类型提取器，支持为输入和输出转换提取可明确识别的数据类型。
  *
+ * <p>注意：在大多数情况下，{@link DataType Extractor} 更有用，因为它还考虑了可能用 {@link DataTypes Hint}
+ * 注释的结构化类型和类型变量。
+ *
  * Class-based data type extractor that supports extraction of clearly identifiable data types for
  * input and output conversion.
  *

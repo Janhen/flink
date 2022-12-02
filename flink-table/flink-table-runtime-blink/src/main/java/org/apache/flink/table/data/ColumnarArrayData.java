@@ -34,6 +34,7 @@ import org.apache.flink.table.data.vector.TimestampColumnVector;
 import java.util.Arrays;
 
 /** Columnar array to support access to vector column data. */
+// 支持访问向量列数据的柱状数组。
 public final class ColumnarArrayData implements ArrayData, TypedSetters {
 
     private final ColumnVector data;

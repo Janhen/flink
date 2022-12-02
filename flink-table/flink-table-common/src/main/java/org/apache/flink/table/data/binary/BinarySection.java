@@ -21,6 +21,7 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.core.memory.MemorySegment;
 
 /** A basic implementation of {@link BinaryFormat} which describe a section of memory. */
+// {@link BinaryFormat} 的基本实现，它描述了一段内存。
 @Internal
 public class BinarySection implements BinaryFormat {
 

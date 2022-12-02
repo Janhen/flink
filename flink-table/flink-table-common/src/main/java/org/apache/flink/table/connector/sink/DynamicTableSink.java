@@ -40,15 +40,22 @@ import java.io.Serializable;
 /**
  * 将动态表汇聚到外部存储系统。
  *
- * <p>动态表是Flink的Table & SQL API的核心概念，以统一的方式处理有界和无界数据。根据定义，动态表可以随时间变化。
+ * <p>动态表是 Flink 的 Table & SQL API 的核心概念，以统一的方式处理有界和无界数据。根据定义，动态表可以随时间变化。
  *
  * <p>对于常规批处理场景，接收器只能接受仅插入的行，并写出有边界的流。
  *
- * <p>对于更改数据捕获(CDC)场景，接收可以通过插入、更新和删除行写出有界或无界流。参见{@link RowKind}。
+ * <p>对于更改数据捕获(CDC)场景，接收可以通过插入、更新和删除行写出有界或无界流。参见 {@link RowKind}。
  *
- * <p> {@link DynamicTableSink}的实例可以被视为最终生成具体运行时实现的工厂，用于写入实际数据。
+ * <p> {@link DynamicTableSink} 的实例可以被视为最终生成具体运行时实现的工厂，用于写入实际数据。
  *
  * <p>根据可选声明的能力，规划器可以对实例应用更改，从而改变生成的运行时实现。
+ *
+ * <p>{@link DynamicTableSink} 可以实现以下能力：
+ *   SupportsPartitioning
+ *   SupportsOverwrite
+ *   SupportsWritingMetadata
+ *
+ * <p>在最后一步中，规划器将调用{@link #getSinkRuntimeProvider(Context)} 来获取运行时实现的提供者。
  *
  * Sink of a dynamic table to an external storage system.
  *
@@ -138,6 +145,8 @@ public interface DynamicTableSink {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通过 {@link SinkRuntimeProvider} 创建运行时实现的上下文。
+     *
      * Context for creating runtime implementation via a {@link SinkRuntimeProvider}.
      *
      * <p>It offers utilities by the planner for creating runtime implementation with minimal
@@ -185,6 +194,8 @@ public interface DynamicTableSink {
     }
 
     /**
+     * 转换器，用于 Flink 的内部数据结构和由给定的 {@link DataType} 指定的对象之间的映射，可以传递到运行时实现中。
+     *
      * Converter for mapping between Flink's internal data structures and objects specified by the
      * given {@link DataType} that can be passed into a runtime implementation.
      *

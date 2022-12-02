@@ -21,9 +21,11 @@ package org.apache.flink.table.functions;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** Characteristics that a {@link FunctionDefinition} requires. */
+// {@link FunctionDefinition} 需要的特征。
 @PublicEvolving
 public enum FunctionRequirement {
 
     /** Requirement that an aggregate function can only be applied in an OVER window. */
+    // 聚合函数只能应用于 OVER 窗口的要求
     OVER_WINDOW_ONLY
 }

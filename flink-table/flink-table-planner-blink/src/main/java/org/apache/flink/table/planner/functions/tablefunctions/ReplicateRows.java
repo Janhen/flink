@@ -27,7 +27,7 @@ import org.apache.flink.types.Row;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
- * 复制该行N次。N被指定为函数的第一个参数。这是一个内部函数，只被优化器用来重写EXCEPT ALL和INTERSECT ALL查询。
+ * 复制该行 N 次。N 被指定为函数的第一个参数。这是一个内部函数，只被优化器用来重写 EXCEPT ALL 和 INTERSECT ALL 查询。
  *
  * Replicate the row N times. N is specified as the first argument to the function. This is an
  * internal function solely used by optimizer to rewrite EXCEPT ALL AND INTERSECT ALL queries.

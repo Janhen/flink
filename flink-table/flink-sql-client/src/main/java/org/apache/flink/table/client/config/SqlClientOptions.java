@@ -36,6 +36,7 @@ public class SqlClientOptions {
                             "The number of rows to cache when in the table mode. If the number of rows exceeds the "
                                     + "specified value, it retries the row in the FIFO style.");
 
+    // J: 执行结果的模式   可选为 {table, tableau, changelog}
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<ResultMode> EXECUTION_RESULT_MODE =
             ConfigOptions.key("sql-client.execution.result-mode")

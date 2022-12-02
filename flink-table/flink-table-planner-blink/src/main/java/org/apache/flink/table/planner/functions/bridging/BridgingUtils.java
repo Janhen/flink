@@ -49,6 +49,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /** Utilities for bridging {@link FunctionDefinition} with Calcite's representation of functions. */
+// 将 {@link FunctionDefinition} 与 Calcite 的函数表示桥接的实用程序。
 final class BridgingUtils {
     static String createName(
             @Nullable FunctionIdentifier identifier, FunctionDefinition definition) {

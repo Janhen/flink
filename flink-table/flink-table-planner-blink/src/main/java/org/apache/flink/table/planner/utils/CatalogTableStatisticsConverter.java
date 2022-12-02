@@ -39,6 +39,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 用于将 {@link CatalogTableStatistics} 和 {@link CatalogColumnStatistics} 转换为 {@link TableStats}
+ * 的实用程序类。
+ *
  * Utility class for converting {@link CatalogTableStatistics} and {@link CatalogColumnStatistics}
  * to {@link TableStats}.
  */

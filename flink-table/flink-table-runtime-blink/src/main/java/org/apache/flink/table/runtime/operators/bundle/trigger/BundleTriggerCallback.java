@@ -21,10 +21,13 @@ package org.apache.flink.table.runtime.operators.bundle.trigger;
 import org.apache.flink.annotation.Internal;
 
 /** Interface for bundle trigger callbacks that can be registered to a {@link BundleTrigger}. */
+// 可以注册到 {@link BundleTrigger} 的捆绑触发器回调接口。
 @Internal
 public interface BundleTriggerCallback {
 
     /**
+     * 调用此方法以完成当前包并在触发触发器时启动新包。
+     *
      * This method is invoked to finish current bundle and start a new one when the trigger was
      * fired.
      *

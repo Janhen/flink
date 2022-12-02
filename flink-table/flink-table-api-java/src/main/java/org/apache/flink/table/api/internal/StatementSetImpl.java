@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @Internal
 class StatementSetImpl implements StatementSet {
     private final TableEnvironmentInternal tableEnvironment;
-    // J: insert ... 操作
+    // J: insert ... 操作(DML)
     private final List<ModifyOperation> operations = new ArrayList<>();
 
     protected StatementSetImpl(TableEnvironmentInternal tableEnvironment) {

@@ -24,6 +24,7 @@ import org.apache.flink.table.runtime.generated.GeneratedRecordComparator;
 import org.apache.flink.table.runtime.generated.RecordComparator;
 
 /** An implementation of {@link EventComparator} based on a generated {@link RecordComparator}. */
+// 基于生成的 {@link RecordComparator} 的 {@link EventComparator} 的实现。
 public class RowDataEventComparator implements EventComparator<RowData> {
     private static final long serialVersionUID = 1L;
 

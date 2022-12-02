@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * 唯一的键约束。也可以将其声明为PRIMARY KEY。
+ * 唯一的键约束。也可以将其声明为 PRIMARY KEY。
  *
  * A unique key constraint. It can be declared also as a PRIMARY KEY.
  *
@@ -41,6 +41,7 @@ public final class UniqueConstraint extends AbstractConstraint {
     private final ConstraintType type;
 
     /** Creates a non enforced {@link ConstraintType#PRIMARY_KEY} constraint. */
+    // 创建一个非强制的 {@link ConstraintType#PRIMARY_KEY} 约束。
     public static UniqueConstraint primaryKey(String name, List<String> columns) {
         return new UniqueConstraint(name, false, ConstraintType.PRIMARY_KEY, columns);
     }
@@ -64,6 +65,8 @@ public final class UniqueConstraint extends AbstractConstraint {
     }
 
     /**
+     * 返回约束的摘要。所有约束摘要将被格式化为
+     *
      * Returns constraint's summary. All constraints summary will be formatted as
      *
      * <pre>

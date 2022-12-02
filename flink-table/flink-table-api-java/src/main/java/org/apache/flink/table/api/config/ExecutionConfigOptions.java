@@ -48,6 +48,7 @@ public class ExecutionConfigOptions {
     //  State Options
     // ------------------------------------------------------------------------
 
+    // J: 装填过期时间，默认不过期
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Duration> IDLE_STATE_RETENTION =
             key("table.exec.state.ttl")
@@ -65,6 +66,7 @@ public class ExecutionConfigOptions {
     //  Source Options
     // ------------------------------------------------------------------------
 
+    // 检测 source 空闲的超时，默认不检测，用于下游任务无需等待该 source 水印
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Duration> TABLE_EXEC_SOURCE_IDLE_TIMEOUT =
             key("table.exec.source.idle-timeout")
@@ -78,7 +80,7 @@ public class ExecutionConfigOptions {
                                     + "Default value is 0, which means detecting source idleness is not enabled.");
 
     // J: CDC 相关的去重
-    // 指示作业中的CDC (Change Data Capture)源“+”是否会产生重复的更改事件，需要框架去重并获得一致的结果。CDC源是
+    // 指示作业中的CDC (Change Data Capture)源是否会产生重复的更改事件，需要框架去重并获得一致的结果。CDC源是
     // 指产生完整变更事件的源，包括INSERTUPDATE_BEFORE“+”UPDATE_AFTERDELETE，例如Debezium格式的Kafka源。
     // 该配置默认为false
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
@@ -117,9 +119,10 @@ public class ExecutionConfigOptions {
     //  Sink Options
     // ------------------------------------------------------------------------
 
-    // 表上的NOT NULL列约束强制“+”空值不能插入到表中。Flink支持、“error”(默认)和“drop”强制行为。默认情况下，
+    // 表上的NOT NULL列约束强制空值不能插入到表中。Flink支持、“error”(默认)和“drop”强制行为。默认情况下，
     // Flink将检查值，并在null值将写入NOT null列时抛出运行时异常。用户可以将行为从“drop”改为，无声地删除这些记录，
-    // 而不会抛出异常。
+    // 而不会抛出异常
+    // J: 对于一些维度信息未上报的，定义时定义为 Not null 的场景适用
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<NotNullEnforcer> TABLE_EXEC_SINK_NOT_NULL_ENFORCER =
             key("table.exec.sink.not-null-enforcer")
@@ -155,6 +158,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Sort Options
     // ------------------------------------------------------------------------
+    // J: 当 order by 未设置 limit 时的默认输出个数
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Integer> TABLE_EXEC_SORT_DEFAULT_LIMIT =
             key("table.exec.sort.default-limit")
@@ -171,7 +175,7 @@ public class ExecutionConfigOptions {
                                     + "If it is too small, may cause intermediate merging. But if it is too large, "
                                     + "it will cause too many files opened at the same time, consume memory and lead to random reading.");
 
-    // 是否异步合并已排序的溢出文件。
+    // 是否异步合并已排序的溢出文件
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Boolean> TABLE_EXEC_SORT_ASYNC_MERGE_ENABLED =
             key("table.exec.sort.async-merge-enabled")
@@ -181,6 +185,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Spill Options
     // ------------------------------------------------------------------------
+    // J: 是否压缩溢出的数据，当前仅支持 sort、hash 聚合、hash 连接 算子
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Boolean> TABLE_EXEC_SPILL_COMPRESSION_ENABLED =
             key("table.exec.spill-compression.enabled")
@@ -189,6 +194,7 @@ public class ExecutionConfigOptions {
                             "Whether to compress spilled data. "
                                     + "Currently we only support compress spilled data for sort and hash-agg and hash-join operators.");
 
+    // J: 溢出压缩的 block 大小
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<MemorySize> TABLE_EXEC_SPILL_COMPRESSION_BLOCK_SIZE =
             key("table.exec.spill-compression.block-size")
@@ -202,6 +208,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Resource Options
     // ------------------------------------------------------------------------
+    // 对于所有算子的并行度，比 StreamExecutionEnvironment 优先级更高
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Integer> TABLE_EXEC_RESOURCE_DEFAULT_PARALLELISM =
             key("table.exec.resource.default-parallelism")
@@ -215,6 +222,7 @@ public class ExecutionConfigOptions {
                                     + "default parallelism is set, then it will fallback to use the parallelism "
                                     + "of StreamExecutionEnvironment.");
 
+    // J: 外部缓冲内存大小，用于 sort merge join、nested join、over window
     @Documentation.ExcludeFromDocumentation(
             "Beginning from Flink 1.10, this is interpreted as a weight hint "
                     + "instead of an absolute memory requirement. Users should not need to change these carefully tuned weight hints.")
@@ -228,6 +236,7 @@ public class ExecutionConfigOptions {
                                     + " it will affect the weight of memory that can be applied by a single operator"
                                     + " in the task, the actual memory used depends on the running environment.");
 
+    // J: hash 聚合算子管理的内存大小
     @Documentation.ExcludeFromDocumentation(
             "Beginning from Flink 1.10, this is interpreted as a weight hint "
                     + "instead of an absolute memory requirement. Users should not need to change these carefully tuned weight hints.")
@@ -241,6 +250,7 @@ public class ExecutionConfigOptions {
                                     + " that can be applied by a single operator in the task, the actual memory used"
                                     + " depends on the running environment.");
 
+    // J: hash 连接算子管理的内存大小
     @Documentation.ExcludeFromDocumentation(
             "Beginning from Flink 1.10, this is interpreted as a weight hint "
                     + "instead of an absolute memory requirement. Users should not need to change these carefully tuned weight hints.")
@@ -254,6 +264,7 @@ public class ExecutionConfigOptions {
                                     + " memory that can be applied by a single operator in the task, the actual"
                                     + " memory used depends on the running environment.");
 
+    // J: 用于排序算子的缓冲大小
     @Documentation.ExcludeFromDocumentation(
             "Beginning from Flink 1.10, this is interpreted as a weight hint "
                     + "instead of an absolute memory requirement. Users should not need to change these carefully tuned weight hints.")
@@ -272,6 +283,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
 
     /** See {@code org.apache.flink.table.runtime.operators.window.grouping.HeapWindowsGrouping}. */
+    // J: 窗口聚合算子中元素缓冲的限制条数
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<Integer> TABLE_EXEC_WINDOW_AGG_BUFFER_SIZE_LIMIT =
             key("table.exec.window-agg.buffer-size-limit")
@@ -282,7 +294,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Async Lookup Options
     // ------------------------------------------------------------------------
-    // 异步查找连接可以触发的异步io操作的最大数量
+    // 异步查找连接可以触发的异步 io 操作的最大数量
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Integer> TABLE_EXEC_ASYNC_LOOKUP_BUFFER_CAPACITY =
             key("table.exec.async-lookup.buffer-capacity")
@@ -290,7 +302,7 @@ public class ExecutionConfigOptions {
                     .withDescription(
                             "The max number of async i/o operation that the async lookup join can trigger.");
 
-    // 异步操作完成的异步超时。
+    // 异步操作完成的异步超时
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH_STREAMING)
     public static final ConfigOption<Duration> TABLE_EXEC_ASYNC_LOOKUP_TIMEOUT =
             key("table.exec.async-lookup.timeout")
@@ -302,6 +314,8 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  MiniBatch Options
     // ------------------------------------------------------------------------
+    // J: 是否开启 table mini-batch
+    //   开启后，必须设置 `table.exec.mini-batch.size`、`table.exec.mini-batch.allow-latency`
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Boolean> TABLE_EXEC_MINIBATCH_ENABLED =
             key("table.exec.mini-batch.enabled")
@@ -313,6 +327,7 @@ public class ExecutionConfigOptions {
                                     + "NOTE: If mini-batch is enabled, 'table.exec.mini-batch.allow-latency' and "
                                     + "'table.exec.mini-batch.size' must be set.");
 
+    // J: 使用 MiniBatch 缓冲输入记录时最大的延迟
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Duration> TABLE_EXEC_MINIBATCH_ALLOW_LATENCY =
             key("table.exec.mini-batch.allow-latency")
@@ -326,6 +341,7 @@ public class ExecutionConfigOptions {
                                     + TABLE_EXEC_MINIBATCH_ENABLED.key()
                                     + " is set true, its value must be greater than zero.");
 
+    // J: 使用 MiniBatch 时输入记录的最大记录数
     @Documentation.TableOption(execMode = Documentation.ExecMode.STREAMING)
     public static final ConfigOption<Long> TABLE_EXEC_MINIBATCH_SIZE =
             key("table.exec.mini-batch.size")
@@ -341,6 +357,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------
     //  Other Exec Options
     // ------------------------------------------------------------------------
+    // J: 禁用的算子。使用 `,` 分割，可选的包含 NestedLoopJoin, ShuffleHashJoin, BroadcastHashJoin, SortMergeJoin, HashAgg, SortAgg
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<String> TABLE_EXEC_DISABLED_OPERATORS =
             key("table.exec.disabled-operators")
@@ -352,6 +369,7 @@ public class ExecutionConfigOptions {
                                     + "\"SortMergeJoin\", \"HashAgg\", \"SortAgg\".\n"
                                     + "By default no operator is disabled.");
 
+    // J: 执行的 shuffle 模式，默认为 ALL_EDGES_BLOCKING
     @Documentation.TableOption(execMode = Documentation.ExecMode.BATCH)
     public static final ConfigOption<String> TABLE_EXEC_SHUFFLE_MODE =
             key("table.exec.shuffle-mode")
@@ -392,7 +410,7 @@ public class ExecutionConfigOptions {
     // ------------------------------------------------------------------------------------------
 
     /** The enforcer to guarantee NOT NULL column constraint when writing data into sink. */
-    // 当向sink写入数据时，强制保证NOT NULL列约束。
+    // 当向 sink 写入数据时，强制保证 NOT NULL 列约束。
     public enum NotNullEnforcer {
         /** Throws runtime exception when writing null values into NOT NULL column. */
         ERROR,
@@ -401,7 +419,7 @@ public class ExecutionConfigOptions {
     }
 
     /** Upsert materialize strategy before sink. */
-    // 在下沉之前先实现战略。
+    // 在下沉之前先实现战略
     public enum UpsertMaterialize {
 
         /** In no case will materialize operator be added. */

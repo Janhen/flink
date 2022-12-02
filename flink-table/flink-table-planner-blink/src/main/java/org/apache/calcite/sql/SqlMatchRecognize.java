@@ -30,6 +30,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * SqlNode 用于 MATCH_RECOGNIZE 子句。
+ *
+ * <p>由于 CALCITE-4390，课程被复制过来。更改的行是：110-112
+ *
  * SqlNode for MATCH_RECOGNIZE clause.
  *
  * <p>The class was copied over because of CALCITE-4390. The changed lines are: 110-112

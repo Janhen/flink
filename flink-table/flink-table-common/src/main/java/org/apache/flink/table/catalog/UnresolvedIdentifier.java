@@ -34,6 +34,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * 对象的标识符，例如目录中的表、视图、函数或类型。此标识符不能直接用于访问目录管理器中的对象，但必须首先完全解析为
+ * {@link ObjectIdentifier}。
+ *
  * Identifier of an object, such as table, view, function or type in a catalog. This identifier
  * cannot be used directly to access an object in a catalog manager, but has to be first fully
  * resolved into {@link ObjectIdentifier}.

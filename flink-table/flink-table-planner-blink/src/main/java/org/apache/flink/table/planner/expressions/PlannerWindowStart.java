@@ -26,6 +26,7 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonPro
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonTypeName;
 
 /** Window start property. */
+// 窗口启动属性。
 @JsonTypeName("WindowStart")
 public class PlannerWindowStart extends AbstractPlannerWindowProperty {
 

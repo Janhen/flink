@@ -27,6 +27,10 @@ import org.apache.flink.table.types.utils.TypeConversions;
 import java.util.Optional;
 
 /**
+ * 从类中获取 {@link DataType} 的实用程序。它必须返回一个数据类型。通过
+ * {@link TypeConversions#fromClassToDataType} 转换已知类型。通过 {@link LegacyTypeInformationType}
+ * 转换未知类型。
+ *
  * Utils for get {@link DataType} from a Class. It must return a DataType. Convert known types by
  * {@link TypeConversions#fromClassToDataType}. Convert unknown types by {@link
  * LegacyTypeInformationType}.

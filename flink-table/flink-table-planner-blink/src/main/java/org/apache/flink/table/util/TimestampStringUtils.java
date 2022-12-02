@@ -23,6 +23,7 @@ import org.apache.calcite.util.TimestampString;
 import java.time.LocalDateTime;
 
 /** Utility functions for calcite's {@link TimestampString}. */
+// calcite {@link TimestampString} 的实用函数。
 public class TimestampStringUtils {
 
     public static TimestampString fromLocalDateTime(LocalDateTime ldt) {

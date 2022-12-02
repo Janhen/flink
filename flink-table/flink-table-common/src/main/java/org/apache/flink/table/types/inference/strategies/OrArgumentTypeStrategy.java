@@ -36,6 +36,8 @@ import java.util.stream.Collectors;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeCasts.supportsAvoidingCast;
 
 /**
+ * 使用多个 {@link ArgumentTypeStrategy} 的分离来推断和验证参数的策略，如 {@code f(NUMERIC || STRING)}。
+ *
  * Strategy for inferring and validating an argument using a disjunction of multiple {@link
  * ArgumentTypeStrategy}s into one like {@code f(NUMERIC || STRING)}.
  *

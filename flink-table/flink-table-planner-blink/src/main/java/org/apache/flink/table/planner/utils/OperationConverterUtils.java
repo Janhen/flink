@@ -52,6 +52,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /** Utils methods for converting sql to operations. */
+//用于将 sql 转换为 operation 的 Utils 方法。
 public class OperationConverterUtils {
 
     private OperationConverterUtils() {}
@@ -188,6 +189,7 @@ public class OperationConverterUtils {
     private static TableColumn toTableColumn(
             SqlTableColumn tableColumn, SqlValidator sqlValidator) {
         if (!(tableColumn instanceof SqlRegularColumn)) {
+            // J: 此操作仅支持常规列
             throw new TableException("Only regular columns are supported for this operation yet.");
         }
         SqlRegularColumn regularColumn = (SqlRegularColumn) tableColumn;

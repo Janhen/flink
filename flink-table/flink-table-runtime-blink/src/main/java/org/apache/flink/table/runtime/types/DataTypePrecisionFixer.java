@@ -43,6 +43,9 @@ import java.util.stream.IntStream;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getFieldNames;
 
 /**
+ * 数据类型访问者用于使用给定的逻辑类型固定数据类型的精度，该逻辑类型具有正确的精度。由于从
+ * {@link org.apache.flink.api.common.typeinfo.TypeInformation} 转换，原始数据类型可能会丢失精度。
+ *
  * The data type visitor used to fix the precision for data type with the given logical type which
  * carries the correct precisions. The original data type may loses precision because of conversion
  * from {@link org.apache.flink.api.common.typeinfo.TypeInformation}.

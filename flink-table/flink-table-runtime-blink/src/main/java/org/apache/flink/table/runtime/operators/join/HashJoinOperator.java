@@ -49,6 +49,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 哈希连接基运算符。
+ *
+ * <p>连接运算符在运行时实现连接运算符的逻辑。它在内部使用混合散列连接来匹配具有相同键的记录。哈希的构建端是匹配的
+ * 第一个输入。它支持 {@link HashJoinType} 中的所有连接类型。
+ *
  * Hash join base operator.
  *
  * <p>The join operator implements the logic of a join operator at runtime. It uses a

@@ -35,6 +35,7 @@ import java.util.Objects;
 import static org.apache.flink.table.types.utils.DataTypeUtils.toInternalDataType;
 
 /** Built-in COLLECT aggregate function. */
+// 内置 COLLECT 聚合函数。
 @Internal
 public final class CollectAggFunction<T>
         extends BuiltInAggregateFunction<MapData, CollectAggFunction.CollectAccumulator<T>> {

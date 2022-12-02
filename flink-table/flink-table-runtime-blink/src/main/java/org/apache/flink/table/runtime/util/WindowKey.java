@@ -23,6 +23,8 @@ import org.apache.flink.table.data.RowData;
 import java.util.Objects;
 
 /**
+ * {@link WindowKey} 结构表示键和窗口的组合。这主要用于小批量窗口操作符，窗口由窗口结束时间戳标识。
+ *
  * The {@link WindowKey} structure represents a combination of key and window. This is mainly used
  * in the mini-batch window operators and window is identified by window end timestamp.
  */
@@ -37,6 +39,7 @@ public final class WindowKey {
     }
 
     /** Replace the currently stored key and window by the given new key and new window. */
+    // 用给定的新密钥和新窗口替换当前存储的密钥和窗口。
     public WindowKey replace(long window, RowData key) {
         this.window = window;
         this.key = key;

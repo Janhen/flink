@@ -40,6 +40,11 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
+ * 在 SQL 查询中扩展 SQL 标识符的实用程序。
+ *
+ * <p>调用 {@link Expanded#toString()} 生成一个类似于 SQL 的字符串，其中用户手动将所有标识符转换为展开的，然后
+ * 可以作为目录视图的展开查询持久保存。
+ *
  * Utility that expand SQL identifiers in a SQL query.
  *
  * <p>Simple use:
@@ -77,7 +82,7 @@ public class Expander {
     }
 
     /** Expands identifiers in a given SQL string, returning a {@link Expanded}. */
-    // 展开给定SQL字符串中的标识符，返回{@link Expanded}。
+    // 展开给定 SQL 字符串中的标识符，返回 {@link Expanded}。
     public Expanded expanded(String ori) {
         final Map<SqlParserPos, SqlIdentifier> identifiers = new HashMap<>();
         final Map<String, SqlIdentifier> funcNameToId = new HashMap<>();
@@ -135,6 +140,8 @@ public class Expander {
         }
 
         /**
+         * 返回根据给定的解析函数替换标识符的 SQL 字符串。
+         *
          * Returns the SQL string with identifiers replaced according to the given unparse function.
          */
         public String substitute(Function<SqlNode, String> fn) {

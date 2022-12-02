@@ -40,6 +40,7 @@ import static org.apache.flink.table.data.util.RowDataUtil.isRetractMsg;
 import static org.apache.flink.table.runtime.util.StateConfigUtil.createTtlConfig;
 
 /** Aggregate Function used for the groupby (without window) aggregate. */
+// 用于 groupby（无窗口）聚合的聚合函数。
 public class GroupAggFunction extends KeyedProcessFunction<RowData, RowData, RowData> {
 
     private static final long serialVersionUID = -4767158666069797704L;

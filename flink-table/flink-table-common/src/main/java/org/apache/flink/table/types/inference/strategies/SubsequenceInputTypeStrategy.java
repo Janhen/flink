@@ -215,6 +215,11 @@ public final class SubsequenceInputTypeStrategy implements InputTypeStrategy {
         }
 
         /**
+         * 为下一个参数定义一个通用的 {@link InputTypeStrategy}。给定的输入策略必须期望恒定数量的参数。这意味着
+         * 参数的最小数量和最大数量都必须定义并且彼此相等。
+         *
+         * <p>如果需要不同的逻辑，请使用 {@link #finishWithVarying(InputTypeStrategy)}。
+         *
          * Defines a common {@link InputTypeStrategy} for the next arguments. Given input strategy
          * must expect a constant number of arguments. That means that both the minimum and maximum
          * number of arguments must be defined and equal to each other.

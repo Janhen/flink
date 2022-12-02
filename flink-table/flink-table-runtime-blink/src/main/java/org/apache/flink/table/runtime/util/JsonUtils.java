@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Json scalar function util. */
+// Json 标量函数实用程序。
 public class JsonUtils {
     public static final Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
     public final Pattern patternKey = Pattern.compile("^([a-zA-Z0-9_\\-\\:\\s]+).*");
@@ -45,16 +46,19 @@ public class JsonUtils {
 
     static {
         // Allows for unescaped ASCII control characters in JSON values
+        // 允许在 JSON 值中使用未转义的 ASCII 控制字符
         JSON_FACTORY.enable(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS);
     }
 
     public static final ObjectMapper MAPPER = new ObjectMapper(JSON_FACTORY);
+    // J: Map, List 复杂类型定义
     public static final JavaType MAP_TYPE =
             TypeFactory.defaultInstance().constructMapType(Map.class, Object.class, Object.class);
     public static final JavaType LIST_TYPE =
             TypeFactory.defaultInstance().constructRawCollectionType(List.class);
 
     /** An LRU cache using a linked hash map. */
+    // 使用链接哈希映射的 LRU 缓存。
     public static class HashCache<K, V> extends LinkedHashMap<K, V> {
 
         private static final int CACHE_SIZE = 16;
@@ -74,6 +78,7 @@ public class JsonUtils {
     }
 
     /** An ThreadLocal cache using a linked hash map. */
+    // 使用链接哈希映射的 ThreadLocal 缓存。
     public static class ThreadLocalHashCache<K, V> {
         private ThreadLocal<HashCache<K, V>> cache = new ThreadLocal<>();
 
@@ -124,6 +129,7 @@ public class JsonUtils {
         return instance.get();
     }
 
+    // J: 抽取 json 中的 path
     public String getJsonObject(String jsonString, String pathString) {
 
         if (jsonString == null
@@ -193,6 +199,7 @@ public class JsonUtils {
             }
             extractObject = extract(extractObject, pathExpr[i], i == pathExprStart && isRootArray);
         }
+        // J: 针对 Map, List 类型，结果返回为 String 类型
         if (extractObject instanceof Map || extractObject instanceof List) {
             try {
                 result = MAPPER.writeValueAsString(extractObject);
@@ -216,6 +223,7 @@ public class JsonUtils {
         return result;
     }
 
+    // J: 抽取多个 json path
     public String[] getJsonObjectsWithoutDollar(String jsonString, String[] pathStrings) {
         if (jsonString == null
                 || jsonString.isEmpty()

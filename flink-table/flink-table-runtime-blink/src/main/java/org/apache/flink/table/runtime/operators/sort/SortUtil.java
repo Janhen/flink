@@ -82,6 +82,7 @@ public class SortUtil {
     }
 
     /** Just support the compact precision decimal. */
+    // 只支持紧凑精度小数。
     public static void putDecimalNormalizedKey(
             DecimalData record, MemorySegment target, int offset, int len) {
         assert record.isCompact();

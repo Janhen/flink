@@ -28,12 +28,12 @@ import org.apache.flink.table.functions.SpecializedFunction.SpecializedContext;
 import javax.annotation.Nullable;
 
 /** Implementation of {@link BuiltInFunctionDefinitions#SOURCE_WATERMARK}. */
-// {@link BuiltInFunctionDefinitions#SOURCE_WATERMARK}的实现。
+// {@link BuiltInFunctionDefinitions#SOURCE_WATERMARK} 的实现。
 @Internal
 public class SourceWatermarkFunction extends BuiltInScalarFunction {
 
-    // SOURCE_WATERMARK()是一个声明性标记函数，没有具体的运行时实现。它只能作为一个单独的表达式在
-    // CREATE TABLE DDL中的WATERMARK FOR子句中使用。声明将被下推到实现'%s'接口的表源中。
+    // SOURCE_WATERMARK() 是一个声明性标记函数，没有具体的运行时实现。它只能作为一个单独的表达式在
+    // CREATE TABLE DDL 中的 WATERMARK FOR 子句中使用。声明将被下推到实现 SupportsSourceWatermark 接口的表源中。
     // 之后源将发出系统定义的水印。请检查文档连接器是否支持源水印。
     public static final String ERROR_MESSAGE =
             String.format(

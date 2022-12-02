@@ -92,6 +92,8 @@ import java.util.Map;
 public interface SupportsWritingMetadata {
 
     /**
+     * 返回元数据键的映射及其相应的数据类型，这些数据类型可以被该表接收器用于写入。
+     *
      * Returns the map of metadata keys and their corresponding data types that can be consumed by
      * this table sink for writing.
      *
@@ -121,6 +123,8 @@ public interface SupportsWritingMetadata {
     Map<String, DataType> listWritableMetadata();
 
     /**
+     * 提供元数据键列表，使用的 {@link RowData} 将包含作为必须保留的附加元数据列。
+     *
      * Provides a list of metadata keys that the consumed {@link RowData} will contain as appended
      * metadata columns which must be persisted.
      *

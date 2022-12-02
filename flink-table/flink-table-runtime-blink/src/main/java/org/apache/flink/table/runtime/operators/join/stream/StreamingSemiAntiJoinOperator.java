@@ -31,6 +31,7 @@ import org.apache.flink.table.runtime.typeutils.InternalTypeInfo;
 import org.apache.flink.types.RowKind;
 
 /** Streaming unbounded Join operator which supports SEMI/ANTI JOIN. */
+// 支持 SEMIANTI JOIN 的 Streaming unbounded Join 运算符。
 public class StreamingSemiAntiJoinOperator extends AbstractStreamingJoinOperator {
 
     private static final long serialVersionUID = -3135772379944924519L;

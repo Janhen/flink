@@ -59,6 +59,8 @@ import static org.apache.flink.table.types.logical.LogicalTypeFamily.CHARACTER_S
 public class PlannerTypeUtils {
 
     /**
+     * 通过映射到相应的新类型来删除所有 {@link LegacyTypeInformationType} 的转换。
+     *
      * A conversion that removes all {@link LegacyTypeInformationType}s by mapping to corresponding
      * new types.
      */
@@ -86,6 +88,8 @@ public class PlannerTypeUtils {
     }
 
     /**
+     * 这两种类型可以相互操作吗？如： 1.CodeGen：equal, cast, assignment。 2.加入钥匙。
+     *
      * Can the two types operate with each other. Such as: 1.CodeGen: equal, cast, assignment.
      * 2.Join keys.
      */

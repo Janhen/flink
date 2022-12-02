@@ -58,6 +58,7 @@ public class FunctionITCase extends StreamingTestBase {
         TestCollectionTableFactory.reset();
         TestCollectionTableFactory.initData(sourceData);
 
+        // J: collection connector?
         tEnv().executeSql(
                         "CREATE TABLE TestTable(a INT, b BIGINT, c BIGINT) WITH ('connector' = 'COLLECTION')");
 

@@ -19,6 +19,7 @@
 package org.apache.flink.table.catalog.stats;
 
 /** Class representing a date value in statistics. */
+// 表示统计中日期值的类。
 public class Date {
     private long daysSinceEpoch;
 

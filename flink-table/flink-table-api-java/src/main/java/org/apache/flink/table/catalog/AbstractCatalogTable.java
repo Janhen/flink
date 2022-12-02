@@ -33,6 +33,7 @@ public abstract class AbstractCatalogTable implements CatalogTable {
     private final TableSchema tableSchema;
     // Partition keys if this is a partitioned table. It's an empty set if the table is not
     // partitioned
+    // 分区键(如果这是一个分区表)。如果表没有分区，则为空集
     private final List<String> partitionKeys;
     // Properties of the table
     private final Map<String, String> options;

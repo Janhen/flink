@@ -35,6 +35,9 @@ import java.util.Map;
 import java.util.TreeSet;
 
 /**
+ * 在 {@code WindowOperator} 中使用 {@link MergingWindowAssigner} 时跟踪合并 {@link Window Windows}
+ * 的实用程序。
+ *
  * Utility for keeping track of merging {@link Window Windows} when using a {@link
  * MergingWindowAssigner} in a {@code WindowOperator}.
  *

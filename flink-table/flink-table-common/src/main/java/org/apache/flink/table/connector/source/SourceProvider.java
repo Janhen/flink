@@ -47,6 +47,6 @@ public interface SourceProvider extends ScanTableSource.ScanRuntimeProvider {
     }
 
     /** Creates a {@link Source} instance. */
-    // 创建一个{@link Source}实例
+    // 创建一个 {@link Source} 实例
     Source<RowData, ?, ?> createSource();
 }

@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.time.Period;
 
 /** Converter for {@link YearMonthIntervalType} of {@link java.time.Period} external type. */
+// {@link java.time.Period} 外部类型的 {@link YearMonthIntervalType} 转换器。
 @Internal
 public class YearMonthIntervalPeriodConverter
         implements DataStructureConverter<Integer, java.time.Period> {

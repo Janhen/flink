@@ -47,6 +47,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /** Streaming sink File Compaction ITCase base, test checkpoint. */
+// 流接收文件压缩ITCase基础，测试检查点
 public abstract class CompactionITCaseBase extends StreamingTestBase {
 
     @Rule public Timeout timeoutPerTest = Timeout.seconds(90);

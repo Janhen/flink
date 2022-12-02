@@ -24,6 +24,8 @@ import org.apache.flink.table.data.vector.VectorizedColumnBatch;
 import org.apache.flink.types.RowKind;
 
 /**
+ * Columnar row 支持访问向量列数据。它是 {@link VectorizedColumnBatch} 中的行视图。
+ *
  * Columnar row to support access to vector column data. It is a row view in {@link
  * VectorizedColumnBatch}.
  */

@@ -25,10 +25,16 @@ import org.apache.flink.table.catalog.DataTypeFactory;
 import org.apache.flink.table.types.inference.CallContext;
 
 /**
- * 一个{@link FunctionDefinition}，它可以提供一个运行时实现(即函数体)，专门针对给定的调用和会话。
+ * 一个 {@link FunctionDefinition}，它可以提供一个运行时实现(即函数体)，专门针对给定的调用和会话。
  *
- * <p>规划器试图将专门化推迟到代码生成之前不久，此时{@link FunctionDefinition}给出的信息已经不够了，运行时需要
- *   {@link UserDefinedFunction}的子类。
+ * <p>规划器试图将专门化推迟到代码生成之前不久，此时 {@link FunctionDefinition} 给出的信息已经不够了，运行时需要
+ *   {@link UserDefinedFunction} 的子类。
+ *
+ * <p>当运行时代码应该知道仅在计划后可用的信息时（例如本地会话时区或十进制返回类型的精度标度），此接口很有用。
+ *
+ * <p>在 API 中注册的 {@link UserDefinedFunction} 是隐式特化的，但也可以实现此接口以在运行前重新配置自身。
+ *
+ * <p>注意：此接口是一种相当低级的功能，但对高级用户很有用。
  *
  * A {@link FunctionDefinition} that can provide a runtime implementation (i.e. the function's body)
  * that is specialized for the given call and session.

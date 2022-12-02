@@ -28,6 +28,7 @@ import org.apache.flink.util.MutableObjectIterator;
 import java.io.IOException;
 
 /** Gets probeRow and match rows for inner join. */
+// 获取内部连接的 probeRow 和匹配行。
 public class SortMergeInnerJoinIterator extends SortMergeJoinIterator {
 
     public SortMergeInnerJoinIterator(

@@ -34,7 +34,7 @@ import java.util.List;
 import static org.apache.flink.table.types.utils.DataTypeUtils.toInternalDataType;
 
 /** Built-in FIRST_VALUE aggregate function. */
-// 内置的FIRST_VALUE聚合函数。
+// 内置的 FIRST_VALUE 聚合函数。
 @Internal
 public final class FirstValueAggFunction<T> extends BuiltInAggregateFunction<T, RowData> {
 

@@ -45,6 +45,9 @@ public enum RankType {
     RANK,
 
     /**
+     * 类似于 RANK，它根据顺序为分区内的每个不同行生成一个唯一的排名号，每个分区中的第一行从 1 开始，对具有相同排名号
+     * 的具有相同值的行进行排名，除了它确实不跳过任何行列，行列之间不留空隙。
+     *
      * is similar to the RANK by generating a unique rank number for each distinct row within the
      * partition based on the order, starting at 1 for the first row in each partition, ranking the
      * rows with equal values with the same rank number, except that it does not skip any rank,

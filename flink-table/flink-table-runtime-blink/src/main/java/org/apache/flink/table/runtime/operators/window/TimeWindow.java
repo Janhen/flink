@@ -27,6 +27,8 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /**
+ * 一个 {@link Window}，表示从 {@code start}（包括）到 {@code end}（不包括）的时间间隔。
+ *
  * A {@link Window} that represents a time interval from {@code start} (inclusive) to {@code end}
  * (exclusive).
  */
@@ -97,6 +99,7 @@ public class TimeWindow extends Window {
     }
 
     /** Compute the inverse of (odd) x mod 2^32. */
+    // 计算（奇数）x mod 2^32 的倒数
     private int modInverse(int x) {
         // Cube gives inverse mod 2^4, as x^4 == 1 (mod 2^4) for all odd x.
         int inverse = x * x * x;
@@ -118,6 +121,7 @@ public class TimeWindow extends Window {
     }
 
     /** Returns the minimal window covers both this window and the given window. */
+    // 返回覆盖此窗口和给定窗口的最小窗口
     public TimeWindow cover(TimeWindow other) {
         return new TimeWindow(Math.min(start, other.start), Math.max(end, other.end));
     }
@@ -212,6 +216,8 @@ public class TimeWindow extends Window {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取时间戳的窗口开始的方法。
+     *
      * Method to get the window start for a timestamp.
      *
      * @param timestamp epoch millisecond to get the window start.

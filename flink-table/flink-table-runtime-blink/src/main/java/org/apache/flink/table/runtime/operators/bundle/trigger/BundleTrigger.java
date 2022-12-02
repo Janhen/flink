@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Internal;
 import java.io.Serializable;
 
 /**
+ * {@link BundleTrigger} 确定何时应评估输入元素包并触发先前注册的回调。
+ *
  * A {@link BundleTrigger} determines when a bundle of input elements should be evaluated and
  * trigger the callback which registered previously.
  *
@@ -32,9 +34,13 @@ import java.io.Serializable;
 public interface BundleTrigger<T> extends Serializable {
 
     /** Register a callback which will be called once this trigger decides to finish this bundle. */
+    // 注册一个回调，一旦此触发器决定完成此捆绑包，该回调将被调用
     void registerCallback(BundleTriggerCallback callback);
 
     /**
+     * 为添加到包中的每个元素调用。如果触发器决定开始评估输入，则应调用
+     * {@link BundleTriggerCallback#finishBundle()}。
+     *
      * Called for every element that gets added to the bundle. If the trigger decides to start
      * evaluate the input, {@link BundleTriggerCallback#finishBundle()} should be invoked.
      *

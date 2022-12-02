@@ -34,19 +34,19 @@ import org.apache.flink.annotation.PublicEvolving;
 public interface StatementSet {
 
     /** add insert statement to the set. */
-    // 向集合中添加插入语句。
+    // 向集合中添加插入语句
     StatementSet addInsertSql(String statement);
 
     /** add Table with the given sink table name to the set. */
-    // 将指定接收器表名的Table添加到集合中。
+    // 将指定接收器表名的 Table 添加到集合中
     StatementSet addInsert(String targetPath, Table table);
 
     /** add {@link Table} with the given sink table name to the set. */
-    // 将{@link Table}与给定的接收器表名添加到集合中。
+    // 将{@link Table}与给定的接收器表名添加到集合中
     StatementSet addInsert(String targetPath, Table table, boolean overwrite);
 
     /**
-     * 返回AST和执行计划，以计算所有语句和Tables的结果。
+     * 返回AST和执行计划，以计算所有语句和Tables的结果
      *
      * returns the AST and the execution plan to compute the result of the all statements and
      * Tables.
@@ -58,7 +58,7 @@ public interface StatementSet {
     String explain(ExplainDetail... extraDetails);
 
     /**
-     * 批量执行所有语句和表。
+     * 批量执行所有语句和表
      *
      * <p>执行此方法时，添加的语句和表将被清除。
      *

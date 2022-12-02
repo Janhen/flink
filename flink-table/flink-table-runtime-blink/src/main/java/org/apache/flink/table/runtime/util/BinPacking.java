@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /** A bin packing implementation. */
+// 装箱实施
 public class BinPacking {
     private BinPacking() {}
 

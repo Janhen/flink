@@ -33,6 +33,10 @@ import java.util.stream.Collectors;
 import static org.apache.flink.table.types.extraction.ExtractionUtils.extractionError;
 
 /**
+ * {@link FunctionHint} 的内部表示。
+ *
+ * <p>模板的所有参数都是可选的。空注解会生成一个模板，其中所有成员都是 {@code null}。
+ *
  * Internal representation of a {@link FunctionHint}.
  *
  * <p>All parameters of a template are optional. An empty annotation results in a template where all

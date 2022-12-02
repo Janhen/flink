@@ -54,14 +54,14 @@ import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.hasRo
 /**
  * 表或视图的模式。
  *
- * <p>模式表示SQL中{@code CREATE TABLE (schema) WITH (options)} DDL语句的模式部分。它定义了不同类型的列、
+ * <p>模式表示 SQL 中 {@code CREATE TABLE (schema) WITH (options)} DDL 语句的模式部分。它定义了不同类型的列、
  *   约束、时间属性和水印策略。可以跨不同的目录引用对象(如函数或类型)。
  *
- * <p>在API和编目中使用该类来定义一个未解析的模式，该模式将被转换为{@link ResolvedSchema}。该类的一些方法执行
+ * <p>在 API 和编目中使用该类来定义一个未解析的模式，该模式将被转换为 {@link ResolvedSchema}。该类的一些方法执行
  *   基本验证，但是主要验证发生在解析过程中。因此，一个未解决的模式可能是不完整的，可能在以后的阶段被丰富或与不同的
  *   模式合并。
  *
- * <p>因为该类的实例未解析，所以不应该直接持久化它。{@link #toString()}只显示所包含对象的摘要。
+ * <p>因为该类的实例未解析，所以不应该直接持久化它。{@link #toString()} 只显示所包含对象的摘要。
  *
  * Schema of a table or view.
  *
@@ -184,6 +184,7 @@ public final class Schema {
         }
 
         /** Adopts all members from the given resolved schema. */
+        // 采用给定解析模式中的所有成员。
         public Builder fromResolvedSchema(ResolvedSchema resolvedSchema) {
             addResolvedColumns(resolvedSchema.getColumns());
             addResolvedWatermarkSpec(resolvedSchema.getWatermarkSpecs());
@@ -267,7 +268,7 @@ public final class Schema {
         /**
          * 声明附加到此模式的物理列。
          *
-         * <p>参见{@link #column(String, AbstractDataType)}获取详细解释。
+         * <p>参见 {@link #column(String, AbstractDataType)} 获取详细解释。
          *
          * <p>此方法使用的类型字符串可以很容易地持久化到持久目录中。
          *
@@ -325,6 +326,8 @@ public final class Schema {
         }
 
         /**
+         * 声明附加到此模式的计算列。
+         *
          * Declares a computed column that is appended to this schema.
          *
          * <p>See {@link #columnByExpression(String, Expression)} for a detailed explanation.
@@ -376,7 +379,7 @@ public final class Schema {
         /**
          * 声明附加到此模式的元数据列。
          *
-         * <p>参见{@link #column(String, AbstractDataType)}获取详细解释。
+         * <p>参见 {@link #column(String, AbstractDataType)} 获取详细解释。
          *
          * <p>此方法使用的类型字符串可以很容易地持久化到持久目录中。
          *
@@ -429,6 +432,7 @@ public final class Schema {
          * @param columnName column name
          * @param dataType data type of the column
          * @param isVirtual whether the column should be persisted or not
+         *                  该列是否应该持久化
          */
         public Builder columnByMetadata(
                 String columnName, AbstractDataType<?> dataType, boolean isVirtual) {
@@ -486,6 +490,7 @@ public final class Schema {
          * @param metadataKey identifying metadata key, if null the column name will be used as
          *     metadata key
          * @param isVirtual whether the column should be persisted or not
+         *                  是否应该持久化列
          */
         public Builder columnByMetadata(
                 String columnName,
@@ -557,6 +562,7 @@ public final class Schema {
          *
          * @param columnName the column name used as a rowtime attribute
          * @param watermarkExpression the expression used for watermark generation
+         *                            用于水印生成的表达式
          */
         public Builder watermark(String columnName, Expression watermarkExpression) {
             Preconditions.checkNotNull(columnName, "Column name must not be null.");
@@ -746,7 +752,7 @@ public final class Schema {
     }
 
     /**
-     * 声明一个物理列，该物理列将在模式解析期间解析为{@link PhysicalColumn}。
+     * 声明一个物理列，该物理列将在模式解析期间解析为 {@link PhysicalColumn}。
      *
      * Declaration of a physical column that will be resolved to {@link PhysicalColumn} during
      * schema resolution.
@@ -766,6 +772,7 @@ public final class Schema {
 
         @Override
         public String toString() {
+            // J: 根据 format 直接提取的数据
             return String.format("%s %s", super.toString(), dataType.toString());
         }
 
@@ -791,7 +798,7 @@ public final class Schema {
     }
 
     /**
-     * 声明将在模式解析期间解析为{@link ComputedColumn}的计算列。
+     * 声明将在模式解析期间解析为 {@link ComputedColumn} 的计算列。
      *
      * Declaration of a computed column that will be resolved to {@link ComputedColumn} during
      * schema resolution.
@@ -811,6 +818,7 @@ public final class Schema {
 
         @Override
         public String toString() {
+            // J: 计算表达式作为列
             return String.format("%s AS %s", super.toString(), expression.asSummaryString());
         }
 
@@ -836,7 +844,7 @@ public final class Schema {
     }
 
     /**
-     * 声明将在模式解析期间解析为{@link MetadataColumn}的元数据列。
+     * 声明将在模式解析期间解析为 {@link MetadataColumn} 的元数据列。
      *
      * Declaration of a metadata column that will be resolved to {@link MetadataColumn} during
      * schema resolution.
@@ -872,6 +880,7 @@ public final class Schema {
 
         @Override
         public String toString() {
+            // J: 提取元数据，声明是否是 virtual
             final StringBuilder sb = new StringBuilder();
             sb.append(super.toString());
             sb.append(" METADATA");
@@ -935,6 +944,7 @@ public final class Schema {
 
         @Override
         public String toString() {
+            // J: 定义水印列
             return String.format(
                     "WATERMARK FOR %s AS %s",
                     EncodingUtils.escapeIdentifier(columnName),
@@ -976,6 +986,7 @@ public final class Schema {
 
         @Override
         public String toString() {
+            // J: 限制...
             return String.format("CONSTRAINT %s", EncodingUtils.escapeIdentifier(constraintName));
         }
 

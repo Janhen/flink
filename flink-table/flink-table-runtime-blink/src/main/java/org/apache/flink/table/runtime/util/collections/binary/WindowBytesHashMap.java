@@ -25,6 +25,8 @@ import org.apache.flink.table.runtime.typeutils.WindowKeySerializer;
 import org.apache.flink.table.runtime.util.WindowKey;
 
 /**
+ * 结构中的二进制映射，如 {@code Map<WindowKey, BinaryRowData>}。
+ *
  * A binary map in the structure like {@code Map<WindowKey, BinaryRowData>}.
  *
  * @see AbstractBytesHashMap for more information about the binary layout.

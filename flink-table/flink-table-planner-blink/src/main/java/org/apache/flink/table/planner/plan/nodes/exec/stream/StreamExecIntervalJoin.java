@@ -63,6 +63,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /** {@link StreamExecNode} for a time interval stream join. */
+// {@link StreamExecNode} 用于时间间隔流连接。
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StreamExecIntervalJoin extends ExecNodeBase<RowData>
         implements StreamExecNode<RowData>, MultipleTransformationTranslator<RowData> {

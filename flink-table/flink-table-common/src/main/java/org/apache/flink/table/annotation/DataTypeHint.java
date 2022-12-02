@@ -31,7 +31,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 影响基于反射提取{@link DataType}的提示。
+ * 影响基于反射提取 {@link DataType} 的提示。
  *
  * A hint that influences the reflection-based extraction of a {@link DataType}.
  *
