@@ -20,6 +20,11 @@ package org.apache.flink.runtime.io.network.partition;
 import java.util.Collection;
 
 /**
+ * 用于跟踪分区的实用程序。
+ *
+ * <p>这个接口有意没有开始跟踪分区的方法，所以实现在他们对这个方法的定义中是灵活的（否则一个人最终会有多个方法，其中
+ * 一个部分可能未被使用）。
+ *
  * Utility for tracking partitions.
  *
  * <p>This interface deliberately does not have a method to start tracking partitions, so that

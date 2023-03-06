@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /** A special {@link ChannelSelector} for use in streaming programs. */
+// 用于流媒体节目的特殊 {@link ChannelSelector}。
 @Internal
 public abstract class StreamPartitioner<T>
         implements ChannelSelector<SerializationDelegate<StreamRecord<T>>>, Serializable {

@@ -66,6 +66,8 @@ public abstract class AfterMatchSkipStrategy implements Serializable {
     }
 
     /**
+     * 丢弃从相同事件开始的每个部分匹配，触发匹配被启动。
+     *
      * Discards every partial match that started with the same event, emitted match was started.
      *
      * @return the created AfterMatchSkipStrategy

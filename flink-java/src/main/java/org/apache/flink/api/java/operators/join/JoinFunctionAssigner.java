@@ -24,6 +24,9 @@ import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.java.operators.JoinOperator;
 
 /**
+ * 需要通过指定 {@link JoinFunction} 或 {@link FlatJoinFunction} 来完成的 Join 转换，然后才能将其用作
+ * 其他运算符的输入。
+ *
  * A Join transformation that needs to be finished by specifying either a {@link JoinFunction} or a
  * {@link FlatJoinFunction} before it can be used as an input to other operators.
  *

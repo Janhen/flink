@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * BoundedData是单个有界阻塞子分区中的数据存储。
+ * BoundedData 是单个有界阻塞子分区中的数据存储。
  *
  * BoundedData is the data store in a single bounded blocking subpartition.
  *

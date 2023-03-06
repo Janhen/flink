@@ -39,6 +39,8 @@ import static org.apache.flink.runtime.io.network.buffer.Buffer.DataType.DATA_BU
 
 final class NonSpanningWrapper implements DataInputView {
 
+    // 序列化程序消耗的字节数超过记录。这表明序列化中断。如果您使用的是自定义序列化类型（Value 或 Writable），请检查
+    // 它们的序列化方法。如果您使用的是 Kryo 序列化类型，检查相应的 Kryo 序列化程序。
     private static final String BROKEN_SERIALIZATION_ERROR_MESSAGE =
             "Serializer consumed more bytes than the record had. "
                     + "This indicates broken serialization. If you are using custom serialization types "

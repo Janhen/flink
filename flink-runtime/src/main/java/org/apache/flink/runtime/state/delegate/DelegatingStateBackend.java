@@ -22,6 +22,10 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.runtime.state.StateBackend;
 
 /**
+ * 委托状态后端的接口。
+ *
+ * <p>顾名思义，它应该包括一个状态后端来委托。
+ *
  * An interface to delegate state backend.
  *
  * <p>As its name, it should include a state backend to delegate.

@@ -45,6 +45,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link InputChannel} 用于请求回收独占或浮动缓冲区的通用缓冲区管理器。
+ *
  * The general buffer manager used by {@link InputChannel} to request/recycle exclusive or floating
  * buffers.
  */

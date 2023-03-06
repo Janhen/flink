@@ -25,6 +25,7 @@ import org.apache.flink.types.Either;
 import java.util.function.Consumer;
 
 /** Request execution state of partition producer, the response accepts state check callbacks. */
+// 请求分区生产者的执行状态，响应接受状态检查回调。
 public interface PartitionProducerStateProvider {
     /**
      * Trigger the producer execution state request.

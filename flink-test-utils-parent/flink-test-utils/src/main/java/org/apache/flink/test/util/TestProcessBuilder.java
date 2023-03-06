@@ -34,6 +34,7 @@ import static org.apache.flink.runtime.testutils.CommonTestUtils.getJavaCommandP
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Utility class wrapping {@link ProcessBuilder} and pre-configuring it with common options. */
+// 实用类包装 {@link ProcessBuilder} 并使用常用选项对其进行预配置
 public class TestProcessBuilder {
     private final String javaCommand = checkNotNull(getJavaCommandPath());
 
@@ -50,6 +51,7 @@ public class TestProcessBuilder {
         File tempLogFile =
                 File.createTempFile(getClass().getSimpleName() + "-", "-log4j.properties");
         tempLogFile.deleteOnExit();
+        // debug 配置打印
         CommonTestUtils.printLog4jDebugConfig(tempLogFile);
 
         jvmArgs.add("-Dlog.level=DEBUG");

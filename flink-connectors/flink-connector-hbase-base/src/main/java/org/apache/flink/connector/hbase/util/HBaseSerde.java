@@ -202,6 +202,8 @@ public class HBaseSerde {
     }
 
     /**
+     * 返回一个 Get 实例，该实例从 HBase 表中检索匹配记录。
+     *
      * Returns an instance of Get that retrieves the matches records from the HBase table.
      *
      * @return The appropriate instance of Get for this use case.
@@ -212,6 +214,7 @@ public class HBaseSerde {
         byte[] rowkey = keyEncoder.encode(rowWithRowKey, 0);
         if (rowkey.length == 0) {
             // drop dirty records, rowkey shouldn't be zero length
+            // 删除脏记录，rowkey 不应该是零长度
             return null;
         }
         Get get = new Get(rowkey);
@@ -225,6 +228,10 @@ public class HBaseSerde {
     }
 
     /**
+     * 将 HBase {@link Result} 转换为一个新的 {@link RowData} 实例。
+     *
+     * <p>注意:此方法是线程安全的。
+     *
      * Converts HBase {@link Result} into a new {@link RowData} instance.
      *
      * <p>Note: this method is thread-safe.
@@ -241,6 +248,8 @@ public class HBaseSerde {
     }
 
     /**
+     * 将HBase {@link Result}转换为重用的{@link RowData}实例。
+     *
      * Converts HBase {@link Result} into a reused {@link RowData} instance.
      *
      * <p>Note: this method is NOT thread-safe.
@@ -309,11 +318,13 @@ public class HBaseSerde {
     // ------------------------------------------------------------------------------------
 
     /** Runtime encoder that encodes a specified field in {@link RowData} into byte[]. */
+    // 将{@link RowData}中的指定字段编码为字节[]的运行时编码器。
     @FunctionalInterface
     private interface FieldEncoder extends Serializable {
         byte[] encode(RowData row, int pos);
     }
 
+    // J: 针对返回的空属性处理
     private static FieldEncoder createNullableFieldEncoder(
             LogicalType fieldType, final byte[] nullStringBytes) {
         final FieldEncoder encoder = createFieldEncoder(fieldType);
@@ -321,6 +332,7 @@ public class HBaseSerde {
             if (hasFamily(fieldType, LogicalTypeFamily.CHARACTER_STRING)) {
                 // special logic for null string values, because HBase can store empty bytes for
                 // string
+                // null字符串值的特殊逻辑，因为HBase可以为字符串存储空字节
                 return (row, pos) -> {
                     if (row.isNullAt(pos)) {
                         return nullStringBytes;

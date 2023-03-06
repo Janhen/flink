@@ -35,7 +35,7 @@ import java.util.Arrays;
 import static org.apache.flink.table.types.logical.utils.LogicalTypeChecks.getPrecision;
 
 /** A utility class to process data exchange with HBase type system. */
-// 一个处理与HBase类型系统的数据交换的实用程序类。
+// 一个处理与 HBase 类型系统的数据交换的实用程序类。
 @Internal
 public class HBaseTypeUtils {
 
@@ -84,6 +84,7 @@ public class HBaseTypeUtils {
     }
 
     /** Serialize the Java Object to byte array with the given type. */
+    // 将Java对象序列化为给定类型的字节数组。
     public static byte[] serializeFromObject(Object value, int typeIdx, Charset stringCharset) {
         switch (typeIdx) {
             case 0: // byte[]

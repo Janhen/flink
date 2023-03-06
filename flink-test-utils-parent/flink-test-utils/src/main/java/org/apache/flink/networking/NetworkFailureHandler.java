@@ -41,6 +41,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
+ * 将来自源通道的入站流量转发到 remoteHost:remotePort 上的目标通道以及相反方向的响应的处理程序。可以使用阻塞标志
+ * 随时阻止所有网络流量。
+ *
  * Handler that is forwarding inbound traffic from the source channel to the target channel on
  * remoteHost:remotePort and the responses in the opposite direction. All of the network traffic can
  * be blocked at any time using blocked flag.

@@ -86,6 +86,15 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * ExecutionEnvironment 是执行程序的上下文。 {@link LocalEnvironment} 将导致在当前 JVM 中执行，
+ * {@link RemoteEnvironment} 将导致在远程设置上执行。
+ *
+ * <p>环境提供了控制作业执行（例如设置并行度）和与外界交互（数据访问）的方法。
+ *
+ * <p>请注意，执行环境需要强类型信息用于所有执行操作的输入和返回类型。这意味着环境需要知道操作的返回值是例如字符串和
+ * 整数的元组。因为 Java 编译器丢弃了大部分泛型类型信息，所以大多数方法都尝试使用反射重新获取该信息。在某些情况下，
+ * 可能需要手动将该信息提供给某些方法。
+ *
  * The ExecutionEnvironment is the context in which a program is executed. A {@link
  * LocalEnvironment} will cause execution in the current JVM, a {@link RemoteEnvironment} will cause
  * execution on a remote setup.
@@ -130,11 +139,14 @@ public class ExecutionEnvironment {
     private final ExecutionConfig config = new ExecutionConfig();
 
     /**
+     * 最新执行的结果，以使其在使用急切执行方法时可检索。
+     *
      * Result from the latest execution, to make it retrievable when using eager execution methods.
      */
     protected JobExecutionResult lastJobExecutionResult;
 
     /** Flag to indicate whether sinks have been cleared in previous executions. */
+    // 指示在以前的执行中是否已清除接收器的标志。
     private boolean wasExecuted = false;
 
     private final PipelineExecutorServiceLoader executorServiceLoader;
@@ -146,6 +158,9 @@ public class ExecutionEnvironment {
     private final List<JobListener> jobListeners = new ArrayList<>();
 
     /**
+     * 创建一个新的 {@link ExecutionEnvironment}，它将使用给定的 {@link Configuration} 来配置
+     * {@link PipelineExecutor}。
+     *
      * Creates a new {@link ExecutionEnvironment} that will use the given {@link Configuration} to
      * configure the {@link PipelineExecutor}.
      */
@@ -335,6 +350,11 @@ public class ExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 将新的 Kryo 默认序列化程序添加到运行时。
+     *
+     * <p>请注意，序列化器实例必须是可序列化的（由 java.io.Serializable 定义），因为它可能通过 java 序列化分发
+     * 到工作节点。
+     *
      * Adds a new Kryo default serializer to the Runtime.
      *
      * <p>Note that the serializer instance must be serializable (as defined by
@@ -388,6 +408,9 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 向序列化堆栈注册给定类型。如果该类型最终被序列化为 POJO，则该类型将注册到 POJO 序列化程序。如果类型最终被
+     * Kryo 序列化，那么它将在 Kryo 注册以确保只写入标签。
+     *
      * Registers the given type with the serialization stack. If the type is eventually serialized
      * as a POJO, then the type is registered with the POJO serializer. If the type ends up being
      * serialized with Kryo, then it will be registered at Kryo to make sure that only tags are
@@ -458,6 +481,8 @@ public class ExecutionEnvironment {
     // ---------------------------------- Text Input Format ---------------------------------------
 
     /**
+     * 创建一个 {@link DataSet}，它表示通过逐行读取给定文件而产生的字符串。该文件将使用 UTF-8 字符集读取。
+     *
      * Creates a {@link DataSet} that represents the Strings produced by reading the given file line
      * wise. The file will be read with the UTF-8 character set.
      *
@@ -594,6 +619,9 @@ public class ExecutionEnvironment {
     // ----------------------------------- CSV Input Format ---------------------------------------
 
     /**
+     * 创建 CSV 阅读器以读取逗号分隔值 (CSV) 文件。阅读器可以选择定义参数和字段类型，并最终生成与读取和解析的 CSV
+     * 输入相对应的 DataSet。
+     *
      * Creates a CSV reader to read a comma separated value (CSV) file. The reader has options to
      * define parameters and field types and will eventually produce the DataSet that corresponds to
      * the read and parsed CSV input.
@@ -608,6 +636,7 @@ public class ExecutionEnvironment {
     // ------------------------------------ File Input Format
     // -----------------------------------------
 
+    // J: 根据 FileInputFormat 读取文件
     public <X> DataSource<X> readFile(FileInputFormat<X> inputFormat, String filePath) {
         if (inputFormat == null) {
             throw new IllegalArgumentException("InputFormat must not be null.");
@@ -631,6 +660,9 @@ public class ExecutionEnvironment {
     // ---------------------------------------
 
     /**
+     * 在 {@link InputFormat} 中创建输入 {@link DataSet} 的通用方法。 DataSet 不会立即创建 - 相反，此方法
+     * 返回一个 DataSet，一旦程序执行，该 DataSet 将从输入格式延迟创建。
+     *
      * Generic method to create an input {@link DataSet} with in {@link InputFormat}. The DataSet
      * will not be immediately created - instead, this method returns a DataSet that will be lazily
      * created from the input format once the program is executed.
@@ -862,6 +894,8 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 创建一个包含迭代器中元素的新数据集。迭代器是可拆分的，允许框架创建返回迭代器中元素的并行数据源。
+     *
      * Creates a new data set that contains elements in the iterator. The iterator is splittable,
      * allowing the framework to create a parallel data source that returns the elements in the
      * iterator.
@@ -1066,6 +1100,8 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 创建系统将用来执行程序的计划，并使用执行数据流图的 JSON 表示形式将其作为字符串返回。
+     *
      * Creates the plan with which the system will execute the program, and returns it as a String
      * using a JSON representation of the execution data flow graph.
      *
@@ -1205,6 +1241,7 @@ public class ExecutionEnvironment {
      * @return A job name.
      */
     private String getJobName() {
+        // J: pipeline.name 控制 Job 名称
         return configuration.getString(
                 PipelineOptions.NAME, "Flink Java Job at " + Calendar.getInstance().getTime());
     }
@@ -1413,6 +1450,9 @@ public class ExecutionEnvironment {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 设置一个上下文环境工厂，它为运行具有预配置环境的程序创建上下文环境。示例是从命令行运行程序，以及在 Scala shell
+     * 中运行程序。
+     *
      * Sets a context environment factory, that creates the context environment for running programs
      * with pre-configured environments. Examples are running programs from the command line, and
      * running programs in the Scala shell.
@@ -1437,6 +1477,8 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * 检查当前是否允许显式实例化 LocalEnvironment 或 RemoteEnvironment。
+     *
      * Checks whether it is currently permitted to explicitly instantiate a LocalEnvironment or a
      * RemoteEnvironment.
      *

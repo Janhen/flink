@@ -26,6 +26,8 @@ import org.apache.flink.runtime.io.network.buffer.Buffer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 为 {@link Buffer} 或 {@link AbstractEvent} 实例键入带有通道索引标记的实例，它们是从中接收的。
+ *
  * Either type for {@link Buffer} or {@link AbstractEvent} instances tagged with the channel index,
  * from which they were received.
  */

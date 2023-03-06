@@ -40,8 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 包含使用Flink Streaming {@link Function Functions}的辅助方法的实用程序类。这类似于
- * {@link org.apache.flink.api.common.functions.util.FunctionUtils}，但有额外的方法来调用只存在于流API中的接口。
+ * 包含使用 Flink Streaming {@link Function Functions} 的辅助方法的实用程序类。这类似于
+ * {@link org.apache.flink.api.common.functions.util.FunctionUtils}，但有额外的方法来调用只存在于流 API 中的接口。
  *
  * Utility class that contains helper methods to work with Flink Streaming {@link Function
  * Functions}. This is similar to {@link org.apache.flink.api.common.functions.util.FunctionUtils}

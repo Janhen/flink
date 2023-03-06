@@ -79,6 +79,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@code OperatorChain} 包含在单个 {@link StreamTask} 中作为一个链执行的所有运算符。
+ *
+ * <p>链的主要入口点是它的{@code mainOperator}。 {@code mainOperator} 正在推动 {@link StreamTask} 的执行，
+ * 通过从网络输入和/或源输入中提取记录并将生成的记录推送到剩余的链式操作符。
+ *
  * The {@code OperatorChain} contains all operators that are executed as one chain within a single
  * {@link StreamTask}.
  *

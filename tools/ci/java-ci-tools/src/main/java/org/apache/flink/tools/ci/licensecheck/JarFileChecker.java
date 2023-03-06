@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Checks the Jar files created by the build process. */
-// 检查构建过程创建的Jar文件。
+// 检查构建过程创建的 Jar 文件。
 public class JarFileChecker {
     private static final Logger LOG = LoggerFactory.getLogger(JarFileChecker.class);
 
@@ -70,6 +70,7 @@ public class JarFileChecker {
             if (isTestJarAndEmpty(file, fileSystem.getPath("/"))) {
                 return 0;
             }
+            // J: 确定
             if (!noticeFileExistsAndIsValid(fileSystem.getPath("META-INF", "NOTICE"), file)) {
                 numSevereIssues++;
             }

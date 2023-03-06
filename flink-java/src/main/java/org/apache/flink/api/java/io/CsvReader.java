@@ -35,6 +35,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * 用于实例化 CSV 解析数据源的构建器类。 CSV 阅读器配置字段类型、分隔符（行和字段）、应该包含或跳过的字段以及其他标志，
+ * 例如是否跳过作为标题的初始行。
+ *
  * A builder class to instantiate a CSV parsing data source. The CSV reader configures the field
  * types, the delimiters (row and field), the fields that should be included or skipped, and other
  * flags such as whether to skip the initial line as the header.

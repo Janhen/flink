@@ -32,6 +32,7 @@ import java.util.Map;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A Parquet {@link ReadSupport} implementation for reading Parquet record as {@link Row}. */
+// 一个Parquet {@link ReadSupport}实现，用于将Parquet记录读取为{@link Row}。
 public class RowReadSupport extends ReadSupport<Row> {
 
     private TypeInformation<?> returnTypeInfo;

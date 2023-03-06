@@ -48,6 +48,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** An input channel reads recovered state from previous unaligned checkpoint snapshots. */
+// 输入通道从以前未对齐的检查点快照中读取恢复状态。
 public abstract class RecoveredInputChannel extends InputChannel implements ChannelStateHolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(RecoveredInputChannel.class);

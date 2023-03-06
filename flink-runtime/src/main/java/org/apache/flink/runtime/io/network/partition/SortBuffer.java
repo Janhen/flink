@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
+ * 可以将不同通道的数据附加到 {@link SortBuffer} 并且在 {@link SortBuffer} 完成后，可以按通道索引顺序从中
+ * 复制附加数据。
+ *
  * Data of different channels can be appended to a {@link SortBuffer} and after the {@link
  * SortBuffer} is finished, the appended data can be copied from it in channel index order.
  */

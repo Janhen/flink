@@ -23,13 +23,15 @@ import org.apache.flink.streaming.api.graph.StreamGraph;
 import org.apache.flink.streaming.api.transformations.PhysicalTransformation;
 
 /**
+ * 包含生成 {@link org.apache.flink.streaming.api.graph.StreamGraph} 的辅助方法的实用程序类。
+ *
  * Utility class that contains helper methods to generating {@link
  * org.apache.flink.streaming.api.graph.StreamGraph}.
  */
 public final class StreamGraphUtils {
 
     /**
-     * 当禁用自动生成uid时，如果没有设置{@link PhysicalTransformation}的uid或散列，则抛出
+     * 当禁用自动生成 uid 时，如果没有设置 {@link PhysicalTransformation} 的 uid 或散列，则抛出
      * {@link IllegalStateException}。
      *
      * Throw {@link IllegalStateException} if the {@link PhysicalTransformation}'s uid or hash is

@@ -21,10 +21,13 @@ package org.apache.flink.streaming.runtime.streamstatus;
 import org.apache.flink.annotation.Internal;
 
 /** Interface for retrieving the current {@link StreamStatus}. */
+// 用于检索当前 {@link StreamStatus} 的接口。
 @Internal
 public interface StreamStatusProvider {
 
     /**
+     * 返回当前流状态。
+     *
      * Returns the current stream status.
      *
      * @return current stream status.

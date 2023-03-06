@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** An output view that buffers written data in memory pages and spills them when they are full. */
+// 一个输出视图，它将写入的数据缓冲在内存页中，并在它们已满时溢出。
 public class SpillingBuffer extends AbstractPagedOutputView {
 
     private final ArrayList<MemorySegment> fullSegments;

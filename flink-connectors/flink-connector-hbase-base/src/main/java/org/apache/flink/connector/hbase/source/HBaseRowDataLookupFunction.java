@@ -49,8 +49,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * HBaseRowDataLookupFunction是一个标准的用户定义表函数，它可以在tableAPI中使用，也可以用于SQL中的时态表连接计划。
- * 它以{@link RowData}的形式查找结果。
+ * HBaseRowDataLookupFunction 是一个标准的用户定义表函数，它可以在 tableAPI 中使用，也可以用于 SQL 中的时态
+ * 表连接计划。它以 {@link RowData} 的形式查找结果。
  *
  * The HBaseRowDataLookupFunction is a standard user-defined table function, it can be used in
  * tableAPI and also useful for temporal table join plan in SQL. It looks up the result as {@link
@@ -65,15 +65,18 @@ public class HBaseRowDataLookupFunction extends TableFunction<RowData> {
     private final String hTableName;
     private final byte[] serializedConfig;
     private final HBaseTableSchema hbaseTableSchema;
+    // J: null 字符串文字
     private final String nullStringLiteral;
 
     private transient Connection hConnection;
     private transient HTable table;
+    // J: HBase 序列化和反序列化
     private transient HBaseSerde serde;
 
     private final long cacheMaxSize;
     private final long cacheExpireMs;
     private final int maxRetryTimes;
+    // J: guava cache 控制 loopup
     private transient Cache<Object, RowData> cache;
 
     public HBaseRowDataLookupFunction(
@@ -82,10 +85,12 @@ public class HBaseRowDataLookupFunction extends TableFunction<RowData> {
             HBaseTableSchema hbaseTableSchema,
             String nullStringLiteral,
             HBaseLookupOptions lookupOptions) {
+        // J: Flink 配置序列化成 bytes?
         this.serializedConfig = HBaseConfigurationUtil.serializeConfiguration(configuration);
         this.hTableName = hTableName;
         this.hbaseTableSchema = hbaseTableSchema;
         this.nullStringLiteral = nullStringLiteral;
+        // 提取 options 中参数
         this.cacheMaxSize = lookupOptions.getCacheMaxSize();
         this.cacheExpireMs = lookupOptions.getCacheExpireMs();
         this.maxRetryTimes = lookupOptions.getMaxRetryTimes();

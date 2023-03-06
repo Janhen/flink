@@ -23,6 +23,8 @@ import org.apache.flink.core.io.IOReadableWritable;
 import java.io.IOException;
 
 /**
+ * 一种特殊的面向记录的运行时结果编写器，仅适用于广播模式。
+ *
  * A special record-oriented runtime result writer only for broadcast mode.
  *
  * <p>The BroadcastRecordWriter extends the {@link RecordWriter} and emits records to all channels

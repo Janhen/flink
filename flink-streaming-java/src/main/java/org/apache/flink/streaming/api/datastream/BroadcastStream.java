@@ -30,6 +30,10 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * {@code BroadcastStream} 是具有 {@link org.apache.flink.api.common.state.BroadcastState 广播状态}
+ * 的流。这可以由任何流使用 {@link DataStream#broadcast(MapStateDescriptor[])} 方法创建，并隐式创建用户可以
+ * 存储创建的 {@code BroadcastStream} 元素的状态。（见 {@link BroadcastConnectedStream}）。
+ *
  * A {@code BroadcastStream} is a stream with {@link
  * org.apache.flink.api.common.state.BroadcastState broadcast state(s)}. This can be created by any
  * stream using the {@link DataStream#broadcast(MapStateDescriptor[])} method and implicitly creates

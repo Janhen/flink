@@ -49,6 +49,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Utility class that contains helper methods to work with {@link SemanticProperties}. */
+// 包含使用 {@link Semantic Properties} 的辅助方法的实用程序类。
 @Internal
 public final class SemanticPropUtil {
 

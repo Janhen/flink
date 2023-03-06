@@ -27,6 +27,11 @@ import org.apache.flink.configuration.Configuration;
 import java.util.Map;
 
 /**
+ * 该接口将算子标记为执行用户定义函数（UDF）的算子，例如{@link org.apache.flink.api.common.functions.RichMapFunction}、
+ * {@link org.apache.flink.api.common.functions .RichReduceFunction} 或
+ * {@link org.apache.flink.api.common.functions.RichCoGroupFunction}。 UDF 运算符与执行内置操作（如聚合）
+ * 的运算符形成对比。
+ *
  * This interface marks operators as operators that execute user-defined functions (UDFs), such as
  * {@link org.apache.flink.api.common.functions.RichMapFunction}, {@link
  * org.apache.flink.api.common.functions.RichReduceFunction}, or {@link

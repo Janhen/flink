@@ -22,6 +22,7 @@ import java.io.Closeable;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /** A {@link LinkedBlockingQueue} that is extended with closing methods. */
+// 使用关闭方法扩展的 {@link LinkedBlockingQueue}。
 public final class RequestQueue<E> extends LinkedBlockingQueue<E> implements Closeable {
 
     private static final long serialVersionUID = 3804115535778471680L;

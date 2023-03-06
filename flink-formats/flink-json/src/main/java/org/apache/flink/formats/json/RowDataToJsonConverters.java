@@ -56,7 +56,7 @@ import static org.apache.flink.formats.common.TimeFormats.SQL_TIME_FORMAT;
 
 /** Tool class used to convert from {@link RowData} to {@link JsonNode}. * */
 @Internal
-public class RowDataToJsonConverters implements Serializable {
+public class  RowDataToJsonConverters implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

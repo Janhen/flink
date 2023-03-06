@@ -21,6 +21,8 @@ package org.apache.flink.runtime.io.network.api.writer;
 import org.apache.flink.core.io.IOReadableWritable;
 
 /**
+ * 这是 {@link ChannelSelector} 接口的默认实现。它代表了一种简单的循环策略，即无论记录如何，每次都只选择一个输出通道。
+ *
  * This is the default implementation of the {@link ChannelSelector} interface. It represents a
  * simple round-robin strategy, i.e. regardless of the record every attached exactly one output
  * channel is selected at a time.

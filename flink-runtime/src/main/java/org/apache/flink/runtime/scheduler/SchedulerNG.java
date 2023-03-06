@@ -57,6 +57,12 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 调度 Flink 作业的接口。
+ *
+ * <p>实例通过 {@link SchedulerNGFactory} 创建，并在实例化时接收 {@link JobGraph}。
+ *
+ * <p>实现可以期望方法不会被并发调用。事实上，所有调用都将源自 {@link ComponentMainThreadExecutor} 中的一个线程。
+ *
  * Interface for scheduling Flink jobs.
  *
  * <p>Instances are created via {@link SchedulerNGFactory}, and receive a {@link JobGraph} when

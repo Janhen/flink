@@ -51,6 +51,7 @@ import java.util.Map;
 import static org.apache.parquet.schema.Type.Repetition.REPEATED;
 
 /** Extends from {@link GroupConverter} to convert an nested Parquet Record into Row. */
+// 从{@link GroupConverter}扩展，将嵌套的Parquet记录转换为行。
 public class RowConverter extends GroupConverter implements ParentDataHolder {
     private final Converter[] converters;
     private final ParentDataHolder parentDataHolder;

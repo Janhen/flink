@@ -30,6 +30,15 @@ import java.util.function.BooleanSupplier;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个流源，它：
+ * 1) 在不允许检查点的情况下发出元素列表，
+ * 2) 然后等待另外两个检查点完成
+ * 3) 然后重新发射之前的相同元素
+ * 4）等待另外两个检查点和
+ * 5) 退出。
+ *
+ * <p>编写此类是为了测试 StreamingFileSink 使用的批量写入器。
+ *
  * A stream source that: 1) emits a list of elements without allowing checkpoints, 2) then waits for
  * two more checkpoints to complete, 3) then re-emits the same elements before 4) waiting for
  * another two checkpoints and 5) exiting.

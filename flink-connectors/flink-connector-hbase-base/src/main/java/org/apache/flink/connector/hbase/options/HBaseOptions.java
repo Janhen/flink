@@ -94,6 +94,7 @@ public class HBaseOptions {
                                     + "Can be set to '0' to disable it. Note, both 'sink.buffer-flush.max-size' and 'sink.buffer-flush.max-rows' "
                                     + "can be set to '0' with the flush interval set allowing for complete async processing of buffered actions.");
 
+    // J: 是否异步查找
     public static final ConfigOption<Boolean> LOOKUP_ASYNC =
             ConfigOptions.key("lookup.async")
                     .booleanType()

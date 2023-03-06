@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.scheduler;
 
 /**
+ * 部署选项，指示任务是否应在其数据可用时通知 master。
+ *
  * Deployment option which indicates whether the task should notify master when its data is
  * available.
  */

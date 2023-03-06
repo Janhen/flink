@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@link LatencyStats}对象用于跟踪和报告跨度量的延迟行为。
+ * {@link LatencyStats} 对象用于跟踪和报告跨度量的延迟行为。
  *
  * The {@link LatencyStats} objects are used to track and report on the behavior of latencies across
  * measurements.

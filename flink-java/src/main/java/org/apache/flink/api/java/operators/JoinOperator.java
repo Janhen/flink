@@ -216,6 +216,10 @@ public abstract class JoinOperator<I1, I2, OUT>
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 在每对连接元素上应用 {@link JoinFunction} 的连接转换。
+     *
+     * <p>它还表示作为联接转换结果的 {@link DataSet}。
+     *
      * A Join transformation that applies a {@link JoinFunction} on each pair of joining elements.
      *
      * <p>It also represents the {@link DataSet} that is the result of a Join transformation.

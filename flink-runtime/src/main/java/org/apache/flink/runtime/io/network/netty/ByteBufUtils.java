@@ -26,6 +26,10 @@ import javax.annotation.Nullable;
 public class ByteBufUtils {
 
     /**
+     * 累积从 <tt>source<tt> 到 <tt>target<tt> 的数据。如果还没有数据积累，<tt>source<tt>有足够的数据，则直接
+     * 返回<tt>source<tt>。否则，数据将被复制到 <tt>target<tt>。如果此操作后复制的数据大小已达到
+     * <tt>targetAccumulationSize<tt>，将返回<tt>target<tt>，否则将返回<tt>null<tt>以指示需要更多数据。
+     *
      * Accumulates data from <tt>source</tt> to <tt>target</tt>. If no data has been accumulated yet
      * and <tt>source</tt> has enough data, <tt>source</tt> will be returned directly. Otherwise,
      * data will be copied into <tt>target</tt>. If the size of data copied after this operation has

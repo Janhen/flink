@@ -42,6 +42,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * {@link SlotSharingExecutionSlotAllocator} 的共享插槽实现。
+ *
  * Shared slot implementation for the {@link SlotSharingExecutionSlotAllocator}.
  *
  * <p>The shared slots are owned and tracked by {@link SlotSharingExecutionSlotAllocator}. The

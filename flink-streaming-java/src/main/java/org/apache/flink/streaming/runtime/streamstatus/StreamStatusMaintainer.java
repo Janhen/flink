@@ -21,10 +21,13 @@ package org.apache.flink.streaming.runtime.streamstatus;
 import org.apache.flink.annotation.Internal;
 
 /** Interface that allows toggling the current {@link StreamStatus} as well as retrieving it. */
+// 允许切换当前 {@link StreamStatus} 以及检索它的接口
 @Internal
 public interface StreamStatusMaintainer extends StreamStatusProvider {
 
     /**
+     * 切换当前流状态。此方法仅在提供的流状态与当前状态不同时才有效。
+     *
      * Toggles the current stream status. This method should only have effect if the supplied stream
      * status is different from the current status.
      *

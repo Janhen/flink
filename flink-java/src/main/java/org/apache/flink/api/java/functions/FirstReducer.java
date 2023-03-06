@@ -24,6 +24,8 @@ import org.apache.flink.api.common.functions.GroupReduceFunction;
 import org.apache.flink.util.Collector;
 
 /**
+ * 只发出组中前 N 个元素的 Reducer。
+ *
  * Reducer that only emits the first N elements in a group.
  *
  * @param <T>

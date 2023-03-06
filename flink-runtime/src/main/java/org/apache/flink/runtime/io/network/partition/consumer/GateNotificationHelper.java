@@ -20,6 +20,10 @@ package org.apache.flink.runtime.io.network.partition.consumer;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 提取 {@link InputGate} 可用性期货的通知。
+ *
+ * <p>应该在锁外创建和关闭。
+ *
  * Abstracts the notification of the availability futures of {@link InputGate}s.
  *
  * <p>Should be created and closed outside of the lock.

@@ -28,6 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 它通过检测到的事件的映射来调用，这些事件由它们的名称标识。这些名称由 {@link org.apache.flink.cep.pattern.Pattern}
+ * 定义，指定了受欢迎的模式。这是处理找到的匹配项的首选方式。
+ *
  * It is called with a map of detected events which are identified by their names. The names are
  * defined by the {@link org.apache.flink.cep.pattern.Pattern} specifying the sought-after pattern.
  * This is the preferred way to process found matches.

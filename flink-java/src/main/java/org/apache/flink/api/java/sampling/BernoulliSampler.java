@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
+ * 基于伯努利轨迹的采样器实现。该采样器用于分馏采样，无需更换。是否对元素进行采样由伯努利实验确定。
+ *
  * A sampler implementation built upon a Bernoulli trail. This sampler is used to sample with
  * fraction and without replacement. Whether an element is sampled or not is determined by a
  * Bernoulli experiment.

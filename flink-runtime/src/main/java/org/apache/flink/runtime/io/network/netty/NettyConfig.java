@@ -37,6 +37,7 @@ public class NettyConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(NettyConfig.class);
 
+    // epoll...
     enum TransportType {
         NIO,
         EPOLL,

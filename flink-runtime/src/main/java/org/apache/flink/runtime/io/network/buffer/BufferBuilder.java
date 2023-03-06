@@ -29,6 +29,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 用于填充 {@link MemorySegment} 内容的非线程安全类。要访问写入数据，请使用 {@link BufferConsumer}，它允许
+ * 从写入数据构建 {@link Buffer} 实例。
+ *
  * Not thread safe class for filling in the content of the {@link MemorySegment}. To access written
  * data please use {@link BufferConsumer} which allows to build {@link Buffer} instances from the
  * written data.

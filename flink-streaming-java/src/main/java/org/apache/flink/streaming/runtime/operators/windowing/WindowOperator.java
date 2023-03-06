@@ -75,6 +75,15 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 基于 {@link WindowAssigner} 和 {@link Trigger} 实现窗口逻辑的运算符。
+ *
+ * <p>当一个元素到达时，它使用 {@link KeySelector} 分配一个键，并使用 {@link WindowAssigner} 分配给零个或多个
+ * 窗口。基于此，将元素放入窗格中。窗格是具有相同键和相同 {@code Window} 的元素的桶。如果一个元素由
+ * {@code WindowAssigner} 分配给多个窗口，则它可以位于多个窗格中。
+ *
+ * <p>每个窗格都有自己提供的 {@code Trigger} 实例。此触发器确定何时应处理窗格的内容以发出结果。当触发器触发时，调用
+ * 给定的 {@link InternalWindowFunction} 以生成为 {@code Trigger} 所属的窗格发出的结果。
+ *
  * An operator that implements the logic for windowing based on a {@link WindowAssigner} and {@link
  * Trigger}.
  *
@@ -135,6 +144,9 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     protected final long allowedLateness;
 
     /**
+     * {@link OutputTag} 用于迟到的事件。 {@code window.maxTimestamp + allowedLateness} 小于当前水印的
+     * 元素将被发送到此。
+     *
      * {@link OutputTag} to use for late arriving events. Elements for which {@code
      * window.maxTimestamp + allowedLateness} is smaller than the current watermark will be emitted
      * to this.
@@ -163,6 +175,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     private transient InternalListState<K, VoidNamespace, Tuple2<W, W>> mergingSetsState;
 
     /**
+     * 这是给 {@code InternalWindowFunction} 用于发射具有给定时间戳的元素。
+     *
      * This is given to the {@code InternalWindowFunction} for emitting elements with a given
      * timestamp.
      */
@@ -556,6 +570,10 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 删除给定窗口的所有状态并调用 {@link Trigger#clear(Window, Trigger.TriggerContext)}。
+     *
+     * <p>调用者必须确保在状态后端和 triggerContext 对象中设置了正确的键。
+     *
      * Drops all state for the given window and calls {@link Trigger#clear(Window,
      * Trigger.TriggerContext)}.
      *
@@ -629,6 +647,8 @@ public class WindowOperator<K, IN, ACC, OUT, W extends Window>
     }
 
     /**
+     * 注册一个定时器来清理窗口的内容。
+     *
      * Registers a timer to cleanup the content of the window.
      *
      * @param window the window whose state to discard

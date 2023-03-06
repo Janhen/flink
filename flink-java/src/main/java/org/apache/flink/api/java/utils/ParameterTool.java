@@ -43,6 +43,8 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 这个类提供了简单的实用方法来读取和解析来自不同来源的程序参数。 args 中只能支持单值参数。
+ *
  * This class provides simple utility methods for reading and parsing program arguments from
  * different sources. Only single value parameter could be supported in args.
  */

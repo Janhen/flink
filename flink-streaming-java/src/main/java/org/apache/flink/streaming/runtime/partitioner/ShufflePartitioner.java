@@ -25,6 +25,8 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import java.util.Random;
 
 /**
+ * 通过随机选择一个输出通道来平均分配数据的分区器。
+ *
  * Partitioner that distributes the data equally by selecting one output channel randomly.
  *
  * @param <T> Type of the Tuple

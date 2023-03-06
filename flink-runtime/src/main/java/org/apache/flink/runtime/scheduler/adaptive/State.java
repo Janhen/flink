@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import java.util.Optional;
 
 /**
+ * {@link AdaptiveScheduler} 的状态抽象。该接口包含每个状态实现必须支持的所有方法。
+ *
  * State abstraction of the {@link AdaptiveScheduler}. This interface contains all methods every
  * state implementation must support.
  */

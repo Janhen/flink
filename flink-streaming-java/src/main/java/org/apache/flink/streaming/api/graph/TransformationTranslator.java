@@ -37,6 +37,8 @@ import java.util.Collection;
 public interface TransformationTranslator<OUT, T extends Transformation<OUT>> {
 
     /**
+     * 将给定的 {@link Transformation} 转换为其运行时实现以进行 BATCH 样式执行。
+     *
      * Translates a given {@link Transformation} to its runtime implementation for BATCH-style
      * execution.
      *

@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 为测试的特定类包记录器设置日志级别的规则。日志记录配置只有在启用日志记录时才会扩展(所以根日志记录器不是OFF)。
+ *
  * A rule that sets the log level for specific class/package loggers for a test. Logging
  * configuration will only be extended when logging is enabled at all (so root logger is not OFF).
  */

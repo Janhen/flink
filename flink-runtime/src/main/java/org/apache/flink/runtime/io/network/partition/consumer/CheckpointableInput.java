@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 输入，只有阻塞和恢复消费的基本方法。例如，它可以是 {@link InputGate} 或链式源。
+ *
  * Input, with just basic methods for blocking and resuming consumption. It can be for example an
  * {@link InputGate} or a chained source.
  */

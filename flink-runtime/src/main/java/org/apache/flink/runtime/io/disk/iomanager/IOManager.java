@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /** The facade for the provided I/O manager services. */
+// 所提供的 IO 管理器服务的外观。
 public abstract class IOManager implements AutoCloseable {
     protected static final Logger LOG = LoggerFactory.getLogger(IOManager.class);
 

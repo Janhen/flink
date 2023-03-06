@@ -260,6 +260,8 @@ public final class Utils {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 用于了解由 Java API 创建的序列化程序层次结构的调试实用程序。在 GroupReduceITCase.testGroupByGenericType() 中测试
+     *
      * Debugging utility to understand the hierarchy of serializers created by the Java API. Tested
      * in GroupReduceITCase.testGroupByGenericType()
      */
@@ -337,6 +339,8 @@ public final class Utils {
     }
 
     /**
+     * 从给定的参数中获取密钥。键必须以“-”或“--”开头。例如，--key1 value1 -key2 value2。
+     *
      * Get the key from the given args. Keys have to start with '-' or '--'. For example, --key1
      * value1 -key2 value2.
      *

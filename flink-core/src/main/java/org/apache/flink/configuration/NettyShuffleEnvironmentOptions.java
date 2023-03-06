@@ -24,6 +24,7 @@ import org.apache.flink.annotation.docs.Documentation;
 import static org.apache.flink.configuration.ConfigOptions.key;
 
 /** The set of configuration options relating to network stack. */
+// 与网络堆栈相关的配置选项集。
 @PublicEvolving
 public class NettyShuffleEnvironmentOptions {
 
@@ -32,6 +33,8 @@ public class NettyShuffleEnvironmentOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 任务管理器期望接收传输信封的默认网络端口。 {@code 0} 表示 TaskManager 搜索空闲端口。
+     *
      * The default network port the task manager expects to receive transfer envelopes on. The
      * {@code 0} means that the TaskManager searches for a free port.
      */
@@ -46,6 +49,7 @@ public class NettyShuffleEnvironmentOptions {
                             "The task manager’s external port used for data exchange operations.");
 
     /** The local network port that the task manager listen at for data exchange. */
+    // 任务管理器侦听数据交换的本地网络端口。
     public static final ConfigOption<Integer> DATA_BIND_PORT =
             key("taskmanager.data.bind-port")
                     .intType()
@@ -67,6 +71,8 @@ public class NettyShuffleEnvironmentOptions {
                                     + ") is set to true");
 
     /**
+     * 布尔标志，指示 shuffle 数据是否将被压缩以用于阻塞 shuffle 模式。
+     *
      * Boolean flag indicating whether the shuffle data will be compressed for blocking shuffle
      * mode.
      *
@@ -85,6 +91,7 @@ public class NettyShuffleEnvironmentOptions {
                                     + "ratio is high.");
 
     /** The codec to be used when compressing shuffle data. */
+    // 压缩 shuffle 数据时要使用的编解码器。
     @Documentation.ExcludeFromDocumentation("Currently, LZ4 is the only legal option.")
     public static final ConfigOption<String> SHUFFLE_COMPRESSION_CODEC =
             key("taskmanager.network.compression.codec")
@@ -92,6 +99,8 @@ public class NettyShuffleEnvironmentOptions {
                     .withDescription("The codec to be used when compressing shuffle data.");
 
     /**
+     * 用于启用的布尔标志禁用有关入站出站网络队列长度的更详细指标。
+     *
      * Boolean flag to enable/disable more detailed metrics about inbound/outbound network queue
      * lengths.
      */
@@ -153,6 +162,10 @@ public class NettyShuffleEnvironmentOptions {
                     .withDescription("Maximum memory size for network buffers.");
 
     /**
+     * 用于每个传出传入通道（子分区输入通道）的网络缓冲区数。
+     *
+     * <p>推理：1 个用于子分区中传输数据的缓冲区 + 1 个用于并行序列化的缓冲区。
+     *
      * Number of network buffers to use for each outgoing/incoming channel (subpartition/input
      * channel).
      *
@@ -169,6 +182,8 @@ public class NettyShuffleEnvironmentOptions {
                                     + " 1 buffer is for receiving in-flight data in the subpartition and 1 buffer is for parallel serialization.");
 
     /**
+     * 用于每个传出传入门（结果分区输入门）的额外网络缓冲区的数量。
+     *
      * Number of extra network buffers to use for each outgoing/incoming gate (result
      * partition/input gate).
      */
@@ -184,6 +199,7 @@ public class NettyShuffleEnvironmentOptions {
                                     + " increased in case of higher round trip times between nodes and/or larger number of machines in the cluster.");
 
     /** Minimum number of network buffers required per sort-merge blocking result partition. */
+    // 每个排序合并阻塞结果分区所需的最小网络缓冲区数。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NETWORK_SORT_SHUFFLE_MIN_BUFFERS =
             key("taskmanager.network.sort-shuffle.min-buffers")
@@ -202,6 +218,8 @@ public class NettyShuffleEnvironmentOptions {
                                     + " config value.");
 
     /**
+     * 在基于排序合并的阻塞 shuffle 和默认的基于散列的阻塞 shuffle 之间切换的并行度阈值。
+     *
      * Parallelism threshold to switch between sort-merge based blocking shuffle and the default
      * hash-based blocking shuffle.
      */
@@ -229,6 +247,7 @@ public class NettyShuffleEnvironmentOptions {
                                     "taskmanager.memory.framework.off-heap.batch-shuffle.size"));
 
     /** Number of max buffers can be used for each output subparition. */
+    // 最大缓冲区数可用于每个输出子分区。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NETWORK_MAX_BUFFERS_PER_CHANNEL =
             key("taskmanager.network.memory.max-buffers-per-channel")
@@ -242,6 +261,7 @@ public class NettyShuffleEnvironmentOptions {
                                     + " producing large amount of data.");
 
     /** The timeout for requesting exclusive buffers for each channel. */
+    // 为每个通道请求独占缓冲区的超时时间。
     @Documentation.ExcludeFromDocumentation(
             "This option is purely implementation related, and may be removed as the implementation changes.")
     public static final ConfigOption<Long> NETWORK_EXCLUSIVE_BUFFERS_REQUEST_TIMEOUT_MILLISECONDS =
@@ -274,6 +294,7 @@ public class NettyShuffleEnvironmentOptions {
                     .withDeprecatedKeys("taskmanager.net.num-arenas")
                     .withDescription("The number of Netty arenas.");
 
+    // J: 服务端线程数
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NUM_THREADS_SERVER =
             key("taskmanager.network.netty.server.numThreads")
@@ -281,6 +302,7 @@ public class NettyShuffleEnvironmentOptions {
                     .withDeprecatedKeys("taskmanager.net.server.numThreads")
                     .withDescription("The number of Netty server threads.");
 
+    // J: 客户端线程数
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NUM_THREADS_CLIENT =
             key("taskmanager.network.netty.client.numThreads")
@@ -288,6 +310,7 @@ public class NettyShuffleEnvironmentOptions {
                     .withDeprecatedKeys("taskmanager.net.client.numThreads")
                     .withDescription("The number of Netty client threads.");
 
+    // J: 服务端积压
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> CONNECT_BACKLOG =
             key("taskmanager.network.netty.server.backlog")
@@ -302,6 +325,7 @@ public class NettyShuffleEnvironmentOptions {
                     .withDeprecatedKeys("taskmanager.net.client.connectTimeoutSec")
                     .withDescription("The Netty client connection timeout.");
 
+    // J: 网络重试次数，目前仅用于建立输入输出通道连接
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NETWORK_RETRIES =
             key("taskmanager.network.retries")
@@ -311,6 +335,7 @@ public class NettyShuffleEnvironmentOptions {
                             "The number of retry attempts for network communication."
                                     + " Currently it's only used for establishing input/output channel connections");
 
+    // Netty 发送和接收缓冲区大小。这默认为系统缓冲区大小“+”(cat /proc/sys/net/ipv4/tcp_[rw]mem)，在现代 Linux 中为 4 MiB。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> SEND_RECEIVE_BUFFER_SIZE =
             key("taskmanager.network.netty.sendReceiveBufferSize")
@@ -320,6 +345,8 @@ public class NettyShuffleEnvironmentOptions {
                             "The Netty send and receive buffer size. This defaults to the system buffer size"
                                     + " (cat /proc/sys/net/ipv4/tcp_[rw]mem) and is 4 MiB in modern Linux.");
 
+    // Netty 传输类型，"nio" 或 "epoll"。 “auto”表示根据平台自动选择属性模式。请注意，"epoll" 模式可以获得
+    // 更好的性能、更少的 GC 并具有更多高级功能，这些功能仅在现代 Linux 上可用。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<String> TRANSPORT_TYPE =
             key("taskmanager.network.netty.transport")
@@ -335,6 +362,7 @@ public class NettyShuffleEnvironmentOptions {
     // ------------------------------------------------------------------------
 
     /** Minimum backoff for partition requests of input channels. */
+    // 输入通道分区请求的最小退避。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NETWORK_REQUEST_BACKOFF_INITIAL =
             key("taskmanager.network.request-backoff.initial")
@@ -344,6 +372,7 @@ public class NettyShuffleEnvironmentOptions {
                             "Minimum backoff in milliseconds for partition requests of input channels.");
 
     /** Maximum backoff for partition requests of input channels. */
+    // 输入通道分区请求的最大退避。
     @Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
     public static final ConfigOption<Integer> NETWORK_REQUEST_BACKOFF_MAX =
             key("taskmanager.network.request-backoff.max")

@@ -24,7 +24,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /** Options for the HBase lookup. */
-// HBase 查找选项。
+// HBase 查找选项
+// 缓存大小、过期时间、重试次数、是否异步调用
 @Internal
 public class HBaseLookupOptions implements Serializable {
     private static final long serialVersionUID = 1L;

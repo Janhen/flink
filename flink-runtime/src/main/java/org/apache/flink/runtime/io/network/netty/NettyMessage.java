@@ -54,6 +54,10 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个简单通用的接口，用于将消息序列化到 Netty 的缓冲区空间。
+ *
+ * <p>只要我们使用 4.0.45 之前的 Netty 版本，这个类就必须是公共的。请查看 FLINK-7845 了解更多信息。
+ *
  * A simple and generic interface to serialize messages to Netty's buffer space.
  *
  * <p>This class must be public as long as we are using a Netty version prior to 4.0.45. Please
@@ -489,6 +493,7 @@ public abstract class NettyMessage {
     // Client requests
     // ------------------------------------------------------------------------
 
+    // J: 客户端分区请求
     static class PartitionRequest extends NettyMessage {
 
         private static final byte ID = 2;
@@ -624,6 +629,8 @@ public abstract class NettyMessage {
     }
 
     /**
+     * 取消由{@link InputChannelID} 标识的{@link InputChannel} 的分区请求。
+     *
      * Cancels the partition request of the {@link InputChannel} identified by {@link
      * InputChannelID}.
      *
@@ -675,6 +682,7 @@ public abstract class NettyMessage {
     }
 
     /** Incremental credit announcement from the client to the server. */
+    // 从客户端到服务器的增量信用公告。
     static class AddCredit extends NettyMessage {
 
         private static final byte ID = 6;
@@ -721,6 +729,7 @@ public abstract class NettyMessage {
     }
 
     /** Message to notify the producer to unblock from checkpoint. */
+    // 通知生产者从检查点解除阻塞的消息。
     static class ResumeConsumption extends NettyMessage {
 
         private static final byte ID = 7;

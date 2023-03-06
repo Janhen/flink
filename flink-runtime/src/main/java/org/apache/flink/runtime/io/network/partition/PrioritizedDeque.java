@@ -33,6 +33,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
+ * 支持元素优先级的类似双端队列的数据结构，这样它们将在任何非优先元素之前被轮询。
+ *
  * A deque-like data structure that supports prioritization of elements, such they will be polled
  * before any non-priority elements.
  *

@@ -35,6 +35,8 @@ import org.apache.flink.api.java.operators.translation.PlanUnwrappingReduceOpera
 import org.apache.flink.api.java.tuple.Tuple2;
 
 /**
+ * 该运算符表示对数据集的“不同”函数的应用，以及该函数产生的结果数据集。
+ *
  * This operator represents the application of a "distinct" function on a data set, and the result
  * data set produced by the function.
  *

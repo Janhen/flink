@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** A version of the {@link IOManager} that uses asynchronous I/O. */
+// 使用异步 IO 的 {@link IOManager} 版本。
 public class IOManagerAsync extends IOManager implements UncaughtExceptionHandler {
 
     /** The writer threads used for asynchronous block oriented channel writing. */

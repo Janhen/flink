@@ -21,6 +21,8 @@ package org.apache.flink.api.java.sampling;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 在分区和协调器之间传输的数据结构，用于分布式随机采样。
+ *
  * The data structure which is transferred between partitions and the coordinator for distributed
  * random sampling.
  *

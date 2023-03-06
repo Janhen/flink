@@ -470,6 +470,8 @@ public class NetUtils {
     }
 
     /**
+     * 从本地系统获取端口时检查给定端口是否在正确的范围内。
+     *
      * check whether the given port is in right range when getting port from local system.
      *
      * @param port the port to check

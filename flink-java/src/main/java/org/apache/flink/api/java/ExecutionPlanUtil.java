@@ -25,6 +25,7 @@ import org.apache.flink.api.common.Plan;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A utility for extracting an execution plan (as JSON) from a {@link Plan}. */
+// 用于从 {@link Plan} 中提取执行计划（作为 JSON）的实用程序。
 @Internal
 public class ExecutionPlanUtil {
 
@@ -70,6 +71,8 @@ public class ExecutionPlanUtil {
     }
 
     /**
+     * 必须驻留在优化器包中的 JSON 计划生成器的内部接口。我们使用反射加载实际的子类。
+     *
      * Internal interface for the JSON plan generator that has to reside in the optimizer package.
      * We load the actual subclass using reflection.
      */

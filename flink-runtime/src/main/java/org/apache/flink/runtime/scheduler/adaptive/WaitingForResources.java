@@ -35,6 +35,8 @@ import java.time.Duration;
 import java.util.concurrent.ScheduledFuture;
 
 /**
+ * 描述调度程序正在等待资源以执行作业的状态。
+ *
  * State which describes that the scheduler is waiting for resources in order to execute the job.
  */
 class WaitingForResources implements State, ResourceConsumer {

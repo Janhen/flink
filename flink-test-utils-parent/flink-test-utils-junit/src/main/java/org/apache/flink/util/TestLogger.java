@@ -41,6 +41,7 @@ public class TestLogger {
         TestSignalHandler.register();
     }
 
+    // watcher ...
     @Rule
     public TestRule watchman =
             new TestWatcher() {

@@ -21,7 +21,7 @@ package org.apache.flink.streaming.api.operators;
 import org.apache.flink.annotation.Internal;
 
 /**
- * 接口可以被{@link InternalTimerService}调用。
+ * 接口可以被 {@link InternalTimerService} 调用。
  *
  * Interface for things that can be called by {@link InternalTimerService}.
  *
@@ -32,8 +32,10 @@ import org.apache.flink.annotation.Internal;
 public interface Triggerable<K, N> {
 
     /** Invoked when an event-time timer fires. */
+    // 当事件时间计时器触发时调用。
     void onEventTime(InternalTimer<K, N> timer) throws Exception;
 
     /** Invoked when a processing-time timer fires. */
+    // 当处理时间计时器触发时调用。
     void onProcessingTime(InternalTimer<K, N> timer) throws Exception;
 }

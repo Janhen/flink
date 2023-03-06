@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Internal;
 import java.util.Iterator;
 
 /**
+ * 数据样本是通过定义的程序从统计总体中选择的一组数据。 RandomSampler 有助于随机创建数据样本。
+ *
  * A data sample is a set of data selected from a statistical population by a defined procedure.
  * RandomSampler helps to create data sample randomly.
  *

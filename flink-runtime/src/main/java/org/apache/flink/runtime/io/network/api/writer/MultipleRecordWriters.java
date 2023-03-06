@@ -29,6 +29,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The specific delegate implementation for the multiple outputs case. */
+// 多输出案例的特定委托实现。
 public class MultipleRecordWriters<T extends IOReadableWritable>
         implements RecordWriterDelegate<T> {
 

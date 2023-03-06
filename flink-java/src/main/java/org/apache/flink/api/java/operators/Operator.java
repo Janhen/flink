@@ -27,6 +27,8 @@ import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 
 /**
+ * Java API 中所有算子的基类。
+ *
  * Base class of all operators in the Java API.
  *
  * @param <OUT> The type of the data set produced by this operator.

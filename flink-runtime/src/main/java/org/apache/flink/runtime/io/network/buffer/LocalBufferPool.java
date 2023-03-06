@@ -37,6 +37,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 用于管理来自 {@link NetworkBufferPool} 的多个 {@link Buffer} 实例的缓冲池。
+ *
  * A buffer pool used to manage a number of {@link Buffer} instances from the {@link
  * NetworkBufferPool}.
  *

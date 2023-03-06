@@ -50,6 +50,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * NetworkBufferPool 是网络堆栈的固定大小的 {@link MemorySegment} 实例池。
+ *
  * The NetworkBufferPool is a fixed size pool of {@link MemorySegment} instances for the network
  * stack.
  *

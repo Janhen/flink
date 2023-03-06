@@ -24,6 +24,10 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
+ * 对于分数采样，样本算法是本地分布的，而对于固定大小的样本算法则不是这样。固定大小的样本算法需要两阶段采样
+ * （根据我们当前的实现）。在第一阶段，每个分布式分区都被独立采样。部分抽样结果由中央协调器处理。中央协调器将部分采样
+ * 结果结合起来形成最终结果。
+ *
  * For sampling with fraction, the sample algorithms are natively distributed, while it's not true
  * for fixed size sample algorithms. The fixed size sample algorithms require two-phases sampling
  * (according to our current implementation). In the first phase, each distributed partition is

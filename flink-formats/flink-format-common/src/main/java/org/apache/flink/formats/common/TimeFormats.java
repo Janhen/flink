@@ -84,6 +84,7 @@ public class TimeFormats {
                     .toFormatter();
 
     /** Formatter for SQL string representation of a timestamp value (with UTC timezone). */
+    // 用于时间戳值(UTC时区)的SQL字符串表示的格式化程序。
     public static final DateTimeFormatter SQL_TIMESTAMP_WITH_LOCAL_TIMEZONE_FORMAT =
             new DateTimeFormatterBuilder()
                     .append(DateTimeFormatter.ISO_LOCAL_DATE)

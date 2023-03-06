@@ -28,6 +28,16 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * 一种特殊的哈希映射实现，可以与其他哈希映射同步有效地遍历。
+ *
+ * <p>这个哈希映射和 Java 的 “java.util.HashMap” 的区别是：
+ *
+ *   <li>不同的哈希方案。此实现使用可扩展散列，这意味着每个散列表的增长都会考虑一个较低的散列码位，并且以前在同一个桶中
+ *       的值随后将在两个相邻的桶中。
+ *   <li>这允许同时有效地遍历多个哈希映射，即使映射的大小不同。
+ *   <li>Map 提供“putIfAbsent()”和“putOrAggregate()”等函数
+ *   <li>Map 支持不移除收缩。
+ *
  * A special Hash Map implementation that can be traversed efficiently in sync with other hash maps.
  *
  * <p>The differences between this hash map and Java's "java.util.HashMap" are:

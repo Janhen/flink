@@ -34,6 +34,11 @@ import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
 
 /**
+ * 外连接转换的中间步骤。
+ *
+ * <p>要继续连接转换，请通过调用 {@link JoinOperatorSetsBase#where(int...)} 或
+ * {@link JoinOperatorSetsBase#where(KeySelector)} 选择第一个输入 {@link DataSet} 的连接键。
+ *
  * Intermediate step of an Outer Join transformation.
  *
  * <p>To continue the Join transformation, select the join key of the first input {@link DataSet} by

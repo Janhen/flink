@@ -23,6 +23,8 @@ import org.apache.flink.runtime.plugable.SerializationDelegate;
 import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 
 /**
+ * 将所有元素发送到子任务 ID=0 的下游操作员的分区程序。
+ *
  * Partitioner that sends all elements to the downstream operator with subtask ID=0.
  *
  * @param <T> Type of the elements in the Stream being partitioned

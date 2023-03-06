@@ -24,6 +24,8 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 实用程序类，用于将INT96编码的拼字时间戳解码为GMT时间戳millis。
+ *
  * Utility class for decoding INT96 encoded parquet timestamp to timestamp millis in GMT. This class
  * is equivalent of @see org.apache.hadoop.hive.ql.io.parquet.timestamp.NanoTime, which produces
  * less intermediate objects during decoding.

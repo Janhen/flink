@@ -336,6 +336,11 @@ public class SingleOutputStreamOperator<T> extends DataStream<T> {
     }
 
     /**
+     * 添加关于此操作符返回类型的类型信息提示。在Flink无法自动确定生成的函数类型的情况下，可以使用此方法。如果函数
+     * 在返回类型中使用不能从输入类型推断的泛型类型变量，就可能出现这种情况。
+     *
+     * <p>在大多数情况下，方法{@link #returns(Class)}和{@link #returns(TypeHint)}更可取。
+     *
      * Adds a type information hint about the return type of this operator. This method can be used
      * in cases where Flink cannot determine automatically what the produced type of a function is.
      * That can be the case if the function uses generic type variables in the return type that

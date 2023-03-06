@@ -32,6 +32,8 @@ import scala.Option;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 围绕 Netty 的 {@link PooledByteBufAllocator} 扩展，严格控制创建的 arenas 数量。
+ *
  * Extends around Netty's {@link PooledByteBufAllocator} with strict control over the number of
  * created arenas.
  */

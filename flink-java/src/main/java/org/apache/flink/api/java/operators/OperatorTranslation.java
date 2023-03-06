@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Used for translating data sets into corresponding operators. */
+// 用于将数据集转换为相应的运算符。
 @Internal
 public class OperatorTranslation {
 
@@ -58,6 +59,7 @@ public class OperatorTranslation {
     private <T> GenericDataSinkBase<T> translate(DataSink<T> sink) {
 
         // translate the input recursively
+        // 递归翻译输入
         Operator<T> input = translate(sink.getDataSet());
 
         // translate the sink itself and connect it to the input

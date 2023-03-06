@@ -28,6 +28,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 此类是一个元组，其中包含部署 {@link ExecutionVertex} 所需的信息。
+ *
  * This class is a tuple holding the information necessary to deploy an {@link ExecutionVertex}.
  *
  * <p>The tuple consists of:

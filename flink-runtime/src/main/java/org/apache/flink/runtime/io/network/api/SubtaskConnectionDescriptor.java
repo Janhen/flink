@@ -24,6 +24,8 @@ import org.apache.flink.runtime.event.RuntimeEvent;
 import java.util.Objects;
 
 /**
+ * 用于在同一新通道上（解）多路复用旧通道的事件。
+ *
  * An event that is used to (de)multiplex old channels over the same new channel.
  *
  * <p>During unaligned checkpoint recovery, if there is a rescaling, channels from the previous run

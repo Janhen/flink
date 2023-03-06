@@ -31,6 +31,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link PartitionedFile} 是基于排序合并的阻塞 shuffle 的持久文件类型。
+ *
  * {@link PartitionedFile} is the persistent file type of sort-merge based blocking shuffle. Each
  * {@link PartitionedFile} contains two physical files: one is the data file and the other is the
  * index file. Both the data file and the index file have multiple regions. Data belonging to the

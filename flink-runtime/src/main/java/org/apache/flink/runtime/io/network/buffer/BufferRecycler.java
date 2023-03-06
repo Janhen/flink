@@ -21,7 +21,7 @@ package org.apache.flink.runtime.io.network.buffer;
 import org.apache.flink.core.memory.MemorySegment;
 
 /** Interface for recycling {@link MemorySegment}s. */
-// 接口回收{@link MemorySegment}。
+// 接口回收 {@link MemorySegment}。
 public interface BufferRecycler {
 
     /**

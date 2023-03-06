@@ -164,7 +164,7 @@ public final class KeySelectorUtil {
     // ------------------------------------------------------------------------
 
     /**
-     * 键选择器，用于通过TypeComparator选择键字段
+     * 键选择器，用于通过 TypeComparator 选择键字段
      *
      * A key selector for selecting key fields via a TypeComparator.
      *

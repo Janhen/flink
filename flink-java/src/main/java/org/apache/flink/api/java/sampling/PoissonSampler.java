@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
+ * 基于泊松分布的采样器实现。在使用分数和替换对元素进行采样时，每个元素的选定数量遵循给定的泊松分布。
+ *
  * A sampler implementation based on the Poisson Distribution. While sampling elements with fraction
  * and replacement, the selected number of each element follows a given poisson distribution.
  *

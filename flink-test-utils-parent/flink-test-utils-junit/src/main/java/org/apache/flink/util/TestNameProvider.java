@@ -24,6 +24,8 @@ import org.junit.runners.model.Statement;
 import javax.annotation.Nullable;
 
 /**
+ * 为每个线程提供当前测试名称的规则。目前，测试名称可用于扩展{@link TestLogger}的所有测试。
+ *
  * A rule that provides the current test name per thread. Currently, the test name is available for
  * all tests that extend {@link TestLogger}.
  */

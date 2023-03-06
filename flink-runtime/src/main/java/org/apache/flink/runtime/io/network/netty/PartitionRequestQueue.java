@@ -46,6 +46,8 @@ import java.util.function.Consumer;
 import static org.apache.flink.runtime.io.network.netty.NettyMessage.BufferResponse;
 
 /**
+ * 分区队列的 nonEmptyReader，它在写入和刷新 {@link Buffer} 实例之前侦听通道可写性更改事件。
+ *
  * A nonEmptyReader of partition queues, which listens for channel writability changed events before
  * writing and flushing {@link Buffer} instances.
  */
@@ -284,6 +286,7 @@ class PartitionRequestQueue extends ChannelInboundHandlerAdapter {
     }
 
     private void handleException(Channel channel, Throwable cause) throws IOException {
+        // J: 使用分区时遇到错误
         LOG.error("Encountered error while consuming partitions", cause);
 
         fatalError = true;
@@ -296,6 +299,7 @@ class PartitionRequestQueue extends ChannelInboundHandlerAdapter {
     }
 
     private void releaseAllResources() throws IOException {
+        // 注意：这只会由一个线程执行：Netty IO 线程！
         // note: this is only ever executed by one thread: the Netty IO thread!
         for (NetworkSequenceViewReader reader : allReaders.values()) {
             releaseViewReader(reader);

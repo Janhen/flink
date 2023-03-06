@@ -28,6 +28,8 @@ import org.apache.flink.util.InstantiationUtil;
 import java.io.IOException;
 
 /**
+ * 使用用户定义的分区器功能在键上选择通道的分区器。
+ *
  * Partitioner that selects the channel with a user defined partitioner function on a key.
  *
  * @param <K> Type of the key
