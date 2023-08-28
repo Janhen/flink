@@ -58,6 +58,7 @@ public class ParquetSchemaConverter {
         switch (type.getTypeRoot()) {
             case CHAR:
             case VARCHAR:
+                // J: BINARY ...
                 return Types.primitive(PrimitiveType.PrimitiveTypeName.BINARY, repetition)
                         .as(OriginalType.UTF8)
                         .named(name);

@@ -56,7 +56,7 @@ under the License.
 		</dependency>
 
 		<!-- Flink-avro -->
-
+		<!-- J: avro depency ... -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-avro</artifactId>

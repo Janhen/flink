@@ -2257,6 +2257,7 @@ public class StreamExecutionEnvironment {
      * @return The execution environment of the context in which the program is executed.
      */
     public static StreamExecutionEnvironment getExecutionEnvironment(Configuration configuration) {
+        // J: 获取 resolve 工厂
         return Utils.resolveFactory(threadLocalContextEnvironmentFactory, contextEnvironmentFactory)
                 .map(factory -> factory.createExecutionEnvironment(configuration))
                 .orElseGet(() -> StreamExecutionEnvironment.createLocalEnvironment(configuration));
@@ -2304,6 +2305,8 @@ public class StreamExecutionEnvironment {
     }
 
     /**
+     * 创建一个{@link LocalStreamEnvironment}。本地执行环境将在与创建环境相同的JVM中以多线程方式运行程序。
+     *
      * Creates a {@link LocalStreamEnvironment}. The local execution environment will run the
      * program in a multi-threaded fashion in the same JVM as the environment was created in.
      *
@@ -2311,6 +2314,7 @@ public class StreamExecutionEnvironment {
      * @return A local execution environment with the specified parallelism.
      */
     public static LocalStreamEnvironment createLocalEnvironment(Configuration configuration) {
+        // J: 按照 flink 配置初始化
         if (configuration.getOptional(CoreOptions.DEFAULT_PARALLELISM).isPresent()) {
             return new LocalStreamEnvironment(configuration);
         } else {

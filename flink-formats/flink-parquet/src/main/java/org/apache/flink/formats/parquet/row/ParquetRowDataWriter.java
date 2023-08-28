@@ -85,6 +85,7 @@ public class ParquetRowDataWriter {
             switch (t.getTypeRoot()) {
                 case CHAR:
                 case VARCHAR:
+                    // J: String 处理
                     return new StringWriter();
                 case BOOLEAN:
                     return new BooleanWriter();
@@ -258,6 +259,7 @@ public class ParquetRowDataWriter {
         }
 
         private void writeString(StringData value) {
+            // J: Add binary, 字节数组
             recordConsumer.addBinary(Binary.fromReusedByteArray(value.toBytes()));
         }
     }

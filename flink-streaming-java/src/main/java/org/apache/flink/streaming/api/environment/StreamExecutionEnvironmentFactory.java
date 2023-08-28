@@ -26,6 +26,8 @@ import org.apache.flink.configuration.Configuration;
 public interface StreamExecutionEnvironmentFactory {
 
     /**
+     * 从这个工厂创建一个StreamExecutionEnvironment。
+     *
      * Creates a StreamExecutionEnvironment from this factory.
      *
      * @return A StreamExecutionEnvironment.
