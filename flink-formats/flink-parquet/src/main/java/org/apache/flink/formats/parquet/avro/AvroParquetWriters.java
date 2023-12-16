@@ -35,6 +35,8 @@ import org.apache.parquet.io.OutputFile;
 import java.io.IOException;
 
 /**
+ * 方便的生成器为不同的Avro类型创建{@link ParquetWriterFactory}实例。
+ *
  * Convenience builder to create {@link ParquetWriterFactory} instances for the different Avro
  * types.
  */

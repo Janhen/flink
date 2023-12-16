@@ -29,6 +29,7 @@ import org.apache.parquet.io.OutputFile;
 import org.apache.parquet.proto.ProtoWriteSupport;
 
 /** Convenience builder for creating {@link ParquetWriterFactory} instances for Protobuf classes. */
+// 为Protobuf类创建{@link ParquetWriterFactory}实例的方便构建器
 public class ParquetProtoWriters {
 
     /**

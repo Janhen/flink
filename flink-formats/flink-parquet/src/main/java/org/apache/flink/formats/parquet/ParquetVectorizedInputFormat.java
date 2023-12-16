@@ -80,6 +80,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
     private static final long serialVersionUID = 1L;
 
     private final SerializableConfiguration hadoopConfig;
+    // J: 保护的属性名??
     private final String[] projectedFields;
     private final LogicalType[] projectedTypes;
     private final ColumnBatchFactory<SplitT> batchFactory;
@@ -119,6 +120,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
                 new ParquetInputFile(fs.open(filePath), fs.getFileStatus(filePath).getLen());
 
         // Notice: This filter is RowGroups level, not individual records.
+        // 注意: 此过滤器是 RowGroups 级别的，而不是单个记录
         FilterCompat.Filter filter = getFilter(hadoopConfig.conf());
         ParquetReadOptions parquetReadOptions =
                 ParquetReadOptions.builder()
@@ -128,6 +130,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
         ParquetFileReader parquetFileReader = ParquetFileReader.open(inputFile, parquetReadOptions);
 
         MessageType fileSchema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+        // 修剪不必要的列，我们应该在运行任何过滤(例如获得过滤的记录计数)之前设置投影模式，因为投影会影响过滤
         // Pruning unnecessary column, we should set the projection schema before running any
         // filtering (e.g. getting filtered record count) because projection impacts filtering
         MessageType requestedSchema = clipParquetSchema(fileSchema);
@@ -167,6 +170,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
     }
 
     /** Clips `parquetSchema` according to `fieldNames`. */
+    // 根据' fieldNames '剪辑' parquetSchema '。
     private MessageType clipParquetSchema(GroupType parquetSchema) {
         Type[] types = new Type[projectedFields.length];
         if (isCaseSensitive) {
@@ -233,6 +237,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
         for (int i = 0; i < requestedSchema.getFieldCount(); ++i) {
             Type t = requestedSchema.getFields().get(i);
             if (!t.isPrimitive() || t.isRepetition(Type.Repetition.REPEATED)) {
+                // 不支持复杂类型
                 throw new UnsupportedOperationException("Complex types not supported.");
             }
 
@@ -240,10 +245,12 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
             if (fileSchema.containsPath(colPath)) {
                 ColumnDescriptor fd = fileSchema.getColumnDescription(colPath);
                 if (!fd.equals(requestedSchema.getColumns().get(i))) {
+                    // 不支持模式演化
                     throw new UnsupportedOperationException("Schema evolution not supported.");
                 }
             } else {
                 if (requestedSchema.getColumns().get(i).getMaxDefinitionLevel() == 0) {
+                    // 数据中缺少列，但所需的数据不可为空。此文件无效。
                     // Column is missing in data but the required data is non-nullable. This file is
                     // invalid.
                     throw new IOException(
@@ -288,6 +295,8 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
     }
 
     /**
+     * 从可写向量创建可读向量。特别是对于十进制，请参见{@link ParquetDecimalVector}。
+     *
      * Create readable vectors from writable vectors. Especially for decimal, see {@link
      * ParquetDecimalVector}.
      */
@@ -309,6 +318,8 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
         private final MessageType requestedSchema;
 
         /**
+         * 此RecordReader最终将读取的行总数。所有行群的行和。
+         *
          * The total number of rows this RecordReader will eventually read. The sum of the rows of
          * all the row groups.
          */
@@ -320,9 +331,12 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
         private long rowsReturned;
 
         /** The number of rows that have been reading, including the current in flight row group. */
+        // 已读取的行数，包括当前 flight 中的行组
         private long totalCountLoadedSoFar;
 
         /**
+         * 对于每个请求列，阅读器读取此列。如果该列在文件中缺失，则为NULL，在这种情况下，我们将用NULL填充属性。
+         *
          * For each request column, the reader to read this column. This is NULL if this column is
          * missing from the file, in which case we populate the attribute with NULL.
          */
@@ -365,6 +379,7 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
         }
 
         /** Advances to the next batch of rows. Returns false if there are no more. */
+        // 前进到下一批行。如果没有，返回false。
         private boolean nextBatch(ParquetReaderBatch<T> batch) throws IOException {
             for (WritableColumnVector v : batch.writableVectors) {
                 v.reset();
@@ -473,6 +488,8 @@ public abstract class ParquetVectorizedInputFormat<T, SplitT extends FileSourceS
             Pool.Recycler<ParquetReaderBatch<T>> recycler);
 
     /**
+     * 提供读写能力的批阅读器。从{@link #convertAndGetIterator(long)}提供{@link RecordIterator}读取接口。
+     *
      * Reader batch that provides writing and reading capabilities. Provides {@link RecordIterator}
      * reading interface from {@link #convertAndGetIterator(long)}.
      */

@@ -33,6 +33,7 @@ public class SourceReaderOptions {
                     .defaultValue(30000L)
                     .withDescription("The timeout when closing the source reader");
 
+    // 源读取器中元素队列的容量
     public static final ConfigOption<Integer> ELEMENT_QUEUE_CAPACITY =
             ConfigOptions.key("source.reader.element.queue.capacity")
                     .intType()

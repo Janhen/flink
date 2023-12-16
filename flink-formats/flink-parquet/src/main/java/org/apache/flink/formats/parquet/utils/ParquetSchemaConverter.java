@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Schema converter converts Parquet schema to and from Flink internal types. */
+// schema 转换器将Parquet架构与Flink内部类型之间进行转换
 public class ParquetSchemaConverter {
 
     static final String MAP_REPEATED_NAME = "key_value";
@@ -109,6 +110,7 @@ public class ParquetSchemaConverter {
                         .as(OriginalType.TIME_MILLIS)
                         .named(name);
             case TIMESTAMP_WITHOUT_TIME_ZONE:
+            // J: INT96 类型对应
             case TIMESTAMP_WITH_LOCAL_TIME_ZONE:
                 return Types.primitive(PrimitiveType.PrimitiveTypeName.INT96, repetition)
                         .named(name);

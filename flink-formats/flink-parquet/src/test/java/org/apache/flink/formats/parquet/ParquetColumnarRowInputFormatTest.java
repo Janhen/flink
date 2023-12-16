@@ -127,6 +127,7 @@ public class ParquetColumnarRowInputFormatTest {
                             .as(OriginalType.DECIMAL)
                             .named("f14"));
 
+    // J: 临时安全...
     @ClassRule public static final TemporaryFolder TEMPORARY_FOLDER = new TemporaryFolder();
 
     private final int rowGroupSize;
@@ -275,6 +276,7 @@ public class ParquetColumnarRowInputFormatTest {
                 new LogicalType[] {
                     new DoubleType(), new TinyIntType(), new IntType(), new VarCharType()
                 };
+        // J: Columnar Row...
         ParquetColumnarRowInputFormat<FileSourceSplit> format =
                 new ParquetColumnarRowInputFormat<>(
                         new Configuration(),

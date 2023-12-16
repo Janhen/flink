@@ -47,6 +47,7 @@ under the License.
 
 		<!-- Table ecosystem and filesystem connector -->
 
+		<!-- 表生态系统和文件系统连接器 -->
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-table-common</artifactId>

@@ -41,6 +41,9 @@ import java.util.stream.Collectors;
 import static org.apache.flink.formats.parquet.vector.ParquetSplitReaderUtil.createVectorFromConstant;
 
 /**
+ * {@link ParquetVectorizedInputFormat}提供{@link RowData}迭代器。使用{@link ColumnarRowData}
+ * 提供列批处理的行视图。
+ *
  * A {@link ParquetVectorizedInputFormat} to provide {@link RowData} iterator. Using {@link
  * ColumnarRowData} to provide a row view of column batch.
  */
@@ -97,6 +100,9 @@ public class ParquetColumnarRowInputFormat<SplitT extends FileSourceSplit>
 
     @Override
     protected int numBatchesToCirculate(org.apache.flink.configuration.Configuration config) {
+        // 在VectorizedColumnBatch中，字典将被惰性反序列化。
+        // 如果同时有多个批处理，则可能存在线程安全问题，因为字典的反序列化依赖于一些内部结构。我们需要设置
+        // numBatchesToCirculate 为 1。
         // In a VectorizedColumnBatch, the dictionary will be lazied deserialized.
         // If there are multiple batches at the same time, there may be thread safety problems,
         // because the deserialization of the dictionary depends on some internal structures.

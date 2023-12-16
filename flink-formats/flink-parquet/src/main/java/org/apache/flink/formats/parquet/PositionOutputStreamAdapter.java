@@ -28,6 +28,7 @@ import java.io.IOException;
 import static org.apache.parquet.Preconditions.checkNotNull;
 
 /** An adapter to turn Flink's {@link FSDataOutputStream} into a {@link PositionOutputStream}. */
+// 将Flink的{@link FSDataOutputStream}转换为{@link PositionOutputStream}的适配器
 @Internal
 class PositionOutputStreamAdapter extends PositionOutputStream {
 

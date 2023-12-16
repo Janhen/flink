@@ -35,6 +35,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@ linksourcesplit}，表示一个文件或文件的一个区域。
+*
  * A {@link SourceSplit} that represents a file, or a region of a file.
  *
  * <p>The split has an offset and an end, which defines the region of the file represented by the

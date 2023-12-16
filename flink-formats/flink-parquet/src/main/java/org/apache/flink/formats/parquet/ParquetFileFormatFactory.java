@@ -53,6 +53,8 @@ public class ParquetFileFormatFactory implements BulkReaderFormatFactory, BulkWr
 
     public static final String IDENTIFIER = "parquet";
 
+    // 使用UTC时区或本地时区在epoch时间和LocalDateTime之间进行转换。Hive0.x/1.x/2.x 使用本地时区。但是
+    // Hive 3.x 使用 UTC 时区
     public static final ConfigOption<Boolean> UTC_TIMEZONE =
             key("utc-timezone")
                     .booleanType()

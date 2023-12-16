@@ -29,6 +29,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * Parquet的{@link OutputFile}接口的实现，它与Flink {@link FSDataOutputStream}相对应。
+ *
+ * <p>因为实现针对一个打开的流，而不是针对一个文件打开自己的流，所以实例只能创建一个流。
+ *
  * An implementation of Parquet's {@link OutputFile} interface that goes against a Flink {@link
  * FSDataOutputStream}.
  *

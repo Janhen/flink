@@ -26,6 +26,12 @@ import javax.annotation.Nullable;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
+ * 一个用于缓存和回收重量级对象的池，以减少对象分配。
+ *
+ * <p>这个池可以在{@link BulkFormat.Reader}，当返回的对象是重量级的并且为了效率需要被重用时。因为读取发
+ * 生在IO线程中，而记录处理发生在Flink的主处理线程中，所以这些对象在返回后不能立即重用。一旦它们被回收回游泳池，
+ * 它们就可以被重复使用。
+ *
  * A pool to cache and recycle heavyweight objects, to reduce object allocation.
  *
  * <p>This pool can be used in the {@link BulkFormat.Reader}, when the returned objects are
@@ -96,6 +102,8 @@ public class Pool<T> {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 回收器将对象放入与回收器关联的池中。
+     *
      * A Recycler puts objects into the pool that the recycler is associated with.
      *
      * @param <T> The pooled and recycled type.

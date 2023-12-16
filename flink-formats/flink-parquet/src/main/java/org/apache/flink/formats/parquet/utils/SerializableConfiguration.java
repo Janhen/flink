@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /** Wrap {@link Configuration} to a serializable class. */
+// 包装{@link Configuration}到一个可序列化的类
 public class SerializableConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;

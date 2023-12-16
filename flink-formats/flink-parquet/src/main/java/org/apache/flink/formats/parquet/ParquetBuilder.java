@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 从Parquet {@link OutputFile}创建{@link ParquetWriter}的构建器。
+ *
  * A builder to create a {@link ParquetWriter} from a Parquet {@link OutputFile}.
  *
  * @param <T> The type of elements written by the writer.

@@ -27,6 +27,8 @@ import org.apache.parquet.io.SeekableInputStream;
 import java.io.IOException;
 
 /**
+ * Parquet {@link InputFile}实现，{@link #newStream()}调用将委托给Flink {@link FSDataInputStream}。
+ *
  * Parquet {@link InputFile} implementation, {@link #newStream()} call will delegate to Flink {@link
  * FSDataInputStream}.
  */

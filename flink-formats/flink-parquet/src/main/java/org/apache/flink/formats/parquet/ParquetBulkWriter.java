@@ -28,6 +28,8 @@ import java.io.IOException;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个简单的{@link BulkWriter}实现，封装了一个{@link ParquetWriter}。
+ *
  * A simple {@link BulkWriter} implementation that wraps a {@link ParquetWriter}.
  *
  * @param <T> The type of records written.

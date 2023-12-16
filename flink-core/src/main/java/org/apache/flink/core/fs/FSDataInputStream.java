@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * 用于向{@link FileSystem}上的文件输入数据流的接口。
+ *
  * Interface for a data input stream to a file on a {@link FileSystem}.
  *
  * <p>This extends the {@link java.io.InputStream} with methods for accessing the stream's {@link

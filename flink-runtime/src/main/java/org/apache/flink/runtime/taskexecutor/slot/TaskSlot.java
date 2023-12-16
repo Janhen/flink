@@ -39,6 +39,9 @@ import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 /**
+ * 属于同一槽位的多个{@link TaskSlotPayload 任务}的容器。{@link TaskSlot}可能处于以下状态之一:
+ *
+ * <li>Free</li>
  * Container for multiple {@link TaskSlotPayload tasks} belonging to the same slot. A {@link
  * TaskSlot} can be in one of the following states:
  *

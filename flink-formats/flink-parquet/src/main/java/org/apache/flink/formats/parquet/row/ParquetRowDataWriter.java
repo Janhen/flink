@@ -52,6 +52,7 @@ import static org.apache.flink.formats.parquet.vector.reader.TimestampColumnRead
 import static org.apache.flink.formats.parquet.vector.reader.TimestampColumnReader.NANOS_PER_SECOND;
 
 /** Writes a record to the Parquet API with the expected schema in order to be written to a file. */
+// 使用预期的模式将记录写入Parquet API，以便写入文件
 public class ParquetRowDataWriter {
 
     private final RowWriter rowWriter;
@@ -299,6 +300,8 @@ public class ParquetRowDataWriter {
     }
 
     /**
+     * 我们现在只支持INT96字节，julianDay(4) + nanosOfDay(8)。
+     *
      * We only support INT96 bytes now, julianDay(4) + nanosOfDay(8). See
      * https://github.com/apache/parquet-format/blob/master/LogicalTypes.md#timestamp
      * TIMESTAMP_MILLIS and TIMESTAMP_MICROS are the deprecated ConvertedType.
@@ -327,6 +330,7 @@ public class ParquetRowDataWriter {
     }
 
     /** It writes a map field to parquet, both key and value are nullable. */
+    // 它将映射字段写入parquet，键和值都可以为空
     private class MapWriter implements FieldWriter {
 
         private String repeatedGroupName;

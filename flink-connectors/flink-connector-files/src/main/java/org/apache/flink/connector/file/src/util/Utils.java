@@ -68,6 +68,8 @@ public final class Utils {
     }
 
     /**
+     * 对{@link BulkFormat.Reader}中每个剩余的元素执行给定的操作。直到处理完所有元素或该操作抛出异常。
+     *
      * Performs the given action for each remaining element in {@link BulkFormat.Reader} until all
      * elements have been processed or the action throws an exception.
      */
