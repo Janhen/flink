@@ -31,6 +31,7 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /** A {@code KryoRegistration} resembles a registered class and its serializer in Kryo. */
+// {@code kryoreregistration}类似于在Kryo中注册的类及其序列化器。
 @Internal
 public class KryoRegistration implements Serializable {
 

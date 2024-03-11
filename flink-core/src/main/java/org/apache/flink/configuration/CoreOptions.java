@@ -37,6 +37,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 @ConfigGroups(groups = {@ConfigGroup(name = "Environment", keyPrefix = "env")})
 public class CoreOptions {
 
+    // parent-first 加载
     @Internal
     public static final String[] PARENT_FIRST_LOGGING_PATTERNS =
             new String[] {
@@ -52,6 +53,8 @@ public class CoreOptions {
     // ------------------------------------------------------------------------
 
     /**
+     * 定义从用户代码加载类时的类解析策略，意味着是否首先检查用户代码jar ({@code "child-first"})或应用程序类路径({@code "parent-first"})
+     *
      * Defines the class resolution strategy when loading classes from user code, meaning whether to
      * first check the user code jar ({@code "child-first"}) or the application classpath ({@code
      * "parent-first"})
@@ -74,6 +77,8 @@ public class CoreOptions {
                                     + " jars can include and load different dependencies than Flink uses (transitively).");
 
     /**
+     * 使用父类加载器的首选项加载的类的名称空间模式，即应用程序类路径，而不是任何用户代码jar文件。
+     *
      * The namespace patterns for classes that are loaded with a preference from the parent
      * classloader, meaning the application class path, rather than any user code jar file. This
      * option only has an effect when {@link #CLASSLOADER_RESOLVE_ORDER} is set to {@code
@@ -224,6 +229,7 @@ public class CoreOptions {
     //  process parameters
     // ------------------------------------------------------------------------
 
+    // 启动所有Flink进程的JVM的Java选项。
     public static final ConfigOption<String> FLINK_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts")
                     .stringType()
@@ -234,6 +240,7 @@ public class CoreOptions {
                                             "Java options to start the JVM of all Flink processes with.")
                                     .build());
 
+    // 用于启动JobManager的JVM的Java选项。
     public static final ConfigOption<String> FLINK_JM_JVM_OPTIONS =
             ConfigOptions.key("env.java.opts.jobmanager")
                     .stringType()
@@ -272,6 +279,8 @@ public class CoreOptions {
                                     .build());
 
     /**
+     * 此选项仅用于生成文档，仅在shell脚本中评估。
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -307,6 +316,8 @@ public class CoreOptions {
                     .withDescription("The maximum number of old log files to keep.");
 
     /**
+     * 此选项仅用于生成文档，仅在shell脚本中评估。
+     *
      * This options is here only for documentation generation, it is only evaluated in the shell
      * scripts.
      */
@@ -393,6 +404,7 @@ public class CoreOptions {
     // ------------------------------------------------------------------------
 
     /** The default filesystem scheme, used for paths that do not declare a scheme explicitly. */
+    // 默认的文件系统模式，用于没有显式声明模式的路径
     @Documentation.Section(Documentation.Sections.COMMON_MISCELLANEOUS)
     public static final ConfigOption<String> DEFAULT_FILESYSTEM_SCHEME =
             ConfigOptions.key("fs.default-scheme")

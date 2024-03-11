@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /**
+ * 用于保存单个输入操作符的信息，如inputoutput TypeInformation
+ *
  * A class for holding information about a single input operator, such as input/output
  * TypeInformation.
  *

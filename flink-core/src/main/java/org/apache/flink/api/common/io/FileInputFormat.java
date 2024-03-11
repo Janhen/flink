@@ -52,6 +52,11 @@ import java.util.Set;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link RichInputFormat}从文件中读取的基类。对于特定的输入类型，需要实现{@link #nextRecord(Object)}和
+ * {@link #reachedEnd()}方法。另外，可以重写{@link #open(FileInputSplit)}和{@link #close()}来改变生命周期行为。
+ *
+ * <p> {@link #open(FileInputSplit)}方法完成后，文件输入数据可以从{@link #stream}字段中获得。
+ *
  * The base class for {@link RichInputFormat}s that read from files. For specific input types the
  * {@link #nextRecord(Object)} and {@link #reachedEnd()} methods need to be implemented.
  * Additionally, one may override {@link #open(FileInputSplit)} and {@link #close()} to change the

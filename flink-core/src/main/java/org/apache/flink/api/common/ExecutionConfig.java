@@ -51,6 +51,11 @@ import static org.apache.flink.configuration.description.TextElement.text;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 用于定义程序执行行为的配置。它允许定义(除其他选项外)以下设置:
+ *
+ * <li>配置允许注册类型和序列化器，以提高处理<i>泛型类型<i>和<i> pojo <i>的效率。通常只有当函数不仅返回其签名中声明
+ * 的类型，而且还返回这些类型的子类时才需要这样做。
+ *
  * A config to define the behavior of the program execution. It allows to define (among other
  * options) the following settings:
  *
@@ -132,6 +137,8 @@ public class ExecutionConfig implements Serializable, Archiveable<ArchivedExecut
 
     // ---------- statebackend related configurations ------------------------------
     /**
+     * 将延迟跟踪标记从源发送到接收的间隔(以毫秒为单位)。
+     *
      * Interval in milliseconds for sending latency tracking marks from the sources to the sinks.
      */
     private long latencyTrackingInterval = MetricOptions.LATENCY_INTERVAL.defaultValue();

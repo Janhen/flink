@@ -37,6 +37,7 @@ public abstract class AbstractRichFunction implements RichFunction, Serializable
     //  Runtime context access
     // --------------------------------------------------------------------------------------------
 
+    // transient
     private transient RuntimeContext runtimeContext;
 
     @Override

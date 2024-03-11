@@ -26,6 +26,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * 带有状态{@link Sink}的{@link Sink}。
+ *
+ * <p> {@link StatefulSink}需要是可序列化的。所有的配置都应该被急切地验证。各自的接收写入器是临时的，只能在任务
+ * 管理器上的子任务中创建。
+ *
  * A {@link Sink} with a stateful {@link SinkWriter}.
  *
  * <p>The {@link StatefulSink} needs to be serializable. All configuration should be validated

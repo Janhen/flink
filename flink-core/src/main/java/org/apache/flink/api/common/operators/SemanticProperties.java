@@ -25,6 +25,7 @@ import org.apache.flink.api.common.operators.util.FieldSet;
 import java.io.Serializable;
 
 /** Container for the semantic properties associated to an operator. */
+// 容器，用于存放与操作符关联的语义属性。
 @Internal
 public interface SemanticProperties extends Serializable {
 

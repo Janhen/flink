@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.IOException;
 
 /**
+ * 用于分区单值状态的{@link State}接口。可以检索或更新该值。
+ *
  * {@link State} interface for partitioned single-value state. The value can be retrieved or
  * updated.
  *

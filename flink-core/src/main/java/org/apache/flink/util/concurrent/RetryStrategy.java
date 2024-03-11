@@ -23,11 +23,14 @@ import java.time.Duration;
 /** Interface that encapsulates retry logic. An instances should be immutable. */
 public interface RetryStrategy {
     /** @return the number of remaining retries */
+    // 剩余重试次数
     int getNumRemainingRetries();
 
     /** @return the current delay if we need to retry */
+    // 返回当前延迟，如果我们需要重试
     Duration getRetryDelay();
 
     /** @return the next retry strategy to current delay if we need to retry */
+    // 如果需要重试，将下一个重试策略返回到当前延迟
     RetryStrategy getNextRetryStrategy();
 }

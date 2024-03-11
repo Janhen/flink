@@ -36,6 +36,8 @@ public class JobManagerOptions {
     public static final MemorySize MIN_JVM_HEAP_SIZE = MemorySize.ofMebiBytes(128);
 
     /**
+     * 配置参数，定义要连接的网络地址，以便与作业管理器通信。
+     *
      * The config parameter defining the network address to connect to for communication with the
      * job manager.
      *

@@ -44,7 +44,8 @@ public class ExecutionOptions {
                     .withDescription(
                             "Runtime execution mode of DataStream programs. Among other things, "
                                     + "this controls task scheduling, network shuffle behavior, and time semantics.");
-
+    //
+    // shuffle 模式
     public static final ConfigOption<BatchShuffleMode> BATCH_SHUFFLE_MODE =
             ConfigOptions.key("execution.batch-shuffle-mode")
                     .enumType(BatchShuffleMode.class)

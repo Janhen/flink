@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 分裂枚举器的接口，负责以下工作:
+ * 1. 发现分割{@link SourceReader} read。
+ * 2. 将拆分分配给源 reader。
+ *
  * A interface of a split enumerator responsible for the followings: 1. discover the splits for the
  * {@link SourceReader} to read. 2. assign the splits to the source reader.
  */

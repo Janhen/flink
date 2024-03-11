@@ -32,12 +32,16 @@ import org.apache.flink.api.common.ExecutionConfig;
 public interface WatermarkGenerator<T> {
 
     /**
+     * 为每个事件调用，允许水印生成器检查并记住事件时间戳，或基于事件本身发出水印。
+     *
      * Called for every event, allows the watermark generator to examine and remember the event
      * timestamps, or to emit a watermark based on the event itself.
      */
     void onEvent(T event, long eventTimestamp, WatermarkOutput output);
 
     /**
+     * 周期性地调用，可能会发出新的水印，也可能不会。
+     *
      * Called periodically, and might emit a new watermark, or not.
      *
      * <p>The interval in which this method is called and Watermarks are generated depends on {@link

@@ -23,6 +23,8 @@ import org.apache.flink.annotation.PublicEvolving;
 import javax.annotation.Nullable;
 
 /**
+ * 一个由{@link FileSystem}实现的接口，熵注入。
+ *
  * An interface to be implemented by a {@link FileSystem} that is aware of entropy injection.
  *
  * <p>Entropy injection is a technique to spread files/objects across more parallel shards of a

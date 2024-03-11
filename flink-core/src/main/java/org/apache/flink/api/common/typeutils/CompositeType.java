@@ -31,6 +31,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * Tuple和Pojo类型的基本类型信息类
+ *
  * Base type information class for Tuple and Pojo types
  *
  * <p>The class is taking care of serialization and comparators for Tuples as well.

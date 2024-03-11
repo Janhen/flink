@@ -21,6 +21,8 @@ package org.apache.flink.core.memory;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 非同步流，类似于Java的ByteArrayInputStream，也公开当前位置。
+ *
  * Un-synchronized stream similar to Java's ByteArrayInputStream that also exposes the current
  * position.
  */

@@ -95,6 +95,9 @@ public interface SplitEnumeratorContext<SplitT extends SourceSplit> {
     void signalNoMoreSplits(int subtask);
 
     /**
+     * 调用可调用对象并将返回值移交给将由源协调器执行的处理程序。当这个方法被多次调用时，<code>Callable<code> s
+     * 可以并发地在线程池中执行。
+     *
      * Invoke the callable and handover the return value to the handler which will be executed by
      * the source coordinator. When this method is invoked multiple times, The <code>Callable</code>
      * s may be executed in a thread pool concurrently.
@@ -135,6 +138,8 @@ public interface SplitEnumeratorContext<SplitT extends SourceSplit> {
             long periodMillis);
 
     /**
+     * 在源协调器线程中调用给定的可运行程序。
+     *
      * Invoke the given runnable in the source coordinator thread.
      *
      * <p>This can be useful when the enumerator needs to execute some action (like assignSplits)

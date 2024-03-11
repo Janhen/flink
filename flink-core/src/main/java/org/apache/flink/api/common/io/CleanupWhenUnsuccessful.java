@@ -21,6 +21,8 @@ package org.apache.flink.api.common.io;
 import org.apache.flink.annotation.Public;
 
 /**
+ * {@link OutputFormat}可以实现此接口，以便在执行失败时运行清理钩子。
+ *
  * {@link OutputFormat}s may implement this interface to run a cleanup hook when the execution is
  * not successful.
  */

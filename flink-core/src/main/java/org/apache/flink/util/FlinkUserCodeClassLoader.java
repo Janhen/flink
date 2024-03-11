@@ -23,6 +23,8 @@ import java.net.URLClassLoader;
 import java.util.function.Consumer;
 
 /**
+ * 如果在{@link #loadClass(String, boolean)}中发生异常，这个类加载器接受一个自定义处理程序。
+ *
  * This class loader accepts a custom handler if an exception occurs in {@link #loadClass(String,
  * boolean)}.
  */

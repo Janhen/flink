@@ -43,7 +43,7 @@ public interface PipelineExecutor {
      * @return a {@link CompletableFuture} with the {@link JobClient} corresponding to the pipeline.
      */
     CompletableFuture<JobClient> execute(
-            final Pipeline pipeline,
+            final Pipeline pipeline,  //
             final Configuration configuration,
             final ClassLoader userCodeClassloader)
             throws Exception;

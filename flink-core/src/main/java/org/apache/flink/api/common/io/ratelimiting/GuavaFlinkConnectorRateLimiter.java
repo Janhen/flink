@@ -23,6 +23,8 @@ import org.apache.flink.api.common.functions.RuntimeContext;
 import org.apache.flink.shaded.guava30.com.google.common.util.concurrent.RateLimiter;
 
 /**
+ * {@link FlinkConnectorRateLimiter}的实现，它使用Guava的RateLimiter进行速率限制。
+ *
  * An implementation of {@link FlinkConnectorRateLimiter} that uses Guava's RateLimiter for rate
  * limiting.
  */
@@ -31,9 +33,11 @@ public class GuavaFlinkConnectorRateLimiter implements FlinkConnectorRateLimiter
     private static final long serialVersionUID = -3680641524643737192L;
 
     /** Rate in bytes per second for the consumer on a whole. */
+    // 总的来说，用户的速率以字节每秒为单位。
     private long globalRateBytesPerSecond;
 
     /** Rate in bytes per second per subtask of the consumer. */
+    // 消费者的每个子任务每秒的字节率。
     private long localRateBytesPerSecond;
 
     /** Runtime context. * */

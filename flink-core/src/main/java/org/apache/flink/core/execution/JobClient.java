@@ -42,6 +42,8 @@ public interface JobClient {
     CompletableFuture<Void> cancel();
 
     /**
+     * 停止Flink集群上的关联作业。
+     *
      * Stops the associated job on Flink cluster.
      *
      * <p>Stopping works only for streaming programs. Be aware, that the job might continue to run
@@ -50,6 +52,7 @@ public interface JobClient {
      *
      * @param advanceToEndOfEventTime flag indicating if the source should inject a {@code
      *     MAX_WATERMARK} in the pipeline
+     *     标志，指示源是否应该在管道中注入{@code MAX_WATERMARK}
      * @param savepointDirectory directory the savepoint should be written to
      * @return a {@link CompletableFuture} containing the path where the savepoint is located
      * @deprecated pass the format explicitly

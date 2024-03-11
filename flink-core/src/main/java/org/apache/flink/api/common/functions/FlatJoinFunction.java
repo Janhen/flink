@@ -24,6 +24,12 @@ import org.apache.flink.util.Collector;
 import java.io.Serializable;
 
 /**
+ * 连接函数的接口。join通过在指定键上连接两个数据集的元素来组合两个数据集。每个连接元素对调用这个函数。
+ *
+ * <p>连接函数的这个特殊变体支持每对连接值返回0、1或多个结果值。
+ *
+ * <p>默认情况下，连接严格遵循SQL中“内部连接”的语义。语义是“内连接”的语义，这意味着如果元素的键不包含在另一个数据集中，元素将被过滤掉。
+ *
  * Interface for Join functions. Joins combine two data sets by joining their elements on specified
  * keys. This function is called with each pair of joining elements.
  *

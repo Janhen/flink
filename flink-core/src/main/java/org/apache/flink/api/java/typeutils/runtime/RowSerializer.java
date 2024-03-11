@@ -47,6 +47,26 @@ import static org.apache.flink.api.java.typeutils.runtime.MaskUtils.writeMask;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link Row} 的序列化器。
+ *
+ * <p>它使用以下序列化格式:
+ *
+ * <pre>
+ *     |bitmask|field|field|....
+ * </pre>
+ *
+ * 位掩码作为一个报头，由{@link #ROW_KIND_OFFSET}位组成，用于编码{@link RowKind}， n位用于表示字段是否为空。
+ * 为了向后兼容，如果序列化器在遗留模式下运行，这些位可以被忽略:
+ *
+ * <pre>
+ *     bitmask with row kind:  |RK RK F1 F2 ... FN|
+ *     bitmask in legacy mode: |F1 F2 ... FN|
+ * </pre>
+ *
+ * <p>字段名是这个序列化器的可选部分。它们允许在基于名称的字段模式下使用行。但是，对基于名称的行的支持是有限的。通常，
+ * 基于名称的模式不应在状态中使用，而应仅用于运行中的数据。目前，名称不是序列化器快照或equalshashCode的一部分(类似于
+ * {@link RowTypeInfo})。
+ *
  * Serializer for {@link Row}.
  *
  * <p>It uses the following serialization format:
@@ -111,6 +131,7 @@ public final class RowSerializer extends TypeSerializer<Row> {
         this.fieldSerializers = (TypeSerializer<Object>[]) checkNotNull(fieldSerializers);
         this.arity = fieldSerializers.length;
         this.positionByName = positionByName;
+        //
         this.mask = new boolean[rowKindOffset + fieldSerializers.length];
         this.reuseRowPositionBased = new Row(fieldSerializers.length);
     }

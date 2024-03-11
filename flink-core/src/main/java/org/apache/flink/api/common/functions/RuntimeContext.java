@@ -46,6 +46,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * RuntimeContext包含有关执行函数的上下文的信息。函数的每个并行实例都有一个上下文，通过这个上下文，它可以访问静态
+ * 上下文信息(比如当前并行度)和其他结构，比如累加器和广播变量。
+ *
  * A RuntimeContext contains information about the context in which functions are executed. Each
  * parallel instance of the function will have a context through which it can access static
  * contextual information (such as the current parallelism) and other constructs like accumulators
@@ -86,6 +89,8 @@ public interface RuntimeContext {
     int getNumberOfParallelSubtasks();
 
     /**
+     * 获取并行任务运行时的最大并行度数。
+     *
      * Gets the number of max-parallelism with which the parallel task runs.
      *
      * @return The max-parallelism with which the parallel task runs.
@@ -94,6 +99,8 @@ public interface RuntimeContext {
     int getMaxNumberOfParallelSubtasks();
 
     /**
+     * 获取此并行子任务的编号。编号从0开始，一直到parallel_1 (parallel_1由{@link #getNumberOfParallelSubtasks()}返回)。
+     *
      * Gets the number of this parallel subtask. The numbering starts from 0 and goes up to
      * parallelism-1 (parallelism as returned by {@link #getNumberOfParallelSubtasks()}).
      *
@@ -102,6 +109,8 @@ public interface RuntimeContext {
     int getIndexOfThisSubtask();
 
     /**
+     * 获取此并行子任务的尝试次数。第一次尝试编号为0。
+     *
      * Gets the attempt number of this parallel subtask. First attempt is numbered 0.
      *
      * @return Attempt number of the subtask.
@@ -132,6 +141,8 @@ public interface RuntimeContext {
     ClassLoader getUserCodeClassLoader();
 
     /**
+     * 为用户代码类装入器释放注册一个自定义钩子。
+     *
      * Registers a custom hook for the user code class loader release.
      *
      * <p>The release hook is executed just before the user code class loader is being released.
@@ -181,6 +192,8 @@ public interface RuntimeContext {
     Histogram getHistogram(String name);
 
     /**
+     * 通过resourceName获取特定的外部资源信息。
+     *
      * Get the specific external resource information by the resourceName.
      *
      * @param resourceName of the required external resource
@@ -192,6 +205,8 @@ public interface RuntimeContext {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 测试是否存在由给定{@代码名}标识的广播变量。
+     *
      * Tests for the existence of the broadcast variable identified by the given {@code name}.
      *
      * @param name The name under which the broadcast variable is registered;
@@ -242,6 +257,8 @@ public interface RuntimeContext {
     // ------------------------------------------------------------------------
 
     /**
+     * 获取系统键值状态的句柄。只有在keyyedstream上执行函数时才能访问keyvalue状态。
+     *
      * Gets a handle to the system's key/value state. The key/value state is only accessible if the
      * function is executed on a KeyedStream. On each access, the state exposes the value for the
      * key of the element currently processed by the function. Each function may have multiple

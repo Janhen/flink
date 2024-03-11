@@ -22,6 +22,8 @@ import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
 
 /**
+ * {@link Consumer}接口的检查扩展，它会重新抛出{@link CompletionException}包装的异常。
+ *
  * A checked extension of the {@link Consumer} interface which rethrows exceptions wrapped in a
  * {@link CompletionException}.
  *

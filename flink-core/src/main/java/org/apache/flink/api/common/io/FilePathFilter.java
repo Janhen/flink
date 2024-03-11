@@ -22,6 +22,8 @@ import org.apache.flink.core.fs.Path;
 import java.io.Serializable;
 
 /**
+ * {@link #filterPath(Path)}方法负责决定路径是否有资格进行进一步处理。这可以用于排除仍在写入的临时文件或部分文件。
+ *
  * The {@link #filterPath(Path)} method is responsible for deciding if a path is eligible for
  * further processing or not. This can serve to exclude temporary or partial files that are still
  * being written.

@@ -30,6 +30,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
+ * 类似{@link java.util.concurrent.Executor}的接口，用于围绕基于邮箱的执行模型进行构建。
+ * {@code MailboxExecutor}还可以通过从任务线程获得控制权来执行邮箱的下游消息。
+ *
  * {@link java.util.concurrent.Executor} like interface for an build around a mailbox-based
  * execution model. {@code MailboxExecutor} can also execute downstream messages of a mailbox by
  * yielding control from the task thread.

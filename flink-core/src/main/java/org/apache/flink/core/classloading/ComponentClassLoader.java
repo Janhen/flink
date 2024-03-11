@@ -32,6 +32,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * {@link URLClassLoader}，它限制哪些类可以加载到给定类路径中包含的那些，除了来自给定包集的类，这些类要么是所有者
+ * 加载的，要么是组件优先加载的。
+ *
  * A {@link URLClassLoader} that restricts which classes can be loaded to those contained within the
  * given classpath, except classes from a given set of packages that are either loaded owner or
  * component-first.

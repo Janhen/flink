@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.core.io.LocatableInputSplit;
 
 /**
+ * 文件输入分割提供关于文件特定部分的信息，这些信息可能驻留在分布式文件系统上，并在多个主机之间进行复制。
+ *
  * A file input split provides information on a particular part of a file, possibly hosted on a
  * distributed file system and replicated among several hosts.
  */

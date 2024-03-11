@@ -21,6 +21,8 @@ package org.apache.flink.util;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 一个异常，表明{@link java.lang。Iterable}只能遍历一次，但已经尝试遍历额外的时间。
+ *
  * An exception, indicating that an {@link java.lang.Iterable} can only be traversed once, but has
  * been attempted to traverse an additional time.
  */

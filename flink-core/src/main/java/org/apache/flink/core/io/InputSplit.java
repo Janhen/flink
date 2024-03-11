@@ -23,6 +23,8 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * 这个接口必须通过各种可以分配给输入格式的输入分割来实现。
+ *
  * This interface must be implemented by all kind of input splits that can be assigned to input
  * formats.
  *

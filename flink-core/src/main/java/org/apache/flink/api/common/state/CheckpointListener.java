@@ -21,6 +21,8 @@ package org.apache.flink.api.common.state;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 这个接口通常只需要与“外部世界”进行事务性交互，比如在检查点上提交外部副作用。一个例子是在检查点完成后提交外部事务。
+ *
  * This interface is typically only needed for transactional interaction with the "outside world",
  * like committing external side effects on checkpoints. An example is committing external
  * transactions once a checkpoint completes.

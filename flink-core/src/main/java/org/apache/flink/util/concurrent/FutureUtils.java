@@ -56,6 +56,7 @@ import static org.apache.flink.util.Preconditions.checkCompletedNormally;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** A collection of utilities that expand the usage of {@link CompletableFuture}. */
+// 扩展了{@link CompletableFuture}用法的实用程序集合。
 public class FutureUtils {
 
     private static final CompletableFuture<Void> COMPLETED_VOID_FUTURE =

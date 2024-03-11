@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * {@link FileSystem FileSystems}的扩展接口，可以执行便宜的DFS侧复制操作。
+ *
  * An extension interface for {@link FileSystem FileSystems} that can perform cheap DFS side
  * duplicate operation. Such an operation can improve the time required for creating cheaply
  * independent snapshots from incremental snapshots.

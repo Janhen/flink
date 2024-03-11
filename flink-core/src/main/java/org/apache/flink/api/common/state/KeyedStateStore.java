@@ -21,6 +21,7 @@ package org.apache.flink.api.common.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /** This interface contains methods for registering keyed state with a managed store. */
+// 此接口包含向托管存储区注册键控状态的方法。
 @PublicEvolving
 public interface KeyedStateStore {
 

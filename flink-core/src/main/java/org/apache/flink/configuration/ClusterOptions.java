@@ -34,6 +34,7 @@ import static org.apache.flink.configuration.description.TextElement.text;
 @PublicEvolving
 public class ClusterOptions {
 
+    // 群集组件之间的初始注册超时(以毫秒为单位)。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> INITIAL_REGISTRATION_TIMEOUT =
             ConfigOptions.key("cluster.registration.initial-timeout")
@@ -42,6 +43,7 @@ public class ClusterOptions {
                     .withDescription(
                             "Initial registration timeout between cluster components in milliseconds.");
 
+    // 集群组件之间的最大注册超时(以毫秒为单位)。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> MAX_REGISTRATION_TIMEOUT =
             ConfigOptions.key("cluster.registration.max-timeout")
@@ -58,6 +60,7 @@ public class ClusterOptions {
                     .withDescription(
                             "The pause made after an registration attempt caused an exception (other than timeout) in milliseconds.");
 
+    // 注册尝试被拒绝后的暂停时间(以毫秒为单位)。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> REFUSED_REGISTRATION_DELAY =
             ConfigOptions.key("cluster.registration.refused-registration-delay")
@@ -66,6 +69,7 @@ public class ClusterOptions {
                     .withDescription(
                             "The pause made after the registration attempt was refused in milliseconds.");
 
+    // 集群服务(如executor)的关闭超时时间(以毫秒为单位)。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Long> CLUSTER_SERVICES_SHUTDOWN_TIMEOUT =
             ConfigOptions.key("cluster.services.shutdown-timeout")
@@ -74,6 +78,7 @@ public class ClusterOptions {
                     .withDescription(
                             "The shutdown timeout for cluster services like executors in milliseconds.");
 
+    // 集群用于执行阻塞IO操作(Master和TaskManager进程)的IO执行器池的大小。
     @Documentation.Section(Documentation.Sections.EXPERT_FAULT_TOLERANCE)
     public static final ConfigOption<Integer> CLUSTER_IO_EXECUTOR_POOL_SIZE =
             ConfigOptions.key("cluster.io-pool.size")
@@ -84,6 +89,7 @@ public class ClusterOptions {
                                     + "By default it will use 4 * the number of CPU cores (hardware contexts) that the cluster process has access to. "
                                     + "Increasing the pool size allows to run more IO operations concurrently.");
 
+    // 启用槽位分散分配策略。此策略尝试将“+”槽均匀地分布在所有可用的 TaskExecutors 上
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<Boolean> EVENLY_SPREAD_OUT_SLOTS_STRATEGY =
             ConfigOptions.key("cluster.evenly-spread-out-slots")
@@ -113,6 +119,7 @@ public class ClusterOptions {
                                                     "FLINK-16510"))
                                     .build());
 
+    // 通过终止JVM来检查用户代码退出系统的标志(例如system .exit())。
     @Documentation.Section(Documentation.Sections.EXPERT_CLUSTER)
     public static final ConfigOption<UserSystemExitMode> INTERCEPT_USER_SYSTEM_EXIT =
             key("cluster.intercept-user-system-exit")
@@ -128,6 +135,7 @@ public class ClusterOptions {
                                             code(HALT_ON_FATAL_ERROR.key()), code(THROW.name()))
                                     .build());
 
+    // 显示TaskManager和JobManager的线程转储web前端的最大堆栈跟踪深度。
     @Documentation.Section(Documentation.Sections.EXPERT_CLUSTER)
     public static final ConfigOption<Integer> THREAD_DUMP_STACKTRACE_MAX_DEPTH =
             key("cluster.thread-dump.stacktrace-max-depth")
@@ -136,6 +144,7 @@ public class ClusterOptions {
                     .withDescription(
                             "The maximum stacktrace depth of TaskManager and JobManager's thread dump web-frontend displayed.");
 
+    // 定义集群是否使用细粒度资源管理。
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<Boolean> ENABLE_FINE_GRAINED_RESOURCE_MANAGEMENT =
             ConfigOptions.key("cluster.fine-grained-resource-management.enabled")
@@ -144,6 +153,7 @@ public class ClusterOptions {
                     .withDescription(
                             "Defines whether the cluster uses fine-grained resource management.");
 
+    // 在批处理作业中应用细粒度资源管理时，是否将所有PIPELINE边转换为BLOCKING。
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<Boolean> FINE_GRAINED_SHUFFLE_MODE_ALL_BLOCKING =
             ConfigOptions.key("fine-grained.shuffle-mode.all-blocking")
@@ -152,6 +162,7 @@ public class ClusterOptions {
                     .withDescription(
                             "Whether to convert all PIPELINE edges to BLOCKING when apply fine-grained resource management in batch jobs.");
 
+    // 定义集群是否将处理任何未捕获的异常，通过只记录它们( LOG 模式)，还是通过失败作业(FAIL 模式)。
     @Documentation.Section(Documentation.Sections.EXPERT_CLUSTER)
     public static final ConfigOption<UncaughtExceptionHandleMode> UNCAUGHT_EXCEPTION_HANDLING =
             ConfigOptions.key("cluster.uncaught-exception-handling")

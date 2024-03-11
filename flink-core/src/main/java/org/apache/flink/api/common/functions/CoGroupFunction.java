@@ -24,6 +24,9 @@ import org.apache.flink.util.Collector;
 import java.io.Serializable;
 
 /**
+ * CoGroup函数的接口。CoGroup函数将两个数据集组合在一起，首先将每个数据集按照一个键分组，然后通过使用每个键的两个
+ * 集合调用该函数来“连接”这些组。如果一个键只出现在两个输入中的一个中，则可能是其中一个组为空。
+ *
  * The interface for CoGroup functions. CoGroup functions combine two data sets by first grouping
  * each data set after a key and then "joining" the groups by calling this function with the two
  * sets for each key. If a key is present in only one of the two inputs, it may be that one of the
@@ -53,6 +56,8 @@ import java.io.Serializable;
 public interface CoGroupFunction<IN1, IN2, O> extends Function, Serializable {
 
     /**
+     * 必须实现此方法以提供coGroup的用户实现。对于元素共享相同键的每一对元素组调用它。
+     *
      * This method must be implemented to provide a user implementation of a coGroup. It is called
      * for each pair of element groups where the elements share the same key.
      *

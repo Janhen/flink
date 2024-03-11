@@ -25,6 +25,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 封装描述用户函数行为的编译器提示的类。如果设置了，优化器将使用它们来估计中间结果的大小。请注意，这些值是可选的提示，
+ * 优化器将始终生成没有它们的有效计划。然而，这些提示可能有助于改善计划的选择。
+ *
  * A class encapsulating compiler hints describing the behavior of the user function. If set, the
  * optimizer will use them to estimate the sizes of the intermediate results. Note that these values
  * are optional hints, the optimizer will always generate a valid plan without them as well. The

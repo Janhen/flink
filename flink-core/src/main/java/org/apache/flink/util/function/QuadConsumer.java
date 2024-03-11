@@ -21,6 +21,8 @@ package org.apache.flink.util.function;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 对四个给定参数执行的操作。
+ *
  * Operation which is performed on four given arguments.
  *
  * @param <S> type of the first argument

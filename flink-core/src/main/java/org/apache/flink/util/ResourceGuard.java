@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 该类是具有以下不变量的共享资源的守卫。
+ *
  * This class is a guard for shared resources with the following invariants. The resource can be
  * acquired by multiple clients in parallel through the {@link #acquireResource()} call. As a result
  * of the call, each client gets a {@link Lease}. The {@link #close()} method of the lease releases

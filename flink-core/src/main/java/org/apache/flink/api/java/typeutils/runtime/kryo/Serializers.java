@@ -45,6 +45,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 类中包含用于Flink运行时序列化器的实用程序。
+ *
  * Class containing utilities for the serializers of the Flink Runtime.
  *
  * <p>Most of the serializers are automatically added to the system.

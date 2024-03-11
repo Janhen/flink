@@ -25,6 +25,8 @@ import org.apache.flink.api.common.operators.util.FieldSet;
 import java.util.ArrayList;
 
 /**
+ * 这个类表示对一组字段的排序。它指定字段和顺序方向(升序、降序)。
+ *
  * This class represents an ordering on a set of fields. It specifies the fields and order direction
  * (ascending, descending).
  */

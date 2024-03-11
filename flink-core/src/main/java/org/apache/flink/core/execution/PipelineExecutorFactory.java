@@ -32,6 +32,8 @@ public interface PipelineExecutorFactory {
     String getName();
 
     /**
+     * 如果此工厂与所提供的配置中的选项兼容，则返回{@code true}，否则返回{@code false}。
+     *
      * Returns {@code true} if this factory is compatible with the options in the provided
      * configuration, {@code false} otherwise.
      */

@@ -23,6 +23,13 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * 用于组合函数(“组合器”)的通用接口。组合器作为{@link GroupReduceFunction}的辅助工具，对数据进行“预还原”。
+ * combine函数通常不会看到整个元素组，而只看到一个子元素组。
+ *
+ * <p>组合函数通常有助于提高程序效率，因为它们允许系统在收集整个组之前更早地减少数据量。
+ *
+ * <p>这个组合函数的特殊变体将一组元素缩减为单个元素。可以在{@link GroupCombineFunction}中定义每个组返回多个值的变体。
+ *
  * Generic interface used for combine functions ("combiners"). Combiners act as auxiliaries to a
  * {@link GroupReduceFunction} and "pre-reduce" the data. The combine functions typically do not see
  * the entire group of elements, but only a sub-group.

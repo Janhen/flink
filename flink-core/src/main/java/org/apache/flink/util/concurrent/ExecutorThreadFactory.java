@@ -46,6 +46,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class ExecutorThreadFactory implements ThreadFactory {
 
     /** The thread pool name used when no explicit pool name has been specified. */
+    // 未指定显式池名时使用的线程池名。
     private static final String DEFAULT_POOL_NAME = "flink-executor-pool";
 
     private final AtomicInteger threadNumber = new AtomicInteger(1);

@@ -24,6 +24,8 @@ import org.apache.flink.types.Value;
 import java.io.Serializable;
 
 /**
+ * 聚合器是一种跨函数的并行实例聚合值的方法。
+ *
  * Aggregators are a means of aggregating values across parallel instances of a function.
  * Aggregators collect simple statistics (such as the number of processed elements) about the actual
  * work performed in a function. Aggregators are specific to iterations and are commonly used to

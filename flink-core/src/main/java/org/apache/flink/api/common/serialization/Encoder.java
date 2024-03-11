@@ -25,6 +25,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
+ * 流文件接收器使用{@link Encoder}将传入的元素实际写入到桶中的文件中。
+ *
  * A {@link Encoder} is used by the streaming file sink to perform the actual writing of the
  * incoming elements to the files in a bucket.
  *

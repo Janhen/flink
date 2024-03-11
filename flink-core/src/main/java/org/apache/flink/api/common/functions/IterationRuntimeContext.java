@@ -31,6 +31,8 @@ import org.apache.flink.types.Value;
 public interface IterationRuntimeContext extends RuntimeContext {
 
     /**
+     * 获取当前超步的编号。超步数从<i>1<i>开始。
+     *
      * Gets the number of the current superstep. Superstep numbers start at <i>1</i>.
      *
      * @return The number of the current superstep.

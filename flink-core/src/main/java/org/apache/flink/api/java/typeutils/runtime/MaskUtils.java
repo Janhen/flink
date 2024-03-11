@@ -24,6 +24,7 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** Utilities for reading and writing binary masks. */
+// 用于读写二进制掩码的实用程序。
 @Internal
 public final class MaskUtils {
 
@@ -64,6 +65,7 @@ public final class MaskUtils {
         readIntoMask(source, mask, mask.length);
     }
 
+    // J: 读取掩码信息
     @SuppressWarnings("UnusedAssignment")
     public static void readIntoMask(DataInputView source, boolean[] mask, int len)
             throws IOException {

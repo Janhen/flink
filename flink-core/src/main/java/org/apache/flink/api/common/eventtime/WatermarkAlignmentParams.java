@@ -23,6 +23,7 @@ import org.apache.flink.annotation.PublicEvolving;
 import java.io.Serializable;
 
 /** Configuration parameters for watermark alignment. */
+// 水印对齐的配置参数。
 @PublicEvolving
 public final class WatermarkAlignmentParams implements Serializable {
     public static final WatermarkAlignmentParams WATERMARK_ALIGNMENT_DISABLED =

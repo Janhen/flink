@@ -23,6 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import java.util.function.Supplier;
 
 /** A {@link Supplier} that returns a single, lazily instantiated, value. */
+// 一个{@link provider}，它返回一个单一的、惰性实例化的值。
 @NotThreadSafe
 public class CachingSupplier<T> implements Supplier<T> {
     private final Supplier<T> backingSupplier;

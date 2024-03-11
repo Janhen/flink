@@ -24,6 +24,13 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * {@code Committer}负责提交由{@link TwoPhaseCommittingSink.PrecommittingSinkWriter}。在两阶段提交协议的
+ * 第二步预提交sinkwriter}。
+ *
+ * <p>提交必须是幂等的:如果Flink在提交阶段发生了一些失败，Flink将从之前的检查点重新开始，并重新尝试提交所有的提交。
+ * 因此，一些或所有可提交事项可能已经提交。这些{@link CommitRequest}不能改变外部系统，实现者被要求发送
+ * {@link CommitRequest#signalAlreadyCommitted()}信号。
+ *
  * The {@code Committer} is responsible for committing the data staged by the {@link
  * TwoPhaseCommittingSink.PrecommittingSinkWriter} in the second step of a two-phase commit
  * protocol.
@@ -39,6 +46,8 @@ import java.util.Collection;
 @PublicEvolving
 public interface Committer<CommT> extends AutoCloseable {
     /**
+     * 提交给定的{@link CommT}列表。
+     *
      * Commit the given list of {@link CommT}.
      *
      * @param committables A list of commit requests staged by the sink writer.

@@ -45,6 +45,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 限制目标文件系统并发打开的输入流、输出流和总流数的文件系统。
+ *
  * A file system that limits the number of concurrently open input streams, output streams, and
  * total streams for a target file system.
  *

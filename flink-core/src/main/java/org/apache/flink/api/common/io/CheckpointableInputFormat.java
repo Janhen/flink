@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 一个描述{@link InputFormat}的接口，允许检查点恢复它们的状态。
+ *
  * An interface that describes {@link InputFormat}s that allow checkpointing/restoring their state.
  *
  * @param <S> The type of input split.

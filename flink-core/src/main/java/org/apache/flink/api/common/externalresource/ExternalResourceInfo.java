@@ -28,6 +28,8 @@ import java.util.Optional;
 public interface ExternalResourceInfo {
 
     /**
+     * 获取指定键所指示的属性。
+     *
      * Get the property indicated by the specified key.
      *
      * @param key of the required property

@@ -244,6 +244,7 @@ public abstract class FileSystem {
     private static final FileSystemFactory FALLBACK_FACTORY = loadHadoopFsFactory();
 
     /** All known plugins for a given scheme, do not fallback for those. */
+    // 所有已知的插件，为一个给定的方案，不退为那些。
     private static final Multimap<String, String> DIRECTLY_SUPPORTED_FILESYSTEM =
             ImmutableMultimap.<String, String>builder()
                     .put("wasb", "flink-fs-azure-hadoop")
@@ -272,6 +273,8 @@ public abstract class FileSystem {
     // ------------------------------------------------------------------------
 
     /**
+     * 初始化共享文件系统设置。
+     *
      * Initializes the shared file system settings.
      *
      * <p>The given configuration is passed to each file system factory to initialize the respective

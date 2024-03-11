@@ -58,6 +58,8 @@ public interface SimpleVersionedSerializer<E> extends Versioned {
     int getVersion();
 
     /**
+     * 序列化给定对象。假定序列化对应于当前序列化版本(由{@link #getVersion()}返回)。
+     *
      * Serializes the given object. The serialization is assumed to correspond to the current
      * serialization version (as returned by {@link #getVersion()}.
      *

@@ -40,6 +40,8 @@ public class AccumulatorHelper {
     private static final Logger LOG = LoggerFactory.getLogger(AccumulatorHelper.class);
 
     /**
+     * 合并两个累加器集合。第二个将并入第一个。
+     *
      * Merge two collections of accumulators. The second will be merged into the first.
      *
      * @param target The collection of accumulators that will be updated
@@ -76,6 +78,7 @@ public class AccumulatorHelper {
     }
 
     /** Workaround method for type safety. */
+    // 类型安全的变通方法。
     private static <V, R extends Serializable> Accumulator<V, R> mergeSingle(
             Accumulator<?, ?> target, Accumulator<?, ?> toMerge) {
         @SuppressWarnings("unchecked")
@@ -127,6 +130,7 @@ public class AccumulatorHelper {
     }
 
     /** Transform the Map with accumulators into a Map containing only the results. */
+    // 将带有累加器的Map转换为只包含结果的Map。
     public static Map<String, OptionalFailure<Object>> toResultMap(
             Map<String, Accumulator<?, ?>> accumulators) {
         Map<String, OptionalFailure<Object>> resultMap = new HashMap<>();

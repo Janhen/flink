@@ -26,6 +26,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link CombinedWatermarkStatus}将多个partitions/shards/splitting的水印(和空闲)更新合并为一个组合水印。
+ *
  * A {@link CombinedWatermarkStatus} combines the watermark (and idleness) updates of multiple
  * partitions/shards/splits into one combined watermark.
  */
@@ -33,6 +35,7 @@ import static org.apache.flink.util.Preconditions.checkState;
 final class CombinedWatermarkStatus {
 
     /** List of all watermark outputs, for efficient access. */
+    // 所有水印输出的列表，为高效访问。
     private final List<PartialWatermark> partialWatermarks = new ArrayList<>();
 
     /** The combined watermark over the per-output watermarks. */
@@ -57,6 +60,8 @@ final class CombinedWatermarkStatus {
     }
 
     /**
+     * 检查是否需要更新组合水印。
+     *
      * Checks whether we need to update the combined watermark.
      *
      * <p><b>NOTE:</b>It can update {@link #isIdle()} status.

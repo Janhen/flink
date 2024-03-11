@@ -23,6 +23,8 @@ import org.apache.flink.util.Preconditions;
 import java.time.Duration;
 
 /**
+ * {@link RetryStrategy}的实现，重试具有指数回退的上限。
+ *
  * An implementation of {@link RetryStrategy} that retries that has an exponential backoff with a
  * cap.
  */

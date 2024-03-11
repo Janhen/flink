@@ -29,6 +29,8 @@ import org.apache.flink.util.Visitable;
 import java.util.List;
 
 /**
+ * 所有操作符的抽象基类。操作符是源、接收器，或者它将操作应用于一个或多个输入，从而产生结果。
+ *
  * Abstract base class for all operators. An operator is a source, sink, or it applies an operation
  * to one or more inputs, producing a result.
  *
@@ -49,6 +51,7 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
     private ResourceSpec minResources =
             ResourceSpec.DEFAULT; // the minimum resource of the contract instance.
 
+    // 首选资源
     private ResourceSpec preferredResources =
             ResourceSpec.DEFAULT; // the preferred resource of the contract instance.
 
@@ -58,6 +61,8 @@ public abstract class Operator<OUT> implements Visitable<Operator<?>> {
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 创建具有给定名称的新契约。默认情况下，参数为空，并且不设置编译器提示。
+     *
      * Creates a new contract with the given name. The parameters are empty by default and the
      * compiler hints are not set.
      *

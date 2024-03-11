@@ -23,6 +23,8 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 /** Configuration parameters for join/sort algorithms. */
 public class AlgorithmOptions {
 
+    // 在混合哈希连接实现中激活或停用布隆过滤器的标志。在哈希连接需要溢出到磁盘(数据集大于内存的保留部分)的情况下，
+    // 这些布隆过滤器可以大大减少溢出记录的数量，但代价是一些CPU周期。
     public static final ConfigOption<Boolean> HASH_JOIN_BLOOM_FILTERS =
             key("taskmanager.runtime.hashjoin-bloom-filters")
                     .booleanType()
@@ -42,6 +44,7 @@ public class AlgorithmOptions {
                                     + " the number of file handles per operator, but may cause intermediate merging/partitioning, if set too"
                                     + " small.");
 
+    // 排序操作在内存预算的这一部分满时开始溢出
     public static final ConfigOption<Float> SORT_SPILLING_THRESHOLD =
             key("taskmanager.runtime.sort-spilling-threshold")
                     .floatType()
@@ -49,6 +52,7 @@ public class AlgorithmOptions {
                     .withDescription(
                             "A sort operation starts spilling when this fraction of its memory budget is full.");
 
+    // 溢出时是否使用LargeRecordHandler。
     public static final ConfigOption<Boolean> USE_LARGE_RECORDS_HANDLER =
             key("taskmanager.runtime.large-record-handler")
                     .booleanType()

@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /** A file lock used for avoiding race condition among multiple threads/processes. */
+// 一种用于避免多线程进程间竞争的文件锁。
 @Internal
 public class FileLock {
     private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
@@ -35,6 +36,8 @@ public class FileLock {
     private java.nio.channels.FileLock lock;
 
     /**
+     * 使用位于fullPath的文件初始化FileLock。
+     *
      * Initialize a FileLock using a file located at fullPath.
      *
      * @param fullPath The path of the locking file

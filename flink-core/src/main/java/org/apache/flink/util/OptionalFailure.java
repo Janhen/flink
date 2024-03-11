@@ -31,6 +31,8 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 包装一个对象，表示成功(带有给定值)或失败原因。
+ *
  * Wrapper around an object representing either a success (with a given value) or a failure cause.
  */
 public class OptionalFailure<T> implements Serializable {

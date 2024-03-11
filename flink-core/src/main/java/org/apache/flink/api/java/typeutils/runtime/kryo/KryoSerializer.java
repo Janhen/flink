@@ -63,6 +63,18 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 使用Kryo序列化框架序列化其类型的类型序列化器
+ *
+ * <p>此序列化器旨在作为基本类型、元组和pojo未涵盖的情况的回退序列化器。
+ *
+ * <p>通过{@link Kryo#register}向Kryo注册的序列化器集及其各自的id取决于flink-java或flink-scala是否在类路径中。
+ * 这是出于向后兼容性的考虑。
+ *
+ * <p>如果两者都不可用(这应该只适用于flink-core中的测试)，则:
+ *
+ * <li>0-9用于Java primitives
+ * <li>10+用于用户自定义注册
+ *
  * A type serializer that serializes its type using the Kryo serialization framework
  * (https://github.com/EsotericSoftware/kryo).
  *

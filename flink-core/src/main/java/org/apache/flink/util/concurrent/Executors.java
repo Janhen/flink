@@ -22,6 +22,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /** Collection of {@link Executor} and {@link ExecutorService} implementations. */
+// {@link Executor}和{@link ExecutorService}实现的集合。
 public class Executors {
 
     /**

@@ -46,6 +46,8 @@ public interface SerializationSchema<T> extends Serializable {
     default void open(InitializationContext context) throws Exception {}
 
     /**
+     * 将传入元素序列化为指定类型。
+     *
      * Serializes the incoming element to a specified type.
      *
      * @param element The incoming element to be serialized

@@ -23,6 +23,11 @@ import java.net.URL;
 import java.util.Collections;
 
 /**
+ * 从子模块jar中加载所有类，除了显式列入白名单的包。
+ *
+ * <p>确保子模块中的类总是通过子模块classloader加载。(因此从子模块jar)，即使类也在类路径上(例如，在测试期间)，
+ * org.apache.flink 中的所有类 包是子优先加载的。
+ *
  * Loads all classes from the submodule jar, except for explicitly white-listed packages.
  *
  * <p>To ensure that classes from the submodule are always loaded through the submodule classloader

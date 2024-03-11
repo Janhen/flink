@@ -21,6 +21,7 @@ package org.apache.flink.api.common.eventtime;
 import org.apache.flink.annotation.Public;
 
 /** An output for watermarks. The output accepts watermarks and idleness (inactivity) status. */
+// 水印的输出。输出接受水印和空闲(不活动)状态。
 @Public
 public interface WatermarkOutput {
 

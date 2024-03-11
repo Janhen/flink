@@ -24,6 +24,7 @@ import org.apache.flink.types.Value;
 import java.io.Serializable;
 
 /** Used to check for convergence. */
+// 用来检查收敛性。
 @PublicEvolving
 public interface ConvergenceCriterion<T extends Value> extends Serializable {
 

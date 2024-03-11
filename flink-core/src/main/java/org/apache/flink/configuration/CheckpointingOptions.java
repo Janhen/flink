@@ -139,6 +139,8 @@ public class CheckpointingOptions {
                                     + " Some state backends may not support incremental checkpoints and ignore this option.");
 
     /**
+     * 此选项为此状态后端配置本地恢复。缺省情况下，未激活本地恢复功能。
+     *
      * This option configures local recovery for this state backend. By default, local recovery is
      * deactivated.
      *
@@ -156,6 +158,8 @@ public class CheckpointingOptions {
                                     + "(including both the EmbeddedRocksDBStateBackend and the HashMapStateBackend).");
 
     /**
+     * 该配置参数定义用于存储基于文件的状态以进行本地恢复的根目录。
+     *
      * The config parameter defining the root directories for storing file-based state for local
      * recovery.
      *
@@ -215,6 +219,8 @@ public class CheckpointingOptions {
                                     + "(i.e. all TaskManagers and JobManagers).");
 
     /**
+     * 状态数据文件的最小大小。小于该值的所有状态块都内联存储在根检查点元数据文件中。
+     *
      * The minimum size of state data files. All state chunks smaller than that are stored inline in
      * the root checkpoint metadata file.
      */
@@ -229,6 +235,8 @@ public class CheckpointingOptions {
                     .withDeprecatedKeys("state.backend.fs.memory-threshold");
 
     /**
+     * 写入文件系统的检查点流的写入缓冲区的默认大小。
+     *
      * The default size of the write buffer for the checkpoint streams that write to file systems.
      */
     @Documentation.Section(Documentation.Sections.EXPERT_STATE_BACKENDS)

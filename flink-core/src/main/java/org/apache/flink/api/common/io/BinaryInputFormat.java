@@ -43,6 +43,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 所有使用固定大小块的输入格式的基类。输入分割与这些块对齐，这意味着每个分割将由一个块组成。如果没有配置，这些块大小
+ * 等于HDFS的本地块大小。
+ *
+ * <p>块将在块的末尾包含{@link BlockInfo}。在那里，阅读器可以找到有关当前正在读取的分割的一些统计信息，这将有助于
+ *  正确解析块的内容。
+ *
  * Base class for all input formats that use blocks of fixed size. The input splits are aligned to
  * these blocks, meaning that each split will consist of one block. Without configuration, these
  * block sizes equal the native block sizes of the HDFS.

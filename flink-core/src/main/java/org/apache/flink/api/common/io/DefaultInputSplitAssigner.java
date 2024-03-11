@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 这是{@link InputSplitAssigner}接口的默认实现。默认的输入分割赋值器简单地按照输入顶点的初始计算顺序返回所有输入分割。
+ *
  * This is the default implementation of the {@link InputSplitAssigner} interface. The default input
  * split assigner simply returns all input splits of an input vertex in the order they were
  * originally computed.

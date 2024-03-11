@@ -38,6 +38,8 @@ import java.util.LinkedHashMap;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * {@link Value} 类型的序列化器。使用值的序列化方法，并使用Kryo进行深度对象复制。
+ *
  * Serializer for {@link Value} types. Uses the value's serialization methods, and uses Kryo for
  * deep object copies.
  *

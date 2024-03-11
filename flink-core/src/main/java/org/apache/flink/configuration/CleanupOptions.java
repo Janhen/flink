@@ -76,6 +76,7 @@ public class CleanupOptions {
         return paramName.replaceAll("[^a-zA-Z0-9]", "");
     }
 
+    // 定义在清理失败时使用的清理策略。
     public static final ConfigOption<String> CLEANUP_STRATEGY =
             ConfigOptions.key(CLEANUP_STRATEGY_PARAM)
                     .stringType()

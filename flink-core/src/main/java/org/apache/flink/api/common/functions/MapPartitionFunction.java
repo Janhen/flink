@@ -24,6 +24,11 @@ import org.apache.flink.util.Collector;
 import java.io.Serializable;
 
 /**
+ * “mapPartition”函数接口。每次数据分区接收到一个包含该分区数据元素的Iterable，就调用一次“mapPartition”函数。它
+ * 可以返回任意数量的数据元素。
+ *
+ * <p>该函数旨在为处理分区中的元素提供增强的灵活性。对于大多数简单的用例，考虑使用{@link MapFunction}或{@link FlatMapFunction}。
+ *
  * Interface for "mapPartition" functions. A "mapPartition" function is called a single time per
  * data partition receives an Iterable with data elements of that partition. It may return an
  * arbitrary number of data elements.

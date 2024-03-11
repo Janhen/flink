@@ -21,6 +21,10 @@ package org.apache.flink.api.common.state;
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
+ * 分区状态的基本接口，支持添加元素和检查当前状态。元素既可以保存在缓冲区中(类似于列表)，也可以聚合为一个值。
+ *
+ * <p>状态被用户函数访问和修改，并且作为分布式快照的一部分被系统一致地检查点。
+ *
  * Base interface for partitioned state that supports adding elements and inspecting the current
  * state. Elements can either be kept in a buffer (list-like) or aggregated into one value.
  *

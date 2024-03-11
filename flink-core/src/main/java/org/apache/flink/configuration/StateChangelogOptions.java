@@ -24,6 +24,7 @@ import org.apache.flink.configuration.description.Description;
 import java.time.Duration;
 
 /** A collection of all configuration options that relate to changelog. */
+// 与变更日志相关的所有配置选项的集合。
 @PublicEvolving
 public class StateChangelogOptions {
 

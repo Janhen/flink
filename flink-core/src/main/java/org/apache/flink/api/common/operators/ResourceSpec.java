@@ -40,6 +40,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 用UDF描述 operator 的不同资源因素。
+ *
  * Describe the different resource factors of the operator with UDF.
  *
  * <p>Resource provides {@link #merge(ResourceSpec)} method for chained operators when generating
@@ -126,6 +128,8 @@ public final class ResourceSpec implements Serializable {
     }
 
     /**
+     * 在生成作业图时，由系统内部用于合并链操作符的其他资源。
+     *
      * Used by system internally to merge the other resources of chained operators when generating
      * the job graph.
      *

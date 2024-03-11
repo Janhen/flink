@@ -25,6 +25,8 @@ import java.util.stream.IntStream;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * 表示一组输入部分水印的水印的组合值和状态。
+ *
  * Represents combined value and status of a watermark for a set number of input partial watermarks.
  */
 @Internal

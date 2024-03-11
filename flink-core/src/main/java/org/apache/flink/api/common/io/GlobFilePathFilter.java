@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 用于根据一组include和exclude glob筛选器确定是否应该包含或排除特定文件。
+ *
  * Class for determining if a particular file should be included or excluded based on a set of
  * include and exclude glob filters.
  *

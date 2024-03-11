@@ -25,6 +25,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 
 /** An {@link Executor} that runs every runnable in a separate thread. */
+// 一个{@link Executor}，它在一个单独的线程中运行每个可运行项。
 public final class SeparateThreadExecutor implements Executor {
     private final ThreadFactory threadFactory;
 

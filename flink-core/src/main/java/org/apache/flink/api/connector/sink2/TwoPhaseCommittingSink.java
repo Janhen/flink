@@ -61,6 +61,7 @@ public interface TwoPhaseCommittingSink<InputT, CommT> extends Sink<InputT> {
     Committer<CommT> createCommitter() throws IOException;
 
     /** Returns the serializer of the committable type. */
+    // 返回可提交类型的序列化器。
     SimpleVersionedSerializer<CommT> getCommittableSerializer();
 
     /** A {@link SinkWriter} that performs the first part of a two-phase commit protocol. */

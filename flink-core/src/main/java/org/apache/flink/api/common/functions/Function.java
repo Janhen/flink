@@ -21,6 +21,10 @@ package org.apache.flink.api.common.functions;
 import org.apache.flink.annotation.Public;
 
 /**
+ * 所有用户定义函数的基接口。
+ *
+ * <p>这个接口是空的，以便允许扩展接口成为可以通过Java 8 lambdas实现的SAM(单个抽象方法)接口。
+ *
  * The base interface for all user-defined functions.
  *
  * <p>This interface is empty in order to allow extending interfaces to be SAM (single abstract

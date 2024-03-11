@@ -29,6 +29,9 @@ import org.apache.flink.core.io.InputSplitAssigner;
 import java.io.IOException;
 
 /**
+ * ReplicatingInputFormat将任何{@link InputFormat}复制到DataSource的所有并行实例中，即复制的InputFormat的
+ * 完整输入完全由DataSource的每个并行实例处理。
+ *
  * A ReplicatingInputFormat replicates any {@link InputFormat} to all parallel instances of a
  * DataSource, i.e., the full input of the replicated InputFormat is completely processed by each
  * parallel instance of the DataSource. This is done by assigning all {@link

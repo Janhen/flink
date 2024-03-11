@@ -25,6 +25,7 @@ import static org.apache.flink.configuration.ConfigOptions.key;
 import static org.apache.flink.configuration.description.TextElement.code;
 
 /** Configuration options for the BlobServer and BlobCache. */
+// BlobServer和BlobCache的配置选项。
 @PublicEvolving
 public class BlobServerOptions {
 

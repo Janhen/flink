@@ -35,6 +35,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** Collection of utilities about time intervals. */
+// 关于时间间隔的实用程序集合。
 public class TimeUtils {
 
     private static final Map<String, ChronoUnit> LABEL_TO_UNIT_MAP =

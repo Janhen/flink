@@ -23,6 +23,10 @@ import org.apache.flink.annotation.Public;
 import java.io.Serializable;
 
 /**
+ * 跨功能接口。交叉函数应用于它们输入的笛卡尔积，并对每对元素调用交叉函数。
+ *
+ * <p>它们是可选的，是一种方便的方法，可以用来直接操作元素对，而不是生成包含元素对的2元组。
+ *
  * Interface for Cross functions. Cross functions are applied to the Cartesian product of their
  * inputs and are called for each pair of elements.
  *

@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 表示实际操作符的所有契约的抽象超类。
+ *
  * Abstract superclass for all contracts that represent actual operators.
  *
  * @param <FT> Type of the user function
@@ -37,6 +39,7 @@ public abstract class AbstractUdfOperator<OUT, FT extends Function> extends Oper
     protected final UserCodeWrapper<FT> userFunction;
 
     /** The extra inputs which parameterize the user function. */
+    // 参数化用户函数的额外输入。
     protected final Map<String, Operator<?>> broadcastInputs = new HashMap<>();
 
     // --------------------------------------------------------------------------------------------
@@ -120,6 +123,8 @@ public abstract class AbstractUdfOperator<OUT, FT extends Function> extends Oper
     public abstract int getNumberOfInputs();
 
     /**
+     * 获取给定输入的输入记录中关键字段的列号。
+     *
      * Gets the column numbers of the key fields in the input records for the given input.
      *
      * @return The column numbers of the key fields.
@@ -129,6 +134,8 @@ public abstract class AbstractUdfOperator<OUT, FT extends Function> extends Oper
     // --------------------------------------------------------------------------------------------
 
     /**
+     * 通用实用函数，将单个类对象包装到该类类型的数组中。
+     *
      * Generic utility function that wraps a single class object into an array of that class type.
      *
      * @param <U> The type of the classes.

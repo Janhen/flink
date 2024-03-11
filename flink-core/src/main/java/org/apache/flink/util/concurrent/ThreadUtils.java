@@ -26,9 +26,11 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /** {@code ThreadUtils} collects helper methods in the context of threading. */
+// {@code ThreadUtils}收集线程上下文中的helper方法。
 public class ThreadUtils {
 
     public static void errorLogThreadDump(Logger logger) {
+        // 每个线程的信息
         final ThreadInfo[] perThreadInfo =
                 ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
         logger.error(

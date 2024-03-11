@@ -34,6 +34,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * 直接执行器服务直接执行调用线程中的可运行对象和可调用对象。
+ *
  * The direct executor service directly executes the runnables and the callables in the calling
  * thread.
  */
@@ -74,7 +76,7 @@ class DirectExecutorService implements ExecutorService {
     public <T> Future<T> submit(@Nonnull Callable<T> task) {
         try {
             T result = task.call();
-
+            // J: 返回 CompletedFuture
             return new CompletedFuture<>(result, null);
         } catch (Exception e) {
             return new CompletedFuture<>(null, e);
