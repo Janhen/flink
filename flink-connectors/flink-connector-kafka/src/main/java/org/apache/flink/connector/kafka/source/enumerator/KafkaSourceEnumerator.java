@@ -489,6 +489,7 @@ public class KafkaSourceEnumerator
     }
 
     /** The implementation for offsets retriever with a consumer and an admin client. */
+    // 偏移量检索器与消费者和管理客户端的实现。
     @VisibleForTesting
     public static class PartitionOffsetsRetrieverImpl
             implements OffsetsInitializer.PartitionOffsetsRetriever, AutoCloseable {
@@ -507,7 +508,9 @@ public class KafkaSourceEnumerator
                             .topicPartitions(new ArrayList<>(partitions));
             try {
                 return adminClient
+                        // J: 找出消费者组，在特定 [(topic,partition_num),...] 的 offset
                         .listConsumerGroupOffsets(groupId, options)
+                        // J: 消费者组已提交的 offset
                         .partitionsToOffsetAndMetadata()
                         .thenApply(
                                 result -> {
@@ -535,6 +538,8 @@ public class KafkaSourceEnumerator
         }
 
         /**
+         * 列出指定分区和OffsetSpec的偏移量。该操作可以查找分区中的开始偏移量、结束偏移量以及与时间戳匹配的偏移量。
+         *
          * List offsets for the specified partitions and OffsetSpec. This operation enables to find
          * the beginning offset, end offset as well as the offset matching a timestamp in
          * partitions.

@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * {@link OffsetsInitializer}的实现，用于根据时间戳初始化偏移量。
+ *
  * An implementation of {@link OffsetsInitializer} to initialize the offsets based on a timestamp.
  *
  * <p>Package private and should be instantiated via {@link OffsetsInitializer}.
@@ -45,6 +47,9 @@ class TimestampOffsetsInitializer implements OffsetsInitializer {
         Map<TopicPartition, Long> startingTimestamps = new HashMap<>();
         Map<TopicPartition, Long> initialOffsets = new HashMap<>();
 
+        // 首先获取分区的当前结束偏移量。这将在我们无法根据时间戳找到合适的偏移量的情况下使用，
+        // 即满足时间戳要求的消息还没有产生给Kafka，在这种情况下，我们只使用最新的偏移量。
+        // 在按时间查询偏移量之前，我们需要获得最新的偏移量，以确保不会遗漏任何消息。
         // First get the current end offsets of the partitions. This is going to be used
         // in case we cannot find a suitable offsets based on the timestamp, i.e. the message
         // meeting the requirement of the timestamp have not been produced to Kafka yet, in

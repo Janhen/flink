@@ -66,6 +66,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 这个类负责在Kafka主题中写入记录，并处理不同的交付{@link DeliveryGuarantee}。
+ *
  * This class is responsible to write records in a Kafka topic and to handle the different delivery
  * {@link DeliveryGuarantee}s.
  *

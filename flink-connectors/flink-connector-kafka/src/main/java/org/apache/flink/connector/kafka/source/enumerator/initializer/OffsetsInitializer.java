@@ -44,6 +44,11 @@ import java.util.Map;
 public interface OffsetsInitializer extends Serializable {
 
     /**
+     * 获取给定Kafka分区的初始偏移量。这些偏移量将用作Kafka分区的启动偏移量或停止偏移量。
+     *
+     * <p>如果实现返回一个开始偏移量，导致Kafka {@code OffsetsOutOfRangeException}。
+     * {@link #getAutoOffsetResetStrategy()}提供的{@link OffsetResetStrategy}将用于重置偏移量。
+     *
      * Get the initial offsets for the given Kafka partitions. These offsets will be used as either
      * starting offsets or stopping offsets of the Kafka partitions.
      *
@@ -71,12 +76,16 @@ public interface OffsetsInitializer extends Serializable {
     OffsetResetStrategy getAutoOffsetResetStrategy();
 
     /**
+     * 一个接口，为{@link OffsetsInitializer}提供必要的信息，以获得Kafka分区的初始偏移量。
+     *
      * An interface that provides necessary information to the {@link OffsetsInitializer} to get the
      * initial offsets of the Kafka partitions.
      */
     interface PartitionOffsetsRetriever {
 
         /**
+         * 在调用这个方法之前，组id应该是为{@link KafkaSource KafkaSource}设置的。否则将抛出{@code IllegalStateException}。
+         *
          * The group id should be the set for {@link KafkaSource KafkaSource} before invoking this
          * method. Otherwise an {@code IllegalStateException} will be thrown.
          *
@@ -86,12 +95,15 @@ public interface OffsetsInitializer extends Serializable {
         Map<TopicPartition, Long> committedOffsets(Collection<TopicPartition> partitions);
 
         /** List end offsets for the specified partitions. */
+        // 列出指定分区的结束偏移量。
         Map<TopicPartition, Long> endOffsets(Collection<TopicPartition> partitions);
 
         /** List beginning offsets for the specified partitions. */
+        // 列出指定分区的开始偏移量。
         Map<TopicPartition, Long> beginningOffsets(Collection<TopicPartition> partitions);
 
         /** List offsets matching a timestamp for the specified partitions. */
+        // 列出与指定分区的时间戳匹配的偏移量。
         Map<TopicPartition, OffsetAndTimestamp> offsetsForTimes(
                 Map<TopicPartition, Long> timestampsToSearch);
     }

@@ -29,6 +29,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
+ * Kafka消费者允许几种不同的方式从主题中消费，包括:
+ *
+ * <p> KafkaSubscriber为Kafka源提供了一个统一的接口来支持这三种订阅模式。
+ *
  * Kafka consumer allows a few different ways to consume from the topics, including:
  *
  * <ol>

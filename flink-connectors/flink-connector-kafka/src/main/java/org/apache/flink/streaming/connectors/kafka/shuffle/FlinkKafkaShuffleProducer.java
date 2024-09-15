@@ -37,6 +37,8 @@ import java.util.Properties;
 import static org.apache.flink.streaming.connectors.kafka.shuffle.FlinkKafkaShuffle.PARTITION_NUMBER;
 
 /**
+ * Flink Kafka Shuffle Producer函数。它与{@link FlinkKafkaProducer}在处理元素和水印的方式上有所不同
+ *
  * Flink Kafka Shuffle Producer Function. It is different from {@link FlinkKafkaProducer} in the way
  * handling elements and watermarks
  */

@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /** Collection of methods to interact with Kafka's client metric system. */
+// 与Kafka的客户端度量系统交互的方法集合。
 @Internal
 public class MetricUtil {
 

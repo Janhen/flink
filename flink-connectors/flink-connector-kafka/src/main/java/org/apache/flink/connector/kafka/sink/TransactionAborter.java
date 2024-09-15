@@ -27,6 +27,8 @@ import java.util.function.Function;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 在重启时中止滞留事务。
+ *
  * Aborts lingering transactions on restart.
  *
  * <p>Transactions are lingering if they are not tracked anywhere. For example, if a job is started

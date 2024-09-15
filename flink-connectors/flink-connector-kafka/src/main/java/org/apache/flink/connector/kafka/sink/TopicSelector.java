@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 /**
+ * 为传入记录选择一个主题。
+ *
  * Selects a topic for the incoming record.
  *
  * @param <IN> type of the incoming record

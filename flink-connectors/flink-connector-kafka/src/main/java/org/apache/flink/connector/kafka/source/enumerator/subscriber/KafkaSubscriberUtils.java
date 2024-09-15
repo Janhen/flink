@@ -29,6 +29,7 @@ class KafkaSubscriberUtils {
 
     private KafkaSubscriberUtils() {}
 
+    // J: 所有 topic 名获取
     static Map<String, TopicDescription> getAllTopicMetadata(AdminClient adminClient) {
         try {
             Set<String> allTopicNames = adminClient.listTopics().names().get();
@@ -38,9 +39,11 @@ class KafkaSubscriberUtils {
         }
     }
 
+    // J: topic 元数据获取
     static Map<String, TopicDescription> getTopicMetadata(
             AdminClient adminClient, Set<String> topicNames) {
         try {
+            // J: 描述性元数据获取
             return adminClient.describeTopics(topicNames).all().get();
         } catch (Exception e) {
             throw new RuntimeException(
