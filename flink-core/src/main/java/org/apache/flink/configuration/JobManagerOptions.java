@@ -437,6 +437,7 @@ public class JobManagerOptions {
         AdaptiveBatch
     }
 
+    // J: 配置的调度模式
     @Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
     public static final ConfigOption<SchedulerExecutionMode> SCHEDULER_MODE =
             key("scheduler-mode")

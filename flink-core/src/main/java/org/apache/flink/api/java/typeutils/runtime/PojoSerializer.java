@@ -54,13 +54,19 @@ import java.util.stream.Collectors;
 
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
+// J: Pojo 序列化器，只负责将 header 序列化进去
 @Internal
 public final class PojoSerializer<T> extends TypeSerializer<T> {
 
     // Flags for the header
+    // 标头标志
+    // J: 是否是 null
     private static byte IS_NULL = 1;
+    // J: 无子类
     private static byte NO_SUBCLASS = 2;
+    // J: 是子类
     private static byte IS_SUBCLASS = 4;
+    // J: 死标记的子类
     private static byte IS_TAGGED_SUBCLASS = 8;
 
     private static final long serialVersionUID = 1L;
@@ -73,6 +79,8 @@ public final class PojoSerializer<T> extends TypeSerializer<T> {
     private final Class<T> clazz;
 
     /**
+     * POJO及其序列化器的字段。
+     *
      * Fields of the POJO and their serializers.
      *
      * <p>The fields are kept as a separate transient member, with their serialization handled with
@@ -82,9 +90,12 @@ public final class PojoSerializer<T> extends TypeSerializer<T> {
     private transient Field[] fields;
 
     private final TypeSerializer<Object>[] fieldSerializers;
+    // J: 记录属性数量
     private final int numFields;
 
     /**
+     * 已注册的子类及其序列化器。注册的类标记的每个子类都被维护为由类标记排序的单独映射。
+     *
      * Registered subclasses and their serializers. Each subclass to their registered class tag is
      * maintained as a separate map ordered by the class tag.
      */
@@ -93,6 +104,7 @@ public final class PojoSerializer<T> extends TypeSerializer<T> {
     private final TypeSerializer<?>[] registeredSerializers;
 
     /** Cache of non-registered subclasses to their serializers, created on-the-fly. */
+    // 将未注册的子类缓存到它们的序列化器，动态创建。
     private transient Map<Class<?>, TypeSerializer<?>> subclassSerializerCache;
 
     // --------------------------------------------------------------------------------------------
@@ -123,6 +135,7 @@ public final class PojoSerializer<T> extends TypeSerializer<T> {
         this.cl = Thread.currentThread().getContextClassLoader();
 
         // We only want those classes that are not our own class and are actually sub-classes.
+        // 只需要那些不是我们自己的类，实际上是子类的类。
         LinkedHashSet<Class<?>> registeredSubclasses =
                 getRegisteredSubclassesFromExecutionConfig(clazz, executionConfig);
 
@@ -319,6 +332,7 @@ public final class PojoSerializer<T> extends TypeSerializer<T> {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void serialize(T value, DataOutputView target) throws IOException {
+        // J: 对应 1 个字节用于将 header 序列化进去
         int flags = 0;
         // handle null values
         if (value == null) {

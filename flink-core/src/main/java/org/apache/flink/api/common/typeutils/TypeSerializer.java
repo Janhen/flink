@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * 此接口描述Flink运行时要处理的数据类型所需的方法。具体地说，这个接口包含序列化和复制方法。
+ *
  * This interface describes the methods that are required for a data type to be handled by the Flink
  * runtime. Specifically, this interface contains the serialization and copying methods.
  *
