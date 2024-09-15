@@ -54,6 +54,8 @@ class FlinkVolcanoProgram[OC <: FlinkOptimizeContext] extends FlinkRuleSetProgra
     // the VolcanoPlanner used to optimize the RelNode tree should be same instance.
     // see: VolcanoPlanner#registerImpl
     // here, use the planner in cluster directly
+
+    // J: HepPlanner
     val planner = root.getCluster.getPlanner.asInstanceOf[VolcanoPlanner]
     val optProgram = Programs.ofRules(rules)
 

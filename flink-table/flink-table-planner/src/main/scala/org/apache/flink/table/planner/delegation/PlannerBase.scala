@@ -71,6 +71,8 @@ import java.util.{Collections, TimeZone}
 import scala.collection.mutable
 
 /**
+ * [[Planner]]的实现。它只支持流用例。新的[[org.apache.flink.table.sources.]InputFormatTableSource[]应该可以工作，但将作为流源处理，并且不会应用特定于批处理的优化)。
+*
  * Implementation of a [[Planner]]. It supports only streaming use cases. (The new
  * [[org.apache.flink.table.sources.InputFormatTableSource]] should work, but will be handled as
  * streaming sources, and no batch specific optimizations will be applied).
@@ -175,6 +177,7 @@ abstract class PlannerBase(
     parser
   }
 
+  // J: 转换操作
   override def translate(
       modifyOperations: util.List[ModifyOperation]): util.List[Transformation[_]] = {
     beforeTranslation()
@@ -182,8 +185,11 @@ abstract class PlannerBase(
       return List.empty[Transformation[_]]
     }
 
+    // J: ModifyOperation => RelNode
     val relNodes = modifyOperations.map(translateToRel)
+    // 优化下 RelNode
     val optimizedRelNodes = optimize(relNodes)
+    //
     val execGraph = translateToExecNodeGraph(optimizedRelNodes, isCompiled = false)
     val transformations = translateToPlan(execGraph)
     afterTranslation()

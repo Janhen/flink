@@ -88,6 +88,7 @@ public class ParserImpl implements Parser {
      */
     @Override
     public List<Operation> parse(String statement) {
+        // J: 解析实现  Calcite   parquet
         CalciteParser parser = calciteParserSupplier.get();
         FlinkPlannerImpl planner = validatorSupplier.get();
 
@@ -98,6 +99,7 @@ public class ParserImpl implements Parser {
 
         // parse the sql query
         // use parseSqlList here because we need to support statement end with ';' in sql client.
+        // 解析sql查询在这里使用parseSqlList，因为我们需要在sql客户端中支持语句以';'结尾。
         SqlNodeList sqlNodeList = parser.parseSqlList(statement);
         List<SqlNode> parsed = sqlNodeList.getList();
         Preconditions.checkArgument(parsed.size() == 1, "only single statement supported");

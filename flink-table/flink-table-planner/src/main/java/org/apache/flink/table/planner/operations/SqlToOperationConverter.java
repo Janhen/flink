@@ -235,10 +235,12 @@ public class SqlToOperationConverter {
             FlinkPlannerImpl flinkPlanner, CatalogManager catalogManager, SqlNode sqlNode) {
         // validate the query
         final SqlNode validated = flinkPlanner.validate(sqlNode);
+        // J: 转换与验证
         return convertValidatedSqlNode(flinkPlanner, catalogManager, validated);
     }
 
     /** Convert a validated sql node to Operation. */
+    // 将已验证的sql节点转换为Operation。
     private static Optional<Operation> convertValidatedSqlNode(
             FlinkPlannerImpl flinkPlanner, CatalogManager catalogManager, SqlNode validated) {
         SqlToOperationConverter converter =

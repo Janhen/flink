@@ -34,7 +34,7 @@ class WindowEmitStrategy(
     isEventTime: JBoolean,
     isSessionWindow: JBoolean,
     earlyFireDelay: Duration,
-    earlyFireDelayEnabled: JBoolean,
+    earlyFireDelayEnabled: JBoolean,  // J: 提前触发器...
     lateFireDelay: Duration,
     lateFireDelayEnabled: JBoolean,
     allowLateness: JLong) {
