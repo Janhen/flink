@@ -99,6 +99,7 @@ public interface SchedulerNG extends GlobalFailureHandler, AutoCloseableAsync {
     // Methods below do not belong to Scheduler but are included due to historical reasons
     // ------------------------------------------------------------------------------------
 
+    // 下面的方法不属于Scheduler，但由于历史原因而包含在其中
     KvStateLocation requestKvStateLocation(JobID jobId, String registrationName)
             throws UnknownKvStateLocation, FlinkJobNotFoundException;
 

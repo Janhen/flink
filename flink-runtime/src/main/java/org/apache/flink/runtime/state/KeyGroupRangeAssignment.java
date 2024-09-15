@@ -123,6 +123,9 @@ public final class KeyGroupRangeAssignment {
      */
     public static int computeOperatorIndexForKeyGroup(
             int maxParallelism, int parallelism, int keyGroupId) {
+
+        // keyGroupId = MathUtils.murmurHash(keyHash) % maxParallelism
+        // (MathUtils.murmurHash(keyHash) % maxParallelism) * parallelism / maxParallelism
         return keyGroupId * parallelism / maxParallelism;
     }
 

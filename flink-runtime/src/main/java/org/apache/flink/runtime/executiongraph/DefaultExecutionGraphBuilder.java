@@ -143,6 +143,7 @@ public class DefaultExecutionGraphBuilder {
         // set the basic properties
 
         try {
+            // J: JSON 的执行计划
             executionGraph.setJsonPlan(JsonPlanGenerator.generatePlan(jobGraph));
         } catch (Throwable t) {
             log.warn("Cannot create JSON plan for job", t);
@@ -169,6 +170,7 @@ public class DefaultExecutionGraphBuilder {
             }
 
             try {
+                // J: 设置好每个节点的类加载器
                 vertex.initializeOnMaster(
                         new SimpleInitializeOnMasterContext(
                                 classLoader,
@@ -188,6 +190,7 @@ public class DefaultExecutionGraphBuilder {
                 (System.nanoTime() - initMasterStart) / 1_000_000);
 
         // topologically sort the job vertices and attach the graph to the existing one
+        // 对作业顶点进行拓扑排序，并将图附加到现有的图上
         List<JobVertex> sortedTopology = jobGraph.getVerticesSortedTopologicallyFromSources();
         if (log.isDebugEnabled()) {
             log.debug(
@@ -196,6 +199,7 @@ public class DefaultExecutionGraphBuilder {
                     jobName,
                     jobId);
         }
+        // 核心逻辑：将拓扑排序过的 JobGraph 添加到 executionGraph 数据结构中。
         executionGraph.attachJobGraph(sortedTopology);
 
         if (log.isDebugEnabled()) {

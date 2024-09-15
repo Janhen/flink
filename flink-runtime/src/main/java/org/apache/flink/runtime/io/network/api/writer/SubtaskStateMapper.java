@@ -41,6 +41,8 @@ import java.util.stream.IntStream;
 public enum SubtaskStateMapper {
 
     /**
+     * 额外的状态在没有任何特定保证的情况下被重新分配给其他子任务(只有上行和下行匹配)。
+     *
      * Extra state is redistributed to other subtasks without any specific guarantee (only that up-
      * and downstream are matched).
      */
@@ -83,6 +85,8 @@ public enum SubtaskStateMapper {
     },
 
     /**
+     * 将旧范围重新映射到新范围。对于较小的缩放，这意味着新的子任务通常分配2个旧的子任务。
+     *
      * Remaps old ranges to new ranges. For minor rescaling that means that new subtasks are mostly
      * assigned 2 old subtasks.
      *

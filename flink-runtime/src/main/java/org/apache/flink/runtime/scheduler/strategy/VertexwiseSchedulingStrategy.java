@@ -39,6 +39,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * {@link SchedulingStrategy}实例，以顶点粒度调度任务(这表明该策略只支持ALL_EDGES_BLOCKING批处理作业)。
+ *
+ * 注意这个策略实现了{@link SchedulingTopologyListener}，所以它可以处理调度拓扑的更新。
+ *
  * {@link SchedulingStrategy} instance which schedules tasks in granularity of vertex (which
  * indicates this strategy only supports ALL_EDGES_BLOCKING batch jobs). Note that this strategy
  * implements {@link SchedulingTopologyListener}, so it can handle the updates of scheduling

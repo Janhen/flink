@@ -35,6 +35,8 @@ public enum ResultPartitionType {
     BLOCKING(false, false, false, false, true),
 
     /**
+     * BLOCKING_PERSISTENT分区类似于{@link #BLOCKING}分区，但具有用户指定的生命周期。
+     *
      * BLOCKING_PERSISTENT partitions are similar to {@link #BLOCKING} partitions, but have a
      * user-specified life cycle.
      *
@@ -73,6 +75,8 @@ public enum ResultPartitionType {
     PIPELINED_BOUNDED(true, true, true, false, false),
 
     /**
+     * 带有有界(本地)缓冲池的流水线分区，支持在近似本地恢复中重新连接后继续使用数据的下游任务。
+     *
      * Pipelined partitions with a bounded (local) buffer pool to support downstream task to
      * continue consuming data after reconnection in Approximate Local-Recovery.
      *

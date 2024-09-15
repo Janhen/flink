@@ -407,6 +407,7 @@ public class JobGraph implements Serializable {
     //  Topological Graph Access
     // --------------------------------------------------------------------------------------------
 
+    // J: 拓扑排序访问
     public List<JobVertex> getVerticesSortedTopologicallyFromSources()
             throws InvalidProgramException {
         // early out on empty lists
