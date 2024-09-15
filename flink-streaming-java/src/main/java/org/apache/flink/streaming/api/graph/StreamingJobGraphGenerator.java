@@ -513,6 +513,7 @@ public class StreamingJobGraphGenerator {
     private void setChaining(Map<Integer, byte[]> hashes, List<Map<Integer, byte[]>> legacyHashes) {
         // we separate out the sources that run as inputs to another operator (chained inputs)
         // from the sources that needs to run as the main (head) operator.
+        // 我们将作为另一个操作符(链式输入)的输入从需要作为主(头)操作符运行的源中分离出来。
         final Map<Integer, OperatorChainInfo> chainEntryPoints =
                 buildChainedInputsAndGetHeadInputs(hashes, legacyHashes);
         final Collection<OperatorChainInfo> initialEntryPoints =
@@ -522,6 +523,7 @@ public class StreamingJobGraphGenerator {
                         .collect(Collectors.toList());
 
         // iterate over a copy of the values, because this map gets concurrently modified
+        // 迭代值的副本，因为该映射被并发修改
         for (OperatorChainInfo info : initialEntryPoints) {
             createChain(
                     info.getStartNodeId(),
@@ -531,6 +533,7 @@ public class StreamingJobGraphGenerator {
         }
     }
 
+    // J: 构建 node chains，返回当前节点的物理出边
     private List<StreamEdge> createChain(
             final Integer currentNodeId,
             final int chainIndex,
@@ -539,14 +542,14 @@ public class StreamingJobGraphGenerator {
 
         Integer startNodeId = chainInfo.getStartNodeId();
         if (!builtVertices.contains(startNodeId)) {
-
+            // J: 过渡用的出边集合, 用来生成最终的 JobEdge, 注意不包括 chain 内部的边
             List<StreamEdge> transitiveOutEdges = new ArrayList<StreamEdge>();
 
             List<StreamEdge> chainableOutputs = new ArrayList<StreamEdge>();
             List<StreamEdge> nonChainableOutputs = new ArrayList<StreamEdge>();
 
             StreamNode currentNode = streamGraph.getStreamNode(currentNodeId);
-
+             // J: 将当前节点的出边分成 chainable 和 nonChainable 两类
             for (StreamEdge outEdge : currentNode.getOutEdges()) {
                 if (isChainable(outEdge, streamGraph)) {
                     chainableOutputs.add(outEdge);
@@ -1061,14 +1064,17 @@ public class StreamingJobGraphGenerator {
     private static boolean isChainableInput(StreamEdge edge, StreamGraph streamGraph) {
         StreamNode upStreamVertex = streamGraph.getSourceVertex(edge);
         StreamNode downStreamVertex = streamGraph.getTargetVertex(edge);
-
+        // 上下游节点是相同的 SlotSharingGroup
         if (!(upStreamVertex.isSameSlotSharingGroup(downStreamVertex)
+            //
                 && areOperatorsChainable(upStreamVertex, downStreamVertex, streamGraph)
-                && arePartitionerAndExchangeModeChainable(
+                && arePartitionerAndExchangeModeChainable(  // J:
                         edge.getPartitioner(),
                         edge.getExchangeMode(),
                         streamGraph.getExecutionConfig().isDynamicGraph())
+                // J: 上下游并行度一致
                 && upStreamVertex.getParallelism() == downStreamVertex.getParallelism()
+                // 未关闭 chaining
                 && streamGraph.isChainingEnabled())) {
 
             return false;
@@ -1113,6 +1119,7 @@ public class StreamingJobGraphGenerator {
         // yielding operators cannot be chained to legacy sources
         // unfortunately the information that vertices have been chained is not preserved at this
         // point
+        // 生成操作符不能链接到遗留源，不幸的是，在这一点上没有保留链接顶点的信息
         if (downStreamOperator instanceof YieldingOperatorFactory
                 && getHeadOperator(upStreamVertex, streamGraph).isLegacySource()) {
             return false;
@@ -1126,6 +1133,7 @@ public class StreamingJobGraphGenerator {
             case NEVER:
                 isChainable = false;
                 break;
+                // J: 上游的 ChainingStrategy 为 ALWAYS、HEAD、HEAD_WITH_SOURCES
             case ALWAYS:
             case HEAD:
             case HEAD_WITH_SOURCES:
@@ -1141,6 +1149,7 @@ public class StreamingJobGraphGenerator {
             case HEAD:
                 isChainable = false;
                 break;
+            // J: 下游节点为 ALWAYS
             case ALWAYS:
                 // keep the value from upstream
                 break;

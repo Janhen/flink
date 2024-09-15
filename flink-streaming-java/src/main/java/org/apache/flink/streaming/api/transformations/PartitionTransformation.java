@@ -30,6 +30,8 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 这种转换表示输入元素划分的变化。
+ *
  * This transformation represents a change of partitioning of the input elements.
  *
  * <p>This does not create a physical operation, it only affects how upstream operations are

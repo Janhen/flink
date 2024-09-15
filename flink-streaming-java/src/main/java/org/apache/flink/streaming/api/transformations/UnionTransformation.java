@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 这个转换代表了几个输入{@link转换}的联合。
+ *
  * This transformation represents a union of several input {@link Transformation Transformations}.
  *
  * <p>This does not create a physical operation, it only affects how upstream operations are

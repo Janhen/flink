@@ -60,6 +60,7 @@ public class KeyGroupStreamPartitioner<T, K> extends StreamPartitioner<T>
             throw new RuntimeException(
                     "Could not extract key from " + record.getInstance().getValue(), e);
         }
+        // J: 根据 maxParallelism 和当前并行度去确认到哪个 subtask
         return KeyGroupRangeAssignment.assignKeyToParallelOperator(
                 key, maxParallelism, numberOfChannels);
     }

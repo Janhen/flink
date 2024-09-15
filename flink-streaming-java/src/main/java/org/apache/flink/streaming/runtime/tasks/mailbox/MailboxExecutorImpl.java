@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.concurrent.RejectedExecutionException;
 
 /** Implementation of an executor service build around a mailbox-based execution model. */
+// 围绕基于邮箱的执行模型构建的执行器服务的实现。
 @Internal
 public final class MailboxExecutorImpl implements MailboxExecutor {
 

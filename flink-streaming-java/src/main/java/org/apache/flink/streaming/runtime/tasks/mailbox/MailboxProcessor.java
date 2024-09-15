@@ -40,6 +40,8 @@ import static org.apache.flink.streaming.runtime.tasks.mailbox.TaskMailbox.MIN_P
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 该类封装了基于邮箱的执行模型的逻辑。
+ *
  * This class encapsulates the logic of the mailbox-based execution model. At the core of this model
  * {@link #runMailboxLoop()} that continuously executes the provided {@link MailboxDefaultAction} in
  * a loop. On each iteration, the method also checks if there are pending actions in the mailbox and
@@ -70,24 +72,30 @@ public class MailboxProcessor implements Closeable {
      * The mailbox data-structure that manages request for special actions, like timers,
      * checkpoints, ...
      */
+    // 邮箱数据结构用于管理特殊操作的请求，如计时器、检查点等。
     protected final TaskMailbox mailbox;
 
     /**
      * Action that is repeatedly executed if no action request is in the mailbox. Typically record
      * processing.
      */
+    // 如果邮箱中没有操作请求，则重复执行的操作。典型的记录处理。
     protected final MailboxDefaultAction mailboxDefaultAction;
 
     /**
+     *
+     *
      * Control flag to terminate the mailbox processor. Once it was terminated could not be
      * restarted again. Must only be accessed from mailbox thread.
      */
+    // 终止邮箱处理程序的控制标志。一旦被终止就不能再重新启动。只能从邮箱线程访问。
     private boolean mailboxLoopRunning;
 
     /**
      * Control flag to temporary suspend the mailbox loop/processor. After suspending the mailbox
      * processor can be still later resumed. Must only be accessed from mailbox thread.
      */
+    // 临时挂起邮箱循环处理器的控制标志。挂起邮箱处理器后，还可以稍后恢复。只能从邮箱线程访问。
     private boolean suspended;
 
     /**

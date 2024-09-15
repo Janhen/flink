@@ -173,6 +173,7 @@ public class StreamExecutionEnvironment {
     /** Settings that control the checkpointing behavior. */
     protected final CheckpointConfig checkpointCfg = new CheckpointConfig();
 
+    // J: Transformation 代表了从一个或多个 DataStream 生成新 DataStream 的操作
     protected final List<Transformation<?>> transformations = new ArrayList<>();
 
     private long bufferTimeout = ExecutionOptions.BUFFER_TIMEOUT.defaultValue().toMillis();
@@ -212,6 +213,7 @@ public class StreamExecutionEnvironment {
     private final List<JobListener> jobListeners = new ArrayList<>();
 
     // Records the slot sharing groups and their corresponding fine-grained ResourceProfile
+    // 记录槽位共享组及其对应的细粒度ResourceProfile
     private final Map<String, ResourceProfile> slotSharingGroupResources = new HashMap<>();
 
     // --------------------------------------------------------------------------------------------
@@ -2161,16 +2163,17 @@ public class StreamExecutionEnvironment {
 
         // We copy the transformation so that newly added transformations cannot intervene with the
         // stream graph generation.
+        // 复制转换，以便新添加的转换不能干预流图的生成。
         return new StreamGraphGenerator(
                         new ArrayList<>(transformations), config, checkpointCfg, configuration)
                 .setStateBackend(defaultStateBackend)
                 .setChangelogStateBackendEnabled(changelogStateBackendEnabled)
                 .setSavepointDir(defaultSavepointDirectory)
-                .setChaining(isChainingEnabled)
+                .setChaining(isChainingEnabled)  // J: 是否开启算子链
                 .setUserArtifacts(cacheFile)
                 .setTimeCharacteristic(timeCharacteristic)
                 .setDefaultBufferTimeout(bufferTimeout)
-                .setSlotSharingGroupResource(slotSharingGroupResources);
+                .setSlotSharingGroupResource(slotSharingGroupResources); // 记录槽位共享组及其对应的细粒度ResourceProfile
     }
 
     /**

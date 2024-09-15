@@ -571,6 +571,7 @@ public class DataStream<T> {
     public <R> SingleOutputStreamOperator<R> map(MapFunction<T, R> mapper) {
 
         TypeInformation<R> outType =
+            // J: Java 反射抽取出 mapper 的返回类型
                 TypeExtractor.getMapReturnTypes(
                         clean(mapper), getType(), Utils.getCallLocationName(), true);
 
@@ -590,6 +591,7 @@ public class DataStream<T> {
      */
     public <R> SingleOutputStreamOperator<R> map(
             MapFunction<T, R> mapper, TypeInformation<R> outputType) {
+        // J: 返回新的 DataStream，StreamMap 为 StreamOperator 的实现类
         return transform("Map", outputType, new StreamMap<>(clean(mapper)));
     }
 
@@ -1190,8 +1192,10 @@ public class DataStream<T> {
             StreamOperatorFactory<R> operatorFactory) {
 
         // read the output type of the input Transform to coax out errors about MissingTypeInfo
+        // 读取输入变换的输出类型，以引出有关MissingTypeInfo的错误
         transformation.getOutputType();
 
+        // J: 连接上当前 DataStream 中的 transformation，构造成树
         OneInputTransformation<T, R> resultTransform =
                 new OneInputTransformation<>(
                         this.transformation,
@@ -1204,6 +1208,7 @@ public class DataStream<T> {
         SingleOutputStreamOperator<R> returnStream =
                 new SingleOutputStreamOperator(environment, resultTransform);
 
+        // J: 所有 Transformation 存放到 env 当中，在 env#execute 时遍历该 list 生成 StreamGraph
         getExecutionEnvironment().addOperator(resultTransform);
 
         return returnStream;

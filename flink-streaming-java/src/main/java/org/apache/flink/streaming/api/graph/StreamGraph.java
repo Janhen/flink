@@ -665,8 +665,7 @@ public class StreamGraph implements Pipeline {
         StreamNode upstreamNode = getStreamNode(upStreamVertexID);
         StreamNode downstreamNode = getStreamNode(downStreamVertexID);
 
-        // If no partitioner was specified and the parallelism of upstream and downstream
-        // operator matches use forward partitioning, use rebalance otherwise.
+        // 如果没有指定 partitioner，并且上下游操作符的并行度匹配，则使用 ForwardPartitioner，否则使用 RebalancePartitioner。
         if (partitioner == null
                 && upstreamNode.getParallelism() == downstreamNode.getParallelism()) {
             partitioner =
@@ -674,6 +673,7 @@ public class StreamGraph implements Pipeline {
                             ? new ForwardForUnspecifiedPartitioner<>()
                             : new ForwardPartitioner<>();
         } else if (partitioner == null) {
+            // J: 上下游并行度不一致，且未指定 partition 时，使用 RebalancePartitioner，Roube-ro
             partitioner = new RebalancePartitioner<Object>();
         }
 

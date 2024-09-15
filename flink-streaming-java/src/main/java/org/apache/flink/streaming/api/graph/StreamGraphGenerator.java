@@ -102,6 +102,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 从{@link Transformation}的图生成{@link StreamGraph}的生成器。
+ *
  * A generator that generates a {@link StreamGraph} from a graph of {@link Transformation}s.
  *
  * <p>This traverses the tree of {@code Transformations} starting from the sinks. At each
@@ -493,6 +495,8 @@ public class StreamGraphGenerator {
     }
 
     /**
+     * 转换一个{@code Transformation}。
+     *
      * Transforms one {@code Transformation}.
      *
      * <p>This checks whether we already transformed it and exits early in that case. If not it

@@ -64,6 +64,10 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 对于所有打算实现只执行一次语义的{@link SinkFunction}，推荐使用这个基类。
+ * 它通过在{@link CheckpointedFunction}和{@link CheckpointListener}之上实现两阶段提交算法来实现这一点。
+ * 用户应该提供自定义{@code TXN}(事务句柄)并实现处理该事务句柄的抽象方法。
+ *
  * This is a recommended base class for all of the {@link SinkFunction} that intend to implement
  * exactly-once semantic. It does that by implementing two phase commit algorithm on top of the
  * {@link CheckpointedFunction} and {@link CheckpointListener}. User should provide custom {@code
@@ -380,6 +384,11 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
         // we can have more than one transaction to check in case of a scale-in event, or
         // for the reasons discussed in the 'notifyCheckpointComplete()' method.
 
+        // J: 提取出 sink 的状态
+        // 当我们使用pendingCommitTransactions恢复状态时，我们并不真正知道事务是否已经提交，或者在完成主服务器上的检查点和通知编写器之间是否存在失败。
+        // (通常的情况是已经提交了，主服务器上的提交和通知之间的窗口非常小)
+        // 如果在第一个完成的检查点之前发生了失败，或者发生了扩展事件(其中一些新任务没有被分配给检查的事务)，则可能根本没有任何事务。
+        // 在缩放事件的情况下，或者由于'notifyCheckpointComplete()'方法中讨论的原因，我们可以检查多个事务。
         state = context.getOperatorStateStore().getListState(stateDescriptor);
 
         boolean recoveredUserContext = false;
@@ -443,6 +452,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
      */
     private void recoverAndCommitInternal(TransactionHolder<TXN> transactionHolder) {
         try {
+            // J: 如果超时即将达到，则记录警告
             logWarningIfTimeoutAlmostReached(transactionHolder);
             recoverAndCommit(transactionHolder.handle);
         } catch (final Exception e) {
@@ -536,6 +546,7 @@ public abstract class TwoPhaseCommitSinkFunction<IN, TXN, CONTEXT> extends RichS
     }
 
     /** State POJO class coupling pendingTransaction, context and pendingCommitTransactions. */
+    // 状态POJO类耦合pendingTransaction、context和pendingCommitTransactions。
     @VisibleForTesting
     @Internal
     public static final class State<TXN, CONTEXT> {
