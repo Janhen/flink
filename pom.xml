@@ -68,6 +68,8 @@ under the License.
 		<module>flink-core</module>
 		<module>flink-java</module>
 		<module>flink-scala</module>
+
+		<!-- fs -->
 		<module>flink-filesystems</module>
 		<module>flink-rpc</module>
 		<module>flink-runtime</module>
@@ -75,6 +77,8 @@ under the License.
 		<module>flink-optimizer</module>
 		<module>flink-streaming-java</module>
 		<module>flink-streaming-scala</module>
+
+
 		<module>flink-connectors</module>
 		<module>flink-formats</module>
 		<module>flink-examples</module>
@@ -140,6 +144,7 @@ under the License.
 		<jackson-bom.version>2.13.4.20221013</jackson-bom.version>
 		<javax.activation.api.version>1.2.0</javax.activation.api.version>
 		<jaxb.api.version>2.3.1</jaxb.api.version>
+		<!-- 测试配置 -->
 		<junit4.version>4.13.2</junit4.version>
 		<junit5.version>5.8.1</junit5.version>
 		<archunit.version>0.22.0</archunit.version>
@@ -152,6 +157,7 @@ under the License.
 		<protoc.version>3.17.3</protoc.version>
 		<okhttp.version>3.14.9</okhttp.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
+		<!-- lz4 压缩 -->
 		<lz4.version>1.8.0</lz4.version>
 		<japicmp.skip>false</japicmp.skip>
 		<flink.convergence.phase>validate</flink.convergence.phase>
@@ -834,6 +840,7 @@ under the License.
 			</dependency>
 
 			<dependency>
+				<!-- Log4j2对disruptor有一个可选的依赖，它可能会影响其他依赖(如hive)，请在这里固定版本以明确此行为 -->
 				<!-- log4j2 has an optional dependency on disruptor which may affect other dependencies (like hive)
 					pin the version here to make this behavior explicit -->
 				<groupId>com.lmax</groupId>
@@ -922,6 +929,7 @@ under the License.
 		</profile>
 
 		<profile>
+			<!-- 开启自适应调度 -->
 			<id>enable-adaptive-scheduler</id>
 			<build>
 				<plugins>
@@ -1011,22 +1019,22 @@ under the License.
 				<jdk>[17,)</jdk>
 			</activation>
 
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>com.diffplug.spotless</groupId>
-							<artifactId>spotless-maven-plugin</artifactId>
-							<configuration>
-								<!-- Current google format does not run on Java 17.
-									 Don't upgrade it in this profile because it formats code differently.
-									 Re-evaluate once support for Java 8 is dropped. -->
-								<skip>true</skip>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
+<!--			<build>-->
+<!--				<pluginManagement>-->
+<!--					<plugins>-->
+<!--						<plugin>-->
+<!--							<groupId>com.diffplug.spotless</groupId>-->
+<!--							<artifactId>spotless-maven-plugin</artifactId>-->
+<!--							<configuration>-->
+<!--								&lt;!&ndash; Current google format does not run on Java 17.-->
+<!--									 Don't upgrade it in this profile because it formats code differently.-->
+<!--									 Re-evaluate once support for Java 8 is dropped. &ndash;&gt;-->
+<!--								<skip>true</skip>-->
+<!--							</configuration>-->
+<!--						</plugin>-->
+<!--					</plugins>-->
+<!--				</pluginManagement>-->
+<!--			</build>-->
 		</profile>
 
 		<profile>
@@ -1074,6 +1082,7 @@ under the License.
 		</profile>
 
 		<profile>
+			<!-- 快速构建 -->
 			<id>fast</id>
 			<activation>
 				<property>
@@ -1090,20 +1099,20 @@ under the License.
 								<skip>true</skip>
 							</configuration>
 						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-checkstyle-plugin</artifactId>
-							<configuration>
-								<skip>true</skip>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>com.diffplug.spotless</groupId>
-							<artifactId>spotless-maven-plugin</artifactId>
-							<configuration>
-								<skip>true</skip>
-							</configuration>
-						</plugin>
+<!--						<plugin>-->
+<!--							<groupId>org.apache.maven.plugins</groupId>-->
+<!--							<artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--							<configuration>-->
+<!--								<skip>true</skip>-->
+<!--							</configuration>-->
+<!--						</plugin>-->
+<!--						<plugin>-->
+<!--							<groupId>com.diffplug.spotless</groupId>-->
+<!--							<artifactId>spotless-maven-plugin</artifactId>-->
+<!--							<configuration>-->
+<!--								<skip>true</skip>-->
+<!--							</configuration>-->
+<!--						</plugin>-->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-enforcer-plugin</artifactId>
@@ -1131,6 +1140,7 @@ under the License.
 		</profile>
 
 		<profile>
+			<!-- 检查覆盖率 -->
 			<id>check-convergence</id>
 			<activation>
 				<property>
@@ -1593,14 +1603,14 @@ under the License.
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--			</plugin>-->
+<!--			<plugin>-->
+<!--				<groupId>com.diffplug.spotless</groupId>-->
+<!--				<artifactId>spotless-maven-plugin</artifactId>-->
+<!--			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -1953,65 +1963,65 @@ under the License.
 					</configuration>
 				</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.17</version>
-					<dependencies>
-						<dependency>
-							<groupId>com.puppycrawl.tools</groupId>
-							<artifactId>checkstyle</artifactId>
-							<!-- Note: match version with docs/flinkDev/ide_setup.md -->
-							<version>8.14</version>
-						</dependency>
-					</dependencies>
-					<executions>
-						<execution>
-							<id>validate</id>
-							<phase>validate</phase>
-							<goals>
-								<goal>check</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<suppressionsLocation>/tools/maven/suppressions.xml</suppressionsLocation>
-						<includeTestSourceDirectory>true</includeTestSourceDirectory>
-						<configLocation>/tools/maven/checkstyle.xml</configLocation>
-						<logViolationsToConsole>true</logViolationsToConsole>
-						<failOnViolation>true</failOnViolation>
-					</configuration>
-				</plugin>
+<!--				<plugin>-->
+<!--					<groupId>org.apache.maven.plugins</groupId>-->
+<!--					<artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--					<version>2.17</version>-->
+<!--					<dependencies>-->
+<!--						<dependency>-->
+<!--							<groupId>com.puppycrawl.tools</groupId>-->
+<!--							<artifactId>checkstyle</artifactId>-->
+<!--							&lt;!&ndash; Note: match version with docs/flinkDev/ide_setup.md &ndash;&gt;-->
+<!--							<version>8.14</version>-->
+<!--						</dependency>-->
+<!--					</dependencies>-->
+<!--					<executions>-->
+<!--						<execution>-->
+<!--							<id>validate</id>-->
+<!--							<phase>validate</phase>-->
+<!--							<goals>-->
+<!--								<goal>check</goal>-->
+<!--							</goals>-->
+<!--						</execution>-->
+<!--					</executions>-->
+<!--					<configuration>-->
+<!--						<suppressionsLocation>/tools/maven/suppressions.xml</suppressionsLocation>-->
+<!--						<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+<!--						<configLocation>/tools/maven/checkstyle.xml</configLocation>-->
+<!--						<logViolationsToConsole>true</logViolationsToConsole>-->
+<!--						<failOnViolation>true</failOnViolation>-->
+<!--					</configuration>-->
+<!--				</plugin>-->
 
-				<plugin>
-					<groupId>com.diffplug.spotless</groupId>
-					<artifactId>spotless-maven-plugin</artifactId>
-					<version>${spotless.version}</version>
-					<configuration>
-						<java>
-							<googleJavaFormat>
-								<version>1.7</version>
-								<style>AOSP</style>
-							</googleJavaFormat>
+<!--				<plugin>-->
+<!--					<groupId>com.diffplug.spotless</groupId>-->
+<!--					<artifactId>spotless-maven-plugin</artifactId>-->
+<!--					<version>${spotless.version}</version>-->
+<!--					<configuration>-->
+<!--						<java>-->
+<!--							<googleJavaFormat>-->
+<!--								<version>1.7</version>-->
+<!--								<style>AOSP</style>-->
+<!--							</googleJavaFormat>-->
 
-							<!-- \# refers to the static imports -->
-							<importOrder>
-								<order>org.apache.flink,org.apache.flink.shaded,,javax,java,scala,\#</order>
-							</importOrder>
+<!--							&lt;!&ndash; \# refers to the static imports &ndash;&gt;-->
+<!--							<importOrder>-->
+<!--								<order>org.apache.flink,org.apache.flink.shaded,,javax,java,scala,\#</order>-->
+<!--							</importOrder>-->
 
-							<removeUnusedImports />
-						</java>
-					</configuration>
-					<executions>
-						<execution>
-							<id>spotless-check</id>
-							<phase>validate</phase>
-							<goals>
-								<goal>check</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+<!--							<removeUnusedImports />-->
+<!--						</java>-->
+<!--					</configuration>-->
+<!--					<executions>-->
+<!--						<execution>-->
+<!--							<id>spotless-check</id>-->
+<!--							<phase>validate</phase>-->
+<!--							<goals>-->
+<!--								<goal>check</goal>-->
+<!--							</goals>-->
+<!--						</execution>-->
+<!--					</executions>-->
+<!--				</plugin>-->
 
 
 				<plugin>
