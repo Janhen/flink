@@ -37,6 +37,7 @@ under the License.
 	</properties>
 
 	<repositories>
+		<!-- confluent 提供的仓库 -->
 		<repository>
 			<id>confluent</id>
 			<url>https://packages.confluent.io/maven/</url>
