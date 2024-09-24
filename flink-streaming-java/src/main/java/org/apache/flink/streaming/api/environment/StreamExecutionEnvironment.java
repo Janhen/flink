@@ -1993,6 +1993,7 @@ public class StreamExecutionEnvironment {
                 jobExecutionResult = new DetachedJobExecutionResult(jobClient.getJobID());
             }
 
+            // J: 注入 listener
             jobListeners.forEach(
                     jobListener -> jobListener.onJobExecuted(jobExecutionResult, null));
 
@@ -2083,6 +2084,7 @@ public class StreamExecutionEnvironment {
                 configuration.get(DeploymentOptions.TARGET),
                 "No execution.target specified in your configuration file.");
 
+        // J: pipeline executor
         final PipelineExecutorFactory executorFactory =
                 executorServiceLoader.getExecutorFactory(configuration);
 
@@ -2091,6 +2093,7 @@ public class StreamExecutionEnvironment {
                 "Cannot find compatible factory for specified execution.target (=%s)",
                 configuration.get(DeploymentOptions.TARGET));
 
+        // J: 封装异步执行状况
         CompletableFuture<JobClient> jobClientFuture =
                 executorFactory
                         .getExecutor(configuration)
@@ -2134,6 +2137,7 @@ public class StreamExecutionEnvironment {
      */
     @Internal
     public StreamGraph getStreamGraph(boolean clearTransformations) {
+        // transformations 的转换生成 StreamGraph
         final StreamGraph streamGraph = getStreamGraphGenerator(transformations).generate();
         if (clearTransformations) {
             transformations.clear();

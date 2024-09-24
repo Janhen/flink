@@ -123,6 +123,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /** Base class which can be used to implement {@link SchedulerNG}. */
+// 基类，可以用来实现{@link SchedulerNG}。
 public abstract class SchedulerBase implements SchedulerNG, CheckpointScheduling {
 
     private final Logger log;
@@ -622,6 +623,7 @@ public abstract class SchedulerBase implements SchedulerNG, CheckpointScheduling
                 executionGraph.getStatusTimestamp(JobStatus.INITIALIZING),
                 jobStatusMetricsSettings);
         operatorCoordinatorHandler.startAllOperatorCoordinators();
+        //
         startSchedulingInternal();
     }
 

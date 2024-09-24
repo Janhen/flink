@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /** Service used by the {@link JobMaster} to manage a slot pool. */
+// {@link JobMaster}用来管理槽位池的服务。
 public interface SlotPoolService extends AutoCloseable {
 
     /**
@@ -70,6 +71,8 @@ public interface SlotPoolService extends AutoCloseable {
     void close();
 
     /**
+     * 为{@link SlotPoolService}提供多个插槽。通过返回已接受的插槽提供的集合，可以单独接受或拒绝插槽提供。
+     *
      * Offers multiple slots to the {@link SlotPoolService}. The slot offerings can be individually
      * accepted or rejected by returning the collection of accepted slot offers.
      *

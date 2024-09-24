@@ -58,6 +58,8 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 调度Flink作业。
+ *
  * Interface for scheduling Flink jobs.
  *
  * <p>Instances are created via {@link SchedulerNGFactory}, and receive a {@link JobGraph} when
@@ -68,6 +70,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface SchedulerNG extends GlobalFailureHandler, AutoCloseableAsync {
 
+    // J: 接口
     void startScheduling();
 
     void cancel();

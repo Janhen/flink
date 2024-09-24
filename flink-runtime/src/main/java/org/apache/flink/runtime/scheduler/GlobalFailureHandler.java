@@ -20,6 +20,9 @@
 package org.apache.flink.runtime.scheduler;
 
 /**
+ * 处理全局故障的接口。在调度器上下文中，我们区分本地和全局故障。全局故障是发生在调度器上下文中(在JobManager进程中)
+ * 的故障，而本地故障是发生在执行任务的“本地”故障。
+ *
  * An interface for handling global failures. In context of a scheduler we distinguish between local
  * and global failures. Global failure is the one that happens in context of the scheduler (in the
  * JobManager process) and local failure is one that is "local" to an executing task.

@@ -415,9 +415,11 @@ public class JobGraph implements Serializable {
             return Collections.emptyList();
         }
 
+        //
         List<JobVertex> sorted = new ArrayList<JobVertex>(this.taskVertices.size());
         Set<JobVertex> remaining = new LinkedHashSet<JobVertex>(this.taskVertices.values());
 
+        // 首先找到没有输入边的顶点和没有连接输入边的顶点(指一些独立的数据集)。
         // start by finding the vertices with no input edges
         // and the ones with disconnected inputs (that refer to some standalone data set)
         {

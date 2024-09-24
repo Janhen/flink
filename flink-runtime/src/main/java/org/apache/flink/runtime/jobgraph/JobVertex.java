@@ -41,6 +41,7 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The base class for job vertexes. */
+// 作业顶点的基类
 public class JobVertex implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,6 +74,7 @@ public class JobVertex implements java.io.Serializable {
     private final List<OperatorIDPair> operatorIDs;
 
     /** List of produced data sets, one per writer. */
+    // 生成的数据集列表，每个编写器一个。
     private final ArrayList<IntermediateDataSet> results = new ArrayList<>();
 
     /** List of edges with incoming data. One per Reader. */
@@ -113,15 +115,20 @@ public class JobVertex implements java.io.Serializable {
     private String name;
 
     /**
+     * 可选地，允许来自不同作业顶点的子任务在一个槽中并发运行的共享组。
+     *
      * Optionally, a sharing group that allows subtasks from different job vertices to run
      * concurrently in one slot.
      */
     @Nullable private SlotSharingGroup slotSharingGroup;
 
     /** The group inside which the vertex subtasks share slots. */
+    // 顶点子任务共享槽的组。
     @Nullable private CoLocationGroupImpl coLocationGroup;
 
     /**
+     * 可选的，操作符的名称，如'Flat Map'或'Join'，将包含在JSON计划中。
+     *
      * Optional, the name of the operator, such as 'Flat Map' or 'Join', to be included in the JSON
      * plan.
      */
@@ -137,6 +144,8 @@ public class JobVertex implements java.io.Serializable {
     private String operatorPrettyName;
 
     /**
+     * 可选的，用于操作符结果的优化器属性的JSON，要包含在JSON计划中。
+     *
      * Optional, the JSON for the optimizer properties of the operator result, to be included in the
      * JSON plan.
      */

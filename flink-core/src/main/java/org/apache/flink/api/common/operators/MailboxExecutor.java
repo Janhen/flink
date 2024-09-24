@@ -90,6 +90,8 @@ public interface MailboxExecutor {
     Object[] EMPTY_ARGS = new Object[0];
 
     /**
+     * 在将来的某个时间在邮箱线程中执行给定的命令。
+     *
      * Executes the given command at some time in the future in the mailbox thread.
      *
      * <p>An optional description can (and should) be added to ease debugging and error-reporting.

@@ -245,6 +245,7 @@ public class Task
     private final AccumulatorRegistry accumulatorRegistry;
 
     /** The thread that executes the task. */
+    // 执行任务的线程。
     private final Thread executingThread;
 
     /** Parent group for all metrics of this task. */
@@ -254,6 +255,7 @@ public class Task
     private final PartitionProducerStateChecker partitionProducerStateChecker;
 
     /** Executor to run future callbacks. */
+    // 执行器以运行未来的回调。
     private final Executor executor;
 
     /** Future that is completed once {@link #run()} exits. */
@@ -552,6 +554,7 @@ public class Task
     }
 
     /** Starts the task's thread. */
+    // 启动任务的线程。
     public void startTaskThread() {
         executingThread.start();
     }

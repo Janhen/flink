@@ -74,6 +74,7 @@ public class DefaultSchedulerFactory implements SchedulerNGFactory {
             final JobStatusListener jobStatusListener)
             throws Exception {
 
+        // J: slot pool
         final SlotPool slotPool =
                 slotPoolService
                         .castInto(SlotPool.class)

@@ -37,6 +37,12 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
+ * 多个{@link TaskSlot}实例的容器。此外，它维护多个索引，以便更快地访问任务和分配的槽集。
+ *
+ * <p>任务槽位表自动注册已分配槽位的超时，这些槽位不能分配给作业管理器。
+ *
+ * <p>在任务槽表被使用之前，它必须通过{@link #start}方法启动。
+ *
  * Container for multiple {@link TaskSlot} instances. Additionally, it maintains multiple indices
  * for faster access to tasks and sets of allocated slots.
  *

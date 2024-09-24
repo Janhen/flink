@@ -112,6 +112,7 @@ public class DefaultScheduler extends SchedulerBase implements SchedulerOperatio
     // anymore. The reserved allocation information is needed for local recovery.
     private final Map<ExecutionVertexID, AllocationID> reservedAllocationByExecutionVertex;
 
+    // J: 默认的 scheduler
     DefaultScheduler(
             final Logger log,
             final JobGraph jobGraph,

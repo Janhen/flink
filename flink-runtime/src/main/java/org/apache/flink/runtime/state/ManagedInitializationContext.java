@@ -36,6 +36,7 @@ import java.util.OptionalLong;
 public interface ManagedInitializationContext {
 
     /** Returns true, if state was restored from the snapshot of a previous execution. */
+    // 如果从前一次执行的快照恢复状态，则返回 true。
     default boolean isRestored() {
         return getRestoredCheckpointId().isPresent();
     }

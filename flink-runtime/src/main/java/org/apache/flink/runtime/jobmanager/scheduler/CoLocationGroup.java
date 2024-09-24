@@ -25,6 +25,11 @@ import org.apache.flink.util.AbstractID;
 import java.util.List;
 
 /**
+ * {@code CoLocationGroup}引用了一个{@link JobVertex}实例的列表，其中一个顶点的<i>第i>个<i>子任务必须在同一个
+ * {@code TaskManager}上执行，就像在同一组中所有其他{@code JobVertex}实例的<i>第i>个<i>子任务一样。
+ *
+ * <p> co-location组用于确保迭代头和迭代尾的第i个子任务被安排在同一个TaskManager上。
+ *
  * {@code CoLocationGroup} refers to a list of {@link JobVertex} instances, where the <i>i-th</i>
  * subtask of one vertex has to be executed on the same {@code TaskManager} as the <i>i-th</i>
  * subtask of all other {@code JobVertex} instances in the same group.

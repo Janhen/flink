@@ -33,6 +33,8 @@ public interface ProcessingTimeService {
     long getCurrentProcessingTime();
 
     /**
+     * 注册一个任务，当(处理)时间为{@code timestamp}时执行。
+     *
      * Registers a task to be executed when (processing) time is {@code timestamp}.
      *
      * @param timestamp Time when the task is to be executed (in processing time)
@@ -43,6 +45,8 @@ public interface ProcessingTimeService {
     ScheduledFuture<?> registerTimer(long timestamp, ProcessingTimeCallback target);
 
     /**
+     * 一个可以通过{@link #registerTimer(long, ProcessingTimeCallback)}注册的回调。
+     *
      * A callback that can be registered via {@link #registerTimer(long, ProcessingTimeCallback)}.
      */
     @PublicEvolving

@@ -177,6 +177,8 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * TaskExecutor实现。任务执行器负责执行多个{@link Task}。
+ *
  * TaskExecutor implementation. The task executor is responsible for the execution of multiple
  * {@link Task}.
  */
@@ -228,6 +230,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
 
     // --------- task slot allocation table -----------
 
+    // J: TaskExecutor 中使用 TaskSlotTable 进行管控
     private final TaskSlotTable<Task> taskSlotTable;
 
     private final Map<JobID, UUID> currentSlotOfferPerJob = new HashMap<>();
@@ -721,6 +724,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
                 throw new TaskSubmissionException("Could not submit task.", e);
             }
 
+            // J: 构造 Task
             Task task =
                     new Task(
                             jobInformation,
@@ -763,6 +767,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
             boolean taskAdded;
 
             try {
+                // J: 管控的类 taskSlotTable
                 taskAdded = taskSlotTable.addTask(task);
             } catch (SlotNotFoundException | SlotNotActiveException e) {
                 throw new TaskSubmissionException("Could not submit task.", e);
@@ -1059,6 +1064,8 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
             final Time timeout) {
         // TODO: Filter invalid requests from the resource manager by using the
         // instance/registration Id
+
+        // ResourceManager 通过该类的 requestSlot 请求 slot
 
         log.info(
                 "Receive slot request {} for job {} from resource manager with leader id {}.",
