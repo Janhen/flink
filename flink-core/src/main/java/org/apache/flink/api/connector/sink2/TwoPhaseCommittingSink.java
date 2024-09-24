@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * 使用两阶段提交协议的精确一次语义{@link Sink}。{@link Sink}由执行预提交的{@link SinkWriter}和实际提交数据的
+ * {@link Committer}组成。为了便于分离，{@link SinkWriter}在检查点或输入结束处创建<i>可提交文件，并将其发送给
+ * {@link Committer}。
+ *
  * A {@link Sink} for exactly-once semantics using a two-phase commit protocol. The {@link Sink}
  * consists of a {@link SinkWriter} that performs the precommits and a {@link Committer} that
  * actually commits the data. To facilitate the separation the {@link SinkWriter} creates
@@ -68,6 +72,10 @@ public interface TwoPhaseCommittingSink<InputT, CommT> extends Sink<InputT> {
     @PublicEvolving
     interface PrecommittingSinkWriter<InputT, CommT> extends SinkWriter<InputT> {
         /**
+         * 准备提交。
+         *
+         * <p>此方法将在{@link #flush(boolean)}之后和{@link StatefulSinkWriter#snapshotState(long)}之前调用。
+         *
          * Prepares for a commit.
          *
          * <p>This method will be called after {@link #flush(boolean)} and before {@link

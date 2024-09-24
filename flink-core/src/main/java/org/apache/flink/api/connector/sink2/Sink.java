@@ -73,6 +73,11 @@ public interface Sink<InputT> extends Serializable {
         UserCodeClassLoader getUserCodeClassLoader();
 
         /**
+         * 返回邮箱执行程序，该执行程序允许在记录处理之间的任务线程内执行 {@link Runnable}。
+         *
+         * <p>请注意，出于性能原因，不应该对每个记录使用此方法，就像不应该将记录单独发送到外部系统一样。更确切地说，
+         * 实现者希望对记录进行批处理，并且每个批处理只对单个{@link Runnable}进行队列处理结果。
+         *
          * Returns the mailbox executor that allows to execute {@link Runnable}s inside the task
          * thread in between record processing.
          *

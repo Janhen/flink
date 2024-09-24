@@ -100,6 +100,8 @@ import org.apache.flink.annotation.Public;
 public interface CheckpointListener {
 
     /**
+     * 通知侦听器具有给定{@code checkpointId}的检查点已完成并已提交。
+     *
      * Notifies the listener that the checkpoint with the given {@code checkpointId} completed and
      * was committed.
      *
@@ -124,6 +126,8 @@ public interface CheckpointListener {
     void notifyCheckpointComplete(long checkpointId) throws Exception;
 
     /**
+     * 一旦终止分布式检查点，将作为通知调用此方法。
+     *
      * This method is called as a notification once a distributed checkpoint has been aborted.
      *
      * <p><b>Important:</b> The fact that a checkpoint has been aborted does NOT mean that the data

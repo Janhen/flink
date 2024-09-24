@@ -44,6 +44,8 @@ import java.util.List;
 public interface StatefulSink<InputT, WriterStateT> extends Sink<InputT> {
 
     /**
+     * 覆盖了 {@link Sink#createWriter(InitContext)}
+     * 
      * Create a {@link StatefulSinkWriter}.
      *
      * @param context the runtime context.
@@ -63,6 +65,9 @@ public interface StatefulSink<InputT, WriterStateT> extends Sink<InputT> {
             InitContext context, Collection<WriterStateT> recoveredState) throws IOException;
 
     /**
+     * 任何有状态接收器都需要提供这个状态序列化器，并正确地实现{@link StatefulSinkWriter#snapshotState(long)}。
+     * 各自的状态在{@link #restoreWriter(InitContext, Collection)}中用于恢复。
+     *
      * Any stateful sink needs to provide this state serializer and implement {@link
      * StatefulSinkWriter#snapshotState(long)} properly. The respective state is used in {@link
      * #restoreWriter(InitContext, Collection)} on recovery.
@@ -72,6 +77,8 @@ public interface StatefulSink<InputT, WriterStateT> extends Sink<InputT> {
     SimpleVersionedSerializer<WriterStateT> getWriterStateSerializer();
 
     /**
+     * {@link StatefulSink} 的混合，允许用户从具有兼容状态的接收器迁移到此接收器。
+     *
      * A mix-in for {@link StatefulSink} that allows users to migrate from a sink with a compatible
      * state to this sink.
      */
@@ -86,6 +93,8 @@ public interface StatefulSink<InputT, WriterStateT> extends Sink<InputT> {
     }
 
     /**
+     * {@link SinkWriter} 的状态需要被检查点。
+     *
      * A {@link SinkWriter} whose state needs to be checkpointed.
      *
      * @param <InputT> The type of the sink writer's input

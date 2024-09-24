@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * {@code Committer}负责提交由{@link TwoPhaseCommittingSink.PrecommittingSinkWriter}。在两阶段提交协议的
+ * {@code Committer} 负责提交由{@link TwoPhaseCommittingSink.PrecommittingSinkWriter}。在两阶段提交协议的
  * 第二步预提交sinkwriter}。
  *
  * <p>提交必须是幂等的:如果Flink在提交阶段发生了一些失败，Flink将从之前的检查点重新开始，并重新尝试提交所有的提交。
@@ -68,12 +68,16 @@ public interface Committer<CommT> extends AutoCloseable {
         CommT getCommittable();
 
         /**
+         * 返回重试此特定可提交文件的次数。第一次尝试从0开始。
+         *
          * Returns how many times this particular committable has been retried. Starts at 0 for the
          * first attempt.
          */
         int getNumberOfRetries();
 
         /**
+         * 由于已知的原因，提交失败，不应该重试。
+         *
          * The commit failed for known reason and should not be retried.
          *
          * <p>Currently calling this method only logs the error, discards the comittable and
@@ -82,6 +86,8 @@ public interface Committer<CommT> extends AutoCloseable {
         void signalFailedWithKnownReason(Throwable t);
 
         /**
+         * 提交因未知原因失败，不应重试。
+         *
          * The commit failed for unknown reason and should not be retried.
          *
          * <p>Currently calling this method fails the job. In the future the behaviour might be

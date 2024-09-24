@@ -24,6 +24,8 @@ import org.apache.flink.api.common.eventtime.Watermark;
 import java.io.IOException;
 
 /**
+ * {@code SinkWriter}负责写入数据。
+ *
  * The {@code SinkWriter} is responsible for writing data.
  *
  * @param <InputT> The type of the sink writer's input
@@ -32,6 +34,8 @@ import java.io.IOException;
 public interface SinkWriter<InputT> extends AutoCloseable {
 
     /**
+     * 向写入器添加元素。
+     *
      * Adds an element to the writer.
      *
      * @param element The input record
@@ -41,12 +45,18 @@ public interface SinkWriter<InputT> extends AutoCloseable {
     void write(InputT element, Context context) throws IOException, InterruptedException;
 
     /**
+     * 在检查点或输入结束时调用，以便写入器至少一次刷新所有挂起的数据。
+     *
      * Called on checkpoint or end of input so that the writer to flush all pending data for
      * at-least-once.
      */
     void flush(boolean endOfInput) throws IOException, InterruptedException;
 
     /**
+     * 向写入器添加水印。
+     *
+     * <p>此方法用于传播水印的高级接收器。
+     *
      * Adds a watermark to the writer.
      *
      * <p>This method is intended for advanced sinks that propagate watermarks.
