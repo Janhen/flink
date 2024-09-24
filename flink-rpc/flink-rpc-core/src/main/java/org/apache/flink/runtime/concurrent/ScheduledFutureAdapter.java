@@ -34,6 +34,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
+ * 适配器从{@link Future}到{@link ScheduledFuture}。这丰富了调度信息的基本未来。
+ *
  * Adapter from {@link Future} to {@link ScheduledFuture}. This enriches the basic future with
  * scheduling information.
  *

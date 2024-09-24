@@ -41,15 +41,19 @@ import static org.apache.flink.streaming.runtime.tasks.mailbox.TaskMailbox.State
 import static org.apache.flink.streaming.runtime.tasks.mailbox.TaskMailbox.State.QUIESCED;
 
 /**
+ * {@link TaskMailbox}在{@link java.util.concurrent.BlockingQueue}样式，并针对我们的多个写入器和单个读取器的用例进行了定制。
+ *
  * Implementation of {@link TaskMailbox} in a {@link java.util.concurrent.BlockingQueue} fashion and
  * tailored towards our use case with multiple writers and single reader.
  */
 @ThreadSafe
 public class TaskMailboxImpl implements TaskMailbox {
     /** Lock for all concurrent ops. */
+    // 锁定所有并发操作。
     private final ReentrantLock lock = new ReentrantLock();
 
     /** Internal queue of mails. */
+    // 邮件的内部队列。
     @GuardedBy("lock")
     private final Deque<Mail> queue = new ArrayDeque<>();
 
@@ -65,12 +69,16 @@ public class TaskMailboxImpl implements TaskMailbox {
     @Nonnull private final Thread taskMailboxThread;
 
     /**
+     * 当前批次的邮件。一个新的批处理可以用{@link #createBatch()}创建，用{@link #tryTakeFromBatch()}消耗。
+     *
      * The current batch of mails. A new batch can be created with {@link #createBatch()} and
      * consumed with {@link #tryTakeFromBatch()}.
      */
     private final Deque<Mail> batch = new ArrayDeque<>();
 
     /**
+     * 性能优化，其中hasNewMail == !queue.isEmpty()。不会反映{@link #batch}的状态。
+     *
      * Performance optimization where hasNewMail == !queue.isEmpty(). Will not reflect the state of
      * {@link #batch}.
      */
@@ -109,8 +117,11 @@ public class TaskMailboxImpl implements TaskMailbox {
 
     @Override
     public Optional<Mail> tryTake(int priority) {
+        // J: 检查基础信息
         checkIsMailboxThread();
         checkTakeStateConditions();
+
+        // 迭代双端队列找出首个大于 priority 优先级的 Mail
         Mail head = takeOrNull(batch, priority);
         if (head != null) {
             return Optional.of(head);
@@ -118,6 +129,7 @@ public class TaskMailboxImpl implements TaskMailbox {
         if (!hasNewMail) {
             return Optional.empty();
         }
+        // mail 为空，且有 mail
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -144,6 +156,7 @@ public class TaskMailboxImpl implements TaskMailbox {
         lock.lockInterruptibly();
         try {
             Mail headMail;
+            // 阻塞的等待
             while ((headMail = takeOrNull(queue, priority)) == null) {
                 // to ease debugging
                 notEmpty.await(1, TimeUnit.SECONDS);
@@ -233,6 +246,7 @@ public class TaskMailboxImpl implements TaskMailbox {
         Iterator<Mail> iterator = queue.iterator();
         while (iterator.hasNext()) {
             Mail mail = iterator.next();
+            // J: 可指定优先级进行获取
             if (mail.getPriority() >= priority) {
                 iterator.remove();
                 return mail;

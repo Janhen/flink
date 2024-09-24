@@ -119,6 +119,8 @@ import static org.apache.flink.runtime.checkpoint.TaskStateSnapshot.deserializeT
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * job master负责执行单个{@link JobGraph}。
+ *
  * JobMaster implementation. The job master is responsible for the execution of a single {@link
  * JobGraph}.
  *
@@ -145,6 +147,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
 
     private final Time rpcTimeout;
 
+    // J: 高可用
     private final HighAvailabilityServices highAvailabilityServices;
 
     private final BlobWriter blobWriter;
@@ -161,6 +164,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
 
     private final ClassLoader userCodeLoader;
 
+    // J: JobManager 中用于 slot 资源管控的类
     private final SlotPoolService slotPoolService;
 
     private final long initializationTimestamp;
@@ -169,16 +173,19 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
 
     // --------- ResourceManager --------
 
+    //
     private final LeaderRetrievalService resourceManagerLeaderRetriever;
 
     // --------- TaskManagers --------
 
+    // J: 维护已注册的 TM
     private final Map<ResourceID, TaskManagerRegistration> registeredTaskManagers;
 
     private final ShuffleMaster<?> shuffleMaster;
 
     // --------- Scheduler --------
 
+    // J: 用于调度使用...
     private final SchedulerNG schedulerNG;
 
     private final JobManagerJobStatusListener jobStatusListener;
@@ -335,6 +342,7 @@ public class JobMaster extends PermanentlyFencedRpcEndpoint<JobMasterId>
         this.accumulators = new HashMap<>();
     }
 
+    // J: 创建 scheduler
     private SchedulerNG createScheduler(
             SlotPoolServiceSchedulerFactory slotPoolServiceSchedulerFactory,
             ExecutionDeploymentTracker executionDeploymentTracker,

@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 任务邮箱提供对邮箱的读写访问，其生命周期为open -> (quiesced) -> closed。邮件有一个优先级，可以用来检索只相关的信件。
+ *
  * A task mailbox provides read and write access to a mailbox and has a lifecycle of open ->
  * (quiesced) -> closed. Mails have a priority that can be used to retrieve only relevant letters.
  *
@@ -96,6 +98,10 @@ public interface TaskMailbox {
     boolean hasMail();
 
     /**
+     * 如果邮箱不为空，则返回一个可选参数，其中包含邮箱(队列头)中最老的邮件;否则返回一个空的可选参数。
+     *
+     * <p>必须从邮箱线程({@link #isMailboxThread()})调用。
+     *
      * Returns an optional with either the oldest mail from the mailbox (head of queue) if the
      * mailbox is not empty or an empty optional otherwise.
      *
@@ -181,6 +187,7 @@ public interface TaskMailbox {
     // --- Lifecycle methods
 
     /** This enum represents the states of the mailbox lifecycle. */
+    // 此枚举表示邮箱生命周期的状态。
     enum State {
         OPEN(true),
         QUIESCED(false),

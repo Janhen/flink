@@ -29,6 +29,7 @@ import org.apache.flink.util.AutoCloseableAsync;
 import java.util.concurrent.CompletableFuture;
 
 /** Interface for a runner which executes a {@link JobMaster}. */
+// 执行{@link JobMaster}的运行器接口。
 public interface JobManagerRunner extends AutoCloseableAsync {
 
     /**
@@ -39,6 +40,8 @@ public interface JobManagerRunner extends AutoCloseableAsync {
     void start() throws Exception;
 
     /**
+     * 获取{@link JobMaster}的{@link JobMasterGateway}。只有JobMaster成为领导者，未来才会完成。
+     *
      * Get the {@link JobMasterGateway} of the {@link JobMaster}. The future is only completed if
      * the JobMaster becomes leader.
      *

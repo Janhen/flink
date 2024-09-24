@@ -141,6 +141,8 @@ public interface JobMasterGateway
             final ResourceManagerId resourceManagerId, final Exception cause);
 
     /**
+     * 将给定的槽提供给作业管理器。响应包含一组接受的槽。
+     *
      * Offers the given slots to the job manager. The response contains the set of accepted slots.
      *
      * @param taskManagerId identifying the task manager
@@ -179,6 +181,8 @@ public interface JobMasterGateway
             @RpcTimeout final Time timeout);
 
     /**
+     * 从任务管理器向作业管理器发送心跳。
+     *
      * Sends the heartbeat to job manager from task manager.
      *
      * @param resourceID unique id of the task manager
@@ -189,6 +193,8 @@ public interface JobMasterGateway
             final ResourceID resourceID, final TaskExecutorToJobManagerHeartbeatPayload payload);
 
     /**
+     * 从资源管理器发送心跳请求。
+     *
      * Sends heartbeat request from the resource manager.
      *
      * @param resourceID unique id of the resource manager
@@ -221,6 +227,8 @@ public interface JobMasterGateway
     CompletableFuture<ExecutionGraphInfo> requestJob(@RpcTimeout Time timeout);
 
     /**
+     * 获取已执行作业的保存点的触发器。
+     *
      * Triggers taking a savepoint of the executed job.
      *
      * @param targetDirectory to which to write the savepoint data or null if the default savepoint

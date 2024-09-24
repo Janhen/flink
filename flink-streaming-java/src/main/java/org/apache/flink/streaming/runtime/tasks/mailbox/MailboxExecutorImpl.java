@@ -60,6 +60,7 @@ public final class MailboxExecutorImpl implements MailboxExecutor {
         this.mailboxProcessor = mailboxProcessor;
     }
 
+    // J: 是否空闲，确认阻塞队列当中是否有 mail
     public boolean isIdle() {
         return !mailboxProcessor.isDefaultActionAvailable()
                 && !mailbox.hasMail()
@@ -82,6 +83,7 @@ public final class MailboxExecutorImpl implements MailboxExecutor {
 
     @Override
     public void yield() throws InterruptedException {
+        // J: 提取 mail
         Mail mail = mailbox.take(priority);
         try {
             mail.run();

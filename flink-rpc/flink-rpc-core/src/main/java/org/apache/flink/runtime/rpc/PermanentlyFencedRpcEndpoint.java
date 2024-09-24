@@ -25,6 +25,8 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
+ * {@link FencedRpcEndpoint}，它被一个与rpc端点的生命周期绑定的围栏令牌隔离。
+ *
  * {@link FencedRpcEndpoint} which is fenced with a fencing token which is bound to the lifetime of
  * the rpc endpoint.
  *

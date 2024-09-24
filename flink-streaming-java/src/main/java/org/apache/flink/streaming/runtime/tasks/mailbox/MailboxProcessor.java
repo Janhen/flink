@@ -187,6 +187,9 @@ public class MailboxProcessor implements Closeable {
     }
 
     /**
+     * 运行邮箱处理循环。这是主要工作完成的地方。这个循环可以随时通过调用{@link #suspend()}来挂起。
+     * 为了恢复循环，应该再次调用此方法。
+     *
      * Runs the mailbox processing loop. This is where the main work is done. This loop can be
      * suspended at any time by calling {@link #suspend()}. For resuming the loop this method should
      * be called again.
@@ -194,8 +197,11 @@ public class MailboxProcessor implements Closeable {
     public void runMailboxLoop() throws Exception {
         suspended = !mailboxLoopRunning;
 
+        // J: 底层实现了阻塞队列
         final TaskMailbox localMailbox = mailbox;
 
+        // 方法必须由声明的邮箱线程执行!
+        // 单线程的循环事件处理
         checkState(
                 localMailbox.isMailboxThread(),
                 "Method must be executed by declared mailbox thread!");
@@ -204,12 +210,16 @@ public class MailboxProcessor implements Closeable {
 
         final MailboxController defaultActionContext = new MailboxController(this);
 
+        // J: 单线程的循环事件处理
         while (isNextLoopPossible()) {
             // The blocking `processMail` call will not return until default action is available.
+            // 阻塞的' processMail '调用将不会返回，直到默认操作可用。
             processMail(localMailbox, false);
+
             if (isNextLoopPossible()) {
                 mailboxDefaultAction.runDefaultAction(
                         defaultActionContext); // lock is acquired inside default action as needed
+                // 锁是根据需要在默认操作中获取的
             }
         }
     }
@@ -269,6 +279,8 @@ public class MailboxProcessor implements Closeable {
     }
 
     /**
+     * 当任务的所有操作执行完毕时，必须调用此方法来结束流任务。
+     *
      * This method must be called to end the stream task when all actions for the tasks have been
      * performed.
      */
@@ -308,6 +320,10 @@ public class MailboxProcessor implements Closeable {
     }
 
     /**
+     * 此助手方法处理来自邮箱的所有特殊操作。在当前的设计中，此方法还评估所有控制标志的更改。这使得
+     * {@link #runMailboxLoop()}中的热路径不受任何其他标志检查的影响，代价是所有标志更改必须确保邮箱发出
+     * mailbox#hasMail信号。
+     *
      * This helper method handles all special actions from the mailbox. In the current design, this
      * method also evaluates all control flag changes. This keeps the hot path in {@link
      * #runMailboxLoop()} free from any other flag checking, at the cost that all flag changes must
@@ -319,9 +335,11 @@ public class MailboxProcessor implements Closeable {
         // Doing this check is an optimization to only have a volatile read in the expected hot
         // path, locks are only
         // acquired after this point.
+        // 做这个检查是一种优化，只在预期的热路径中有一个易失性读取，锁只在这一点之后获得。
         boolean isBatchAvailable = mailbox.createBatch();
 
         // Take mails in a non-blockingly and execute them.
+        // 以非阻塞方式接收邮件并执行它们。
         boolean processed = isBatchAvailable && processMailsNonBlocking(singleStep);
         if (singleStep) {
             return processed;
@@ -329,6 +347,7 @@ public class MailboxProcessor implements Closeable {
 
         // If the default action is currently not available, we can run a blocking mailbox execution
         // until the default action becomes available again.
+        // 如果默认操作当前不可用，则可以运行阻塞邮箱执行，直到默认操作再次可用为止。
         processed |= processMailsWhenDefaultActionUnavailable();
 
         return processed;
@@ -337,9 +356,12 @@ public class MailboxProcessor implements Closeable {
     private boolean processMailsWhenDefaultActionUnavailable() throws Exception {
         boolean processedSomething = false;
         Optional<Mail> maybeMail;
+        // J: 等待下一个循环达到
         while (!isDefaultActionAvailable() && isNextLoopPossible()) {
+            // 尝试无阻塞方式，并发安全的获取
             maybeMail = mailbox.tryTake(MIN_PRIORITY);
             if (!maybeMail.isPresent()) {
+                // take 为阻塞式的获取，只有有元素时
                 maybeMail = Optional.of(mailbox.take(MIN_PRIORITY));
             }
             maybePauseIdleTimer();
@@ -409,6 +431,7 @@ public class MailboxProcessor implements Closeable {
 
     private boolean isNextLoopPossible() {
         // 'Suspended' can be false only when 'mailboxLoopRunning' is true.
+        // 只有当'mailboxLoopRunning'为真时，'Suspended'才能为假。
         return !suspended;
     }
 

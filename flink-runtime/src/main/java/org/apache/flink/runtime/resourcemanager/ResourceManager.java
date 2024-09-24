@@ -133,6 +133,8 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
     private final FatalErrorHandler fatalErrorHandler;
 
     /** The slot manager maintains the available slots. */
+    // 插槽管理器维护可用的插槽。
+    // ResourceManager 总使用 SlotManager 进行管控 slot
     private final SlotManager slotManager;
 
     private final ResourceManagerPartitionTracker clusterPartitionTracker;

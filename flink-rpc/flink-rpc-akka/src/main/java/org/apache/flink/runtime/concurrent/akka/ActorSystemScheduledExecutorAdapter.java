@@ -36,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 import scala.concurrent.duration.FiniteDuration;
 
 /**
+ * 适配器使用{@link ActorSystem}作为{@link ScheduledExecutor}。进一步确保上下文类装入器在可运行程序运行时设置为Flink类装入器。
+ *
  * Adapter to use a {@link ActorSystem} as a {@link ScheduledExecutor}. Furthermore ensures that the
  * context class loader is set to the Flink class loader while the runnable is running.
  */
