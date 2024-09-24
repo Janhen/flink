@@ -178,9 +178,13 @@ abstract class PlannerBase(
   }
 
   // J: 转换操作
+  // J: 将 ModifyOperation => Transformation
   override def translate(
       modifyOperations: util.List[ModifyOperation]): util.List[Transformation[_]] = {
+    // J: 。。。
     beforeTranslation()
+
+    // J: 针对 ModifyOperation 进行转换，映射成 RelNode
     if (modifyOperations.isEmpty) {
       return List.empty[Transformation[_]]
     }
@@ -189,7 +193,7 @@ abstract class PlannerBase(
     val relNodes = modifyOperations.map(translateToRel)
     // 优化下 RelNode
     val optimizedRelNodes = optimize(relNodes)
-    //
+    // => ExecNodeGraph
     val execGraph = translateToExecNodeGraph(optimizedRelNodes, isCompiled = false)
     val transformations = translateToPlan(execGraph)
     afterTranslation()
@@ -322,6 +326,8 @@ abstract class PlannerBase(
   }
 
   /**
+   * 将[[FlinkPhysicalRel]] DAG转换为[[ExecNodeGraph]]，尝试重用重复的子计划并根据给定的处理器转换图形。
+   *
    * Converts [[FlinkPhysicalRel]] DAG to [[ExecNodeGraph]], tries to reuse duplicate sub-plans and
    * transforms the graph based on the given processors.
    */
@@ -356,6 +362,8 @@ abstract class PlannerBase(
   protected def getExecNodeGraphProcessors: Seq[ExecNodeGraphProcessor]
 
   /**
+   * 将[[ExecNodeGraph]]转换为[[Transformation]] DAG。
+   *
    * Translates an [[ExecNodeGraph]] into a [[Transformation]] DAG.
    *
    * @param execGraph
@@ -483,6 +491,7 @@ abstract class PlannerBase(
     configuration.removeConfig(TABLE_QUERY_START_LOCAL_TIME)
 
     // Clean caches that might have filled up during optimization
+    // 清理在优化过程中可能已经填满的缓存
     CompileUtils.cleanUp()
   }
 

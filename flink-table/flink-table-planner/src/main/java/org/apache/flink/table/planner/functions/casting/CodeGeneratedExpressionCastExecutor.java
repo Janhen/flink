@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 @Internal
 class CodeGeneratedExpressionCastExecutor<IN, OUT> implements CastExecutor<IN, OUT> {
 
+    // J: 表达式求值...
     private final ExpressionEvaluator expressionEvaluator;
 
     // To reuse for invocations

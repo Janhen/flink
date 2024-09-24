@@ -233,6 +233,7 @@ public class SqlToOperationConverter {
      */
     public static Optional<Operation> convert(
             FlinkPlannerImpl flinkPlanner, CatalogManager catalogManager, SqlNode sqlNode) {
+        // J: 转换 ...
         // validate the query
         final SqlNode validated = flinkPlanner.validate(sqlNode);
         // J: 转换与验证

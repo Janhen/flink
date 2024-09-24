@@ -25,6 +25,10 @@ import org.apache.flink.table.catalog.ResolvedSchema;
 import java.util.List;
 
 /**
+ * 基类，用于表示面向用户的{@link Table} API背后的操作结构。
+ *
+ * <p>表示一个可以作为关系查询节点的操作。它有一个模式，可用于验证应用于该模式之上的{@link QueryOperation}。
+ *
  * Base class for representing an operation structure behind a user-facing {@link Table} API.
  *
  * <p>It represents an operation that can be a node of a relational query. It has a schema, that can

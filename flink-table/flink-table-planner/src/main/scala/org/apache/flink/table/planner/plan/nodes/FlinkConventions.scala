@@ -47,6 +47,8 @@ class FlinkConvention(name: String, relClass: Class[_ <: RelNode])
   }
 }
 
+// J: Flink 扩展 RelNode
+// 增加 FlinkLogicRel、FlinkPhysicRel
 object FlinkConventions {
   val LOGICAL = new Convention.Impl("LOGICAL", classOf[FlinkLogicalRel])
   val STREAM_PHYSICAL = new FlinkConvention("STREAM_PHYSICAL", classOf[StreamPhysicalRel])

@@ -24,6 +24,8 @@ import org.apache.flink.table.api.TableException;
 import javax.annotation.Nullable;
 
 /**
+ * 接口对执行从一种类型到另一种类型的值强制转换的函数进行建模。
+ *
  * Interface to model a function that performs the casting of a value from one type to another.
  *
  * @param <IN> Input internal type

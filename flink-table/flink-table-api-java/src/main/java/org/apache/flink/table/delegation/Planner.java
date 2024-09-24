@@ -56,6 +56,8 @@ import java.util.List;
 public interface Planner {
 
     /**
+     * 检索提供解析SQL字符串的方法的{@link Parser}。
+     *
      * Retrieves a {@link Parser} that provides methods for parsing a SQL string.
      *
      * @return initialized {@link Parser}
@@ -63,6 +65,8 @@ public interface Planner {
     Parser getParser();
 
     /**
+     * 将{@link ModifyOperation}的关系树转换为一组可运行的{@link Transformation}。
+     *
      * Converts a relational tree of {@link ModifyOperation}s into a set of runnable {@link
      * Transformation}s.
      *

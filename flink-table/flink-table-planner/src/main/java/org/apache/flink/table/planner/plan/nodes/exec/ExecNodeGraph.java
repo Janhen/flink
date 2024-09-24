@@ -26,6 +26,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The {@link ExecNodeGraph} representing the {@link ExecNode} topology. */
+// {@link ExecNodeGraph}表示{@link ExecNode}拓扑。
 public class ExecNodeGraph {
     private final FlinkVersion flinkVersion;
     private final List<ExecNode<?>> rootNodes;

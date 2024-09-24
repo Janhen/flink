@@ -191,6 +191,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
     protected final TableConfig tableConfig;
     protected final Executor execEnv;
     protected final FunctionCatalog functionCatalog;
+    // J: 可插拔的 planner
     protected final Planner planner;
     private final boolean isStreamingMode;
     private final ClassLoader userClassLoader;
@@ -781,6 +782,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
     public TableResultInternal executeInternal(List<ModifyOperation> operations) {
         List<Transformation<?>> transformations = translate(operations);
         List<String> sinkIdentifierNames = extractSinkIdentifierNames(operations);
+        // ...
         TableResultInternal result = executeInternal(transformations, sinkIdentifierNames);
         if (tableConfig.get(TABLE_DML_SYNC)) {
             try {
@@ -795,6 +797,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
 
     private TableResultInternal executeInternal(
             List<Transformation<?>> transformations, List<String> sinkIdentifierNames) {
+        // J: 构造 job 名称
         final String defaultJobName = "insert-into_" + String.join(",", sinkIdentifierNames);
         // We pass only the configuration to avoid reconfiguration with the rootConfiguration
         Pipeline pipeline =
@@ -824,10 +827,12 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
 
     private TableResultInternal executeQueryOperation(QueryOperation operation) {
         CollectModifyOperation sinkOperation = new CollectModifyOperation(operation);
+        // J: 对于 QueryOperation 的操作
         List<Transformation<?>> transformations =
                 translate(Collections.singletonList(sinkOperation));
         final String defaultJobName = "collect";
         // We pass only the configuration to avoid reconfiguration with the rootConfiguration
+        // 只传递配置，以避免用rootConfiguration重新配置
         Pipeline pipeline =
                 execEnv.createPipeline(
                         transformations, tableConfig.getConfiguration(), defaultJobName);
@@ -1653,6 +1658,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
     }
 
     protected List<Transformation<?>> translate(List<ModifyOperation> modifyOperations) {
+        // J: List<ModifyOperation> => 转换成 List<Transformation>
         return planner.translate(modifyOperations);
     }
 

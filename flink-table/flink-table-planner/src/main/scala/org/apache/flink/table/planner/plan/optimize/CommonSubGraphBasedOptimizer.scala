@@ -62,6 +62,9 @@ abstract class CommonSubGraphBasedOptimizer extends Optimizer {
   }
 
   /**
+   * 从原始关系节点生成优化后的[[RelNode]] DAG。注意:结果DAG中被重用的节点会被转换为相同的RelNode，
+   * 结果中不包含[[IntermediateRelTable]]。
+   *
    * Generates the optimized [[RelNode]] DAG from the original relational nodes. NOTES: the reused
    * node in result DAG will be converted to the same RelNode, and the result doesn't contain
    * [[IntermediateRelTable]].
