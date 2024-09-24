@@ -36,6 +36,10 @@ import java.util.Optional;
 import java.util.Properties;
 
 /**
+ * {@link KafkaSink}的提交实现
+ *
+ * <p>提交者负责通过提交完成Kafka事务。
+ *
  * Committer implementation for {@link KafkaSink}
  *
  * <p>The committer is responsible to finalize the Kafka transactions by committing them.
@@ -49,6 +53,7 @@ class KafkaCommitter implements Committer<KafkaCommittable>, Closeable {
 
     private final Properties kafkaProducerConfig;
 
+    // J: 内部实现的
     @Nullable private FlinkKafkaInternalProducer<?, ?> recoveryProducer;
 
     KafkaCommitter(Properties kafkaProducerConfig) {
@@ -58,8 +63,10 @@ class KafkaCommitter implements Committer<KafkaCommittable>, Closeable {
     @Override
     public void commit(Collection<CommitRequest<KafkaCommittable>> requests)
             throws IOException, InterruptedException {
+        // J: 进行一批消息的提交...
         for (CommitRequest<KafkaCommittable> request : requests) {
             final KafkaCommittable committable = request.getCommittable();
+            // J:
             final String transactionalId = committable.getTransactionalId();
             LOG.debug("Committing Kafka transaction {}", transactionalId);
             Optional<Recyclable<? extends FlinkKafkaInternalProducer<?, ?>>> recyclable =
@@ -70,6 +77,7 @@ class KafkaCommitter implements Committer<KafkaCommittable>, Closeable {
                         recyclable
                                 .<FlinkKafkaInternalProducer<?, ?>>map(Recyclable::getObject)
                                 .orElseGet(() -> getRecoveryProducer(committable));
+                // J: producer 提交事务
                 producer.commitTransaction();
                 producer.flush();
                 recyclable.ifPresent(Recyclable::close);

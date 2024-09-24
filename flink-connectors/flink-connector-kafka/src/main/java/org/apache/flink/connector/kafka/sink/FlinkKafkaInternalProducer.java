@@ -37,6 +37,8 @@ import java.util.Properties;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个{@link KafkaProducer}，它公开私有字段以允许从给定状态生成resume。
+ *
  * A {@link KafkaProducer} that exposes private fields to allow resume producing from a given state.
  */
 class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
@@ -63,6 +65,7 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
         }
         Properties props = new Properties();
         props.putAll(properties);
+        // J: 指定 transactional.id
         props.setProperty(ProducerConfig.TRANSACTIONAL_ID_CONFIG, transactionalId);
         return props;
     }
@@ -78,6 +81,7 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
     @Override
     public void beginTransaction() throws ProducerFencedException {
         super.beginTransaction();
+        // J: 开启事务
         inTransaction = true;
     }
 
@@ -169,6 +173,10 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
     }
 
     /**
+     * 除了提交{@link org.apache.kafka.clients.producer。KafkaProducercommitTransaction}也在向事务中
+     * 添加新的分区。 flushNewPartitions方法将此逻辑移动到预提交，以使resumeTransaction更简单。否则，
+     * resumeTransaction将需要恢复尚未添加的“运行中”分区的状态。
+     *
      * Besides committing {@link org.apache.kafka.clients.producer.KafkaProducer#commitTransaction}
      * is also adding new partitions to the transaction. flushNewPartitions method is moving this
      * logic to pre-commit/flush, to make resumeTransaction simpler. Otherwise resumeTransaction
@@ -176,6 +184,7 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
      */
     private void flushNewPartitions() {
         LOG.info("Flushing new partitions");
+        // J: 为新分区排队
         TransactionalRequestResult result = enqueueNewPartitions();
         Object sender = getField("sender");
         invoke(sender, "wakeup");
@@ -183,6 +192,10 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
     }
 
     /**
+     * 在事务管理器中为新事务排队，并返回{@link TransactionalRequestResult}，允许等待它们。
+     *
+     * <p>如果没有新的事务，我们返回已经完成的{@link TransactionalRequestResult}。
+     *
      * Enqueues new transactions at the transaction manager and returns a {@link
      * TransactionalRequestResult} that allows waiting on them.
      *
@@ -191,6 +204,7 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
      */
     private TransactionalRequestResult enqueueNewPartitions() {
         Object transactionManager = getTransactionManager();
+        // J: 加锁...
         synchronized (transactionManager) {
             Object newPartitionsInTransaction =
                     getField(transactionManager, "newPartitionsInTransaction");
@@ -222,6 +236,7 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
         }
     }
 
+    // J: 反射方法调用...
     private static Object invoke(Object object, String methodName, Object... args) {
         Class<?>[] argTypes = new Class[args.length];
         for (int i = 0; i < args.length; i++) {
@@ -268,6 +283,9 @@ class FlinkKafkaInternalProducer<K, V> extends KafkaProducer<K, V> {
     }
 
     /**
+     * 不是从事务协调器获取producerId和epoch，而是重用以前获得的两个，以便我们可以在重新启动后恢复事务。这个方法的
+     * 实现是基于{@link KafkaProducer#initTransactions}。
+     *
      * Instead of obtaining producerId and epoch from the transaction coordinator, re-use previously
      * obtained ones, so that we can resume transaction after a restart. Implementation of this
      * method is based on {@link KafkaProducer#initTransactions}.

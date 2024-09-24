@@ -26,6 +26,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.Serializable;
 
 /**
+ * 一个序列化模式，定义了如何将类型为{@code T}的值转换为{@link ProducerRecord}的值。
+ *
  * A serialization schema which defines how to convert a value of type {@code T} to {@link
  * ProducerRecord}.
  *
@@ -49,6 +51,8 @@ public interface KafkaRecordSerializationSchema<T> extends Serializable {
             throws Exception {}
 
     /**
+     * 序列化给定的元素并以{@link ProducerRecord}的形式返回。
+     *
      * Serializes given element and returns it as a {@link ProducerRecord}.
      *
      * @param element element to be serialized
@@ -75,6 +79,8 @@ public interface KafkaRecordSerializationSchema<T> extends Serializable {
         int getNumberOfParallelInstances();
 
         /**
+         * 对于给定的主题id，检索可用分区。
+         *
          * For a given topic id retrieve the available partitions.
          *
          * <p>After the first retrieval the returned partitions are cached. If the partitions are

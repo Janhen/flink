@@ -66,7 +66,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
- * 这个类负责在Kafka主题中写入记录，并处理不同的交付{@link DeliveryGuarantee}。
+ * 这个类负责在 Kafka主题中写入记录，并处理不同的交付{@link DeliveryGuarantee}。
  *
  * This class is responsible to write records in a Kafka topic and to handle the different delivery
  * {@link DeliveryGuarantee}s.
@@ -89,6 +89,7 @@ class KafkaWriter<IN>
     private final Properties kafkaProducerConfig;
     private final String transactionalIdPrefix;
     private final KafkaRecordSerializationSchema<IN> recordSerializer;
+    // J: 回调机制...  生产后的回调?
     private final Callback deliveryCallback;
     private final KafkaRecordSerializationSchema.KafkaSinkContext kafkaSinkContext;
 
@@ -101,11 +102,13 @@ class KafkaWriter<IN>
     private final ProcessingTimeService timeService;
 
     // Number of outgoing bytes at the latest metric sync
+    // 在最近的度量同步中传出的字节数
     private long latestOutgoingByteTotal;
     private Metric byteOutMetric;
     private FlinkKafkaInternalProducer<byte[], byte[]> currentProducer;
     private final KafkaWriterState kafkaWriterState;
     // producer pool only used for exactly once
+    // 生产者池只被使用一次
     private final Deque<FlinkKafkaInternalProducer<byte[], byte[]>> producerPool =
             new ArrayDeque<>();
     private final Closer closer = Closer.create();
@@ -141,9 +144,10 @@ class KafkaWriter<IN>
         this.kafkaProducerConfig = checkNotNull(kafkaProducerConfig, "kafkaProducerConfig");
         this.transactionalIdPrefix = checkNotNull(transactionalIdPrefix, "transactionalIdPrefix");
         this.recordSerializer = checkNotNull(recordSerializer, "recordSerializer");
+        // J: MailboxExecutor 回调...
         this.deliveryCallback =
                 new WriterCallback(
-                        sinkInitContext.getMailboxExecutor(),
+                        sinkInitContext.getMailboxExecutor(),  // J: mailbox 用于错误的 metric 记录
                         sinkInitContext.<RecordMetadata>metadataConsumer().orElse(null));
         this.disabledMetrics =
                 kafkaProducerConfig.containsKey(KEY_DISABLE_METRICS)
@@ -169,6 +173,7 @@ class KafkaWriter<IN>
             throw new FlinkRuntimeException("Cannot initialize schema.", e);
         }
 
+        // J: 存放的是 事务ID前缀
         this.kafkaWriterState = new KafkaWriterState(transactionalIdPrefix);
         this.lastCheckpointId =
                 sinkInitContext
@@ -178,6 +183,7 @@ class KafkaWriter<IN>
             abortLingeringTransactions(
                     checkNotNull(recoveredStates, "recoveredStates"), lastCheckpointId + 1);
             this.currentProducer = getTransactionalProducer(lastCheckpointId + 1);
+            // J: EOS 时，开启事务
             this.currentProducer.beginTransaction();
         } else if (deliveryGuarantee == DeliveryGuarantee.AT_LEAST_ONCE
                 || deliveryGuarantee == DeliveryGuarantee.NONE) {
@@ -194,9 +200,13 @@ class KafkaWriter<IN>
 
     @Override
     public void write(IN element, Context context) throws IOException {
+        // J: 正常单条数据的写入
         final ProducerRecord<byte[], byte[]> record =
                 recordSerializer.serialize(element, kafkaSinkContext, context.timestamp());
+        // J: kafka producer 发送    异步机制
+        // 异步地将记录发送到主题，并在确认发送后调用提供的回调
         currentProducer.send(record, deliveryCallback);
+        // J: 维护 metric
         numRecordsOutCounter.inc();
     }
 
@@ -204,12 +214,14 @@ class KafkaWriter<IN>
     public void flush(boolean endOfInput) throws IOException, InterruptedException {
         if (deliveryGuarantee != DeliveryGuarantee.NONE || endOfInput) {
             LOG.debug("final flush={}", endOfInput);
+            // J: 数据刷写...
             currentProducer.flush();
         }
     }
 
     @Override
     public Collection<KafkaCommittable> prepareCommit() {
+        // J: 两阶段提交中的预提交阶段处理
         if (deliveryGuarantee == DeliveryGuarantee.EXACTLY_ONCE) {
             final List<KafkaCommittable> committables =
                     Collections.singletonList(
@@ -223,7 +235,10 @@ class KafkaWriter<IN>
     @Override
     public List<KafkaWriterState> snapshotState(long checkpointId) throws IOException {
         if (deliveryGuarantee == DeliveryGuarantee.EXACTLY_ONCE) {
+            // J: EOS 语义下
+            // 获取 initTransactions 后的 producer
             currentProducer = getTransactionalProducer(checkpointId + 1);
+            // J: 开启事务...
             currentProducer.beginTransaction();
         }
         return ImmutableList.of(kafkaWriterState);
@@ -243,9 +258,11 @@ class KafkaWriter<IN>
                 });
     }
 
+    // J: 取消
     private void abortCurrentProducer() {
         if (currentProducer.isInTransaction()) {
             try {
+                // J: 事务取消
                 currentProducer.abortTransaction();
             } catch (ProducerFencedException e) {
                 LOG.debug(
@@ -264,12 +281,14 @@ class KafkaWriter<IN>
         return currentProducer;
     }
 
+    // J: 中止延迟事务
     void abortLingeringTransactions(
             Collection<KafkaWriterState> recoveredStates, long startCheckpointId) {
         List<String> prefixesToAbort = Lists.newArrayList(transactionalIdPrefix);
 
         final Optional<KafkaWriterState> lastStateOpt = recoveredStates.stream().findFirst();
         if (lastStateOpt.isPresent()) {
+
             KafkaWriterState lastState = lastStateOpt.get();
             if (!lastState.getTransactionalIdPrefix().equals(transactionalIdPrefix)) {
                 prefixesToAbort.add(lastState.getTransactionalIdPrefix());
@@ -307,10 +326,12 @@ class KafkaWriter<IN>
         FlinkKafkaInternalProducer<byte[], byte[]> producer = null;
         // in case checkpoints have been aborted, Flink would create non-consecutive transaction ids
         // this loop ensures that all gaps are filled with initialized (empty) transactions
+        // 如果检查点已经终止，Flink将创建非连续的事务id，这个循环确保所有空白都被初始化(空)事务填充
         for (long id = lastCheckpointId + 1; id <= checkpointId; id++) {
             String transactionalId =
                     TransactionalIdFactory.buildTransactionalId(
                             transactionalIdPrefix, kafkaSinkContext.getParallelInstanceId(), id);
+            // J: 获取 执行了 producer initTransactions 方法的 producer
             producer = getOrCreateTransactionalProducer(transactionalId);
         }
         this.lastCheckpointId = checkpointId;
@@ -321,11 +342,14 @@ class KafkaWriter<IN>
 
     private FlinkKafkaInternalProducer<byte[], byte[]> getOrCreateTransactionalProducer(
             String transactionalId) {
+        // J: pool ...
         FlinkKafkaInternalProducer<byte[], byte[]> producer = producerPool.poll();
         if (producer == null) {
             producer = new FlinkKafkaInternalProducer<>(kafkaProducerConfig, transactionalId);
             closer.register(producer);
+            // J: 初始化事务...
             producer.initTransactions();
+            // J: flink kafka connector 的 metric 初始化...
             initKafkaMetrics(producer);
         } else {
             producer.initTransactionId(transactionalId);
@@ -365,6 +389,7 @@ class KafkaWriter<IN>
         };
     }
 
+    // J: metric 的计算...
     private long computeSendTime() {
         FlinkKafkaInternalProducer<byte[], byte[]> producer = this.currentProducer;
         if (producer == null) {
@@ -382,7 +407,7 @@ class KafkaWriter<IN>
 
     private void registerMetricSync() {
         timeService.registerTimer(
-                lastSync + METRIC_UPDATE_INTERVAL_MILLIS,
+                lastSync + METRIC_UPDATE_INTERVAL_MILLIS,  // 500ms
                 (time) -> {
                     if (closed) {
                         return;
@@ -397,7 +422,9 @@ class KafkaWriter<IN>
                 });
     }
 
+    // J: producer 后的回调 callback
     private class WriterCallback implements Callback {
+        // J: 线程机制...
         private final MailboxExecutor mailboxExecutor;
         @Nullable private final Consumer<RecordMetadata> metadataConsumer;
 
@@ -410,12 +437,15 @@ class KafkaWriter<IN>
 
         @Override
         public void onCompletion(RecordMetadata metadata, Exception exception) {
+            // J: kafka 生产发送完成后的回调...
             if (exception != null) {
                 FlinkKafkaInternalProducer<byte[], byte[]> producer =
                         KafkaWriter.this.currentProducer;
+                // J: 基于 Mailbox 进行出错指标的统计...
                 mailboxExecutor.execute(
                         () -> {
                             numRecordsOutErrorsCounter.inc();
+                            // J: 运行时异常的抛出...
                             throwException(metadata, exception, producer);
                         },
                         "Failed to send data to Kafka");

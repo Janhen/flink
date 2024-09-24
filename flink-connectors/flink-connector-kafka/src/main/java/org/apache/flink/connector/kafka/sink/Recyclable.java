@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
+// J: 可回收的...
 class Recyclable<T> implements Closeable {
     private T object;
     private final Consumer<T> recycler;

@@ -24,6 +24,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
+ * 这个类保存了必要的信息来构造一个新的{@link FlinkKafkaInternalProducer}来提交{@link KafkaCommitter}中的事务。
+ *
  * This class holds the necessary information to construct a new {@link FlinkKafkaInternalProducer}
  * to commit transactions in {@link KafkaCommitter}.
  */
@@ -31,7 +33,9 @@ class KafkaCommittable {
 
     private final long producerId;
     private final short epoch;
+    // J: 事务ID
     private final String transactionalId;
+    // J: 可回收的 producer
     @Nullable private Recyclable<? extends FlinkKafkaInternalProducer<?, ?>> producer;
 
     public KafkaCommittable(

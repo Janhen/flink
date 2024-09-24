@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.Properties;
 
 /**
+ * Flink Sink将数据生成为Kafka主题。接收器支持由{@link DeliveryGuarantee}描述的所有交付保证。
+ *
  * Flink Sink to produce data into a Kafka topic. The sink supports all delivery guarantees
  * described by {@link DeliveryGuarantee}.
  * <li>{@link DeliveryGuarantee#NONE} does not provide any guarantees: messages may be lost in case
@@ -60,8 +62,11 @@ public class KafkaSink<IN>
 
     private final DeliveryGuarantee deliveryGuarantee;
 
+    // J: 序列化相关，
     private final KafkaRecordSerializationSchema<IN> recordSerializer;
+    // 生产相关配置
     private final Properties kafkaProducerConfig;
+    // 事务 ID 前缀
     private final String transactionalIdPrefix;
 
     KafkaSink(
@@ -88,6 +93,7 @@ public class KafkaSink<IN>
     @Internal
     @Override
     public Committer<KafkaCommittable> createCommitter() throws IOException {
+        // J: commiter 创建...  控制提交机制...
         return new KafkaCommitter(kafkaProducerConfig);
     }
 
@@ -100,6 +106,7 @@ public class KafkaSink<IN>
     @Internal
     @Override
     public KafkaWriter<IN> createWriter(InitContext context) throws IOException {
+        // J: writer 写入...
         return new KafkaWriter<IN>(
                 deliveryGuarantee,
                 kafkaProducerConfig,
@@ -114,6 +121,7 @@ public class KafkaSink<IN>
     @Override
     public KafkaWriter<IN> restoreWriter(
             InitContext context, Collection<KafkaWriterState> recoveredState) throws IOException {
+        // 恢复 writer
         return new KafkaWriter<>(
                 deliveryGuarantee,
                 kafkaProducerConfig,

@@ -36,6 +36,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 构建器构造{@link KafkaRecordSerializationSchema}。
+ *
  * Builder to construct {@link KafkaRecordSerializationSchema}.
  *
  * <p>This class should give a first entrypoint when trying to serialize elements to {@link
@@ -82,10 +84,13 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
 
     @Nullable private Function<? super IN, String> topicSelector;
     @Nullable private SerializationSchema<? super IN> valueSerializationSchema;
+    // J: 写入的分区器
     @Nullable private FlinkKafkaPartitioner<? super IN> partitioner;
     @Nullable private SerializationSchema<? super IN> keySerializationSchema;
 
     /**
+     * 设置一个自定义分区程序，确定目标主题的目标分区。
+     *
      * Sets a custom partitioner determining the target partition of the target topic.
      *
      * @param partitioner
@@ -107,6 +112,7 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
     public KafkaRecordSerializationSchemaBuilder<IN> setTopic(String topic) {
         checkState(this.topicSelector == null, "Topic selector already set.");
         checkNotNull(topic);
+        // J: 默认的 select，对应都指向传入的 topic
         this.topicSelector = new CachingTopicSelector<>((e) -> topic);
         return this;
     }
@@ -250,6 +256,7 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
         checkState(keySerializationSchema == null, "Key serializer already set.");
     }
 
+    // J:
     private static class CachingTopicSelector<IN> implements Function<IN, String>, Serializable {
 
         private static final int CACHE_RESET_SIZE = 5;
@@ -263,6 +270,7 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
 
         @Override
         public String apply(IN in) {
+            // J: 提供缓存功能...
             final String topic = cache.getOrDefault(in, topicSelector.apply(in));
             cache.put(in, topic);
             if (cache.size() == CACHE_RESET_SIZE) {
@@ -272,6 +280,7 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
         }
     }
 
+    // J: 包装类...
     private static class KafkaRecordSerializationSchemaWrapper<IN>
             implements KafkaRecordSerializationSchema<IN> {
         private final SerializationSchema<? super IN> valueSerializationSchema;
@@ -325,10 +334,11 @@ public class KafkaRecordSerializationSchemaBuilder<IN> {
                                             context.getPartitionsForTopic(targetTopic)))
                             : OptionalInt.empty();
 
+            // J: 构造 kafka 的 ProducerRecord
             return new ProducerRecord<>(
                     targetTopic,
-                    partition.isPresent() ? partition.getAsInt() : null,
-                    timestamp == null || timestamp < 0L ? null : timestamp,
+                    partition.isPresent() ? partition.getAsInt() : null, // 指定分区写入的
+                    timestamp == null || timestamp < 0L ? null : timestamp, // 生产端传入的 timestamp
                     key,
                     value);
         }
