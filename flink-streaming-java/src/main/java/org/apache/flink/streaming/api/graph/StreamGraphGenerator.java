@@ -222,6 +222,7 @@ public class StreamGraphGenerator {
 
     // Keep track of which Transforms we have already transformed, this is necessary because
     // we have loops, i.e. feedback edges.
+    // 跟踪已经转换的变换，这是必要的，因为我们有循环，即反馈边。
     private Map<Transformation<?>, Collection<Integer>> alreadyTransformed;
 
     public StreamGraphGenerator(
@@ -314,12 +315,15 @@ public class StreamGraphGenerator {
 
         alreadyTransformed = new IdentityHashMap<>();
 
+        // J: 迭代 transform, 进行
         for (Transformation<?> transformation : transformations) {
             transform(transformation);
         }
 
+        // J: slot share group 资源
         streamGraph.setSlotSharingGroupResource(slotSharingGroupResources);
 
+        // J: 细粒度
         setFineGrainedGlobalStreamExchangeMode(streamGraph);
 
         for (StreamNode node : streamGraph.getStreamNodes()) {
@@ -509,6 +513,7 @@ public class StreamGraphGenerator {
 
         LOG.debug("Transforming " + transform);
 
+        // J: 最大并行度确认
         if (transform.getMaxParallelism() <= 0) {
 
             // if the max parallelism hasn't been set, then first use the job wide max parallelism
@@ -808,6 +813,7 @@ public class StreamGraphGenerator {
         final List<Collection<Integer>> allInputIds = getParentInputIds(transform.getInputs());
 
         // the recursive call might have already transformed this
+        // 递归调用可能已经对它进行了转换
         if (alreadyTransformed.containsKey(transform)) {
             return alreadyTransformed.get(transform);
         }

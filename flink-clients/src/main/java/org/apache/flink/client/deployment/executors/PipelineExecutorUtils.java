@@ -36,6 +36,8 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class PipelineExecutorUtils {
 
     /**
+     * 创建与提供的{@link Pipeline}相对应的{@link JobGraph}。
+     *
      * Creates the {@link JobGraph} corresponding to the provided {@link Pipeline}.
      *
      * @param pipeline the pipeline whose job graph we are computing
@@ -52,6 +54,7 @@ public class PipelineExecutorUtils {
 
         final ExecutionConfigAccessor executionConfigAccessor =
                 ExecutionConfigAccessor.fromConfiguration(configuration);
+        // J: translate
         final JobGraph jobGraph =
                 FlinkPipelineTranslationUtil.getJobGraph(
                         pipeline, configuration, executionConfigAccessor.getParallelism());

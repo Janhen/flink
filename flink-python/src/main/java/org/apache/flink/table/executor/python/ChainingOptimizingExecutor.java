@@ -32,6 +32,7 @@ import org.apache.flink.util.Preconditions;
 
 import java.util.List;
 
+// {@link Executor}将在生成流图之前执行链接优化。
 /** {@link Executor} which will perform chaining optimization before generating the StreamGraph. */
 @Internal
 public class ChainingOptimizingExecutor implements Executor {
@@ -52,6 +53,7 @@ public class ChainingOptimizingExecutor implements Executor {
             List<Transformation<?>> transformations,
             ReadableConfig configuration,
             String defaultJobName) {
+        // J: 可链接上的
         List<Transformation<?>> chainedTransformations = transformations;
         if (configuration
                 .getOptional(PythonOptions.PYTHON_OPERATOR_CHAINING_ENABLED)

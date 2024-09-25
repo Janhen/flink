@@ -58,6 +58,7 @@ public abstract class SimpleTransformationTranslator<OUT, T extends Transformati
         checkNotNull(transformation);
         checkNotNull(context);
 
+        // J: 对流式的 translate
         final Collection<Integer> transformedIds =
                 translateForStreamingInternal(transformation, context);
         configure(transformation, context);
@@ -79,6 +80,8 @@ public abstract class SimpleTransformationTranslator<OUT, T extends Transformati
             final T transformation, final Context context);
 
     /**
+     * 将给定的{@link Transformation}转换为它的运行时实现，以进行流样式的执行。
+     *
      * Translates a given {@link Transformation} to its runtime implementation for STREAMING-style
      * execution.
      *

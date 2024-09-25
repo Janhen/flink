@@ -492,6 +492,8 @@ public class Execution
     }
 
     /**
+     * 将执行部署到先前分配的资源。
+     *
      * Deploys the execution to the previously assigned resource.
      *
      * @throws JobException if the execution cannot be deployed to the assigned resource

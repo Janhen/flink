@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 /** Configuration for the {@link StandaloneApplicationClusterEntryPoint}. */
 final class StandaloneApplicationClusterConfiguration extends EntrypointClusterConfiguration {
 
+    // J: restore
     @Nonnull private final SavepointRestoreSettings savepointRestoreSettings;
 
     @Nullable private final JobID jobId;

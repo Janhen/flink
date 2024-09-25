@@ -19,6 +19,7 @@
 package org.apache.flink.runtime.io.network.partition;
 
 /** Type of a result partition. */
+// 结果分区的类型。
 public enum ResultPartitionType {
 
     /**
@@ -50,6 +51,8 @@ public enum ResultPartitionType {
     BLOCKING_PERSISTENT(false, false, false, true, true),
 
     /**
+     * 一个流水线的流数据交换。这适用于有界流和无界流。
+     *
      * A pipelined streaming data exchange. This is applicable to both bounded and unbounded
      * streams.
      *
@@ -88,18 +91,24 @@ public enum ResultPartitionType {
     PIPELINED_APPROXIMATE(true, true, true, false, true);
 
     /** Can the partition be consumed while being produced? */
+    // 分区在生产过程中可以被消耗吗?
     private final boolean isPipelined;
 
     /** Does the partition produce back pressure when not consumed? */
+    // 隔板在不消耗时是否产生背压?
     private final boolean hasBackPressure;
 
     /** Does this partition use a limited number of (network) buffers? */
+    // 这个分区是否使用有限数量的(网络)缓冲区?
     private final boolean isBounded;
 
     /** This partition will not be released after consuming if 'isPersistent' is true. */
+    // 如果'isPersistent'为true，这个分区在使用后不会被释放。
     private final boolean isPersistent;
 
     /**
+     * 可以重新连接分区吗?
+     *
      * Can the partition be reconnected.
      *
      * <p>Attention: this attribute is introduced temporally for

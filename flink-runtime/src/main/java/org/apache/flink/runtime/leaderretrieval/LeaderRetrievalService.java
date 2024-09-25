@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.leaderretrieval;
 
 /**
+ * 该接口必须由一个服务实现，该服务检索当前的领导者并通知侦听器。
+ *
  * This interface has to be implemented by a service which retrieves the current leader and notifies
  * a listener about it.
  *

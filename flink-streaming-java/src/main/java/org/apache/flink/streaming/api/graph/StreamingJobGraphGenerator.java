@@ -166,11 +166,13 @@ public class StreamingJobGraphGenerator {
         preValidate();
         jobGraph.setJobType(streamGraph.getJobType());
 
+        // J: 启用近似本地恢复
         jobGraph.enableApproximateLocalRecovery(
                 streamGraph.getCheckpointConfig().isApproximateLocalRecoveryEnabled());
 
         // Generate deterministic hashes for the nodes in order to identify them across
         // submission iff they didn't change.
+        // 为节点生成确定性哈希，以便在提交时识别它们(如果它们没有更改)。
         Map<Integer, byte[]> hashes =
                 defaultStreamGraphHasher.traverseStreamGraphAndGenerateHashes(streamGraph);
 
@@ -180,12 +182,15 @@ public class StreamingJobGraphGenerator {
             legacyHashes.add(hasher.traverseStreamGraphAndGenerateHashes(streamGraph));
         }
 
+        // J:
         setChaining(hashes, legacyHashes);
 
         setPhysicalEdges();
 
+        // J: 资源相关， slot share,  co location
         setSlotSharingAndCoLocation();
 
+        // J: 管理内存相关
         setManagedMemoryFraction(
                 Collections.unmodifiableMap(jobVertices),
                 Collections.unmodifiableMap(vertexConfigs),
@@ -506,6 +511,10 @@ public class StreamingJobGraphGenerator {
     }
 
     /**
+     * 从源{@link StreamNode}实例设置任务链。
+     *
+     * <p>这将递归地创建所有{@link JobVertex}实例。
+     *
      * Sets up task chains from the source {@link StreamNode} instances.
      *
      * <p>This will recursively create all {@link JobVertex} instances.
@@ -513,7 +522,7 @@ public class StreamingJobGraphGenerator {
     private void setChaining(Map<Integer, byte[]> hashes, List<Map<Integer, byte[]>> legacyHashes) {
         // we separate out the sources that run as inputs to another operator (chained inputs)
         // from the sources that needs to run as the main (head) operator.
-        // 我们将作为另一个操作符(链式输入)的输入从需要作为主(头)操作符运行的源中分离出来。
+        // 将作为另一个操作符(链式输入)的输入从需要作为主(头)操作符运行的源中分离出来。
         final Map<Integer, OperatorChainInfo> chainEntryPoints =
                 buildChainedInputsAndGetHeadInputs(hashes, legacyHashes);
         final Collection<OperatorChainInfo> initialEntryPoints =
@@ -1197,6 +1206,7 @@ public class StreamingJobGraphGenerator {
             final SlotSharingGroup effectiveSlotSharingGroup;
             if (slotSharingGroupKey.equals(StreamGraphGenerator.DEFAULT_SLOT_SHARING_GROUP)) {
                 // fallback to the region slot sharing group by default
+                // 默认回退到区域槽位共享组
                 effectiveSlotSharingGroup =
                         checkNotNull(vertexRegionSlotSharingGroups.get(vertex.getID()));
             } else {
@@ -1264,6 +1274,7 @@ public class StreamingJobGraphGenerator {
             final SlotSharingGroup sharingGroup = vertex.getSlotSharingGroup();
 
             // configure co-location constraint
+            // 配置协同位置约束
             final String coLocationGroupKey = node.getCoLocationGroup();
             if (coLocationGroupKey != null) {
                 if (sharingGroup == null) {

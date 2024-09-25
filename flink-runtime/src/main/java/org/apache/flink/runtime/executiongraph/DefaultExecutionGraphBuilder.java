@@ -115,6 +115,7 @@ public class DefaultExecutionGraphBuilder {
                         jobManagerConfig);
 
         // create a new execution graph, if none exists so far
+        // 创建一个新的执行图(如果到目前为止还不存在)
         final DefaultExecutionGraph executionGraph;
         try {
             executionGraph =
@@ -144,6 +145,8 @@ public class DefaultExecutionGraphBuilder {
 
         try {
             // J: JSON 的执行计划
+            // 实际可扩展该 json plan 形成的内容来进行优化
+            // {"jid":"ba36d173525a3cbc825a789cf3372221","name":"WordCount","type":"STREAMING","nodes":[{"id":"e70bbd798b564e0a50e10e343f1ac56b","parallelism":12,"operator":"","operator_strategy":"","description":"counter<br/>+- Sink: print-sink<br/>","inputs":[{"num":0,"id":"0a448493b4782967b150582570326227","ship_strategy":"HASH","exchange":"pipelined_bounded"}],"optimizer_properties":{}},{"id":"0a448493b4782967b150582570326227","parallelism":12,"operator":"","operator_strategy":"","description":"tokenizer<br/>","inputs":[{"num":0,"id":"bc764cd8ddf7a0cff126f51c16239658","ship_strategy":"REBALANCE","exchange":"pipelined_bounded"}],"optimizer_properties":{}},{"id":"bc764cd8ddf7a0cff126f51c16239658","parallelism":1,"operator":"","operator_strategy":"","description":"Source: in-memory-input<br/>","optimizer_properties":{}}]}
             executionGraph.setJsonPlan(JsonPlanGenerator.generatePlan(jobGraph));
         } catch (Throwable t) {
             log.warn("Cannot create JSON plan for job", t);

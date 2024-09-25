@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * {@link FlinkPipelineTranslator}用于数据流API {@link StreamGraph StreamGraphs}。
+ *
  * {@link FlinkPipelineTranslator} for DataStream API {@link StreamGraph StreamGraphs}.
  *
  * <p>Note: this is used through reflection in {@link

@@ -28,6 +28,7 @@ import org.apache.flink.core.memory.DataOutputView;
 import java.io.IOException;
 
 /** A serializer for byte arrays. */
+// 字节数组的序列化器。
 @Internal
 public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<byte[]> {
 

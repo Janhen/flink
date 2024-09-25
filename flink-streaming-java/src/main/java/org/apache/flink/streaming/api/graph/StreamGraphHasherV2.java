@@ -75,6 +75,7 @@ public class StreamGraphHasherV2 implements StreamGraphHasher {
     @Override
     public Map<Integer, byte[]> traverseStreamGraphAndGenerateHashes(StreamGraph streamGraph) {
         // The hash function used to generate the hash
+        // 用于生成哈希值的哈希函数
         final HashFunction hashFunction = Hashing.murmur3_128(0);
         final Map<Integer, byte[]> hashes = new HashMap<>();
 

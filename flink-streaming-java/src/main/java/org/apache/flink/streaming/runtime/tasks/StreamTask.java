@@ -139,6 +139,8 @@ import static org.apache.flink.util.Preconditions.checkState;
 import static org.apache.flink.util.concurrent.FutureUtils.assertNoException;
 
 /**
+ * 所有流任务的基类。任务是由taskmanager部署和执行的本地处理单元。
+ *
  * Base class for all streaming tasks. A task is the unit of local processing that is deployed and
  * executed by the TaskManagers. Each task runs one or more {@link StreamOperator}s which form the
  * Task's operator chain. Operators that are chained together execute synchronously in the same
@@ -272,6 +274,7 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>>
 
     private final RecordWriterDelegate<SerializationDelegate<StreamRecord<OUT>>> recordWriter;
 
+    // J: Mailbox 线程模型
     protected final MailboxProcessor mailboxProcessor;
 
     final MailboxExecutor mainMailboxExecutor;
@@ -742,6 +745,7 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>>
     @Override
     public final void invoke() throws Exception {
         // Allow invoking method 'invoke' without having to call 'restore' before it.
+        // J: 允许调用方法'invoke'而不必在它之前调用'restore'。
         if (!isRunning) {
             LOG.debug("Restoring during invoke will be called.");
             restoreInternal();
@@ -750,9 +754,11 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>>
         // final check to exit early before starting to run
         ensureNotCanceled();
 
+        // 调度缓冲区清除器
         scheduleBufferDebloater();
 
         // let the task do its work
+        // 让任务完成它的工作
         runMailboxLoop();
 
         // if this left the run() method cleanly despite the fact that this was canceled,
@@ -803,6 +809,7 @@ public abstract class StreamTask<OUT, OP extends StreamOperator<OUT>>
         return mailboxProcessor.isMailboxLoopRunning();
     }
 
+    // J: 信箱 循环机制
     public void runMailboxLoop() throws Exception {
         mailboxProcessor.runMailboxLoop();
     }
