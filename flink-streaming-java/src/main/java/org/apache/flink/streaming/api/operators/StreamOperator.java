@@ -28,6 +28,10 @@ import org.apache.flink.streaming.runtime.streamrecord.StreamRecord;
 import java.io.Serializable;
 
 /**
+ * 流操作符的基本接口。实现者将实现
+ * {@link org.apache.flink.streaming.api.operators.OneInputStreamOperator}之一。
+ * {@link org.apache.flink.streaming.api.operators.TwoInputStreamOperator}来创建处理元素的操作符。
+ *
  * Basic interface for stream operators. Implementers would implement one of {@link
  * org.apache.flink.streaming.api.operators.OneInputStreamOperator} or {@link
  * org.apache.flink.streaming.api.operators.TwoInputStreamOperator} to create operators that process

@@ -63,6 +63,11 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个操作符，用于处理要写入{@link org.apache.flink.api.connector.sink.Sink}的记录。它也有一种方法来处理
+ * 具有相同并行性的可提交文件，或者将它们发送到具有不同并行性的下游{@link CommitterOperator}。
+ *
+ * <p>操作符始终是汇聚管道的一部分，并且是第一个操作符。
+ *
  * An operator that processes records to be written into a {@link
  * org.apache.flink.api.connector.sink.Sink}. It also has a way to process committables with the
  * same parallelism or send them downstream to a {@link CommitterOperator} with a different
@@ -77,6 +82,8 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
         implements OneInputStreamOperator<InputT, CommittableMessage<CommT>>, BoundedOneInput {
 
     /**
+     * 为了支持从1.14开始的状态迁移，其中sinkWriter和committer是同一操作符的一部分。
+     *
      * To support state migrations from 1.14 where the sinkWriter and committer where part of the
      * same operator.
      */
@@ -84,10 +91,12 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
             new ListStateDescriptor<>(
                     "streaming_committer_raw_states", BytePrimitiveArraySerializer.INSTANCE);
 
+    // 2PC Sink 时初始化
     @Nullable private final SimpleVersionedSerializer<CommT> committableSerializer;
     private final List<CommT> legacyCommittables = new ArrayList<>();
 
     /** The runtime information of the input element. */
+    // 输入元素的运行时信息
     private final Context<InputT> context;
 
     private final boolean emitDownstream;
@@ -99,8 +108,10 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
 
     private SinkWriter<InputT> sinkWriter;
 
+    // J: sink write 状态处理器，分为有状态的和无状态的
     private final SinkWriterStateHandler<InputT> writerStateHandler;
 
+    // J: Mailbox 线程模型
     private final MailboxExecutor mailboxExecutor;
 
     private boolean endOfInput = false;
@@ -112,6 +123,7 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
         this.processingTimeService = checkNotNull(processingTimeService);
         this.mailboxExecutor = checkNotNull(mailboxExecutor);
         this.context = new Context<>();
+        // J: 确定是否是两阶段提交的
         this.emitDownstream = sink instanceof TwoPhaseCommittingSink;
 
         if (sink instanceof StatefulSink) {
@@ -122,6 +134,7 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
         }
 
         if (sink instanceof TwoPhaseCommittingSink) {
+            // J: 2PC sink 获取 可提交类型的序列化器
             committableSerializer =
                     ((TwoPhaseCommittingSink<InputT, CommT>) sink).getCommittableSerializer();
         } else {
@@ -137,26 +150,31 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
                 createInitContext(checkpointId.isPresent() ? checkpointId.getAsLong() : null);
         if (context.isRestored()) {
             if (committableSerializer != null) {
+                // J: 提取原始的
                 final ListState<List<CommT>> legacyCommitterState =
                         new SimpleVersionedListState<>(
                                 context.getOperatorStateStore()
                                         .getListState(STREAMING_COMMITTER_RAW_STATES_DESC),
                                 new SinkV1WriterCommittableSerializer<>(committableSerializer));
+                // 遗留提交者状态
                 legacyCommitterState.get().forEach(legacyCommittables::addAll);
             }
         }
+        // J: sink writer 由 writer state handler 中创建
         sinkWriter = writerStateHandler.createWriter(initContext, context);
     }
 
     @Override
     public void snapshotState(StateSnapshotContext context) throws Exception {
         super.snapshotState(context);
+        // J: 状态的 snapshot state 处理
         writerStateHandler.snapshotState(context.getCheckpointId());
     }
 
     @Override
     public void processElement(StreamRecord<InputT> element) throws Exception {
         context.element = element;
+        // J: 元素写入到 sink writer
         sinkWriter.write(element.getValue(), context);
     }
 
@@ -174,6 +192,7 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
     public void processWatermark(Watermark mark) throws Exception {
         super.processWatermark(mark);
         this.currentWatermark = mark.getTimestamp();
+        // J: 水印的写入
         sinkWriter.writeWatermark(
                 new org.apache.flink.api.common.eventtime.Watermark(mark.getTimestamp()));
     }
@@ -189,6 +208,7 @@ class SinkWriterOperator<InputT, CommT> extends AbstractStreamOperator<Committab
         if (!emitDownstream) {
             // To support SinkV1 topologies with only a writer we have to call prepareCommit
             // although no committables are forwarded
+            // 为了支持只有一个写入器的SinkV1拓扑，我们必须调用prepareCommit，尽管没有提交被转发
             if (sinkWriter instanceof PrecommittingSinkWriter) {
                 ((PrecommittingSinkWriter<?, ?>) sinkWriter).prepareCommit();
             }

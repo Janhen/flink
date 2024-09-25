@@ -103,12 +103,14 @@ public abstract class AbstractStreamOperator<OUT>
     // ---------------- runtime fields ------------------
 
     /** The task that contains this operator (and other operators in the same chain). */
+    // 包含此操作符(以及同一链中的其他操作符)的任务。
     private transient StreamTask<?, ?> container;
 
     protected transient StreamConfig config;
 
     protected transient Output<StreamRecord<OUT>> output;
 
+    // 索引组合水印状态
     private transient IndexedCombinedWatermarkStatus combinedWatermark;
 
     /** The runtime context for UDFs. */

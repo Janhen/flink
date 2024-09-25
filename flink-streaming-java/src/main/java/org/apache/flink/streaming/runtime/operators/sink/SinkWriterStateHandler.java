@@ -22,6 +22,9 @@ import org.apache.flink.api.connector.sink2.SinkWriter;
 import org.apache.flink.runtime.state.StateInitializationContext;
 
 /**
+ * 管理一个{@link org.apache.flink.api.connector.sink.SinkWriter}的状态。只有两种方式:由
+ * {@link StatelessSinkWriterStateHandler}处理的无状态和由{@link StatelessSinkWriterStateHandler}处理的有状态。
+ *
  * Manages the state of a {@link org.apache.flink.api.connector.sink.SinkWriter}. There are only two
  * flavors: stateless handled by {@link StatelessSinkWriterStateHandler} and stateful handled with
  * {@link StatefulSinkWriterStateHandler}.

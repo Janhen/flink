@@ -34,6 +34,15 @@ import java.util.List;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 一个{@link ListState}使用{@link SimpleVersionedSerializer}而不是{@link TypeSerializer}。
+ *
+ * <p>状态封装了一个类型为{@code byte[]}的{@link ListState}，这意味着它内部只保留字节并惰性地将它们反序列化
+ * 为对象。与使用{@code TypeSerializer}的{@code ListState}状态相比，这有两个主要含义:
+ *
+ * 此状态不参与<i>>状态迁移<i>。字节永远不会被转换，不同的状态版本由版本化的序列化器惰性地解析。
+ *
+ * 这种状态通常比直接使用{@code TypeSerializer}的状态要慢，因为会有额外的拷贝到字节数组和额外的版本编码。
+ *
  * A {@link ListState} that uses a {@link SimpleVersionedSerializer} instead of a {@link
  * TypeSerializer}.
  *
@@ -51,7 +60,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * @param <T> The type of the objects stored in the state.
  */
 public class SimpleVersionedListState<T> implements ListState<T> {
-
+    // 原始的 byte[]
     private final ListState<byte[]> rawState;
 
     private final SimpleVersionedSerializer<T> serializer;
@@ -68,6 +77,7 @@ public class SimpleVersionedListState<T> implements ListState<T> {
 
     @Override
     public void update(@Nullable List<T> values) throws Exception {
+        // J: 整个 list 序列化
         rawState.update(serializeAll(values));
     }
 
@@ -86,6 +96,7 @@ public class SimpleVersionedListState<T> implements ListState<T> {
 
     @Override
     public void add(T value) throws Exception {
+        // J: 添加进 byte[]
         rawState.add(serialize(value));
     }
 
@@ -110,11 +121,13 @@ public class SimpleVersionedListState<T> implements ListState<T> {
 
         final ArrayList<byte[]> rawValues = new ArrayList<>(values.size());
         for (T value : values) {
+            // J: 每个元素使用 SimpleVersionedSerialization 进行序列化成 byte[]
             rawValues.add(serialize(value));
         }
         return rawValues;
     }
 
+    // J: 反序列化迭代器
     private static final class DeserializingIterator<T> implements Iterator<T> {
 
         private final Iterator<byte[]> rawIterator;
