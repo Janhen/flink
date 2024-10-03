@@ -52,6 +52,7 @@ public enum StartupMode {
     SPECIFIC_OFFSETS(Long.MIN_VALUE);
 
     /** The sentinel offset value corresponding to this startup mode. */
+    // 与此启动模式对应的前哨偏移值。
     private long stateSentinel;
 
     StartupMode(long stateSentinel) {

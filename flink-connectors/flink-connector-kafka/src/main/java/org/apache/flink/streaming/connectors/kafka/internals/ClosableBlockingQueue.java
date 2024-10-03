@@ -33,6 +33,15 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * 一种特殊形式的阻塞队列，有两个附加项:
+ *
+ * <li>队列可以在空时自动关闭。关闭队列后添加元素失败。这允许队列消费者自动发现没有元素可用，并将自己标记为已关闭。
+ * <li>队列允许在一个轮询调用中轮询元素批次。
+ *
+ * <p>队列没有容量限制，对多个生产者和消费者都是安全的。
+ *
+ * <p>注意:禁止使用Null元素。
+ *
  * A special form of blocking queue with two additions:
  *
  * <ol>

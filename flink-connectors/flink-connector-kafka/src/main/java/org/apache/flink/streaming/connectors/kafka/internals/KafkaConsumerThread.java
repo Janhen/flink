@@ -69,6 +69,7 @@ public class KafkaConsumerThread<T> extends Thread {
     private final Handover handover;
 
     /** The next offsets that the main thread should commit and the commit callback. */
+    // 下一个是主线程应该提交和提交回调的偏移量。
     private final AtomicReference<
                     Tuple2<Map<TopicPartition, OffsetAndMetadata>, KafkaCommitCallback>>
             nextOffsetsToCommit;
@@ -77,6 +78,7 @@ public class KafkaConsumerThread<T> extends Thread {
     private final Properties kafkaProperties;
 
     /** The queue of unassigned partitions that we need to assign to the Kafka consumer. */
+    // 我们需要分配给Kafka消费者的未分配分区队列。
     private final ClosableBlockingQueue<KafkaTopicPartitionState<T, TopicPartition>>
             unassignedPartitionsQueue;
 

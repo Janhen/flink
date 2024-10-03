@@ -1160,6 +1160,7 @@ public class FlinkKafkaProducer<IN>
             semantic = FlinkKafkaProducer.Semantic.NONE;
         }
 
+        // J: 事务的 ...
         nextTransactionalIdHintState =
                 context.getOperatorStateStore()
                         .getUnionListState(NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR_V2);
@@ -1437,6 +1438,7 @@ public class FlinkKafkaProducer<IN>
 
     private void migrateNextTransactionalIdHindState(FunctionInitializationContext context)
             throws Exception {
+        // J: 迁移下一个事务id后状态
         ListState<NextTransactionalIdHint> oldNextTransactionalIdHintState =
                 context.getOperatorStateStore()
                         .getUnionListState(NEXT_TRANSACTIONAL_ID_HINT_DESCRIPTOR);

@@ -31,6 +31,8 @@ import java.io.Closeable;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * v
+ *
  * The Handover is a utility to hand over data (a buffer of records) and exception from a
  * <i>producer</i> thread to a <i>consumer</i> thread. It effectively behaves like a "size one
  * blocking queue", with some extras around exception reporting, closing, and waking up thread

@@ -21,6 +21,8 @@ package org.apache.flink.streaming.connectors.kafka.internals;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 一个回调接口，源操作符可以实现该接口，以便在提交请求完成时触发自定义操作，通常应该从检查点完成事件触发。
+ *
  * A callback interface that the source operator can implement to trigger custom actions when a
  * commit request completes, which should normally be triggered from checkpoint complete event.
  */
@@ -28,6 +30,8 @@ import org.apache.flink.annotation.Internal;
 public interface KafkaCommitCallback {
 
     /**
+     * 用户可以实现一个回调方法，以提供提交请求完成的异步处理。当发送到服务器的提交请求被确认无误时，将调用此方法。
+     *
      * A callback method the user can implement to provide asynchronous handling of commit request
      * completion. This method will be called when the commit request sent to the server has been
      * acknowledged without error.
@@ -35,6 +39,8 @@ public interface KafkaCommitCallback {
     void onSuccess();
 
     /**
+     * 用户可以实现一个回调方法，以提供提交请求失败的异步处理。此方法将在提交请求失败时调用。
+     *
      * A callback method the user can implement to provide asynchronous handling of commit request
      * failure. This method will be called when the commit request failed.
      *

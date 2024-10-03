@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 import static org.apache.flink.util.Preconditions.checkArgument;
 
 /**
+ * Kafka主题描述符描述了消费者如何订阅Kafka主题——要么是固定的主题列表，要么是主题模式。
+ *
  * A Kafka Topics Descriptor describes how the consumer subscribes to Kafka topics - either a fixed
  * list of topics, or a topic pattern.
  */
@@ -66,6 +68,8 @@ public class KafkaTopicsDescriptor implements Serializable {
     }
 
     /**
+     * 检查输入的主题是否与KafkaTopicDescriptor描述的主题匹配。
+     *
      * Check if the input topic matches the topics described by this KafkaTopicDescriptor.
      *
      * @return true if found a match.
@@ -74,6 +78,7 @@ public class KafkaTopicsDescriptor implements Serializable {
         if (isFixedTopics()) {
             return getFixedTopics().contains(topic);
         } else {
+            // J: 正则匹配
             return topicPattern.matcher(topic).matches();
         }
     }

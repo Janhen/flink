@@ -50,6 +50,8 @@ import static org.apache.flink.streaming.connectors.kafka.internals.metrics.Kafk
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
+ * 所有读取器的基类，它实现了与Kafka代理的连接，并从Kafka分区中提取记录。
+ *
  * Base class for all fetchers, which implement the connections to Kafka brokers and pull records
  * from Kafka partitions.
  *

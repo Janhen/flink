@@ -45,6 +45,8 @@ import java.util.Queue;
 import static org.apache.flink.util.Preconditions.checkState;
 
 /**
+ * 一个通过Kafka消费者API从Kafka代理获取数据的获取器。
+ *
  * A fetcher that fetches data from Kafka brokers via the Kafka consumer API.
  *
  * @param <T> The type of elements produced by the fetcher.
@@ -63,9 +65,12 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
     private final KafkaCollector kafkaCollector;
 
     /** The handover of data and exceptions between the consumer thread and the task thread. */
+    // 在消费者线程和任务线程之间交换数据和异常。
     final Handover handover;
 
     /**
+     * 这个线程运行实际的 kafka consumer，并将记录批发送给这个抓取器。
+     *
      * The thread that runs the actual KafkaConsumer and hand the record batches to this fetcher.
      */
     final KafkaConsumerThread consumerThread;
@@ -130,6 +135,7 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
             while (running) {
                 // this blocks until we get the next records
                 // it automatically re-throws exceptions encountered in the consumer thread
+                // 这个阻塞直到我们得到下一个记录，它会自动重新抛出在消费者线程中遇到的异常
                 final ConsumerRecords<byte[], byte[]> records = handover.pollNext();
 
                 // get the records for each topic partition
@@ -180,6 +186,7 @@ public class KafkaFetcher<T> extends AbstractFetcher<T, TopicPartition> {
 
             // emit the actual records. this also updates offset state atomically and emits
             // watermarks
+            // 发出实际的记录。这也自动更新偏移状态并发出水印
             emitRecordsWithTimestamps(
                     kafkaCollector.getRecords(), partition, record.offset(), record.timestamp());
 

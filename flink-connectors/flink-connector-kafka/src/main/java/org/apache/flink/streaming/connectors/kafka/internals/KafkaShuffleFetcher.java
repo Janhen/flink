@@ -49,9 +49,11 @@ import static org.apache.flink.streaming.connectors.kafka.shuffle.FlinkKafkaShuf
 import static org.apache.flink.streaming.connectors.kafka.shuffle.FlinkKafkaShuffleProducer.KafkaSerializer.TAG_WATERMARK;
 
 /** Fetch data from Kafka for Kafka Shuffle. */
+// 从Kafka中获取数据用于Kafka Shuffle。
 @Internal
 public class KafkaShuffleFetcher<T> extends KafkaFetcher<T> {
     /** The handler to check and generate watermarks from fetched records. * */
+    // 从获取的记录中检查和生成水印的处理程序。
     private final WatermarkHandler watermarkHandler;
 
     /** The schema to convert between Kafka's byte messages, and Flink's objects. */

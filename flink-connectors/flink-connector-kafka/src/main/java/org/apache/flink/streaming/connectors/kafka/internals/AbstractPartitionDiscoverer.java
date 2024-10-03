@@ -44,6 +44,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class AbstractPartitionDiscoverer {
 
     /** Describes whether we are discovering partitions for fixed topics or a topic pattern. */
+    // 描述我们是为固定主题还是为主题模式发现分区。
     private final KafkaTopicsDescriptor topicsDescriptor;
 
     /** Index of the consumer subtask that this partition discoverer belongs to. */
@@ -105,6 +106,11 @@ public abstract class AbstractPartitionDiscoverer {
     }
 
     /**
+     * 通过抛出{@link WakeupException}来中断正在进行的发现尝试。如果没有任何尝试正在进行，下一次尝试将抛出
+     * {@link WakeupException}。
+     *
+     * <p>这个方法可以从不同的线程并发调用。
+     *
      * Interrupt an in-progress discovery attempt by throwing a {@link WakeupException}. If no
      * attempt is in progress, the immediate next attempt will throw a {@link WakeupException}.
      *
@@ -135,6 +141,7 @@ public abstract class AbstractPartitionDiscoverer {
                     List<String> matchedTopics = getAllTopics();
 
                     // retain topics that match the pattern
+                    // 保留与模式匹配的主题
                     Iterator<String> iter = matchedTopics.iterator();
                     while (iter.hasNext()) {
                         if (!topicsDescriptor.isMatchingTopic(iter.next())) {
@@ -230,9 +237,11 @@ public abstract class AbstractPartitionDiscoverer {
     protected abstract void closeConnections() throws Exception;
 
     /** Fetch the list of all topics from Kafka. */
+    // 从Kafka获取所有主题的列表。
     protected abstract List<String> getAllTopics() throws WakeupException;
 
     /** Fetch the list of all partitions for a specific topics list from Kafka. */
+    // 从Kafka获取特定主题列表的所有分区列表。
     protected abstract List<KafkaTopicPartition> getAllPartitionsForTopics(List<String> topics)
             throws WakeupException;
 

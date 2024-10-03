@@ -249,8 +249,10 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
 
         // make sure that auto commit is disabled when our offset commit mode is ON_CHECKPOINTS;
         // this overwrites whatever setting the user configured in the properties
+        // 确保当偏移提交模式为ON_CHECKPOINTS时，自动提交被禁用;这将覆盖用户在属性中配置的任何设置
         adjustAutoCommitConfig(properties, offsetCommitMode);
 
+        // J: 实际的数据获取交由 kafkaFetcher
         return new KafkaFetcher<>(
                 sourceContext,
                 assignedPartitionsWithInitialOffsets,
@@ -292,8 +294,10 @@ public class FlinkKafkaConsumer<T> extends FlinkKafkaConsumerBase<T> {
         // this is ok because this is a one-time operation that happens only on startup
         try (KafkaConsumer<?, ?> consumer = new KafkaConsumer(properties)) {
             for (Map.Entry<TopicPartition, OffsetAndTimestamp> partitionToOffset :
+                // J: 根据 topic,partiton => timestamp 去找出对应的 offset 情况
                     consumer.offsetsForTimes(partitionOffsetsRequest).entrySet()) {
 
+                // J: 封装到 Flink 中的 KafkaTopicPartition 当中...
                 result.put(
                         new KafkaTopicPartition(
                                 partitionToOffset.getKey().topic(),

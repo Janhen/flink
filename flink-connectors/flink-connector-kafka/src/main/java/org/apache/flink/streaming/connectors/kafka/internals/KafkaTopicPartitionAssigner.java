@@ -24,6 +24,17 @@ import org.apache.flink.annotation.Internal;
 public class KafkaTopicPartitionAssigner {
 
     /**
+     * 返回指定 Kafka 分区应该分配给的目标子任务的索引。
+     *
+     * <p>单个主题分区的结果分布具有以下契约:
+     *
+     * <li>1.均匀分布在子任务之间
+     * <li>2. 分区是循环分布的(严格顺时针w.r.t.升序子任务索引)，使用分区id作为起始索引的偏移量(即，将分配给
+     * 主题的分区0的子任务的索引，使用主题名称确定)。
+     *
+     * <p>上述合同至关重要，不可毁约。消费者子任务依赖此契约在本地过滤掉不应该订阅的分区，从而保证单个主题的所有
+     * 分区始终以统一分布的方式分配给某些子任务。
+     *
      * Returns the index of the target subtask that a specific Kafka partition should be assigned
      * to.
      *
@@ -47,12 +58,14 @@ public class KafkaTopicPartitionAssigner {
      * @return index of the target subtask that the Kafka partition should be assigned to.
      */
     public static int assign(KafkaTopicPartition partition, int numParallelSubtasks) {
+        // J: 根据 topic 确定 start index
         int startIndex =
                 ((partition.getTopic().hashCode() * 31) & 0x7FFFFFFF) % numParallelSubtasks;
 
         // here, the assumption is that the id of Kafka partitions are always ascending
         // starting from 0, and therefore can be used directly as the offset clockwise from the
         // start index
+        // 在这里，假设Kafka分区的id总是从0开始升序，因此可以直接用作从开始索引顺时针方向的偏移量
         return (startIndex + partition.getPartition()) % numParallelSubtasks;
     }
 }

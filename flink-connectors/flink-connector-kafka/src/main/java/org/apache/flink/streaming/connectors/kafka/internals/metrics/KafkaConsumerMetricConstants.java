@@ -20,6 +20,10 @@ package org.apache.flink.streaming.connectors.kafka.internals.metrics;
 import org.apache.flink.annotation.Internal;
 
 /**
+ * 与Kafka消费者指标相关的常量字符串的集合。
+ *
+ * <p>不能更改名称，因为这会破坏消费者指标的向后兼容性。
+ *
  * A collection of Kafka consumer metrics related constant strings.
  *
  * <p>The names must not be changed, as that would break backward compatibility for the consumer's
