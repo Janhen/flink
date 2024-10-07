@@ -88,7 +88,7 @@ import static org.apache.flink.util.Preconditions.checkState;
 public abstract class AbstractStreamOperator<OUT>
         implements StreamOperator<OUT>,
                 SetupableStreamOperator<OUT>,
-                CheckpointedStreamOperator,
+                CheckpointedStreamOperator,  // J:
                 Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -57,6 +57,13 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 一个{@link TwoInputStreamOperator operator}来执行有时间限制的流内部连接。
+ *
+ * <p>通过使用一个可配置的下界和上界，这个操作符将恰好产生那些(T1, T2)对，其中T2。ts∈[T1]。ts +下界T1。ts +上界]。
+ * 下界和上界都可以配置为包含或排除。
+ *
+ * <p>一旦元素连接起来，它们就被传递给用户定义的{@link ProcessJoinFunction}。
+ *
  * An {@link TwoInputStreamOperator operator} to execute time-bounded stream inner joins.
  *
  * <p>By using a configurable lower and upper bound this operator will emit exactly those pairs (T1,
@@ -104,7 +111,9 @@ public class IntervalJoinOperator<K, T1, T2, OUT>
     private final TypeSerializer<T1> leftTypeSerializer;
     private final TypeSerializer<T2> rightTypeSerializer;
 
+    // J: join state left
     private transient MapState<Long, List<BufferEntry<T1>>> leftBuffer;
+    // J: join state right
     private transient MapState<Long, List<BufferEntry<T2>>> rightBuffer;
 
     private transient TimestampedCollector<OUT> collector;
@@ -161,6 +170,7 @@ public class IntervalJoinOperator<K, T1, T2, OUT>
     public void initializeState(StateInitializationContext context) throws Exception {
         super.initializeState(context);
 
+        // J: KeyedStateStore restore ...
         this.leftBuffer =
                 context.getKeyedStateStore()
                         .getMapState(
@@ -227,6 +237,7 @@ public class IntervalJoinOperator<K, T1, T2, OUT>
                             + "interval stream joins need to have timestamps meaningful timestamps.");
         }
 
+        // J: 迟到机制...
         if (isLate(ourTimestamp)) {
             return;
         }

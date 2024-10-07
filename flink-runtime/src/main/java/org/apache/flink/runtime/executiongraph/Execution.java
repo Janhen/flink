@@ -540,6 +540,7 @@ public class Execution
 
             // race double check, did we fail/cancel and do we need to release the slot?
             if (this.state != DEPLOYING) {
+                // J: 释放 slot
                 slot.releaseSlot(
                         new FlinkException(
                                 "Actual state of execution "
@@ -569,6 +570,7 @@ public class Execution
             // null taskRestore to let it be GC'ed
             taskRestore = null;
 
+            // J: gateway ...
             final TaskManagerGateway taskManagerGateway = slot.getTaskManagerGateway();
 
             final ComponentMainThreadExecutor jobMasterMainThreadExecutor =

@@ -76,6 +76,7 @@ public final class StreamSQLExample {
         // it will be accessible under a name
         tableEnv.createTemporaryView("TableB", orderB);
 
+        // J: 流式 SQL 执行逻辑
         // union the two tables
         final Table result =
                 tableEnv.sqlQuery(

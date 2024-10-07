@@ -2101,6 +2101,7 @@ public class StreamExecutionEnvironment {
 
         try {
             JobClient jobClient = jobClientFuture.get();
+            // J: 对 JobListener 增加 onJobSubmitted 回调
             jobListeners.forEach(jobListener -> jobListener.onJobSubmitted(jobClient, null));
             return jobClient;
         } catch (ExecutionException executionException) {

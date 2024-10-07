@@ -19,6 +19,8 @@
 package org.apache.flink.runtime.execution;
 
 /**
+ * 任务在执行过程中可能处于的所有状态的枚举。任务通常以状态{@code CREATED}开始，并根据下图切换状态:
+ *
  * An enumeration of all states that a task can be in during its execution. Tasks usually start in
  * the state {@code CREATED} and switch states according to this diagram:
  *

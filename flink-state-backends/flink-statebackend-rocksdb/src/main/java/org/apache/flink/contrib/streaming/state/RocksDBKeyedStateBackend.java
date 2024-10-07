@@ -116,6 +116,8 @@ public class RocksDBKeyedStateBackend<K> extends AbstractKeyedStateBackend<K> {
     private static final Logger LOG = LoggerFactory.getLogger(RocksDBKeyedStateBackend.class);
 
     /**
+     * RocksDB中合并操作符的名称。除非你知道你要做什么，否则不要改变。
+     *
      * The name of the merge operator in RocksDB. Do not change except you know exactly what you do.
      */
     public static final String MERGE_OPERATOR_NAME = "stringappendtest";

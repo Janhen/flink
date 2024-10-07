@@ -1087,6 +1087,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
                         slotId, jobId, targetAddress, allocationId, resourceProfile));
 
         try {
+            // J: 分配 slot
             final boolean isConnected =
                     allocateSlotForJob(jobId, slotId, allocationId, resourceProfile, targetAddress);
 
@@ -1108,6 +1109,7 @@ public class TaskExecutor extends RpcEndpoint implements TaskExecutorGateway {
             ResourceProfile resourceProfile,
             String targetAddress)
             throws SlotAllocationException {
+        // ...
         allocateSlot(slotId, jobId, allocationId, resourceProfile);
 
         final JobTable.Job job;

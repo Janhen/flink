@@ -48,6 +48,11 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 /**
+ * 将其输入元素发送到任意后端的通用接收器。此接收器与Flink的检查点机制集成，可以提供精确的一次性保证;取决于存储后端
+ * 和sink提交器实现。
+ *
+ * <p>传入记录存储在{@link org.apache.flink.runtime.state.AbstractStateBackend}中，并且仅在检查点完成时提交。
+ *
  * Generic Sink that emits its input elements into an arbitrary backend. This sink is integrated
  * with Flink's checkpointing mechanism and can provide exactly-once guarantees; depending on the
  * storage backend and sink/committer implementation.

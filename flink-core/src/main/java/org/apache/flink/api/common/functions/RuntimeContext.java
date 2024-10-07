@@ -82,6 +82,8 @@ public interface RuntimeContext {
     OperatorMetricGroup getMetricGroup();
 
     /**
+     * 获取并行任务运行时使用的并行度。
+     *
      * Gets the parallelism with which the parallel task runs.
      *
      * @return The parallelism with which the parallel task runs.

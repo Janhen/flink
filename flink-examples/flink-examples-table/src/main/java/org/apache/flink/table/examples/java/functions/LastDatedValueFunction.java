@@ -30,6 +30,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 /**
+ * 实现一个{@link AggregateFunction}，它返回一个包含最新的非空值和相应日期的行。
+ *
  * Implementation of an {@link AggregateFunction} that returns a row containing the latest non-null
  * value with its corresponding date.
  *

@@ -27,6 +27,7 @@ import org.apache.flink.runtime.state.internal.InternalKvState;
 import javax.annotation.Nonnull;
 
 /** This factory produces concrete internal state objects. */
+// 这个工厂产生具体的内部状态对象。
 public interface KeyedStateFactory {
 
     /**

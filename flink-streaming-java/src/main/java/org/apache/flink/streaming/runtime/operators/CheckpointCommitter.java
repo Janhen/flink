@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
+ * 该类用于保存有关哪个接收操作符实例已将检查点提交给后端的信息。
+ *
  * This class is used to save information about which sink operator instance has committed
  * checkpoints to a backend.
  *

@@ -86,6 +86,8 @@ import org.apache.flink.util.Preconditions;
 import java.util.Arrays;
 
 /**
+ * 一个{@link DataSet}，它是连接转换的结果。
+ *
  * A {@link DataSet} that is the result of a Join transformation.
  *
  * @param <I1> The type of the first input DataSet of the Join transformation.

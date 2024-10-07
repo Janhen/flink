@@ -52,6 +52,7 @@ public class TopSpeedWindowingExampleITCase extends TestLogger {
 
         final String resultPath = temporaryFolder.newFolder().toURI().toString();
 
+        // J: 指定命令运行的参数
         TopSpeedWindowing.main(
                 new String[] {
                     "--input",

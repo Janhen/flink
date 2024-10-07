@@ -82,6 +82,7 @@ public final class UpdatingTopCityExample {
                         + ")");
 
         // insert some example data into the table
+        // 向表中插入一些示例数据
         final TableResult insertionResult =
                 env.executeSql(
                         "INSERT INTO PopulationUpdates VALUES"
@@ -110,6 +111,7 @@ public final class UpdatingTopCityExample {
         // since all cluster operations of the Table API are executed asynchronously,
         // we need to wait until the insertion has been completed,
         // an exception is thrown in case of an error
+        // 由于Table API的所有集群操作都是异步执行的，因此我们需要等待插入完成，如果出现错误将抛出异常
         insertionResult.await();
 
         // read from table and aggregate the total population per city

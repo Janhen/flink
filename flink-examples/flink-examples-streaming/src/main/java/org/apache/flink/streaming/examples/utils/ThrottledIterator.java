@@ -24,6 +24,8 @@ import java.util.Iterator;
 import static java.util.Objects.requireNonNull;
 
 /**
+ * 收集源的一种变体(以流的形式发送元素序列)，支持限制发送速率。
+ *
  * A variant of the collection source (emits a sequence of elements as a stream) that supports
  * throttling the emission rate.
  *
