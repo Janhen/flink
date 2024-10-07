@@ -59,6 +59,7 @@ public class StatementSetImpl<E extends TableEnvironmentInternal> implements Sta
 
     @Override
     public StatementSet addInsertSql(String statement) {
+        // J: 解析对应的 sql 语句，形成对应的 Operation
         List<Operation> operations = tableEnvironment.getParser().parse(statement);
 
         if (operations.size() != 1) {

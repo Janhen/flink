@@ -31,10 +31,18 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** Provides methods for parsing SQL objects from a SQL string. */
+// 提供从SQL字符串解析SQL对象的方法。
 @Internal
 public interface Parser {
 
     /**
+     * 用于解析表示为String的SQL查询的入口点。
+     *
+     * <p><b>注意:<b>如果创建的{@link Operation}是{@link QueryOperation}，它必须以
+     * {@link Planner#translate(List)}方法能够理解的形式存在。
+     *
+     * <p>生成的操作树应该已经被验证过了。
+     *
      * Entry point for parsing SQL queries expressed as a String.
      *
      * <p><b>Note:</b>If the created {@link Operation} is a {@link QueryOperation} it must be in a
@@ -49,6 +57,8 @@ public interface Parser {
     List<Operation> parse(String statement);
 
     /**
+     * 用于解析表示为String的SQL标识符的入口点。
+     *
      * Entry point for parsing SQL identifiers expressed as a String.
      *
      * @param identifier the SQL identifier to parse
@@ -58,6 +68,8 @@ public interface Parser {
     UnresolvedIdentifier parseIdentifier(String identifier);
 
     /**
+     * 用于解析表示为String的SQL表达式的入口点。
+     *
      * Entry point for parsing SQL expressions expressed as a String.
      *
      * @param sqlExpression the SQL expression to parse
@@ -70,6 +82,8 @@ public interface Parser {
             String sqlExpression, RowType inputRowType, @Nullable LogicalType outputType);
 
     /**
+     * 返回给定语句在给定游标位置的完成提示。完成不区分大小写。
+     *
      * Returns completion hints for the given statement at the given cursor position. The completion
      * happens case insensitively.
      *

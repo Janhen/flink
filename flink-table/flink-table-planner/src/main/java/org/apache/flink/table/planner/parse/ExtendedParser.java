@@ -26,23 +26,29 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * {@link ExtendedParser}用于解析一些{@link CalciteParser}不支持的特殊命令，例如{@code SET key=value}
+ * 可能在key和value中包含特殊字符。将一些解析策略移到这里也是一个好主意，以避免引入新的保留关键字。
+ *
  * {@link ExtendedParser} is used for parsing some special command which can't supported by {@link
  * CalciteParser}, e.g. {@code SET key=value} may contain special characters in key and value. It's
  * also a good idea to move some parsing strategy here to avoid introducing new reserved keywords.
  */
 public class ExtendedParser {
-
+    // J: 单例控制
     public static final ExtendedParser INSTANCE = new ExtendedParser();
 
+    // J: 解析策略
     private static final List<ExtendedParseStrategy> PARSE_STRATEGIES =
             Arrays.asList(
-                    ClearOperationParseStrategy.INSTANCE,
-                    HelpOperationParseStrategy.INSTANCE,
-                    QuitOperationParseStrategy.INSTANCE,
-                    ResetOperationParseStrategy.INSTANCE,
-                    SetOperationParseStrategy.INSTANCE);
+                    ClearOperationParseStrategy.INSTANCE, // CLEAR\s*;?
+                    HelpOperationParseStrategy.INSTANCE,  // HELP\s*;?
+                    QuitOperationParseStrategy.INSTANCE, // (EXIT|QUIT)\s*;?
+                    ResetOperationParseStrategy.INSTANCE, // RESET(\s+(?<key>[^'\s]+)\s*)?\s*;?
+                    SetOperationParseStrategy.INSTANCE); // set 相关的， SET(\s+(?<key>[^'\s]+)\s*=\s*('(?<quotedVal>[^']*)'|(?<val>[^;\s]+)))?\s*;?
 
     /**
+     * 将输入语句解析为{@link Operation}。
+     *
      * Parse the input statement to the {@link Operation}.
      *
      * @param statement the command to evaluate
@@ -50,7 +56,9 @@ public class ExtendedParser {
      */
     public Optional<Operation> parse(String statement) {
         for (ExtendedParseStrategy strategy : PARSE_STRATEGIES) {
+            // J: 判断 SQL 语句是否包含扩展的正则机制...
             if (strategy.match(statement)) {
+                // 匹配的状况下，进行转换操作。
                 return Optional.of(strategy.convert(statement));
             }
         }

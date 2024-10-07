@@ -23,6 +23,8 @@ import org.apache.flink.api.dag.Transformation;
 import org.apache.flink.table.delegation.Planner;
 
 /**
+ * {@link ExecNodeTranslator}负责将{@link ExecNode}转换为{@link Transformation}。
+ *
  * An {@link ExecNodeTranslator} is responsible for translating an {@link ExecNode} to {@link
  * Transformation}s.
  *

@@ -21,6 +21,9 @@ package org.apache.flink.table.planner.parse;
 import org.apache.flink.table.operations.Operation;
 
 /**
+ * 将语句解析为{@link Operation}的策略。解析一些{@link CalciteParser}不支持的特殊命令，例如
+ * {@code SET key=value}可能会在key和value中包含特殊字符。
+ *
  * Strategy to parse statement to {@link Operation}. parsing some special command which can't
  * supported by {@link CalciteParser}, e.g. {@code SET key=value} may contain special characters in
  * key and value.
@@ -28,11 +31,15 @@ import org.apache.flink.table.operations.Operation;
 public interface ExtendedParseStrategy {
 
     /** Determine whether the input statement is satisfied the strategy. */
+    // 确定输入语句是否满足策略。
+    // J: 主要为正则进行字符的匹配
     boolean match(String statement);
 
     /** Convert the input statement to the {@link Operation}. */
+    // 将输入语句转换为{@link Operation}。
     Operation convert(String statement);
 
     /** Return hints for the given statement. */
+    // 返回给定语句的提示。
     String[] getHints();
 }

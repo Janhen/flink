@@ -53,6 +53,8 @@ public interface Executor {
     ReadableConfig getConfiguration();
 
     /**
+     * 将给定的转换转换为{@link Pipeline}。
+     *
      * Translates the given transformations to a {@link Pipeline}.
      *
      * @param transformations list of transformations
@@ -75,6 +77,8 @@ public interface Executor {
     JobExecutionResult execute(Pipeline pipeline) throws Exception;
 
     /**
+     * 异步执行给定的管道。
+     *
      * Executes the given pipeline asynchronously.
      *
      * @param pipeline the pipeline to execute

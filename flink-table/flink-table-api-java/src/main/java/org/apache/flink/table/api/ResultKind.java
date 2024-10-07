@@ -30,6 +30,8 @@ public enum ResultKind {
     SUCCESS,
 
     /**
+     * 语句(如DML、DQL、SHOW)执行成功，结果包含重要内容。
+     *
      * The statement (e.g. DML, DQL, SHOW) executes successfully, and the result contains important
      * content.
      */

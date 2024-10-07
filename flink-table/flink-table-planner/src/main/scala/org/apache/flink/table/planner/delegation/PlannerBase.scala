@@ -71,7 +71,8 @@ import java.util.{Collections, TimeZone}
 import scala.collection.mutable
 
 /**
- * [[Planner]]的实现。它只支持流用例。新的[[org.apache.flink.table.sources.]InputFormatTableSource[]应该可以工作，但将作为流源处理，并且不会应用特定于批处理的优化)。
+ * [[Planner]]的实现。它只支持流用例。新的[[org.apache.flink.table.sources.]InputFormatTableSource[]
+* 应该可以工作，但将作为流源处理，并且不会应用特定于批处理的优化)。
 *
  * Implementation of a [[Planner]]. It supports only streaming use cases. (The new
  * [[org.apache.flink.table.sources.InputFormatTableSource]] should work, but will be handled as
@@ -95,12 +96,13 @@ abstract class PlannerBase(
     executor: Executor,
     tableConfig: TableConfig,
     val moduleManager: ModuleManager,
-    val functionCatalog: FunctionCatalog,
-    val catalogManager: CatalogManager,
-    isStreamingMode: Boolean)
+    val functionCatalog: FunctionCatalog, // J: 函数的 catalog
+    val catalogManager: CatalogManager,  //
+    isStreamingMode: Boolean)  // J: 流和批的混合统一
   extends Planner {
 
   // temporary utility until we don't use planner expressions anymore
+  // 临时实用程序，直到我们不再使用计划器表达式
   functionCatalog.setPlannerTypeInferenceUtil(PlannerTypeInferenceUtilImpl.INSTANCE)
 
   private var parser: Parser = _
@@ -189,13 +191,17 @@ abstract class PlannerBase(
       return List.empty[Transformation[_]]
     }
 
-    // J: ModifyOperation => RelNode
+    // J: translateToRel 实现 ModifyOperation => RelNode
     val relNodes = modifyOperations.map(translateToRel)
     // 优化下 RelNode
     val optimizedRelNodes = optimize(relNodes)
-    // => ExecNodeGraph
+    // 将优化后的 RelNode => ExecNodeGraph
+    // 方法内部有 FlinkPhysicalRel DAG => ExecNodeGraph
     val execGraph = translateToExecNodeGraph(optimizedRelNodes, isCompiled = false)
+    // J: 将 ExecNodeGraph => List<Transformation>，由实现类 StreamPlanner/BatchPlanner 处理
     val transformations = translateToPlan(execGraph)
+
+    // translate 后的行为
     afterTranslation()
     transformations
   }
@@ -345,12 +351,16 @@ abstract class PlannerBase(
     require(optimizedRelNodes.forall(_.isInstanceOf[FlinkPhysicalRel]))
     // Rewrite same rel object to different rel objects
     // in order to get the correct dag (dag reuse is based on object not digest)
+    // 将相同的rel对象重写为不同的rel对象，以获得正确的dag (dag重用基于对象而不是摘要)
     val shuttle = new SameRelObjectShuttle()
     val relsWithoutSameObj = optimizedRelNodes.map(_.accept(shuttle))
     // reuse subplan
+    // J: 重用辅助方案
     val reusedPlan = SubplanReuser.reuseDuplicatedSubplan(relsWithoutSameObj, tableConfig)
     // convert FlinkPhysicalRel DAG to ExecNodeGraph
+    // 转换  FlinkPhysicalRel DAG => ExecNodeGraph
     val generator = new ExecNodeGraphGenerator()
+    //
     val execGraph = generator.generate(reusedPlan.map(_.asInstanceOf[FlinkPhysicalRel]), isCompiled)
 
     // process the graph
@@ -467,6 +477,8 @@ abstract class PlannerBase(
   protected def beforeTranslation(): Unit = {
     // Add query start time to TableConfig, these config are used internally,
     // these configs will be used by temporal functions like CURRENT_TIMESTAMP,LOCALTIMESTAMP.
+    // 将查询开始时间添加到TableConfig，这些配置在内部使用，这些配置将被像CURRENT_TIMESTAMP,LOCALTIMESTAMP
+    // 这样的时间函数使用。
     val epochTime: JLong = System.currentTimeMillis()
     tableConfig.set(TABLE_QUERY_START_EPOCH_TIME, epochTime)
     val localTime: JLong = epochTime +
@@ -477,6 +489,7 @@ abstract class PlannerBase(
     getExecEnv.configure(tableConfig.getConfiguration, Thread.currentThread().getContextClassLoader)
 
     // Use config parallelism to override env parallelism.
+    // 使用config parallelism覆盖env parallelism。
     val defaultParallelism =
       getTableConfig.get(ExecutionConfigOptions.TABLE_EXEC_RESOURCE_DEFAULT_PARALLELISM)
     if (defaultParallelism > 0) {

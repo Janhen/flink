@@ -43,6 +43,7 @@ public class SetOperationParseStrategy extends AbstractRegexParseStrategy {
     public Operation convert(String statement) {
         Matcher matcher = pattern.matcher(statement.trim());
         final List<String> operands = new ArrayList<>();
+        // J: 进行 set 的各个 key, val 提取
         if (matcher.find()) {
             if (matcher.group("key") != null) {
                 operands.add(matcher.group("key"));

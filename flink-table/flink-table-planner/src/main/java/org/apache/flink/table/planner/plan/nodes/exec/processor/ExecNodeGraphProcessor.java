@@ -21,6 +21,8 @@ package org.apache.flink.table.planner.plan.nodes.exec.processor;
 import org.apache.flink.table.planner.plan.nodes.exec.ExecNodeGraph;
 
 /**
+ * {@link ExecNodeGraphProcessor}插件，使用它可以更改或更新给定的{@link ExecNodeGraph}。
+ *
  * {@link ExecNodeGraphProcessor} plugin, use it can change or update the given {@link
  * ExecNodeGraph}.
  */

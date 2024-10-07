@@ -22,6 +22,10 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.table.operations.Operation;
 
 /**
+ * 描述DDL语句的{@link Operation}，例如ALTER TABLE或ALTER DATABASE。
+ *
+ * <p>不同的子操作可以有其特殊的目标名称。例如，alter table操作可能有一个目标表名和一个标志来描述它是否存在。
+ *
  * A {@link Operation} that describes the DDL statements, e.g. ALTER TABLE or ALTER DATABASE.
  *
  * <p>Different sub operations can have their special target name. For example, a alter table

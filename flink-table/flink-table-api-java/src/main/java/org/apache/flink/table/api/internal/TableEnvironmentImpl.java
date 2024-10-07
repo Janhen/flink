@@ -683,6 +683,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
         Operation operation = operations.get(0);
 
         if (operation instanceof QueryOperation && !(operation instanceof ModifyOperation)) {
+            //
             return createTable((QueryOperation) operation);
         } else {
             throw new ValidationException(
@@ -693,12 +694,13 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
 
     @Override
     public TableResult executeSql(String statement) {
+        // J: parser  parse ...
         List<Operation> operations = getParser().parse(statement);
 
         if (operations.size() != 1) {
             throw new TableException(UNSUPPORTED_QUERY_IN_EXECUTE_SQL_MSG);
         }
-
+        // J: 对 Operation 执行...
         return executeInternal(operations.get(0));
     }
 
@@ -780,7 +782,9 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
 
     @Override
     public TableResultInternal executeInternal(List<ModifyOperation> operations) {
+        // List<ModifyOperation> => List<Transformation>
         List<Transformation<?>> transformations = translate(operations);
+        // 提取 sink 标识符名称
         List<String> sinkIdentifierNames = extractSinkIdentifierNames(operations);
         // ...
         TableResultInternal result = executeInternal(transformations, sinkIdentifierNames);
@@ -795,11 +799,13 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
         return result;
     }
 
+    // J: ..
     private TableResultInternal executeInternal(
             List<Transformation<?>> transformations, List<String> sinkIdentifierNames) {
         // J: 构造 job 名称
         final String defaultJobName = "insert-into_" + String.join(",", sinkIdentifierNames);
         // We pass only the configuration to avoid reconfiguration with the rootConfiguration
+        // 我们只传递配置，以避免用rootConfiguration重新配置
         Pipeline pipeline =
                 execEnv.createPipeline(
                         transformations, tableConfig.getConfiguration(), defaultJobName);
@@ -809,6 +815,7 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
             Long[] affectedRowCounts = new Long[transformations.size()];
             for (int i = 0; i < transformations.size(); ++i) {
                 // use sink identifier name as field name
+                // 使用接收器标识符名称作为字段名称
                 columns.add(Column.physical(sinkIdentifierNames.get(i), DataTypes.BIGINT()));
                 affectedRowCounts[i] = -1L;
             }
@@ -862,9 +869,11 @@ public class TableEnvironmentImpl implements TableEnvironmentInternal {
 
     @Override
     public TableResultInternal executeInternal(Operation operation) {
+        // J: 针对不同的 operation 做处理
         if (operation instanceof ModifyOperation) {
             return executeInternal(Collections.singletonList((ModifyOperation) operation));
         } else if (operation instanceof StatementSetOperation) {
+            // J: 多个 语句 操作
             return executeInternal(((StatementSetOperation) operation).getOperations());
         } else if (operation instanceof CreateTableOperation) {
             CreateTableOperation createTableOperation = (CreateTableOperation) operation;

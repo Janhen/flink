@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 描述语句集的{@link Operation}，例如:
+ *
  * A {@link Operation} that describes the statement set, e.g.
  *
  * <pre>

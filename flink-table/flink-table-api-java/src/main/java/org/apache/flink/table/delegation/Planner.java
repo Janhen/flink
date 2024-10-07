@@ -67,6 +67,10 @@ public interface Planner {
     /**
      * 将{@link ModifyOperation}的关系树转换为一组可运行的{@link Transformation}。
      *
+     * <p>该方法接受{@link ModifyOperation}列表，以允许重用多个关系查询的公共子树。每个查询的顶部节点应该是
+     * {@link ModifyOperation}，以便传递输出{@link Transformation}的预期属性，例如
+     * 输出模式(append、撤回、upsert)或预期的输出类型。
+     *
      * Converts a relational tree of {@link ModifyOperation}s into a set of runnable {@link
      * Transformation}s.
      *
@@ -76,7 +80,7 @@ public interface Planner {
      * mode (append, retract, upsert) or the expected output type.
      *
      * @param modifyOperations list of relational operations to plan, optimize and convert in a
-     *     single run.
+     *     single run.  要在一次运行中计划、优化和转换的关系操作列表。
      * @return list of corresponding {@link Transformation}s.
      */
     List<Transformation<?>> translate(List<ModifyOperation> modifyOperations);

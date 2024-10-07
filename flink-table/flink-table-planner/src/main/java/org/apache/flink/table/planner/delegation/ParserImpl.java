@@ -65,6 +65,7 @@ public class ParserImpl implements Parser {
     private final Supplier<FlinkPlannerImpl> validatorSupplier;
     private final Supplier<CalciteParser> calciteParserSupplier;
     private final SqlExprToRexConverterFactory sqlExprToRexConverterFactory;
+    // J: 扩展的解析器
     private static final ExtendedParser EXTENDED_PARSER = ExtendedParser.INSTANCE;
 
     public ParserImpl(
@@ -79,6 +80,9 @@ public class ParserImpl implements Parser {
     }
 
     /**
+     * 在解析语句时，它首先使用{@link ExtendedParser}来解析语句。如果{@link ExtendedParser}解析语句失败，
+     * 则使用{@link CalciteParser}解析语句。
+     *
      * When parsing statement, it first uses {@link ExtendedParser} to parse statements. If {@link
      * ExtendedParser} fails to parse statement, it uses the {@link CalciteParser} to parse
      * statements.
@@ -90,17 +94,23 @@ public class ParserImpl implements Parser {
     public List<Operation> parse(String statement) {
         // J: 解析实现  Calcite   parquet
         CalciteParser parser = calciteParserSupplier.get();
+        // J: flink 的 planner
         FlinkPlannerImpl planner = validatorSupplier.get();
 
         Optional<Operation> command = EXTENDED_PARSER.parse(statement);
+        // J: 对应包含 calcite 不支持的内容
         if (command.isPresent()) {
+            // J: 走 扩展解析器...
             return Collections.singletonList(command.get());
         }
 
         // parse the sql query
         // use parseSqlList here because we need to support statement end with ';' in sql client.
+
         // 解析sql查询在这里使用parseSqlList，因为我们需要在sql客户端中支持语句以';'结尾。
         SqlNodeList sqlNodeList = parser.parseSqlList(statement);
+
+        // J: 获取到 Calcite 的 SqlNode
         List<SqlNode> parsed = sqlNodeList.getList();
         Preconditions.checkArgument(parsed.size() == 1, "only single statement supported");
         return Collections.singletonList(

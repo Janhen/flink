@@ -22,12 +22,16 @@ package org.apache.flink.table.planner.plan.trait;
 public enum MiniBatchMode {
 
     /**
+     * {@code ProcTime}模式下的操作符需要在ProcTime间隔中发出水印，即启用了mini-batch的无界组agg。
+     *
      * An operator in {@code #ProcTime} mode requires watermarks emitted in proctime interval, i.e.,
      * unbounded group agg with mini-batch enabled.
      */
     ProcTime,
 
     /**
+     * {@code RowTime}模式下的操作符需要从元素中提取水印，并在RowTime间隔内发出，例如，window, window join…
+     *
      * An operator in {@code #RowTime} mode requires watermarks extracted from elements, and emitted
      * in rowtime interval, e.g., window, window join...
      */

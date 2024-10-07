@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Operation to describe ALTER TABLE ADD PARTITION statement. */
+// 描述ALTER TABLE ADD PARTITION语句的操作。
 public class AddPartitionsOperation extends AlterTableOperation {
 
     private final boolean ifNotExists;

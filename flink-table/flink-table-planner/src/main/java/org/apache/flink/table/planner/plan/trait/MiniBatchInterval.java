@@ -26,6 +26,7 @@ import java.util.Objects;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /** The pojo class that describes the mini-batch interval and mini-batch mode. */
+// 描述小批量间隔和小批量模式的pojo类。
 public class MiniBatchInterval {
     public static final String FIELD_NAME_INTERVAL = "interval";
     public static final String FIELD_NAME_MODE = "mode";

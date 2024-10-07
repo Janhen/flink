@@ -40,6 +40,7 @@ object FlinkStreamRuleSets {
   )
 
   /** Convert sub-queries before query decorrelation. */
+    // 在查询解关联之前转换子查询。
   val TABLE_SUBQUERY_RULES: RuleSet = RuleSets.ofList(
     CoreRules.FILTER_SUB_QUERY_TO_CORRELATE,
     CoreRules.PROJECT_SUB_QUERY_TO_CORRELATE,
@@ -47,6 +48,8 @@ object FlinkStreamRuleSets {
   )
 
   /**
+   * 通过将对表的引用替换为适当的计划子树来展开计划。这些规则可以创建新的计划节点。
+   *
    * Expand plan by replacing references to tables into a proper plan sub trees. Those rules can
    * create new plan nodes.
    */
@@ -58,6 +61,7 @@ object FlinkStreamRuleSets {
     LogicalCorrelateToJoinFromTemporalTableFunctionRule.INSTANCE
   )
 
+  // 扩展计划优化
   val POST_EXPAND_CLEAN_UP_RULES: RuleSet = RuleSets.ofList(EnumerableToLogicalTableScan.INSTANCE)
 
   /** Convert table references before query decorrelation. */
@@ -325,6 +329,7 @@ object FlinkStreamRuleSets {
   )
 
   /** RuleSet to do logical optimize for stream */
+    // 规则集为流做逻辑优化
   val LOGICAL_OPT_RULES: RuleSet = RuleSets.ofList(
     (
       FILTER_RULES.asScala ++

@@ -112,6 +112,7 @@ abstract class CommonSubGraphBasedOptimizer extends Optimizer {
     class ExpandShuttle extends RelShuttleImpl {
 
       // ensure the same intermediateTable would be expanded to the same RelNode tree.
+      // 确保将相同的intermediateTable扩展到相同的RelNode树。
       private val expandedIntermediateTables =
         new util.IdentityHashMap[IntermediateRelTable, RelNode]()
 

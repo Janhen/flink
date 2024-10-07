@@ -145,6 +145,8 @@ import static org.apache.calcite.sql.SqlUtil.stripAs;
 import static org.apache.calcite.util.Static.RESOURCE;
 
 /**
+ * {@link SqlValidator}的默认实现，由于CALCITE-4554，类被复制。
+ *
  * Default implementation of {@link SqlValidator}, the class was copied over because of
  * CALCITE-4554.
  *
@@ -183,6 +185,8 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
     protected final Map<String, IdInfo> idPositions = new HashMap<>();
 
     /**
+     * 将{@link SqlNode 查询节点}对象映射到从它们创建的{@link SqlValidatorScope}范围。
+     *
      * Maps {@link SqlNode query node} objects to the {@link SqlValidatorScope} scope created from
      * them.
      */
@@ -698,9 +702,11 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
         return false;
     }
 
+    // J: 验证 sql node
     public SqlNode validate(SqlNode topNode) {
         SqlValidatorScope scope = new EmptyScope(this);
         scope = new CatalogScope(scope, ImmutableList.of("CATALOG"));
+        // J: 验证表达式范围
         final SqlNode topNode2 = validateScopedExpression(topNode, scope);
         final RelDataType type = getValidatedNodeType(topNode2);
         Util.discard(type);

@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /** A TableResult is the representation of the statement execution result. */
+// TableResult是语句执行结果的表示。
 @PublicEvolving
 public interface TableResult {
 
@@ -40,6 +41,8 @@ public interface TableResult {
     Optional<JobClient> getJobClient();
 
     /**
+     * 如果需要，请等待，直到数据准备好。
+     *
      * Wait if necessary until the data is ready.
      *
      * <p>For a select operation, this method will wait until the first row can be accessed locally.

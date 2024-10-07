@@ -21,6 +21,7 @@ package org.apache.flink.table.operations.command;
 import org.apache.flink.table.operations.Operation;
 
 /** Operation to describe an ADD JAR statement. */
+// 操作来描述ADD JAR语句。
 public class AddJarOperation implements Operation {
 
     private final String path;

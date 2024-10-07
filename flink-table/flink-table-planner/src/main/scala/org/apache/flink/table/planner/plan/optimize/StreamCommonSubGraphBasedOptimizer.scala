@@ -49,15 +49,20 @@ class StreamCommonSubGraphBasedOptimizer(planner: StreamPlanner)
   override protected def doOptimize(roots: Seq[RelNode]): Seq[RelNodeBlock] = {
     val tableConfig = planner.getTableConfig
     // build RelNodeBlock plan
+    // 构建RelNodeBlock计划
     val sinkBlocks = RelNodeBlockPlanBuilder.buildRelNodeBlockPlan(roots, tableConfig)
     // infer trait properties for sink block
+    // 为sink块推断trait属性
     sinkBlocks.foreach {
       sinkBlock =>
         // don't require update before by default
         sinkBlock.setUpdateBeforeRequired(false)
 
-        val miniBatchInterval: MiniBatchInterval =
+        // J: mini batch 的处理
+        val miniBatchInterval: MiniBatchInterval = {
+          // J: table.exec.mini-batch.enabled 开启
           if (tableConfig.get(ExecutionConfigOptions.TABLE_EXEC_MINIBATCH_ENABLED)) {
+            // table.exec.mini-batch.allow-latency 允许的延迟
             val miniBatchLatency =
               tableConfig.get(ExecutionConfigOptions.TABLE_EXEC_MINIBATCH_ALLOW_LATENCY).toMillis
             Preconditions.checkArgument(
@@ -68,6 +73,7 @@ class StreamCommonSubGraphBasedOptimizer(planner: StreamPlanner)
           } else {
             MiniBatchIntervalTrait.NONE.getMiniBatchInterval
           }
+        }
         sinkBlock.setMiniBatchInterval(miniBatchInterval)
     }
 

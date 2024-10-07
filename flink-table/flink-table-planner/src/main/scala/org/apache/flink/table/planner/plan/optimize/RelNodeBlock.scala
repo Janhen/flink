@@ -96,6 +96,7 @@ class RelNodeBlock(val outputNode: RelNode) {
 
   // After this block has been optimized, the result will be converted to a new TableScan as
   // new output node
+  // 在这个块被优化之后，结果将被转换为一个新的TableScan作为新的输出节点
   private var newOutputNode: Option[RelNode] = None
 
   private var outputTableName: Option[String] = None
@@ -103,6 +104,7 @@ class RelNodeBlock(val outputNode: RelNode) {
   private var optimizedPlan: Option[RelNode] = None
 
   // whether any parent block requires UPDATE_BEFORE messages
+  // 是否有父块需要UPDATE_BEFORE消息
   private var updateBeforeRequired: Boolean = false
 
   private var miniBatchInterval: MiniBatchInterval = MiniBatchInterval.NONE
@@ -135,6 +137,7 @@ class RelNodeBlock(val outputNode: RelNode) {
   /** Returns true if any parent block requires UPDATE_BEFORE messages for updates. */
   def isUpdateBeforeRequired: Boolean = updateBeforeRequired
 
+  // J: RelNodeBlock
   def setMiniBatchInterval(miniBatchInterval: MiniBatchInterval): Unit = {
     this.miniBatchInterval = miniBatchInterval
   }

@@ -22,6 +22,8 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.table.operations.Operation;
 
 /**
+ * 描述DDL语句的{@link Operation}，例如CREATE TABLE或CREATE FUNCTION。
+ *
  * A {@link Operation} that describes the DDL statements, e.g. CREATE TABLE or CREATE FUNCTION.
  *
  * <p>Different sub operations can have their special instances. For example, a create table
