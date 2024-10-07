@@ -65,8 +65,11 @@ under the License.
 	<modules>
 		<module>flink-annotations</module>
 		<module>flink-architecture-tests</module>
+
+
 		<module>flink-core</module>
 		<module>flink-java</module>
+
 		<module>flink-scala</module>
 
 		<!-- fs -->
@@ -82,6 +85,7 @@ under the License.
 		<module>flink-connectors</module>
 		<module>flink-formats</module>
 		<module>flink-examples</module>
+
 		<module>flink-clients</module>
 		<module>flink-container</module>
 		<module>flink-queryable-state</module>
@@ -94,16 +98,29 @@ under the License.
 		<module>flink-table</module>
 		<module>flink-quickstart</module>
 		<module>flink-contrib</module>
+
 		<module>flink-dist</module>
 		<module>flink-dist-scala</module>
+
+		<!-- 监控的 metric -->
 		<module>flink-metrics</module>
+
+		<!-- yarn 执行 -->
 		<module>flink-yarn</module>
 		<module>flink-yarn-tests</module>
+
 		<module>flink-fs-tests</module>
 		<module>flink-docs</module>
+
+		<!-- pyflink 操作 -->
 		<module>flink-python</module>
+
 		<module>flink-walkthroughs</module>
+
+		<!-- k8s -->
 		<module>flink-kubernetes</module>
+
+		<!-- gpu 等外部资源 -->
 		<module>flink-external-resources</module>
 		<module>tools/ci/java-ci-tools</module>
 	</modules>
