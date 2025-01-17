@@ -33,6 +33,7 @@ import java.util.Map;
 public class PythonOptions {
 
     /** The maximum number of elements to include in a bundle. */
+    // 要包含在一个bundle中的元素的最大数量。
     public static final ConfigOption<Integer> MAX_BUNDLE_SIZE =
             ConfigOptions.key("python.fn-execution.bundle.size")
                     .intType()
@@ -44,6 +45,7 @@ public class PythonOptions {
                                     + "A larger value can improve the throughput, but at the cost of more memory usage and higher latency.");
 
     /** The maximum time to wait before finalising a bundle (in milliseconds). */
+    // 在完成一个bundle之前等待的最长时间（以毫秒为单位）。
     public static final ConfigOption<Long> MAX_BUNDLE_TIME_MILLS =
             ConfigOptions.key("python.fn-execution.bundle.time")
                     .longType()
@@ -54,6 +56,7 @@ public class PythonOptions {
                                     + "buffered before being processed. Lower timeouts lead to lower tail latencies, but may affect throughput.");
 
     /** The maximum number of elements to include in an arrow batch. */
+    // arrow 批处理中要包含的元素的最大数量。
     public static final ConfigOption<Integer> MAX_ARROW_BATCH_SIZE =
             ConfigOptions.key("python.fn-execution.arrow.batch.size")
                     .intType()
@@ -64,6 +67,7 @@ public class PythonOptions {
                                     + "bundle size. Otherwise, the bundle size will be used as the arrow batch size.");
 
     /** The configuration to enable or disable metric for Python execution. */
+    // 启用或禁用Python执行度量的配置。
     public static final ConfigOption<Boolean> PYTHON_METRIC_ENABLED =
             ConfigOptions.key("python.metric.enabled")
                     .booleanType()
@@ -73,6 +77,7 @@ public class PythonOptions {
                                     + "disable the metric to achieve better performance at some circumstance.");
 
     /** The configuration to enable or disable profile for Python execution. */
+    // 为Python执行启用或禁用概要文件的配置。
     public static final ConfigOption<Boolean> PYTHON_PROFILE_ENABLED =
             ConfigOptions.key("python.profile.enabled")
                     .booleanType()
@@ -84,6 +89,7 @@ public class PythonOptions {
                                     + "python.fn-execution.bundle.size and python.fn-execution.bundle.time.");
 
     /** The configuration to enable or disable system env for Python execution. */
+    // 启用或禁用用于Python执行的系统环境的配置。
     public static final ConfigOption<Boolean> PYTHON_SYSTEMENV_ENABLED =
             ConfigOptions.key("python.systemenv.enabled")
                     .booleanType()
@@ -92,6 +98,7 @@ public class PythonOptions {
                             "Specify whether to load System Environment when starting Python worker.");
 
     /** The configuration to enable or disable python operator chaining. */
+    // 启用或禁用python操作符链接的配置。
     public static final ConfigOption<Boolean> PYTHON_OPERATOR_CHAINING_ENABLED =
             ConfigOptions.key("python.operator-chaining.enabled")
                     .booleanType()
@@ -100,6 +107,10 @@ public class PythonOptions {
                             "Python operator chaining allows non-shuffle operations to be co-located in the "
                                     + "same thread fully avoiding serialization and de-serialization.");
 
+    // 为作业附加自定义文件。标准的资源文件后缀，如.py.egg.zip。支持WHL或目录。
+    // 这些文件将被添加到本地客户端和远程python UDF工作器的 PYTHONPATH 中。
+    // 以.zip为后缀的文件将被提取并添加到 PYTHONPATH。
+    // 逗号（','）可用作分隔符来指定多个文件。该选项相当于命令行选项“-pyfs”
     public static final ConfigOption<String> PYTHON_FILES =
             ConfigOptions.key("python.files")
                     .stringType()
@@ -110,6 +121,7 @@ public class PythonOptions {
                                     + "client and the remote python UDF worker. Files suffixed with .zip will be extracted and added to PYTHONPATH. "
                                     + "Comma (',') could be used as the separator to specify multiple files. The option is equivalent to the command line option \"-pyfs\". ");
 
+    // 指定一个定义第三方依赖的requirements.txt文件。
     public static final ConfigOption<String> PYTHON_REQUIREMENTS =
             ConfigOptions.key("python.requirements")
                     .stringType()
@@ -175,6 +187,7 @@ public class PythonOptions {
                                     .build());
 
     /** Whether the memory used by the Python framework is managed memory. */
+    // Python框架使用的内存是否为托管内存。
     public static final ConfigOption<Boolean> USE_MANAGED_MEMORY =
             ConfigOptions.key("python.fn-execution.memory.managed")
                     .booleanType()
@@ -188,6 +201,7 @@ public class PythonOptions {
                                     TaskManagerOptions.TASK_OFF_HEAP_MEMORY.key()));
 
     /** The maximum number of states cached in a Python UDF worker. */
+    // 在Python UDF worker中缓存的最大状态数。
     @Experimental
     public static final ConfigOption<Integer> STATE_CACHE_SIZE =
             ConfigOptions.key("python.state.cache-size")
@@ -198,6 +212,7 @@ public class PythonOptions {
                                     + "is an experimental flag and might not be available in future releases.");
 
     /** The maximum number of cached items which read from Java side in a Python MapState. */
+    // 在Python MapState中从Java端读取的缓存项的最大数量。
     @Experimental
     public static final ConfigOption<Integer> MAP_STATE_READ_CACHE_SIZE =
             ConfigOptions.key("python.map-state.read-cache-size")
@@ -208,6 +223,7 @@ public class PythonOptions {
                                     + "Note that this is an experimental flag and might not be available in future releases.");
 
     /** The maximum number of write requests cached in a Python MapState. */
+    // 在Python MapState中缓存的最大写请求数。
     @Experimental
     public static final ConfigOption<Integer> MAP_STATE_WRITE_CACHE_SIZE =
             ConfigOptions.key("python.map-state.write-cache-size")
@@ -221,6 +237,8 @@ public class PythonOptions {
                                     + "releases.");
 
     /**
+     * 当迭代Python MapState时，每个请求发送给Python UDF worker的最大条目数。
+     *
      * The maximum number of entries sent to Python UDF worker per request when iterating a Python
      * MapState.
      */
@@ -236,6 +254,11 @@ public class PythonOptions {
                                     + "in future releases.");
 
     /** Specify the python runtime execution mode. */
+    // 指定python运行时执行模式。
+    // ‘ process ’模式意味着Python用户定义函数将在单独的Python进程中执行。
+    // ‘ thread ’模式意味着Python用户定义函数将在Java操作符的同一进程中执行。
+    // 请注意，目前它仍然不支持在所有地方以‘ thread ’模式执行Python用户定义函数。
+    // 在这些情况下，它将退回到“进程”模式。
     @Experimental
     public static final ConfigOption<String> PYTHON_EXECUTION_MODE =
             ConfigOptions.key("python.execution-mode")
